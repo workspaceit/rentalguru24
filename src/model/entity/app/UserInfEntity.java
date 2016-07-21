@@ -15,7 +15,8 @@ public class UserInfEntity {
     private Timestamp createdDate;
 
     @Id
-    @Column(name = "id")
+//    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return id;
     }
