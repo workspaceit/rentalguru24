@@ -27,11 +27,7 @@ public class AppLoginCredentialModel extends BaseModel {
     public void insert(AppLoginCredentialEntity appLoginCredentialEntity){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
-//        System.out.println(appLoginCredentialEntity.getUserInfByUserInfId().getId());
-      //  System.out.println(appLoginCredentialEntity.getUserInfByUserInfId().getId());
-        //    appLoginCredentialEntity.getUserInfByUserInfId().setId(userid);
         session.save(appLoginCredentialEntity.getUserInfByUserInfId());
-        System.out.println(appLoginCredentialEntity.getUserInfByUserInfId().getId());
         appLoginCredentialEntity.setUserInfId(appLoginCredentialEntity.getUserInfByUserInfId().getId());
         session.save(appLoginCredentialEntity);
         session.getTransaction().commit();
