@@ -42,20 +42,29 @@ public class SignupService {
         DeviceInfoEntity deviceInfoEntity3 = new DeviceInfoEntity();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
+
+
         deviceInfoEntity1.setDeviceId("123456789");
         deviceInfoEntity2.setDeviceId("987654321");
         deviceInfoEntity3.setDeviceId("369258147");
 
+        ArrayList<DeviceInfoEntity> deviceInfoEntitiesarr = new ArrayList<DeviceInfoEntity>();
+//        Set<DeviceInfoEntity> deviceInfoEntitiesarr = new HashSet<DeviceInfoEntity>();
 
+        deviceInfoEntitiesarr.add(deviceInfoEntity1);
+        deviceInfoEntitiesarr.add(deviceInfoEntity2);
+        deviceInfoEntitiesarr.add(deviceInfoEntity3);
 
         userInfEntity.setFirstName(firstName);
         userInfEntity.setLastName(lastName);
 
         appLoginCredentialEntity.setEmail(email);
+
         appLoginCredentialEntity.setPassword(bCryptPasswordEncoder.encode(password));
         appLoginCredentialEntity.setAccessToken(DigestUtils.md5DigestAsHex((email+password).getBytes()));
         appLoginCredentialEntity.setUserInfByUserInfId(userInfEntity);
-        appLoginCredentialEntity.setDeviceInfosById(new ArrayList<DeviceInfoEntity>(){{add(deviceInfoEntity1); add(deviceInfoEntity2); add(deviceInfoEntity3);}});
+        appLoginCredentialEntity.setDeviceInfosById(deviceInfoEntitiesarr);
+
         appLoginCredentialModel.insert(appLoginCredentialEntity);
     }
 
