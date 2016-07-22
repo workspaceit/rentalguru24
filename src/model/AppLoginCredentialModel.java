@@ -1,5 +1,6 @@
 package model;
 
+import model.entity.app.AEntity;
 import model.entity.app.AppLoginCredentialEntity;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -36,6 +37,10 @@ public class AppLoginCredentialModel extends BaseModel {
         session.save(appLoginCredentialEntity);
         session.getTransaction().commit();
         session.close();
+    }
+    public AEntity aEntity(){
+        Session session = this.sessionFactory.openSession();
+        return session.get(AEntity.class,2);
     }
 
 }
