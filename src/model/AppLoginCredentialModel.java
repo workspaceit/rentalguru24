@@ -2,8 +2,14 @@ package model;
 
 import model.entity.app.AEntity;
 import model.entity.app.AppLoginCredentialEntity;
+import model.entity.app.DeviceInfoEntity;
 import org.hibernate.Query;
 import org.hibernate.Session;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by mi on 7/20/16.
@@ -28,13 +34,15 @@ public class AppLoginCredentialModel extends BaseModel {
     public void insert(AppLoginCredentialEntity appLoginCredentialEntity){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
-//        System.out.println(appLoginCredentialEntity.getUserInfByUserInfId().getId());
-      //  System.out.println(appLoginCredentialEntity.getUserInfByUserInfId().getId());
-        //    appLoginCredentialEntity.getUserInfByUserInfId().setId(userid);
         session.save(appLoginCredentialEntity.getUserInfByUserInfId());
-        System.out.println(appLoginCredentialEntity.getUserInfByUserInfId().getId());
         appLoginCredentialEntity.setUserInfId(appLoginCredentialEntity.getUserInfByUserInfId().getId());
         session.save(appLoginCredentialEntity);
+        Integer Deviceid= appLoginCredentialEntity.getId();
+        Collection<DeviceInfoEntity> List = appLoginCredentialEntity.getDeviceInfosById();
+        for (DeviceInfoEntity device : List){
+            device.setAppCredentialId(Deviceid);
+            session.save(device);
+        }
         session.getTransaction().commit();
         session.close();
     }

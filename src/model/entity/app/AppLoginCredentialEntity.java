@@ -121,7 +121,7 @@ public class AppLoginCredentialEntity {
         this.userInfByUserInfId = userInfByUserInfId;
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "app_credential_id",  insertable=false, updatable=false)
     public Collection<DeviceInfoEntity> getDeviceInfosById() {
         return deviceInfosById;
