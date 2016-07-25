@@ -28,10 +28,9 @@
        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
               <property name="annotatedClasses">
                      <list>
-                            <value>model.entity.app.AppLoginCredentialEntity</value>
-                            <value>model.entity.app.DeviceInfoEntity</value>
-                            <value>model.entity.app.UserInfEntity</value>
-                            <value>model.entity.app.AEntity</value>
+                            <value>model.entity.app.AppCredential</value>
+                            <value>model.entity.app.UserAddress</value>
+                            <value>model.entity.app.User</value>
                      </list>
               </property>
               <property name="hibernateProperties">
@@ -46,3 +45,6 @@
               </property>
        </bean>
 </beans>
+
+
+

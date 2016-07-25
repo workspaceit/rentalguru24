@@ -4,26 +4,37 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by mi on 7/20/16.
+ * Created by mi on 7/25/16.
  */
 @Entity
 @Table(name = "user_inf", schema = "", catalog = "rentguru24")
-public class UserInfEntity {
+public class User {
     private int id;
+    private int addressId;
     private String firstName;
     private String lastName;
     private Timestamp createdDate;
+    private UserAddress userAddress;
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+//    @Basic
+//    @Column(name = "user_address_id")
+//    public int getAddressId() {
+//        return addressId;
+//    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
     @Basic
@@ -61,12 +72,13 @@ public class UserInfEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserInfEntity that = (UserInfEntity) o;
+        User user = (User) o;
 
-        if (id != that.id) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
+        if (id != user.id) return false;
+        if (addressId != user.addressId) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (createdDate != null ? !createdDate.equals(user.createdDate) : user.createdDate != null) return false;
 
         return true;
     }
@@ -74,9 +86,20 @@ public class UserInfEntity {
     @Override
     public int hashCode() {
         int result = id;
+        result = 31 * result + addressId;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "user_address_id", referencedColumnName = "id", nullable = false)
+    public UserAddress getuserAddress() {
+        return userAddress;
+    }
+
+    public void setuserAddress(UserAddress userAddress) {
+        this.userAddress = userAddress;
     }
 }

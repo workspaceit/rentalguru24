@@ -1,8 +1,7 @@
 package model;
 
-import model.entity.app.AEntity;
-import model.entity.app.AppLoginCredentialEntity;
-import model.entity.app.DeviceInfoEntity;
+
+import model.entity.app.AppCredential;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -15,40 +14,30 @@ import java.util.List;
  * Created by mi on 7/20/16.
  */
 public class AppLoginCredentialModel extends BaseModel {
-    public AppLoginCredentialEntity getById(){
+    public AppCredential getById(){
         Session session = this.sessionFactory.openSession();
 
 
 
-        return session.get(AppLoginCredentialEntity.class,1);
+        return session.get(AppCredential.class,1);
     }
-    public AppLoginCredentialEntity getByPassword(){
+    public AppCredential getByPassword(){
         Session session = this.sessionFactory.openSession();
-        String hql = "from AppLoginCredentialEntity where password = :password";
+        String hql = "from AppCredential where password = :password";
 
         Query query = session.createQuery(hql);
-        query.setParameter("password","123456789");
-        return (AppLoginCredentialEntity)query.uniqueResult();
+        query.setParameter("password", "123456789");
+        return (AppCredential)query.uniqueResult();
     }
 
-    public void insert(AppLoginCredentialEntity appLoginCredentialEntity){
+    public void insert(AppCredential appCredential){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
-        session.save(appLoginCredentialEntity.getUserInfByUserInfId());
-        appLoginCredentialEntity.setUserInfId(appLoginCredentialEntity.getUserInfByUserInfId().getId());
-        session.save(appLoginCredentialEntity);
-        Integer Deviceid= appLoginCredentialEntity.getId();
-        Collection<DeviceInfoEntity> List = appLoginCredentialEntity.getDeviceInfosById();
-        for (DeviceInfoEntity device : List){
-            device.setAppCredentialId(Deviceid);
-            session.save(device);
-        }
+        //session.save(appCredential.getUser());
+        session.saveOrUpdate(appCredential);
         session.getTransaction().commit();
         session.close();
     }
-    public AEntity aEntity(){
-        Session session = this.sessionFactory.openSession();
-        return session.get(AEntity.class,2);
-    }
+
 
 }

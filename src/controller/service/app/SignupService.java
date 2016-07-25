@@ -2,9 +2,9 @@ package controller.service.app;
 
 
 import model.AppLoginCredentialModel;
-import model.entity.app.AppLoginCredentialEntity;
-import model.entity.app.DeviceInfoEntity;
-import model.entity.app.UserInfEntity;
+import model.entity.app.AppCredential;
+import model.entity.app.User;
+import model.entity.app.UserAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.DigestUtils;
@@ -30,42 +30,33 @@ public class SignupService {
     @RequestMapping(value = "/postsignup", method = RequestMethod.POST)
     public void postSignup(@RequestParam Map<String, String> allRequestParams){
 
-        String firstName = allRequestParams.get("first_name");
-        String lastName =allRequestParams.get("last_name");
-        String email = allRequestParams.get("email");
-        String password = allRequestParams.get("password");
+        String firstName ="TEST";// allRequestParams.get("first_name");
+        String lastName ="TEST";//allRequestParams.get("last_name");
+        String email = "email@email.com";//allRequestParams.get("email");
+        String password = "123456";//allRequestParams.get("password");
 
-        AppLoginCredentialEntity appLoginCredentialEntity = new AppLoginCredentialEntity();
-        UserInfEntity userInfEntity = new UserInfEntity();
-        DeviceInfoEntity deviceInfoEntity1 = new DeviceInfoEntity();
-        DeviceInfoEntity deviceInfoEntity2 = new DeviceInfoEntity();
-        DeviceInfoEntity deviceInfoEntity3 = new DeviceInfoEntity();
+        AppCredential appCredential = new AppCredential();
+        User user = new User();
+        UserAddress userAddress = new UserAddress();
+        userAddress.setAddress("sdfds");
+        userAddress.setCity("Pitsnurg");
+        userAddress.setZip("1245");
+        userAddress.setState("Pelsanvania");
+        user.setuserAddress(userAddress);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        appCredential.setEmail(email);
+        appCredential.setPassword(password);
+        appCredential.setUser(user);
 
 
 
-        deviceInfoEntity1.setDeviceId("123456789");
-        deviceInfoEntity2.setDeviceId("987654321");
-        deviceInfoEntity3.setDeviceId("369258147");
+        appCredential.setPassword(bCryptPasswordEncoder.encode(password));
+        appCredential.setAccesstoken(DigestUtils.md5DigestAsHex((email + password).getBytes()));
 
-        ArrayList<DeviceInfoEntity> deviceInfoEntitiesarr = new ArrayList<DeviceInfoEntity>();
-//        Set<DeviceInfoEntity> deviceInfoEntitiesarr = new HashSet<DeviceInfoEntity>();
 
-        deviceInfoEntitiesarr.add(deviceInfoEntity1);
-        deviceInfoEntitiesarr.add(deviceInfoEntity2);
-        deviceInfoEntitiesarr.add(deviceInfoEntity3);
-
-        userInfEntity.setFirstName(firstName);
-        userInfEntity.setLastName(lastName);
-
-        appLoginCredentialEntity.setEmail(email);
-
-        appLoginCredentialEntity.setPassword(bCryptPasswordEncoder.encode(password));
-        appLoginCredentialEntity.setAccessToken(DigestUtils.md5DigestAsHex((email+password).getBytes()));
-        appLoginCredentialEntity.setUserInfByUserInfId(userInfEntity);
-        appLoginCredentialEntity.setDeviceInfosById(deviceInfoEntitiesarr);
-
-        appLoginCredentialModel.insert(appLoginCredentialEntity);
+        appLoginCredentialModel.insert(appCredential);
     }
 
 }

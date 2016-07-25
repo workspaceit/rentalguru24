@@ -1,8 +1,7 @@
 package controller.service.app;
 
 import model.AppLoginCredentialModel;
-import model.entity.app.AEntity;
-import model.entity.app.AppLoginCredentialEntity;
+import model.entity.app.AppCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,12 +18,12 @@ public class AuthService {
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
 
-    @RequestMapping(value="/getbyid",method = RequestMethod.GET)
-    public AEntity getById(){
-        System.out.println("SD");
-        //    AppLoginCredentialModel apcm = new AppLoginCredentialModel();
-        return appLoginCredentialModel.aEntity();
-    }
+//    @RequestMapping(value="/getbyid",method = RequestMethod.GET)
+//    public AEntity getById(){
+//        System.out.println("SD");
+//        //    AppLoginCredentialModel apcm = new AppLoginCredentialModel();
+//        return appLoginCredentialModel.aEntity();
+//    }
 //    @RequestMapping(value="/auth",method = RequestMethod.POST)
 //    public AppLoginCredentialEntity getAuthinticated(@RequestParam("access_token") String accessToken){
 //        //  AppLoginCredentialModel appLoginCredentialModel = new AppLoginCredentialModel();
@@ -32,7 +31,7 @@ public class AuthService {
 //        //  isAuthenticated
 //    }
     @RequestMapping(value = "/getbypassword", method = RequestMethod.GET)
-    public AppLoginCredentialEntity getByPassword(){
+    public AppCredential getByPassword(){
         return appLoginCredentialModel.getByPassword();
     }
 
