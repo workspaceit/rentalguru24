@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+
+
 import java.util.ArrayList;
 
 /**
@@ -15,12 +17,14 @@ import java.util.ArrayList;
 //@Component
 //@Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-@Component
-public class ServiceResponse {
 
-    public ResponseStat responseStat = null;
-    public Object       responseData = null;
+
+//@Component("serviceResponse")
+//@Scope(value="session",proxyMode=ScopedProxyMode.TARGET_CLASS)
+public class ServiceResponse  {
+
+    public ResponseStat responseStat;
+    public Object       responseData;
 
     public ServiceResponse() {
         System.out.println("ServiceResponse() Called");
@@ -80,6 +84,22 @@ public class ServiceResponse {
         RequestError() {
             this.params = "";
             this.msg = "";
+        }
+
+        public String getParams() {
+            return params;
+        }
+
+        public void setParams(String params) {
+            this.params = params;
+        }
+
+        public String getMsg() {
+            return msg;
+        }
+
+        public void setMsg(String msg) {
+            this.msg = msg;
         }
     }
     public Object getResponseData() {
