@@ -8,6 +8,7 @@ import java.util.Collection;
  * Created by mi on 8/1/16.
  */
 @Entity
+@Table(name = "attributes", schema = "", catalog = "rentguru24")
 public class Attributes {
     private int id;
     private String name;
@@ -17,6 +18,7 @@ public class Attributes {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -80,7 +82,7 @@ public class Attributes {
     }
 
     @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinColumn(name = "attribute_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "attributes_id", referencedColumnName = "id", nullable = false)
     public Collection<AttributeValues> getAttributeValuesById() {
         return attributeValuesById;
     }
