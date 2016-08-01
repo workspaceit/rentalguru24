@@ -1,9 +1,12 @@
 package controller.service.app;
 
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
-import helper.ServiceResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import controller.helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
 import model.entity.app.User;
@@ -28,7 +31,7 @@ import java.util.*;
 @RequestMapping("/signup")
 public class SignupService{
     //ServiceResponse serviceResponse;
-    @Autowired
+    @Inject
     ServiceResponse serviceResponse;
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
@@ -107,6 +110,12 @@ public class SignupService{
 
      //   appLoginCredentialModel.insert(appCredential);
        // return result.getAllErrors();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            System.out.println(objectMapper.writeValueAsString(this.serviceResponse));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return serviceResponse;
     }
 
