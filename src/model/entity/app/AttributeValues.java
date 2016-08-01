@@ -15,22 +15,13 @@ public class AttributeValues {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "attributes_id")
-    public int getAttributesId() {
-        return attributesId;
-    }
-
-    public void setAttributesId(int attributesId) {
-        this.attributesId = attributesId;
     }
 
     @Basic
@@ -61,7 +52,6 @@ public class AttributeValues {
         AttributeValues that = (AttributeValues) o;
 
         if (id != that.id) return false;
-        if (attributesId != that.attributesId) return false;
         if (createdBy != that.createdBy) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
