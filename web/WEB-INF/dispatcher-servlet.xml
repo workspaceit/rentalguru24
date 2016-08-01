@@ -6,7 +6,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
        <mvc:annotation-driven/>
-       <context:component-scan base-package="controller.service.app" />
+       <context:component-scan base-package="controller" />
 
 
 
@@ -17,6 +17,10 @@
               <property name="suffix" value=".jsp" />
        </bean>
 
+
+       <bean id="baseService" class="controller.service.BaseService">
+
+       </bean>
        <bean id="baseModel" class="model.BaseModel">
               <property name="sessionFactory" ref="sessionFactory"/>
        </bean>
@@ -31,6 +35,14 @@
                             <value>model.entity.app.AppCredential</value>
                             <value>model.entity.app.UserAddress</value>
                             <value>model.entity.app.User</value>
+                            <value>model.entity.app.AttributeValues</value>
+                            <value>model.entity.app.Attributes</value>
+                            <value>model.entity.app.Category</value>
+                            <value>model.entity.app.Product</value>
+                            <value>model.entity.app.ProductAttribute</value>
+                            <value>model.entity.app.ProductCategory</value>
+                            <value>model.entity.app.RentProduct</value>
+                            <value>model.entity.app.RentRequest</value>
                      </list>
               </property>
               <property name="hibernateProperties">
@@ -47,4 +59,9 @@
 </beans>
 
 
-
+<!--<prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>-->
+<!--<prop key="hibernate.connection.username">root</prop>-->
+<!--<prop key="hibernate.connection.password" />-->
+<!--<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>-->
+<!--<prop key="hibernate.show_sql">true</prop>-->
+<!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
