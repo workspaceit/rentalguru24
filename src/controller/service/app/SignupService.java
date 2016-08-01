@@ -3,14 +3,12 @@ package controller.service.app;
 
 import javax.validation.Valid;
 
-import controller.helper.ServiceResponse;
-import controller.service.BaseService;
+import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
 import model.entity.app.User;
 import model.entity.app.UserAddress;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import validator.UserAddressValidator;
 
 import java.util.*;
 
@@ -30,16 +27,22 @@ import java.util.*;
 @RestController
 @RequestMapping("/signup")
 public class SignupService{
+    //ServiceResponse serviceResponse;
+    @Autowired
     ServiceResponse serviceResponse;
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
 
 //    @Autowired
 //    private MessageSource messageSource;
-
-    @RequestMapping(value = "/postsignup", method = RequestMethod.POST)
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public ServiceResponse test(@RequestParam Map<String, String> allRequestParams){
+        serviceResponse.responseStat.msg = "TEST";
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/postsignup", method = RequestMethod.GET)
     public ServiceResponse postSignup(@RequestParam Map<String, String> allRequestParams,@Valid UserAddress userAddress,BindingResult result){
-        serviceResponse = new ServiceResponse();
+      //  serviceResponse = new ServiceResponse();
         System.out.println("ok01");
         String firstName ="TEST";// allRequestParams.get("first_name");
         String lastName ="TEST";//allRequestParams.get("last_name");
@@ -62,7 +65,7 @@ public class SignupService{
         appCredential.setUser(user);
 
        // UserAddressValidator userAddressValidator = new UserAddressValidator();
-        new UserAddressValidator().validate(userAddress, result);
+     //   new UserAddressValidator().validate(userAddress, result);
 
 
         appCredential.setPassword(bCryptPasswordEncoder.encode(password));
@@ -83,8 +86,8 @@ public class SignupService{
 //            }
 //        }
         System.out.println("result.hasErrors() "+result.hasErrors());
+        //serviceResponse.responseData = userAddress;
         if(result.hasErrors()) {
-            serviceResponse.responseData = result;
             for (ObjectError object : result.getAllErrors()) {
                 if(object instanceof FieldError) {
                     FieldError fieldError = (FieldError) object;

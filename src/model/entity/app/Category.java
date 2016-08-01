@@ -1,10 +1,8 @@
 package model.entity.app;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
  * Created by mi on 8/1/16.
@@ -17,6 +15,7 @@ public class Category {
     private int sortedOrder;
     private int createdBy;
     private Timestamp createdDate;
+    private Collection<Category> subcategory;
 
     @Id
     @Column(name = "id")
@@ -105,5 +104,14 @@ public class Category {
         result = 31 * result + createdBy;
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
+    }
+
+//    @OneToMany(mappedBy = "categoryByParentId")
+//    public Collection<Category> getSubcategory() {
+//        return subcategory;
+//    }
+
+    public void setSubcategory(Collection<Category> subcategory) {
+        this.subcategory = subcategory;
     }
 }
