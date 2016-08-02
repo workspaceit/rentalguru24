@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by omar on 8/1/16.
@@ -61,8 +58,8 @@ public class TestService {
         attributesModel.insert(attributes);
     }
     @RequestMapping(value = "/test/getatt", method = RequestMethod.GET)
-    public void getAttribute(){
-        attributesModel.getById();
+    public Attributes getAttribute(){
+       return attributesModel.getById();
     }
 
     @RequestMapping(value = "/test/category", method = RequestMethod.POST)
@@ -111,18 +108,18 @@ public class TestService {
     }
 
     @RequestMapping(value = "/test/getbytoken", method = RequestMethod.GET)
-    public void getToken(){
-        identityDocModel.getByToken(15845648);
+    public List<IdentityDoc> getToken(){
+        return identityDocModel.getByToken(15845648);
     }
 
     @RequestMapping(value = "/test/idtyp/getbyid", method = RequestMethod.GET)
-    public void getIdeTypGetById(){
-        identityTypeModel.getById(1);
+    public IdentityType getIdeTypGetById(){
+        return identityTypeModel.getById(1);
     }
 
     @RequestMapping(value = "/tset/idtyp/getall", method = RequestMethod.GET)
-    public void getAllIdTyp(){
-        identityTypeModel.getAll();
+    public List<IdentityType> getAllIdTyp(){
+        return identityTypeModel.getAll();
     }
 
 }

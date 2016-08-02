@@ -3,6 +3,7 @@ package controller.service.app;
 import model.IdentityTypeModel;
 import model.entity.app.IdentityType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,5 +21,9 @@ public class UtilityServices {
     @RequestMapping(value = "/get-identity", method = RequestMethod.GET)
     public List<IdentityType> getAllIdentityType(){
         return identityTypeModel.getAll();
+    }
+    @RequestMapping(value = "/get-identity/{id}", method = RequestMethod.GET)
+    public IdentityType getById(@PathVariable("id")int id){
+        return identityTypeModel.getById(id);
     }
 }
