@@ -16,9 +16,6 @@ import java.util.List;
 public class AppLoginCredentialModel extends BaseModel {
     public AppCredential getById(){
         Session session = this.sessionFactory.openSession();
-
-
-
         return session.get(AppCredential.class,1);
     }
     public AppCredential getByPassword(){

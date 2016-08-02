@@ -47,6 +47,8 @@
        </bean>
        <bean id="attributesModel" class="model.AttributesModel" >
        </bean>
+       <bean id="categoryModel" class="model.CategoryModel" >
+       </bean>
 
        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
               <property name="annotatedClasses">

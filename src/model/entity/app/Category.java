@@ -3,6 +3,8 @@ package model.entity.app;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by mi on 8/1/16.
@@ -11,7 +13,7 @@ import java.util.Collection;
 public class Category {
     private int id;
     private String name;
-    private Integer parentId;
+    private Category parent;
     private int sortedOrder;
     private int createdBy;
     private Timestamp createdDate;
@@ -19,6 +21,7 @@ public class Category {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -37,14 +40,14 @@ public class Category {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "parent_id")
-    public Integer getParentId() {
-        return parentId;
-    }
+//    @Basic
+//    @Column(name = "parent_id")
+//    public Category getParent() {
+//        return parent;
+//    }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setParent(Category parent) {
+        this.parent = parent;
     }
 
     @Basic
@@ -88,7 +91,7 @@ public class Category {
         if (sortedOrder != category.sortedOrder) return false;
         if (createdBy != category.createdBy) return false;
         if (name != null ? !name.equals(category.name) : category.name != null) return false;
-        if (parentId != null ? !parentId.equals(category.parentId) : category.parentId != null) return false;
+        if (parent != null ? !parent.equals(category.parent) : category.parent != null) return false;
         if (createdDate != null ? !createdDate.equals(category.createdDate) : category.createdDate != null)
             return false;
 
@@ -99,19 +102,37 @@ public class Category {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
+        result = 31 * result + (parent != null ? parent.hashCode() : 0);
         result = 31 * result + sortedOrder;
         result = 31 * result + createdBy;
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
     }
 
+
+
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "id")
+//
+//    @OneToMany(mappedBy = "Category")
+//    private Collection<Category> subCategories;
+//
+//    public Collection<Category> getSubcategory() {
+//        return subcategory;
+//    }
+//
+//    public void setSubcategory(Collection<Category> subcategory) {
+//        this.subcategory = subcategory;
+//    }
+
 //    @OneToMany(mappedBy = "categoryByParentId")
 //    public Collection<Category> getSubcategory() {
 //        return subcategory;
 //    }
+//
+//    public void setSubcategory(Collection<Category> subcategory) {
+//        this.subcategory = subcategory;
+//    }
 
-    public void setSubcategory(Collection<Category> subcategory) {
-        this.subcategory = subcategory;
-    }
+
 }
