@@ -104,15 +104,25 @@ public class TestService {
     }
 
     @RequestMapping(value = "/test/idtype", method = RequestMethod.POST)
-    public  void postIdentityType(){
+    public void postIdentityType(){
         IdentityType identityType = new IdentityType();
         identityType.setName("pqrst");
         identityTypeModel.insert(identityType);
     }
 
     @RequestMapping(value = "/test/getbytoken", method = RequestMethod.GET)
-    public  void getToken(){
+    public void getToken(){
         identityDocModel.getByToken(15845648);
+    }
+
+    @RequestMapping(value = "/test/idtyp/getbyid", method = RequestMethod.GET)
+    public void getIdeTypGetById(){
+        identityTypeModel.getById(1);
+    }
+
+    @RequestMapping(value = "/tset/idtyp/getall", method = RequestMethod.GET)
+    public void getAllIdTyp(){
+        identityTypeModel.getAll();
     }
 
 }
