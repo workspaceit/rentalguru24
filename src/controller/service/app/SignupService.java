@@ -5,7 +5,8 @@ import javax.validation.Valid;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import controller.helper.ServiceResponse;
+import helper.ImageHelper;
+import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
 import model.entity.app.User;
@@ -15,13 +16,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import validator.UserValidator;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -39,7 +41,7 @@ public class SignupService{
     AppLoginCredentialModel appLoginCredentialModel;
 
     public SignupService() {
-        System.out.println("RestController HAHAHA");
+        System.out.println("SignupService() is Called");
         serviceResponse = new ServiceResponse();
     }
 
@@ -51,73 +53,62 @@ public class SignupService{
         serviceResponse.responseStat.msg = "TEST";
         return serviceResponse;
     }
-    @RequestMapping(value = "/postsignup", method = RequestMethod.GET)
-    public ServiceResponse postSignup(@RequestParam Map<String, String> allRequestParams,@Valid UserAddress userAddress,BindingResult result){
-      //  serviceResponse = new ServiceResponse();
-        System.out.println("ok01");
-        String firstName ="TEST";// allRequestParams.get("first_name");
-        String lastName ="TEST";//allRequestParams.get("last_name");
-        String email = "email@email.com";//allRequestParams.get("email");
-        String password = "123456";//allRequestParams.get("password");
+    @RequestMapping(value = "/postsignup",  headers = "Content-Type=multipart/form-data", method = RequestMethod.POST)
+    public ServiceResponse postSignup(@RequestParam Map<String, String> allRequestParams,
 
-        AppCredential appCredential = new AppCredential();
-        User user = new User();
-//        UserAddress userAddress = new UserAddress();
-        userAddress.setAddress("sdfds");
-        //userAddress.setCity("Pitsnurg");
-        userAddress.setZip("1245");
-        userAddress.setState("Pelsanvania");
-        user.setuserAddress(userAddress);
+                                      @RequestParam("file") MultipartFile file,
+                                      @Valid UserAddress userAddress,
+                                      @Valid User user,
+                                      BindingResult result){
+      //  serviceResponse = new ServiceResponse();
+        System.out.println(file.getName());
+        try {
+            ImageHelper.saveAsPdf(file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String firstName = allRequestParams.get("firstName");
+        String lastName = allRequestParams.get("lastName");
+        String email = allRequestParams.get("email");
+        String password = allRequestParams.get("password");
+
+        String city = allRequestParams.get("city");
+        String zip = allRequestParams.get("zip");
+        String state = allRequestParams.get("state");
+        String address = allRequestParams.get("address");
+
+
+        userAddress.setAddress(address);
+        userAddress.setZip(zip);
+        userAddress.setState(state);
+        userAddress.setCity(city);
+
+
+        user.setUserAddress(userAddress);
         user.setFirstName(firstName);
         user.setLastName(lastName);
+
+        AppCredential appCredential = new AppCredential();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         appCredential.setEmail(email);
         appCredential.setPassword(password);
         appCredential.setUser(user);
 
-       // UserAddressValidator userAddressValidator = new UserAddressValidator();
-     //   new UserAddressValidator().validate(userAddress, result);
-
+       // new UserAddressValidator().validate(userAddress, result);
+        new UserValidator().validate(user,result);
 
         appCredential.setPassword(bCryptPasswordEncoder.encode(password));
         appCredential.setAccesstoken(DigestUtils.md5DigestAsHex((email + password).getBytes()));
-//        if(result.hasErrors()){
-//            System.out.println("hasErrors");
-//            for (Object object : result.getAllErrors()) {
-//                if(object instanceof FieldError) {
-//                    FieldError fieldError = (FieldError) object;
-//
-//                    /**
-//                     * Use null as second parameter if you do not use i18n (internationalization)
-//                     */
-//
-//                    String message = messageSource.getMessage(fieldError, null);
-//                    System.out.println(message);
-//                }
-//            }
-//        }
-        System.out.println("result.hasErrors() "+result.hasErrors());
-        //serviceResponse.responseData = userAddress;
-        if(result.hasErrors()) {
-            for (ObjectError object : result.getAllErrors()) {
-                if(object instanceof FieldError) {
-                    FieldError fieldError = (FieldError) object;
 
-                    System.out.println(fieldError.getCode());
-                }
-
-                if(object instanceof ObjectError) {
-                    ObjectError objectError = (ObjectError) object;
-
-                    System.out.println(objectError.getCode());
-                    objectError.getObjectName();
-                }
-            }
+        if(result.hasErrors()){
+            this.serviceResponse.setError(result,true,false);
+            return this.serviceResponse;
         }
 
 
+
      //   appLoginCredentialModel.insert(appCredential);
-       // return result.getAllErrors();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             System.out.println(objectMapper.writeValueAsString(this.serviceResponse));

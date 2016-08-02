@@ -95,11 +95,11 @@ public class User {
 
     @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "user_address_id", referencedColumnName = "id", nullable = false)
-    public UserAddress getuserAddress() {
+    public UserAddress getUserAddress() {
         return userAddress;
     }
 
-    public void setuserAddress(UserAddress userAddress) {
+    public void setUserAddress(UserAddress userAddress) {
         this.userAddress = userAddress;
     }
 }
