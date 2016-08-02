@@ -1,9 +1,6 @@
 package model.entity.app;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -16,7 +13,8 @@ public class IdentityType {
     private int name;
     private Timestamp createdDate;
 
-    @Basic
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
