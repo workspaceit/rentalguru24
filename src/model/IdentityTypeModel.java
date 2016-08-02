@@ -4,6 +4,7 @@ import model.entity.app.IdentityType;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -27,7 +28,14 @@ public class IdentityTypeModel extends BaseModel {
         Session session = this.sessionFactory.openSession();
         String hql = "FROM IdentityType";
         Query query = session.createQuery(hql);
-        List result = query.list();
-        return result;
+        return (List<IdentityType>)query.list();
+//        List result =query.list();
+//        for (Iterator<IdentityType> iter = result.iterator(); iter.hasNext(); ) {
+//            IdentityType element = iter.next();
+//            System.out.println(element.getId());
+//            System.out.println(element.getName());
+//            System.out.println(element.getCreatedDate());
+//        }
+//        return result;
     }
 }

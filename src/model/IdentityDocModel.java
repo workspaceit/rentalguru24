@@ -1,6 +1,7 @@
 package model;
 
 import model.entity.app.IdentityDoc;
+import model.entity.app.IdentityType;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -21,7 +22,8 @@ public class IdentityDocModel extends BaseModel {
         Session session = this.sessionFactory.openSession();
         String hql = "FROM IdentityDoc ID WHERE ID.token="+token;
         Query query = session.createQuery(hql);
-        List results = query.list();
-        return results;
+        return (List<IdentityDoc>)query.list();
+//        List results = query.list();
+//        return results;
     }
 }
