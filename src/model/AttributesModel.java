@@ -17,6 +17,6 @@ public class AttributesModel extends BaseModel{
     }
     public Category getById(){
         Session session = this.sessionFactory.openSession();
-        return session.get(Category.class, 1);
+        return session.get(Category.class, 2);
     }
 }
