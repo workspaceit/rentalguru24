@@ -45,12 +45,17 @@ public class SignupService{
         serviceResponse = new ServiceResponse();
     }
 
-    //    @Autowired
-//    private MessageSource messageSource;
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public ServiceResponse test(@RequestParam Map<String, String> allRequestParams){
-        System.out.println("At Test Service");
-        serviceResponse.responseStat.msg = "TEST";
+
+    @RequestMapping(value = "/upload/document-identity", method = RequestMethod.GET)
+    public ServiceResponse uploadDocumentIdentity(@RequestParam("documentIdentity") MultipartFile file){
+
+
+        try {
+            ImageHelper.saveAsPdf(file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+            serviceResponse.setErrorMsg("documentIdentity","No file attached");
+        }
         return serviceResponse;
     }
     @RequestMapping(value = "/postsignup",  headers = "Content-Type=multipart/form-data", method = RequestMethod.POST)
@@ -117,5 +122,6 @@ public class SignupService{
         }
         return serviceResponse;
     }
+
 
 }
