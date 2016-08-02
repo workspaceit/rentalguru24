@@ -10,12 +10,12 @@ import java.sql.Timestamp;
 @Table(name = "identity_type", schema = "", catalog = "rentguru24")
 public class IdentityType {
     private int id;
-    private int name;
+    private String name;
     private Timestamp createdDate;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -26,11 +26,11 @@ public class IdentityType {
 
     @Basic
     @Column(name = "name")
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -61,7 +61,7 @@ public class IdentityType {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + name;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
     }

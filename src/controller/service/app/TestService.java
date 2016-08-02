@@ -3,9 +3,9 @@ package controller.service.app;
 
 import model.AttributesModel;
 import model.CategoryModel;
-import model.entity.app.AttributeValues;
-import model.entity.app.Attributes;
-import model.entity.app.Category;
+import model.IdentityDocModel;
+import model.IdentityTypeModel;
+import model.entity.app.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +28,12 @@ public class TestService {
 
     @Autowired
     CategoryModel categoryModel;
+
+    @Autowired
+    IdentityDocModel identityDocModel;
+
+    @Autowired
+    IdentityTypeModel identityTypeModel;
 
     @RequestMapping(value = "/test/att", method = RequestMethod.POST)
     public void postAttribute(@RequestParam Map<String, String> allRequestParams){
@@ -82,13 +88,31 @@ public class TestService {
         subCategory2.setParent(category);
 
         Set<Category> subCategories = new HashSet<Category>();
-
         subCategories.add(subCategory1);
         subCategories.add(subCategory2);
-
 //        category.setSubcategory(subCategories);
-
         categoryModel.insert(category);
-
     }
+    @RequestMapping(value = "/test/iddoc", method = RequestMethod.POST)
+    public void postIdentityDoc(){
+        IdentityDoc identityDoc = new IdentityDoc();
+
+        identityDoc.setToken(15845648);
+        identityDoc.setPath("pqrst");
+
+        identityDocModel.insert(identityDoc);
+    }
+
+    @RequestMapping(value = "/test/idtype", method = RequestMethod.POST)
+    public  void postIdentityType(){
+        IdentityType identityType = new IdentityType();
+        identityType.setName("pqrst");
+        identityTypeModel.insert(identityType);
+    }
+
+    @RequestMapping(value = "/test/getbytoken", method = RequestMethod.GET)
+    public  void getToken(){
+        identityDocModel.getByToken(15845648);
+    }
+
 }

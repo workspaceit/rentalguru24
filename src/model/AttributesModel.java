@@ -15,8 +15,8 @@ public class AttributesModel extends BaseModel{
         session.getTransaction().commit();
         session.close();
     }
-    public Category getById(){
+    public Attributes getById(){
         Session session = this.sessionFactory.openSession();
-        return session.get(Category.class, 2);
+        return session.get(Attributes.class, 2);
     }
 }

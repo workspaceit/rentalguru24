@@ -51,6 +51,10 @@
        </bean>
        <bean id="categoryModel" class="model.CategoryModel" >
        </bean>
+       <bean id="identityDocModel" class="model.IdentityDocModel" >
+       </bean>
+       <bean id="identityTypeModel" class="model.IdentityTypeModel" >
+       </bean>
 
        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
               <property name="annotatedClasses">
