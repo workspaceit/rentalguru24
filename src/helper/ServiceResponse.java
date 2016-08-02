@@ -1,10 +1,9 @@
-package controller.helper;
+package helper;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 
 
 import java.util.ArrayList;
@@ -13,14 +12,7 @@ import java.util.ArrayList;
  * Created by mi on 8/1/16.
  */
 
-//@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-//@Component
-//@Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
-
-//@Component("serviceResponse")
-//@Scope(value="session",proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class ServiceResponse  {
 
     public ResponseStat responseStat;
@@ -112,4 +104,41 @@ public class ServiceResponse  {
     public void setResponseData(Object responseData) {
         this.responseData = responseData;
     }
+    public void setError(BindingResult result,boolean filterDot,boolean replaceDot){
+        if(result.hasErrors()) {
+            for (ObjectError object : result.getAllErrors()) {
+                RequestError requestError = new RequestError();
+
+                if(object instanceof FieldError) {
+                    FieldError fieldError = (FieldError) object;
+
+                    requestError.setParams(this.filterDot(fieldError.getField()));
+                    requestError.setMsg(fieldError.getCode());
+                }
+
+                if(object instanceof ObjectError) {
+                    ObjectError objectError = (ObjectError) object;
+
+                    //requestError.setParams(objectError.get());
+                    //requestError.setMsg(objectError.getCode());
+                    // requestError.setParams(objectError.getCode());
+                }
+                this.responseStat.requestErrors.add(requestError);
+            }
+        }
+    }
+    public void setErrorMsg(String params,String msg){
+        RequestError requestError = new RequestError();
+        requestError.setParams(params);
+        requestError.setParams(msg);
+        this.responseStat.requestErrors.add(requestError);
+    }
+    private String filterDot(String fieldName){
+        String[] str = fieldName.split("\\.");
+        if(str.length>1){
+            return str[str.length-1];
+        }
+        return str[0];
+    }
+
 }

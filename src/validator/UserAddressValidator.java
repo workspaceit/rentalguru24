@@ -16,7 +16,11 @@ public class UserAddressValidator implements Validator {
     @Override
     public void validate(Object object, Errors errors) {
         UserAddress userAddress = (UserAddress)object;
-        ValidationUtils.rejectIfEmpty(errors,"city","City is required");
+        ValidationUtils.rejectIfEmpty(errors,"address","Address is required");
+        ValidationUtils.rejectIfEmpty(errors,"state","State is required");
+        ValidationUtils.rejectIfEmpty(errors,"zip","Zip is required");
+
+//        ValidationUtils.rejectIfEmpt
         ///errors.rejectValue("city","City is required");
     }
 }

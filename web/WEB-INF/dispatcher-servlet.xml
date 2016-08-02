@@ -8,7 +8,15 @@
        <mvc:annotation-driven/>
        <context:component-scan base-package="controller"   />
 
+       <bean id="multipartResolver"
+             class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+              <!-- max upload size in bytes -->
+              <property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
 
+              <!-- max size of file in memory (in bytes) -->
+              <property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+
+       </bean>
 
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
@@ -27,7 +35,7 @@
               <!--</property>-->
        <!--</bean>-->
 
-       <!--<bean id="serviceResponse" class="controller.helper.ServiceResponse" scope="session" >-->
+       <!--<bean id="serviceResponse" class="helper.ServiceResponse" scope="session" >-->
               <!--<aop:scoped-proxy proxy-target-class="true"  />-->
        <!--</bean>-->
        <bean id="baseModel" class="model.BaseModel">
@@ -56,6 +64,8 @@
                             <value>model.entity.app.ProductCategory</value>
                             <value>model.entity.app.RentProduct</value>
                             <value>model.entity.app.RentRequest</value>
+                            <value>model.entity.app.TempIdentityDoc</value>
+                            <value>model.entity.app.IdentityType</value>
                      </list>
               </property>
               <property name="hibernateProperties">
