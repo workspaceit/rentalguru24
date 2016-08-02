@@ -25,6 +25,10 @@ import java.util.Set;
 public class TestService {
     @Autowired
     AttributesModel attributesModel;
+
+    @Autowired
+    CategoryModel categoryModel;
+
     @RequestMapping(value = "/test/att", method = RequestMethod.POST)
     public void postAttribute(){
         Attributes attributes = new Attributes();
@@ -47,8 +51,7 @@ public class TestService {
         attributesModel.insert(attributes);
     }
 
-    @Autowired
-    CategoryModel categoryModel;
+
     @RequestMapping(value = "/test/category", method = RequestMethod.POST)
     public void postCategory(){
 
