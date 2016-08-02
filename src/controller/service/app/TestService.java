@@ -30,7 +30,11 @@ public class TestService {
     CategoryModel categoryModel;
 
     @RequestMapping(value = "/test/att", method = RequestMethod.POST)
-    public void postAttribute(){
+    public void postAttribute(@RequestParam Map<String, String> allRequestParams){
+
+//        String attName = allRequestParams.get("att_name");
+//        String attCreatedBy = allRequestParams.get("att_created_by");
+
         Attributes attributes = new Attributes();
         attributes.setName("hhy");
         attributes.setCreatedBy(1);
@@ -79,7 +83,7 @@ public class TestService {
         subCategories.add(subCategory1);
         subCategories.add(subCategory2);
 
-        category.setSubcategory(subCategories);
+//        category.setSubcategory(subCategories);
 
         categoryModel.insert(category);
 

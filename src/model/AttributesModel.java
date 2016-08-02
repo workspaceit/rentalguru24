@@ -1,6 +1,7 @@
 package model;
 
 import model.entity.app.Attributes;
+import model.entity.app.Category;
 import org.hibernate.Session;
 
 /**
@@ -13,5 +14,9 @@ public class AttributesModel extends BaseModel{
         session.save(attributes);
         session.getTransaction().commit();
         session.close();
+    }
+    public Category getById(){
+        Session session = this.sessionFactory.openSession();
+        return session.get(Category.class, 1);
     }
 }

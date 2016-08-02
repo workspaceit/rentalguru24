@@ -40,11 +40,11 @@ public class Category {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "parent_id")
-    public Category getParent() {
-        return parent;
-    }
+//    @Basic
+//    @Column(name = "parent_id")
+//    public Category getParent() {
+//        return parent;
+//    }
 
     public void setParent(Category parent) {
         this.parent = parent;
@@ -111,18 +111,19 @@ public class Category {
 
 
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
-
-    @OneToMany(mappedBy = "Category")
-
-    public Collection<Category> getSubcategory() {
-        return subcategory;
-    }
-
-    public void setSubcategory(Collection<Category> subcategory) {
-        this.subcategory = subcategory;
-    }
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "id")
+//
+//    @OneToMany(mappedBy = "Category")
+//    private Collection<Category> subCategories;
+//
+//    public Collection<Category> getSubcategory() {
+//        return subcategory;
+//    }
+//
+//    public void setSubcategory(Collection<Category> subcategory) {
+//        this.subcategory = subcategory;
+//    }
 
 //    @OneToMany(mappedBy = "categoryByParentId")
 //    public Collection<Category> getSubcategory() {
