@@ -20,12 +20,19 @@ public class ImageHelper {
 //    private final static String STICKER_GLOBAL_PATH = "/home/wsit/Projects/j2ee/";
 
 //      Local settings for pictures and Images
-    private final static String GLOBAL_PATH = "/home/mi/Projects/j2ee/imagetalk_picture/";
-    private final static String STICKER_GLOBAL_PATH = "/home/mi/Projects/j2ee/";
+    private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/imagetalk_picture/";
+    private static String STICKER_GLOBAL_PATH = "/home/mi/Projects/j2ee/";
+
+
+    public static void setGlobalPath(String globalPath) {
+        GLOBAL_PATH = globalPath;
+    }
 
     public static String getGlobalPath() {
         return GLOBAL_PATH;
     }
+
+
     public static String getStickerGlobalPath() {
         return  STICKER_GLOBAL_PATH;
     }

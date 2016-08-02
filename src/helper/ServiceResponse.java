@@ -33,7 +33,7 @@ public class ServiceResponse  {
         public ResponseStat() {
             System.out.println("ResponseStat() Called");
             this.status = true;
-            this.isLogin = true;
+            this.isLogin = false;
             this.msg = "";
             this.requestErrors = new ArrayList<RequestError>();
         }
@@ -46,7 +46,8 @@ public class ServiceResponse  {
             this.status = status;
         }
 
-        public boolean isLogin() {
+        public boolean getIsLogin() {
+            System.out.println("getIsLogin() Called");
             return isLogin;
         }
 
@@ -106,6 +107,7 @@ public class ServiceResponse  {
     }
     public void setError(BindingResult result,boolean filterDot,boolean replaceDot){
         if(result.hasErrors()) {
+            this.responseStat.setStatus(false);
             for (ObjectError object : result.getAllErrors()) {
                 RequestError requestError = new RequestError();
 
