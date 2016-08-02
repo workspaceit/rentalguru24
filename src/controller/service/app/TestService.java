@@ -107,8 +107,12 @@ public class TestService {
     public  void postIdentityType(){
         IdentityType identityType = new IdentityType();
         identityType.setName("pqrst");
-
         identityTypeModel.insert(identityType);
+    }
+
+    @RequestMapping(value = "/test/getbytoken", method = RequestMethod.GET)
+    public  void getToken(){
+        identityDocModel.getByToken(15845648);
     }
 
 }

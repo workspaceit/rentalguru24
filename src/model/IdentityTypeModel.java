@@ -14,4 +14,5 @@ public class IdentityTypeModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+
 }
