@@ -64,7 +64,7 @@
                             <value>model.entity.app.ProductCategory</value>
                             <value>model.entity.app.RentProduct</value>
                             <value>model.entity.app.RentRequest</value>
-                            <value>model.entity.app.TempIdentityDoc</value>
+                            <value>model.entity.app.IdentityDoc</value>
                             <value>model.entity.app.IdentityType</value>
                      </list>
               </property>
