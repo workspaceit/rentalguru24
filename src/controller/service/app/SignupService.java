@@ -45,19 +45,6 @@ public class SignupService{
         serviceResponse = new ServiceResponse();
     }
 
-
-    @RequestMapping(value = "/upload/document-identity", headers = "Content-Type=multipart/form-data",method = RequestMethod.GET)
-    public ServiceResponse uploadDocumentIdentity(@RequestParam("documentIdentity") MultipartFile file){
-
-
-        try {
-            ImageHelper.saveAsPdf(file.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-            serviceResponse.setErrorMsg("documentIdentity","No file attached");
-        }
-        return serviceResponse;
-    }
     @RequestMapping(value = "/postsignup",  headers = "Content-Type=multipart/form-data", method = RequestMethod.POST)
     public ServiceResponse postSignup(@RequestParam Map<String, String> allRequestParams,
 

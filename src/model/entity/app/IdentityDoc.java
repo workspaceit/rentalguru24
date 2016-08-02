@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "temp_identity_doc", schema = "", catalog = "rentguru24")
-public class TempIdentityDoc {
+public class IdentityDoc {
     private int id;
     private int token;
     private String path;
@@ -59,7 +59,7 @@ public class TempIdentityDoc {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TempIdentityDoc that = (TempIdentityDoc) o;
+        IdentityDoc that = (IdentityDoc) o;
 
         if (id != that.id) return false;
         if (token != that.token) return false;
