@@ -54,7 +54,11 @@ public class TestService {
         attributes.setAttributeValuesById(attributeValuesarr);
         attributesModel.insert(attributes);
     }
-
+    @RequestMapping(value = "/test/getatt", method = RequestMethod.GET)
+    public void getAttribute(){
+        attributesModel = new AttributesModel();
+        attributesModel.getById();
+    }
 
     @RequestMapping(value = "/test/category", method = RequestMethod.POST)
     public void postCategory(){
