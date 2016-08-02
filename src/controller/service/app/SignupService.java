@@ -46,7 +46,7 @@ public class SignupService{
     }
 
 
-    @RequestMapping(value = "/upload/document-identity", method = RequestMethod.GET)
+    @RequestMapping(value = "/upload/document-identity", headers = "Content-Type=multipart/form-data",method = RequestMethod.GET)
     public ServiceResponse uploadDocumentIdentity(@RequestParam("documentIdentity") MultipartFile file){
 
 
