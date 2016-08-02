@@ -17,7 +17,9 @@
               <property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
 
        </bean>
-
+       <!--<bean id="imageHelper" class="helper.ImageHelper" >-->
+              <!--<property name="GLOBAL_PATH" value="/home/mi/Projects/j2ee/imagetalk_picture/" />-->
+       <!--</bean>-->
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
@@ -43,7 +45,7 @@
        </bean>
        <bean id="deviceInfoModel" class="model.DeviceInfoModel">
        </bean>
-       <bean id="appLoginCredentialModel" class="model.AppLoginCredentialModel">
+       <bean id="appLoginCredentialModel" class="model.AppCredentialModel">
        </bean>
        <bean id="attributesModel" class="model.AttributesModel" >
        </bean>

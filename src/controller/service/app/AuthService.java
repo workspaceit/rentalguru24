@@ -1,6 +1,6 @@
 package controller.service.app;
 
-import model.AppLoginCredentialModel;
+import model.AppCredentialModel;
 import model.entity.app.AppCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/app")
 public class AuthService {
     @Autowired
-    AppLoginCredentialModel appLoginCredentialModel;
+    AppCredentialModel appLoginCredentialModel;
 
 //    @RequestMapping(value="/getbyid",method = RequestMethod.GET)
 //    public AEntity getById(){
