@@ -17,11 +17,19 @@
               <property name="suffix" value=".jsp" />
        </bean>
 
+       <!--<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">-->
+              <!--<property name="scopes">-->
+                     <!--<map>-->
+                            <!--<entry key="session">-->
+                                   <!--<bean class="org.springframework.context.support.SimpleThreadScope"/>-->
+                            <!--</entry>-->
+                     <!--</map>-->
+              <!--</property>-->
+       <!--</bean>-->
 
-
-       <bean id="serviceResponse" class="helper.ServiceResponse" >
-
-       </bean>
+       <!--<bean id="serviceResponse" class="controller.helper.ServiceResponse" scope="session" >-->
+              <!--<aop:scoped-proxy proxy-target-class="true"  />-->
+       <!--</bean>-->
        <bean id="baseModel" class="model.BaseModel">
               <property name="sessionFactory" ref="sessionFactory"/>
        </bean>
@@ -61,12 +69,12 @@
                      </props>
               </property>
        </bean>
-</beans>
+       </beans>
 
 
-<!--<prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>-->
-<!--<prop key="hibernate.connection.username">root</prop>-->
-<!--<prop key="hibernate.connection.password" />-->
-<!--<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>-->
-<!--<prop key="hibernate.show_sql">true</prop>-->
-<!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
+        <!--<prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>-->
+        <!--<prop key="hibernate.connection.username">root</prop>-->
+        <!--<prop key="hibernate.connection.password" />-->
+        <!--<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>-->
+        <!--<prop key="hibernate.show_sql">true</prop>-->
+        <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->

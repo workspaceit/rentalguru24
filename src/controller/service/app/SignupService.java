@@ -3,12 +3,15 @@ package controller.service.app;
 
 import javax.validation.Valid;
 
-import helper.ServiceResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import controller.helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
 import model.entity.app.User;
 import model.entity.app.UserAddress;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
@@ -25,18 +28,26 @@ import java.util.*;
  * Created by omar on 7/21/16.
  */
 @RestController
+
 @RequestMapping("/signup")
+@Scope("request")
 public class SignupService{
     //ServiceResponse serviceResponse;
-    @Autowired
-    ServiceResponse serviceResponse;
+
+    private ServiceResponse serviceResponse;
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
 
-//    @Autowired
+    public SignupService() {
+        System.out.println("RestController HAHAHA");
+        serviceResponse = new ServiceResponse();
+    }
+
+    //    @Autowired
 //    private MessageSource messageSource;
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public ServiceResponse test(@RequestParam Map<String, String> allRequestParams){
+        System.out.println("At Test Service");
         serviceResponse.responseStat.msg = "TEST";
         return serviceResponse;
     }
@@ -107,6 +118,12 @@ public class SignupService{
 
      //   appLoginCredentialModel.insert(appCredential);
        // return result.getAllErrors();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            System.out.println(objectMapper.writeValueAsString(this.serviceResponse));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return serviceResponse;
     }
 
