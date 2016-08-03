@@ -55,6 +55,10 @@
        </bean>
        <bean id="identityTypeModel" class="model.IdentityTypeModel" >
        </bean>
+       <bean id="rentRequestModel" class="model.RentRequestModel" >
+       </bean>
+       <bean id="rentProductModel" class="model.RentProductModel" >
+       </bean>
 
        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
               <property name="annotatedClasses">

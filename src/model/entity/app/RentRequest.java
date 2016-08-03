@@ -53,7 +53,7 @@ public class RentRequest {
     }
 
     @Basic
-    @Column(name = "booking_id")
+    @Column(name = "rent_product_id")
     public int getBookingId() {
         return bookingId;
     }

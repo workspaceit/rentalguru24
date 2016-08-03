@@ -39,6 +39,10 @@ public class AppCredentialValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password","Password is required");
 
 
+        if(appCredential.getPassword().length()<6){
+            errors.rejectValue("password","Password at least 6 character required");
+        }
+
         try {
             errors.pushNestedPath("userInf");
             ValidationUtils.invokeValidator(this.userValidator, appCredential.getUserInf(), errors);
