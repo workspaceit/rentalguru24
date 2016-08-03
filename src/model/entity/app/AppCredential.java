@@ -24,6 +24,19 @@ public class AppCredential {
     private Timestamp createdDate;
     private UserInf userInf;
 
+    public AppCredential() {
+        this.id = 0;
+        this.userId = 0;
+        this.role = 0;
+        this.email = "";
+        this.password = "";
+        this.accesstoken = "";
+        this.varified = false;
+        this.blocked = false;
+        this.createdDate = null;
+        this.userInf = null;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

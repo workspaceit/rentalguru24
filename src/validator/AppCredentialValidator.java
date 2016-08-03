@@ -36,10 +36,10 @@ public class AppCredentialValidator implements Validator {
     public void validate(Object object, Errors errors) {
         AppCredential appCredential = (AppCredential)object;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"email","Email is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password","Password is required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Password is required");
 
 
-        if(appCredential.getPassword().length()<6){
+        if(errors.getFieldErrorCount("password")==0 && appCredential.getPassword().length()<6){
             errors.rejectValue("password","Password at least 6 character required");
         }
 
