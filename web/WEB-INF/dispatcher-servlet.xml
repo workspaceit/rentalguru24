@@ -7,7 +7,8 @@
 
        <mvc:annotation-driven/>
        <context:component-scan base-package="controller"   />
-
+       <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
+                      cache-period="31556926"/>
        <bean id="multipartResolver"
              class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
               <!-- max upload size in bytes -->
@@ -89,6 +90,12 @@
                      </props>
               </property>
        </bean>
+       <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+              <property name="prefix" value="/WEB-INF/view/" />
+              <property name="suffix" value=".jsp" />
+       </bean>
+
+
        </beans>
 
 

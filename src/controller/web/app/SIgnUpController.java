@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.portlet.ModelAndView;
 
 import java.io.IOException;
@@ -14,13 +15,12 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/signup")
-public class SIgnUpController {
+public class SignUpController {
 
-    protected final Log logger = LogFactory.getLog(getClass());
+    @RequestMapping(method = RequestMethod.GET)
+    public String index() {
+        System.out.println("Signup Controller Reached");
 
-    public ModelAndView index() {
-
-
-        return new ModelAndView("app/jsp/SignUp.jsp");
+        return "public/SignUp";
     }
 }
