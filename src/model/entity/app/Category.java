@@ -13,7 +13,7 @@ import java.util.Set;
 public class Category {
     private int id;
     private String name;
-    private Category parent;
+    private Category parentId;
     private int sortedOrder;
     private int createdBy;
     private Timestamp createdDate;
@@ -42,13 +42,13 @@ public class Category {
 
 //    @Basic
 //    @Column(name = "parent_id")
-//    public Category getParent() {
-//        return parent;
+//    public Category getParentId() {
+//        return parentId;
 //    }
-
-    public void setParent(Category parent) {
-        this.parent = parent;
-    }
+//
+//    public void setParent(Category parent) {
+//        this.parentId = parent;
+//    }
 
     @Basic
     @Column(name = "sorted_order")
@@ -91,7 +91,7 @@ public class Category {
         if (sortedOrder != category.sortedOrder) return false;
         if (createdBy != category.createdBy) return false;
         if (name != null ? !name.equals(category.name) : category.name != null) return false;
-        if (parent != null ? !parent.equals(category.parent) : category.parent != null) return false;
+        if (parentId != null ? !parentId.equals(category.parentId) : category.parentId != null) return false;
         if (createdDate != null ? !createdDate.equals(category.createdDate) : category.createdDate != null)
             return false;
 
@@ -102,7 +102,7 @@ public class Category {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (parent != null ? parent.hashCode() : 0);
+        result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
         result = 31 * result + sortedOrder;
         result = 31 * result + createdBy;
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
@@ -115,8 +115,6 @@ public class Category {
 //    @JoinColumn(name = "id")
 //
 //    @OneToMany(mappedBy = "Category")
-//    private Collection<Category> subCategories;
-//
 //    public Collection<Category> getSubcategory() {
 //        return subcategory;
 //    }

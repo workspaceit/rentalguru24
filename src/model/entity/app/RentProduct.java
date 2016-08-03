@@ -112,7 +112,18 @@ public class RentProduct {
 //        return rentRequestsById;
 //    }
 
-    public void setRentRequestsById(Collection<RentRequest> rentRequestsById) {
-        this.rentRequestsById = rentRequestsById;
-    }
+//    public void setRentRequestsById(Collection<RentRequest> rentRequestsById) {
+//        this.rentRequestsById = rentRequestsById;
+//    }
+
+//    Zakariya
+//
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "rent_product_id", referencedColumnName = "id", nullable = false)
+//    public Collection<RentRequest> getRentRequestsById() {return rentRequestsById;}
+//
+//    public void setRentRequestsById(Collection<RentRequest> rentRequestsById){
+//        this.rentRequestsById = rentRequestsById;
+//    }
+
 }
