@@ -14,16 +14,16 @@ import java.util.List;
  * Created by mi on 7/20/16.
  */
 public class AppCredentialModel extends BaseModel {
-    public AppCredential getById(){
+    public AppCredential getById(int id){
         Session session = this.sessionFactory.openSession();
-        return session.get(AppCredential.class,1);
+        return session.get(AppCredential.class,id);
     }
     public AppCredential getByPassword(){
         Session session = this.sessionFactory.openSession();
         String hql = "from AppCredential where password = :password";
 
         Query query = session.createQuery(hql);
-        query.setParameter("password", "123456789");
+        query.setParameter("password", "$2a$10$Xf.T6cLdQj/5/lGgG2CoCu.momkOn5C6X3WDKdgDH1pSLjYRxqReS");
         return (AppCredential)query.uniqueResult();
     }
 
@@ -32,6 +32,15 @@ public class AppCredentialModel extends BaseModel {
         session.beginTransaction();
         //session.save(appCredential.getUser());
         session.saveOrUpdate(appCredential);
+        session.getTransaction().commit();
+        session.close();
+
+    }
+    public void update(AppCredential appCredential){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        //session.save(appCredential.getUser());
+        session.update(appCredential);
         session.getTransaction().commit();
         session.close();
     }

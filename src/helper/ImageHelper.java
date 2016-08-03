@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Random;
 
 /**
  * Created by mi on 10/1/15.
@@ -20,8 +21,12 @@ public class ImageHelper {
 //    private final static String STICKER_GLOBAL_PATH = "/home/wsit/Projects/j2ee/";
 
 //      Local settings for pictures and Images
-    private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/imagetalk_picture/";
-    private static String STICKER_GLOBAL_PATH = "/home/mi/Projects/j2ee/";
+    private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
+    private static String DOC_FOLDER= "identityDoc/";
+    private static String DOC_PATH= GLOBAL_PATH+DOC_FOLDER;
+    private static String TEMP_FOLDER= "temp/";
+    private static String TEMP_FILE_PATH= GLOBAL_PATH+TEMP_FOLDER;
+
 
 
     public static void setGlobalPath(String globalPath) {
@@ -31,10 +36,31 @@ public class ImageHelper {
     public static String getGlobalPath() {
         return GLOBAL_PATH;
     }
+    public static boolean isFileExist(String path){
+        File docFile =new File(GLOBAL_PATH+path);
+        return docFile.exists();
+    }
+    public static String moveFile(int appCredential,String oldPath){
+        String fileName = appCredential+"/"+System.nanoTime()+"."+getExtension(oldPath);
+        String filePath = DOC_PATH+fileName;
+        try{
+
+            File docFile =new File(GLOBAL_PATH+oldPath);
+
+            createDirIfNotExist(DOC_PATH + appCredential);
+
+            if(docFile.renameTo(new File(filePath))){
+                System.out.println("File is moved successful!");
+            }else{
+                System.out.println("File is failed to move!"+filePath);
+            }
+            System.out.println(GLOBAL_PATH+oldPath);
 
 
-    public static String getStickerGlobalPath() {
-        return  STICKER_GLOBAL_PATH;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return DOC_FOLDER+fileName;
     }
 
     public static void createDirIfNotExist(String path) {
@@ -57,480 +83,7 @@ public class ImageHelper {
         System.out.println("Completed Serializing");
         return b.toByteArray();
     }
-    public static String saveFile(Object imgObj, String path, int uId) {
-        if (path == null) {
-            //path = "/home/mi/pic/";
-            path = "/home/wsit/pic";
-        }
-        String fileName = "";
-        try {
-            fileName = +System.nanoTime() + ".jpg";
-            createDirIfNotExist(path + uId);
-            path += uId + "/" + fileName;
-            File file = new File(path);
 
-            long startTime = System.nanoTime();
-            if (imgObj.getClass().equals(BufferedImage.class)) {
-                ImageIO.write((BufferedImage) imgObj, "jpg", file);
-            } else if (imgObj.getClass().equals(String.class)) {
-                ImageIO.write(decodeToImage((String) imgObj), "jpg", file);
-            }
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return fileName;
-        }
-        return fileName;
-    }
-
-    public static Pictures saveProfilePicture(Object imgObj, int uId) {
-        Pictures pictures = new Pictures();
-        String   path     = GLOBAL_PATH;
-        String   fileName = "";
-        try {
-            fileName = +System.nanoTime() + ".jpg";
-            path += uId;
-            createDirIfNotExist(path);
-            path += "/profile";
-            createDirIfNotExist(path);
-            path += "/" + fileName;
-            System.out.println(path);
-            File file = new File(path);
-
-
-            if (imgObj.getClass().equals(BufferedImage.class)) {
-                ImageIO.write((BufferedImage) imgObj, "jpg", file);
-
-                PictureDetails thumb1 = new PictureDetails();
-                thumb1.type = "thumbnail";
-                thumb1.path = createThumbnail((BufferedImage) imgObj, 50, 50, uId + "/profile");
-                thumb1.size.width = 50;
-                thumb1.size.height = 50;
-                pictures.thumb.add(thumb1);
-
-                PictureDetails thumb2 = new PictureDetails();
-                thumb2.type = "thumbnail";
-                thumb2.path = createThumbnail((BufferedImage) imgObj, 100, 100, uId + "/profile");
-
-                thumb2.size.width = 100;
-                thumb2.size.height = 100;
-
-                pictures.thumb.add(thumb2);
-
-            } else if (imgObj.getClass().equals(String.class)) {
-                ImageIO.write(decodeToImage((String) imgObj), "jpg", file);
-
-                PictureDetails thumb1 = new PictureDetails();
-                thumb1.type = "thumbnail";
-                thumb1.path = createThumbnail(decodeToImage((String) imgObj), 50, 50, uId + "/profile");
-
-                thumb1.size.width = 50;
-                thumb1.size.height = 50;
-
-                pictures.thumb.add(thumb1);
-
-                PictureDetails thumb2 = new PictureDetails();
-                thumb2.type = "thumbnail";
-                thumb2.path = createThumbnail(decodeToImage((String) imgObj), 100, 100, uId + "/profile");
-                thumb2.size.width = 100;
-                thumb2.size.height = 100;
-                pictures.thumb.add(thumb2);
-            }
-
-            fileName = uId + "/profile/" + fileName;
-            pictures.original.size.height = 0;
-            pictures.original.size.width = 0;
-            pictures.original.type = "original";
-            pictures.original.path = fileName;
-
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return pictures;
-        }
-        return pictures;
-    }
-
-    public static Pictures saveByteToChatPicture(byte[] b,int uId,String tmpFileName) {
-        Pictures pictures = new Pictures();
-        String   path     = GLOBAL_PATH;
-        String   fileName = "";
-        System.out.println("tmpFileName :" + tmpFileName);
-        try {
-            fileName = +System.nanoTime() + "."+getExtension(tmpFileName);
-            path += uId;
-            createDirIfNotExist(path);
-            path += "/chat";
-            createDirIfNotExist(path);
-            path += "/media";
-            createDirIfNotExist(path);
-            path += "/picture";
-            createDirIfNotExist(path);
-            path += "/regular";
-            createDirIfNotExist(path);
-            path += "/" + fileName;
-            System.out.println(path);
-            File outputfile = new File(path);
-
-
-
-
-            BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(b));
-            ImageIO.write(bufferedImage,getExtension(tmpFileName), outputfile);
-
-            fileName = uId + "/chat/media/picture/regular/" + fileName;
-            pictures.original.size.height = bufferedImage.getHeight();
-            pictures.original.size.width = bufferedImage.getWidth();
-            pictures.original.path = fileName;
-
-
-            PictureDetails thumb1 = new PictureDetails();
-            thumb1.type = "thumbnail";
-            thumb1.path = createThumbnail(bufferedImage, 100, 100, uId + "/chat/media/picture/regular",tmpFileName);
-            thumb1.size.width = 32;
-            thumb1.size.height = 32;
-            pictures.thumb.add(thumb1);
-
-            PictureDetails thumb2 = new PictureDetails();
-            thumb2.type = "thumbnail";
-            thumb2.path = createThumbnail(bufferedImage, 200, 200, uId + "/chat/media/picture/regular",tmpFileName);
-            thumb2.size.width = 48;
-            thumb2.size.height = 48;
-            pictures.thumb.add(thumb2);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return pictures;
-    }
-    public static Pictures saveByteToChatPrivatePicture(byte[] b,int uId,String tmpFileName) {
-        Pictures pictures = new Pictures();
-        String   path     = GLOBAL_PATH;
-        String   fileName = "";
-        try {
-            fileName = +System.nanoTime() + "."+getExtension(tmpFileName);
-            path += uId;
-            createDirIfNotExist(path);
-            path += "/chat";
-            createDirIfNotExist(path);
-            path += "/media";
-            createDirIfNotExist(path);
-            path += "/picture";
-            createDirIfNotExist(path);
-            path += "/private";
-            createDirIfNotExist(path);
-            path += "/" + fileName;
-            System.out.println(path);
-            File outputfile = new File(path);
-
-
-
-
-            BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(b));
-            ImageIO.write(bufferedImage,getExtension(tmpFileName), outputfile);
-
-            fileName = uId + "/chat/media/picture/" + fileName;
-            pictures.original.size.height = bufferedImage.getHeight();
-            pictures.original.size.width = bufferedImage.getWidth();
-            pictures.original.path = fileName;
-
-
-            PictureDetails thumb1 = new PictureDetails();
-            thumb1.type = "thumbnail";
-            thumb1.path = createThumbnail(bufferedImage, 100, 100, uId + "/chat/media/picture/private",tmpFileName);
-            thumb1.size.width = 32;
-            thumb1.size.height = 32;
-            pictures.thumb.add(thumb1);
-
-            PictureDetails thumb2 = new PictureDetails();
-            thumb2.type = "thumbnail";
-            thumb2.path = createThumbnail(bufferedImage, 200, 200, uId + "/chat/media/picture/private",tmpFileName);
-            thumb2.size.width = 48;
-            thumb2.size.height = 48;
-            pictures.thumb.add(thumb2);
-
-            System.out.println("Path  : " + path);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return pictures;
-    }
-    public static Pictures saveChatPicture(Object imgObj, int uId) {
-        Pictures pictures = new Pictures();
-        String   path     = GLOBAL_PATH;
-        String   fileName = "";
-        try {
-            fileName = +System.nanoTime() + ".jpg";
-            path += uId;
-            createDirIfNotExist(path);
-            path += "/chat";
-            createDirIfNotExist(path);
-            path += "/media";
-            createDirIfNotExist(path);
-            path += "/picture";
-            createDirIfNotExist(path);
-            path += "/regular";
-            createDirIfNotExist(path);
-            path += "/" + fileName;
-            System.out.println(path);
-            File file = new File(path);
-            BufferedImage img;
-
-            if (imgObj.getClass().equals(BufferedImage.class)) {
-                img = (BufferedImage) imgObj;
-            } else if (imgObj.getClass().equals(String.class)) {
-                img = decodeToImage((String) imgObj);
-            }else{
-                img = decodeToImage((String) imgObj);
-            }
-
-            ImageIO.write(img, "jpg", file);
-
-            fileName = uId + "/chat/media/picture/regular/" + fileName;
-            pictures.original.size.height = img.getHeight();
-            pictures.original.size.width = img.getWidth();
-            pictures.original.path = fileName;
-
-
-            PictureDetails thumb1 = new PictureDetails();
-            thumb1.type = "thumbnail";
-            thumb1.path = createThumbnail(decodeToImage((String) imgObj), 100, 100, uId + "/chat/media/picture/regular");
-
-            thumb1.size.width = 32;
-            thumb1.size.height = 32;
-
-            pictures.thumb.add(thumb1);
-
-            PictureDetails thumb2 = new PictureDetails();
-            thumb2.type = "thumbnail";
-            thumb2.path = createThumbnail(decodeToImage((String) imgObj), 200, 200, uId + "/chat/media/picture/regular");
-            thumb2.size.width = 48;
-            thumb2.size.height = 48;
-
-            pictures.thumb.add(thumb2);
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return pictures;
-        }
-        return pictures;
-    }
-    public static Pictures saveChatPrivatePicture(Object imgObj, int uId) {
-        Pictures pictures = new Pictures();
-        String   path     = GLOBAL_PATH;
-        String   fileName = "";
-        try {
-            fileName = +System.nanoTime() + ".jpg";
-            path += uId;
-            createDirIfNotExist(path);
-            path += "/chat";
-            createDirIfNotExist(path);
-            path += "/media";
-            createDirIfNotExist(path);
-            path += "/picture";
-            createDirIfNotExist(path);
-            path += "/private";
-            createDirIfNotExist(path);
-            path += "/" + fileName;
-            System.out.println(path);
-            File file = new File(path);
-            BufferedImage img;
-
-            if (imgObj.getClass().equals(BufferedImage.class)) {
-                img = (BufferedImage) imgObj;
-            } else if (imgObj.getClass().equals(String.class)) {
-                img = decodeToImage((String) imgObj);
-            }else{
-                img = decodeToImage((String) imgObj);
-            }
-
-            ImageIO.write(img, "jpg", file);
-
-            fileName = uId + "/chat/media/picture/private/" + fileName;
-            pictures.original.size.height = img.getHeight();
-            pictures.original.size.width = img.getWidth();
-            pictures.original.path = fileName;
-
-
-            PictureDetails thumb1 = new PictureDetails();
-            thumb1.type = "thumbnail";
-            thumb1.path = createThumbnail(decodeToImage((String) imgObj), 100, 100, uId + "/chat/media/picture/private");
-
-            thumb1.size.width = 32;
-            thumb1.size.height = 32;
-
-            pictures.thumb.add(thumb1);
-
-            PictureDetails thumb2 = new PictureDetails();
-            thumb2.type = "thumbnail";
-            thumb2.path = createThumbnail(decodeToImage((String) imgObj), 200, 200, uId + "/chat/media/picture/private");
-            thumb2.size.width = 48;
-            thumb2.size.height = 48;
-
-            pictures.thumb.add(thumb2);
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return pictures;
-        }
-        return pictures;
-    }
-    public static Pictures saveChatLocationPicture(Object imgObj, int uId) {
-        Pictures pictures = new Pictures();
-        String   path     = GLOBAL_PATH;
-        String   fileName = "";
-        try {
-            fileName = +System.nanoTime() + ".jpg";
-            path += uId;
-            createDirIfNotExist(path);
-            path += "/chat";
-            createDirIfNotExist(path);
-            path += "/media";
-            createDirIfNotExist(path);
-            path += "/location";
-            createDirIfNotExist(path);
-            path += "/" + fileName;
-            System.out.println(path);
-            File file = new File(path);
-            BufferedImage img;
-
-            if (imgObj.getClass().equals(BufferedImage.class)) {
-                img = (BufferedImage) imgObj;
-            } else if (imgObj.getClass().equals(String.class)) {
-                img = decodeToImage((String) imgObj);
-            }else{
-                img = decodeToImage((String) imgObj);
-            }
-
-            ImageIO.write(img, "jpg", file);
-
-            fileName = uId + "/chat/media/picture/" + fileName;
-            pictures.original.size.height = img.getHeight();
-            pictures.original.size.width = img.getWidth();
-            pictures.original.path = fileName;
-
-
-            PictureDetails thumb1 = new PictureDetails();
-            thumb1.type = "thumbnail";
-            thumb1.path = createThumbnail(decodeToImage((String) imgObj), 100, 100, uId + "/chat/media/picture");
-
-            thumb1.size.width = 32;
-            thumb1.size.height = 32;
-
-            pictures.thumb.add(thumb1);
-
-            PictureDetails thumb2 = new PictureDetails();
-            thumb2.type = "thumbnail";
-            thumb2.path = createThumbnail(decodeToImage((String) imgObj), 200, 200, uId + "/chat/media/picture");
-            thumb2.size.width = 48;
-            thumb2.size.height = 48;
-
-            pictures.thumb.add(thumb2);
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return pictures;
-        }
-        return pictures;
-    }
-    public static Pictures saveJobIcon(Object imgObj, int uId) {
-        Pictures pictures = new Pictures();
-        String   path     = GLOBAL_PATH;
-        String   fileName = "";
-        try {
-            fileName = +System.nanoTime() + ".jpg";
-            path += uId;
-            createDirIfNotExist(path);
-            path += "/job";
-            createDirIfNotExist(path);
-            path += "/" + fileName;
-            System.out.println(path);
-            File file = new File(path);
-            BufferedImage img;
-
-            if (imgObj.getClass().equals(BufferedImage.class)) {
-                img = (BufferedImage) imgObj;
-            } else if (imgObj.getClass().equals(String.class)) {
-                img = decodeToImage((String) imgObj);
-            }else{
-                img = decodeToImage((String) imgObj);
-            }
-
-            ImageIO.write(img, "jpg", file);
-
-            fileName = uId + "/job/" + fileName;
-            pictures.original.size.height = 0;
-            pictures.original.size.width = 0;
-            pictures.original.path = fileName;
-
-
-            PictureDetails thumb1 = new PictureDetails();
-            thumb1.type = "thumbnail";
-            thumb1.path = createThumbnail(decodeToImage((String) imgObj), 32, 32, uId + "/job");
-
-            thumb1.size.width = 32;
-            thumb1.size.height = 32;
-
-            pictures.thumb.add(thumb1);
-
-            PictureDetails thumb2 = new PictureDetails();
-            thumb2.type = "thumbnail";
-            thumb2.path = createThumbnail(decodeToImage((String) imgObj), 48, 48, uId + "/job");
-            thumb2.size.width = 48;
-            thumb2.size.height = 48;
-
-            pictures.thumb.add(thumb2);
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return pictures;
-        }
-        return pictures;
-    }
-    public static Pictures saveWallPostPicture(Object imgObj, int uId) {
-        Pictures pictures = new Pictures();
-        String   path     = GLOBAL_PATH;
-        String   fileName = "";
-        try {
-            fileName = +System.nanoTime() + ".jpg";
-            path += uId;
-            createDirIfNotExist(path);
-            path += "/wallpost";
-            createDirIfNotExist(path);
-            path += "/" + fileName;
-            System.out.println(path);
-            File file = new File(path);
-
-
-            if (imgObj.getClass().equals(BufferedImage.class)) {
-                ImageIO.write((BufferedImage) imgObj, "jpg", file);
-
-                //                PictureDetails thumb1 = new  PictureDetails();
-                //                thumb1.type = "thumbnail";
-                //                thumb1.path = createThumbnail((BufferedImage)imgObj, 100, 50,uId+"/wallpost");
-                //                pictures.thumb.add(thumb1);
-            } else if (imgObj.getClass().equals(String.class)) {
-                ImageIO.write(decodeToImage((String) imgObj), "jpg", file);
-
-                //                PictureDetails thumb1 = new  PictureDetails();
-                //                thumb1.type = "thumbnail";
-                //                thumb1.path = createThumbnail(decodeToImage((String) imgObj), 100, 50,uId+"/wallpost");
-                //                pictures.thumb.add(thumb1);
-            }
-
-            fileName = uId + "/wallpost/" + fileName;
-            pictures.original.size.height = 0;
-            pictures.original.size.width = 0;
-            pictures.original.path = fileName;
-
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-            return pictures;
-        }
-        return pictures;
-    }
 
     public static BufferedImage decodeToImage(String imageString) {
         BufferedImage image = null;
@@ -546,9 +99,10 @@ public class ImageHelper {
         }
         return image;
     }
-    public static void saveAsPdf(byte[] pdfByte) {
+    public static String saveFile(byte[] pdfByte, String originalFileName) {
+        String fileName = getRandomNumber() + "."+getExtension(originalFileName);
         try {
-            File someFile = new File(GLOBAL_PATH+ "/" +System.nanoTime() + ".pdf");
+            File someFile = new File(TEMP_FILE_PATH+ "/" +fileName);
             FileOutputStream fos;
             fos = new FileOutputStream(someFile);
             fos.write(pdfByte);
@@ -557,9 +111,9 @@ public class ImageHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return TEMP_FOLDER+fileName;
     }
-    public static void saveAsPdf(String base64Str) {
+    public static void saveFile(String base64Str) {
         BufferedImage image = null;
         byte[]        pdfByte;
         try {
@@ -578,7 +132,11 @@ public class ImageHelper {
         }
 
     }
-
+    public static String getRandomNumber(){
+        Random rnd = new Random();
+        int n = 1000 + rnd.nextInt(900000);
+        return Integer.toString(n);
+    }
     public static String encodeToString(BufferedImage image, String type) {
         String imageString = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

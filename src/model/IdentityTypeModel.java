@@ -23,6 +23,12 @@ public class IdentityTypeModel extends BaseModel {
         Session session = this.sessionFactory.openSession();
         return session.get(IdentityType.class, id);
     }
+    public boolean isExist(int id){
+        Session session = this.sessionFactory.openSession();
+        if(session.get(IdentityType.class, id)!=null)
+            return true;
+        return false;
+    }
 
     public List<IdentityType> getAll(){
         Session session = this.sessionFactory.openSession();

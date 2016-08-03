@@ -1,8 +1,8 @@
 package validator;
 
 import model.AppCredentialModel;
+import model.IdentityTypeModel;
 import model.entity.app.AppCredential;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -15,13 +15,16 @@ import java.util.regex.Pattern;
  */
 public class AppCredentialValidator implements Validator {
     private final UserValidator userValidator;
+    private AppCredentialModel appCredentialModel;
+    private boolean insertValidation;
+
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-    private AppCredentialModel appCredentialModel;
-    public AppCredentialValidator(AppCredentialModel appCredentialModel) {
+    public AppCredentialValidator(AppCredentialModel appCredentialModel, IdentityTypeModel identityTypeModel,boolean insertValidation) {
         this.appCredentialModel = appCredentialModel;
-        this.userValidator = new UserValidator();
+        this.userValidator = new UserValidator(identityTypeModel);
+        this.insertValidation = insertValidation;
     }
 
     @Override
@@ -37,8 +40,8 @@ public class AppCredentialValidator implements Validator {
 
 
         try {
-            errors.pushNestedPath("user");
-            ValidationUtils.invokeValidator(this.userValidator, appCredential.getUser(), errors);
+            errors.pushNestedPath("userInf");
+            ValidationUtils.invokeValidator(this.userValidator, appCredential.getUserInf(), errors);
         }finally {
             errors.popNestedPath();
         }
@@ -52,10 +55,12 @@ public class AppCredentialValidator implements Validator {
             errors.rejectValue("email", "Email is not valid format");
         }
 
-
-        if(appCredentialModel.isEmailExist(appCredential.getEmail())){
-            errors.rejectValue("email", "Email is already been used");
+        if(this.insertValidation){
+            if(appCredentialModel.isEmailExist(appCredential.getEmail())){
+                errors.rejectValue("email", "Email is already been used");
+            }
         }
+
 
     }
 }

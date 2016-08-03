@@ -3,7 +3,7 @@ package controller.service.app;
 
 import model.AttributesModel;
 import model.CategoryModel;
-import model.IdentityDocModel;
+import model.TempFileModel;
 import model.IdentityTypeModel;
 import model.entity.app.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class TestService {
     CategoryModel categoryModel;
 
     @Autowired
-    IdentityDocModel identityDocModel;
+    TempFileModel tempFileModel;
 
     @Autowired
     IdentityTypeModel identityTypeModel;
@@ -92,12 +92,12 @@ public class TestService {
     }
     @RequestMapping(value = "/test/iddoc", method = RequestMethod.POST)
     public void postIdentityDoc(){
-        IdentityDoc identityDoc = new IdentityDoc();
+        model.entity.app.TempFile tempFile = new model.entity.app.TempFile();
 
-        identityDoc.setToken(15845648);
-        identityDoc.setPath("pqrst");
+        tempFile.setToken(15845648);
+        tempFile.setPath("pqrst");
 
-        identityDocModel.insert(identityDoc);
+        this.tempFileModel.insert(tempFile);
     }
 
     @RequestMapping(value = "/test/idtype", method = RequestMethod.POST)
@@ -108,8 +108,8 @@ public class TestService {
     }
 
     @RequestMapping(value = "/test/getbytoken", method = RequestMethod.GET)
-    public List<IdentityDoc> getToken(){
-        return identityDocModel.getByToken(15845648);
+    public model.entity.app.TempFile getToken(){
+        return tempFileModel.getByToken(15845648);
     }
 
     @RequestMapping(value = "/test/idtyp/getbyid", method = RequestMethod.GET)

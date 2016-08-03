@@ -51,7 +51,7 @@
        </bean>
        <bean id="categoryModel" class="model.CategoryModel" >
        </bean>
-       <bean id="identityDocModel" class="model.IdentityDocModel" >
+       <bean id="identityDocModel" class="model.TempFileModel" >
        </bean>
        <bean id="identityTypeModel" class="model.IdentityTypeModel" >
        </bean>
@@ -61,7 +61,7 @@
                      <list>
                             <value>model.entity.app.AppCredential</value>
                             <value>model.entity.app.UserAddress</value>
-                            <value>model.entity.app.User</value>
+                            <value>model.entity.app.UserInf</value>
                             <value>model.entity.app.AttributeValues</value>
                             <value>model.entity.app.Attributes</value>
                             <value>model.entity.app.Category</value>
@@ -70,7 +70,7 @@
                             <value>model.entity.app.ProductCategory</value>
                             <value>model.entity.app.RentProduct</value>
                             <value>model.entity.app.RentRequest</value>
-                            <value>model.entity.app.IdentityDoc</value>
+                            <value>model.entity.app.TempFile</value>
                             <value>model.entity.app.IdentityType</value>
                      </list>
               </property>

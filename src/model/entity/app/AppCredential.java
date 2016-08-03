@@ -1,11 +1,15 @@
 package model.entity.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * Created by mi on 7/25/16.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "app_login_credential", schema = "", catalog = "rentguru24")
 public class AppCredential {
@@ -18,7 +22,7 @@ public class AppCredential {
     private boolean varified;
     private boolean blocked;
     private Timestamp createdDate;
-    private User user;
+    private UserInf userInf;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +65,7 @@ public class AppCredential {
         this.email = email;
     }
 
+    @JsonIgnore
     @Basic
     @Column(name = "password")
     public String getPassword() {
@@ -70,6 +75,7 @@ public class AppCredential {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     @Basic
     @Column(name = "accesstoken")
@@ -147,11 +153,11 @@ public class AppCredential {
 
     @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "user_inf_id", referencedColumnName = "id", nullable = false)
-    public User getUser() {
-        return user;
+    public UserInf getUserInf() {
+        return userInf;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserInf(UserInf userInf) {
+        this.userInf = userInf;
     }
 }

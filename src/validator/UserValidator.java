@@ -1,7 +1,7 @@
 package validator;
 
-import model.entity.app.User;
-import model.entity.app.UserAddress;
+import model.IdentityTypeModel;
+import model.entity.app.UserInf;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -11,30 +11,39 @@ import org.springframework.validation.Validator;
  */
 public class UserValidator implements Validator {
     private final UserAddressValidator userAddressValidator;
+    private final IdentityTypeValidator identityTypeValidator;
+    private IdentityTypeModel identityTypeModel;
 
-    public UserValidator() {
+    public UserValidator(IdentityTypeModel identityTypeModel) {
         this.userAddressValidator = new UserAddressValidator();
+        this.identityTypeModel = identityTypeModel;
+        this.identityTypeValidator = new IdentityTypeValidator(this.identityTypeModel);
     }
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return User.class.equals(aClass);
+        return UserInf.class.equals(aClass);
     }
 
     @Override
     public void validate(Object object, Errors errors) {
-        User user = (User)object;
+        UserInf userInf = (UserInf)object;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"firstName","First name required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"lastName","Last name required");
 
+//        try {
+//            errors.pushNestedPath("userAddress");
+//            ValidationUtils.invokeValidator(this.userAddressValidator, user.getUserAddress(), errors);
+//        } finally {
+//            errors.popNestedPath();
+//        }
+        userInf.getIdentityType();
         try {
-            errors.pushNestedPath("userAddress");
-            ValidationUtils.invokeValidator(this.userAddressValidator, user.getUserAddress(), errors);
-        } finally {
+            errors.pushNestedPath("identityType");
+            ValidationUtils.invokeValidator(this.identityTypeValidator, userInf.getIdentityType(), errors);
+        }finally {
             errors.popNestedPath();
         }
-
-
         if(errors.hasErrors()){
             return;
         }

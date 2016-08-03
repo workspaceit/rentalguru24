@@ -1,5 +1,6 @@
 package helper;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -7,6 +8,7 @@ import org.springframework.validation.ObjectError;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by mi on 8/1/16.
@@ -17,11 +19,12 @@ public class ServiceResponse  {
 
     public ResponseStat responseStat;
     public Object       responseData;
-
+    private HashMap<String,String> parameterAlias;
     public ServiceResponse() {
         System.out.println("ServiceResponse() Called");
         this.responseStat = new ResponseStat();
         this.responseData = new Object();
+        parameterAlias = new HashMap<>();
     }
 
     public class ResponseStat {
@@ -95,6 +98,23 @@ public class ServiceResponse  {
             this.msg = msg;
         }
     }
+
+    @JsonIgnore
+    public HashMap<String, String> getParameterAlias() {
+        return parameterAlias;
+    }
+
+    public void setParameterAlias(String parameter, String replacedValue) {
+        this.parameterAlias.put(parameter,replacedValue);
+    }
+    @JsonIgnore
+    public String getAliasedParameter(String parameter) {
+        return this.parameterAlias.get(parameter);
+    }
+    @JsonIgnore
+    public boolean hasAliasedParameter(String parameter) {
+        return this.parameterAlias.containsKey(parameter);
+    }
     public Object getResponseData() {
         System.out.println(this.responseData.getClass());
         return (this.responseData.getClass().getSimpleName().equals("Object"))?null:this.responseData;
@@ -105,6 +125,9 @@ public class ServiceResponse  {
     public void setResponseData(Object responseData) {
         this.responseData = responseData;
     }
+    public boolean hasErrors(){
+        return this.responseStat.requestErrors.size()>0;
+    }
     public void setError(BindingResult result,boolean filterDot,boolean replaceDot){
         if(result.hasErrors()) {
             this.responseStat.setStatus(false);
@@ -113,8 +136,16 @@ public class ServiceResponse  {
 
                 if(object instanceof FieldError) {
                     FieldError fieldError = (FieldError) object;
+                    String param = fieldError.getField();
+                    if(filterDot){
 
-                    requestError.setParams(this.filterDot(fieldError.getField()));
+                        param = this.filterDot(param);
+
+                        if(hasAliasedParameter(param)){
+                            param = getAliasedParameter(param);
+                        }
+                    }
+                    requestError.setParams(param);
                     requestError.setMsg(fieldError.getCode());
                 }
 
@@ -130,9 +161,10 @@ public class ServiceResponse  {
         }
     }
     public void setErrorMsg(String params,String msg){
+        this.responseStat.setStatus(false);
         RequestError requestError = new RequestError();
         requestError.setParams(params);
-        requestError.setParams(msg);
+        requestError.setMsg(msg);
         this.responseStat.requestErrors.add(requestError);
     }
     private String filterDot(String fieldName){

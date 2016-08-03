@@ -7,10 +7,10 @@ import java.sql.Timestamp;
  * Created by mi on 8/2/16.
  */
 @Entity
-@Table(name = "temp_identity_doc", schema = "", catalog = "rentguru24")
-public class IdentityDoc {
+@Table(name = "temp_file", schema = "", catalog = "rentguru24")
+public class TempFile {
     private int id;
-    private int token;
+    private long token;
     private String path;
     private Timestamp createdDate;
 
@@ -27,11 +27,11 @@ public class IdentityDoc {
 
     @Basic
     @Column(name = "token")
-    public int getToken() {
+    public long getToken() {
         return token;
     }
 
-    public void setToken(int token) {
+    public void setToken(long token) {
         this.token = token;
     }
 
@@ -60,7 +60,7 @@ public class IdentityDoc {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        IdentityDoc that = (IdentityDoc) o;
+        TempFile that = (TempFile) o;
 
         if (id != that.id) return false;
         if (token != that.token) return false;
@@ -70,12 +70,5 @@ public class IdentityDoc {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + token;
-        result = 31 * result + (path != null ? path.hashCode() : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
-    }
+
 }

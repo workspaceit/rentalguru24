@@ -2,7 +2,8 @@ package controller;
 
 import helper.ImageHelper;
 import helper.ServiceResponse;
-import model.entity.app.IdentityDoc;
+import model.TempFileModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,30 +22,42 @@ import java.util.Random;
 @Scope("request")
 public class FileController {
     private ServiceResponse serviceResponse;
-
+    @Autowired
+    TempFileModel tempFileModel;
     public FileController( ) {
         this.serviceResponse = new ServiceResponse();
     }
 
     @RequestMapping(value = "/upload/document-identity", headers = "Content-Type=multipart/form-data",method = RequestMethod.POST)
     public ServiceResponse uploadDocumentIdentity(@RequestParam("documentIdentity") MultipartFile file){
+        model.entity.app.TempFile tempFile = new model.entity.app.TempFile();
+
+
+        /*---------Only Doc type validation -----------------*/
 
         try {
-            ImageHelper.saveAsPdf(file.getBytes());
+            byte[] fileByte = file.getBytes();
+            System.out.println("Byte Received " +fileByte.length);
+            if(fileByte.length==0){
+                this.serviceResponse.setErrorMsg("documentIdentity","No file attached");
+                return this.serviceResponse;
+            }
+            String filePath = ImageHelper.saveFile(fileByte, file.getOriginalFilename());
+            tempFile.setPath(filePath);
         } catch (IOException e) {
             e.printStackTrace();
             serviceResponse.setErrorMsg("documentIdentity","No file attached");
         }
-        IdentityDoc identityDoc = new IdentityDoc();
-        identityDoc.setId(0);
-        identityDoc.setPath("PATH");
+
 
         Random rnd = new Random();
-        int n = 100000 + rnd.nextInt(900000);
-        System.out.println(n);
-        identityDoc.setToken(10164687);
-        identityDoc.setCreatedDate(null);
-       // serviceResponse.setResponseData(identityDoc);
+        long n = 1000000000 + rnd.nextInt(900000);
+
+        tempFile.setToken(n);
+
+
+        this.tempFileModel.insert(tempFile);
+        this.serviceResponse.setResponseData(tempFile.getToken());
         return serviceResponse;
     }
 
