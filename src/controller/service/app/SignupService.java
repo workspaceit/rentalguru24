@@ -5,7 +5,7 @@ import javax.validation.Valid;
 
 import helper.ImageHelper;
 import helper.ServiceResponse;
-import model.AuthCredentialModel;
+import model.AppLoginCredentialModel;
 import model.IdentityTypeModel;
 import model.TempFileModel;
 import model.entity.app.AuthCredential;
@@ -14,8 +14,6 @@ import model.entity.app.TempFile;
 import model.entity.app.UserInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,7 +35,7 @@ public class SignupService{
     private ServiceResponse serviceResponse;
 
     @Autowired
-    AuthCredentialModel authCredentialModel;
+    AppLoginCredentialModel appLoginCredentialModel;
     @Autowired
     TempFileModel tempFileModel;
     @Autowired
@@ -45,12 +43,11 @@ public class SignupService{
 
 
     public SignupService() {
-        System.out.println("SignupService() is Called");
         serviceResponse = new ServiceResponse();
     }
 
     @RequestMapping(value="/user",method = RequestMethod.POST)
-    public ServiceResponse postSignup(@RequestParam Map<String, String> allRequestParams,
+    public ServiceResponse userSignup(@RequestParam Map<String, String> allRequestParams,
                                       @Valid AuthCredential authCredential,
                                       BindingResult result){
 
@@ -104,7 +101,6 @@ public class SignupService{
 
         authCredential.setUserInf(userInf);
         authCredential.setRole(-1);
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         authCredential.setEmail(email);
         authCredential.setPassword(password);
 
@@ -114,7 +110,7 @@ public class SignupService{
 
 
         /*------------------- Entity Validation ---------------------*/
-        new AuthCredentialValidator(authCredentialModel,identityTypeModel,true).validate(authCredential,result);
+        new AuthCredentialValidator(appLoginCredentialModel,identityTypeModel,true).validate(authCredential,result);
 
 
         // new IdentityTypeValidator(identityTypeModel).validate(identityType, result);
@@ -145,10 +141,9 @@ public class SignupService{
         }
 
         authCredential.getUserInf().setIdentityDocUrl(tempFile.getPath());
-        authCredential.setPassword(bCryptPasswordEncoder.encode(password));
-        authCredential.setAccesstoken(DigestUtils.md5DigestAsHex((email + password).getBytes()));
 
-        authCredentialModel.insert(authCredential);
+
+        appLoginCredentialModel.insert(authCredential);
 
         /*----- Move identity doc form temp to original ---- */
 
@@ -159,12 +154,12 @@ public class SignupService{
         /*----- Update Information ---- */
         authCredential.getUserInf().setIdentityDocUrl(filePath);
 
-        authCredentialModel.update(authCredential);
+        appLoginCredentialModel.update(authCredential);
         this.tempFileModel.delete(tempFile);
 
-        authCredential = authCredentialModel.getById(authCredential.getId());
+        authCredential = appLoginCredentialModel.getById(authCredential.getId());
 
-        this.serviceResponse.responseStat.setMsg("Signup successful");
+        this.serviceResponse.getResponseStat().setMsg("Signup successful");
         this.serviceResponse.setResponseData(authCredential);
         return serviceResponse;
     }

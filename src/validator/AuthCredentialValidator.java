@@ -1,6 +1,6 @@
 package validator;
 
-import model.AuthCredentialModel;
+import model.AppLoginCredentialModel;
 import model.IdentityTypeModel;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
@@ -16,14 +16,14 @@ import java.util.regex.Pattern;
  */
 public class AuthCredentialValidator implements Validator {
     private final UserValidator userValidator;
-    private AuthCredentialModel authCredentialModel;
+    private AppLoginCredentialModel appLoginCredentialModel;
     private boolean insertValidation;
 
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-    public AuthCredentialValidator(AuthCredentialModel authCredentialModel, IdentityTypeModel identityTypeModel, boolean insertValidation) {
-        this.authCredentialModel = authCredentialModel;
+    public AuthCredentialValidator(AppLoginCredentialModel appLoginCredentialModel, IdentityTypeModel identityTypeModel, boolean insertValidation) {
+        this.appLoginCredentialModel = appLoginCredentialModel;
         this.userValidator = new UserValidator(identityTypeModel);
         this.insertValidation = insertValidation;
     }
@@ -61,7 +61,7 @@ public class AuthCredentialValidator implements Validator {
         }
 
         if(this.insertValidation){
-            if(authCredentialModel.isEmailExist(authCredential.getEmail())){
+            if(appLoginCredentialModel.isEmailExist(authCredential.getEmail())){
                 errors.rejectValue("email", "Email is already been used");
             }
         }

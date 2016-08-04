@@ -13,12 +13,12 @@ public class AbstractCredential {
     protected int role;
     protected String email;
 
-    private Timestamp createdDate;
-    private UserInf userInf;
+    protected Timestamp createdDate;
+    protected UserInf userInf;
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;

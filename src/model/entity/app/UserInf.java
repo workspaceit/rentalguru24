@@ -21,6 +21,17 @@ public class UserInf {
     private UserAddress userAddress;
     private IdentityType identityType;
 
+    public UserInf() {
+        this.id = 0;
+        this.addressId = 0;
+        this.firstName = "";
+        this.lastName = "";
+        this.identityDocUrl = "";
+        this.createdDate = null;
+        this.userAddress = new UserAddress();
+        this.identityType = new IdentityType();
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

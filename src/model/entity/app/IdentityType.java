@@ -13,6 +13,12 @@ public class IdentityType {
     private String name;
     private Timestamp createdDate;
 
+    public IdentityType() {
+        this.id = 0;
+        this.name = "";
+        this.createdDate = null;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

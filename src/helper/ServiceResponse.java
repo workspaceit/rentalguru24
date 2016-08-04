@@ -17,8 +17,8 @@ import java.util.HashMap;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceResponse  {
 
-    public ResponseStat responseStat;
-    public Object       responseData;
+    private ResponseStat responseStat;
+    private Object       responseData;
     private HashMap<String,String> parameterAlias;
     public ServiceResponse() {
         System.out.println("ServiceResponse() Called");
@@ -97,6 +97,14 @@ public class ServiceResponse  {
         public void setMsg(String msg) {
             this.msg = msg;
         }
+    }
+
+    public ResponseStat getResponseStat() {
+        return responseStat;
+    }
+
+    public void setResponseStat(ResponseStat responseStat) {
+        this.responseStat = responseStat;
     }
 
     @JsonIgnore

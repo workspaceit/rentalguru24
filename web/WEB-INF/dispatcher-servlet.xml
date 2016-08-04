@@ -46,7 +46,7 @@
        </bean>
        <bean id="deviceInfoModel" class="model.DeviceInfoModel">
        </bean>
-       <bean id="appLoginCredentialModel" class="model.AuthCredentialModel">
+       <bean id="appLoginCredentialModel" class="model.AppLoginCredentialModel">
        </bean>
        <bean id="attributesModel" class="model.AttributesModel" >
        </bean>

@@ -2,6 +2,7 @@ package controller.service;
 
 import controller.BaseHttp;
 import helper.ServiceResponse;
+import model.entity.app.AppCredential;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 public class BaseService extends BaseHttp{
+
     public BaseService() {
 
-        this.serviceResponse = new ServiceResponse();
     }
 }

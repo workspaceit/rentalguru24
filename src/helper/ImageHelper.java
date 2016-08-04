@@ -21,8 +21,8 @@ public class ImageHelper {
 //    private final static String STICKER_GLOBAL_PATH = "/home/wsit/Projects/j2ee/";
 
 //      Local settings for pictures and Images
-//    private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
-    private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
+     private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
+  //  private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
     private static String DOC_FOLDER= "identityDoc/";
     private static String DOC_PATH= GLOBAL_PATH+DOC_FOLDER;
     private static String TEMP_FOLDER= "temp/";
