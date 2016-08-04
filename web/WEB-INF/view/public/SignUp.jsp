@@ -101,49 +101,53 @@
 
 
 <div class="container center-bg">
-    <form class="form-signup clearfix">
+    <form class="form-signup clearfix" onsubmit="return submitSignUpData();">
         <div class="col-md-6">
             <div class="form-group">
                 <label for="firstname">First name</label>
-                <input type="text" class="form-control" placeholder="ex.John">
-                <p class="help-block error-form">Please fill up the field</p>
+                <input type="text" class="form-control" placeholder="ex.John" id="firstName" name="firstName">
+                <p class="help-block error-form" id="errorMsg_firstName">Please fill up the field</p>
             </div>
             <div class="form-group">
                 <label for="lastname">Last name</label>
-                <input type="text" class="form-control" placeholder="ex.Wick">
-                <p class="help-block error-form">Please fill up the field</p>
+                <input type="text" class="form-control" placeholder="ex.Wick" id="lastName" name="lastName">
+                <p class="help-block error-form" id="errorMsg_lastName">Please fill up the field</p>
             </div>
             <div class="form-group">
-                <label for="dateofbirth">Email</label>
-                <input type="email" class="form-control" placeholder="ex.email@email.com">
-                <p class="help-block error-form">Please fill up the field</p>
+                <label for="email">Email</label>
+                <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
+                <p class="help-block error-form" id="errorMsg_email">Please fill up the field</p>
             </div>
 
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="address">Password</label>
-                <input type="password" class="form-control" placeholder="ex.password">
-                <p class="help-block error-form">Please fill up the field</p>
+                <label for="password">Password</label>
+                <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
+                <p class="help-block error-form" id="errorMsg_password">Please fill up the field</p>
+            </div>
+            <div class="form-group ">
+                <label for="identityTypeId">Identity Type</label>
+                <input type="text" class="form-control" placeholder="Identity Type" id="" name="">
+                <p class="help-block error-form" id="errorMsg_identityTypeId">Please fill up the field</p>
+                <select id="identityTypeId" name="identityTypeId">
+                    <option value="0"></option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="terms">Identity Type</label>
-                <input type="text" class="form-control" placeholder="Identity Type">
-                <p class="help-block error-form">Please fill up the field</p>
-            </div>
-            <div class="form-group">
-                <label for="terms">Identity Document</label>
-
-                <div id="fallback" class="fallback">
+                <label for="identityDoc">Identity Document</label>
+                <div id="identityDoc" class="fallback" >
                     Drop files here or click to upload.
                 </div>
-                <%--<input type="file" name="documentIdentity">--%>
-                <p class="help-block error-form">Please fill up the field</p>
-
+                <input type="file" name="documentIdentity">
+                <p class="help-block error-form" id="errorMsg_identityDoc">Please fill up the field</p>
             </div>
         </div>
         <div class="col-md-12 text-center">
             <button class="btn-cstm-sign">Sign up</button>
+        </div>
+        <div id='tokenHiddnContainr'>
+            <input type="hidden" value="" id="identityDocToken" name="identityDocToken">
         </div>
     </form>
 </div>
@@ -275,12 +279,6 @@
 
 </script>
 <script>
-    $(document).ready(function(){
-        $('#fallback').dropzone({
-
-        });
-    });
-
     $('input[type=file]').on('change', function(){
         var files;
         files = event.target.files;
@@ -292,7 +290,6 @@
         $.each(files, function(key, value)
         {
             data.append('documentIdentity', value);
-            console.log(key);
         });
 
         $.ajax({
@@ -305,6 +302,8 @@
             contentType: false,
             success: function(data, textStatus, jqXHR)
             {
+                console.log(data.responseData);
+                $('#tokenHiddnContainr').html("<input type='hidden' value='"+data.responseData+"' id='identityDocToken' name='identityDocToken'>");
                 if(typeof data.error === 'undefined')
                 {
                     submitForm(event, data);
@@ -320,6 +319,56 @@
             }
         });
     });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $.ajax({
+            url: '/api/utility/get-identity',
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(data){
+                console.log(data);
+                $.each(data.responseData, function(index, identity) {
+                    var select = document.getElementById("identityTypeId");
+                    var option = document.createElement("option");
+                    option.value = identity.id;
+                    option.text = identity.name;
+                    select.add(option);
+                });
+            }
+        });
+    });
+</script>
+<script>
+     function submitSignUpData(){
+        var firstName = $("#firstName").val();
+        var lastName = $("#lastName").val();
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var identityTypeId = $("#identityTypeId option:selected").val();
+        var identityDocToken = $("#identityDocToken").val();
+        console.log(firstName, lastName, email, password, identityTypeId, identityDocToken);
+        $.ajax({
+            url: '/api/signup/user',
+            type: 'POST',
+            data: {
+                firstName:firstName,
+                lastName:lastName,
+                email:email,
+                password:password,
+                identityTypeId:identityTypeId,
+                identityDocToken:identityDocToken
+            },
+            success: function(data){
+                console.log(data);
+            }
+        });
+         return false;
+    }
 </script>
 
 </body>
