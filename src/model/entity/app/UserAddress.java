@@ -16,6 +16,15 @@ public class UserAddress {
     private String state;
     private Timestamp createdDate;
 
+    public UserAddress() {
+        this.id = 0;
+        this.address = "";
+        this.zip = "";
+        this.city = "";
+        this.state = "";
+        this.createdDate = null;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

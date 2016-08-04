@@ -12,7 +12,14 @@ import java.sql.Timestamp;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "app_login_credential", schema = "", catalog = "rentguru24")
-@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
 public class AppCredential extends AbstractCredential{
+    public AppCredential() {
+        this.id =0;
+        this.userId=0;
+        this.role=0;
+        this.email="";
 
+        this.createdDate =null;
+        this.userInf = new UserInf();
+    }
 }

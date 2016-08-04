@@ -1,13 +1,14 @@
 package controller.service.app;
 
 import controller.service.BaseService;
-import model.AuthCredentialModel;
-import model.entity.app.AppCredential;
+import helper.ServiceResponse;
+import model.AppLoginCredentialModel;
 import model.entity.app.AuthCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,31 +16,47 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/api/app")
+@RequestMapping("/api/signin")
 @Scope("request")
 public class AuthService extends BaseService {
     @Autowired
-    AuthCredentialModel appLoginCredentialModel;
+    AppLoginCredentialModel appLoginCredentialModel;
 
-//    @RequestMapping(value="/getbyid",method = RequestMethod.GET)
-//    public AEntity getById(){
-//        System.out.println("SD");
-//        //    AppLoginCredentialModel apcm = new AppLoginCredentialModel();
-//        return authCredentialModel.aEntity();
-//    }
-//    @RequestMapping(value="/auth",method = RequestMethod.POST)
-//    public AppLoginCredentialEntity getAuthinticated(@RequestParam("access_token") String accessToken){
-//        //  AppLoginCredentialModel authCredentialModel = new AppLoginCredentialModel();
-//        return authCredentialModel.isAuthenticated(accessToken);
-//        //  isAuthenticated
-//    }
-    @RequestMapping(value = "/getbypassword", method = RequestMethod.GET)
-    public AppCredential getByPassword(){
-        return (AppCredential)appLoginCredentialModel.getByPassword();
+
+    @RequestMapping(value = "/by-accesstoken", method = RequestMethod.POST)
+    public ServiceResponse authenticateByAccessToken(@RequestParam String accessToken){
+        if(accessToken.isEmpty()){
+            this.serviceResponse.setErrorMsg("accesstoken","Access token required");
+        }
+        AuthCredential authCredential = appLoginCredentialModel.authenticationByAccessToken(accessToken);
+
+        if(authCredential==null){
+            this.serviceResponse.getResponseStat().setMsg("Invalid access token !! Ha ha ha ....");
+            return this.serviceResponse;
+        }
+
+        this.serviceResponse.getResponseStat().setMsg("Login success");
+        this.setAppcredentialInSession(appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
+        this.serviceResponse.setResponseData(authCredential);
+        return this.serviceResponse;
     }
-    @RequestMapping(value = "/id", method = RequestMethod.GET)
-    public AppCredential getById(){
-        return (AppCredential)appLoginCredentialModel.dummy();
+    @RequestMapping(value = "/by-email-password", method = RequestMethod.POST)
+    public ServiceResponse authenticateByEmailPasswor(@RequestParam String email,@RequestParam String password){
+        if(email.isEmpty() || password.isEmpty()){
+            this.serviceResponse.getResponseStat().setMsg("Email or password is worng");
+        }
+
+        AuthCredential authCredential = appLoginCredentialModel.authenticationByEmailPassword(email,password);
+
+        if(authCredential==null){
+            this.serviceResponse.getResponseStat().setMsg("Invalid email or password");
+            return this.serviceResponse;
+        }
+
+        this.serviceResponse.getResponseStat().setMsg("Login success");
+        this.setAppcredentialInSession(appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
+        this.serviceResponse.setResponseData(authCredential);
+        return this.serviceResponse;
     }
 
 }
