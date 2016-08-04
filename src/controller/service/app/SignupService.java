@@ -5,10 +5,10 @@ import javax.validation.Valid;
 
 import helper.ImageHelper;
 import helper.ServiceResponse;
-import model.AppCredentialModel;
+import model.AuthCredentialModel;
 import model.IdentityTypeModel;
 import model.TempFileModel;
-import model.entity.app.AppCredential;
+import model.entity.app.AuthCredential;
 import model.entity.app.IdentityType;
 import model.entity.app.TempFile;
 import model.entity.app.UserInf;
@@ -17,13 +17,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import validator.AppCredentialValidator;
-import validator.IdentityTypeValidator;
+import validator.AuthCredentialValidator;
 
 import java.util.*;
 
@@ -39,7 +37,7 @@ public class SignupService{
     private ServiceResponse serviceResponse;
 
     @Autowired
-    AppCredentialModel appLoginCredentialModel;
+    AuthCredentialModel authCredentialModel;
     @Autowired
     TempFileModel tempFileModel;
     @Autowired
@@ -53,7 +51,7 @@ public class SignupService{
 
     @RequestMapping(value="/user",method = RequestMethod.POST)
     public ServiceResponse postSignup(@RequestParam Map<String, String> allRequestParams,
-                                      @Valid AppCredential appCredential,
+                                      @Valid AuthCredential authCredential,
                                       BindingResult result){
 
 
@@ -104,19 +102,19 @@ public class SignupService{
         userInf.setLastName(lastName);
 
 
-        appCredential.setUserInf(userInf);
-        appCredential.setRole(-1);
+        authCredential.setUserInf(userInf);
+        authCredential.setRole(-1);
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        appCredential.setEmail(email);
-        appCredential.setPassword(password);
+        authCredential.setEmail(email);
+        authCredential.setPassword(password);
 
       //  identityType = identityTypeModel.getById(identityType.getId());
 
-        appCredential.getUserInf().setIdentityType(identityType);
+        authCredential.getUserInf().setIdentityType(identityType);
 
 
         /*------------------- Entity Validation ---------------------*/
-        new AppCredentialValidator(appLoginCredentialModel,identityTypeModel,true).validate(appCredential,result);
+        new AuthCredentialValidator(authCredentialModel,identityTypeModel,true).validate(authCredential,result);
 
 
         // new IdentityTypeValidator(identityTypeModel).validate(identityType, result);
@@ -146,28 +144,28 @@ public class SignupService{
             return serviceResponse;
         }
 
-        appCredential.getUserInf().setIdentityDocUrl(tempFile.getPath());
-        appCredential.setPassword(bCryptPasswordEncoder.encode(password));
-        appCredential.setAccesstoken(DigestUtils.md5DigestAsHex((email + password).getBytes()));
+        authCredential.getUserInf().setIdentityDocUrl(tempFile.getPath());
+        authCredential.setPassword(bCryptPasswordEncoder.encode(password));
+        authCredential.setAccesstoken(DigestUtils.md5DigestAsHex((email + password).getBytes()));
 
-        appLoginCredentialModel.insert(appCredential);
+        authCredentialModel.insert(authCredential);
 
         /*----- Move identity doc form temp to original ---- */
 
-        String filePath = ImageHelper.moveFile(appCredential.getId(), tempFile.getPath());
+        String filePath = ImageHelper.moveFile(authCredential.getId(), tempFile.getPath());
 
 
 
         /*----- Update Information ---- */
-        appCredential.getUserInf().setIdentityDocUrl(filePath);
+        authCredential.getUserInf().setIdentityDocUrl(filePath);
 
-        appLoginCredentialModel.update(appCredential);
+        authCredentialModel.update(authCredential);
         this.tempFileModel.delete(tempFile);
 
-        appCredential = appLoginCredentialModel.getById(appCredential.getId());
+        authCredential = authCredentialModel.getById(authCredential.getId());
 
         this.serviceResponse.responseStat.setMsg("Signup successful");
-        this.serviceResponse.setResponseData(appCredential);
+        this.serviceResponse.setResponseData(authCredential);
         return serviceResponse;
     }
 

@@ -106,14 +106,17 @@
             <div class="form-group">
                 <label for="firstname">First name</label>
                 <input type="text" class="form-control" placeholder="ex.John">
+                <p class="help-block error-form">Please fill up the field</p>
             </div>
             <div class="form-group">
                 <label for="lastname">Last name</label>
                 <input type="text" class="form-control" placeholder="ex.Wick">
+                <p class="help-block error-form">Please fill up the field</p>
             </div>
             <div class="form-group">
                 <label for="dateofbirth">Email</label>
                 <input type="email" class="form-control" placeholder="ex.email@email.com">
+                <p class="help-block error-form">Please fill up the field</p>
             </div>
 
         </div>
@@ -121,10 +124,12 @@
             <div class="form-group">
                 <label for="address">Password</label>
                 <input type="password" class="form-control" placeholder="ex.password">
+                <p class="help-block error-form">Please fill up the field</p>
             </div>
             <div class="form-group">
                 <label for="terms">Identity Type</label>
                 <input type="text" class="form-control" placeholder="Identity Type">
+                <p class="help-block error-form">Please fill up the field</p>
             </div>
             <div class="form-group">
                 <label for="terms">Identity Document</label>
@@ -132,15 +137,17 @@
                 <div id="fallback" class="fallback">
                     Drop files here or click to upload.
                 </div>
+                <%--<input type="file" name="documentIdentity">--%>
+                <p class="help-block error-form">Please fill up the field</p>
 
             </div>
-            <input type="file" name="documentIdentity">
         </div>
         <div class="col-md-12 text-center">
             <button class="btn-cstm-sign">Sign up</button>
         </div>
     </form>
 </div>
+
 
 
 

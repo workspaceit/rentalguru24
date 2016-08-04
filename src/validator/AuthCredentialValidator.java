@@ -1,8 +1,9 @@
 package validator;
 
-import model.AppCredentialModel;
+import model.AuthCredentialModel;
 import model.IdentityTypeModel;
 import model.entity.app.AppCredential;
+import model.entity.app.AuthCredential;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -13,16 +14,16 @@ import java.util.regex.Pattern;
 /**
  * Created by mi on 8/2/16.
  */
-public class AppCredentialValidator implements Validator {
+public class AuthCredentialValidator implements Validator {
     private final UserValidator userValidator;
-    private AppCredentialModel appCredentialModel;
+    private AuthCredentialModel authCredentialModel;
     private boolean insertValidation;
 
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-    public AppCredentialValidator(AppCredentialModel appCredentialModel, IdentityTypeModel identityTypeModel,boolean insertValidation) {
-        this.appCredentialModel = appCredentialModel;
+    public AuthCredentialValidator(AuthCredentialModel authCredentialModel, IdentityTypeModel identityTypeModel, boolean insertValidation) {
+        this.authCredentialModel = authCredentialModel;
         this.userValidator = new UserValidator(identityTypeModel);
         this.insertValidation = insertValidation;
     }
@@ -34,18 +35,18 @@ public class AppCredentialValidator implements Validator {
 
     @Override
     public void validate(Object object, Errors errors) {
-        AppCredential appCredential = (AppCredential)object;
+        AuthCredential authCredential = (AuthCredential)object;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"email","Email is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Password is required");
 
 
-        if(errors.getFieldErrorCount("password")==0 && appCredential.getPassword().length()<6){
+        if(errors.getFieldErrorCount("password")==0 && authCredential.getPassword().length()<6){
             errors.rejectValue("password","Password at least 6 character required");
         }
 
         try {
             errors.pushNestedPath("userInf");
-            ValidationUtils.invokeValidator(this.userValidator, appCredential.getUserInf(), errors);
+            ValidationUtils.invokeValidator(this.userValidator, authCredential.getUserInf(), errors);
         }finally {
             errors.popNestedPath();
         }
@@ -54,13 +55,13 @@ public class AppCredentialValidator implements Validator {
             return;
         }
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(appCredential.getEmail());
+        Matcher matcher = pattern.matcher(authCredential.getEmail());
         if (!matcher.matches()) {
             errors.rejectValue("email", "Email is not valid format");
         }
 
         if(this.insertValidation){
-            if(appCredentialModel.isEmailExist(appCredential.getEmail())){
+            if(authCredentialModel.isEmailExist(authCredential.getEmail())){
                 errors.rejectValue("email", "Email is already been used");
             }
         }

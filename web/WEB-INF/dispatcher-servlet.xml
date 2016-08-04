@@ -46,7 +46,7 @@
        </bean>
        <bean id="deviceInfoModel" class="model.DeviceInfoModel">
        </bean>
-       <bean id="appLoginCredentialModel" class="model.AppCredentialModel">
+       <bean id="appLoginCredentialModel" class="model.AuthCredentialModel">
        </bean>
        <bean id="attributesModel" class="model.AttributesModel" >
        </bean>
@@ -65,6 +65,7 @@
               <property name="annotatedClasses">
                      <list>
                             <value>model.entity.app.AppCredential</value>
+                            <value>model.entity.app.AuthCredential</value>
                             <value>model.entity.app.UserAddress</value>
                             <value>model.entity.app.UserInf</value>
                             <value>model.entity.app.AttributeValues</value>
