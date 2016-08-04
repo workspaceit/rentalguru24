@@ -134,6 +134,7 @@
                 </div>
 
             </div>
+            <input type="file" name="documentIdentity">
         </div>
         <div class="col-md-12 text-center">
             <button class="btn-cstm-sign">Sign up</button>
@@ -266,7 +267,53 @@
 
 
 </script>
+<script>
+    $(document).ready(function(){
+        $('#fallback').dropzone({
 
+        });
+    });
+
+    $('input[type=file]').on('change', function(){
+        var files;
+        files = event.target.files;
+
+        event.stopPropagation();
+        event.preventDefault();
+
+        var data = new FormData();
+        $.each(files, function(key, value)
+        {
+            data.append('documentIdentity', value);
+            console.log(key);
+        });
+
+        $.ajax({
+            url: '/fileupload/upload/document-identity',
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(data, textStatus, jqXHR)
+            {
+                if(typeof data.error === 'undefined')
+                {
+                    submitForm(event, data);
+                }
+                else
+                {
+                    console.log('ERRORS: ' + data.error);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                console.log('ERRORS: ' + textStatus);
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
