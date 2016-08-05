@@ -21,8 +21,7 @@ public class ServiceResponse  {
     private Object       responseData;
     private HashMap<String,String> parameterAlias;
     public ServiceResponse() {
-        System.out.println("ServiceResponse() Called");
-        this.responseStat = new ResponseStat();
+       this.responseStat = new ResponseStat();
         this.responseData = new Object();
         parameterAlias = new HashMap<>();
     }

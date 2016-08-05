@@ -232,7 +232,7 @@
 <script src="<c:url value="/resources/js/clean-blog.min.js" />" ></script>
 <script src="<c:url value="/resources/js/owl.carousel.js" />" ></script>
 <script src="<c:url value="/resources/js/jquery.enllax.min.js" />" ></script>
-
+<script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
 
 
 <!-- Javascript framework and plugins end here -->

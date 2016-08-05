@@ -9,6 +9,7 @@
        <context:component-scan base-package="controller"   />
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
+
        <bean id="multipartResolver"
              class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
               <!-- max upload size in bytes -->

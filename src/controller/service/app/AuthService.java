@@ -41,7 +41,7 @@ public class AuthService extends BaseService {
         return this.serviceResponse;
     }
     @RequestMapping(value = "/by-email-password", method = RequestMethod.POST)
-    public ServiceResponse authenticateByEmailPasswor(@RequestParam String email,@RequestParam String password){
+    public ServiceResponse authenticateByEmailPassword(@RequestParam String email,@RequestParam String password){
         if(email.isEmpty() || password.isEmpty()){
             this.serviceResponse.getResponseStat().setMsg("Email or password is worng");
         }
@@ -56,6 +56,7 @@ public class AuthService extends BaseService {
         }
 
         this.serviceResponse.getResponseStat().setMsg("Login success");
+        this.setAppcredentialInSession(appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
         this.setAppcredentialInSession(appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
         return this.serviceResponse;
     }

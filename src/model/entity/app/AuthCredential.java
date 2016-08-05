@@ -15,7 +15,7 @@ public class AuthCredential extends AbstractCredential {
 
     private String password;
     private String accesstoken;
-    private boolean varified;
+    private boolean verified;
     private boolean blocked;
 
     @JsonIgnore
@@ -43,12 +43,12 @@ public class AuthCredential extends AbstractCredential {
 
     @Basic
     @Column(name = "varified")
-    public boolean isVarified() {
-        return varified;
+    public boolean isVerified() {
+        return verified;
     }
 
-    public void setVarified(boolean varified) {
-        this.varified = varified;
+    public void setVerified(boolean varified) {
+        this.verified = varified;
     }
 
     @Basic

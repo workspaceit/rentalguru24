@@ -1,5 +1,6 @@
 package controller.service.app;
 
+import controller.service.BaseService;
 import helper.ServiceResponse;
 import model.IdentityTypeModel;
 import model.entity.app.IdentityType;
@@ -18,11 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/utility")
 @Scope("request")
-public class UtilityServices {
-    ServiceResponse serviceResponse;
-    public UtilityServices(){
-        this.serviceResponse = new ServiceResponse();
-    }
+public class UtilityServices extends BaseService{
+
     @Autowired
     IdentityTypeModel identityTypeModel;
 
