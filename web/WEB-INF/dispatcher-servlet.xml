@@ -9,6 +9,14 @@
        <context:component-scan base-package="controller"   />
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
+       <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+       <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
+       <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+              <property name="prefix" value="/WEB-INF/view/" />
+              <property name="suffix" value=".jsp" />
+       </bean>
+
+
 
        <bean id="multipartResolver"
              class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -21,14 +29,39 @@
        </bean>
 
 
-       <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
-       <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
-       <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
-              <property name="prefix" value="/WEB-INF/view/" />
-              <property name="suffix" value=".jsp" />
+
+       <bean id="rentGuruMail" class="library.RentGuruMail">
+              <property name="mailSender" ref="mailSender"/>
        </bean>
 
 
+       <!-- ******************** Mail Configuration *********************************** -->
+       <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+
+              <property name="host" value="hera.ihostman.com"/>
+              <property name="port" value="465"/>
+              <property name="username" value="developer_beta@workspaceit.com"/>
+              <property name="password" value="wsit_cabguard1"/>
+              <property name="javaMailProperties">
+                     <props>
+                            <prop key="mail.transport.protocol">smtp</prop>
+                            <prop key="mail.smtp.auth">true</prop>
+                            <prop key="mail.smtp.starttls.enable">true</prop>
+                            <prop key="mail.debug">true</prop>
+                            <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                     </props>
+              </property>
+       </bean>
+
+
+       <bean id="preConfiguredMessage" class="org.springframework.mail.SimpleMailMessage">
+              <property name="to" value="rafi101010@gmail.com"></property>
+              <property name="from" value="rafi101010@gmail.com"></property>
+              <property name="subject" value="FATAL - Application crash. Save your job !!"/>
+       </bean>
+
+
+       <!-- ******************** Model Class, *********************************** -->
        <bean id="baseModel" class="model.BaseModel">
               <property name="sessionFactory" ref="sessionFactory"/>
        </bean>

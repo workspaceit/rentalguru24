@@ -284,13 +284,15 @@
 </script>
 <script>
     $(document).ready(function(){
+        setAliasMessage("identityDocToken","Identity doc token required","Identity document required");
+        fetchIdentity();
+    });
+
+    function fetchIdentity(){
         $.ajax({
             url: '/api/utility/get-identity',
             type: 'GET',
-            cache: false,
             dataType: 'json',
-            processData: false,
-            contentType: false,
             success: function(data){
                 $.each(data.responseData, function(index, identity) {
                     var select = document.getElementById("identityTypeId");
@@ -301,7 +303,7 @@
                 });
             }
         });
-    });
+    }
 </script>
 <script>
     function submitSignUpData(){
