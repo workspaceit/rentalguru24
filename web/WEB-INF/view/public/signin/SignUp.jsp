@@ -106,17 +106,17 @@
             <div class="form-group">
                 <label for="firstname">First name</label>
                 <input type="text" class="form-control" placeholder="ex.John" id="firstName" name="firstName">
-                <p class="help-block error-form" id="errorMsg_firstName">Please fill up the field</p>
+                <p class="help-block error-form" id="errorMsg_firstName"></p>
             </div>
             <div class="form-group">
                 <label for="lastname">Last name</label>
                 <input type="text" class="form-control" placeholder="ex.Wick" id="lastName" name="lastName">
-                <p class="help-block error-form" id="errorMsg_lastName">Please fill up the field</p>
+                <p class="help-block error-form" id="errorMsg_lastName"></p>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
-                <p class="help-block error-form" id="errorMsg_email">Please fill up the field</p>
+                <p class="help-block error-form" id="errorMsg_email"></p>
             </div>
 
         </div>
@@ -124,21 +124,23 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
-                <p class="help-block error-form" id="errorMsg_password">Please fill up the field</p>
+                <p class="help-block error-form" id="errorMsg_password"></p>
             </div>
             <div class="form-group ">
                 <label for="identityTypeId">Identity Type</label>
-                <input type="text" class="form-control" placeholder="Identity Type" id="" name="">
-                <p class="help-block error-form" id="errorMsg_identityTypeId">Please fill up the field</p>
+                <%--<input type="text" class="form-control" placeholder="Identity Type" id="" name="">--%>
                 <select id="identityTypeId" name="identityTypeId">
-                    <option value="0">Please select a identity type</option>
+                    <option value="">Please select a identity type</option>
                 </select>
+                <p class="help-block error-form" id="errorMsg_identityTypeId"></p>
+
             </div>
             <div class="form-group">
                 <label for="fallback">Identity Document</label>
                 <div id="fallback"  class="fallback" >
                     Drop files here or click to upload.
                 </div>
+
                 <%--<input type="file" name="documentIdentity">--%>
                 <p class="help-block error-form" id="errorMsg_identityDoc">Please fill up the field</p>
             </div>
@@ -358,12 +360,16 @@
                 identityDocToken:identityDocToken
             },
             success: function(data){
-//                console.log(data);
+                console.log(data);
+                if(data.responseStat.status == false){
+                    BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
+                }
             }
         });
          return false;
     }
 </script>
+
 
 <script>
 //    $("#fallback").dropzone({
@@ -445,8 +451,6 @@ console.log("${baseURL}");
 
 
 </script>
-
-
 
 </body>
 
