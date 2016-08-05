@@ -35,10 +35,10 @@ public class AppLoginCredentialModel extends BaseModel {
 
         Session session = this.sessionFactory.openSession();
         String hql = "from AuthCredential where email = :email and password = :password";
-        System.out.println(bCryptPasswordEncoder.encode(password));
+        System.out.println(DigestUtils.md5DigestAsHex(password.getBytes()));
         Query query = session.createQuery(hql);
         query.setParameter("email", email);
-        query.setParameter("password", bCryptPasswordEncoder.encode(password));
+        query.setParameter("password", DigestUtils.md5DigestAsHex(password.getBytes()));
         return (AuthCredential)query.uniqueResult();
     }
     public AuthCredential authenticationByAccessToken(String accessToken){
@@ -66,7 +66,7 @@ public class AppLoginCredentialModel extends BaseModel {
     public void insert(AuthCredential authCredential){
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        authCredential.setPassword(bCryptPasswordEncoder.encode(authCredential.getPassword()));
+        authCredential.setPassword(DigestUtils.md5DigestAsHex(authCredential.getPassword().getBytes()));
         authCredential.setAccesstoken(DigestUtils.md5DigestAsHex((authCredential.getEmail() + authCredential.getPassword()).getBytes()));
 
 

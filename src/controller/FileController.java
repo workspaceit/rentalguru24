@@ -25,6 +25,7 @@ public class FileController {
     @Autowired
     TempFileModel tempFileModel;
     public FileController( ) {
+        System.out.println("File Controller");
         this.serviceResponse = new ServiceResponse();
     }
 
