@@ -259,7 +259,7 @@
       },
       success: function(data){
         console.log(data);
-        if(data.responseStat == false){
+        if(data.responseStat.status == true){
           window.location.href = "/home";
         }else{
           console.log('Signin Fail');
@@ -272,5 +272,3 @@
 
 </body>
 </html>
-
-
