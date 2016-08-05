@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import validator.AuthCredentialValidator;
+import validator.entity.AuthCredentialValidator;
 
 import java.util.*;
 
@@ -63,12 +63,12 @@ public class SignupService{
         Long identityDocToken = null;
         try{
             if(allRequestParams.get("identityDocToken")==null || allRequestParams.get("identityDocToken")==""){
-                this.serviceResponse.setErrorMsg("identityDocToken", "Identity doc token required");
+                this.serviceResponse.setRequestError("identityDocToken", "Identity doc token required");
             }else{
                 identityDocToken = Long.parseLong(allRequestParams.get("identityDocToken"));
             }
         }catch (Exception ex){
-            this.serviceResponse.setErrorMsg("identityDocToken", "Identity doc token integer required");
+            this.serviceResponse.setRequestError("identityDocToken", "Identity doc token integer required");
             identityDocToken = 0L;
         }
 
@@ -78,7 +78,7 @@ public class SignupService{
 
             identityType.setId(Integer.parseInt(allRequestParams.get("identityTypeId")));
         }catch (Exception ex){
-            this.serviceResponse.setErrorMsg("identityTypeId","Identity type id required");
+            this.serviceResponse.setRequestError("identityTypeId", "Identity type id required");
             identityType.setId(0);
         }
 
@@ -130,12 +130,12 @@ public class SignupService{
 
         TempFile tempFile = this.tempFileModel.getByToken(identityDocToken);
         if(tempFile ==null){
-            this.serviceResponse.setErrorMsg("identityDocToken","Identity doc token is not valid");
+            this.serviceResponse.setRequestError("identityDocToken", "Identity doc token is not valid");
             return serviceResponse;
         }
 
         if(!ImageHelper.isFileExist(tempFile.getPath())){
-            this.serviceResponse.setErrorMsg("identityDocToken","No file found associated with the token");
+            this.serviceResponse.setRequestError("identityDocToken", "No file found associated with the token");
             return serviceResponse;
         }
 

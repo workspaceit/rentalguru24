@@ -1,4 +1,4 @@
-package validator;
+package validator.entity;
 
 import model.IdentityTypeModel;
 import model.entity.app.UserInf;

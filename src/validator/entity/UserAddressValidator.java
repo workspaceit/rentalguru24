@@ -1,4 +1,4 @@
-package validator;
+package validator.entity;
 
 import model.entity.app.UserAddress;
 import org.springframework.validation.Errors;

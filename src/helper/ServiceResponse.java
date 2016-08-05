@@ -64,7 +64,10 @@ public class ServiceResponse  {
         public void setMsg(String msg) {
             this.msg = msg;
         }
-
+        public void setErrorMsg(String msg) {
+            this.status = false;
+            this.msg = msg;
+        }
         public ArrayList<RequestError> getRequestErrors() {
             return requestErrors;
         }
@@ -167,7 +170,7 @@ public class ServiceResponse  {
             }
         }
     }
-    public void setErrorMsg(String params,String msg){
+    public void setRequestError(String params, String msg){
         this.responseStat.setStatus(false);
         RequestError requestError = new RequestError();
         requestError.setParams(params);
