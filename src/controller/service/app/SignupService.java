@@ -104,14 +104,13 @@ public class SignupService{
         authCredential.setEmail(email);
         authCredential.setPassword(password);
 
-      //  identityType = identityTypeModel.getById(identityType.getId());
+
 
         authCredential.getUserInf().setIdentityType(identityType);
 
 
         /*------------------- Entity Validation ---------------------*/
         new AuthCredentialValidator(appLoginCredentialModel,identityTypeModel,true).validate(authCredential,result);
-
 
         // new IdentityTypeValidator(identityTypeModel).validate(identityType, result);
 

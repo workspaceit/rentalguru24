@@ -51,11 +51,12 @@ public class AuthService extends BaseService {
         if(authCredential==null){
             this.serviceResponse.getResponseStat().setMsg("Invalid email or password");
             return this.serviceResponse;
+        }else{
+            this.serviceResponse.setResponseData(authCredential);
         }
 
         this.serviceResponse.getResponseStat().setMsg("Login success");
         this.setAppcredentialInSession(appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
-        this.serviceResponse.setResponseData(authCredential);
         return this.serviceResponse;
     }
 

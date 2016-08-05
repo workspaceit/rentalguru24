@@ -135,7 +135,7 @@ public class UserInf {
         this.userAddress = userAddress;
     }
 
-    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "identity_type_id", referencedColumnName = "id", nullable = false)
     public IdentityType getIdentityType() {
         return identityType;
