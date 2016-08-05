@@ -258,7 +258,12 @@
         password : password
       },
       success: function(data){
-        console.log("s");
+        console.log(data);
+        if(data.responseStat == false){
+          window.location.href = "/home";
+        }else{
+          console.log('Signin Fail');
+        }
       }
     });
     return false;
