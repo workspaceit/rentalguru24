@@ -1,4 +1,4 @@
-package validator;
+package validator.entity;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

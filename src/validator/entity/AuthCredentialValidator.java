@@ -1,4 +1,4 @@
-package validator;
+package validator.entity;
 
 import model.AppLoginCredentialModel;
 import model.IdentityTypeModel;

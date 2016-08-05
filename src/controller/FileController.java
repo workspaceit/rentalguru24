@@ -40,14 +40,14 @@ public class FileController {
             byte[] fileByte = file.getBytes();
             System.out.println("Byte Received " +fileByte.length);
             if(fileByte.length==0){
-                this.serviceResponse.setErrorMsg("documentIdentity","No file attached");
+                this.serviceResponse.setRequestError("documentIdentity", "No file attached");
                 return this.serviceResponse;
             }
             String filePath = ImageHelper.saveFile(fileByte, file.getOriginalFilename());
             tempFile.setPath(filePath);
         } catch (IOException e) {
             e.printStackTrace();
-            serviceResponse.setErrorMsg("documentIdentity","No file attached");
+            serviceResponse.setRequestError("documentIdentity", "No file attached");
         }
 
 

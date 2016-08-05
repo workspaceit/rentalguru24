@@ -19,9 +19,8 @@
               <property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
 
        </bean>
-       <!--<bean id="imageHelper" class="helper.ImageHelper" >-->
-              <!--<property name="GLOBAL_PATH" value="/home/mi/Projects/j2ee/imagetalk_picture/" />-->
-       <!--</bean>-->
+
+
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
@@ -29,19 +28,7 @@
               <property name="suffix" value=".jsp" />
        </bean>
 
-       <!--<bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">-->
-              <!--<property name="scopes">-->
-                     <!--<map>-->
-                            <!--<entry key="session">-->
-                                   <!--<bean class="org.springframework.context.support.SimpleThreadScope"/>-->
-                            <!--</entry>-->
-                     <!--</map>-->
-              <!--</property>-->
-       <!--</bean>-->
 
-       <!--<bean id="serviceResponse" class="helper.ServiceResponse" scope="session" >-->
-              <!--<aop:scoped-proxy proxy-target-class="true"  />-->
-       <!--</bean>-->
        <bean id="baseModel" class="model.BaseModel">
               <property name="sessionFactory" ref="sessionFactory"/>
        </bean>
@@ -62,6 +49,8 @@
        <bean id="rentProductModel" class="model.RentProductModel" >
        </bean>
 
+
+        <!-- ******************** Hibernate Session,Entity, *********************************** -->
        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
               <property name="annotatedClasses">
                      <list>
@@ -92,10 +81,24 @@
                      </props>
               </property>
        </bean>
+
+
+       <!-- ******************** Email and Email Template   *********************************** -->
+
+       <!--<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
+              <!--&lt;!&ndash;<property name="resourceLoaderPath"><value>/WEB-INF/mailTemplate/</value></property>&ndash;&gt;-->
+       <!--</bean>-->
+
+
+
+
+
+       <!-- ******************** View Resolve  *********************************** -->
        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
               <property name="prefix" value="/WEB-INF/view/" />
               <property name="suffix" value=".jsp" />
        </bean>
+
 
 
        </beans>

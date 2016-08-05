@@ -26,12 +26,12 @@ public class AuthService extends BaseService {
     @RequestMapping(value = "/by-accesstoken", method = RequestMethod.POST)
     public ServiceResponse authenticateByAccessToken(@RequestParam String accessToken){
         if(accessToken.isEmpty()){
-            this.serviceResponse.setErrorMsg("accesstoken","Access token required");
+            this.serviceResponse.setRequestError("accessToken", "Access token required");
         }
         AuthCredential authCredential = appLoginCredentialModel.authenticationByAccessToken(accessToken);
 
         if(authCredential==null){
-            this.serviceResponse.getResponseStat().setMsg("Invalid access token !! Ha ha ha ....");
+            this.serviceResponse.getResponseStat().setErrorMsg("Invalid access token !! Ha ha ha ....");
             return this.serviceResponse;
         }
 
@@ -43,13 +43,13 @@ public class AuthService extends BaseService {
     @RequestMapping(value = "/by-email-password", method = RequestMethod.POST)
     public ServiceResponse authenticateByEmailPassword(@RequestParam String email,@RequestParam String password){
         if(email.isEmpty() || password.isEmpty()){
-            this.serviceResponse.getResponseStat().setMsg("Email or password is worng");
+            this.serviceResponse.getResponseStat().setErrorMsg("Email or password is worng");
         }
 
         AuthCredential authCredential = appLoginCredentialModel.authenticationByEmailPassword(email,password);
 
         if(authCredential==null){
-            this.serviceResponse.getResponseStat().setMsg("Invalid email or password");
+            this.serviceResponse.getResponseStat().setErrorMsg("Invalid email or password");
             return this.serviceResponse;
         }else{
             this.serviceResponse.setResponseData(authCredential);
