@@ -16,6 +16,6 @@ public class SignInController {
     public String index() {
 
 
-        return "public/SignIn";
+        return "public/signin/SignIn";
     }
 }

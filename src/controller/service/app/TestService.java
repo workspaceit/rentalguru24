@@ -172,4 +172,13 @@ public class TestService {
         rentProductModel.insert(rentProduct);
     }
 
+    @RequestMapping(value = "/test/mail", method = RequestMethod.POST)
+    public void testMail(){
+        //final WebContext ctx = new WebContext(request,servletContext,request.getLocale());
+
+
+    }
+
+
+
 }
