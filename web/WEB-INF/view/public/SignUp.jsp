@@ -131,12 +131,12 @@
                 <input type="text" class="form-control" placeholder="Identity Type" id="" name="">
                 <p class="help-block error-form" id="errorMsg_identityTypeId">Please fill up the field</p>
                 <select id="identityTypeId" name="identityTypeId">
-                    <option value="0"></option>
+                    <option value="0">Please select a identity type</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="identityDoc">Identity Document</label>
-                <div id="identityDoc" class="fallback" >
+                <label for="fallback">Identity Document</label>
+                <div id="fallback" class="fallback" >
                     Drop files here or click to upload.
                 </div>
                 <input type="file" name="documentIdentity">
@@ -282,6 +282,7 @@
     $('input[type=file]').on('change', function(){
         var files;
         files = event.target.files;
+        console.log(files);
 
         event.stopPropagation();
         event.preventDefault();
@@ -302,16 +303,9 @@
             contentType: false,
             success: function(data, textStatus, jqXHR)
             {
-                console.log(data.responseData);
+//                console.log(data.responseData);
                 $('#tokenHiddnContainr').html("<input type='hidden' value='"+data.responseData+"' id='identityDocToken' name='identityDocToken'>");
-                if(typeof data.error === 'undefined')
-                {
-                    submitForm(event, data);
-                }
-                else
-                {
-                    console.log('ERRORS: ' + data.error);
-                }
+
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
@@ -331,7 +325,6 @@
             processData: false,
             contentType: false,
             success: function(data){
-                console.log(data);
                 $.each(data.responseData, function(index, identity) {
                     var select = document.getElementById("identityTypeId");
                     var option = document.createElement("option");
@@ -351,7 +344,7 @@
         var password = $("#password").val();
         var identityTypeId = $("#identityTypeId option:selected").val();
         var identityDocToken = $("#identityDocToken").val();
-        console.log(firstName, lastName, email, password, identityTypeId, identityDocToken);
+//        console.log(firstName, lastName, email, password, identityTypeId, identityDocToken);
         $.ajax({
             url: '/api/signup/user',
             type: 'POST',
@@ -364,12 +357,26 @@
                 identityDocToken:identityDocToken
             },
             success: function(data){
-                console.log(data);
+//                console.log(data);
             }
         });
          return false;
     }
 </script>
+
+<script>
+    $("#fallback").dropzone({
+        success: function(file, response){
+            alert(file);
+        }
+    });
+</script>
+
+
+
+</body>
+
+</body>
 
 </body>
 </html>
