@@ -101,15 +101,15 @@
 
 
 <div class="container center-bg">
-  <form class="form-signup clearfix">
+  <form class="form-signup clearfix" onsubmit="return submitSignInData();">
     <div class="col-md-12">
       <div class="form-group">
-        <label for="dateofbirth">Email</label>
-        <input type="email" class="form-control" placeholder="ex.email@email.com">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
       </div>
       <div class="form-group">
-        <label for="dateofbirth">Password</label>
-        <input type="password" class="form-control" placeholder="ex.password">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
       </div>
       <div class="checkbox">
         <label><input type="checkbox"> Remember me</label>
@@ -245,10 +245,25 @@
 
   })(jQuery);
 
-
-
 </script>
-
+<script>
+  function submitSignInData(){
+    var email = $("#email").val();
+    var password = $("#password").val();
+    $.ajax({
+      url: '/api/signin/by-email-password',
+      type: 'POST',
+      data: {
+        email: email,
+        password : password
+      },
+      success: function(data){
+        console.log("s");
+      }
+    });
+    return false;
+  }
+</script>
 
 </body>
 </html>
