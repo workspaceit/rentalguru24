@@ -1,6 +1,7 @@
 package controller.service.app;
 
 
+import library.RentGuruMail;
 import model.*;
 
 import model.entity.app.*;
@@ -37,6 +38,9 @@ public class TestService {
 
     @Autowired
     RentProductModel rentProductModel;
+
+    @Autowired
+    RentGuruMail rentGuruMail;
 
     @RequestMapping(value = "/test/att", method = RequestMethod.POST)
     public void postAttribute(@RequestParam Map<String, String> allRequestParams){
@@ -174,6 +178,7 @@ public class TestService {
 
     @RequestMapping(value = "/test/mail", method = RequestMethod.POST)
     public void testMail(){
+        rentGuruMail.sendSignUpMail();
         //final WebContext ctx = new WebContext(request,servletContext,request.getLocale());
 
 
