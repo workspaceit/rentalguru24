@@ -94,8 +94,8 @@
 
 <div class="parallax-window bg1" data-enllax-ratio="0.7">
   <div class="container title-block">
-    <h1>Sign up</h1>
-    <p>Sign up for the great Deals. Explore More</p>
+    <h1>Sign in</h1>
+    <p>Sign in for the great Deals. Explore More</p>
   </div>
 </div>
 
@@ -118,7 +118,7 @@
     </div>
 
     <div class="col-md-12 text-center">
-      <button class="btn-cstm-sign">Sign up</button>
+      <button class="btn-cstm-sign">Sign in</button>
     </div>
   </form>
 </div>
