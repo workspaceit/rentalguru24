@@ -137,11 +137,12 @@
             </div>
             <div class="form-group">
                 <label for="fallback">Identity Document</label>
-                <div id="fallback" class="fallback" >
+                <div id="fallback"  class="fallback" >
                     Drop files here or click to upload.
                 </div>
-                <input type="file" name="documentIdentity">
-                <p class="help-block error-form" id="errorMsg_identityDocToken"></p>
+
+                <%--<input type="file" name="documentIdentity">--%>
+                <p class="help-block error-form" id="errorMsg_identityDoc">Please fill up the field</p>
             </div>
         </div>
         <div class="col-md-12 text-center">
@@ -238,7 +239,8 @@
 
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">
-    $("div#fallback").dropzone({ url: "/file/post" });
+    console.log("${pageContext.request.localName}");
+   // $("div#fallback").dropzone({ url: "/file/post" });
 
     $('.main_product_slider').carousel();
     $('.owl-carousel').owlCarousel({
@@ -367,6 +369,50 @@
          return false;
     }
 </script>
+
+
+<script>
+//    $("#fallback").dropzone({
+//        success: function(file, response){
+//            alert(file);
+//        }
+//    });
+
+
+//Dropzone.options.myAwesomeDropzone = {
+//    paramName: "documentIdentity", // The name that will be used to transfer the file
+//    maxFilesize: 2, // MB
+//    accept: function(file, done) {
+//        if (file.name == "justinbieber.jpg") {
+//            done("Naha, you don't.");
+//        }
+//        else { done(); }
+//    }
+//};
+Dropzone.autoDiscover = false;
+$(function() {
+    var identityDocFile = $("div#fallback").dropzone(
+            {
+                url: "/fileupload/upload/document-identity",
+                paramName: "documentIdentity",
+                maxFilesize: 1,
+                success:function(file, response){
+                    console.log(response);
+                }
+            }
+    );
+
+
+//    identityDocFile.on("addedfile", function (file) {
+//        console.log(file);
+//    });
+//    identityDocFile.on("success", function (file, response) {
+//        console.log(response);
+//    });
+});
+
+</script>
+
 </body>
 
 </body>
