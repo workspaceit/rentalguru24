@@ -19,6 +19,6 @@ public class SignUpController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index() {
-        return "public/signup/SignUp";
+        return "public/SignUp";
     }
 }

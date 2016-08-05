@@ -140,18 +140,17 @@
                 <div id="fallback"  class="fallback" >
                     Drop files here or click to upload.
                 </div>
+
                 <%--<input type="file" name="documentIdentity">--%>
-                <p class="help-block error-form" id="errorMsg_identityDocToken"></p>
+                <p class="help-block error-form" id="errorMsg_identityDoc">Please fill up the field</p>
             </div>
         </div>
         <div class="col-md-12 text-center">
             <button class="btn-cstm-sign">Sign up</button>
-            <div class="alert alert-success" hidden>
-                <strong>Success!</strong>
-            </div>
         </div>
-
-        <input type="hidden" value="" id="identityDocToken" name="identityDocToken">
+        <div id='tokenHiddnContainr'>
+            <input type="hidden" value="" id="identityDocToken" name="identityDocToken">
+        </div>
     </form>
 </div>
 
@@ -283,6 +282,43 @@
 
 </script>
 <script>
+    $('input[type=file]').on('change', function(){
+        var files;
+        files = event.target.files;
+        console.log(files);
+
+        event.stopPropagation();
+        event.preventDefault();
+
+        var data = new FormData();
+        $.each(files, function(key, value)
+        {
+            data.append('documentIdentity', value);
+        });
+
+        $.ajax({
+            url: '/fileupload/upload/document-identity',
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(data, textStatus, jqXHR)
+            {
+//                console.log(data.responseData);
+                $('#tokenHiddnContainr').html("<input type='hidden' value='"+data.responseData+"' id='identityDocToken' name='identityDocToken'>");
+
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                console.log('ERRORS: ' + textStatus);
+            }
+        });
+    });
+</script>
+
+<script>
     $(document).ready(function(){
         $.ajax({
             url: '/api/utility/get-identity',
@@ -327,9 +363,6 @@
                 console.log(data);
                 if(data.responseStat.status == false){
                     BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
-                }else{
-                    $('form').trigger('reset');
-                    $('.alert-success').show().delay(5000).fadeOut();
                 }
             }
         });
@@ -339,6 +372,23 @@
 
 
 <script>
+//    $("#fallback").dropzone({
+//        success: function(file, response){
+//            alert(file);
+//        }
+//    });
+
+
+//Dropzone.options.myAwesomeDropzone = {
+//    paramName: "documentIdentity", // The name that will be used to transfer the file
+//    maxFilesize: 2, // MB
+//    accept: function(file, done) {
+//        if (file.name == "justinbieber.jpg") {
+//            done("Naha, you don't.");
+//        }
+//        else { done(); }
+//    }
+//};
 Dropzone.autoDiscover = false;
 $(function() {
     var identityDocFile = $("div#fallback").dropzone(
@@ -348,13 +398,18 @@ $(function() {
                 maxFilesize: 1,
                 success:function(file, response){
                     console.log(response);
-                    $('#identityDocToken').val(response.responseData);
                 }
             }
     );
 
-});
 
+//    identityDocFile.on("addedfile", function (file) {
+//        console.log(file);
+//    });
+//    identityDocFile.on("success", function (file, response) {
+//        console.log(response);
+//    });
+});
 
 
 
@@ -395,10 +450,10 @@ console.log("${baseURL}");
 
 
 
->>>>>>> a91fb5bf3de76a0b19a4e6a53794b0af708094de:web/WEB-INF/view/public/signin/SignUp.jsp
 </script>
 
 </body>
+
 </body>
 
 </body>
