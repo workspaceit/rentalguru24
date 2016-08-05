@@ -136,7 +136,7 @@
             </div>
             <div class="form-group">
                 <label for="fallback">Identity Document</label>
-                <div id="fallback" name="documentIdentity" class="fallback" >
+                <div id="fallback"  class="fallback" >
                     Drop files here or click to upload.
                 </div>
                 <%--<input type="file" name="documentIdentity">--%>
