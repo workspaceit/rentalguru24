@@ -17,11 +17,24 @@ public class CategoryModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+    public Category getById(int id){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM Category where id = :id";
+        Query query =  session.createQuery(hql);
+        query.setParameter("id",id);
+        return (Category)query.uniqueResult();
+    }
     public List<Category> getAll(){
         Session session = this.sessionFactory.openSession();
         String hql = "FROM Category where parent_id = NULL";
         Query query =  session.createQuery(hql);
-        //query.setParameter("parent_id",null);
+        return (List<Category>)query.list();
+    }
+    public List<Category> getByParentId(int parentId){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM Category where parent_id = :parent_id";
+        Query query =  session.createQuery(hql);
+        query.setParameter("parent_id",parentId);
         return (List<Category>)query.list();
     }
 }

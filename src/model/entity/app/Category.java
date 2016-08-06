@@ -1,5 +1,8 @@
 package model.entity.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -9,6 +12,7 @@ import java.util.Set;
 /**
  * Created by mi on 8/1/16.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 public class Category {
     private int id;
@@ -62,6 +66,7 @@ public class Category {
 
     @Basic
     @Column(name = "created_by")
+    @JsonIgnore
     public int getCreatedBy() {
         return createdBy;
     }
@@ -72,6 +77,7 @@ public class Category {
 
     @Basic
     @Column(name = "created_date")
+    @JsonIgnore
     public Timestamp getCreatedDate() {
         return createdDate;
     }
@@ -118,29 +124,5 @@ public class Category {
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
     }
-
-
-
-//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "id")
-//
-//    @OneToMany(mappedBy = "Category")
-//    public Collection<Category> getSubcategory() {
-//        return subcategory;
-//    }
-//
-//    public void setSubcategory(Collection<Category> subcategory) {
-//        this.subcategory = subcategory;
-//    }
-
-//    @OneToMany(mappedBy = "categoryByParentId")
-//    public Collection<Category> getSubcategory() {
-//        return subcategory;
-//    }
-//
-//    public void setSubcategory(Collection<Category> subcategory) {
-//        this.subcategory = subcategory;
-//    }
-
 
 }

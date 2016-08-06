@@ -43,9 +43,22 @@ public class UtilityServices extends BaseService{
         return  this.serviceResponse;
     }
     @RequestMapping(value = "/get-category", method = RequestMethod.GET)
-    public ServiceResponse getAlCategory(){
+    public ServiceResponse getAllCategory(){
 
-        this.serviceResponse.setResponseData(categoryModel.getAll());
+        this.serviceResponse.setResponseData(categoryModel.getAll(),"No category found");
         return this.serviceResponse;
     }
+    @RequestMapping(value = "/get-category/{id}", method = RequestMethod.GET)
+    public ServiceResponse getAllCategoryById(@PathVariable("id")int id){
+
+        this.serviceResponse.setResponseData(categoryModel.getById(id),"No category found");
+        return this.serviceResponse;
+    }
+    @RequestMapping(value = "/get-subcategory/{parentId}", method = RequestMethod.GET)
+    public ServiceResponse getSubCategoryByPrentId(@PathVariable("parentId")int parentId){
+
+        this.serviceResponse.setResponseData(categoryModel.getByParentId(parentId),"No subcategory found");
+        return this.serviceResponse;
+    }
+
 }

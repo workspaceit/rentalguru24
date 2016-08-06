@@ -9,6 +9,7 @@ import org.springframework.validation.ObjectError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by mi on 8/1/16.
@@ -133,6 +134,24 @@ public class ServiceResponse  {
     }
 
     public void setResponseData(Object responseData) {
+        if(responseData==null){
+            this.responseStat.status = false;
+        }
+        this.responseData = responseData;
+    }
+    public void setResponseData(Object responseData,String ifNullMsg) {
+        if(responseData==null){
+            this.responseStat.status = false;
+            this.responseStat.msg = ifNullMsg;
+            return;
+        }else if(responseData instanceof List){
+            if( ((List)responseData).size() == 0){
+                this.responseStat.status = false;
+                this.responseStat.msg = ifNullMsg;
+                return;
+            }
+        }
+        /*------------ this.responseData can't be NULL, Must not reach here if null or similar --------------*/
         this.responseData = responseData;
     }
     public boolean hasErrors(){
