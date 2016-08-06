@@ -2,7 +2,9 @@ package controller.service.app;
 
 import controller.service.BaseService;
 import helper.ServiceResponse;
+import model.CategoryModel;
 import model.IdentityTypeModel;
+import model.entity.app.Category;
 import model.entity.app.IdentityType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by omar on 8/2/16.
@@ -23,6 +27,8 @@ public class UtilityServices extends BaseService{
 
     @Autowired
     IdentityTypeModel identityTypeModel;
+    @Autowired
+    CategoryModel categoryModel;
 
     @RequestMapping(value = "/get-identity", method = RequestMethod.GET)
     public ServiceResponse getAllIdentityType(){
@@ -35,5 +41,11 @@ public class UtilityServices extends BaseService{
 
         this.serviceResponse.setResponseData(identityTypeModel.getById(id));
         return  this.serviceResponse;
+    }
+    @RequestMapping(value = "/get-category", method = RequestMethod.GET)
+    public ServiceResponse getAlCategory(){
+
+        this.serviceResponse.setResponseData(categoryModel.getAll());
+        return this.serviceResponse;
     }
 }

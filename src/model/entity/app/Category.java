@@ -13,7 +13,7 @@ import java.util.Set;
 public class Category {
     private int id;
     private String name;
-    private Category parentId;
+    private Integer parentId;
     private int sortedOrder;
     private int createdBy;
     private Timestamp createdDate;
@@ -74,6 +74,16 @@ public class Category {
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {
         return createdDate;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = true)
+    public Collection<Category> getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(Collection<Category> subcategory) {
+        this.subcategory = subcategory;
     }
 
     public void setCreatedDate(Timestamp createdDate) {
