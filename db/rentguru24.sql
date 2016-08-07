@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Aug 05, 2016 at 03:05 অপরাহ্ণ
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.20
+-- Host: 127.0.0.1
+-- Generation Time: Aug 07, 2016 at 07:50 PM
+-- Server version: 10.1.10-MariaDB
+-- PHP Version: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -130,6 +130,19 @@ CREATE TABLE `category` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`, `parent_id`, `sorted_order`, `created_by`, `created_date`) VALUES
+(1, 'parent_category', NULL, 2, 1, '2016-08-06 15:59:11'),
+(2, 'parent_category 1', NULL, 2, 1, '2016-08-06 16:23:14'),
+(3, 'child1', 2, 3, 1, '2016-08-06 16:23:54'),
+(4, 'child2', 3, 4, 1, '2016-08-06 16:24:04'),
+(5, 'parent_category 2', NULL, 2, 1, '2016-08-06 16:24:29'),
+(6, 'child 3', 5, 3, 1, '2016-08-06 16:24:38'),
+(7, 'child 4', 5, 4, 1, '2016-08-06 16:24:46');
+
 -- --------------------------------------------------------
 
 --
@@ -163,8 +176,9 @@ CREATE TABLE `product` (
   `description` text NOT NULL,
   `images` text NOT NULL,
   `current_value` double(200,2) NOT NULL,
-  `fee` double(8,2) NOT NULL,
-  `available` tinyint(1) NOT NULL,
+  `rent_fee` double(8,2) NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `currently_available` tinyint(1) NOT NULL,
   `review_status` tinyint(1) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -181,6 +195,20 @@ CREATE TABLE `product_attribute` (
   `attribute_values_id` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_availability`
+--
+
+CREATE TABLE `product_availability` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `from_date` datetime NOT NULL,
+  `to_date` datetime NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -205,8 +233,42 @@ CREATE TABLE `product_category` (
 
 CREATE TABLE `product_location` (
   `id` int(11) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `product_id` int(11) NOT NULL
+  `product_id` int(11) NOT NULL,
+  `city` varchar(200) DEFAULT NULL,
+  `state` varchar(200) DEFAULT NULL,
+  `formated_address` text NOT NULL,
+  `zip` varchar(200) DEFAULT NULL,
+  `lat` float(10,6) NOT NULL,
+  `lng` float(10,6) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_received`
+--
+
+CREATE TABLE `product_received` (
+  `id` int(11) NOT NULL,
+  `rent_product_id` int(11) NOT NULL,
+  `is_received` tinyint(1) NOT NULL,
+  `received_date` datetime NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_returned`
+--
+
+CREATE TABLE `product_returned` (
+  `id` int(11) NOT NULL,
+  `rent_product_id` int(11) NOT NULL,
+  `is_returned` tinyint(1) NOT NULL,
+  `returned_date` datetime NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -220,6 +282,8 @@ CREATE TABLE `rent_product` (
   `product_id` int(11) NOT NULL,
   `start_date` date NOT NULL,
   `ends_date` date NOT NULL,
+  `product_returned` tinyint(1) NOT NULL,
+  `product_received` tinyint(1) NOT NULL,
   `expired` tinyint(1) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -453,6 +517,13 @@ ALTER TABLE `product_attribute`
   ADD KEY `product_attribute_product` (`product_id`);
 
 --
+-- Indexes for table `product_availability`
+--
+ALTER TABLE `product_availability`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `product_category`
 --
 ALTER TABLE `product_category`
@@ -466,7 +537,21 @@ ALTER TABLE `product_category`
 --
 ALTER TABLE `product_location`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_location_product` (`product_id`);
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `product_received`
+--
+ALTER TABLE `product_received`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rent_product_id` (`rent_product_id`);
+
+--
+-- Indexes for table `product_returned`
+--
+ALTER TABLE `product_returned`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rent_product_id` (`rent_product_id`);
 
 --
 -- Indexes for table `rent_product`
@@ -533,7 +618,7 @@ ALTER TABLE `attribute_values`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `identity_type`
 --
@@ -550,6 +635,11 @@ ALTER TABLE `product`
 ALTER TABLE `product_attribute`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `product_availability`
+--
+ALTER TABLE `product_availability`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `product_category`
 --
 ALTER TABLE `product_category`
@@ -558,6 +648,16 @@ ALTER TABLE `product_category`
 -- AUTO_INCREMENT for table `product_location`
 --
 ALTER TABLE `product_location`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `product_received`
+--
+ALTER TABLE `product_received`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `product_returned`
+--
+ALTER TABLE `product_returned`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `rent_product`
@@ -573,7 +673,7 @@ ALTER TABLE `rent_request`
 -- AUTO_INCREMENT for table `temp_file`
 --
 ALTER TABLE `temp_file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT for table `user_address`
 --
@@ -617,7 +717,6 @@ ALTER TABLE `attribute_values`
 -- Constraints for table `category`
 --
 ALTER TABLE `category`
-  ADD CONSTRAINT `category_app_login_credential` FOREIGN KEY (`created_by`) REFERENCES `app_login_credential` (`id`),
   ADD CONSTRAINT `category_category` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`);
 
 --
@@ -634,6 +733,12 @@ ALTER TABLE `product_attribute`
   ADD CONSTRAINT `product_attribute_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
 --
+-- Constraints for table `product_availability`
+--
+ALTER TABLE `product_availability`
+  ADD CONSTRAINT `product_availability_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `product_category`
 --
 ALTER TABLE `product_category`
@@ -645,7 +750,7 @@ ALTER TABLE `product_category`
 -- Constraints for table `product_location`
 --
 ALTER TABLE `product_location`
-  ADD CONSTRAINT `product_location_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `product_location_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `rent_product`
