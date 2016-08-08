@@ -19,8 +19,22 @@ public class Product {
     private double fee;
     private boolean available;
     private boolean reviewStatus;
+    private String profileImage;
+    private String otherImages;
+    private double rentFee;
+    private boolean active;
+    private boolean currentlyAvailable;
+    private Timestamp availableFrom;
+    private Timestamp availableTill;
     private Timestamp createdDate;
-    private Collection<ProductAttribute> productAttributes;
+
+
+    //private Collection<ProductAttribute> productAttributes;
+
+
+    public void setReviewStatus(boolean reviewStatus) {
+        this.reviewStatus = reviewStatus;
+    }
 
     @Id
     @Column(name = "id")
@@ -62,11 +76,7 @@ public class Product {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "images")
-    public String getImages() {
-        return images;
-    }
+
 
     public void setImages(String images) {
         this.images = images;
@@ -98,6 +108,11 @@ public class Product {
         return available;
     }
 
+//    @OneToMany(mappedBy = "productByProductId")
+//    public Collection<ProductAttribute> getProductAttributes() {
+//        return productAttributes;
+//    }
+
     public void setAvailable(boolean available) {
         this.available = available;
     }
@@ -108,9 +123,7 @@ public class Product {
         return reviewStatus;
     }
 
-    public void setReviewStatus(boolean reviewStatus) {
-        this.reviewStatus = reviewStatus;
-    }
+
 
     @Basic
     @Column(name = "created_date")
@@ -162,12 +175,74 @@ public class Product {
         return result;
     }
 
-//    @OneToMany(mappedBy = "productByProductId")
-//    public Collection<ProductAttribute> getProductAttributes() {
-//        return productAttributes;
-//    }
 
-    public void setProductAttributes(Collection<ProductAttribute> productAttributes) {
-        this.productAttributes = productAttributes;
+    @Basic
+    @Column(name = "profile_image")
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    @Basic
+    @Column(name = "other_images")
+    public String getOtherImages() {
+        return otherImages;
+    }
+
+    public void setOtherImages(String otherImages) {
+        this.otherImages = otherImages;
+    }
+
+    @Basic
+    @Column(name = "rent_fee")
+    public double getRentFee() {
+        return rentFee;
+    }
+
+    public void setRentFee(double rentFee) {
+        this.rentFee = rentFee;
+    }
+
+    @Basic
+    @Column(name = "active")
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Basic
+    @Column(name = "currently_available")
+    public boolean isCurrentlyAvailable() {
+        return currentlyAvailable;
+    }
+
+    public void setCurrentlyAvailable(boolean currentlyAvailable) {
+        this.currentlyAvailable = currentlyAvailable;
+    }
+
+    @Basic
+    @Column(name = "available_from")
+    public Timestamp getAvailableFrom() {
+        return availableFrom;
+    }
+
+    public void setAvailableFrom(Timestamp availableFrom) {
+        this.availableFrom = availableFrom;
+    }
+
+    @Basic
+    @Column(name = "available_till")
+    public Timestamp getAvailableTill() {
+        return availableTill;
+    }
+
+    public void setAvailableTill(Timestamp availableTill) {
+        this.availableTill = availableTill;
     }
 }
