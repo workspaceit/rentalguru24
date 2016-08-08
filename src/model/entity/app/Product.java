@@ -22,9 +22,11 @@ public class Product {
     private Timestamp availableTill;
     private boolean reviewStatus;
     private Timestamp createdDate;
+    private AppCredential owner;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -199,5 +201,15 @@ public class Product {
         result = 31 * result + (reviewStatus ? 1 : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", nullable = false)
+    public AppCredential getOwner(){
+        return this.owner;
+    }
+
+    public void setOwner(AppCredential owner){
+        this.owner = owner;
     }
 }
