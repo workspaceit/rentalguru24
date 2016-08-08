@@ -1,16 +1,13 @@
 package controller.service.app;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.service.BaseService;
 import helper.DateHelper;
 import helper.ImageHelper;
 import helper.ServiceResponse;
-import jdk.nashorn.internal.parser.JSONParser;
 import model.AppLoginCredentialModel;
 import model.ProductModel;
 import model.TempFileModel;
-import model.entity.app.AppCredential;
 import model.entity.app.Product;
 import model.entity.app.TempFile;
 import model.nonentity.photo.Picture;
@@ -25,9 +22,6 @@ import validator.form.ProductUploadFormValidator;
 import validator.form.class_file.ProductUploadForm;
 
 import javax.validation.Valid;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 
 /**
@@ -60,16 +54,33 @@ public class ProductService extends BaseService{
         productUploadForm.setName(allRequestParameter.get("name"));
         productUploadForm.setDescription(allRequestParameter.get("description"));
         productUploadForm.setOtherImages(allRequestParameter.get("otherImagesTokens"));
+
+
+
         try{
-            productUploadForm.setProfileImage(Long.parseLong(allRequestParameter.get("profileImageToken")));
+            ObjectMapper objectMapper = new ObjectMapper();
+            if(!allRequestParameter.get("categoryId").isEmpty()){
+
+                Long[] categoryIdArray =  objectMapper.readValue(allRequestParameter.get("categoryId"), Long[].class);
+                productUploadForm.setCategoryIdArray(categoryIdArray);
+            }
+
+        }catch(Exception ex){
+            this.serviceResponse.setRequestError("categoryIdArray","Category Id required");
+        }
+
+        try{
+            productUploadForm.setProfileImageToken(Long.parseLong(allRequestParameter.get("profileImageToken")));
         }catch(Exception ex){
             this.serviceResponse.setRequestError("profileImageToken","Profile image token value required");
         }
+
         try{
             productUploadForm.setCurrentValue(Double.parseDouble(allRequestParameter.get("currentValue")));
         }catch(Exception ex){
             this.serviceResponse.setRequestError("currentValue","Current value required");
         }
+
         try{
             productUploadForm.setRentFee(Double.parseDouble(allRequestParameter.get("rentFee")));
         }catch(Exception ex){
@@ -103,7 +114,7 @@ public class ProductService extends BaseService{
 
 
 
-        TempFile tempFile = this.tempFileModel.getByToken(productUploadForm.getProfileImage());
+        TempFile tempFile = this.tempFileModel.getByToken(productUploadForm.getProfileImageToken());
         if(tempFile ==null){
             this.serviceResponse.setRequestError("profileImage", "Profile Image doc token is not valid");
             return serviceResponse;

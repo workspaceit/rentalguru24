@@ -1,14 +1,12 @@
 package validator.form.class_file;
 
-import java.sql.Timestamp;
-
 /**
  * Created by mi on 8/8/16.
  */
 public class ProductUploadForm {
     private String name;
     private String description;
-    private long profileImage;
+    private long profileImageToken;
     private String otherImages;
     private double currentValue;
     private double rentFee;
@@ -17,7 +15,7 @@ public class ProductUploadForm {
     private String availableFrom;
     private String availableTill;
     private boolean reviewStatus;
-    private int categoryId;
+    private Long[] categoryIdArray;
     private String createdDate;
 
     public String getName() {
@@ -36,12 +34,12 @@ public class ProductUploadForm {
         this.description = description;
     }
 
-    public long getProfileImage() {
-        return profileImage;
+    public long getProfileImageToken() {
+        return profileImageToken;
     }
 
-    public void setProfileImage(long profileImage) {
-        this.profileImage = profileImage;
+    public void setProfileImageToken(long profileImageToken) {
+        this.profileImageToken = profileImageToken;
     }
 
     public String getOtherImages() {
@@ -108,12 +106,12 @@ public class ProductUploadForm {
         this.reviewStatus = reviewStatus;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public Long[] getCategoryIdArray() {
+        return categoryIdArray;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryIdArray(Long[] categoryIdArray) {
+        this.categoryIdArray = categoryIdArray;
     }
 
     public String getCreatedDate() {
