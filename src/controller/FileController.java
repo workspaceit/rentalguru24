@@ -18,7 +18,7 @@ import java.util.Random;
  * Created by mi on 8/2/16.
  */
 @RestController
-@RequestMapping("/fileupload")
+@RequestMapping("/fileupload/upload")
 @Scope("request")
 public class FileController {
     private ServiceResponse serviceResponse;
@@ -29,7 +29,7 @@ public class FileController {
         this.serviceResponse = new ServiceResponse();
     }
 
-    @RequestMapping(value = "/upload/document-identity", headers = "Content-Type=multipart/form-data",method = RequestMethod.POST)
+    @RequestMapping(value = "/document-identity", headers = "Content-Type=multipart/form-data",method = RequestMethod.POST)
     public ServiceResponse uploadDocumentIdentity(@RequestParam("documentIdentity") MultipartFile file){
         model.entity.app.TempFile tempFile = new model.entity.app.TempFile();
 
@@ -48,6 +48,38 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
             serviceResponse.setRequestError("documentIdentity", "No file attached");
+        }
+
+
+        Random rnd = new Random();
+        long n = 1000000000 + rnd.nextInt(900000);
+
+        tempFile.setToken(n);
+
+
+        this.tempFileModel.insert(tempFile);
+        this.serviceResponse.setResponseData(tempFile.getToken());
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/product-image", headers = "Content-Type=multipart/form-data",method = RequestMethod.POST)
+    public ServiceResponse uploadProductImage(@RequestParam("productImage") MultipartFile file){
+        model.entity.app.TempFile tempFile = new model.entity.app.TempFile();
+
+
+        /*---------Only Doc type validation -----------------*/
+
+        try {
+            byte[] fileByte = file.getBytes();
+            System.out.println("Byte Received " +fileByte.length);
+            if(fileByte.length==0){
+                this.serviceResponse.setRequestError("productImage", "No file attached");
+                return this.serviceResponse;
+            }
+            String filePath = ImageHelper.saveFile(fileByte, file.getOriginalFilename());
+            tempFile.setPath(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            serviceResponse.setRequestError("productImage", "No file attached");
         }
 
 

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import validator.entity.ProductValidator;
+import validator.form.ProductUploadFormValidator;
+import validator.form.class_file.ProductUploadForm;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -23,10 +24,10 @@ import java.util.Map;
 public class ProductService extends BaseService{
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     public ServiceResponse uploadProduct(@RequestParam Map<String,String> allRequestParameter,
-                                         @Valid Product product,
+                                         @Valid ProductUploadForm productUploadForm,
                                          BindingResult result){
 
-        new ProductValidator().validate(product,result);
+        new ProductUploadFormValidator().validate(productUploadForm, result);
         this.serviceResponse.setError(result,true,false);
         return this.serviceResponse;
     }

@@ -25,6 +25,8 @@ public class ImageHelper {
 //    private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
     private static String DOC_FOLDER= "identityDoc/";
     private static String DOC_PATH= GLOBAL_PATH+DOC_FOLDER;
+    private static String PRODUCT_FOLDER= "product/";
+    private static String PRODUCT_PATH= GLOBAL_PATH+PRODUCT_FOLDER;
     private static String TEMP_FOLDER= "temp/";
     private static String TEMP_FILE_PATH= GLOBAL_PATH+TEMP_FOLDER;
 
@@ -49,6 +51,28 @@ public class ImageHelper {
             File docFile =new File(GLOBAL_PATH+oldPath);
 
             createDirIfNotExist(DOC_PATH + appCredential);
+
+            if(docFile.renameTo(new File(filePath))){
+                System.out.println("File is moved successful!");
+            }else{
+                System.out.println("File is failed to move!"+filePath);
+            }
+            System.out.println(GLOBAL_PATH+oldPath);
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return DOC_FOLDER+fileName;
+    }
+    public static String moveProductImage(int appCredential,String oldPath){
+        String fileName = appCredential+"/"+System.nanoTime()+"."+getExtension(oldPath);
+        String filePath = DOC_PATH+fileName;
+        try{
+
+            File docFile =new File(GLOBAL_PATH+oldPath);
+
+            createDirIfNotExist(PRODUCT_PATH + appCredential);
 
             if(docFile.renameTo(new File(filePath))){
                 System.out.println("File is moved successful!");

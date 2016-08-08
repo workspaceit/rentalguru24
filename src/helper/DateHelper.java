@@ -1,6 +1,7 @@
 package helper;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,6 +11,8 @@ import java.util.TimeZone;
  * Created by mi on 10/29/15.
  */
 public class DateHelper {
+
+
 
     public static String getProcessedTimeStamp(Timestamp timeStamp) {
         String processedTime = "";
@@ -42,5 +45,18 @@ public class DateHelper {
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         return dateFormat.format(new Date());
+    }
+
+
+    public static boolean isDateValid(String date,String dateFormat)
+    {
+        try {
+            DateFormat df = new SimpleDateFormat(dateFormat);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 }
