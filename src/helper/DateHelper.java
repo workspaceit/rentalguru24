@@ -59,4 +59,16 @@ public class DateHelper {
             return false;
         }
     }
+
+    public static Timestamp getStringToTimeStamp(String strDate,String format){
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        try {
+            Date date = dateFormat.parse(strDate);
+            return new java.sql.Timestamp(date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
 }

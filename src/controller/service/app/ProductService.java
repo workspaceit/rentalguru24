@@ -1,11 +1,19 @@
 package controller.service.app;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.service.BaseService;
+import helper.DateHelper;
+import helper.ImageHelper;
 import helper.ServiceResponse;
+import jdk.nashorn.internal.parser.JSONParser;
 import model.AppLoginCredentialModel;
 import model.ProductModel;
+import model.TempFileModel;
 import model.entity.app.AppCredential;
 import model.entity.app.Product;
+import model.entity.app.TempFile;
+import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
@@ -17,7 +25,9 @@ import validator.form.ProductUploadFormValidator;
 import validator.form.class_file.ProductUploadForm;
 
 import javax.validation.Valid;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 /**
@@ -33,6 +43,9 @@ public class ProductService extends BaseService{
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
 
+    @Autowired
+    TempFileModel tempFileModel;
+
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     public ServiceResponse uploadProduct(@RequestParam Map<String,String> allRequestParameter,
                                          @Valid ProductUploadForm productUploadForm,
@@ -41,39 +54,90 @@ public class ProductService extends BaseService{
 
         Product product = new Product();
 
-        String name = allRequestParameter.get("name");
-        String description = allRequestParameter.get("description");
-        String profileImage = allRequestParameter.get("profileimage");
-        String otherImages = allRequestParameter.get("otherimages");
-        String currentValue = allRequestParameter.get("currentvalue");
-        String rentFee = allRequestParameter.get("rentfee");
-        String active = allRequestParameter.get("active");
-        String currentlyAvailable = allRequestParameter.get("currentlyavailable");
-        String availableFrom =  allRequestParameter.get("availablefrom");
-        String availableTill = allRequestParameter.get("availabletill");
-        String reviewStatus = allRequestParameter.get("reviewstatus");
+        productUploadForm.setName(allRequestParameter.get("name"));
+        productUploadForm.setDescription(allRequestParameter.get("description"));
+        productUploadForm.setOtherImages(allRequestParameter.get("otherImagesTokens"));
+        try{
+            productUploadForm.setProfileImage(Long.parseLong(allRequestParameter.get("profileImageToken")));
+        }catch(Exception ex){
+            this.serviceResponse.setRequestError("profileImageToken","Profile image token value required");
+        }
+        try{
+            productUploadForm.setCurrentValue(Double.parseDouble(allRequestParameter.get("currentValue")));
+        }catch(Exception ex){
+            this.serviceResponse.setRequestError("currentValue","Current value required");
+        }
+        try{
+            productUploadForm.setRentFee(Double.parseDouble(allRequestParameter.get("rentFee")));
+        }catch(Exception ex){
+            this.serviceResponse.setRequestError("rentFee","Rent fee required");
+        }
 
-        java.sql.Timestamp availableFromDate = java.sql.Timestamp.valueOf(availableFrom) ;
-        java.sql.Timestamp availableTillDate = java.sql.Timestamp.valueOf(availableTill) ;
+        productUploadForm.setAvailableFrom(allRequestParameter.get("availableFrom"));
+        productUploadForm.setAvailableTill(allRequestParameter.get("availableTill"));
 
 
-        product.setName(name);
-        product.setDescription(description);
-        product.setProfileImage(profileImage);
-        product.setOtherImages(otherImages);
-        product.setCurrentValue(Double.parseDouble(currentValue));
-        product.setRentFee(Double.parseDouble(rentFee));
-        product.setActive(Boolean.parseBoolean(active));
-        product.setCurrentValue(Double.parseDouble(currentlyAvailable));
+
+
+
+
+        new ProductUploadFormValidator().validate(productUploadForm, result);
+
+        this.serviceResponse.setError(result, true, false);
+        if( this.serviceResponse.hasErrors()){
+            return this.serviceResponse;
+        }
+
+
+        java.sql.Timestamp availableFromDate = DateHelper.getStringToTimeStamp(productUploadForm.getAvailableFrom(), "dd-MM-yyyy") ;
+        java.sql.Timestamp availableTillDate = DateHelper.getStringToTimeStamp(productUploadForm.getAvailableFrom(), "dd-MM-yyyy") ;
+
+
+
+        product.setOwner(appLoginCredentialModel.getAppCredentialById(32));
+
+        /*----- Move identity doc form temp to original ---- */
+
+
+
+        TempFile tempFile = this.tempFileModel.getByToken(productUploadForm.getProfileImage());
+        if(tempFile ==null){
+            this.serviceResponse.setRequestError("profileImage", "Profile Image doc token is not valid");
+            return serviceResponse;
+        }
+
+        if(!ImageHelper.isFileExist(tempFile.getPath())){
+            this.serviceResponse.setRequestError("profileImage", "No file found associated with the token");
+            return serviceResponse;
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        Picture profileImageJsonObject = new Picture();
+        try {
+            profileImageJsonObject = ImageHelper.moveProductImage(product.getOwner().getId(), tempFile.getPath());
+        } catch (Exception e) {
+            //e.printStackTrace();
+            this.serviceResponse.setRequestError("profileImage", "Unable to save profile image");
+            return serviceResponse;
+        }
+
+
+        product.setName(productUploadForm.getName());
+        product.setDescription(productUploadForm.getDescription());
+        product.setProfileImage(profileImageJsonObject);
+        //product.setOtherImages();
+        product.setCurrentValue(productUploadForm.getCurrentValue());
+        product.setRentFee(productUploadForm.getRentFee());
+        product.setActive(true);
+        product.setCurrentValue(productUploadForm.getCurrentValue());
         product.setAvailableFrom(availableFromDate);
         product.setAvailableTill(availableTillDate);
-        product.setReviewStatus(Boolean.parseBoolean(reviewStatus));
+        product.setReviewStatus(false);
 
-        product.setOwner(appLoginCredentialModel.getAppCredentialById(1));
+
 
         productModel.insert(product);
 
-
+        this.serviceResponse.setResponseData(product);
         return this.serviceResponse;
     }
 }
