@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -162,10 +163,10 @@
                         <li class="dropdown catagory_drop">
                             <a href="#" class="dropdown-toggle catagory_drop_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i>Select a category <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <c:forEach var="listValue" items="${category}">
+                                <d:forEach var="listValue" items="${category}">
                                     <%--<li><a href="#">Action</a></li>--%>
                                     <li>${listValue}</li>
-                                </c:forEach>
+                                </d:forEach>
                             </ul>
                         </li>
                         <form class="navbar-form navbar-left no-padding main_search_form" role="search">

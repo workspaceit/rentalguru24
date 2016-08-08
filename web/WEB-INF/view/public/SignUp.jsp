@@ -331,7 +331,9 @@
                     BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
                 }else{
                     $('form').trigger('reset');
-                    $('.alert-success').show().delay(5000).fadeOut();
+                    $('.alert-success').show().delay(5000).fadeOut(500,function(){
+                        window.location.href = "/home";
+                    });
                 }
             }
         });
