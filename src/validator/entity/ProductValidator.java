@@ -20,9 +20,11 @@ public class ProductValidator implements Validator {
 
         errors.rejectValue("name","Product name required");
         errors.rejectValue("description","Description name required");
-        errors.rejectValue("name","product name required");
-        errors.rejectValue("name","product name required");
-        errors.rejectValue("name","product name required");
+        errors.rejectValue("profileImage","profile Image  required");
+        //errors.rejectValue("otherImages","Other Images  required");
+        errors.rejectValue("rentFee","Rent fee required");
+        errors.rejectValue("availableFrom","product name required");
+        errors.rejectValue("availableTill","product name required");
 
 
     }
