@@ -1,5 +1,7 @@
 package model.entity.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -12,11 +14,11 @@ public class ProductCategory {
     private int id;
     private int productId;
     private int categoryId;
-    private int createdBy;
     private Timestamp createdDate;
     private Category category;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -37,17 +39,10 @@ public class ProductCategory {
     }
 
 
-    @Basic
-    @Column(name = "created_by")
-    public int getCreatedBy() {
-        return createdBy;
-    }
 
-    public void setCreatedBy(int createdBy) {
-        this.createdBy = createdBy;
-    }
 
     @Basic
+    @JsonIgnore
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {
         return createdDate;
@@ -67,7 +62,6 @@ public class ProductCategory {
         if (id != that.id) return false;
         if (productId != that.productId) return false;
         if (categoryId != that.categoryId) return false;
-        if (createdBy != that.createdBy) return false;
         if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
 
         return true;
@@ -78,7 +72,6 @@ public class ProductCategory {
         int result = id;
         result = 31 * result + productId;
         result = 31 * result + categoryId;
-        result = 31 * result + createdBy;
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
     }

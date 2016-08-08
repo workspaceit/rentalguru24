@@ -115,6 +115,7 @@
                             <value>model.entity.app.TempFile</value>
                             <value>model.entity.app.IdentityType</value>
                             <value>model.entity.app.ProductAvailability</value>
+                            <value>model.entity.app.ProductLocation</value>
                      </list>
               </property>
               <property name="hibernateProperties">

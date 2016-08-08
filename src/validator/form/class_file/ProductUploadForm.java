@@ -15,8 +15,16 @@ public class ProductUploadForm {
     private String availableFrom;
     private String availableTill;
     private boolean reviewStatus;
-    private Long[] categoryIdArray;
-    private String createdDate;
+    private Integer[] categoryIdArray;
+
+
+
+    private String city;
+    private String state;
+    private String formattedAddress;
+    private String zip;
+    private float lat;
+    private float lng;
 
     public String getName() {
         return name;
@@ -106,19 +114,61 @@ public class ProductUploadForm {
         this.reviewStatus = reviewStatus;
     }
 
-    public Long[] getCategoryIdArray() {
+    public Integer[] getCategoryIdArray() {
         return categoryIdArray;
     }
 
-    public void setCategoryIdArray(Long[] categoryIdArray) {
+    public void setCategoryIdArray(Integer[] categoryIdArray) {
         this.categoryIdArray = categoryIdArray;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+
+
+    public String getCity() {
+        return city;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getFormattedAddress() {
+        return formattedAddress;
+    }
+
+    public void setFormattedAddress(String formattedAddress) {
+        this.formattedAddress = formattedAddress;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public float getLat() {
+        return lat;
+    }
+
+    public void setLat(float lat) {
+        this.lat = lat;
+    }
+
+    public float getLng() {
+        return lng;
+    }
+
+    public void setLng(float lng) {
+        this.lng = lng;
     }
 }
