@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import validator.entity.ProductValidator;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -25,8 +26,8 @@ public class ProductService extends BaseService{
                                          @Valid Product product,
                                          BindingResult result){
 
-
-
+        new ProductValidator().validate(product,result);
+        this.serviceResponse.setError(result,true,false);
         return this.serviceResponse;
     }
 }
