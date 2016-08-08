@@ -1,19 +1,25 @@
 package model.entity.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sun.javafx.css.converters.ColorConverter;
 import model.entity.app.convert.PictureConverter;
 import model.nonentity.photo.Picture;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by mi on 8/8/16.
  */
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "product", schema = "", catalog = "rentguru24")
 public class Product {
     private int id;
+
     private String name;
     private String description;
     private Picture profileImage;
@@ -27,6 +33,7 @@ public class Product {
     private boolean reviewStatus;
     private Timestamp createdDate;
     private AppCredential owner;
+    private List<ProductCategory> productCategories;
 
     @Id
     @Column(name = "id")
@@ -153,12 +160,23 @@ public class Product {
 
     @Basic
     @Column(name = "created_date")
+    @JsonIgnore
     public Timestamp getCreatedDate() {
         return createdDate;
     }
 
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
+    }
+
+    @OneToMany
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    public List<ProductCategory> getProductCategories() {
+        return productCategories;
+    }
+
+    public void setProductCategories(List<ProductCategory> productCategories) {
+        this.productCategories = productCategories;
     }
 
     @Override

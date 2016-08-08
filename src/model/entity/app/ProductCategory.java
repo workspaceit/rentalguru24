@@ -26,25 +26,16 @@ public class ProductCategory {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "product_id")
-    public int getProductId() {
-        return productId;
-    }
+//    @Basic
+//    @Column(name = "product_id")
+//    public int getProductId() {
+//        return productId;
+//    }
 
     public void setProductId(int productId) {
         this.productId = productId;
     }
 
-    @Basic
-    @Column(name = "category_id")
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
 
     @Basic
     @Column(name = "created_by")
@@ -92,11 +83,11 @@ public class ProductCategory {
         return result;
     }
 
-//    @ManyToOne
-//    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
-//    public Category getCategory() {
-//        return category;
-//    }
+    @OneToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    public Category getCategory() {
+        return category;
+    }
 
     public void setCategory(Category category) {
         this.category = category;

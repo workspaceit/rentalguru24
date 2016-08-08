@@ -17,6 +17,7 @@ public class ProductUploadForm {
     private String availableFrom;
     private String availableTill;
     private boolean reviewStatus;
+    private int categoryId;
     private String createdDate;
 
     public String getName() {
@@ -105,6 +106,14 @@ public class ProductUploadForm {
 
     public void setReviewStatus(boolean reviewStatus) {
         this.reviewStatus = reviewStatus;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCreatedDate() {

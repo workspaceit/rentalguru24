@@ -51,7 +51,10 @@ public class ProductService extends BaseService{
                                          @Valid ProductUploadForm productUploadForm,
                                          BindingResult result){
 
-
+        if(!this.serviceResponse.getResponseStat().getIsLogin()){
+            this.serviceResponse.getResponseStat().setErrorMsg("Session expired !! , please login ");
+            return this.serviceResponse;
+        }
         Product product = new Product();
 
         productUploadForm.setName(allRequestParameter.get("name"));
@@ -94,7 +97,7 @@ public class ProductService extends BaseService{
 
 
 
-        product.setOwner(appLoginCredentialModel.getAppCredentialById(32));
+        product.setOwner(this.appCredential);
 
         /*----- Move identity doc form temp to original ---- */
 

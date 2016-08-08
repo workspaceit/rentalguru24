@@ -27,6 +27,7 @@ public class ProductUploadFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"profileImage", "profile Image  required");
         //errors.rejectValue("otherImages","Other Images  required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"rentFee", "Rent fee required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "categoryId", "Category id required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"availableFrom", "Available from date required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "availableTill", "Available till date required");
 
