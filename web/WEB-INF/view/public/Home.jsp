@@ -165,7 +165,7 @@
                             <ul class="dropdown-menu">
                                 <d:forEach var="listValue" items="${category}">
                                     <%--<li><a href="#">Action</a></li>--%>
-                                    <li>${listValue}</li>
+                                    <li><a href="#">${listValue.name}</a></li>
                                 </d:forEach>
                             </ul>
                         </li>
