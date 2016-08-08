@@ -81,6 +81,8 @@
        </bean>
        <bean id="rentProductModel" class="model.RentProductModel" >
        </bean>
+       <bean id="productModel" class="model.ProductModel" >
+       </bean>
 
 
         <!-- ******************** Hibernate Session,Entity, *********************************** -->

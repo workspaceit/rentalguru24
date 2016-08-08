@@ -31,12 +31,12 @@ public class RentRequestService {
         String startDate = allrequstvalue.get("startDate");
         String endDate = allrequstvalue.get("endDate");
 
-        System.out.println(productId);
-        System.out.println(requestedBy);
-        System.out.println(bookingId);
-        System.out.println(requestId);
-        System.out.println(startDate);
-        System.out.println(endDate);
+//        System.out.println(productId);
+//        System.out.println(requestedBy);
+//        System.out.println(bookingId);
+//        System.out.println(requestId);
+//        System.out.println(startDate);
+//        System.out.println(endDate);
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date Sdate = formatter.parse(startDate);
