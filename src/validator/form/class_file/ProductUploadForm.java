@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public class ProductUploadForm {
     private String name;
     private String description;
-    private String profileImage;
+    private long profileImage;
     private String otherImages;
     private double currentValue;
     private double rentFee;
@@ -35,11 +35,11 @@ public class ProductUploadForm {
         this.description = description;
     }
 
-    public String getProfileImage() {
+    public long getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(String profileImage) {
+    public void setProfileImage(long profileImage) {
         this.profileImage = profileImage;
     }
 

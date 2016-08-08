@@ -1,5 +1,9 @@
 package model.entity.app;
 
+import com.sun.javafx.css.converters.ColorConverter;
+import model.entity.app.convert.PictureConverter;
+import model.nonentity.photo.Picture;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -12,8 +16,8 @@ public class Product {
     private int id;
     private String name;
     private String description;
-    private String profileImage;
-    private String otherImages;
+    private Picture profileImage;
+    private Picture otherImages;
     private double currentValue;
     private double rentFee;
     private boolean active;
@@ -57,21 +61,23 @@ public class Product {
 
     @Basic
     @Column(name = "profile_image")
-    public String getProfileImage() {
+    @Convert(converter = PictureConverter.class)
+    public Picture getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(String profileImage) {
+    public void setProfileImage(Picture profileImage) {
         this.profileImage = profileImage;
     }
 
     @Basic
     @Column(name = "other_images")
-    public String getOtherImages() {
+    @Convert(converter = PictureConverter.class)
+    public Picture getOtherImages() {
         return otherImages;
     }
 
-    public void setOtherImages(String otherImages) {
+    public void setOtherImages(Picture otherImages) {
         this.otherImages = otherImages;
     }
 

@@ -1,8 +1,6 @@
 package helper;
 
-import model.nonentity.photo.PictureDetails;
-import model.nonentity.photo.Pictures;
-import model.nonentity.photo.PictureSize;
+import model.nonentity.photo.Picture;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -43,14 +41,14 @@ public class ImageHelper {
         File docFile =new File(GLOBAL_PATH+path);
         return docFile.exists();
     }
-    public static String moveFile(int appCredential,String oldPath){
-        String fileName = appCredential+"/"+System.nanoTime()+"."+getExtension(oldPath);
+    public static String moveFile(int appCredentialId,String oldPath){
+        String fileName = appCredentialId+"/"+System.nanoTime()+"."+getExtension(oldPath);
         String filePath = DOC_PATH+fileName;
         try{
 
             File docFile =new File(GLOBAL_PATH+oldPath);
 
-            createDirIfNotExist(DOC_PATH + appCredential);
+            createDirIfNotExist(DOC_PATH + appCredentialId);
 
             if(docFile.renameTo(new File(filePath))){
                 System.out.println("File is moved successful!");
@@ -65,17 +63,24 @@ public class ImageHelper {
         }
         return DOC_FOLDER+fileName;
     }
-    public static String moveProductImage(int appCredential,String oldPath){
-        String fileName = appCredential+"/"+System.nanoTime()+"."+getExtension(oldPath);
+    public static Picture moveProductImage(int appCredentialId,String oldPath){
+        String fileName = appCredentialId+"/"+System.nanoTime()+"."+getExtension(oldPath);
         String filePath = DOC_PATH+fileName;
+        Picture picture = new Picture();
         try{
 
             File docFile =new File(GLOBAL_PATH+oldPath);
 
-            createDirIfNotExist(PRODUCT_PATH + appCredential);
+            createDirIfNotExist(PRODUCT_PATH + appCredentialId);
 
             if(docFile.renameTo(new File(filePath))){
-                System.out.println("File is moved successful!");
+                BufferedImage in = ImageIO.read(new File(filePath));
+
+
+                picture.getOriginal().setPath(PRODUCT_FOLDER + fileName);
+                picture.getOriginal().getSize().setHeight(in.getHeight());
+                picture.getOriginal().getSize().setWidth(in.getWidth());
+
             }else{
                 System.out.println("File is failed to move!"+filePath);
             }
@@ -85,7 +90,11 @@ public class ImageHelper {
         }catch(Exception e){
             e.printStackTrace();
         }
-        return DOC_FOLDER+fileName;
+
+
+
+
+        return picture;
     }
 
     public static void createDirIfNotExist(String path) {
