@@ -1,5 +1,6 @@
 package model.entity.app.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
@@ -95,6 +96,8 @@ public class ProductLocation {
     public void setLng(Float lng) {
         this.lng = lng;
     }
+
+    @JsonIgnore
     @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {

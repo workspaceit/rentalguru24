@@ -1,15 +1,16 @@
 package controller.service.app;
 
 
+import controller.service.BaseService;
+import helper.DateHelper;
+import helper.ServiceResponse;
 import library.RentGuruMail;
 import model.*;
 
 import model.entity.app.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
 import java.sql.Date;
@@ -20,7 +21,8 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/api/app")
-public class TestService {
+@Scope("request")
+public class TestService extends BaseService{
     @Autowired
     AttributesModel attributesModel;
 
@@ -137,7 +139,6 @@ public class TestService {
         RentRequest rentRequest = new RentRequest();
         rentRequest.setProductId(1);
         rentRequest.setRequestedBy(1);
-        rentRequest.setBookingId(1);
         rentRequest.setRequestId(null);
         rentRequest.setStartDate(new Date(Calendar.getInstance().getTime().getTime()));
         rentRequest.setEndDate(new Date(Calendar.getInstance().getTime().getTime()));
@@ -176,11 +177,59 @@ public class TestService {
         rentProductModel.insert(rentProduct);
     }
 
-    @RequestMapping(value = "/test/mail", method = RequestMethod.POST)
-    public void testMail(){
-        rentGuruMail.sendSignUpMail();
-        //final WebContext ctx = new WebContext(request,servletContext,request.getLocale());
+    @RequestMapping(value = "/test/request-rent/{productId}", method = RequestMethod.POST)
+    public ServiceResponse testMail(@PathVariable("productId") int productId,@RequestParam("startDate")String startDate,@RequestParam("endsDate")String endsDate){
+        System.out.println(productId);
+        System.out.println(startDate);
+        System.out.println(endsDate);
 
+        if(startDate==null || startDate.isEmpty()){
+            this.serviceResponse.setRequestError("startDate","Start date is required");
+        }
+        if(endsDate==null || endsDate.isEmpty()){
+            this.serviceResponse.setRequestError("endsDate","End date is required");
+        }
+
+        if(this.serviceResponse.hasErrors()){
+            return this.serviceResponse;
+        }
+
+
+        if(!DateHelper.isDateValid(startDate, "dd-MM-yyyy")){
+            this.serviceResponse.setRequestError("startDate","Start date format miss matched");
+        }
+        if(!DateHelper.isDateValid(endsDate, "dd-MM-yyyy")){
+            this.serviceResponse.setRequestError("endsDate","Ends date format miss matched");
+        }
+
+        if(this.serviceResponse.hasErrors()){
+            return this.serviceResponse;
+        }
+
+
+        Timestamp startTimeStamp = DateHelper.getStringToTimeStamp(startDate, "dd-MM-yyyy");
+        Timestamp endTimeStamp = DateHelper.getStringToTimeStamp(endsDate,"dd-MM-yyyy");
+
+
+        if(rentProductModel.isProductInRent(productId,startTimeStamp,endTimeStamp)){
+            this.serviceResponse.setRequestError("productId","Product is not available for rent in given date");
+            return this.serviceResponse;
+        }
+
+        if(this.serviceResponse.hasErrors()){
+            return this.serviceResponse;
+        }
+
+        RentRequest rentRequest = new RentRequest();
+
+        rentRequest.setApprove(false);
+        rentRequest.setRequestedBy(this.appCredential.getId());
+        rentRequest.setProductId(productId);
+        rentRequest.setStartDate(new Date(startTimeStamp.getTime()));
+        rentRequest.setEndDate(new Date(endTimeStamp.getTime()));
+        rentRequestModel.insert(rentRequest);
+        this.serviceResponse.setResponseData(rentRequest,"Internal server error");
+        return this.serviceResponse;
 
     }
 

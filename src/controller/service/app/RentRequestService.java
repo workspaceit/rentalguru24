@@ -49,11 +49,11 @@ public class RentRequestService {
 
         rentRequest.setProductId(Integer.parseInt(productId));
         rentRequest.setRequestedBy(Integer.parseInt(requestedBy));
-        rentRequest.setBookingId(Integer.parseInt(bookingId));
         rentRequest.setRequestId(Integer.parseInt(requestId));
         rentRequest.setStartDate(SDate);
         rentRequest.setEndDate(EDate);
 
         rentRequestModel.insert(rentRequest);
+
     }
 }
