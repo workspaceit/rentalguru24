@@ -1,11 +1,10 @@
 package controller.web.app;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 
@@ -16,9 +15,9 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/signup")
 public class SignUpController {
-
     @RequestMapping(method = RequestMethod.GET)
-    public String index() {
-        return "public/SignUp";
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("public/SignUp");
+        return modelAndView;
     }
 }
