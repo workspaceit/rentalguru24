@@ -11,6 +11,7 @@ import model.ProductModel;
 import model.TempFileModel;
 import model.entity.app.*;
 import model.nonentity.photo.Picture;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
@@ -204,4 +205,50 @@ public class ProductService extends BaseService{
         this.serviceResponse.setResponseData(product);
         return this.serviceResponse;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @RequestMapping(value = "/get-searched-product", method = RequestMethod.GET)
+    public List<Product> getProductSearchedProduct(@RequestParam ("limit") int limit, @RequestParam ("offset") int offset){
+        List<Product> products = productModel.getProductSearch(limit, offset);
+        return products;
+    }
 }
+
