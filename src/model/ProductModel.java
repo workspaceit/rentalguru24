@@ -1,6 +1,7 @@
 package model;
 
 
+import model.entity.app.product.SearchedProduct;
 import org.hibernate.Query;
 
 import model.entity.app.product.Product;
@@ -32,10 +33,15 @@ public class ProductModel extends BaseModel{
         session.beginTransaction();
         return session.get(Product.class,id);
     }
-    public List<Product> getProductSearch(int limit, int offset){
+    public List<SearchedProduct> getProductSearch(int limit, int offset){
+        if(limit > 15){
+            limit = 15;
+        }
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM SerchedProduct";
+        String hql = "FROM SearchedProduct";
         Query query =  session.createQuery(hql);
-        return (List<Product>)query.list();
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+        return (List<SearchedProduct>)query.list();
     }
 }

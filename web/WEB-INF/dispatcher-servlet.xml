@@ -116,6 +116,7 @@
                             <value>model.entity.app.IdentityType</value>
                             <value>model.entity.app.product.ProductAvailability</value>
                             <value>model.entity.app.product.ProductLocation</value>
+                            <!--<value>model.entity.app.product.SearchedProduct</value>-->
                      </list>
               </property>
               <property name="hibernateProperties">
