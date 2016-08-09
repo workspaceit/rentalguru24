@@ -90,9 +90,12 @@ public class ProductService extends BaseService{
             if(allRequestParameter.get("otherImagesToken")!=null && !allRequestParameter.get("otherImagesToken").isEmpty()) {
                 Long[] otherImagesToken = objectMapper.readValue(allRequestParameter.get("otherImagesToken"), Long[].class);
                 productUploadForm.setOtherImagesTokenArray(otherImagesToken);
+            }else{
+                productUploadForm.setOtherImagesTokenArray(new Long[0]);
             }
         }catch(Exception ex){
             this.serviceResponse.setRequestError("otherImagesToken","Other images token is not in valid format");
+            productUploadForm.setOtherImagesTokenArray(new Long[0]);
         }
 
         try{
@@ -181,12 +184,12 @@ public class ProductService extends BaseService{
 
         TempFile tempFile = this.tempFileModel.getByToken(productUploadForm.getProfileImageToken());
         if(tempFile ==null){
-            this.serviceResponse.setRequestError("profileImage", "Profile Image token is not valid");
+            this.serviceResponse.setRequestError("profileImageToken", "Profile Image token is not valid");
             return serviceResponse;
         }
 
         if(!ImageHelper.isFileExist(tempFile.getPath())){
-            this.serviceResponse.setRequestError("profileImage", "No file found associated with the token");
+            this.serviceResponse.setRequestError("profileImageToken", "No file found associated with the token");
             return serviceResponse;
         }
         ObjectMapper objectMapper = new ObjectMapper();
@@ -195,7 +198,7 @@ public class ProductService extends BaseService{
             profileImage = ImageHelper.moveProductImage(product.getOwner().getId(), tempFile.getPath());
         } catch (Exception e) {
             //e.printStackTrace();
-            this.serviceResponse.setRequestError("profileImage", "Unable to save profile image");
+            this.serviceResponse.setRequestError("profileImageToken", "Unable to save profile image");
             return serviceResponse;
         }
 
@@ -210,7 +213,7 @@ public class ProductService extends BaseService{
                 otherImages.add(picture);
             } catch (Exception e) {
                 //e.printStackTrace();
-                this.serviceResponse.setRequestError("profileImage", "Unable to save profile image");
+                this.serviceResponse.setRequestError("profileImageToken", "Unable to save profile image");
                 return serviceResponse;
             }
         }
