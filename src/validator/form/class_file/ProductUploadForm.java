@@ -7,7 +7,6 @@ public class ProductUploadForm {
     private String name;
     private String description;
     private long profileImageToken;
-    private String otherImages;
     private double currentValue;
     private double rentFee;
     private boolean active;
@@ -16,6 +15,7 @@ public class ProductUploadForm {
     private String availableTill;
     private boolean reviewStatus;
     private Integer[] categoryIdArray;
+    private Long[] otherImagesTokenArray;
 
 
 
@@ -50,13 +50,7 @@ public class ProductUploadForm {
         this.profileImageToken = profileImageToken;
     }
 
-    public String getOtherImages() {
-        return otherImages;
-    }
 
-    public void setOtherImages(String otherImages) {
-        this.otherImages = otherImages;
-    }
 
     public double getCurrentValue() {
         return currentValue;
@@ -170,5 +164,13 @@ public class ProductUploadForm {
 
     public void setLng(float lng) {
         this.lng = lng;
+    }
+
+    public Long[] getOtherImagesTokenArray() {
+        return otherImagesTokenArray;
+    }
+
+    public void setOtherImagesTokenArray(Long[] otherImagesTokenArray) {
+        this.otherImagesTokenArray = otherImagesTokenArray;
     }
 }

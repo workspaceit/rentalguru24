@@ -1,4 +1,4 @@
-package model.entity.app.convert;
+package model.convert;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,13 +6,15 @@ import model.nonentity.photo.Picture;
 
 import javax.persistence.AttributeConverter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mi on 8/8/16.
  */
-public class PictureConverter implements AttributeConverter<Picture, String> {
+public class PictureArrayConverter implements AttributeConverter<List<Picture>, String> {
     @Override
-    public String convertToDatabaseColumn(Picture picture) {
+    public String convertToDatabaseColumn(List<Picture> picture) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return  objectMapper.writeValueAsString(picture);
@@ -23,13 +25,19 @@ public class PictureConverter implements AttributeConverter<Picture, String> {
     }
 
     @Override
-    public Picture convertToEntityAttribute(String s) {
+    public List<Picture> convertToEntityAttribute(String s) {
         ObjectMapper objectMapper = new ObjectMapper();
         if(s==null){
             return null;
         }
         try {
-            return objectMapper.readValue(s, Picture.class);
+            Picture[] pictures = objectMapper.readValue(s, Picture[].class);
+            List<Picture> pictureList = new ArrayList<>();
+
+            for(Picture picture: pictures){
+                pictureList.add(picture);
+            }
+            return pictureList;
         } catch (IOException e) {
             e.printStackTrace();
         }

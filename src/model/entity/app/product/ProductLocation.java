@@ -1,4 +1,6 @@
-package model.entity.app;
+package model.entity.app.product;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -6,6 +8,7 @@ import java.sql.Timestamp;
 /**
  * Created by MI on 08-Aug-16.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "product_location", schema = "", catalog = "rentguru24")
 public class ProductLocation {
@@ -15,8 +18,8 @@ public class ProductLocation {
     private String state;
     private String formattedAddress;
     private String zip;
-    private float lat;
-    private float lng;
+    private Float lat = null;
+    private Float lng = null;
     private Timestamp createdDate;
 
     @Id
@@ -76,20 +79,20 @@ public class ProductLocation {
     }
     @Basic
     @Column(name = "lat")
-    public float getLat() {
+    public Float getLat() {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(Float lat) {
         this.lat = lat;
     }
     @Basic
     @Column(name = "lng")
-    public float getLng() {
+    public Float getLng() {
         return lng;
     }
 
-    public void setLng(float lng) {
+    public void setLng(Float lng) {
         this.lng = lng;
     }
     @Basic

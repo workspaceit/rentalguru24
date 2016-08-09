@@ -10,6 +10,9 @@ import model.CategoryModel;
 import model.ProductModel;
 import model.TempFileModel;
 import model.entity.app.*;
+import model.entity.app.product.Product;
+import model.entity.app.product.ProductCategory;
+import model.entity.app.product.ProductLocation;
 import model.nonentity.photo.Picture;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ import validator.form.ProductUploadFormValidator;
 import validator.form.class_file.ProductUploadForm;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +55,8 @@ public class ProductService extends BaseService{
                                          @Valid ProductUploadForm productUploadForm,
                                          BindingResult result){
 
+        this.serviceResponse.setParameterAlias("otherImagesTokenArray","otherImageTokens");
+
         if(!this.serviceResponse.getResponseStat().getIsLogin()){
             this.serviceResponse.getResponseStat().setErrorMsg("Session expired !! , please login ");
             return this.serviceResponse;
@@ -59,13 +65,11 @@ public class ProductService extends BaseService{
 
         productUploadForm.setName(allRequestParameter.get("name"));
         productUploadForm.setDescription(allRequestParameter.get("description"));
-        productUploadForm.setOtherImages(allRequestParameter.get("otherImagesTokens"));
-
 
 
         try{
             ObjectMapper objectMapper = new ObjectMapper();
-            System.out.println("CategoryIds : "+allRequestParameter.get("categoryIds"));
+
             if(!allRequestParameter.get("categoryIds").isEmpty()){
                 Integer[] categoryIdArray =  objectMapper.readValue(allRequestParameter.get("categoryIds"), Integer[].class);
                 productUploadForm.setCategoryIdArray(categoryIdArray);
@@ -77,6 +81,17 @@ public class ProductService extends BaseService{
         }catch(Exception ex){
             this.serviceResponse.setRequestError("categoryIds","Category Id required");
             productUploadForm.setCategoryIdArray(new Integer[0]);
+        }
+
+        try{
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            if(allRequestParameter.get("otherImagesToken")!=null && !allRequestParameter.get("otherImagesToken").isEmpty()) {
+                Long[] otherImagesToken = objectMapper.readValue(allRequestParameter.get("otherImagesToken"), Long[].class);
+                productUploadForm.setOtherImagesTokenArray(otherImagesToken);
+            }
+        }catch(Exception ex){
+            this.serviceResponse.setRequestError("otherImagesToken","Other images token is not in valid format");
         }
 
         try{
@@ -92,15 +107,19 @@ public class ProductService extends BaseService{
         }
 
         try{
-            productUploadForm.setLat(Float.parseFloat(allRequestParameter.get("lat")));
+            if(allRequestParameter.get("lat")!=null){
+                productUploadForm.setLat(Float.parseFloat(allRequestParameter.get("lat")));
+            }
         }catch(Exception ex){
-            this.serviceResponse.setRequestError("lat","Latitude is required");
+            this.serviceResponse.setRequestError("lat","Latitude is not valid format, float  required");
         }
 
         try{
-            productUploadForm.setLng(Float.parseFloat(allRequestParameter.get("lng")));
+            if(allRequestParameter.get("lng")!=null) {
+                productUploadForm.setLng(Float.parseFloat(allRequestParameter.get("lng")));
+            }
         }catch(Exception ex){
-            this.serviceResponse.setRequestError("lng","Longitude is required");
+            this.serviceResponse.setRequestError("lng","Longitude is not valid format, float  required");
         }
 
         try{
@@ -124,51 +143,84 @@ public class ProductService extends BaseService{
 
 
 
-        new ProductUploadFormValidator(categoryModel).validate(productUploadForm, result);
+        new ProductUploadFormValidator(categoryModel,tempFileModel).validate(productUploadForm, result);
+
+
+
+
+        java.sql.Timestamp availableFromDate = DateHelper.getStringToTimeStamp(productUploadForm.getAvailableFrom(), "dd-MM-yyyy") ;
+        java.sql.Timestamp availableTillDate = DateHelper.getStringToTimeStamp(productUploadForm.getAvailableTill(), "dd-MM-yyyy") ;
+
+        Timestamp utcTimeStamp = DateHelper.getUtcTimeStamp();
+
+//        utcTimeStamp. Validation
+        if(utcTimeStamp.after(availableFromDate)){
+            this.serviceResponse.setRequestError("availableFrom", "Available from is past then current time");
+        }else{
+            if(availableFromDate.after(availableTillDate)){
+                this.serviceResponse.setRequestError("availableTill", "Available from is past to available till time");
+            }
+        }
+
+        if(utcTimeStamp.after(availableTillDate)){
+            this.serviceResponse.setRequestError("availableTill", "Available till is past then current time");
+        }
 
         this.serviceResponse.setError(result, true, false);
-        if( this.serviceResponse.hasErrors()){
+        if(this.serviceResponse.hasErrors()){
             return this.serviceResponse;
         }
 
 
-        java.sql.Timestamp availableFromDate = DateHelper.getStringToTimeStamp(productUploadForm.getAvailableFrom(), "dd-MM-yyyy") ;
-        java.sql.Timestamp availableTillDate = DateHelper.getStringToTimeStamp(productUploadForm.getAvailableFrom(), "dd-MM-yyyy") ;
-
-
-
         product.setOwner(this.appCredential);
 
-        /*----- Move identity doc form temp to original ---- */
+        /*----- Move Product image form temp to original ---- */
 
 
 
-//        TempFile tempFile = this.tempFileModel.getByToken(productUploadForm.getProfileImageToken());
-//        if(tempFile ==null){
-//            this.serviceResponse.setRequestError("profileImage", "Profile Image doc token is not valid");
-//            return serviceResponse;
-//        }
-//
-//        if(!ImageHelper.isFileExist(tempFile.getPath())){
-//            this.serviceResponse.setRequestError("profileImage", "No file found associated with the token");
-//            return serviceResponse;
-//        }
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        Picture profileImageJsonObject = new Picture();
-//        try {
-//            profileImageJsonObject = ImageHelper.moveProductImage(product.getOwner().getId(), tempFile.getPath());
-//        } catch (Exception e) {
-//            //e.printStackTrace();
-//            this.serviceResponse.setRequestError("profileImage", "Unable to save profile image");
-//            return serviceResponse;
-//        }
+        TempFile tempFile = this.tempFileModel.getByToken(productUploadForm.getProfileImageToken());
+        if(tempFile ==null){
+            this.serviceResponse.setRequestError("profileImage", "Profile Image token is not valid");
+            return serviceResponse;
+        }
+
+        if(!ImageHelper.isFileExist(tempFile.getPath())){
+            this.serviceResponse.setRequestError("profileImage", "No file found associated with the token");
+            return serviceResponse;
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        Picture profileImage = new Picture();
+        try {
+            profileImage = ImageHelper.moveProductImage(product.getOwner().getId(), tempFile.getPath());
+        } catch (Exception e) {
+            //e.printStackTrace();
+            this.serviceResponse.setRequestError("profileImage", "Unable to save profile image");
+            return serviceResponse;
+        }
+
+        /*----- Move Product other images form temp to original ---- */
+
+        List<Picture> otherImages = new ArrayList<>();
+        for(long otherImageToken : productUploadForm.getOtherImagesTokenArray()){
+            TempFile tempOtherFile = this.tempFileModel.getByToken(otherImageToken);
+            Picture picture = new Picture();
+            try {
+                picture = ImageHelper.moveProductImage(product.getOwner().getId(), tempOtherFile.getPath());
+                otherImages.add(picture);
+            } catch (Exception e) {
+                //e.printStackTrace();
+                this.serviceResponse.setRequestError("profileImage", "Unable to save profile image");
+                return serviceResponse;
+            }
+        }
+
+
 
 
         product.setName(productUploadForm.getName());
         product.setDescription(productUploadForm.getDescription());
-        product.setProfileImage(new Picture());
-       // product.setProfileImage(profileImageJsonObject);
-        //product.setOtherImages();
+        product.setProfileImage(profileImage);
+        product.setOtherImages(otherImages);
         product.setCurrentValue(productUploadForm.getCurrentValue());
         product.setRentFee(productUploadForm.getRentFee());
         product.setActive(true);
@@ -191,6 +243,7 @@ public class ProductService extends BaseService{
 
 
         productModel.insert(product);
+
         product.setProductLocation(new ProductLocation());
         product.getProductLocation().setCity(productUploadForm.getCity());
         product.getProductLocation().setState(productUploadForm.getState());

@@ -46,7 +46,13 @@ public class DateHelper {
 
         return dateFormat.format(new Date());
     }
+    public static Timestamp getUtcTimeStamp(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
+
+        return getStringToTimeStamp(dateFormat.format(new Date()),"yyyy-MM-dd");
+    }
 
     public static boolean isDateValid(String date,String dateFormat)
     {

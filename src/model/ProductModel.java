@@ -1,7 +1,10 @@
 package model;
 
-import model.entity.app.Product;
+
 import org.hibernate.Query;
+
+import model.entity.app.product.Product;
+
 import org.hibernate.Session;
 
 import java.util.List;

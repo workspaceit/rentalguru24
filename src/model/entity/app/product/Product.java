@@ -1,14 +1,8 @@
-package model.entity.app;
+package model.entity.app.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.javafx.css.converters.ColorConverter;
-import model.entity.app.convert.PictureConverter;
-import model.nonentity.photo.Picture;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.List;
 
 /**
  * Created by mi on 8/8/16.
