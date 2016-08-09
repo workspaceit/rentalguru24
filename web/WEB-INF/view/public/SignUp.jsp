@@ -137,20 +137,23 @@
             </div>
             <div class="form-group">
                 <label for="fallback">Identity Document</label>
-                <div id="fallback"  class="fallback" >
+                <div id="fallback"  class="fallback pos-relative" >
                     Drop files here or click to upload.
+                    <%--<span class="inner-load fileUploadGif" hidden></span>--%>
                 </div>
                 <%--<input type="file" name="documentIdentity">--%>
                 <p class="help-block error-form" id="errorMsg_identityDocToken"></p>
             </div>
         </div>
         <div class="col-md-12 text-center">
-            <button class="btn-cstm-sign">Sign up</button>
-            <div class="alert alert-success" hidden>
-                <strong>Success!</strong>
+            <button class="btn-cstm-sign pos-relative">
+                Sign up
+                <span class="inner-load signUpGif" hidden></span>
+            </button>
+            <div class="alert alert-success text-center" role="alert" hidden>
+                Sign up completed Successfully
             </div>
         </div>
-
         <input type="hidden" value="" id="identityDocToken" name="identityDocToken">
     </form>
 </div>
@@ -307,6 +310,7 @@
 </script>
 <script>
     function submitSignUpData(){
+        $('.signUpGif').show();
         var firstName = $("#firstName").val();
         var lastName = $("#lastName").val();
         var email = $("#email").val();
@@ -331,6 +335,7 @@
                     BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
                 }else{
                     $('form').trigger('reset');
+                    $('.signUpGif').hide().delay(4998).fadeOut();
                     $('.alert-success').show().delay(5000).fadeOut(500,function(){
                         window.location.href = "/home";
                     });
@@ -350,14 +355,21 @@
                     url: "/fileupload/upload/document-identity",
                     paramName: "documentIdentity",
                     maxFilesize: 1,
+//                    addedfile:function(file){
+//                        $('.fileUploadGif').show();
+//                    },
                     success:function(file, response){
                         if(response.responseStat.status == true) {
                             $('#identityDocToken').val(response.responseData);
+//                            $('.fileUploadGif').hide().delay(500).fadeOut();
                         }
                         else{
                             BindErrorsWithHtml('errorMsg_', response.requestErrors);
                         }
                     }
+//                    error:function(file, errorMessage, xhr){
+//
+//                    }
                 }
         );
 
