@@ -1,6 +1,6 @@
 package model;
 
-import model.entity.app.Product;
+import model.entity.app.product.Product;
 import org.hibernate.Session;
 
 /**

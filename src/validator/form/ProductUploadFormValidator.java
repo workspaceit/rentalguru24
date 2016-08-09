@@ -2,8 +2,11 @@ package validator.form;
 
 
 import helper.DateHelper;
+import helper.ImageHelper;
 import model.CategoryModel;
-import model.entity.app.Product;
+import model.TempFileModel;
+import model.entity.app.product.Product;
+import model.entity.app.TempFile;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -14,9 +17,11 @@ import validator.form.class_file.ProductUploadForm;
  */
 public class ProductUploadFormValidator implements Validator {
     private CategoryModel categoryModel;
+    private TempFileModel tempFileModel;
 
-    public ProductUploadFormValidator(CategoryModel categoryModel) {
+    public ProductUploadFormValidator(CategoryModel categoryModel, TempFileModel tempFileModel) {
         this.categoryModel = categoryModel;
+        this.tempFileModel = tempFileModel;
     }
 
     @Override
@@ -34,7 +39,6 @@ public class ProductUploadFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"profileImageToken", "profile Image  required");
         //errors.rejectValue("otherImages","Other Images  required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"rentFee", "Rent fee required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "categoryIdArray", "Category id required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"availableFrom", "Available from date required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "availableTill", "Available till date required");
 
@@ -42,8 +46,8 @@ public class ProductUploadFormValidator implements Validator {
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "City is required");
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "state", "State is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zip", "Zip is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lat", "Lat is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lng", "Lng is required");
+//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lat", "Lat is required");
+//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lng", "Lng is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "formattedAddress", "Formatted address required");
 
 
@@ -68,5 +72,30 @@ public class ProductUploadFormValidator implements Validator {
                 }
             }
         }
+
+
+          /*----- Other images token validation check ---- */
+        if(productUploadForm.getOtherImagesTokenArray()!=null){
+            for(long otherImageToken : productUploadForm.getOtherImagesTokenArray()){
+                TempFile tempFile = this.tempFileModel.getByToken(otherImageToken);
+                if(tempFile ==null){
+                    errors.rejectValue("otherImagesTokenArray", "Other image token is not valid");
+                    break;
+                }
+
+                if(!ImageHelper.isFileExist(tempFile.getPath())){
+                    errors.rejectValue("otherImagesTokenArray", "No file found associated with the token");
+                    break;
+                }
+            }
+        }
+
+
+
+
+
+
+
+
     }
 }

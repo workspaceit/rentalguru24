@@ -65,7 +65,7 @@ public class ImageHelper {
     }
     public static Picture moveProductImage(int appCredentialId,String oldPath){
         String fileName = appCredentialId+"/"+System.nanoTime()+"."+getExtension(oldPath);
-        String filePath = DOC_PATH+fileName;
+        String filePath = PRODUCT_PATH+fileName;
         Picture picture = new Picture();
         try{
 

@@ -1,4 +1,4 @@
-package model.entity.app;
+package model.entity.app.product;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

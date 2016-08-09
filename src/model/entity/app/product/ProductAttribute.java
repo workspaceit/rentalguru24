@@ -1,4 +1,6 @@
-package model.entity.app;
+package model.entity.app.product;
+
+import model.entity.app.AttributeValues;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

@@ -1,6 +1,7 @@
-package model.entity.app;
+package model.entity.app.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import model.entity.app.Category;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

@@ -1,7 +1,9 @@
-package model.entity.app;
+package model.entity.app.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import model.entity.app.convert.PictureConverter;
+import model.convert.PictureArrayConverter;
+import model.convert.PictureConverter;
+import model.entity.app.AppCredential;
 import model.nonentity.photo.Picture;
 
 import javax.persistence.*;
@@ -13,23 +15,23 @@ import java.util.List;
  */
 @MappedSuperclass
 public class AbstractProduct {
-    private int id;
+    protected int id;
 
-    private String name;
-    private String description;
-    private Picture profileImage;
-    private Picture otherImages;
-    private double currentValue;
-    private double rentFee;
-    private boolean active;
-    private boolean currentlyAvailable;
-    private Timestamp availableFrom;
-    private Timestamp availableTill;
-    private boolean reviewStatus;
-    private Timestamp createdDate;
-    private AppCredential owner;
-    private List<ProductCategory> productCategories;
-    private ProductLocation productLocation;
+    protected String name;
+    protected String description;
+    protected Picture profileImage;
+    protected List<Picture> otherImages;
+    protected double currentValue;
+    protected double rentFee;
+    protected boolean active;
+    protected boolean currentlyAvailable;
+    protected Timestamp availableFrom;
+    protected Timestamp availableTill;
+    protected boolean reviewStatus;
+    protected Timestamp createdDate;
+    protected AppCredential owner;
+    protected List<ProductCategory> productCategories;
+    protected ProductLocation productLocation;
 
     @Id
     @Column(name = "id")
@@ -75,12 +77,12 @@ public class AbstractProduct {
 
     @Basic
     @Column(name = "other_images")
-    @Convert(converter = PictureConverter.class)
-    public Picture getOtherImages() {
+    @Convert(converter = PictureArrayConverter.class)
+    public List<Picture> getOtherImages() {
         return otherImages;
     }
 
-    public void setOtherImages(Picture otherImages) {
+    public void setOtherImages(List<Picture> otherImages) {
         this.otherImages = otherImages;
     }
 

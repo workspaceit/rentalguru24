@@ -107,15 +107,15 @@
                             <value>model.entity.app.AttributeValues</value>
                             <value>model.entity.app.Attributes</value>
                             <value>model.entity.app.Category</value>
-                            <value>model.entity.app.Product</value>
-                            <value>model.entity.app.ProductAttribute</value>
-                            <value>model.entity.app.ProductCategory</value>
+                            <value>model.entity.app.product.Product</value>
+                            <value>model.entity.app.product.ProductAttribute</value>
+                            <value>model.entity.app.product.ProductCategory</value>
                             <value>model.entity.app.RentProduct</value>
                             <value>model.entity.app.RentRequest</value>
                             <value>model.entity.app.TempFile</value>
                             <value>model.entity.app.IdentityType</value>
-                            <value>model.entity.app.ProductAvailability</value>
-                            <value>model.entity.app.ProductLocation</value>
+                            <value>model.entity.app.product.ProductAvailability</value>
+                            <value>model.entity.app.product.ProductLocation</value>
                      </list>
               </property>
               <property name="hibernateProperties">
