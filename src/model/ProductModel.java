@@ -44,4 +44,9 @@ public class ProductModel extends BaseModel{
         query.setMaxResults(limit);
         return (List<Product>)query.list();
     }
+    public Product getProductSearchById(int id){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        return session.get(Product.class,id);
+    }
 }

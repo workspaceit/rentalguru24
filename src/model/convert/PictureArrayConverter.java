@@ -28,6 +28,7 @@ public class PictureArrayConverter implements AttributeConverter<List<Picture>, 
     public List<Picture> convertToEntityAttribute(String s) {
         ObjectMapper objectMapper = new ObjectMapper();
         if(s==null){
+            System.out.println(s);
             return new ArrayList<>();
         }
         try {
@@ -40,7 +41,7 @@ public class PictureArrayConverter implements AttributeConverter<List<Picture>, 
             return pictureList;
         } catch (IOException e) {
             e.printStackTrace();
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
     }
 }
