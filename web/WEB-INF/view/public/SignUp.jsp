@@ -335,11 +335,11 @@
                     BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
                 }else{
                     $('form').trigger('reset');
-                    $('.signUpGif').hide().delay(4998).fadeOut();
                     $('.alert-success').show().delay(5000).fadeOut(500,function(){
-                        window.location.href = "/home";
+                        window.location.href = "/signin";
                     });
                 }
+                $('.signUpGif').hide().delay(4998).fadeOut();
             }
         });
         return false;

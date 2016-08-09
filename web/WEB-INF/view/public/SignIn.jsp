@@ -118,7 +118,12 @@
     </div>
 
     <div class="col-md-12 text-center">
-      <button class="btn-cstm-sign">Sign in</button>
+      <button class="btn-cstm-sign pos-relative" id="signBtn">Sign in
+        <span id="signInProgressImg" class="inner-load signUpGif" hidden></span>
+      </button>
+      <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
+
+      </div>
     </div>
   </form>
 </div>
@@ -248,6 +253,9 @@
 </script>
 <script>
   function submitSignInData(){
+    $("#signBtn").attr("disabled","disabled");
+    $("#alertMsg").hide();
+    $("#signInProgressImg").show();
     var email = $("#email").val();
     var password = $("#password").val();
     $.ajax({
@@ -260,10 +268,17 @@
       success: function(data){
         console.log(data);
         if(data.responseStat.status == true){
-          window.location.href = "/home";
+          $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){
+            window.location.href = "/home";
+          });
+
         }else{
-          console.log('Signin Fail');
+          $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){
+            $("#signBtn").removeAttrs("disabled","disabled");
+          });
         }
+        $("#signInProgressImg").hide();
+
       }
     });
     return false;

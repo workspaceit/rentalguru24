@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class ProductCategory {
     private int id;
     private int productId;
-    private int categoryId;
+   // private int categoryId;
     private Timestamp createdDate;
     private Category category;
 
@@ -35,9 +35,9 @@ public class ProductCategory {
 //        return productId;
 //    }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
+//    public void setProductId(int productId) {
+//        this.productId = productId;
+//    }
 
 
 
@@ -62,7 +62,6 @@ public class ProductCategory {
 
         if (id != that.id) return false;
         if (productId != that.productId) return false;
-        if (categoryId != that.categoryId) return false;
         if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
 
         return true;
@@ -72,7 +71,6 @@ public class ProductCategory {
     public int hashCode() {
         int result = id;
         result = 31 * result + productId;
-        result = 31 * result + categoryId;
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
     }

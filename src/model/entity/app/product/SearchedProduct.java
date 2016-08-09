@@ -14,16 +14,16 @@ import java.util.List;
 @Table(name = "product", schema = "", catalog = "rentguru24")
 public class SearchedProduct extends AbstractProduct{
 
-    private List<ProductAvailability> productAvailability;
-
-
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="product_id",referencedColumnName = "id")
-    public List<ProductAvailability> getProductAvailability() {
-        return productAvailability;
-    }
-
-    public void setProductAvailability(List<ProductAvailability> productAvailability) {
-        this.productAvailability = productAvailability;
-    }
+//    private List<ProductAvailability> productAvailability;
+//
+//
+//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    @JoinColumn(name="product_id",referencedColumnName = "id")
+//    public List<ProductAvailability> getProductAvailability() {
+//        return productAvailability;
+//    }
+//
+//    public void setProductAvailability(List<ProductAvailability> productAvailability) {
+//        this.productAvailability = productAvailability;
+//    }
 }

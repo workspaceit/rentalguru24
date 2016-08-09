@@ -44,6 +44,18 @@ public class ProductModel extends BaseModel{
         query.setMaxResults(limit);
         return (List<Product>)query.list();
     }
+    public List<SearchedProduct> getSearchedProduct(int limit, int offset){
+        if(limit > 15){
+            limit = 15;
+        }
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM SearchedProduct P ORDER BY P.id DESC";
+        Query query =  session.createQuery(hql);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+        return (List<SearchedProduct>)query.list();
+    }
+
     public Product getProductSearchById(int id){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();

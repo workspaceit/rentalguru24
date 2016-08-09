@@ -1,14 +1,17 @@
 package controller.service.app;
 
+import controller.service.BaseService;
+import helper.DateHelper;
+import helper.ServiceResponse;
+import model.RentProductModel;
 import model.RentRequestModel;
 import model.entity.app.RentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -18,42 +21,67 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/rent")
-public class RentRequestService {
+@Scope("request")
+public class RentRequestService extends BaseService{
     @Autowired
     RentRequestModel rentRequestModel;
-    @RequestMapping(value = "/request", method = RequestMethod.POST)
-    public void postRentRequsest(@RequestParam Map<String, String> allrequstvalue) throws ParseException {
+    @Autowired
+    RentProductModel rentProductModel;
+    @RequestMapping(value = "/request-rent/{productId}", method = RequestMethod.POST)
+    public ServiceResponse testMail(@PathVariable("productId") int productId,@RequestParam("startDate")String startDate,@RequestParam("endsDate")String endsDate){
+        if(!this.serviceResponse.getResponseStat().getIsLogin()){
+            this.serviceResponse.getResponseStat().setErrorMsg("Session expired !! , please login ");
+            return this.serviceResponse;
+        }
 
-        String productId = allrequstvalue.get("productId");
-        String requestedBy = allrequstvalue.get("requestedBy");
-        String bookingId = allrequstvalue.get("bookingId");
-        String requestId = allrequstvalue.get("requestId");
-        String startDate = allrequstvalue.get("startDate");
-        String endDate = allrequstvalue.get("endDate");
 
-//        System.out.println(productId);
-//        System.out.println(requestedBy);
-//        System.out.println(bookingId);
-//        System.out.println(requestId);
-//        System.out.println(startDate);
-//        System.out.println(endDate);
+        if(startDate==null || startDate.isEmpty()){
+            this.serviceResponse.setRequestError("startDate","Start date is required");
+        }
+        if(endsDate==null || endsDate.isEmpty()){
+            this.serviceResponse.setRequestError("endsDate","End date is required");
+        }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date Sdate = formatter.parse(startDate);
-        java.sql.Date SDate = new Date(Sdate.getTime());
+        if(this.serviceResponse.hasErrors()){
+            return this.serviceResponse;
+        }
 
-        java.util.Date Edate = formatter.parse(endDate);
-        java.sql.Date EDate = new Date(Edate.getTime());
+
+        if(!DateHelper.isDateValid(startDate, "dd-MM-yyyy")){
+            this.serviceResponse.setRequestError("startDate","Start date format miss matched");
+        }
+        if(!DateHelper.isDateValid(endsDate, "dd-MM-yyyy")){
+            this.serviceResponse.setRequestError("endsDate","Ends date format miss matched");
+        }
+
+        if(this.serviceResponse.hasErrors()){
+            return this.serviceResponse;
+        }
+
+
+        Timestamp startTimeStamp = DateHelper.getStringToTimeStamp(startDate, "dd-MM-yyyy");
+        Timestamp endTimeStamp = DateHelper.getStringToTimeStamp(endsDate,"dd-MM-yyyy");
+
+
+        if(rentProductModel.isProductInRent(productId,startTimeStamp,endTimeStamp)){
+            this.serviceResponse.setRequestError("productId","Product is not available for rent in given date");
+            return this.serviceResponse;
+        }
+
+        if(this.serviceResponse.hasErrors()){
+            return this.serviceResponse;
+        }
 
         RentRequest rentRequest = new RentRequest();
 
-        rentRequest.setProductId(Integer.parseInt(productId));
-        rentRequest.setRequestedBy(Integer.parseInt(requestedBy));
-        rentRequest.setRequestId(Integer.parseInt(requestId));
-        rentRequest.setStartDate(SDate);
-        rentRequest.setEndDate(EDate);
-
+        rentRequest.setApprove(false);
+        rentRequest.setRequestedBy(this.appCredential.getId());
+        rentRequest.setProductId(productId);
+        rentRequest.setStartDate(new Date(startTimeStamp.getTime()));
+        rentRequest.setEndDate(new Date(endTimeStamp.getTime()));
         rentRequestModel.insert(rentRequest);
+        this.serviceResponse.setResponseData(rentRequest, "Internal server error");
+        return this.serviceResponse;
 
     }
 }

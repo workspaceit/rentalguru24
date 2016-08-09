@@ -1,21 +1,24 @@
 package model.entity.app;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by mi on 8/1/16.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "rent_request", schema = "", catalog = "rentguru24")
 public class RentRequest {
     private int id;
     private int productId;
     private int requestedBy;
-    private Integer requestId;
+    private List<RentRequest> requestExtension;
     private boolean requestCancel;
     private Date startDate;
     private Date endDate;
@@ -53,14 +56,14 @@ public class RentRequest {
         this.requestedBy = requestedBy;
     }
 
-    @Basic
-    @Column(name = "request_id")
-    public Integer getRequestId() {
-        return requestId;
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "request_id", referencedColumnName = "id", nullable = true)
+    public List<RentRequest> getRequestExtension() {
+        return requestExtension;
     }
 
-    public void setRequestId(Integer requestId) {
-        this.requestId = requestId;
+    public void setRequestExtension(List<RentRequest> requestExtension) {
+        this.requestExtension = requestExtension;
     }
 
     @Basic
@@ -138,7 +141,6 @@ public class RentRequest {
         if (requestCancel != that.requestCancel) return false;
         if (approve != that.approve) return false;
         if (extension != that.extension) return false;
-        if (requestId != null ? !requestId.equals(that.requestId) : that.requestId != null) return false;
         if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
         if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
         if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
@@ -151,7 +153,6 @@ public class RentRequest {
         int result = id;
         result = 31 * result + productId;
         result = 31 * result + requestedBy;
-        result = 31 * result + (requestId != null ? requestId.hashCode() : 0);
         result = 31 * result + (requestCancel ? 1 : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
