@@ -19,10 +19,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import validator.form.ProductUploadFormValidator;
 import validator.form.class_file.ProductUploadForm;
 
@@ -267,6 +264,11 @@ public class ProductService extends BaseService{
     public List<Product> getProductSearchedProduct(@RequestParam ("limit") int limit, @RequestParam ("offset") int offset){
         List<Product> products = productModel.getProductSearch(limit, offset);
         return products;
+    }
+
+    @RequestMapping(value = "/get-searched-product/{id}", method = RequestMethod.GET)
+    public Product getProductSearchById(@PathVariable("id") int id){
+       return productModel.getProductSearchById(id);
     }
 }
 
