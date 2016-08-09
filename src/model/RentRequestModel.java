@@ -14,4 +14,5 @@ public class RentRequestModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+
 }

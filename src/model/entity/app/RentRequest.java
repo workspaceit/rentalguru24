@@ -1,5 +1,7 @@
 package model.entity.app;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -18,7 +20,7 @@ public class RentRequest {
     private boolean requestCancel;
     private Date startDate;
     private Date endDate;
-    private byte approve;
+    private Boolean approve;
     private boolean extension;
     private Timestamp createdDate;
 
@@ -104,11 +106,11 @@ public class RentRequest {
 
     @Basic
     @Column(name = "approve")
-    public byte getApprove() {
+    public Boolean getApprove() {
         return approve;
     }
 
-    public void setApprove(byte approve) {
+    public void setApprove(Boolean approve) {
         this.approve = approve;
     }
 
@@ -164,7 +166,7 @@ public class RentRequest {
         result = 31 * result + (requestCancel ? 1 : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        result = 31 * result + (int) approve;
+        result = 31 * result + (approve ? 1 : 0);
         result = 31 * result + (extension ? 1 : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
