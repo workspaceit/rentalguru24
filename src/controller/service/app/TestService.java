@@ -139,7 +139,6 @@ public class TestService extends BaseService{
         RentRequest rentRequest = new RentRequest();
         rentRequest.setProductId(1);
         rentRequest.setRequestedBy(1);
-        rentRequest.setBookingId(1);
         rentRequest.setRequestId(null);
         rentRequest.setStartDate(new Date(Calendar.getInstance().getTime().getTime()));
         rentRequest.setEndDate(new Date(Calendar.getInstance().getTime().getTime()));
@@ -224,11 +223,12 @@ public class TestService extends BaseService{
         RentRequest rentRequest = new RentRequest();
 
         rentRequest.setApprove(false);
+        rentRequest.setRequestedBy(this.appCredential.getId());
         rentRequest.setProductId(productId);
         rentRequest.setStartDate(new Date(startTimeStamp.getTime()));
         rentRequest.setEndDate(new Date(endTimeStamp.getTime()));
         rentRequestModel.insert(rentRequest);
-
+        this.serviceResponse.setResponseData(rentRequest,"Internal server error");
         return this.serviceResponse;
 
     }

@@ -15,7 +15,6 @@ public class RentRequest {
     private int id;
     private int productId;
     private int requestedBy;
-    private int bookingId;
     private Integer requestId;
     private boolean requestCancel;
     private Date startDate;
@@ -52,16 +51,6 @@ public class RentRequest {
 
     public void setRequestedBy(int requestedBy) {
         this.requestedBy = requestedBy;
-    }
-
-    @Basic
-    @Column(name = "rent_product_id")
-    public int getBookingId() {
-        return bookingId;
-    }
-
-    public void setBookingId(int bookingId) {
-        this.bookingId = bookingId;
     }
 
     @Basic
@@ -134,6 +123,8 @@ public class RentRequest {
         this.createdDate = createdDate;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -144,7 +135,6 @@ public class RentRequest {
         if (id != that.id) return false;
         if (productId != that.productId) return false;
         if (requestedBy != that.requestedBy) return false;
-        if (bookingId != that.bookingId) return false;
         if (requestCancel != that.requestCancel) return false;
         if (approve != that.approve) return false;
         if (extension != that.extension) return false;
@@ -161,7 +151,6 @@ public class RentRequest {
         int result = id;
         result = 31 * result + productId;
         result = 31 * result + requestedBy;
-        result = 31 * result + bookingId;
         result = 31 * result + (requestId != null ? requestId.hashCode() : 0);
         result = 31 * result + (requestCancel ? 1 : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);

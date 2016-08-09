@@ -3,7 +3,6 @@ package model.entity.app;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 /**
  * Created by mi on 8/1/16.
@@ -17,7 +16,7 @@ public class RentProduct {
     private Date endsDate;
     private boolean expired;
     private Timestamp createdDate;
-    private Collection<RentRequest> rentRequestsById;
+    private RentRequest rentRequest;
 
     @Id
     @Column(name = "id")
@@ -107,14 +106,15 @@ public class RentProduct {
         return result;
     }
 
-//    @OneToMany(mappedBy = "rentProductByBookingId")
-//    public Collection<RentRequest> getRentRequestsById() {
-//        return rentRequestsById;
-//    }
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "rent_request_id", referencedColumnName = "id", nullable = true)
+    public RentRequest getRentRequest() {
+        return rentRequest;
+    }
 
-//    public void setRentRequestsById(Collection<RentRequest> rentRequestsById) {
-//        this.rentRequestsById = rentRequestsById;
-//    }
+    public void setRentRequest(RentRequest rentRequest) {
+        this.rentRequest = rentRequest;
+    }
 
 //    Zakariya
 //

@@ -21,8 +21,8 @@ public class RentProductModel extends BaseModel {
     }
     public boolean isProductInRent(int productId,Timestamp startDate,Timestamp endsDate){
         Session session = this.sessionFactory.openSession();
-        String hql = "from RentProduct where ( RentProduct.endsDate <= :endsDate and RentProduct.startDate >= :endsDate ) or" +
-                    " ( RentProduct.endsDate <= :startDate and RentProduct.startDate >= :startDate ) and RentProduct.productId = :productId ";
+        String hql = "from RentProduct where ( ( startDate BETWEEN :startDate and :endsDate ) or" +
+                    " ( endsDate BETWEEN :startDate and :endsDate ) ) and productId = :productId ";
 
         Query query =  session.createQuery(hql);
 
