@@ -1,7 +1,14 @@
 package model;
 
+
+import model.entity.app.product.SearchedProduct;
+import org.hibernate.Query;
+
 import model.entity.app.product.Product;
+
 import org.hibernate.Session;
+
+import java.util.List;
 
 /**
  * Created by omar on 8/8/16.
@@ -25,5 +32,16 @@ public class ProductModel extends BaseModel{
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
         return session.get(Product.class,id);
+    }
+    public List<SearchedProduct> getProductSearch(int limit, int offset){
+        if(limit > 15){
+            limit = 15;
+        }
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM SearchedProduct";
+        Query query =  session.createQuery(hql);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+        return (List<SearchedProduct>)query.list();
     }
 }

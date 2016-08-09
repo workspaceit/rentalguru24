@@ -13,7 +13,9 @@ import model.entity.app.*;
 import model.entity.app.product.Product;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.ProductLocation;
+import model.entity.app.product.SearchedProduct;
 import model.nonentity.photo.Picture;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
@@ -54,7 +56,7 @@ public class ProductService extends BaseService{
                                          @Valid ProductUploadForm productUploadForm,
                                          BindingResult result){
 
-        this.serviceResponse.setParameterAlias("otherImagesTokenArray","otherImageTokens");
+        this.serviceResponse.setParameterAlias("otherImagesTokenArray", "otherImageTokens");
 
         if(!this.serviceResponse.getResponseStat().getIsLogin()){
             this.serviceResponse.getResponseStat().setErrorMsg("Session expired !! , please login ");
@@ -257,4 +259,11 @@ public class ProductService extends BaseService{
         this.serviceResponse.setResponseData(product);
         return this.serviceResponse;
     }
+
+    @RequestMapping(value = "/get-searched-product", method = RequestMethod.GET)
+    public List<SearchedProduct> getProductSearchedProduct(@RequestParam ("limit") int limit, @RequestParam ("offset") int offset){
+        List<SearchedProduct> productSearch = productModel.getProductSearch(limit, offset);
+        return productSearch;
+    }
 }
+
