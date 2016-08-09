@@ -33,15 +33,15 @@ public class ProductModel extends BaseModel{
         session.beginTransaction();
         return session.get(Product.class,id);
     }
-    public List<SearchedProduct> getProductSearch(int limit, int offset){
+    public List<Product> getProductSearch(int limit, int offset){
         if(limit > 15){
             limit = 15;
         }
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM SearchedProduct";
+        String hql = "FROM Product";
         Query query =  session.createQuery(hql);
         query.setFirstResult(offset);
         query.setMaxResults(limit);
-        return (List<SearchedProduct>)query.list();
+        return (List<Product>)query.list();
     }
 }

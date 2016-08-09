@@ -261,9 +261,9 @@ public class ProductService extends BaseService{
     }
 
     @RequestMapping(value = "/get-searched-product", method = RequestMethod.GET)
-    public List<SearchedProduct> getProductSearchedProduct(@RequestParam ("limit") int limit, @RequestParam ("offset") int offset){
-        List<SearchedProduct> productSearch = productModel.getProductSearch(limit, offset);
-        return productSearch;
+    public List<Product> getProductSearchedProduct(@RequestParam ("limit") int limit, @RequestParam ("offset") int offset){
+        List<Product> products = productModel.getProductSearch(limit, offset);
+        return products;
     }
 }
 
