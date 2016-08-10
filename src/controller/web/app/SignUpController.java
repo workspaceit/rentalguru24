@@ -1,6 +1,9 @@
 package controller.web.app;
 
 
+import com.fasterxml.jackson.databind.deser.Deserializers;
+import controller.BaseHttp;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,10 +17,12 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/signup")
-public class SignUpController {
+@Scope("request")
+public class SignUpController extends BaseHttp{
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("public/SignUp");
+        modelAndView.addObject("BaseUrl",this.getBaseURL());
         return modelAndView;
     }
 }

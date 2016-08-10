@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "product_location", schema = "", catalog = "rentguru24")
+@Table(name = "product_location", schema = "" ) // catalog = "rentguru24"
 public class ProductLocation {
     private int id;
     private int productId;

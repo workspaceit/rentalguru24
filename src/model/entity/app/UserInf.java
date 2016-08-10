@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "user_inf", schema = "", catalog = "rentguru24")
+@Table(name = "user_inf", schema = "") //, catalog = "rentguru24"
 public class UserInf {
     private int id;
     private Integer addressId;

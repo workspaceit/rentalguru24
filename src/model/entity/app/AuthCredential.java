@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "app_login_credential", schema = "", catalog = "rentguru24")
+@Table(name = "app_login_credential", schema = "") //, catalog = "rentguru24"
 public class AuthCredential extends AbstractCredential {
 
     private String password;

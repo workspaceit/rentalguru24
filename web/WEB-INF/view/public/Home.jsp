@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -949,6 +951,9 @@
             </div>
         </div>
 
+        <script>
+            var BASEURL = "${BaseUrl}";
+        </script>
 
         <!-- Contact end here --> 
         <!-- Main container start here -->

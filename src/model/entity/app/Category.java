@@ -14,7 +14,7 @@ import java.util.Set;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "category", schema = "", catalog = "rentguru24")
+@Table(name = "category" ) //catalog = "rentguru24"
 public class Category {
     private int id;
     private String name;

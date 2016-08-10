@@ -13,7 +13,7 @@ import java.util.List;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "rent_request", schema = "", catalog = "rentguru24")
+@Table(name = "rent_request", schema = "") //, catalog = "rentguru24"
 public class RentRequest {
     private int id;
     private int productId;

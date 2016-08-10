@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * Created by mi on 8/2/16.
  */
 @Entity
-@Table(name = "temp_file", schema = "", catalog = "rentguru24")
+@Table(name = "temp_file", schema = "") //, catalog = "rentguru24"
 public class TempFile {
     private int id;
     private long token;

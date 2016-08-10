@@ -15,9 +15,11 @@ import java.util.Random;
  */
 public class ImageHelper {
     //server settings for pictures and images
-//    private final static String GLOBAL_PATH = "/home/wsit/Projects/j2ee/imagetalk_picture/";
-//    private final static String STICKER_GLOBAL_PATH = "/home/wsit/Projects/j2ee/";
+    /* Develop */
+  //  private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
 
+    /* Beta */
+//    private static String GLOBAL_PATH = "/home/wsit/rentguru24files_beta/";
 //      Local settings for pictures and Images
      private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
   //  private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";

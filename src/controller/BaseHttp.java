@@ -18,13 +18,14 @@ public class BaseHttp {
     public AppCredential appCredential;
     private HttpSession httpSession;
     private HttpServletRequest httpServletRequest;
-
+    private String baseURL;
     public BaseHttp() {
         this.serviceResponse = new ServiceResponse();
         this.appCredential = new AppCredential();
         ServletRequestAttributes ar = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         httpServletRequest = ar.getRequest();
         httpSession = httpServletRequest.getSession();
+        baseURL = getURLWithContextPath(httpServletRequest);
 
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
             try{
@@ -36,12 +37,19 @@ public class BaseHttp {
             this.serviceResponse.getResponseStat().setIsLogin(true);
         }
 
-        System.out.println("FIRST NAME "+appCredential.getUserInf().getFirstName());
     }
+
+    public String getBaseURL() {
+        return baseURL;
+    }
+
     public void setAppcredentialInSession(AppCredential appCredential){
         this.appCredential = appCredential;
         this.serviceResponse.getResponseStat().setIsLogin(true);
         httpSession.setAttribute("appCredential", appCredential);
+    }
+    public static String getURLWithContextPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 
 }

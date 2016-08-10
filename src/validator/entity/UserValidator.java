@@ -37,7 +37,7 @@ public class UserValidator implements Validator {
 //        } finally {
 //            errors.popNestedPath();
 //        }
-        userInf.getIdentityType();
+
         try {
             errors.pushNestedPath("identityType");
             ValidationUtils.invokeValidator(this.identityTypeValidator, userInf.getIdentityType(), errors);

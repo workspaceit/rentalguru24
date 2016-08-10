@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "app_login_credential", schema = "", catalog = "rentguru24")
+@Table(name = "app_login_credential", schema = "" ) //catalog = "rentguru24"
 public class AppCredential extends AbstractCredential{
     public AppCredential() {
         this.id =0;

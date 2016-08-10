@@ -260,15 +260,22 @@ public class ProductService extends BaseService{
         return this.serviceResponse;
     }
 
-    @RequestMapping(value = "/get-searched-product", method = RequestMethod.GET)
-    public List<Product> getProductSearchedProduct(@RequestParam ("limit") int limit, @RequestParam ("offset") int offset){
+    @RequestMapping(value = "/get-product", method = RequestMethod.GET)
+    public ServiceResponse getProduct(@RequestParam ("limit") int limit, @RequestParam ("offset") int offset){
         List<Product> products = productModel.getProductSearch(limit, offset);
-        return products;
+        this.serviceResponse.setResponseData(products,"No product found");
+        return this.serviceResponse;
     }
 
-    @RequestMapping(value = "/get-searched-product/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-product/{id}", method = RequestMethod.GET)
     public Product getProductSearchById(@PathVariable("id") int id){
        return productModel.getProductSearchById(id);
+    }
+
+    @RequestMapping(value = "/get-searched-product", method = RequestMethod.GET)
+    public List<SearchedProduct> getSearchedProduct(@RequestParam ("limit") int limit, @RequestParam ("offset") int offset){
+        List<SearchedProduct> searchedProducts = productModel.getSearchedProduct(limit, offset);
+        return searchedProducts;
     }
 }
 

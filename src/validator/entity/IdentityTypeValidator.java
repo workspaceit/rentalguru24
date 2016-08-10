@@ -24,10 +24,8 @@ public class IdentityTypeValidator  implements Validator {
     @Override
     public void validate(Object object, Errors errors) {
         IdentityType identityType =(IdentityType) object;
-        if(identityType.getId()!=0){
-            if(!this.identityTypeModel.isExist(identityType.getId())){
-                errors.rejectValue("id", "Identity type id is not valid");
-            }
+        if(!this.identityTypeModel.isExist(identityType.getId())){
+            errors.rejectValue("id", "Identity type id does not exist");
         }
 
     }

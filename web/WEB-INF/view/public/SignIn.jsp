@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -189,7 +190,9 @@
     </div>
   </div>
 </div>
-
+<script>
+  var BASEURL = "${BaseUrl}";
+</script>
 <!-- Contact end here -->
 <!-- Main container start here -->
 <!-- Javascript framework and plugins start here -->
@@ -212,7 +215,7 @@
 
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">
-  $("div#fallback").dropzone({ url: "/file/post" });
+  $("div#fallback").dropzone({ url: BASEURL+"/file/post" });
 
   $('.main_product_slider').carousel();
   $('.owl-carousel').owlCarousel({
@@ -259,7 +262,7 @@
     var email = $("#email").val();
     var password = $("#password").val();
     $.ajax({
-      url: '/api/signin/by-email-password',
+      url: BASEURL+'/api/signin/by-email-password',
       type: 'POST',
       data: {
         email: email,

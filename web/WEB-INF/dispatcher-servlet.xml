@@ -9,6 +9,11 @@
        <context:component-scan base-package="controller"   />
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
+
+       <mvc:resources mapping="/product-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/product/"
+                      cache-period="31556926"/>
+       <!--<mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
 
@@ -116,7 +121,7 @@
                             <value>model.entity.app.IdentityType</value>
                             <value>model.entity.app.product.ProductAvailability</value>
                             <value>model.entity.app.product.ProductLocation</value>
-                            <!--<value>model.entity.app.product.SearchedProduct</value>-->
+                            <value>model.entity.app.product.SearchedProduct</value>
                      </list>
               </property>
               <property name="hibernateProperties">

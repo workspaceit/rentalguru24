@@ -220,7 +220,9 @@
         </div>
     </div>
 </div>
-
+<script>
+    var BASEURL = "${BaseUrl}";
+</script>
 <!-- Contact end here -->
 <!-- Main container start here -->
 <!-- Javascript framework and plugins start here -->
@@ -293,7 +295,7 @@
 
     function fetchIdentity(){
         $.ajax({
-            url: '/api/utility/get-identity',
+            url: BASEURL+'/api/utility/get-identity',
             type: 'GET',
             dataType: 'json',
             success: function(data){
@@ -319,7 +321,7 @@
         var identityDocToken = $("#identityDocToken").val();
 //        console.log(firstName, lastName, email, password, identityTypeId, identityDocToken);
         $.ajax({
-            url: '/api/signup/user',
+            url: BASEURL+'/api/signup/user',
             type: 'POST',
             data: {
                 firstName:firstName,
@@ -352,7 +354,7 @@
     $(function() {
         var identityDocFile = $("div#fallback").dropzone(
                 {
-                    url: "/fileupload/upload/document-identity",
+                    url: BASEURL+"/fileupload/upload/document-identity",
                     paramName: "documentIdentity",
                     maxFilesize: 1,
 //                    addedfile:function(file){

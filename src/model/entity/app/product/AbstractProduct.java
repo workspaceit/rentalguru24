@@ -30,7 +30,6 @@ public class AbstractProduct {
     protected boolean reviewStatus;
     protected Timestamp createdDate;
     protected AppCredential owner;
-    protected List<ProductCategory> productCategories;
     protected ProductLocation productLocation;
 
     @Id
@@ -177,15 +176,7 @@ public class AbstractProduct {
         this.owner = owner;
     }
 
-    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    public List<ProductCategory> getProductCategories() {
-        return productCategories;
-    }
 
-    public void setProductCategories(List<ProductCategory> productCategories) {
-        this.productCategories = productCategories;
-    }
 
     @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "id", referencedColumnName = "product_id", nullable = false)
