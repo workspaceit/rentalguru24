@@ -40,7 +40,7 @@ public class ProductModel extends BaseModel{
         Session session = this.sessionFactory.openSession();
         String hql = "FROM Product P ORDER BY P.id DESC";
         Query query =  session.createQuery(hql);
-        query.setFirstResult(offset);
+        query.setFirstResult(offset*limit);
         query.setMaxResults(limit);
         return (List<Product>)query.list();
     }
@@ -51,7 +51,7 @@ public class ProductModel extends BaseModel{
         Session session = this.sessionFactory.openSession();
         String hql = "FROM SearchedProduct P ORDER BY P.id DESC";
         Query query =  session.createQuery(hql);
-        query.setFirstResult(offset);
+        query.setFirstResult(offset*limit);
         query.setMaxResults(limit);
         return (List<SearchedProduct>)query.list();
     }
