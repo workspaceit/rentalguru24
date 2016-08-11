@@ -1,3 +1,4 @@
+<%@ page import="controller.BaseHttp" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
 
@@ -98,6 +99,7 @@
 
                         <div class="col-md-6 col-sm-6 col-xs-6 ">
                             <ul class="top_nav_ul right top_nav_ul">
+                                <d:if test="${IsLogIn != true}">
                                 <li class="dropdown">
                                     <a href="/signin" class="dropdown-toggle top_nav_a"
                                        aria-expanded="false">
@@ -110,6 +112,7 @@
                                         <i class="fa fa-lock"></i>Register
                                     </a>                      
                                 </li>
+                                </d:if>
                                 <li class="dropdown no-margin">
                                     <a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true"
                                        aria-expanded="false">

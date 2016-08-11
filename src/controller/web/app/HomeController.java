@@ -34,11 +34,13 @@ public class HomeController extends BaseHttp {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("public/Home");
+        Boolean IsLogin = this.serviceResponse.getResponseStat().getIsLogin();
         List<Category> category = categoryModel.getAll();
         List<SearchedProduct> products = productModel.getSearchedProduct(8, 0);
 
         modelAndView.addObject("category", category);
         modelAndView.addObject("products", products);
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl",this.getBaseURL());
         return modelAndView;
     }
