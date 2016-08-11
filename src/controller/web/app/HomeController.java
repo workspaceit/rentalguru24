@@ -1,8 +1,12 @@
 package controller.web.app;
 
 import controller.BaseHttp;
+import controller.service.app.ProductService;
 import model.CategoryModel;
+import model.ProductModel;
 import model.entity.app.Category;
+import model.entity.app.product.Product;
+import model.entity.app.product.SearchedProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -24,11 +28,17 @@ import java.util.List;
 public class HomeController extends BaseHttp {
     @Autowired
     CategoryModel categoryModel;
+
+    @Autowired
+    ProductModel productModel;
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("public/Home");
         List<Category> category = categoryModel.getAll();
+        List<SearchedProduct> products = productModel.getSearchedProduct(8, 0);
+
         modelAndView.addObject("category", category);
+        modelAndView.addObject("products", products);
         modelAndView.addObject("BaseUrl",this.getBaseURL());
         return modelAndView;
     }

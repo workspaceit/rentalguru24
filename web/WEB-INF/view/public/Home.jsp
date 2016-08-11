@@ -420,18 +420,19 @@
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
                         <div class="row clearfix">
+                            <d:forEach var="product" items="${products}">
                             <div class="col-md-3 single-item">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <div class="img-single">
-                                            <img src="<c:url value="/resources/img/6.jpg" />" />
+                                            <img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" />
                                             <div class="product-btn-grp">
                                                 <a href="#" class="gbtn left">Quick view</a>
                                                 <a href="#" class="gbtn right">Rent Now</a>
                                             </div>
                                         </div>
                                         <div class="block-desc">
-                                            <label class="title-label">Aenean Ru Bristique</label>
+                                            <label class="title-label">${product.name}</label>
                                             <br>
                                             <fieldset class="rating">
                                                 <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
@@ -445,223 +446,222 @@
                                         <div class="block-action">
                                             <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
                                             <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                                            <div class="price-tag">$30.00</div>
+                                            <div class="price-tag">$${product.currentValue}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 single-item">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="img-single">
-                                            <img src="<c:url value="/resources/img/7.jpg" />" />
-                                            <div class="product-btn-grp">
-                                                <a href="#" class="gbtn left">Quick view</a>
-                                                <a href="#" class="gbtn right">Rent Now</a>
-                                            </div>
-                                        </div>
-                                        <div class="block-desc">
-                                            <label class="title-label">Aenean Ru Bristique</label>
-                                            <br>
-                                            <fieldset class="rating">
-                                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                            </fieldset>
+                            </d:forEach>
+                            <%--<div class="col-md-3 single-item">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="img-single">--%>
+                                            <%--<img src="<c:url value="/resources/img/7.jpg" />" />--%>
+                                            <%--<div class="product-btn-grp">--%>
+                                                <%--<a href="#" class="gbtn left">Quick view</a>--%>
+                                                <%--<a href="#" class="gbtn right">Rent Now</a>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="block-desc">--%>
+                                            <%--<label class="title-label">Aenean Ru Bristique</label>--%>
+                                            <%--<br>--%>
+                                            <%--<fieldset class="rating">--%>
+                                                <%--<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>--%>
+                                                <%--<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>--%>
+                                                <%--<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>--%>
+                                                <%--<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>--%>
+                                                <%--<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>--%>
+                                            <%--</fieldset>--%>
 
-                                        </div>
-                                        <div class="block-action">
-                                            <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
-                                            <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                                            <div class="price-tag">$30.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 single-item">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="img-single">
-                                            <img src="<c:url value="/resources/img/8.jpg" />" />
-                                            <div class="product-btn-grp">
-                                                <a href="#" class="gbtn left">Quick view</a>
-                                                <a href="#" class="gbtn right">Rent Now</a>
-                                            </div>
-                                        </div>
-                                        <div class="block-desc">
-                                            <label class="title-label">Aenean Ru Bristique</label>
-                                            <br>
-                                            <fieldset class="rating">
-                                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                            </fieldset>
+                                        <%--</div>--%>
+                                        <%--<div class="block-action">--%>
+                                            <%--<button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>--%>
+                                            <%--<button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>--%>
+                                            <%--<div class="price-tag">$30.00</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-3 single-item">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="img-single">--%>
+                                            <%--<img src="<c:url value="/resources/img/8.jpg" />" />--%>
+                                            <%--<div class="product-btn-grp">--%>
+                                                <%--<a href="#" class="gbtn left">Quick view</a>--%>
+                                                <%--<a href="#" class="gbtn right">Rent Now</a>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="block-desc">--%>
+                                            <%--<label class="title-label">Aenean Ru Bristique</label>--%>
+                                            <%--<br>--%>
+                                            <%--<fieldset class="rating">--%>
+                                                <%--<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>--%>
+                                                <%--<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>--%>
+                                                <%--<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>--%>
+                                                <%--<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>--%>
+                                                <%--<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>--%>
+                                            <%--</fieldset>--%>
 
-                                        </div>
-                                        <div class="block-action">
-                                            <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
-                                            <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                                            <div class="price-tag">$30.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 single-item">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="img-single">
-                                            <img src="<c:url value="/resources/img/9.jpg" />" />
-                                            <div class="product-btn-grp">
-                                                <a href="#" class="gbtn left">Quick view</a>
-                                                <a href="#" class="gbtn right">Rent Now</a>
-                                            </div>
-                                        </div>
-                                        <div class="block-desc">
-                                            <label class="title-label">Aenean Ru Bristique</label>
-                                            <br>
-                                            <fieldset class="rating">
-                                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                            </fieldset>
+                                        <%--</div>--%>
+                                        <%--<div class="block-action">--%>
+                                            <%--<button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>--%>
+                                            <%--<button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>--%>
+                                            <%--<div class="price-tag">$30.00</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-3 single-item">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="img-single">--%>
+                                            <%--<img src="<c:url value="/resources/img/9.jpg" />" />--%>
+                                            <%--<div class="product-btn-grp">--%>
+                                                <%--<a href="#" class="gbtn left">Quick view</a>--%>
+                                                <%--<a href="#" class="gbtn right">Rent Now</a>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="block-desc">--%>
+                                            <%--<label class="title-label">Aenean Ru Bristique</label>--%>
+                                            <%--<br>--%>
+                                            <%--<fieldset class="rating">--%>
+                                                <%--<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>--%>
+                                                <%--<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>--%>
+                                                <%--<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>--%>
+                                                <%--<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>--%>
+                                                <%--<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>--%>
+                                            <%--</fieldset>--%>
 
-                                        </div>
-                                        <div class="block-action">
-                                            <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
-                                            <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                                            <div class="price-tag">$30.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 single-item">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="img-single">
-                                            <img src="<c:url value="/resources/img/10.jpg" />" />
-                                            <div class="product-btn-grp">
-                                                <a href="#" class="gbtn left">Quick view</a>
-                                                <a href="#" class="gbtn right">Rent Now</a>
-                                            </div>
-                                        </div>
-                                        <div class="block-desc">
-                                            <label class="title-label">Aenean Ru Bristique</label>
-                                            <br>
-                                            <fieldset class="rating">
-                                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                            </fieldset>
+                                        <%--</div>--%>
+                                        <%--<div class="block-action">--%>
+                                            <%--<button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>--%>
+                                            <%--<button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>--%>
+                                            <%--<div class="price-tag">$30.00</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-3 single-item">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="img-single">--%>
+                                            <%--<img src="<c:url value="/resources/img/10.jpg" />" />--%>
+                                            <%--<div class="product-btn-grp">--%>
+                                                <%--<a href="#" class="gbtn left">Quick view</a>--%>
+                                                <%--<a href="#" class="gbtn right">Rent Now</a>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="block-desc">--%>
+                                            <%--<label class="title-label">Aenean Ru Bristique</label>--%>
+                                            <%--<br>--%>
+                                            <%--<fieldset class="rating">--%>
+                                                <%--<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>--%>
+                                                <%--<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>--%>
+                                                <%--<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>--%>
+                                                <%--<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>--%>
+                                                <%--<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>--%>
+                                            <%--</fieldset>--%>
 
-                                        </div>
-                                        <div class="block-action">
-                                            <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
-                                            <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                                            <div class="price-tag">$30.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 single-item">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="img-single">
-                                            <img src="<c:url value="/resources/img/11.jpg" />" />
-                                            <div class="product-btn-grp">
-                                                <a href="#" class="gbtn left">Quick view</a>
-                                                <a href="#" class="gbtn right">Rent Now</a>
-                                            </div>
-                                        </div>
-                                        <div class="block-desc">
-                                            <label class="title-label">Aenean Ru Bristique</label>
-                                            <br>
-                                            <fieldset class="rating">
-                                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                            </fieldset>
+                                        <%--</div>--%>
+                                        <%--<div class="block-action">--%>
+                                            <%--<button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>--%>
+                                            <%--<button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>--%>
+                                            <%--<div class="price-tag">$30.00</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-3 single-item">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="img-single">--%>
+                                            <%--<img src="<c:url value="/resources/img/11.jpg" />" />--%>
+                                            <%--<div class="product-btn-grp">--%>
+                                                <%--<a href="#" class="gbtn left">Quick view</a>--%>
+                                                <%--<a href="#" class="gbtn right">Rent Now</a>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="block-desc">--%>
+                                            <%--<label class="title-label">Aenean Ru Bristique</label>--%>
+                                            <%--<br>--%>
+                                            <%--<fieldset class="rating">--%>
+                                                <%--<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>--%>
+                                                <%--<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>--%>
+                                                <%--<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>--%>
+                                                <%--<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>--%>
+                                                <%--<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>--%>
+                                            <%--</fieldset>--%>
 
-                                        </div>
-                                        <div class="block-action">
-                                            <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
-                                            <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                                            <div class="price-tag">$30.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 single-item">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="img-single">
-                                            <img src="<c:url value="/resources/img/12.jpg" />" />
-                                            <div class="product-btn-grp">
-                                                <a href="#" class="gbtn left">Quick view</a>
-                                                <a href="#" class="gbtn right">Rent Now</a>
-                                            </div>
-                                        </div>
-                                        <div class="block-desc">
-                                            <label class="title-label">Aenean Ru Bristique</label>
-                                            <br>
-                                            <fieldset class="rating">
-                                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                            </fieldset>
+                                        <%--</div>--%>
+                                        <%--<div class="block-action">--%>
+                                            <%--<button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>--%>
+                                            <%--<button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>--%>
+                                            <%--<div class="price-tag">$30.00</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-3 single-item">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="img-single">--%>
+                                            <%--<img src="<c:url value="/resources/img/12.jpg" />" />--%>
+                                            <%--<div class="product-btn-grp">--%>
+                                                <%--<a href="#" class="gbtn left">Quick view</a>--%>
+                                                <%--<a href="#" class="gbtn right">Rent Now</a>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="block-desc">--%>
+                                            <%--<label class="title-label">Aenean Ru Bristique</label>--%>
+                                            <%--<br>--%>
+                                            <%--<fieldset class="rating">--%>
+                                                <%--<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>--%>
+                                                <%--<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>--%>
+                                                <%--<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>--%>
+                                                <%--<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>--%>
+                                                <%--<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>--%>
+                                            <%--</fieldset>--%>
 
-                                        </div>
-                                        <div class="block-action">
-                                            <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
-                                            <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                                            <div class="price-tag">$30.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 single-item">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="img-single">
-                                            <img src="<c:url value="/resources/img/13.jpg" />" />
-                                            <div class="product-btn-grp">
-                                                <a href="#" class="gbtn left">Quick view</a>
-                                                <a href="#" class="gbtn right">Rent Now</a>
-                                            </div>
-                                        </div>
-                                        <div class="block-desc">
-                                            <label class="title-label">Aenean Ru Bristique</label>
-                                            <br>
-                                            <fieldset class="rating">
-                                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                                                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                                            </fieldset>
+                                        <%--</div>--%>
+                                        <%--<div class="block-action">--%>
+                                            <%--<button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>--%>
+                                            <%--<button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>--%>
+                                            <%--<div class="price-tag">$30.00</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-3 single-item">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="img-single">--%>
+                                            <%--<img src="<c:url value="/resources/img/13.jpg" />" />--%>
+                                            <%--<div class="product-btn-grp">--%>
+                                                <%--<a href="#" class="gbtn left">Quick view</a>--%>
+                                                <%--<a href="#" class="gbtn right">Rent Now</a>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="block-desc">--%>
+                                            <%--<label class="title-label">Aenean Ru Bristique</label>--%>
+                                            <%--<br>--%>
+                                            <%--<fieldset class="rating">--%>
+                                                <%--<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>--%>
+                                                <%--<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>--%>
+                                                <%--<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>--%>
+                                                <%--<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>--%>
+                                                <%--<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>--%>
+                                            <%--</fieldset>--%>
 
-                                        </div>
-                                        <div class="block-action">
-                                            <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
-                                            <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                                            <div class="price-tag">$30.00</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
+                                        <%--</div>--%>
+                                        <%--<div class="block-action">--%>
+                                            <%--<button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>--%>
+                                            <%--<button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>--%>
+                                            <%--<div class="price-tag">$30.00</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
                         </div>
                     </div>
                 </div>
