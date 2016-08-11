@@ -139,14 +139,14 @@
                 <label for="fallback">Identity Document</label>
                 <div id="fallback"  class="fallback pos-relative" >
                     Drop files here or click to upload.
-                    <%--<span class="inner-load fileUploadGif" hidden></span>--%>
+                    <span class="inner-load fileUploadGif" hidden></span>
                 </div>
                 <%--<input type="file" name="documentIdentity">--%>
                 <p class="help-block error-form" id="errorMsg_identityDocToken"></p>
             </div>
         </div>
         <div class="col-md-12 text-center">
-            <button class="btn-cstm-sign pos-relative">
+            <button class="btn-cstm-sign pos-relative" id="signUpButton">
                 Sign up
                 <span class="inner-load signUpGif" hidden></span>
             </button>
@@ -357,21 +357,27 @@
                     url: BASEURL+"/fileupload/upload/document-identity",
                     paramName: "documentIdentity",
                     maxFilesize: 1,
-//                    addedfile:function(file){
-//                        $('.fileUploadGif').show();
-//                    },
+                    uploadprogress:function(file, progress){
+                        $('#signUpButton').addAttribute("disabled","disabled");
+                        $('.signUpGif').show();
+                        $('.fileUploadGif').show();
+                    },
                     success:function(file, response){
                         if(response.responseStat.status == true) {
+                            $('.fileUploadGif').hide();
+                            $('#signUpButton').removeAttrs("disabled","disabled");
+                            $('.signUpGif').hide();
                             $('#identityDocToken').val(response.responseData);
-//                            $('.fileUploadGif').hide().delay(500).fadeOut();
                         }
                         else{
                             BindErrorsWithHtml('errorMsg_', response.requestErrors);
                         }
+                    },
+                    error:function(file, errorMessage, xhr){
+                        $('.fileUploadGif').hide();
+                        $('#signUpButton').removeAttrs("disabled","disabled");
+                        $('.signUpGif').hide();
                     }
-//                    error:function(file, errorMessage, xhr){
-//
-//                    }
                 }
         );
 
