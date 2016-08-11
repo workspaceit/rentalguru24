@@ -76,7 +76,7 @@ public class ProductCategory {
     }
 
     @OneToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id", referencedColumnName = "category_id", nullable = false)
     public Category getCategory() {
         return category;
     }

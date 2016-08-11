@@ -1,5 +1,8 @@
 package model.entity.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import model.entity.app.product.Product;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -17,8 +20,10 @@ public class RentProduct {
     private boolean expired;
     private Timestamp createdDate;
     private RentRequest rentRequest;
+    private Product product;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -68,46 +73,27 @@ public class RentProduct {
         this.expired = expired;
     }
 
+
     @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {
         return createdDate;
     }
-
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RentProduct that = (RentProduct) o;
-
-        if (id != that.id) return false;
-        if (productId != that.productId) return false;
-        if (expired != that.expired) return false;
-        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
-        if (endsDate != null ? !endsDate.equals(that.endsDate) : that.endsDate != null) return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
-
-        return true;
+    @JsonIgnore
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id",insertable = false,updatable = false)
+    public Product getProduct() {
+        return product;
+    }
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + productId;
-        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
-        result = 31 * result + (endsDate != null ? endsDate.hashCode() : 0);
-        result = 31 * result + (expired ? 1 : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
-    }
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinColumn(name = "rent_request_id", referencedColumnName = "id", nullable = true)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "rent_request_id", referencedColumnName = "id", nullable = false)
     public RentRequest getRentRequest() {
         return rentRequest;
     }
@@ -115,15 +101,5 @@ public class RentProduct {
     public void setRentRequest(RentRequest rentRequest) {
         this.rentRequest = rentRequest;
     }
-
-//    Zakariya
-//
-//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "rent_product_id", referencedColumnName = "id", nullable = false)
-//    public Collection<RentRequest> getRentRequestsById() {return rentRequestsById;}
-//
-//    public void setRentRequestsById(Collection<RentRequest> rentRequestsById){
-//        this.rentRequestsById = rentRequestsById;
-//    }
 
 }

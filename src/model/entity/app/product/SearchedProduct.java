@@ -1,8 +1,14 @@
 package model.entity.app.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import model.convert.PictureArrayConverter;
+import model.convert.PictureConverter;
+import model.entity.app.AppCredential;
+import model.nonentity.photo.Picture;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -13,17 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "product", schema = "" ) //catalog = "rentguru24"
 public class SearchedProduct extends AbstractProduct{
-//
-//    protected List<ProductCategory> productCategoriesLP;
-//    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-//    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-//    public List<ProductCategory> getProductCategoriesLP() {
-//        return productCategoriesLP;
-//    }
-//
-//    public void setProductCategoriesLP(List<ProductCategory> productCategories) {
-//        this.productCategoriesLP = productCategories;
-//    }
+
 //    private List<ProductAvailability> productAvailability;
 //
 //

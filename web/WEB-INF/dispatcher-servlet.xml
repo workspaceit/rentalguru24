@@ -5,12 +5,24 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-       <mvc:annotation-driven/>
+       <mvc:annotation-driven>
+              <mvc:message-converters>
+                     <bean class="json.MappingJackson2HttpMessageConverter">
+                            <property name="objectMapper">
+                                   <bean class="json.HibernateAwareObjectMapper" >
+                                          <property name="serializationInclusion" value="NON_NULL" />
+                                   </bean>
+                            </property>
+
+                     </bean>
+              </mvc:message-converters>
+       </mvc:annotation-driven>
+
        <context:component-scan base-package="controller"   />
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
 
-       <mvc:resources mapping="/product-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/product/"
+       <mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/product/"
                       cache-period="31556926"/>
        <!--<mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"-->
                       <!--cache-period="31556926"/>-->
@@ -121,7 +133,7 @@
                             <value>model.entity.app.IdentityType</value>
                             <value>model.entity.app.product.ProductAvailability</value>
                             <value>model.entity.app.product.ProductLocation</value>
-                            <value>model.entity.app.product.SearchedProduct</value>
+                            <!--<value>model.entity.app.product.SearchedProduct</value>-->
                      </list>
               </property>
               <property name="hibernateProperties">
