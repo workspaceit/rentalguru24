@@ -9,6 +9,7 @@ public class ProductUploadForm {
     private long profileImageToken;
     private double currentValue;
     private double rentFee;
+    private Integer rentTypeId;
     private boolean active;
     private boolean currentlyAvailable;
     private String availableFrom;
@@ -66,6 +67,14 @@ public class ProductUploadForm {
 
     public void setRentFee(double rentFee) {
         this.rentFee = rentFee;
+    }
+
+    public Integer getRentTypeId() {
+        return rentTypeId;
+    }
+
+    public void setRentTypeId(Integer rentTypeId) {
+        this.rentTypeId = rentTypeId;
     }
 
     public boolean isActive() {

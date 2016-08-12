@@ -8,6 +8,7 @@ import model.convert.PictureConverter;
 import model.entity.app.AppCredential;
 import model.entity.app.RentProduct;
 import model.entity.app.RentRequest;
+import model.entity.app.RentType;
 import model.nonentity.photo.Picture;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -41,6 +42,7 @@ public class Product{
     protected Timestamp createdDate;
     protected AppCredential owner;
     protected ProductLocation productLocation;
+    protected RentType rentType;
     protected List<ProductCategory> productCategories;
     protected List<ProductAvailability> productAvailability;
     protected List<RentRequest> rentRequests;
@@ -203,6 +205,17 @@ public class Product{
     public void setProductLocation(ProductLocation productLocation) {
         this.productLocation = productLocation;
     }
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rent_type_id", referencedColumnName = "id", nullable = false)
+    public RentType getRentType() {
+        return rentType;
+    }
+
+
+    public void setRentType(RentType rentType) {
+        this.rentType = rentType;
+    }
+
     @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)

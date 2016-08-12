@@ -4,6 +4,7 @@ package validator.form;
 import helper.DateHelper;
 import helper.ImageHelper;
 import model.CategoryModel;
+import model.RentTypeModel;
 import model.TempFileModel;
 import model.entity.app.product.Product;
 import model.entity.app.TempFile;
@@ -18,10 +19,12 @@ import validator.form.class_file.ProductUploadForm;
 public class ProductUploadFormValidator implements Validator {
     private CategoryModel categoryModel;
     private TempFileModel tempFileModel;
+    private RentTypeModel rentTypeModel;
 
-    public ProductUploadFormValidator(CategoryModel categoryModel, TempFileModel tempFileModel) {
+    public ProductUploadFormValidator(CategoryModel categoryModel, TempFileModel tempFileModel,RentTypeModel rentTypeMode) {
         this.categoryModel = categoryModel;
         this.tempFileModel = tempFileModel;
+        this.rentTypeModel = rentTypeMode;
     }
 
     @Override
@@ -90,11 +93,11 @@ public class ProductUploadFormValidator implements Validator {
             }
         }
 
-
-
-
-
-
+        if(productUploadForm.getRentTypeId()!=null){
+            if(rentTypeModel.getById(productUploadForm.getRentTypeId())==null){
+                errors.rejectValue("rentTypeId", "No rent type found by id  "+productUploadForm.getRentTypeId());
+            }
+        }
 
 
     }

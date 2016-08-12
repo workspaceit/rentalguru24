@@ -5,10 +5,7 @@ import controller.service.BaseService;
 import helper.DateHelper;
 import helper.ImageHelper;
 import helper.ServiceResponse;
-import model.AppLoginCredentialModel;
-import model.CategoryModel;
-import model.ProductModel;
-import model.TempFileModel;
+import model.*;
 import model.entity.app.*;
 import model.entity.app.product.Product;
 import model.entity.app.product.ProductCategory;
@@ -47,6 +44,9 @@ public class ProductService extends BaseService{
 
     @Autowired
     CategoryModel categoryModel;
+
+    @Autowired
+    RentTypeModel rentTypeModel;
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     public ServiceResponse uploadProduct(@RequestParam Map<String,String> allRequestParameter,
@@ -98,7 +98,7 @@ public class ProductService extends BaseService{
         try{
             productUploadForm.setProfileImageToken(Long.parseLong(allRequestParameter.get("profileImageToken")));
         }catch(Exception ex){
-            this.serviceResponse.setRequestError("profileImageToken","Profile image token value required");
+            this.serviceResponse.setRequestError("profileImageToken", "Profile image token value required");
         }
 
         try{
@@ -126,9 +126,18 @@ public class ProductService extends BaseService{
         try{
             productUploadForm.setRentFee(Double.parseDouble(allRequestParameter.get("rentFee")));
         }catch(Exception ex){
-            this.serviceResponse.setRequestError("rentFee","Rent fee required");
+            this.serviceResponse.setRequestError("rentFee","Rent fee integer required");
         }
 
+        try{
+            if(allRequestParameter.get("rentType")!=null) {
+                productUploadForm.setRentTypeId(Integer.parseInt(allRequestParameter.get("rentType")));
+            }else{
+                this.serviceResponse.setRequestError("rentType","Rent type  required");
+            }
+        }catch(Exception ex){
+            this.serviceResponse.setRequestError("rentType","Rent type  required");
+        }
 
 
         productUploadForm.setCity(allRequestParameter.get("city"));
@@ -144,7 +153,7 @@ public class ProductService extends BaseService{
 
 
 
-        new ProductUploadFormValidator(categoryModel,tempFileModel).validate(productUploadForm, result);
+        new ProductUploadFormValidator(categoryModel,tempFileModel,rentTypeModel).validate(productUploadForm, result);
 
 
 
@@ -215,6 +224,7 @@ public class ProductService extends BaseService{
             }
         }
 
+        RentType rentType = rentTypeModel.getById(productUploadForm.getRentTypeId());
 
 
 
@@ -225,6 +235,8 @@ public class ProductService extends BaseService{
         product.setCurrentValue(productUploadForm.getCurrentValue());
         product.setRentFee(productUploadForm.getRentFee());
         product.setActive(true);
+        product.setCurrentlyAvailable(true);
+        product.setRentType(rentType);
         product.setCurrentValue(productUploadForm.getCurrentValue());
         product.setAvailableFrom(availableFromDate);
         product.setAvailableTill(availableTillDate);

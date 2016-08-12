@@ -93,6 +93,8 @@
        <bean id="baseModel" class="model.BaseModel">
               <property name="sessionFactory" ref="sessionFactory"/>
        </bean>
+       <bean id="rentTypeModel" class="model.RentTypeModel" >
+       </bean>
        <bean id="deviceInfoModel" class="model.DeviceInfoModel">
        </bean>
        <bean id="appLoginCredentialModel" class="model.AppLoginCredentialModel">
@@ -111,6 +113,7 @@
        </bean>
        <bean id="productModel" class="model.ProductModel" >
        </bean>
+
 
 
         <!-- ******************** Hibernate Session,Entity, *********************************** -->
@@ -133,7 +136,7 @@
                             <value>model.entity.app.IdentityType</value>
                             <value>model.entity.app.product.ProductAvailability</value>
                             <value>model.entity.app.product.ProductLocation</value>
-                            <!--<value>model.entity.app.product.SearchedProduct</value>-->
+                            <value>model.entity.app.RentType</value>
                      </list>
               </property>
               <property name="hibernateProperties">

@@ -4,6 +4,7 @@ import controller.service.BaseService;
 import helper.ServiceResponse;
 import model.CategoryModel;
 import model.IdentityTypeModel;
+import model.RentTypeModel;
 import model.entity.app.Category;
 import model.entity.app.IdentityType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class UtilityServices extends BaseService{
     IdentityTypeModel identityTypeModel;
     @Autowired
     CategoryModel categoryModel;
+    @Autowired
+    RentTypeModel rentTypeModel;
 
     @RequestMapping(value = "/get-identity", method = RequestMethod.GET)
     public ServiceResponse getAllIdentityType(){
@@ -58,6 +61,18 @@ public class UtilityServices extends BaseService{
     public ServiceResponse getSubCategoryByPrentId(@PathVariable("parentId")int parentId){
 
         this.serviceResponse.setResponseData(categoryModel.getByParentId(parentId),"No subcategory found");
+        return this.serviceResponse;
+    }
+    @RequestMapping(value = "/get-rent-type/{id}", method = RequestMethod.GET)
+    public ServiceResponse getRentTypeById(@PathVariable("id")int id){
+
+        this.serviceResponse.setResponseData(rentTypeModel.getById(id),"No rent type found");
+        return this.serviceResponse;
+    }
+    @RequestMapping(value = "/get-rent-type", method = RequestMethod.GET)
+    public ServiceResponse getRentType(){
+
+        this.serviceResponse.setResponseData(rentTypeModel.getAll(),"No record found");
         return this.serviceResponse;
     }
 
