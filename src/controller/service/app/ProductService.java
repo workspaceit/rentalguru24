@@ -230,6 +230,7 @@ public class ProductService extends BaseService{
 
         product.setName(productUploadForm.getName());
         product.setDescription(productUploadForm.getDescription());
+        product.setRating(0);
         product.setProfileImage(profileImage);
         product.setOtherImages(otherImages);
         product.setCurrentValue(productUploadForm.getCurrentValue());
