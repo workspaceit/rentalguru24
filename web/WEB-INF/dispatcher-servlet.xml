@@ -113,6 +113,8 @@
        </bean>
        <bean id="productModel" class="model.ProductModel" >
        </bean>
+       <bean id="productRatingModel" class="model.ProductRatingModel" >
+       </bean>
 
 
 
