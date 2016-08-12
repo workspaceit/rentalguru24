@@ -1,6 +1,7 @@
 <%@ page import="controller.BaseHttp" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <!DOCTYPE html>
@@ -435,7 +436,7 @@
                                             </div>
                                         </div>
                                         <div class="block-desc">
-                                            <label class="title-label">${product.name}</label>
+                                            <label class="title-label productName">${fn:substring(product.name, 0, 20)}<d:if test="${fn:length(product.name)>20}">....</d:if></label>
                                             <br>
                                             <fieldset class="rating">
                                                 <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
