@@ -12,16 +12,19 @@ import org.hibernate.Session;
 public class ProductRatingModel extends BaseModel {
     public void insert(ProductRating productRating){
         Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
         session.save(productRating);
         session.getTransaction().commit();
         session.close();
     }
-    public float averageRating(int productId){
+    public double averageRating(int productId){
         Session session = this.sessionFactory.openSession();
-//        String hql = "SELECT AVG(ProductRating.rateValue) as avgRating FROM ProductRating pR WHERE  pR.product_id = "+productId;
-        String hql = "SELECT AVG(ProductRating.rateval) AS averageRating, WHERE ProductRating.product_id="+productId;
+        String hql = "SELECT AVG(pR.rateValue) as avgRating " +
+                    "FROM ProductRating pR " +
+                    "WHERE  pR.product.id = "+productId;
+//        String hql = "SELECT AVG(ProductRating.rateval) AS averageRating, WHERE ProductRating.product_id="+productId;
         Query query = session.createQuery(hql);
-        float result = (float) query.uniqueResult();
+        double result = (double) query.uniqueResult();
         return result;
     }
 }

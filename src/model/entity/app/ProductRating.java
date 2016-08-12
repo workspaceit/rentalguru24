@@ -97,13 +97,13 @@ public class ProductRating {
     }
 
     @OneToOne
-    @JoinColumn(name = "app_credential_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "app_credential_id", referencedColumnName = "id", nullable = false)
     public AppCredential getAppCredential(){return appCredential;}
 
     public void setAppCredential(AppCredential appCredential){this.appCredential = appCredential;}
 
     @OneToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     public Product getProduct(){return  product;}
 
     public void setProduct(Product product){this.product = product;}

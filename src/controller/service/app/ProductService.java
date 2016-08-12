@@ -300,22 +300,27 @@ public class ProductService extends BaseService{
     @RequestMapping(value = "/rate-product/{product_id}/{rating_value}", method = RequestMethod.POST)
     public ServiceResponse postProductRating(@PathVariable("product_id") int productId, @PathVariable("rating_value") int ratingValue){
 
-//        if(!this.serviceResponse.getResponseStat().getIsLogin()){
-//            this.serviceResponse.getResponseStat().setErrorMsg("Session expired !! , please login ");
-//            return this.serviceResponse;
-//        }
+        if(!this.serviceResponse.getResponseStat().getIsLogin()){
+            this.serviceResponse.getResponseStat().setErrorMsg("Session expired !! , please login ");
+            return this.serviceResponse;
+        }
 
         ProductRating productRating = new ProductRating();
 
-//        productRating.setProductId(productId);
-//        productRating.setAppCredentialId(this.appCredential.getId());
+        Product product = productModel.getById(productId);
+
         productRating.setAppCredential(this.appCredential);
-//        productRating.setProduct(productModel.getById(productId));
+        productRating.setProduct(product);
         productRating.setRateValue(ratingValue);
 
         productRatingModel.insert(productRating);
 
-        System.out.println(productRatingModel.averageRating(productId));
+        double averageRate = productRatingModel.averageRating(productId);
+        product.setAverageRating((float)averageRate);
+//        productModel.update(product);
+
+        this.serviceResponse.setResponseData(productRating);
+
         return this.serviceResponse;
     }
 
