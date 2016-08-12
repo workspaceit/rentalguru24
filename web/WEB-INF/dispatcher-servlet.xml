@@ -140,6 +140,7 @@
                             <value>model.entity.app.product.ProductLocation</value>
                             <value>model.entity.app.RentType</value>
                             <value>model.entity.app.ProductRating</value>
+                            <value>model.entity.app.product.ProductLiked</value>
                      </list>
               </property>
               <property name="hibernateProperties">

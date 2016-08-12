@@ -216,6 +216,9 @@ public class ProductService extends BaseService{
             Picture picture = new Picture();
             try {
                 picture = ImageHelper.moveProductImage(product.getOwner().getId(), tempOtherFile.getPath());
+
+                if(picture.getOriginal().getPath().isEmpty()) continue;
+
                 otherImages.add(picture);
             } catch (Exception e) {
                 //e.printStackTrace();
@@ -230,7 +233,7 @@ public class ProductService extends BaseService{
 
         product.setName(productUploadForm.getName());
         product.setDescription(productUploadForm.getDescription());
-        product.setRating(0);
+        product.setAverageRating(0);
         product.setProfileImage(profileImage);
         product.setOtherImages(otherImages);
         product.setCurrentValue(productUploadForm.getCurrentValue());

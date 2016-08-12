@@ -2,6 +2,7 @@ package model.entity.app.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.convert.PictureArrayConverter;
 import model.convert.PictureConverter;
@@ -12,6 +13,7 @@ import model.entity.app.RentType;
 import model.nonentity.photo.Picture;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -26,32 +28,34 @@ import java.util.List;
 @Table(name = "product", schema = "" ) //catalog = "rentguru24"
 public class Product{
 
-    protected int id;
+    private int id;
 
-    protected String name;
-    protected String description;
-    protected float averageRating;
-    protected Picture profileImage;
-    protected List<Picture> otherImages;
-    protected double currentValue;
-    protected double rentFee;
-    protected boolean active;
-    protected boolean currentlyAvailable;
-    protected Timestamp availableFrom;
-    protected Timestamp availableTill;
-    protected boolean reviewStatus;
-    protected Timestamp createdDate;
-    protected AppCredential owner;
-    protected ProductLocation productLocation;
-    protected List<ProductCategory> productCategories;
-    protected RentType rentType;
+    private String name;
+    private String description;
+    private float averageRating;
+    private Picture profileImage;
+    private List<Picture> otherImages;
+    private double currentValue;
+    private double rentFee;
+    private boolean active;
+    private boolean currentlyAvailable;
+    private Timestamp availableFrom;
+    private Timestamp availableTill;
+    private boolean reviewStatus;
+    private Timestamp createdDate;
+    private AppCredential owner;
+    private ProductLocation productLocation;
+    private List<ProductCategory> productCategories;
+    private RentType rentType;
+    private ProductLiked productLiked;
+    private boolean isLiked = false;
 
     /* Not ready to to deploy in develop server */
 
 
-//    protected List<ProductAvailability> productAvailability;
-//    protected List<RentRequest> rentRequests;
-//    protected RentProduct rentProduct;
+//    private List<ProductAvailability> productAvailability;
+//    private List<RentRequest> rentRequests;
+//    private RentProduct rentProduct;
 
 
 
@@ -86,15 +90,6 @@ public class Product{
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "average_rating")
-    public float getRating() {
-        return averageRating;
-    }
-
-    public void setRating(int rating) {
-        this.averageRating = rating;
-    }
 
     @Basic
     @Column(name = "profile_image")
@@ -242,14 +237,51 @@ public class Product{
         return rentType;
     }
 
-
     public void setRentType(RentType rentType) {
         this.rentType = rentType;
     }
 
 
+    @Basic
+    @Column(name = "average_rating")
+    public float getAverageRating() {
+        return averageRating;
+    }
 
-        /* Not ready to to deploy in develop server */
+    public void setAverageRating(float averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "product")
+    @Where(clause = "product_id = id")
+    public ProductLiked getProductLiked() {
+        return productLiked;
+    }
+
+    public void setProductLiked(ProductLiked productLiked) {
+        boolean isLiked = false;
+
+        if(productLiked!=null && productLiked.getId()!=0) isLiked = true;
+
+        this.setIsLiked(isLiked);
+        this.productLiked = productLiked;
+        System.out.println("isLiked "+isLiked);
+        System.out.println("this.productLiked "+this.productLiked);
+    }
+
+
+    @Transient
+    @JsonSerialize
+    public boolean getIsLiked() {
+        return isLiked;
+    }
+
+    @JsonDeserialize
+    public void setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
+    }
+    /* Not ready to to deploy in develop server */
 //
 //    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 //    @Fetch(value = FetchMode.SUBSELECT)
