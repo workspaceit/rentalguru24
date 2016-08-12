@@ -48,7 +48,7 @@ public class Product{
     private List<ProductCategory> productCategories;
     private RentType rentType;
     private ProductLiked productLiked;
-    private boolean isLiked = false;
+    private boolean isLiked;
 
     /* Not ready to to deploy in develop server */
 
@@ -273,11 +273,12 @@ public class Product{
 
     @Transient
     @JsonSerialize
+    @JsonDeserialize
     public boolean getIsLiked() {
         return isLiked;
     }
 
-    @JsonDeserialize
+
     public void setIsLiked(boolean isLiked) {
         this.isLiked = isLiked;
     }

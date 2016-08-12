@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 07, 2016 at 07:50 PM
--- Server version: 10.1.10-MariaDB
--- PHP Version: 5.6.19
+-- Host: localhost
+-- Generation Time: Aug 12, 2016 at 06:54 PM
+-- Server version: 5.6.31-0ubuntu0.14.04.2
+-- PHP Version: 5.6.23-1+deprecated+dontuse+deb.sury.org~trusty+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `rentguru24`
@@ -26,13 +26,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `activation`
 --
 
-CREATE TABLE `activation` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `activation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `app_login_credential_id` int(11) NOT NULL,
   `code` varchar(500) NOT NULL,
   `expire_date` date NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `activation_app_login_credential` (`app_login_credential_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -40,8 +42,8 @@ CREATE TABLE `activation` (
 -- Table structure for table `app_login_credential`
 --
 
-CREATE TABLE `app_login_credential` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `app_login_credential` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_inf_id` int(11) NOT NULL,
   `role` int(11) NOT NULL,
   `email` varchar(500) NOT NULL,
@@ -49,45 +51,30 @@ CREATE TABLE `app_login_credential` (
   `accesstoken` varchar(500) NOT NULL,
   `varified` tinyint(1) NOT NULL,
   `blocked` tinyint(1) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `app_credential_unser_inf_id` (`user_inf_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
 
 --
 -- Dumping data for table `app_login_credential`
 --
 
 INSERT INTO `app_login_credential` (`id`, `user_inf_id`, `role`, `email`, `password`, `accesstoken`, `varified`, `blocked`, `created_date`) VALUES
-(1, 1, -1, 'dummy2@tummy.com', '$2a$10$Xf.T6cLdQj/5/lGgG2CoCu.momkOn5C6X3WDKdgDH1pSLjYRxqReS', '6d8198a927ae15186ee58e35f565c3e3', 0, 0, '2016-08-02 12:23:07'),
-(2, 3, -1, 'dummy3@tummy.com', '$2a$10$RmKNXJraFDFRVi3S0nMYbOj5uPiSP4NDyzMk5ypg.jLRTitzfbcSS', '08e360df61e971ec7c5ce390be5b404e', 0, 0, '2016-08-02 12:36:18'),
-(3, 4, -1, 'dummy4@tummy.com', '$2a$10$MQSPdLB5Gs5ADG17.UE7SuMu1fKnqIjajggnnrALkMLbhx6ZJB7yu', '8b49c98c87b8064ff98475c9610a3a7d', 0, 0, '2016-08-02 12:38:17'),
-(4, 5, -1, 'dummy5@tummy.com', '$2a$10$lsbHg1USMjACjitLIsJPhu4mqkneXW8HbX/2heQYixbVD8RLnEvdq', 'd13ef753bba918a1db2a10faee2b72d2', 0, 0, '2016-08-02 12:41:09'),
-(5, 6, -1, 'dummy6@tummy.com', '$2a$10$Doo9QDp47yjpCF7JyS4u6.TWthR5kega4WU59VWbazbZ5sRSjzrYO', '797d6153c1999d808fe8b00f57dde76b', 0, 0, '2016-08-02 12:41:56'),
-(6, 7, -1, 'dummy7@tummy.com', '$2a$10$4CK6bYoqf5ougH2RYfDWPexIiUendXaZEk2D2YYdGgjrrCfEN3/Fu', 'a1412578fa3ddd72ca299d0908211a6b', 0, 0, '2016-08-02 12:45:12'),
-(7, 8, -1, 'dummy8@tummy.com', '$2a$10$GNikbt58FwC3GosQThk.E.8AYy07P67KwfaNr5h.E.O.TBW.BsPi2', 'd0222d8ed1680c7092bc035fd04add73', 0, 0, '2016-08-03 07:06:07'),
-(8, 9, -1, 'dummy9@tummy.com', '$2a$10$cVfGyaaTXQWad5Tw0WuvgukNShvvkJJU8e0/J6nfbadweAd2njo7K', 'd9475b0bed4e3fb5a5a6baac1e9f1999', 0, 0, '2016-08-03 07:09:13'),
-(9, 10, -1, 'dummy10@tummy.com', '$2a$10$p/bsoKk5nmhU96uYuvC4I.iP1x99iXCedyGU9hR72HWPTEX7UWp/G', '043a8522fa503d795509bafea91c3dcc', 0, 0, '2016-08-03 07:14:51'),
-(10, 11, -1, 'dummy11@tummy.com', '$2a$10$qTPWRzldyEMDFkCN7NDzEudEqAfx3DQyaINe7rd7LPivgJDmLPK52', 'c50e59c0ed8a6f64223164b3ea80c3f4', 0, 0, '2016-08-03 07:32:21'),
-(11, 12, -1, 'dummy13@tummy.com', '$2a$10$YDp.6NVgVsyBOoDtZf28g.BQ5EMG0zExVRahtlq6C8UJDb288VL6i', '306711ada72c3d61ae3995b108936459', 0, 0, '2016-08-03 07:41:02'),
-(12, 13, -1, 'dummy12@tummy.com', '$2a$10$4kllKh2fIrPGloKp2EQCBuO0A0187oHHmyxAjG2ss9pO4Aj0mVsnC', 'c024e41ea7c70ee577380f25419a7666', 0, 0, '2016-08-03 07:41:49'),
-(13, 14, -1, 'dummy13@tummy.com', '$2a$10$UofISgZOOZO.UfiAqPRHHulfuSorNDK9Lu8qMGgHdm5oFz3S7wwNS', '306711ada72c3d61ae3995b108936459', 0, 0, '2016-08-03 08:33:30'),
-(14, 15, -1, 'dummy14@tummy.com', '$2a$10$sHlJ.y.hJrhO0s0ptpLl9eiG/0unX9o1w.HmuIVx69wujaQHUE9Zu', '9723fac4d02586269b1d3ffb6c9dfb0b', 0, 0, '2016-08-03 09:01:39'),
-(15, 16, -1, 'dummy15@tummy.com', '$2a$10$lmn5rr2vHAR9TDq53lZkTeAT3X6iNfLmFqe2TDq2BrQPqxO6mmiMe', 'a5af1f9176d9aa0cbc87178129bc1fc4', 0, 0, '2016-08-04 12:47:12'),
-(16, 17, -1, 'dummy16@tummy.com', '$2a$10$eJlvxnIHeR/1aZ5Pjc4FteTk63enwC9LWmu.7BXUPFi/HYFxVlbeu', '9947623d6aab7e9e217cb4da94d58753', 0, 0, '2016-08-04 12:53:50'),
-(17, 18, -1, 'sadasd@gmail.com', '$2a$10$BocModh6AJHmD7/BltL2N.kvGBFNQ5oJftg7MtKp2oswgJid5uIbC', '57970f52d64b2080bb9bd5ece1905aee', 0, 0, '2016-08-04 13:17:31'),
-(18, 19, -1, 'zakariya@gmail.com', '25f9e794323b453885f5181f1b624d0b', '9180ef539e81dd41a9cb8f284bfed7db', 0, 0, '2016-08-05 05:32:10'),
-(19, 20, -1, 'sadasasfasgtdsrutuskd@gmail.com', '25f9e794323b453885f5181f1b624d0b', '7d62afb8e764c621379a259ccb5a6189', 0, 0, '2016-08-05 06:54:45'),
-(20, 21, -1, 'sadaasdaww2eassd@gmail.com', '25f9e794323b453885f5181f1b624d0b', '7fafe40a62654bb3458cd521e843e3f5', 0, 0, '2016-08-05 06:56:14'),
-(21, 22, -1, 'zakarigfggftfhtfhfthtya@gmail.coms', '25f9e794323b453885f5181f1b624d0b', 'b0bd3ba89a9afd02b2adb75e1ec8a490', 0, 0, '2016-08-05 06:57:24'),
-(22, 23, -1, 'omsssssssssar@hotmail.com', '25f9e794323b453885f5181f1b624d0b', '3f49ee5fbca9874a7f63731c68c73c85', 0, 0, '2016-08-05 06:59:27'),
-(23, 24, -1, 'sadasasfasssssssssgtdsrutuskd@gmail.com', '25f9e794323b453885f5181f1b624d0b', '65ae42e5071c783a65b2fe59eb427138', 0, 0, '2016-08-05 07:04:06'),
-(24, 25, -1, 'sadasssssssssssssssssssssssssssssssd@gmail.com', '25f9e794323b453885f5181f1b624d0b', '745c6b3be0b8f17beb077d8c2d83520f', 0, 0, '2016-08-05 07:11:14'),
-(25, 26, -1, 'sadaknajsdhaowinlauiwesd@gmail.com', '25f9e794323b453885f5181f1b624d0b', 'b34a98090c19a2a1570b2214960892eb', 0, 0, '2016-08-05 09:22:41'),
-(26, 27, -1, 'sadewrewr3wrdfhtrikiasd@gmail.com', '25f9e794323b453885f5181f1b624d0b', '6b90192d79252f0ebbb64b4d5949447e', 0, 0, '2016-08-05 09:25:29'),
-(27, 28, -1, 'jansfkjbanfujasfn@gmail.com', '25f9e794323b453885f5181f1b624d0b', '30589c9ecc23bcf85cd771b06056d1e7', 0, 0, '2016-08-05 09:32:02'),
-(28, 29, -1, 'askjdnunasdjunywldamkl@gmail.com', '25f9e794323b453885f5181f1b624d0b', '4c4e6b7cc117212d573947ef6ac4c288', 0, 0, '2016-08-05 09:37:43'),
-(29, 30, -1, 'sadasasfasssssssgtdsrutuskd@gmail.com', '25f9e794323b453885f5181f1b624d0b', '859bb0c2e857bd11bda332e3af49f4bc', 0, 0, '2016-08-05 09:40:14'),
-(30, 31, -1, 'ssssssssssssadasd@gmail.com', '25f9e794323b453885f5181f1b624d0b', 'cada720e067ce9f03e31b91b92e93c76', 0, 0, '2016-08-05 09:42:55'),
-(31, 32, -1, 'zakssssssssariya@gmail.com', '25f9e794323b453885f5181f1b624d0b', '0a2ce216bf97d576bb65e0a4596cbd2c', 0, 0, '2016-08-05 12:11:04');
+(32, 33, -1, 'mousum@workspace.com', 'e10adc3949ba59abbe56e057f20f883e', '61ec56ac9b9442af7cda8b85977e7849', 0, 0, '2016-08-08 07:14:22'),
+(33, 34, -1, 'tomal@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '5f08323684a25d460fbd4a574f64af96', 0, 0, '2016-08-08 08:02:14'),
+(34, 35, -1, 'developer@wsit.com', 'e10adc3949ba59abbe56e057f20f883e', '84e2761bca190cb87d9e0306f27b6c82', 0, 0, '2016-08-08 08:24:21'),
+(35, 36, -1, 'rafi@workspace.com', 'e10adc3949ba59abbe56e057f20f883e', '273f1a8b06d9e0063f2bb9ed21bbf624', 0, 0, '2016-08-08 08:56:09'),
+(36, 37, -1, 'mausum@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'f54f2b3b33936bd2d91a6ec219d62485', 0, 0, '2016-08-08 09:09:28'),
+(37, 38, -1, 'fayme@work.com', 'e10adc3949ba59abbe56e057f20f883e', '85e7bc630a1f1259ce0b0c1e88366cd2', 0, 0, '2016-08-08 09:40:15'),
+(38, 39, -1, 'f@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '34ac9072ee5000706b88e49c67d58af8', 0, 0, '2016-08-08 11:34:16'),
+(39, 40, -1, 'tmina@yahoo.com', '6182a61e266111245440159ef6901169', '5e514d2bb99e4beb79815e2a2bcccfbe', 0, 0, '2016-08-09 07:43:33'),
+(40, 41, -1, 'lima@yahoo.com', '6182a61e266111245440159ef6901169', '1642e525a70dee1eb3352ed35220011d', 0, 0, '2016-08-09 10:53:17'),
+(41, 42, -1, 'e@sdf.com', 'd58e3582afa99040e27b92b13c8f2280', '54ba615ccb87199abaaa485199e38dc8', 0, 0, '2016-08-09 12:29:42'),
+(42, 43, -1, 'dsa@sdf.com', 'a8f5f167f44f4964e6c998dee827110c', '47dbc11357bb1d0645dfddf39de6a840', 0, 0, '2016-08-09 12:30:35'),
+(43, 44, -1, 'asd@sdf.comn', '89aaaeeda8a4f50e0ad8fb8ad6e6e437', '85effe24aea679cf4ce8ffa3f9284305', 0, 0, '2016-08-09 12:31:21'),
+(44, 45, -1, 'dummy20@tummy.com', '5a2dd3b5557333af7d0d89a8790379e9', '9c98b4bc3ada6a81c946bc278c531c91', 0, 0, '2016-08-10 12:07:05'),
+(45, 46, -1, 'dummy21@tummy.com', '5a2dd3b5557333af7d0d89a8790379e9', 'e2e3a9a544ccedef1e317a57d351bc47', 0, 0, '2016-08-10 12:10:22');
 
 -- --------------------------------------------------------
 
@@ -95,12 +82,14 @@ INSERT INTO `app_login_credential` (`id`, `user_inf_id`, `role`, `email`, `passw
 -- Table structure for table `attributes`
 --
 
-CREATE TABLE `attributes` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `attributes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
   `created_by` int(11) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `attributes_app_login_credential` (`created_by`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -108,12 +97,15 @@ CREATE TABLE `attributes` (
 -- Table structure for table `attribute_values`
 --
 
-CREATE TABLE `attribute_values` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `attribute_values` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `attributes_id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
-  `created_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_by` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `attribute_values_app_login_credential` (`created_by`),
+  KEY `attribute_values_attributes` (`attributes_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -121,27 +113,30 @@ CREATE TABLE `attribute_values` (
 -- Table structure for table `category`
 --
 
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
   `sorted_order` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `category_app_login_credential` (`created_by`),
+  KEY `category_category` (`parent_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `parent_id`, `sorted_order`, `created_by`, `created_date`) VALUES
-(1, 'parent_category', NULL, 2, 1, '2016-08-06 15:59:11'),
-(2, 'parent_category 1', NULL, 2, 1, '2016-08-06 16:23:14'),
-(3, 'child1', 2, 3, 1, '2016-08-06 16:23:54'),
-(4, 'child2', 3, 4, 1, '2016-08-06 16:24:04'),
-(5, 'parent_category 2', NULL, 2, 1, '2016-08-06 16:24:29'),
-(6, 'child 3', 5, 3, 1, '2016-08-06 16:24:38'),
-(7, 'child 4', 5, 4, 1, '2016-08-06 16:24:46');
+(8, 'Home', NULL, 1, 0, '2016-08-08 09:04:04'),
+(9, 'HOME APPLIANCE', NULL, 2, 0, '2016-08-08 09:27:59'),
+(10, 'FURNITURE', NULL, 3, 0, '2016-08-08 09:27:08'),
+(11, 'GAMING & PARTY', NULL, 4, 0, '2016-08-08 09:27:08'),
+(12, 'COOL GADGETS', NULL, 5, 0, '2016-08-08 09:27:52'),
+(13, 'BLOGS', NULL, 6, 0, '2016-08-08 09:27:52'),
+(14, 'Swedish washing machine', 9, 7, 0, '2016-08-08 10:40:35');
 
 -- --------------------------------------------------------
 
@@ -149,11 +144,12 @@ INSERT INTO `category` (`id`, `name`, `parent_id`, `sorted_order`, `created_by`,
 -- Table structure for table `identity_type`
 --
 
-CREATE TABLE `identity_type` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `identity_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `identity_type`
@@ -169,19 +165,36 @@ INSERT INTO `identity_type` (`id`, `name`, `created_date`) VALUES
 -- Table structure for table `product`
 --
 
-CREATE TABLE `product` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `owner_id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `description` text NOT NULL,
-  `images` text NOT NULL,
+  `average_rating` float(2,2) NOT NULL DEFAULT '0.00',
+  `profile_image` text NOT NULL,
+  `other_images` text,
   `current_value` double(200,2) NOT NULL,
   `rent_fee` double(8,2) NOT NULL,
+  `rent_type_id` int(11) NOT NULL DEFAULT '1',
   `active` tinyint(1) NOT NULL,
   `currently_available` tinyint(1) NOT NULL,
-  `review_status` tinyint(1) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `available_from` datetime NOT NULL,
+  `available_till` datetime NOT NULL,
+  `review_status` tinyint(1) NOT NULL DEFAULT '0',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `product_app_login_credential` (`owner_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `owner_id`, `name`, `description`, `average_rating`, `profile_image`, `other_images`, `current_value`, `rent_fee`, `rent_type_id`, `active`, `currently_available`, `available_from`, `available_till`, `review_status`, `created_date`) VALUES
+(12, 40, 'CK Tempting Glimmer Sheer Creme EyeShadow - 303 Baby Blue', 'Offers high shine high impact colour Lightweight & extra-smooth finish.', 0.00, '{"original":{"path":"product/40/26594005394083.jpg","type":"","size":{"width":458,"height":458}},"thumb":[]}', '[]', 1000.00, 900.00, 1, 1, 0, '2016-08-09 00:00:00', '2016-10-09 00:00:00', 0, '2016-08-09 11:24:47'),
+(14, 32, 'dsf', 'sdf', 0.00, '{"original":{"path":"product/32/815788920270.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 0, '2016-08-12 04:42:01'),
+(17, 32, 'dsf', 'sdf', 0.00, '{"original":{"path":"product/32/1087095250392.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 0, '2016-08-12 04:46:32'),
+(19, 32, 'dsf', 'sdf', 0.00, '{"original":{"path":"product/32/1278511427233.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 0, '2016-08-12 04:49:44');
 
 -- --------------------------------------------------------
 
@@ -189,13 +202,16 @@ CREATE TABLE `product` (
 -- Table structure for table `product_attribute`
 --
 
-CREATE TABLE `product_attribute` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_attribute` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `attribute_values_id` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_attribute_attribute_values` (`attribute_values_id`),
+  KEY `product_attribute_product` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -203,13 +219,23 @@ CREATE TABLE `product_attribute` (
 -- Table structure for table `product_availability`
 --
 
-CREATE TABLE `product_availability` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_availability` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `from_date` datetime NOT NULL,
   `to_date` datetime NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `product_availability`
+--
+
+INSERT INTO `product_availability` (`id`, `product_id`, `from_date`, `to_date`, `created_date`) VALUES
+(1, 12, '2016-08-18 00:00:00', '2016-08-26 00:00:00', '2016-08-11 10:46:48'),
+(2, 12, '2016-08-25 00:00:00', '2016-08-26 00:00:00', '2016-08-11 10:46:48');
 
 -- --------------------------------------------------------
 
@@ -217,13 +243,50 @@ CREATE TABLE `product_availability` (
 -- Table structure for table `product_category`
 --
 
-CREATE TABLE `product_category` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `product_category_category` (`category_id`),
+  KEY `product_category_product` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+
+--
+-- Dumping data for table `product_category`
+--
+
+INSERT INTO `product_category` (`id`, `product_id`, `category_id`, `created_date`) VALUES
+(11, 12, 9, '2016-08-09 11:24:47'),
+(12, 14, 9, '2016-08-12 04:42:01'),
+(15, 17, 8, '2016-08-12 04:46:32'),
+(17, 19, 8, '2016-08-12 04:49:44'),
+(18, 19, 10, '2016-08-12 04:49:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_liked`
+--
+
+CREATE TABLE IF NOT EXISTS `product_liked` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `app_credential_id` int(11) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `app_credential_id` (`app_credential_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `product_liked`
+--
+
+INSERT INTO `product_liked` (`id`, `product_id`, `app_credential_id`, `created_date`) VALUES
+(2, 12, 32, '2016-08-12 11:36:28'),
+(3, 14, 32, '2016-08-12 11:36:28');
 
 -- --------------------------------------------------------
 
@@ -231,17 +294,46 @@ CREATE TABLE `product_category` (
 -- Table structure for table `product_location`
 --
 
-CREATE TABLE `product_location` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_location` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `city` varchar(200) DEFAULT NULL,
   `state` varchar(200) DEFAULT NULL,
-  `formated_address` text NOT NULL,
+  `formatted_address` text NOT NULL,
   `zip` varchar(200) DEFAULT NULL,
-  `lat` float(10,6) NOT NULL,
-  `lng` float(10,6) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `lat` float(10,6) DEFAULT NULL,
+  `lng` float(10,6) DEFAULT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `product_location`
+--
+
+INSERT INTO `product_location` (`id`, `product_id`, `city`, `state`, `formatted_address`, `zip`, `lat`, `lng`, `created_date`) VALUES
+(5, 12, 'dhaka', 'Dhaka', 'Nikunja-2, Khilkhet 2324', '234s', 10.000000, 30.000000, '2016-08-09 11:24:47'),
+(6, 14, NULL, NULL, 'Banani', 'wdf', 3.000000, 34.000000, '2016-08-12 04:42:01'),
+(7, 17, NULL, NULL, 'Banani', 'wdf', 3.000000, 34.000000, '2016-08-12 04:46:32'),
+(8, 19, NULL, NULL, 'Banani', 'wdf', 3.000000, 34.000000, '2016-08-12 04:49:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_rating`
+--
+
+CREATE TABLE IF NOT EXISTS `product_rating` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `app_credential_id` int(11) NOT NULL,
+  `rate_value` int(11) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `app_credential_id` (`app_credential_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -249,13 +341,22 @@ CREATE TABLE `product_location` (
 -- Table structure for table `product_received`
 --
 
-CREATE TABLE `product_received` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_received` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `rent_product_id` int(11) NOT NULL,
   `is_received` tinyint(1) NOT NULL,
   `received_date` datetime NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `rent_product_id` (`rent_product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `product_received`
+--
+
+INSERT INTO `product_received` (`id`, `rent_product_id`, `is_received`, `received_date`, `created`) VALUES
+(1, 1, 1, '2016-08-11 00:00:00', '2016-08-11 12:57:50');
 
 -- --------------------------------------------------------
 
@@ -263,13 +364,22 @@ CREATE TABLE `product_received` (
 -- Table structure for table `product_returned`
 --
 
-CREATE TABLE `product_returned` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `product_returned` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `rent_product_id` int(11) NOT NULL,
   `is_returned` tinyint(1) NOT NULL,
   `returned_date` datetime NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `rent_product_id` (`rent_product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `product_returned`
+--
+
+INSERT INTO `product_returned` (`id`, `rent_product_id`, `is_returned`, `returned_date`, `created`) VALUES
+(1, 1, 0, '2016-08-11 00:00:00', '2016-08-11 12:58:15');
 
 -- --------------------------------------------------------
 
@@ -277,16 +387,27 @@ CREATE TABLE `product_returned` (
 -- Table structure for table `rent_product`
 --
 
-CREATE TABLE `rent_product` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `rent_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rent_request_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `start_date` date NOT NULL,
   `ends_date` date NOT NULL,
   `product_returned` tinyint(1) NOT NULL,
   `product_received` tinyint(1) NOT NULL,
   `expired` tinyint(1) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `booking_product` (`product_id`),
+  KEY `rent_request` (`rent_request_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `rent_product`
+--
+
+INSERT INTO `rent_product` (`id`, `rent_request_id`, `product_id`, `start_date`, `ends_date`, `product_returned`, `product_received`, `expired`, `created_date`) VALUES
+(1, 7, 12, '2016-09-24', '2016-09-30', 0, 0, 0, '2016-08-11 11:15:02');
 
 -- --------------------------------------------------------
 
@@ -294,19 +415,53 @@ CREATE TABLE `rent_product` (
 -- Table structure for table `rent_request`
 --
 
-CREATE TABLE `rent_request` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `rent_request` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `requested_by` int(11) NOT NULL,
-  `rent_product_id` int(11) DEFAULT NULL,
   `request_id` int(11) DEFAULT NULL COMMENT 'Request extension',
   `request_cancel` int(11) NOT NULL DEFAULT '0',
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `approve` tinyint(1) NOT NULL DEFAULT '0',
   `extension` tinyint(1) NOT NULL DEFAULT '0',
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `rent_request_app_login_credential` (`requested_by`),
+  KEY `rent_request_product` (`product_id`),
+  KEY `rent_request_rent_request` (`request_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+
+--
+-- Dumping data for table `rent_request`
+--
+
+INSERT INTO `rent_request` (`id`, `product_id`, `requested_by`, `request_id`, `request_cancel`, `start_date`, `end_date`, `approve`, `extension`, `created_date`) VALUES
+(7, 12, 32, NULL, 0, '2016-10-24', '2016-09-24', 0, 0, '2016-08-11 11:41:51'),
+(16, 12, 32, 7, 0, '2016-08-25', '2016-08-26', 1, 0, '2016-08-11 12:12:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rent_type`
+--
+
+CREATE TABLE IF NOT EXISTS `rent_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `rent_type`
+--
+
+INSERT INTO `rent_type` (`id`, `name`, `created_date`) VALUES
+(1, 'Day', '2016-08-11 13:03:54'),
+(2, 'Week', '2016-08-11 13:03:58'),
+(3, 'Month', '2016-08-11 13:04:00'),
+(4, 'Year', '2016-08-11 13:04:10');
 
 -- --------------------------------------------------------
 
@@ -314,12 +469,13 @@ CREATE TABLE `rent_request` (
 -- Table structure for table `temp_file`
 --
 
-CREATE TABLE `temp_file` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `temp_file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `token` int(11) NOT NULL,
   `path` text NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=141 ;
 
 --
 -- Dumping data for table `temp_file`
@@ -360,7 +516,77 @@ INSERT INTO `temp_file` (`id`, `token`, `path`, `created_date`) VALUES
 (58, 1000541350, 'temp/529431.jpeg', '2016-08-05 10:47:42'),
 (59, 1000509038, 'temp/32653.jpg', '2016-08-05 11:03:03'),
 (60, 1000622465, 'temp/24583.jpg', '2016-08-05 11:12:50'),
-(61, 1000244241, 'temp/195807.jpg', '2016-08-05 11:14:01');
+(61, 1000244241, 'temp/195807.jpg', '2016-08-05 11:14:01'),
+(62, 1000076031, 'temp/825716.documentIdentity', '2016-08-08 06:26:22'),
+(63, 1000160416, 'temp/563853.documentIdentity', '2016-08-08 06:54:07'),
+(64, 1000341724, 'temp/389658.documentIdentity', '2016-08-08 06:56:05'),
+(65, 1000260198, 'temp/350402.documentIdentity', '2016-08-08 07:00:15'),
+(66, 1000357063, 'temp/262241.documentIdentity', '2016-08-08 07:02:05'),
+(67, 1000064960, 'temp/270270.documentIdentity', '2016-08-08 07:03:01'),
+(68, 1000195274, 'temp/359652.documentIdentity', '2016-08-08 07:03:58'),
+(69, 1000266772, 'temp/143603.documentIdentity', '2016-08-08 07:05:06'),
+(70, 1000667714, 'temp/246999.documentIdentity', '2016-08-08 07:11:51'),
+(74, 1000875880, 'temp/323240.documentIdentity', '2016-08-08 08:46:03'),
+(75, 1000574946, 'temp/894765.documentIdentity', '2016-08-08 08:47:48'),
+(76, 1000633065, 'temp/11400.documentIdentity', '2016-08-08 08:49:17'),
+(77, 1000350978, 'temp/403572.documentIdentity', '2016-08-08 08:50:39'),
+(78, 1000664351, 'temp/446335.documentIdentity', '2016-08-08 08:52:26'),
+(79, 1000777366, 'temp/617910.documentIdentity', '2016-08-08 08:55:46'),
+(81, 1000594149, 'temp/652106.jpg', '2016-08-08 08:58:59'),
+(84, 1000813693, 'temp/140925.jpg', '2016-08-08 09:52:58'),
+(85, 1000198824, 'temp/660275.jpg', '2016-08-08 11:29:03'),
+(87, 1000097015, 'temp/234421.jpg', '2016-08-08 11:40:32'),
+(88, 1000290017, 'temp/572056.jpg', '2016-08-08 11:41:50'),
+(89, 1000002751, 'temp/399091.jpg', '2016-08-08 11:49:24'),
+(90, 1000502502, 'temp/236041.jpg', '2016-08-08 11:54:51'),
+(91, 1000082742, 'temp/749173.jpg', '2016-08-08 12:04:00'),
+(92, 1000644783, 'temp/10584.jpg', '2016-08-08 12:09:00'),
+(93, 1000059578, 'temp/234166.jpg', '2016-08-08 12:12:41'),
+(94, 1000588189, 'temp/450549.jpg', '2016-08-08 12:13:27'),
+(95, 1000303493, 'temp/804723.jpg', '2016-08-08 12:17:06'),
+(96, 1000283700, 'temp/655476.jpg', '2016-08-08 12:50:32'),
+(97, 1000615665, 'temp/621005.jpg', '2016-08-08 12:50:39'),
+(98, 1000187093, 'temp/609603.jpg', '2016-08-08 12:54:05'),
+(99, 1000743794, 'temp/16013.jpg', '2016-08-09 05:01:03'),
+(100, 1000568186, 'temp/156594.jpg', '2016-08-09 05:01:10'),
+(101, 1000394798, 'temp/215930.jpg', '2016-08-09 05:01:22'),
+(102, 1000197513, 'temp/739258.jpg', '2016-08-09 05:04:29'),
+(103, 1000271035, 'temp/585410.jpg', '2016-08-09 05:04:36'),
+(104, 1000096477, 'temp/646499.jpg', '2016-08-09 05:04:46'),
+(105, 1000842329, 'temp/900648.jpg', '2016-08-09 05:06:46'),
+(106, 1000597942, 'temp/899053.jpg', '2016-08-09 05:06:53'),
+(107, 1000046079, 'temp/574627.jpg', '2016-08-09 05:07:03'),
+(108, 1000310827, 'temp/26153.jpg', '2016-08-09 05:12:44'),
+(109, 1000875695, 'temp/598325.jpg', '2016-08-09 05:12:53'),
+(110, 1000577960, 'temp/115189.jpg', '2016-08-09 05:13:07'),
+(111, 1000577030, 'temp/242255.jpg', '2016-08-09 05:14:45'),
+(112, 1000118780, 'temp/310928.jpg', '2016-08-09 07:04:17'),
+(113, 1000162534, 'temp/357803.jpg', '2016-08-09 07:04:27'),
+(114, 1000641342, 'temp/32137.jpg', '2016-08-09 07:04:37'),
+(115, 1000759998, 'temp/809561.jpg', '2016-08-09 07:05:03'),
+(117, 1000760495, 'temp/460853.jpg', '2016-08-09 09:41:44'),
+(118, 1000013352, 'temp/540129.jpg', '2016-08-09 09:55:45'),
+(119, 1000273473, 'temp/860506.jpg', '2016-08-09 09:57:20'),
+(120, 1000460961, 'temp/774823.docx', '2016-08-09 10:47:33'),
+(121, 1000739416, 'temp/757254.docx', '2016-08-09 10:50:47'),
+(123, 1000359935, 'temp/637452.png', '2016-08-09 10:56:33'),
+(124, 1000475194, 'temp/114463.jpg', '2016-08-09 11:14:19'),
+(125, 1000223598, 'temp/232240.jpg', '2016-08-09 11:15:54'),
+(126, 1000185479, 'temp/531200.jpg', '2016-08-09 11:24:36'),
+(127, 1000880238, 'temp/617836.jpg', '2016-08-11 13:40:16'),
+(128, 1000741350, 'temp/104787.jpg', '2016-08-11 13:46:25'),
+(129, 1000409236, 'temp/9455.jpg', '2016-08-11 13:47:03'),
+(130, 1000443843, 'temp/721869.jpg', '2016-08-11 13:50:02'),
+(131, 1000493493, 'temp/308365.jpg', '2016-08-11 13:51:09'),
+(132, 1000053671, 'temp/190790.jpg', '2016-08-11 13:51:37'),
+(133, 1000546137, 'temp/499471.jpg', '2016-08-11 13:53:24'),
+(134, 1000631157, 'temp/858968.jpg', '2016-08-12 04:39:38'),
+(135, 1000458381, 'temp/859789.jpg', '2016-08-12 04:41:54'),
+(136, 1000530735, 'temp/749024.jpg', '2016-08-12 04:43:28'),
+(137, 1000568425, 'temp/538099.jpg', '2016-08-12 04:44:55'),
+(138, 1000675201, 'temp/374906.jpg', '2016-08-12 04:46:17'),
+(139, 1000362158, 'temp/704563.jpg', '2016-08-12 04:47:25'),
+(140, 1000504935, 'temp/886440.jpg', '2016-08-12 04:49:30');
 
 -- --------------------------------------------------------
 
@@ -368,14 +594,15 @@ INSERT INTO `temp_file` (`id`, `token`, `path`, `created_date`) VALUES
 -- Table structure for table `user_address`
 --
 
-CREATE TABLE `user_address` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user_address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `address` text NOT NULL,
   `zip` varchar(20) NOT NULL,
   `city` varchar(200) NOT NULL,
   `state` varchar(200) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 --
 -- Dumping data for table `user_address`
@@ -399,7 +626,21 @@ INSERT INTO `user_address` (`id`, `address`, `zip`, `city`, `state`, `created_da
 (15, '', '', '', '', '2016-08-05 09:37:43'),
 (16, '', '', '', '', '2016-08-05 09:40:14'),
 (17, '', '', '', '', '2016-08-05 09:42:55'),
-(18, '', '', '', '', '2016-08-05 12:11:04');
+(18, '', '', '', '', '2016-08-05 12:11:04'),
+(19, '', '', '', '', '2016-08-08 07:14:22'),
+(20, '', '', '', '', '2016-08-08 08:02:14'),
+(21, '', '', '', '', '2016-08-08 08:24:21'),
+(22, '', '', '', '', '2016-08-08 08:56:09'),
+(23, '', '', '', '', '2016-08-08 09:09:28'),
+(24, '', '', '', '', '2016-08-08 09:40:15'),
+(25, '', '', '', '', '2016-08-08 11:34:16'),
+(26, '', '', '', '', '2016-08-09 07:43:33'),
+(27, '', '', '', '', '2016-08-09 10:53:17'),
+(28, '', '', '', '', '2016-08-09 12:29:42'),
+(29, '', '', '', '', '2016-08-09 12:30:35'),
+(30, '', '', '', '', '2016-08-09 12:31:21'),
+(32, '', '', '', '', '2016-08-10 12:07:05'),
+(33, '', '', '', '', '2016-08-10 12:10:22');
 
 -- --------------------------------------------------------
 
@@ -407,283 +648,39 @@ INSERT INTO `user_address` (`id`, `address`, `zip`, `city`, `state`, `created_da
 -- Table structure for table `user_inf`
 --
 
-CREATE TABLE `user_inf` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user_inf` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_address_id` int(11) DEFAULT NULL,
   `identity_type_id` int(11) NOT NULL,
   `first_name` varchar(500) NOT NULL,
   `last_name` varchar(500) NOT NULL,
   `identity_doc_path` text NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `identity_type` (`identity_type_id`),
+  KEY `user_inf_user_address` (`user_address_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
 
 --
 -- Dumping data for table `user_inf`
 --
 
 INSERT INTO `user_inf` (`id`, `user_address_id`, `identity_type_id`, `first_name`, `last_name`, `identity_doc_path`, `created_date`) VALUES
-(1, NULL, 1, 'Dummy', 'Tummy', '', '2016-08-03 08:10:49'),
-(3, NULL, 1, 'Dummy', 'Tummy', '', '2016-08-03 08:10:49'),
-(4, NULL, 1, 'Dummy', 'Tummy', '', '2016-08-03 08:10:49'),
-(5, NULL, 1, 'Dummy', 'Tummy', '', '2016-08-03 08:10:49'),
-(6, 1, 1, 'Dummy', 'Tummy', '', '2016-08-03 08:10:49'),
-(7, NULL, 1, 'Dummy', 'Tummy', '', '2016-08-03 08:10:49'),
-(8, NULL, 1, 'Dummy', 'Tummy', '/home/mi/Projects/j2ee/rentguru24files/identityDoc/7/10340174867435.pdf', '2016-08-03 08:10:49'),
-(9, NULL, 1, 'Dummy', 'Tummy', '/home/mi/Projects/j2ee/rentguru24files/identityDoc/8/10526220065227.pdf', '2016-08-03 08:10:49'),
-(10, NULL, 1, 'Dummy', 'Tummy', '/home/mi/Projects/j2ee/rentguru24files/identityDoc/9/10864440785468.pdf', '2016-08-03 08:10:49'),
-(11, NULL, 1, 'Dummy', 'Tummy', '10/11914235854858.pdf', '2016-08-03 08:10:49'),
-(12, NULL, 1, 'Dummy', 'Tummy', 'identityDoc/11/12435434870569.pdf', '2016-08-03 08:10:49'),
-(13, NULL, 1, 'Dummy', 'Tummy', 'identityDoc/12/12481864261034.pdf', '2016-08-03 08:10:49'),
-(14, NULL, 1, 'Dummy', 'Tummy', 'identityDoc/13/15582991791391.pdf', '2016-08-03 08:33:30'),
-(15, NULL, 1, 'Dummy', 'Tummy', 'identityDoc/14/17272600703079.pdf', '2016-08-03 09:01:39'),
-(16, 2, 1, 'dummy', 'tummy', 'identityDoc/15/1381116257134.pdf', '2016-08-04 12:47:12'),
-(17, 3, 1, 'dummy', 'tummy', 'identityDoc/16/1778700127238.pdf', '2016-08-04 12:53:50'),
-(18, 4, 1, 'zakariya', 'naseef', 'identityDoc/17/8279041029990.jpg', '2016-08-04 13:17:31'),
-(19, 5, 1, 'zakariya', 'naseef', 'identityDoc/18/4694518004098.jpg', '2016-08-05 05:32:10'),
-(20, 6, 1, 'zakariya', 'naseef', 'identityDoc/19/9649766072717.jpg', '2016-08-05 06:54:46'),
-(21, 7, 1, 'zakariya', 'naseef', 'identityDoc/20/9738156948310.jpg', '2016-08-05 06:56:14'),
-(22, 8, 1, 'zakariya', 'asawdawrryhfj', 'identityDoc/21/9807924206240.jpg', '2016-08-05 06:57:24'),
-(23, 9, 1, 'zakariya', 'naseef', 'identityDoc/22/9931722817626.jpg', '2016-08-05 06:59:27'),
-(24, 10, 1, 'zakariya', 'naseef', 'identityDoc/23/10210092722168.jpg', '2016-08-05 07:04:06'),
-(25, 11, 1, 'zakariya', 'naseef', 'identityDoc/24/10637843147018.jpg', '2016-08-05 07:11:14'),
-(26, 12, 1, 'zakariya', 'naseef', 'identityDoc/25/1430084885068.jpg', '2016-08-05 09:22:41'),
-(27, 13, 1, 'zakariya', 'naseef', 'identityDoc/26/1597714985659.jpg', '2016-08-05 09:25:29'),
-(28, 14, 1, 'zakariya', 'naseef', 'identityDoc/27/1991443376119.jpg', '2016-08-05 09:32:02'),
-(29, 15, 1, 'zakariya', 'naseef', 'identityDoc/28/2332143704301.jpeg', '2016-08-05 09:37:43'),
-(30, 16, 1, 'zakariya', 'naseef', 'identityDoc/29/2482667224530.jpeg', '2016-08-05 09:40:14'),
-(31, 17, 1, 'zakariya', 'naseef', 'identityDoc/30/2644072510930.jpeg', '2016-08-05 09:42:55'),
-(32, 18, 1, 'zakariya', 'naseef', 'identityDoc/31/11532035329432.jpg', '2016-08-05 12:11:04');
+(33, 19, 1, 'Mausum', 'Nandi', 'identityDoc/32/10300038890383.documentIdentity', '2016-08-08 07:14:22'),
+(34, 20, 1, 'Taiful', 'Islam', 'identityDoc/33/13172418657778.documentIdentity', '2016-08-08 08:02:14'),
+(35, 21, 1, 'developer', 'wsit', 'identityDoc/34/14499115145635.jpg', '2016-08-08 08:24:21'),
+(36, 22, 1, 'Maidul', 'Rafi', 'identityDoc/35/16406680045445.documentIdentity', '2016-08-08 08:56:09'),
+(37, 23, 1, 'Mausum', 'Nandy', 'identityDoc/36/17206486365557.documentIdentity', '2016-08-08 09:09:28'),
+(38, 24, 1, 'fayme', 'Pauli', 'identityDoc/37/19053048474532.documentIdentity', '2016-08-08 09:40:15'),
+(39, 25, 2, 'fa', 'y me', 'identityDoc/38/25894182279794.docx', '2016-08-08 11:34:16'),
+(40, 26, 1, 'Tahmina', 'A', 'identityDoc/39/13320013602830.docx', '2016-08-09 07:43:33'),
+(41, 27, 2, 'Lima', 'N', 'identityDoc/40/24704427305911.docx', '2016-08-09 10:53:17'),
+(42, 28, 1, 'xc', 'zxc', 'identityDoc/41/30488810011776.png', '2016-08-09 12:29:42'),
+(43, 29, 2, 'asd', 'sad', 'identityDoc/42/30542282440316.png', '2016-08-09 12:30:35'),
+(44, 30, 1, 'asd', 'asd', 'identityDoc/43/30587637477572.png', '2016-08-09 12:31:21'),
+(45, 32, 1, 'dummy', 'tummy', 'identityDoc/44/26962367826164.docx', '2016-08-10 12:07:05'),
+(46, 33, 1, 'dummy', 'tummy', 'identityDoc/45/27159631397218.docx', '2016-08-10 12:10:22');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `activation`
---
-ALTER TABLE `activation`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `activation_app_login_credential` (`app_login_credential_id`);
-
---
--- Indexes for table `app_login_credential`
---
-ALTER TABLE `app_login_credential`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `app_credential_unser_inf_id` (`user_inf_id`);
-
---
--- Indexes for table `attributes`
---
-ALTER TABLE `attributes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `attributes_app_login_credential` (`created_by`);
-
---
--- Indexes for table `attribute_values`
---
-ALTER TABLE `attribute_values`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `attribute_values_app_login_credential` (`created_by`),
-  ADD KEY `attribute_values_attributes` (`attributes_id`);
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `category_app_login_credential` (`created_by`),
-  ADD KEY `category_category` (`parent_id`);
-
---
--- Indexes for table `identity_type`
---
-ALTER TABLE `identity_type`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `product`
---
-ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_app_login_credential` (`owner_id`);
-
---
--- Indexes for table `product_attribute`
---
-ALTER TABLE `product_attribute`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_attribute_attribute_values` (`attribute_values_id`),
-  ADD KEY `product_attribute_product` (`product_id`);
-
---
--- Indexes for table `product_availability`
---
-ALTER TABLE `product_availability`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `product_category`
---
-ALTER TABLE `product_category`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_category_app_login_credential` (`created_by`),
-  ADD KEY `product_category_category` (`category_id`),
-  ADD KEY `product_category_product` (`product_id`);
-
---
--- Indexes for table `product_location`
---
-ALTER TABLE `product_location`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `product_received`
---
-ALTER TABLE `product_received`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `rent_product_id` (`rent_product_id`);
-
---
--- Indexes for table `product_returned`
---
-ALTER TABLE `product_returned`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `rent_product_id` (`rent_product_id`);
-
---
--- Indexes for table `rent_product`
---
-ALTER TABLE `rent_product`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `booking_product` (`product_id`);
-
---
--- Indexes for table `rent_request`
---
-ALTER TABLE `rent_request`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `rent_request_app_login_credential` (`requested_by`),
-  ADD KEY `rent_request_booking` (`rent_product_id`),
-  ADD KEY `rent_request_product` (`product_id`),
-  ADD KEY `rent_request_rent_request` (`request_id`);
-
---
--- Indexes for table `temp_file`
---
-ALTER TABLE `temp_file`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_address`
---
-ALTER TABLE `user_address`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_inf`
---
-ALTER TABLE `user_inf`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `identity_type` (`identity_type_id`),
-  ADD KEY `user_inf_user_address` (`user_address_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `activation`
---
-ALTER TABLE `activation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `app_login_credential`
---
-ALTER TABLE `app_login_credential`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
---
--- AUTO_INCREMENT for table `attributes`
---
-ALTER TABLE `attributes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `attribute_values`
---
-ALTER TABLE `attribute_values`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `identity_type`
---
-ALTER TABLE `identity_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `product`
---
-ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `product_attribute`
---
-ALTER TABLE `product_attribute`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `product_availability`
---
-ALTER TABLE `product_availability`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `product_category`
---
-ALTER TABLE `product_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `product_location`
---
-ALTER TABLE `product_location`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `product_received`
---
-ALTER TABLE `product_received`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `product_returned`
---
-ALTER TABLE `product_returned`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `rent_product`
---
-ALTER TABLE `rent_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `rent_request`
---
-ALTER TABLE `rent_request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `temp_file`
---
-ALTER TABLE `temp_file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
---
--- AUTO_INCREMENT for table `user_address`
---
-ALTER TABLE `user_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
---
--- AUTO_INCREMENT for table `user_inf`
---
-ALTER TABLE `user_inf`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- Constraints for dumped tables
 --
@@ -742,9 +739,15 @@ ALTER TABLE `product_availability`
 -- Constraints for table `product_category`
 --
 ALTER TABLE `product_category`
-  ADD CONSTRAINT `product_category_app_login_credential` FOREIGN KEY (`created_by`) REFERENCES `app_login_credential` (`id`),
-  ADD CONSTRAINT `product_category_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `product_category_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `product_category_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+
+--
+-- Constraints for table `product_liked`
+--
+ALTER TABLE `product_liked`
+  ADD CONSTRAINT `app_login_credential_app_credential_id` FOREIGN KEY (`app_credential_id`) REFERENCES `app_login_credential` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `product_liked_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `product_location`
@@ -753,17 +756,24 @@ ALTER TABLE `product_location`
   ADD CONSTRAINT `product_location_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `product_rating`
+--
+ALTER TABLE `product_rating`
+  ADD CONSTRAINT ` product_rating_app_credential_id` FOREIGN KEY (`app_credential_id`) REFERENCES `activation` (`app_login_credential_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT ` product_rating_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `rent_product`
 --
 ALTER TABLE `rent_product`
-  ADD CONSTRAINT `booking_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+  ADD CONSTRAINT `booking_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `rent_product_rent)request` FOREIGN KEY (`rent_request_id`) REFERENCES `rent_request` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `rent_request`
 --
 ALTER TABLE `rent_request`
   ADD CONSTRAINT `rent_request_app_login_credential` FOREIGN KEY (`requested_by`) REFERENCES `app_login_credential` (`id`),
-  ADD CONSTRAINT `rent_request_booking` FOREIGN KEY (`rent_product_id`) REFERENCES `rent_product` (`id`),
   ADD CONSTRAINT `rent_request_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `rent_request_rent_request` FOREIGN KEY (`request_id`) REFERENCES `rent_request` (`id`);
 
