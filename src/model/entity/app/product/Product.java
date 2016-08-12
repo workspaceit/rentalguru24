@@ -30,7 +30,7 @@ public class Product{
 
     protected String name;
     protected String description;
-    protected int rating;
+    protected float averageRating;
     protected Picture profileImage;
     protected List<Picture> otherImages;
     protected double currentValue;
@@ -87,13 +87,13 @@ public class Product{
     }
 
     @Basic
-    @Column(name = "rating")
-    public int getRating() {
-        return rating;
+    @Column(name = "average_rating")
+    public float getRating() {
+        return averageRating;
     }
 
     public void setRating(int rating) {
-        this.rating = rating;
+        this.averageRating = rating;
     }
 
     @Basic
