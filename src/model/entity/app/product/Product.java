@@ -30,6 +30,7 @@ public class Product{
 
     protected String name;
     protected String description;
+    protected int rating;
     protected Picture profileImage;
     protected List<Picture> otherImages;
     protected double currentValue;
@@ -42,11 +43,15 @@ public class Product{
     protected Timestamp createdDate;
     protected AppCredential owner;
     protected ProductLocation productLocation;
-    protected RentType rentType;
     protected List<ProductCategory> productCategories;
-    protected List<ProductAvailability> productAvailability;
-    protected List<RentRequest> rentRequests;
-    protected RentProduct rentProduct;
+    protected RentType rentType;
+
+    /* Not ready to to deploy in develop server */
+
+
+//    protected List<ProductAvailability> productAvailability;
+//    protected List<RentRequest> rentRequests;
+//    protected RentProduct rentProduct;
 
 
 
@@ -79,6 +84,16 @@ public class Product{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "rating")
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     @Basic
@@ -205,16 +220,8 @@ public class Product{
     public void setProductLocation(ProductLocation productLocation) {
         this.productLocation = productLocation;
     }
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rent_type_id", referencedColumnName = "id", nullable = false)
-    public RentType getRentType() {
-        return rentType;
-    }
 
 
-    public void setRentType(RentType rentType) {
-        this.rentType = rentType;
-    }
 
     @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -229,36 +236,49 @@ public class Product{
         this.productCategories = productCategories;
     }
 
-
-
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JoinColumn(name="product_id",referencedColumnName = "id")
-    public List<ProductAvailability> getProductAvailability() {
-        return productAvailability;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rent_type_id", referencedColumnName = "id", nullable = false)
+    public RentType getRentType() {
+        return rentType;
     }
 
-    public void setProductAvailability(List<ProductAvailability> productAvailability) {
-        this.productAvailability = productAvailability;
+
+    public void setRentType(RentType rentType) {
+        this.rentType = rentType;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JoinColumn(name="product_id",referencedColumnName = "id")
-    public List<RentRequest> getRentRequests() {
-        return rentRequests;
-    }
 
-    public void setRentRequests(List<RentRequest> rentRequests) {
-        this.rentRequests = rentRequests;
-    }
 
-    @OneToOne(mappedBy = "product")
-    public RentProduct getRentProduct() {
-        return rentProduct;
-    }
-
-    public void setRentProduct(RentProduct rentProduct) {
-        this.rentProduct = rentProduct;
-    }
+        /* Not ready to to deploy in develop server */
+//
+//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    @Fetch(value = FetchMode.SUBSELECT)
+//    @JoinColumn(name="product_id",referencedColumnName = "id")
+//    public List<ProductAvailability> getProductAvailability() {
+//        return productAvailability;
+//    }
+//
+//    public void setProductAvailability(List<ProductAvailability> productAvailability) {
+//        this.productAvailability = productAvailability;
+//    }
+//
+//    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @Fetch(value = FetchMode.SUBSELECT)
+//    @JoinColumn(name="product_id",referencedColumnName = "id")
+//    public List<RentRequest> getRentRequests() {
+//        return rentRequests;
+//    }
+//
+//    public void setRentRequests(List<RentRequest> rentRequests) {
+//        this.rentRequests = rentRequests;
+//    }
+//
+//    @OneToOne(mappedBy = "product")
+//    public RentProduct getRentProduct() {
+//        return rentProduct;
+//    }
+//
+//    public void setRentProduct(RentProduct rentProduct) {
+//        this.rentProduct = rentProduct;
+//    }
 }

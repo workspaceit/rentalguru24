@@ -46,7 +46,10 @@ public class BaseHttp {
     public void setAppcredentialInSession(AppCredential appCredential){
         this.appCredential = appCredential;
         this.serviceResponse.getResponseStat().setIsLogin(true);
-        httpSession.setAttribute("appCredential", appCredential);
+        this.httpSession.setAttribute("appCredential", appCredential);
+    }
+    public void destroySession(){
+        this.httpSession.invalidate();
     }
     public static String getURLWithContextPath(HttpServletRequest request) {
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();

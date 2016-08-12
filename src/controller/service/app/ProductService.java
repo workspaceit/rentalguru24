@@ -130,13 +130,13 @@ public class ProductService extends BaseService{
         }
 
         try{
-            if(allRequestParameter.get("rentType")!=null) {
-                productUploadForm.setRentTypeId(Integer.parseInt(allRequestParameter.get("rentType")));
+            if(allRequestParameter.get("rentTypeId")!=null) {
+                productUploadForm.setRentTypeId(Integer.parseInt(allRequestParameter.get("rentTypeId")));
             }else{
-                this.serviceResponse.setRequestError("rentType","Rent type  required");
+                this.serviceResponse.setRequestError("rentTypeId","Rent type  required");
             }
         }catch(Exception ex){
-            this.serviceResponse.setRequestError("rentType","Rent type  required");
+            this.serviceResponse.setRequestError("rentTypeId","Rent type  required");
         }
 
 

@@ -67,7 +67,15 @@ public class FileController {
 
 
         /*---------Only Doc type validation -----------------*/
+        System.out.println("File Size"+file.getSize());
 
+
+
+        long fileSizeLimit = 2 *1024 *1024; // 2 MB
+        if(file.getSize() > fileSizeLimit){
+            serviceResponse.setRequestError("productImage", "Max file size 2 MB");
+            return this.serviceResponse;
+        }
         try {
             byte[] fileByte = file.getBytes();
             System.out.println("Byte Received " +fileByte.length);

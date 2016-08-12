@@ -15,12 +15,13 @@ import java.util.Random;
  */
 public class ImageHelper {
     //server settings for pictures and images
-    /* Develop */
+    /* ------------------- Develop ----------------------------- */
   //  private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
 
-    /* Beta */
+    /* -------------------- Beta ---------------------------------- */
 //    private static String GLOBAL_PATH = "/home/wsit/rentguru24files_beta/";
-//      Local settings for pictures and Images
+
+        /*------------------Local---------------------*/
     private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
 //    private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
     private static String DOC_FOLDER= "identityDoc/";
@@ -78,10 +79,10 @@ public class ImageHelper {
             if(docFile.renameTo(new File(filePath))){
                 BufferedImage in = ImageIO.read(new File(filePath));
 
-
                 picture.getOriginal().setPath(PRODUCT_FOLDER + fileName);
                 picture.getOriginal().getSize().setHeight(in.getHeight());
                 picture.getOriginal().getSize().setWidth(in.getWidth());
+                in.flush();
 
             }else{
                 System.out.println("File is failed to move!"+filePath);
