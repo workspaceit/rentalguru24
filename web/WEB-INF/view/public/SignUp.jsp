@@ -338,7 +338,7 @@
                 }else{
                     $('form').trigger('reset');
                     $('.alert-success').show().delay(5000).fadeOut(500,function(){
-                        window.location.href = "/signin";
+                        window.location.href = BASEURL+"/signin";
                     });
                 }
                 $('.signUpGif').hide().delay(4998).fadeOut();

@@ -101,13 +101,13 @@
                             <ul class="top_nav_ul right top_nav_ul">
                                 <d:if test="${IsLogIn != true}">
                                 <li class="dropdown">
-                                    <a href="/signin" class="dropdown-toggle top_nav_a"
+                                    <a href="${BaseUrl}/signin" class="dropdown-toggle top_nav_a"
                                        aria-expanded="false">
                                         <i class="fa fa-user"></i>Login
                                     </a>                      
                                 </li>
                                 <li class="dropdown">
-                                    <a href="/signup" class="dropdown-toggle top_nav_a"
+                                    <a href="${BaseUrl}/signup" class="dropdown-toggle top_nav_a"
                                        aria-expanded="false">
                                         <i class="fa fa-lock"></i>Register
                                     </a>                      
