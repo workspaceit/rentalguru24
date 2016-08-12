@@ -48,6 +48,9 @@ public class ProductService extends BaseService{
     @Autowired
     RentTypeModel rentTypeModel;
 
+    @Autowired
+    ProductRatingModel productRatingModel;
+
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     public ServiceResponse uploadProduct(@RequestParam Map<String,String> allRequestParameter,
                                          @Valid ProductUploadForm productUploadForm,
@@ -290,5 +293,28 @@ public class ProductService extends BaseService{
         List<SearchedProduct> searchedProducts = productModel.getSearchedProduct(limit, offset);
         return searchedProducts;
     }
+
+    @RequestMapping(value = "/rate-product/{product_id}/{rating_value}", method = RequestMethod.POST)
+    public ServiceResponse postProductRating(@PathVariable("product_id") int productId, @PathVariable("rating_value") int ratingValue){
+
+//        if(!this.serviceResponse.getResponseStat().getIsLogin()){
+//            this.serviceResponse.getResponseStat().setErrorMsg("Session expired !! , please login ");
+//            return this.serviceResponse;
+//        }
+
+        ProductRating productRating = new ProductRating();
+
+//        productRating.setProductId(productId);
+//        productRating.setAppCredentialId(this.appCredential.getId());
+        productRating.setAppCredential(this.appCredential);
+//        productRating.setProduct(productModel.getById(productId));
+        productRating.setRateValue(ratingValue);
+
+        productRatingModel.insert(productRating);
+
+        System.out.println(productRatingModel.averageRating(productId));
+        return this.serviceResponse;
+    }
+
 }
 

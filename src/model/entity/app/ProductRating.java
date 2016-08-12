@@ -1,5 +1,7 @@
 package model.entity.app;
 
+import model.entity.app.product.Product;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -10,13 +12,16 @@ import java.sql.Timestamp;
 @Table(name = "product_rating", schema = "", catalog = "rentguru24")
 public class ProductRating {
     private int id;
-    private int productId;
-    private int appCredentialId;
+//    private int productId;
+//    private int appCredentialId;
     private int rateValue;
     private Timestamp createdDate;
+    private AppCredential appCredential;
+    private Product product;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -25,25 +30,25 @@ public class ProductRating {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "product_id")
-    public int getProductId() {
-        return productId;
-    }
+//    @Basic
+//    @Column(name = "product_id")
+//    public int getProductId() {
+//        return productId;
+//    }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
+//    public void setProductId(int productId) {
+//        this.productId = productId;
+//    }
 
-    @Basic
-    @Column(name = "app_credential_id")
-    public int getAppCredentialId() {
-        return appCredentialId;
-    }
-
-    public void setAppCredentialId(int appCredentialId) {
-        this.appCredentialId = appCredentialId;
-    }
+//    @Basic
+//    @Column(name = "app_credential_id")
+//    public int getAppCredentialId() {
+//        return appCredentialId;
+//    }
+//
+//    public void setAppCredentialId(int appCredentialId) {
+//        this.appCredentialId = appCredentialId;
+//    }
 
     @Basic
     @Column(name = "rate_value")
@@ -73,8 +78,8 @@ public class ProductRating {
         ProductRating that = (ProductRating) o;
 
         if (id != that.id) return false;
-        if (productId != that.productId) return false;
-        if (appCredentialId != that.appCredentialId) return false;
+//        if (productId != that.productId) return false;
+//        if (appCredentialId != that.appCredentialId) return false;
         if (rateValue != that.rateValue) return false;
         if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
 
@@ -84,10 +89,22 @@ public class ProductRating {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + productId;
-        result = 31 * result + appCredentialId;
+//        result = 31 * result + productId;
+//        result = 31 * result + appCredentialId;
         result = 31 * result + rateValue;
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
     }
+
+    @OneToOne
+    @JoinColumn(name = "app_credential_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public AppCredential getAppCredential(){return appCredential;}
+
+    public void setAppCredential(AppCredential appCredential){this.appCredential = appCredential;}
+
+    @OneToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    public Product getProduct(){return  product;}
+
+    public void setProduct(Product product){this.product = product;}
 }
