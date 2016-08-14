@@ -4,7 +4,7 @@ import controller.BaseHttp;
 import model.CategoryModel;
 import model.ProductModel;
 import model.entity.app.Category;
-import model.entity.app.product.Product;
+import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -34,10 +34,10 @@ public class HomeController extends BaseHttp {
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Boolean IsLogin = this.serviceResponse.getResponseStat().getIsLogin();
         List<Category> category = categoryModel.getAll();
-        List<Product> products = productModel.getProductSearch(8, 0);
+        List<RentalProduct> rentalProducts = productModel.getRentalProduct(8, 0);
 
         modelAndView.addObject("category", category);
-        modelAndView.addObject("products", products);
+        modelAndView.addObject("products", rentalProducts);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl",this.getBaseURL());
         return modelAndView;

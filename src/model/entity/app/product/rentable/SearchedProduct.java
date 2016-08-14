@@ -1,15 +1,8 @@
-package model.entity.app.product;
+package model.entity.app.product.rentable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import model.convert.PictureArrayConverter;
-import model.convert.PictureConverter;
-import model.entity.app.AppCredential;
-import model.nonentity.photo.Picture;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.List;
 
 /**
  * Created by mi on 8/9/16.

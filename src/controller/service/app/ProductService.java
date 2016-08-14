@@ -7,12 +7,12 @@ import helper.ImageHelper;
 import helper.ServiceResponse;
 import model.*;
 import model.entity.app.*;
-import model.entity.app.product.Product;
 import model.entity.app.product.ProductCategory;
-import model.entity.app.product.ProductLocation;
-import model.entity.app.product.SearchedProduct;
+import model.entity.app.product.rentable.RentalProductEntity;
+import model.entity.app.product.rentable.ProductLocation;
+import model.entity.app.product.rentable.SearchedProduct;
+import model.entity.app.product.rentable.iface.RentalProduct;
 import model.nonentity.photo.Picture;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
@@ -62,7 +62,7 @@ public class ProductService extends BaseService{
             this.serviceResponse.getResponseStat().setErrorMsg("Session expired !! , please login ");
             return this.serviceResponse;
         }
-        Product product = new Product();
+        RentalProduct rentalProduct = new RentalProductEntity();
 
         productUploadForm.setName(allRequestParameter.get("name"));
         productUploadForm.setDescription(allRequestParameter.get("description"));
@@ -185,7 +185,7 @@ public class ProductService extends BaseService{
         }
 
 
-        product.setOwner(this.appCredential);
+        rentalProduct.setOwner(this.appCredential);
 
         /*----- Move Product image form temp to original ---- */
 
@@ -204,7 +204,7 @@ public class ProductService extends BaseService{
         ObjectMapper objectMapper = new ObjectMapper();
         Picture profileImage = new Picture();
         try {
-            profileImage = ImageHelper.moveProductImage(product.getOwner().getId(), tempFile.getPath());
+            profileImage = ImageHelper.moveProductImage(rentalProduct.getOwner().getId(), tempFile.getPath());
         } catch (Exception e) {
             //e.printStackTrace();
             this.serviceResponse.setRequestError("profileImageToken", "Unable to save profile image");
@@ -218,7 +218,7 @@ public class ProductService extends BaseService{
             TempFile tempOtherFile = this.tempFileModel.getByToken(otherImageToken);
             Picture picture = new Picture();
             try {
-                picture = ImageHelper.moveProductImage(product.getOwner().getId(), tempOtherFile.getPath());
+                picture = ImageHelper.moveProductImage(rentalProduct.getOwner().getId(), tempOtherFile.getPath());
 
                 if(picture.getOriginal().getPath().isEmpty()) continue;
 
@@ -234,20 +234,20 @@ public class ProductService extends BaseService{
 
 
 
-        product.setName(productUploadForm.getName());
-        product.setDescription(productUploadForm.getDescription());
-        product.setAverageRating(0);
-        product.setProfileImage(profileImage);
-        product.setOtherImages(otherImages);
-        product.setCurrentValue(productUploadForm.getCurrentValue());
-        product.setRentFee(productUploadForm.getRentFee());
-        product.setActive(true);
-        product.setCurrentlyAvailable(true);
-        product.setRentType(rentType);
-        product.setCurrentValue(productUploadForm.getCurrentValue());
-        product.setAvailableFrom(availableFromDate);
-        product.setAvailableTill(availableTillDate);
-        product.setReviewStatus(false);
+        rentalProduct.setName(productUploadForm.getName());
+        rentalProduct.setDescription(productUploadForm.getDescription());
+        rentalProduct.setAverageRating(0);
+        rentalProduct.setProfileImage(profileImage);
+        rentalProduct.setOtherImages(otherImages);
+        rentalProduct.setCurrentValue(productUploadForm.getCurrentValue());
+        rentalProduct.setRentFee(productUploadForm.getRentFee());
+        rentalProduct.setActive(true);
+        rentalProduct.setCurrentlyAvailable(true);
+        rentalProduct.setRentType(rentType);
+        rentalProduct.setCurrentValue(productUploadForm.getCurrentValue());
+        rentalProduct.setAvailableFrom(availableFromDate);
+        rentalProduct.setAvailableTill(availableTillDate);
+        rentalProduct.setReviewStatus(false);
 
 
 
@@ -259,35 +259,35 @@ public class ProductService extends BaseService{
             productCategory.setCategory(categoryModel.getById(categoryId));
             productCategoryList.add(productCategory);
         }
-        product.setProductCategories(productCategoryList);
+        rentalProduct.setProductCategories(productCategoryList);
 
 
-        productModel.insert(product);
+        productModel.insert(rentalProduct);
 
-        product.setProductLocation(new ProductLocation());
-        product.getProductLocation().setCity(productUploadForm.getCity());
-        product.getProductLocation().setState(productUploadForm.getState());
-        product.getProductLocation().setLat(productUploadForm.getLat());
-        product.getProductLocation().setLng(productUploadForm.getLng());
-        product.getProductLocation().setZip(productUploadForm.getZip());
-        product.getProductLocation().setFormattedAddress(productUploadForm.getFormattedAddress());
-        product.getProductLocation().setProductId(product.getId());
+        rentalProduct.setProductLocation(new ProductLocation());
+        rentalProduct.getProductLocation().setCity(productUploadForm.getCity());
+        rentalProduct.getProductLocation().setState(productUploadForm.getState());
+        rentalProduct.getProductLocation().setLat(productUploadForm.getLat());
+        rentalProduct.getProductLocation().setLng(productUploadForm.getLng());
+        rentalProduct.getProductLocation().setZip(productUploadForm.getZip());
+        rentalProduct.getProductLocation().setFormattedAddress(productUploadForm.getFormattedAddress());
+        rentalProduct.getProductLocation().setProductId(rentalProduct.getId());
 
-        productModel.update(product);
+        productModel.update(rentalProduct);
 
-        this.serviceResponse.setResponseData(product);
+        this.serviceResponse.setResponseData(rentalProduct);
         return this.serviceResponse;
     }
 
     @RequestMapping(value = "/get-product", method = RequestMethod.GET)
     public ServiceResponse getProduct(@RequestParam ("limit") int limit, @RequestParam ("offset") int offset){
-        List<Product> products = productModel.getProductSearch(limit, offset);
-        this.serviceResponse.setResponseData(products,"No product found");
+        List<RentalProduct> rentalProducts = productModel.getRentalProduct(limit, offset);
+        this.serviceResponse.setResponseData(rentalProducts,"No product found");
         return this.serviceResponse;
     }
 
     @RequestMapping(value = "/get-product/{id}", method = RequestMethod.GET)
-    public Product getProductSearchById(@PathVariable("id") int id){
+    public RentalProduct getProductSearchById(@PathVariable("id") int id){
        return productModel.getProductSearchById(id);
     }
 
@@ -307,7 +307,7 @@ public class ProductService extends BaseService{
 
         ProductRating productRating = new ProductRating();
 
-        Product product = productModel.getById(productId);
+        RentalProductEntity product = productModel.getEntityById(productId);
 
         productRating.setAppCredential(this.appCredential);
         productRating.setProduct(product);

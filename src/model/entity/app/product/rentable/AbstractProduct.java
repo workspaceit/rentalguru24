@@ -1,4 +1,4 @@
-package model.entity.app.product;
+package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

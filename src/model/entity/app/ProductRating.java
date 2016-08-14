@@ -1,6 +1,6 @@
 package model.entity.app;
 
-import model.entity.app.product.Product;
+import model.entity.app.product.rentable.RentalProductEntity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -17,7 +17,7 @@ public class ProductRating {
     private int rateValue;
     private Timestamp createdDate;
     private AppCredential appCredential;
-    private Product product;
+    private RentalProductEntity product;
 
     @Id
     @Column(name = "id")
@@ -104,7 +104,7 @@ public class ProductRating {
 
     @OneToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    public Product getProduct(){return  product;}
+    public RentalProductEntity getProduct(){return  product;}
 
-    public void setProduct(Product product){this.product = product;}
+    public void setProduct(RentalProductEntity product){this.product = product;}
 }

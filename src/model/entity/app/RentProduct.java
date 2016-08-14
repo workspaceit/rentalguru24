@@ -1,7 +1,7 @@
 package model.entity.app;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import model.entity.app.product.Product;
+import model.entity.app.product.rentable.RentalProductEntity;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -20,7 +20,7 @@ public class RentProduct {
     private boolean expired;
     private Timestamp createdDate;
     private RentRequest rentRequest;
-    private Product product;
+    private RentalProductEntity product;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -85,10 +85,10 @@ public class RentProduct {
     @JsonIgnore
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id",insertable = false,updatable = false)
-    public Product getProduct() {
+    public RentalProductEntity getProduct() {
         return product;
     }
-    public void setProduct(Product product) {
+    public void setProduct(RentalProductEntity product) {
         this.product = product;
     }
 

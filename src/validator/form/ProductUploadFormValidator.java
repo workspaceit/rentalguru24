@@ -6,8 +6,8 @@ import helper.ImageHelper;
 import model.CategoryModel;
 import model.RentTypeModel;
 import model.TempFileModel;
-import model.entity.app.product.Product;
 import model.entity.app.TempFile;
+import model.entity.app.product.rentable.RentalProductEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -29,7 +29,7 @@ public class ProductUploadFormValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return Product.class.equals(aClass);
+        return RentalProductEntity.class.equals(aClass);
     }
     private static String DATE_FORMAT = "dd-MM-yyyy";
     @Override
