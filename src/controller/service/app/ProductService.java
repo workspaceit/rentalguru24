@@ -23,6 +23,7 @@ import validator.form.class_file.ProductUploadForm;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -305,19 +306,29 @@ public class ProductService extends BaseService{
             return this.serviceResponse;
         }
 
-        ProductRating productRating = new ProductRating();
+        if(productRatingModel.getAuthorization(this.appCredential.getId(), productId) == true){
+            this.serviceResponse.getResponseStat().setErrorMsg("You have already rated this product !!");
+            return this.serviceResponse;
+        }
 
         RentalProductEntity product = productModel.getEntityById(productId);
+        ProductRating productRating = new ProductRating();
+
+        if(product == null){
+            this.serviceResponse.getResponseStat().setErrorMsg("No Product Found !!");
+            return this.serviceResponse;
+        }
+
 
         productRating.setAppCredential(this.appCredential);
         productRating.setProduct(product);
         productRating.setRateValue(ratingValue);
 
-        productRatingModel.insert(productRating);
+//        productRatingModel.insert(productRating);
 
         double averageRate = productRatingModel.averageRating(productId);
         product.setAverageRating((float)averageRate);
-//        productModel.update(product);
+        productModel.update(product);
 
         this.serviceResponse.setResponseData(productRating);
 

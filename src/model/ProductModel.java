@@ -67,4 +67,5 @@ public class ProductModel extends BaseModel{
         session.beginTransaction();
         return session.get(RentalProductEntity.class,id);
     }
+
 }

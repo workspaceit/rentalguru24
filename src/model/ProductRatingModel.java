@@ -4,6 +4,7 @@ import model.entity.app.ProductRating;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import java.util.List;
 
 
 /**
@@ -26,5 +27,12 @@ public class ProductRatingModel extends BaseModel {
         Query query = session.createQuery(hql);
         double result = (double) query.uniqueResult();
         return result;
+    }
+
+    public boolean getAuthorization(int id, int productId){
+        Session session = this.sessionFactory.openSession();
+        String hql = "SELECT 1 FROM ProductRating pR WHERE pR.appCredential.id ="+id+" AND pR.product.id ="+productId;
+        Query query = session.createQuery(hql);
+        return (query.uniqueResult() != null);
     }
 }
