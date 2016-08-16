@@ -19,6 +19,46 @@
        </mvc:annotation-driven>
 
        <context:component-scan base-package="controller"   />
+
+       <!-- * ** *** **** Interceptor  **** *** ** * -->
+
+       <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
+              <!--<property name="mappings">-->
+                     <!--<props>-->
+                            <!--<prop key="/signup"></prop>-->
+                     <!--</props>-->
+              <!--</property>-->
+
+              <!--<property name="interceptors">-->
+                     <!--<list>-->
+                            <!--<ref bean="maintenanceInterceptor" />-->
+                            <!--<ref bean="executeTimeInterceptor" />-->
+                     <!--</list>-->
+              <!--</property>-->
+       <!--</bean>-->
+
+       <mvc:interceptors>
+              <mvc:interceptor>
+                     <mvc:mapping path="/signup"/>
+                     <bean class="controller.interceptor.WebAuthInterceptor"/>
+              </mvc:interceptor>
+
+
+
+
+              <!-- ******* Service ************-->
+              <!--<mvc:interceptor>-->
+                     <!--<mvc:mapping path="/api/utility/get-rent-type"/>-->
+                     <!--<bean class="controller.interceptor.ServiceAuthInterceptor"/>-->
+              <!--</mvc:interceptor>-->
+
+       </mvc:interceptors>
+
+       <!-- * ** *** **** Interceptor Ends **** *** ** * -->
+
+
+
+
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
 

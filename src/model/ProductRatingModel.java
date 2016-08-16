@@ -20,12 +20,14 @@ public class ProductRatingModel extends BaseModel {
     }
     public double averageRating(int productId){
         Session session = this.sessionFactory.openSession();
-        String hql = "SELECT AVG(pR.rateValue) as avgRating " +
+        String hql = "SELECT COALESCE(AVG(pR.rateValue),0) as avgRating " +
                     "FROM ProductRating pR " +
                     "WHERE  pR.product.id = "+productId;
 //        String hql = "SELECT AVG(ProductRating.rateval) AS averageRating, WHERE ProductRating.product_id="+productId;
         Query query = session.createQuery(hql);
         double result = (double) query.uniqueResult();
+        System.out.println("Average result "+result);
+        result = Math.round(result * 100.0) / 100.0;
         return result;
     }
 

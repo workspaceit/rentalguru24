@@ -298,7 +298,7 @@ public class ProductService extends BaseService{
         return searchedProducts;
     }
 
-    @RequestMapping(value = "/rate-product/{product_id}/{rating_value}", method = RequestMethod.POST)
+    @RequestMapping(value = "/rate-product/{product_id}/{rating_value}", method = RequestMethod.GET)
     public ServiceResponse postProductRating(@PathVariable("product_id") int productId, @PathVariable("rating_value") int ratingValue){
 
         if(!this.serviceResponse.getResponseStat().getIsLogin()){
@@ -324,7 +324,7 @@ public class ProductService extends BaseService{
         productRating.setProduct(product);
         productRating.setRateValue(ratingValue);
 
-//        productRatingModel.insert(productRating);
+        productRatingModel.insert(productRating);
 
         double averageRate = productRatingModel.averageRating(productId);
         product.setAverageRating((float)averageRate);
