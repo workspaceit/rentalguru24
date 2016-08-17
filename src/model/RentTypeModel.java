@@ -12,11 +12,19 @@ public class RentTypeModel extends BaseModel {
 
     public List<RentType> getAll(){
         Session session = this.sessionFactory.openSession();
-        return session.createQuery("from RentType").list();
+        try {
+            return session.createQuery("from RentType").list();
+        }finally {
+            session.close();
+        }
     }
     public RentType getById(int id){
         Session session = this.sessionFactory.openSession();
-        return (RentType)session.createQuery("from RentType where id = "+id).uniqueResult();
+        try {
+            return (RentType)session.createQuery("from RentType where id = "+id).uniqueResult();
+        }finally {
+            session.close();
+        }
     }
 
 }

@@ -17,9 +17,14 @@ public class TempFileModel extends BaseModel {
     }
     public model.entity.app.TempFile getByToken(long token){
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM TempFile ID WHERE ID.token="+token;
-        Query query = session.createQuery(hql);
-        return (model.entity.app.TempFile)query.uniqueResult();
+
+        try {
+            String hql = "FROM TempFile ID WHERE ID.token="+token;
+            Query query = session.createQuery(hql);
+            return (model.entity.app.TempFile)query.uniqueResult();
+        }finally {
+            session.close();
+        }
     }
     public void delete(TempFile tempFile){
         Session session = this.sessionFactory.openSession();

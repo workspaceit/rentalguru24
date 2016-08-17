@@ -20,17 +20,23 @@ public class RentProductModel extends BaseModel {
         session.close();
     }
     public boolean isProductInRent(int productId,Timestamp startDate,Timestamp endsDate){
-        Session session = this.sessionFactory.openSession();
-        String hql = "from RentProduct where ( ( startDate BETWEEN :startDate and :endsDate ) or" +
-                    " ( endsDate BETWEEN :startDate and :endsDate ) ) and productId = :productId ";
+        Session session = null;
+        try{
+            session = this.sessionFactory.openSession();
+            String hql = "from RentProduct where ( ( startDate BETWEEN :startDate and :endsDate ) or" +
+                        " ( endsDate BETWEEN :startDate and :endsDate ) ) and productId = :productId ";
 
-        Query query =  session.createQuery(hql);
+            Query query =  session.createQuery(hql);
 
-        query.setParameter("productId", productId);
-        query.setParameter("startDate",startDate);
-        query.setParameter("endsDate", endsDate);
+            query.setParameter("productId", productId);
+            query.setParameter("startDate",startDate);
+            query.setParameter("endsDate", endsDate);
 
-        RentProduct rentProduct = (RentProduct)query.uniqueResult();
-        return ( rentProduct != null  );
+            RentProduct rentProduct = (RentProduct)query.uniqueResult();
+            return ( rentProduct != null  );
+
+        }finally {
+            session.close();
+        }
     }
 }

@@ -50,28 +50,39 @@ public class ProductModel extends BaseModel{
             limit = 15;
         }
         String hql = "FROM RentalProductEntity P  ORDER BY P.id DESC";
-        return this.sessionFactory.getCurrentSession()
-                .createQuery(hql)
-                .setFirstResult(offset * limit)
-                .setMaxResults(limit).list();
-
+        Session session = this.sessionFactory.openSession();
+        try {
+            return  session.createQuery(hql)
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit).list();
+        }finally {
+            session.close();
+        }
     }
     public List<SearchedProduct> getSearchedProduct(int limit, int offset){
         if(limit > 15){
             limit = 15;
         }
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity P ORDER BY P.id DESC";
-        Query query =  session.createQuery(hql);
-        query.setFirstResult(offset*limit);
-        query.setMaxResults(limit);
-        return (List<SearchedProduct>)query.list();
+        try {
+            String hql = "FROM RentalProductEntity P ORDER BY P.id DESC";
+            Query query = session.createQuery(hql);
+            query.setFirstResult(offset * limit);
+            query.setMaxResults(limit);
+            return (List<SearchedProduct>) query.list();
+        }finally {
+            session.close();
+        }
     }
 
     public RentalProduct getProductSearchById(int id){
         Session session = this.sessionFactory.openSession();
-        session.beginTransaction();
-        return session.get(RentalProductEntity.class,id);
+        try {
+            session.beginTransaction();
+            return session.get(RentalProductEntity.class,id);
+        }finally {
+            session.close();
+        }
     }
 
 }
