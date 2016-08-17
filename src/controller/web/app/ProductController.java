@@ -1,7 +1,9 @@
 package controller.web.app;
 
 import controller.BaseHttp;
+import model.CategoryModel;
 import model.ProductModel;
+import model.entity.app.Category;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -25,9 +27,14 @@ public class ProductController extends BaseHttp{
     @Autowired
     ProductModel productModel;
 
+    @Autowired
+    CategoryModel categoryModel;
+
     @RequestMapping(value="/upload",method = RequestMethod.GET)
     public ModelAndView upload(){
         ModelAndView modelAndView = new ModelAndView("public/product/upload");
+        List<Category> category = categoryModel.getAll();
+        modelAndView.addObject("category", category);
         return modelAndView;
     }
 
