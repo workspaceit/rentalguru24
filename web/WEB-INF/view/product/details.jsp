@@ -235,34 +235,26 @@
               <div id="slider" class="flexslider">
                 <ul class="slides">
                   <li>
-                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentedProduct.profileImage.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
+                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentedProduct.getProfileImage().original.path}'"  src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
                   </li>
+                  <d:forEach var="productOtherImages" items="${rentedProduct.getOtherImages()}">
                   <li>
-                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentedProduct.profileImage.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
+                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${productOtherImages.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
                   </li>
-                  <li>
-                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentedProduct.profileImage.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
-                  </li>
-                  <li>
-                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentedProduct.profileImage.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
-                  </li>
+                  </d:forEach>
                   <!-- items mirrored twice, total of 12 -->
                 </ul>
               </div>
               <div id="carousel" class="flexslider">
                 <ul class="slides">
                   <li>
-                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
+                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentedProduct.getProfileImage().original.path}" />">
                   </li>
+                  <d:forEach var="productOtherImages" items="${rentedProduct.getOtherImages()}">
                   <li>
-                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
+                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">
                   </li>
-                  <li>
-                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
-                  </li>
-                  <li>
-                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
-                  </li>
+                  </d:forEach>
                   <!-- items mirrored twice, total of 12 -->
                 </ul>
               </div>
@@ -344,7 +336,7 @@
                   <d:if test="${rentedProduct.isCurrentlyAvailable() == false}">
                     <p class="no-margin"><strong>Avaialability:</strong><span class="avail_span">Unavailable</span></p>
                   </d:if>
-                  <p class="no-margin"><strong>Category:</strong><span class="avail_span"></span></p>
+                  <p class="no-margin"><strong>Category:</strong><span class="avail_span">${rentedProduct.getProductCategories().get(0).getCategory().getName()}</span></p>
 
                 </div>
               </div>
