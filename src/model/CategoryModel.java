@@ -21,20 +21,38 @@ public class CategoryModel extends BaseModel {
         Session session = this.sessionFactory.openSession();
         String hql = "FROM Category where id = :id";
         Query query =  session.createQuery(hql);
-        query.setParameter("id",id);
-        return (Category)query.uniqueResult();
+        query.setParameter("id", id);
+        try{
+            return (Category)query.uniqueResult();
+        }finally{
+            session.close();
+        }
+    }
+    public List<Category> getAllCategoryParent(){
+        Session session = this.sessionFactory.openSession();
+        try{
+            return session.createQuery("select distinct category FROM Category category where category.isSubcategory = false")
+                    .list();
+        }finally{
+            session.close();
+        }
     }
     public List<Category> getAll(){
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM Category where parent_id = NULL";
-        Query query =  session.createQuery(hql);
-        return (List<Category>)query.list();
+        try{
+            return session.createQuery("select distinct category FROM Category category LEFT JOIN FETCH category.subcategory where category.isSubcategory = false")
+                    .list();
+        }finally{
+            session.close();
+        }
     }
     public List<Category> getByParentId(int parentId){
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM Category where parent_id = :parent_id";
-        Query query =  session.createQuery(hql);
-        query.setParameter("parent_id",parentId);
-        return (List<Category>)query.list();
+        try {
+            return session.createQuery("select distinct category FROM Category category INNER JOIN FETCH category.subcategory where category.id =:parentId")
+                    .setParameter("parentId", parentId).list();
+        }finally{
+            session.close();
+        }
     }
 }

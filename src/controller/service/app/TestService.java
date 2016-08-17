@@ -137,8 +137,8 @@ public class TestService extends BaseService{
     public void postRentRequsest(){
 
         RentRequest rentRequest = new RentRequest();
-        rentRequest.setProductId(1);
-        rentRequest.setRequestedBy(1);
+//        rentRequest.setProductId(1);
+//        rentRequest.setRequestedBy(1);
         rentRequest.setStartDate(new Date(Calendar.getInstance().getTime().getTime()));
         rentRequest.setEndDate(new Date(Calendar.getInstance().getTime().getTime()));
 

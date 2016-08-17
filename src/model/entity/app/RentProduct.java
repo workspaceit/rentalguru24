@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  * Created by mi on 8/1/16.
  */
 @Entity
-@Table(name = "rent_product", schema = "") //, catalog = "rentguru24"
+@Table(name = "rent_product", schema = "")
 public class RentProduct {
     private int id;
     private int productId;
@@ -21,6 +21,7 @@ public class RentProduct {
     private Timestamp createdDate;
     private RentRequest rentRequest;
     private RentalProductEntity product;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

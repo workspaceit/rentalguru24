@@ -51,6 +51,13 @@ public class UtilityServices extends BaseService{
         this.serviceResponse.setResponseData(categoryModel.getAll(),"No category found");
         return this.serviceResponse;
     }
+
+    @RequestMapping(value = "/get-parent-category/", method = RequestMethod.GET)
+    public ServiceResponse getAllParentCategoryById(){
+        this.serviceResponse.setResponseData(categoryModel.getAllCategoryParent(),"No category found");
+        return this.serviceResponse;
+    }
+
     @RequestMapping(value = "/get-category/{id}", method = RequestMethod.GET)
     public ServiceResponse getAllCategoryById(@PathVariable("id")int id){
 
