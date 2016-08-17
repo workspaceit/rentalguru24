@@ -61,7 +61,7 @@
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
 
-       <mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/product/"
+       <mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
                       cache-period="31556926"/>
        <!--<mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"-->
                       <!--cache-period="31556926"/>-->
