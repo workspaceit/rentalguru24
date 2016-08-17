@@ -429,9 +429,9 @@
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <div class="img-single">
-                                            <img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" />
+                                            <a href="${BaseUrl}/product/details/${product.getId()}"><img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" /></a>
                                             <div class="product-btn-grp">
-                                                <a href="#" class="gbtn left">Quick view</a>
+                                                <a href="${BaseUrl}/product/details/${product.getId()}" class="gbtn left">Quick view</a>
                                                 <a href="#" class="gbtn right">Rent Now</a>
                                             </div>
                                         </div>
