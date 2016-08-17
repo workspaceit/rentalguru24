@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.convert.PictureArrayConverter;
 import model.convert.PictureConverter;
 import model.entity.app.AppCredential;
+import model.entity.app.RentRequest;
 import model.entity.app.RentType;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.ProductLiked;
@@ -17,6 +18,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,11 +52,13 @@ public class RentalProductEntity implements RentalProduct {
     private ProductLiked productLiked;
     private boolean isLiked;
 
+
+
     /* Not ready to to deploy in develop server */
 
 
 //    private List<ProductAvailability> productAvailability;
-//    private List<RentRequest> rentRequests;
+    private List<RentRequest> rentRequests;
 //    private RentProduct rentProduct;
 
 
@@ -295,16 +299,15 @@ public class RentalProductEntity implements RentalProduct {
 //        this.productAvailability = productAvailability;
 //    }
 //
-//    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-//    @Fetch(value = FetchMode.SUBSELECT)
-//    @JoinColumn(name="product_id",referencedColumnName = "id")
-//    public List<RentRequest> getRentRequests() {
-//        return rentRequests;
-//    }
-//
-//    public void setRentRequests(List<RentRequest> rentRequests) {
-//        this.rentRequests = rentRequests;
-//    }
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinColumn(name="product_id",referencedColumnName = "id")
+    public List<RentRequest> getRentRequests() {
+         return rentRequests;
+    }
+    public void setRentRequests(List<RentRequest> rentRequests) {
+       this.rentRequests = rentRequests;
+    }
 //
 //    @OneToOne(mappedBy = "product")
 //    public RentProduct getRentProduct() {

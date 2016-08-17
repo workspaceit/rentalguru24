@@ -7,10 +7,12 @@
 
        <mvc:annotation-driven>
               <mvc:message-converters>
-                     <bean class="json.MappingJackson2HttpMessageConverter">
+                     <!--json.MappingJackson2HttpMessageConverter-->
+                     <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                             <property name="objectMapper">
                                    <bean class="json.HibernateAwareObjectMapper" >
                                           <property name="serializationInclusion" value="NON_NULL" />
+
                                    </bean>
                             </property>
 
@@ -43,14 +45,11 @@
                      <bean class="controller.interceptor.WebAuthInterceptor"/>
               </mvc:interceptor>
 
-
-
-
               <!-- ******* Service ************-->
-              <!--<mvc:interceptor>-->
-                     <!--<mvc:mapping path="/api/utility/get-rent-type"/>-->
-                     <!--<bean class="controller.interceptor.ServiceAuthInterceptor"/>-->
-              <!--</mvc:interceptor>-->
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/auth/**"/>
+                     <bean class="controller.interceptor.ServiceAuthInterceptor"/>
+              </mvc:interceptor>
 
        </mvc:interceptors>
 
@@ -191,6 +190,7 @@
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
                             <prop key="hibernate.show_sql">true</prop>
                             <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                            <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
                      </props>
               </property>
        </bean>

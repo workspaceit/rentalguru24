@@ -23,8 +23,21 @@ public class Test {
         Product b = new SellableProduct();
         System.out.println(b.getClass());
         System.out.println(((SellableProduct)b).isSellable);
+        new H();
+        new H();
     }
 }
+class H{
+    public String a;
+    public List<Integer> intList;
+
+    {
+        a= "Static";
+        intList = new ArrayList<>();
+        System.out.println("Executed");
+    }
+}
+
 abstract class  Product{
 
 }

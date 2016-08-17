@@ -34,15 +34,19 @@ public class ProductModel extends BaseModel{
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
         try{
-            return session.get(RentalProductEntity.class,id);
+            return session.get(RentalProductEntity.class, id);
         }finally {
             session.close();
         }
     }
     public RentalProduct getById(int id){
         Session session = this.sessionFactory.openSession();
-        session.beginTransaction();
-        return session.get(RentalProductEntity.class,id);
+        try{
+            session.beginTransaction();
+            return session.get(RentalProductEntity.class,id);
+        }finally {
+            session.close();
+        }
     }
 
     public List<RentalProduct> getRentalProduct(int limit, int offset){

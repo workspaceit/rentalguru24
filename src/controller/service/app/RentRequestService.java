@@ -3,13 +3,17 @@ package controller.service.app;
 import controller.service.BaseService;
 import helper.DateHelper;
 import helper.ServiceResponse;
+import model.ProductModel;
 import model.RentProductModel;
 import model.RentRequestModel;
+import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
+import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -20,68 +24,112 @@ import java.util.Map;
  * Created by omar on 8/3/16.
  */
 @RestController
-@RequestMapping("/api/rent")
-@Scope("request")
-public class RentRequestService extends BaseService{
+@RequestMapping("/api/auth/rent")
+public class RentRequestService{
     @Autowired
     RentRequestModel rentRequestModel;
     @Autowired
     RentProductModel rentProductModel;
+    @Autowired
+    ProductModel productModel;
     @RequestMapping(value = "/request-rent/{productId}", method = RequestMethod.POST)
-    public ServiceResponse testMail(@PathVariable("productId") int productId,@RequestParam("startDate")String startDate,@RequestParam("endsDate")String endsDate){
-        if(!this.serviceResponse.getResponseStat().getIsLogin()){
-            this.serviceResponse.getResponseStat().setErrorMsg("Session expired !! , please login ");
-            return this.serviceResponse;
-        }
+    public ServiceResponse sendRentRequest(HttpServletRequest request,
+                                           @PathVariable("productId") int productId,
+                                           @RequestParam("startDate")String startDate,
+                                           @RequestParam("endsDate")String endsDate,
+                                           @RequestParam(value="remark",required=false)String remark
+                                            ){
 
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
         if(startDate==null || startDate.isEmpty()){
-            this.serviceResponse.setRequestError("startDate","Start date is required");
+           serviceResponse.setRequestError("startDate","Start date is required");
         }
         if(endsDate==null || endsDate.isEmpty()){
-            this.serviceResponse.setRequestError("endsDate","End date is required");
+           serviceResponse.setRequestError("endsDate","End date is required");
         }
 
-        if(this.serviceResponse.hasErrors()){
-            return this.serviceResponse;
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
         }
 
 
         if(!DateHelper.isDateValid(startDate, "dd-MM-yyyy")){
-            this.serviceResponse.setRequestError("startDate","Start date format miss matched");
+           serviceResponse.setRequestError("startDate","Start date format miss matched");
         }
         if(!DateHelper.isDateValid(endsDate, "dd-MM-yyyy")){
-            this.serviceResponse.setRequestError("endsDate","Ends date format miss matched");
+           serviceResponse.setRequestError("endsDate","Ends date format miss matched");
         }
 
-        if(this.serviceResponse.hasErrors()){
-            return this.serviceResponse;
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
         }
 
 
         Timestamp startTimeStamp = DateHelper.getStringToTimeStamp(startDate, "dd-MM-yyyy");
-        Timestamp endTimeStamp = DateHelper.getStringToTimeStamp(endsDate,"dd-MM-yyyy");
+        Timestamp endTimeStamp = DateHelper.getStringToTimeStamp(endsDate, "dd-MM-yyyy");
 
 
         if(rentProductModel.isProductInRent(productId,startTimeStamp,endTimeStamp)){
-            this.serviceResponse.setRequestError("productId","Product is not available for rent in given date");
-            return this.serviceResponse;
+           serviceResponse.setRequestError("productId","Product is not available for rent in given date");
+            return serviceResponse;
         }
 
-        if(this.serviceResponse.hasErrors()){
-            return this.serviceResponse;
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
         }
+        RentalProduct rentalProduct = productModel.getEntityById(productId);
+
+        if(rentalProduct == null){
+            serviceResponse.setRequestError("productId","Product does not exist by this id");
+            return serviceResponse;
+        }
+
+        if(rentalProduct.getOwner().getId() == appCredential.getId()){
+            serviceResponse.setRequestError("productId","You can not rent your own product");
+            return serviceResponse;
+        }
+
 
         RentRequest rentRequest = new RentRequest();
 
         rentRequest.setApprove(false);
-        rentRequest.setRequestedBy(this.appCredential.getId());
-        rentRequest.setProductId(productId);
+        rentRequest.setRequestedBy(appCredential);
+        rentRequest.setRentalProduct(rentalProduct);
         rentRequest.setStartDate(new Date(startTimeStamp.getTime()));
         rentRequest.setEndDate(new Date(endTimeStamp.getTime()));
-        rentRequestModel.insert(rentRequest);
-        this.serviceResponse.setResponseData(rentRequest, "Internal server error");
-        return this.serviceResponse;
+        rentRequest.setRemark(remark);
 
+        rentRequestModel.insert(rentRequest);
+
+        serviceResponse.setResponseData(rentRequest, "Internal server error");
+
+        return serviceResponse;
+
+    }
+
+    @RequestMapping(value = "/get-my-product-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getRentRequest(HttpServletRequest request,
+                                          @RequestParam("limit") int limit,
+                                          @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getByProductOwner(appCredential.getId(), limit, offset),"No record found");
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/get-my-product-rent-request/{productId}", method = RequestMethod.POST)
+    public ServiceResponse getRentRequestByProductId(HttpServletRequest request,
+                                                     @PathVariable int productId,
+                                                     @RequestParam("limit") int limit,
+                                                     @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getProductId(appCredential.getId(), productId,limit,offset), "No record found");
+        return serviceResponse;
     }
 }

@@ -27,15 +27,16 @@ public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
 
 
         ServiceResponse serviceResponse = new ServiceResponse();
-        AppCredential appCredential = null;// new AppCredential();
         ServletRequestAttributes ar = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession httpSession = request.getSession();
 
 
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
+            request.setAttribute("serviceResponse", serviceResponse);
+            request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
             return true;
         }else{
-            // request.setAttribute("serviceResponse", serviceResponse);
+            serviceResponse.getResponseStat().setErrorMsg("Session expired !!!!");
             response.setContentType("application/json");
             PrintWriter pw = response.getWriter();
             ObjectMapper objectMapper = new ObjectMapper();

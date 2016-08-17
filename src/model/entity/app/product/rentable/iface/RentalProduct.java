@@ -1,5 +1,6 @@
 package model.entity.app.product.rentable.iface;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.entity.app.AppCredential;
 import model.entity.app.RentType;
 import model.entity.app.product.ProductCategory;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by MI on 14-Aug-16.
  */
+@JsonSerialize(as=RentalProduct.class)
 public interface RentalProduct {
 
     public int getId();

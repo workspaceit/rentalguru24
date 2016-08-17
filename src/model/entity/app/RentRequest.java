@@ -1,32 +1,40 @@
 package model.entity.app;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import model.entity.app.product.rentable.RentalProductEntity;
+import model.entity.app.product.rentable.iface.RentalProduct;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mi on 8/1/16.
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "rent_request", schema = "") //, catalog = "rentguru24"
 public class RentRequest {
     private int id;
-    private int productId;
-    private int requestedBy;
+    private RentalProduct rentalProduct;
+    private AppCredential requestedBy;
     private List<RentRequest> requestExtension;
     private boolean requestCancel;
     private Date startDate;
     private Date endDate;
     private Boolean approve;
     private boolean extension;
+    private String remark;
     private Timestamp createdDate;
 
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -36,27 +44,32 @@ public class RentRequest {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "product_id")
-    public int getProductId() {
-        return productId;
+
+    @ManyToOne(targetEntity=RentalProductEntity.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    public RentalProduct getRentalProduct() {
+        return rentalProduct;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+
+
+    public void setRentalProduct(RentalProduct rentalProduct) {
+        System.out.println("rentalProductEntity " + rentalProduct.getId());
+        this.rentalProduct = rentalProduct;
     }
 
-    @Basic
-    @Column(name = "requested_by")
-    public int getRequestedBy() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requested_by", referencedColumnName = "id", nullable = false)
+    public AppCredential getRequestedBy() {
         return requestedBy;
     }
 
-    public void setRequestedBy(int requestedBy) {
+    public void setRequestedBy(AppCredential requestedBy) {
         this.requestedBy = requestedBy;
     }
 
-    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "request_id", referencedColumnName = "id", nullable = true)
     public List<RentRequest> getRequestExtension() {
         return requestExtension;
@@ -117,6 +130,25 @@ public class RentRequest {
     }
 
     @Basic
+    @Column(name = "remark")
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remarks) {
+        if(remarks!=null){
+            remarks = remarks.trim();
+        }else{
+            remarks = "";
+        }
+
+        if(remarks.isEmpty()){
+            remarks = null;
+        }
+        this.remark = remarks;
+    }
+
+    @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {
         return createdDate;
@@ -128,37 +160,5 @@ public class RentRequest {
 
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        RentRequest that = (RentRequest) o;
-
-        if (id != that.id) return false;
-        if (productId != that.productId) return false;
-        if (requestedBy != that.requestedBy) return false;
-        if (requestCancel != that.requestCancel) return false;
-        if (approve != that.approve) return false;
-        if (extension != that.extension) return false;
-        if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
-        if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + productId;
-        result = 31 * result + requestedBy;
-        result = 31 * result + (requestCancel ? 1 : 0);
-        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
-        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-        result = 31 * result + (approve ? 1 : 0);
-        result = 31 * result + (extension ? 1 : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
-    }
 }
