@@ -125,11 +125,11 @@
           <label>Choose Category</label>
           <select class="selectpicker">
             <option value="0">please select a category</option>
-            <d:forEach var="Parentcategory" items="${category}">
-              <option value="${Parentcategory.name}">${Parentcategory.name}</option>
+            <d:forEach var="listValue" items="${category}">
+              <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
           </select>
-          <p class="help-block error-form">Please fill up the field</p>
+          <p class="help-block error-form" id="errorMsg_category"></p>
         </div>
         <div class="form-group">
           <label>Choose Sub Category</label>
@@ -145,52 +145,52 @@
               <option>Toilet Paper</option>
             </optgroup>
           </select>
-          <p class="help-block error-form">Please fill up the field</p>
+          <p class="help-block error-form" id="errorMsg_subCategory"></p>
         </div>
         <div class="form-group">
           <label>Product Title</label>
           <input type="text" class="form-control" placeholder="">
-          <p class="help-block error-form">Please fill up the field</p>
+          <p class="help-block error-form" id="errorMsg_productTitle"></p>
         </div>
         <div class="form-group">
           <label>Product Description</label>
           <textarea class="form-control cstm-desc"></textarea>
-          <p class="help-block error-form">Please fill up the field</p>
+          <p class="help-block error-form" id="errorMsg_productDescription"></p>
         </div>
         <div class="row clearfix">
           <div class="col-md-6">
             <div class="form-group date-con">
               <label>From</label>
               <input type="text"  class="form-control datepicker" id="dpd1" placeholder="" >
-              <p class="help-block error-form">Please fill up the field</p>
+              <p class="help-block error-form" id="errorMsg_fromDate"></p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group date-con">
               <label>To</label>
               <input type="text"  class="form-control datepicker" id="dpd2" placeholder="" >
-              <p class="help-block error-form">Please fill up the field</p>
+              <p class="help-block error-form" id="errorMsg_toDate"></p>
             </div>
           </div>
         </div>
         <div class="form-group">
           <label>Product Location</label>
           <input type="text" class="form-control" placeholder="">
-          <p class="help-block error-form">Please fill up the field</p>
+          <p class="help-block error-form" id="errorMsg_productLocation"></p>
         </div>
         <div class="row clearfix">
           <div class="col-md-4">
             <div class="form-group">
               <label>Zip Code</label>
               <input type="text"  class="form-control" placeholder="" >
-              <p class="help-block error-form">Please fill up the field</p>
+              <p class="help-block error-form" id="errorMsg_zipCode"></p>
             </div>
           </div>
           <div class="col-md-8">
             <div class="form-group">
               <label>City</label>
               <input type="text"  class="form-control" placeholder="" >
-              <p class="help-block error-form">Please fill up the field</p>
+              <p class="help-block error-form" id="errorMsg_city"></p>
             </div>
           </div>
         </div>
@@ -199,12 +199,12 @@
         <div class="form-group">
           <label >Product Current price</label>
           <input type="text" class="form-control" placeholder="">
-          <p class="help-block error-form">Please fill up the field</p>
+          <p class="help-block error-form" id="errorMsg_productCurrentPrice"></p>
         </div>
         <div class="form-group">
           <label>Rent price</label>
           <input type="text" class="form-control" placeholder="">
-          <p class="help-block error-form">Please fill up the field</p>
+          <p class="help-block error-form" id="errorMsg_rentPrice"></p>
         </div>
         <div class="form-group">
           <label for="fallback">Add product images</label>
@@ -212,7 +212,7 @@
             Drop files here or click to upload.
             <span class="inner-load"></span>
           </div>
-          <p class="help-block error-form">Please fill up the field</p>
+          <p class="help-block error-form" id="errorMsg_productImage"></p>
 
         </div>
         <div class="row preview-container">
