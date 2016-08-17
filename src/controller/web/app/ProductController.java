@@ -33,7 +33,7 @@ public class ProductController extends BaseHttp{
     @RequestMapping(value="/upload",method = RequestMethod.GET)
     public ModelAndView upload(){
         ModelAndView modelAndView = new ModelAndView("public/product/upload");
-        List<Category> category = categoryModel.getAll();
+        List<Category> category = categoryModel.getAllCategoryParent();
         modelAndView.addObject("category", category);
         return modelAndView;
     }
