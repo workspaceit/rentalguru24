@@ -125,7 +125,7 @@
           <label>Choose Category</label>
           <%--<select class="selectpicker" onchange="subCategory()" id="category">--%>
           <select onchange="subCategory()" id="category">
-            <option value="0">PLEASE SELECT A CATEGORY</option>
+            <option value="">PLEASE SELECT A CATEGORY</option>
             <d:forEach var="listValue" items="${category}">
               <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
@@ -136,14 +136,14 @@
           <label>Choose Sub Category</label>
           <%--<select class="selectpicker" id="subCategory">--%>
           <select id="subCategory">
-            <option value="0">PLEASE SELECT A SUB CATEGORY</option>
+            <option value="">PLEASE SELECT A SUB CATEGORY</option>
           </select>
           <p class="help-block error-form" id="errorMsg_categoryIds"></p>
         </div>
         <div class="form-group">
           <label>Choose Rent Type</label>
           <select  id="rentTypeId">
-            <option value="0">PLEASE SELECT A RENT TYPE</option>
+            <option value="">PLEASE SELECT A RENT TYPE</option>
             <d:forEach var="listValue" items="${rentTypes}">
               <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
@@ -491,12 +491,12 @@
     var subCategory = $('#subCategory option:selected').val();
 
     var categoryArray = [];
-    if(subCategory == 0){
-      categoryArray.push(categoryId);
+    if(subCategory == ""){
+        categoryArray.push(categoryId);
     }else{
       categoryArray.push(subCategory);
     }
-
+console.log(categoryArray);
     var fromDate = $('#availableFrom').val();
     var tillDate = $('#availableTill').val();
 
