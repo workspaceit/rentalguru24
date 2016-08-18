@@ -218,20 +218,19 @@
           <p class="help-block error-form" id="errorMsg_profileImageToken"></p>
           <input type="hidden" value="" id="profileImageToken" name="profileImageToken">
         </div>
-        <div class="row preview-container">
-          <p>Preview Area</p>
-          <div class="col-xs-6 col-md-6">
-            <a href="#" class="thumbnail">
-              <img src="http://placehold.it/200x200" alt="...">
-            </a>
-          </div>
-          <div class="col-xs-6 col-md-6">
-            <a href="#" class="thumbnail">
-              <img src="http://placehold.it/200x200" alt="...">
-            </a>
-          </div>
-        </div>
-
+        <%--<div class="row preview-container">--%>
+          <%--<p>Preview Area</p>--%>
+          <%--<div class="col-xs-6 col-md-6">--%>
+            <%--<a href="#" class="thumbnail">--%>
+              <%--<img src="http://placehold.it/200x200" alt="...">--%>
+            <%--</a>--%>
+          <%--</div>--%>
+          <%--<div class="col-xs-6 col-md-6">--%>
+            <%--<a href="#" class="thumbnail">--%>
+              <%--<img src="http://placehold.it/200x200" alt="...">--%>
+            <%--</a>--%>
+          <%--</div>--%>
+        <%--</div>--%>
       </div>
     </div>
     <div class="col-md-12 text-right" style="padding:0px 100px 20px 0px;">
@@ -491,10 +490,11 @@
     var categoryId = $('#category option:selected').val();
     var subCategory = $('#subCategory option:selected').val();
 
-    if(subCategory != null){
-      var categoryIds = JSON.stringify([subCategory]);
+    var categoryArray = [];
+    if(subCategory == 0){
+      categoryArray.push(categoryId);
     }else{
-      var categoryIds = JSON.stringify([categoryId]);
+      categoryArray.push(subCategory);
     }
 
     var fromDate = $('#availableFrom').val();
@@ -505,6 +505,7 @@
     var profileImageToken = $('#profileImageToken').val();
     var currentValue = $('#currentValue').val();
     var rentFee = $('#rentFee').val();
+    var categoryIds= JSON.stringify(categoryArray);
     var availableFrom = fromDate.replace(/\//g,"-");
     var availableTill = tillDate.replace(/\//g,"-");
     var formattedAddress = $('#formattedAddress').val();
