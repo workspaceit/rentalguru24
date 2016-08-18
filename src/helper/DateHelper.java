@@ -13,7 +13,6 @@ import java.util.TimeZone;
 public class DateHelper {
 
 
-
     public static String getProcessedTimeStamp(Timestamp timeStamp) {
         String processedTime = "";
         if(timeStamp!=null){
@@ -51,7 +50,7 @@ public class DateHelper {
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 
-        return getStringToTimeStamp(dateFormat.format(new Date()),"yyyy-MM-dd");
+        return getStringToTimeStamp(dateFormat.format(new Date()), "yyyy-MM-dd");
     }
 
     public static boolean isDateValid(String date,String dateFormat)
@@ -75,6 +74,11 @@ public class DateHelper {
             e.printStackTrace();
         }
         return null;
+
+    }
+
+    public static Timestamp getSQLDateToTimeStamp(Date date){
+        return new java.sql.Timestamp(date.getTime());
 
     }
 }

@@ -7,6 +7,7 @@ import model.ProductModel;
 import model.RentProductModel;
 import model.RentRequestModel;
 import model.entity.app.AppCredential;
+import model.entity.app.RentProduct;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,14 +139,41 @@ public class RentRequestService{
         }
 
         if(rentRequest.getApprove()){
-            serviceResponse.getResponseStat().setErrorMsg("Request already approved");
+            serviceResponse.setRequestError("requestId", "Request already approved");
             return serviceResponse;
         }
+
+        RentProduct rentProduct = new RentProduct();
+
+        boolean isProductInRent = rentProductModel.isProductInRent(rentRequest.getRentalProduct().getId(),
+                DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
+                DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
+        );
+
+        if(isProductInRent){
+            serviceResponse.setRequestError("requestId","You can not approve, your product is in rent");
+            return serviceResponse;
+        }
+
 
         rentRequest.setApprove(true);
         rentRequest.setDisapprove(false);
 
         rentRequestModel.update(rentRequest);
+
+        /* ~~~~~~~~~~~~~  Rent Product Insertion ~~~~~~~~~~~~~~~~*/
+
+        rentProduct.setRentRequest(rentRequest);
+        rentProduct.setProductReceived(false);
+        rentProduct.setProductReturned(false);
+        rentProduct.setExpired(false);
+        rentProduct.setStartDate(rentRequest.getStartDate());
+        rentProduct.setEndsDate(rentRequest.getEndDate());
+        rentProduct.setProductId(rentRequest.getRentalProduct().getId());
+        rentProduct.setRenteeId(rentRequest.getRequestedBy().getId());
+
+        rentProductModel.insert(rentProduct);
+
         serviceResponse.setResponseData(rentRequest,"No record found");
         return serviceResponse;
     }
