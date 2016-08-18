@@ -91,6 +91,10 @@ public class RentRequestService{
             return serviceResponse;
         }
 
+        if(rentRequestModel.isAlreadyRequested(appCredential.getId(),productId,startTimeStamp,endTimeStamp)){
+            serviceResponse.getResponseStat().setErrorMsg("You are already requested for this product in between those date");
+            return serviceResponse;
+        }
 
         RentRequest rentRequest = new RentRequest();
 
