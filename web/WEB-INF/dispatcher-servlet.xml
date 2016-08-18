@@ -11,8 +11,7 @@
                      <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                             <property name="objectMapper">
                                    <bean class="json.HibernateAwareObjectMapper" >
-                                          <property name="serializationInclusion" value="NON_NULL" />
-
+                                          <!--<property name="serializationInclusion" value="NON_NULL" />-->
                                    </bean>
                             </property>
 

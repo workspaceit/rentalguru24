@@ -14,7 +14,8 @@ import java.util.List;
 /**
  * Created by MI on 14-Aug-16.
  */
-@JsonSerialize(as=RentalProduct.class)
+
+@JsonSerialize(as=RentalProduct.class,include= JsonSerialize.Inclusion.NON_EMPTY)
 public interface RentalProduct {
 
     public int getId();
