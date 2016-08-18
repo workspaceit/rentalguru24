@@ -54,12 +54,13 @@ public class ProductUploadFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "formattedAddress", "Formatted address required");
 
 
-        if(productUploadForm.getAvailableFrom()!=null){
+        if(productUploadForm.getAvailableFrom()!=null && !productUploadForm.getAvailableFrom().isEmpty()){
+
             if(!DateHelper.isDateValid(productUploadForm.getAvailableFrom(), DATE_FORMAT)){
                 errors.rejectValue("availableFrom","Available from date in invalid format");
             }
         }
-        if(productUploadForm.getAvailableFrom()!=null){
+        if(productUploadForm.getAvailableTill()!=null && !productUploadForm.getAvailableTill().isEmpty()){
             if(!DateHelper.isDateValid(productUploadForm.getAvailableTill(), DATE_FORMAT)){
                 errors.rejectValue("availableTill","Available till date in invalid format");
             }

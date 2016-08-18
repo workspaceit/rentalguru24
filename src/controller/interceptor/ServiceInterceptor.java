@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
-public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
+public class ServiceInterceptor extends HandlerInterceptorAdapter{
 
 
     //before the actual handler will be executed
@@ -30,22 +30,9 @@ public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
         ServletRequestAttributes ar = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession httpSession = request.getSession();
 
+        request.setAttribute("serviceResponse", serviceResponse);
 
-        if(httpSession.getAttribute("appCredential") instanceof AppCredential){
-            request.setAttribute("serviceResponse", serviceResponse);
-            request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
-            serviceResponse.getResponseStat().setIsLogin(true);
-            return true;
-        }else{
-            serviceResponse.getResponseStat().setErrorMsg("Session expired !!!!");
-            response.setContentType("application/json");
-            PrintWriter pw = response.getWriter();
-            ObjectMapper objectMapper = new ObjectMapper();
-            pw.print(objectMapper.writeValueAsString(serviceResponse));
-            System.out.println("INTERCEPTOR postHandle");
-            pw.close();
-            return false;
-        }
+        return true;
 
     }
 

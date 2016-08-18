@@ -1,5 +1,6 @@
 package model.entity.app.product.rentable.iface;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.entity.app.AppCredential;
 import model.entity.app.RentType;
@@ -29,7 +30,10 @@ public interface RentalProduct {
     public boolean isActive();
     public Timestamp getAvailableFrom();
     public Timestamp getAvailableTill();
+
+    @JsonIgnore
     public Timestamp getCreatedDate();
+
     public AppCredential getOwner() ;
     public ProductLocation getProductLocation();
     public List<ProductCategory> getProductCategories();
