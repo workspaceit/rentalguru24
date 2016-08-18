@@ -1,16 +1,13 @@
 package model.entity.app;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.iface.RentalProduct;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +25,7 @@ public class RentRequest {
     private Date startDate;
     private Date endDate;
     private Boolean approve;
+    private Boolean disapprove;
     private boolean extension;
     private String remark;
     private Timestamp createdDate;
@@ -81,7 +79,7 @@ public class RentRequest {
 
     @Basic
     @Column(name = "request_cancel")
-    public boolean isRequestCancel() {
+    public boolean getRequestCancel() {
         return requestCancel;
     }
 
@@ -120,6 +118,16 @@ public class RentRequest {
     }
 
     @Basic
+    @Column(name = "disapprove")
+    public Boolean getDisapprove() {
+        return disapprove;
+    }
+
+    public void setDisapprove(Boolean disApprove) {
+        this.disapprove = disApprove;
+    }
+
+    @Basic
     @Column(name = "extension")
     public boolean isExtension() {
         return extension;
@@ -148,6 +156,7 @@ public class RentRequest {
         this.remark = remarks;
     }
 
+    @JsonIgnore
     @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {

@@ -32,22 +32,25 @@ public class RentRequestService{
     RentProductModel rentProductModel;
     @Autowired
     ProductModel productModel;
+
+    /* **************************** Rent Request action [Started] ************************** */
+
     @RequestMapping(value = "/request-rent/{productId}", method = RequestMethod.POST)
-    public ServiceResponse sendRentRequest(HttpServletRequest request,
+    public ServiceResponse makeRentRequest(HttpServletRequest request,
                                            @PathVariable("productId") int productId,
                                            @RequestParam("startDate")String startDate,
                                            @RequestParam("endsDate")String endsDate,
                                            @RequestParam(value="remark",required=false)String remark
-                                            ){
+    ){
 
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
         if(startDate==null || startDate.isEmpty()){
-           serviceResponse.setRequestError("startDate","Start date is required");
+            serviceResponse.setRequestError("startDate","Start date is required");
         }
         if(endsDate==null || endsDate.isEmpty()){
-           serviceResponse.setRequestError("endsDate","End date is required");
+            serviceResponse.setRequestError("endsDate","End date is required");
         }
 
         if(serviceResponse.hasErrors()){
@@ -56,10 +59,10 @@ public class RentRequestService{
 
 
         if(!DateHelper.isDateValid(startDate, "dd-MM-yyyy")){
-           serviceResponse.setRequestError("startDate","Start date format miss matched");
+            serviceResponse.setRequestError("startDate","Start date format miss matched");
         }
         if(!DateHelper.isDateValid(endsDate, "dd-MM-yyyy")){
-           serviceResponse.setRequestError("endsDate","Ends date format miss matched");
+            serviceResponse.setRequestError("endsDate","Ends date format miss matched");
         }
 
         if(serviceResponse.hasErrors()){
@@ -72,7 +75,7 @@ public class RentRequestService{
 
 
         if(rentProductModel.isProductInRent(productId,startTimeStamp,endTimeStamp)){
-           serviceResponse.setRequestError("productId","Product is not available for rent in given date");
+            serviceResponse.setRequestError("productId","Product is not available for rent in given date");
             return serviceResponse;
         }
 
@@ -113,8 +116,136 @@ public class RentRequestService{
 
     }
 
+
+    @RequestMapping(value = "/approve-request/{requestId}", method = RequestMethod.GET)
+    public ServiceResponse approveRequest(HttpServletRequest request,
+                                         @PathVariable("requestId") int requestId){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        RentRequest rentRequest = rentRequestModel.getById(requestId);
+        if(rentRequest==null){
+            serviceResponse.setRequestError("requestId","No request exist by this id ");
+            return serviceResponse;
+        }
+
+        if(rentRequest.getRentalProduct().getOwner().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("requestId","You are not allowed to perform action for this rent request");
+            return serviceResponse;
+        }
+
+        if(rentRequest.getApprove()){
+            serviceResponse.getResponseStat().setErrorMsg("Request already approved");
+            return serviceResponse;
+        }
+
+        rentRequest.setApprove(true);
+        rentRequest.setDisapprove(false);
+
+        rentRequestModel.update(rentRequest);
+        serviceResponse.setResponseData(rentRequest,"No record found");
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/disapprove-request/{requestId}", method = RequestMethod.GET)
+    public ServiceResponse disapproveRequest(HttpServletRequest request,
+                                         @PathVariable("requestId") int requestId){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        RentRequest rentRequest = rentRequestModel.getById(requestId);
+        if(rentRequest==null){
+            serviceResponse.setRequestError("requestId","No request exist by this id ");
+            return serviceResponse;
+        }
+
+        if(rentRequest.getRentalProduct().getOwner().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("requestId","You are not allowed to perform action for this rent request");
+            return serviceResponse;
+        }
+
+        if(rentRequest.getDisapprove()){
+            serviceResponse.getResponseStat().setErrorMsg("Request already disapproved");
+            return serviceResponse;
+        }
+
+        rentRequest.setApprove(false);
+        rentRequest.setDisapprove(true);
+
+        rentRequestModel.update(rentRequest);
+        serviceResponse.setResponseData(rentRequest,"No record found");
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/cancel-request/{requestId}", method = RequestMethod.GET)
+    public ServiceResponse cancelRequest(HttpServletRequest request,
+                                             @PathVariable("requestId") int requestId){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        RentRequest rentRequest = rentRequestModel.getById(requestId);
+        if(rentRequest==null){
+            serviceResponse.setRequestError("requestId","No request exist by this id ");
+            return serviceResponse;
+        }
+
+        if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("requestId","You are not allowed to perform action for this rent request");
+            return serviceResponse;
+        }
+
+        if(rentRequest.getRequestCancel()){
+            serviceResponse.getResponseStat().setErrorMsg("Request already canceled");
+            return serviceResponse;
+        }
+
+        rentRequest.setRequestCancel(true);
+
+        rentRequestModel.update(rentRequest);
+        serviceResponse.setResponseData(rentRequest,"No record found");
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/undo-cancel-request/{requestId}", method = RequestMethod.GET)
+    public ServiceResponse undoCancelRequest(HttpServletRequest request,
+                                         @PathVariable("requestId") int requestId){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        RentRequest rentRequest = rentRequestModel.getById(requestId);
+        if(rentRequest==null){
+            serviceResponse.setRequestError("requestId","No request exist by this id ");
+            return serviceResponse;
+        }
+
+        if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("requestId","You are not allowed to perform action for this rent request");
+            return serviceResponse;
+        }
+
+        if(!rentRequest.getRequestCancel()){
+            serviceResponse.getResponseStat().setErrorMsg("Request is not in cancel state");
+            return serviceResponse;
+        }
+
+        rentRequest.setRequestCancel(false);
+
+        rentRequestModel.update(rentRequest);
+        serviceResponse.setResponseData(rentRequest,"No record found");
+        return serviceResponse;
+    }
+
+
+    /* **************************** Rent Request action [Ends] ************************** */
+
+
+    /* **************************** Get all Rent request list For Product Owner [Started] ************************** */
+
     @RequestMapping(value = "/get-my-product-rent-request", method = RequestMethod.POST)
-    public ServiceResponse getRentRequest(HttpServletRequest request,
+    public ServiceResponse getMyProductRentRequest(HttpServletRequest request,
                                           @RequestParam("limit") int limit,
                                           @RequestParam("offset")int offset){
 
@@ -124,8 +255,9 @@ public class RentRequestService{
         serviceResponse.setResponseData(rentRequestModel.getByProductOwner(appCredential.getId(), limit, offset),"No record found");
         return serviceResponse;
     }
+
     @RequestMapping(value = "/get-my-product-rent-request/{productId}", method = RequestMethod.POST)
-    public ServiceResponse getRentRequestByProductId(HttpServletRequest request,
+    public ServiceResponse getMyProductRentRequestByProductId(HttpServletRequest request,
                                                      @PathVariable int productId,
                                                      @RequestParam("limit") int limit,
                                                      @RequestParam("offset")int offset){
@@ -133,7 +265,134 @@ public class RentRequestService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        serviceResponse.setResponseData(rentRequestModel.getProductId(appCredential.getId(), productId,limit,offset), "No record found");
+        serviceResponse.setResponseData(rentRequestModel.getByProductOwnerAndProductId(appCredential.getId(), productId, limit, offset), "No record found");
+        return serviceResponse;
+    }
+
+
+    @RequestMapping(value = "/get-my-approved-product-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getMyProductAllApprovedRentRequest(HttpServletRequest request,
+                                          @RequestParam("limit") int limit,
+                                          @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getAllApproveRequestByProductOwner(appCredential.getId(), limit, offset),"No record found");
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/get-my-disapproved-product-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getMyProductAllDisapprovedRentRequest(HttpServletRequest request,
+                                                     @RequestParam("limit") int limit,
+                                                     @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getAllDisapproveRequestByProductOwner(appCredential.getId(), limit, offset),"No record found");
+
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/get-my-pending-product-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getMyProductAllPendingRentRequest(HttpServletRequest request,
+                                                        @RequestParam("limit") int limit,
+                                                        @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getAllPendingRequestByProductOwner(appCredential.getId(), limit, offset),"No record found");
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/get-my-canceled-product-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getMyProductAllCanceledRentRequest(HttpServletRequest request,
+                                                    @RequestParam("limit") int limit,
+                                                    @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getAllCanceledRequestByProductOwner(appCredential.getId(), limit, offset),"No record found");
+        return serviceResponse;
+    }
+
+     /* **************************** Get all Rent request list For Product Owner [Ends] ************************** */
+
+
+
+     /* **************************** Get all Rent request list For Request Maker [Started] ************************** */
+
+    @RequestMapping(value = "/get-my-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getMyRentRequest(HttpServletRequest request,
+                                          @RequestParam("limit") int limit,
+                                          @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getByRequestedBy(appCredential.getId(), limit, offset),"No record found");
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/get-my-rent-request/{productId}", method = RequestMethod.POST)
+    public ServiceResponse getMyRentRequestByProductId(HttpServletRequest request,
+                                                              @PathVariable int productId,
+                                                              @RequestParam("limit") int limit,
+                                                              @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        System.out.print("productId "+productId);
+        serviceResponse.setResponseData(rentRequestModel.getByRequestedByAndProductId(appCredential.getId(), productId, limit, offset), "No record found");
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/get-my-pending-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getMyPendingRentRequest(HttpServletRequest request,
+                                            @RequestParam("limit") int limit,
+                                            @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getAllPendingRequestByRequestedBy(appCredential.getId(), limit, offset),"No record found");
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/get-my-approved-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getMyApprovedRentRequest(HttpServletRequest request,
+                                                   @RequestParam("limit") int limit,
+                                                   @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getAllApproveRequestByRequestedBy(appCredential.getId(), limit, offset),"No record found");
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/get-my-disapproved-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getMyAllDisapprovedRentRequest(HttpServletRequest request,
+                                                                 @RequestParam("limit") int limit,
+                                                                 @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getAllDisapproveRequestByRequestedBy(appCredential.getId(), limit, offset),"No record found");
+
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/get-my-canceled-rent-request", method = RequestMethod.POST)
+    public ServiceResponse getMyAllCanceledRentRequest(HttpServletRequest request,
+                                                              @RequestParam("limit") int limit,
+                                                              @RequestParam("offset")int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(rentRequestModel.getAllCanceledRequestByRequestedBy(appCredential.getId(), limit, offset),"No record found");
         return serviceResponse;
     }
 }

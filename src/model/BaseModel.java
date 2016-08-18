@@ -14,7 +14,7 @@ public class BaseModel {
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
-        System.out.println("TEST");
+        System.out.println(" ***** **** *** ** * SessionFactory Is Created * ** *** **** *****");
         this.sessionFactory = sessionFactory;
     }
 }
