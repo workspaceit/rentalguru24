@@ -125,7 +125,7 @@
           <label>Choose Category</label>
           <%--<select class="selectpicker" onchange="subCategory()" id="category">--%>
           <select onchange="subCategory()" id="category">
-            <option value="0">PLEASE SELECT A CATEGORY</option>
+            <option value="">PLEASE SELECT A CATEGORY</option>
             <d:forEach var="listValue" items="${category}">
               <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
@@ -136,14 +136,14 @@
           <label>Choose Sub Category</label>
           <%--<select class="selectpicker" id="subCategory">--%>
           <select id="subCategory">
-            <option value="0">PLEASE SELECT A SUB CATEGORY</option>
+            <option value="">PLEASE SELECT A SUB CATEGORY</option>
           </select>
           <p class="help-block error-form" id="errorMsg_categoryIds"></p>
         </div>
         <div class="form-group">
           <label>Choose Rent Type</label>
           <select  id="rentTypeId">
-            <option value="0">PLEASE SELECT A RENT TYPE</option>
+            <option value="">PLEASE SELECT A RENT TYPE</option>
             <d:forEach var="listValue" items="${rentTypes}">
               <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
@@ -218,20 +218,19 @@
           <p class="help-block error-form" id="errorMsg_profileImageToken"></p>
           <input type="hidden" value="" id="profileImageToken" name="profileImageToken">
         </div>
-        <div class="row preview-container">
-          <p>Preview Area</p>
-          <div class="col-xs-6 col-md-6">
-            <a href="#" class="thumbnail">
-              <img src="http://placehold.it/200x200" alt="...">
-            </a>
-          </div>
-          <div class="col-xs-6 col-md-6">
-            <a href="#" class="thumbnail">
-              <img src="http://placehold.it/200x200" alt="...">
-            </a>
-          </div>
-        </div>
-
+        <%--<div class="row preview-container">--%>
+          <%--<p>Preview Area</p>--%>
+          <%--<div class="col-xs-6 col-md-6">--%>
+            <%--<a href="#" class="thumbnail">--%>
+              <%--<img src="http://placehold.it/200x200" alt="...">--%>
+            <%--</a>--%>
+          <%--</div>--%>
+          <%--<div class="col-xs-6 col-md-6">--%>
+            <%--<a href="#" class="thumbnail">--%>
+              <%--<img src="http://placehold.it/200x200" alt="...">--%>
+            <%--</a>--%>
+          <%--</div>--%>
+        <%--</div>--%>
       </div>
     </div>
     <div class="col-md-12 text-right" style="padding:0px 100px 20px 0px;">
@@ -491,12 +490,13 @@
     var categoryId = $('#category option:selected').val();
     var subCategory = $('#subCategory option:selected').val();
 
-    if(subCategory != null){
-      var categoryIds = JSON.stringify([subCategory]);
+    var categoryArray = [];
+    if(subCategory == ""){
+        categoryArray.push(categoryId);
     }else{
-      var categoryIds = JSON.stringify([categoryId]);
+      categoryArray.push(subCategory);
     }
-
+console.log(categoryArray);
     var fromDate = $('#availableFrom').val();
     var tillDate = $('#availableTill').val();
 
@@ -505,6 +505,7 @@
     var profileImageToken = $('#profileImageToken').val();
     var currentValue = $('#currentValue').val();
     var rentFee = $('#rentFee').val();
+    var categoryIds= JSON.stringify(categoryArray);
     var availableFrom = fromDate.replace(/\//g,"-");
     var availableTill = tillDate.replace(/\//g,"-");
     var formattedAddress = $('#formattedAddress').val();
