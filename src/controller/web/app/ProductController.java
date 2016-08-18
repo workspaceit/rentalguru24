@@ -3,7 +3,9 @@ package controller.web.app;
 import controller.BaseHttp;
 import model.CategoryModel;
 import model.ProductModel;
+import model.RentTypeModel;
 import model.entity.app.Category;
+import model.entity.app.RentType;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -30,11 +32,17 @@ public class ProductController extends BaseHttp{
     @Autowired
     CategoryModel categoryModel;
 
+    @Autowired
+    RentTypeModel rentTypeModel;
+
     @RequestMapping(value="/upload",method = RequestMethod.GET)
     public ModelAndView upload(){
-        ModelAndView modelAndView = new ModelAndView("public/product/upload");
+        ModelAndView modelAndView = new ModelAndView("/product/upload");
         List<Category> category = categoryModel.getAllCategoryParent();
+        List<RentType> rentTypes = rentTypeModel.getAll();
+
         modelAndView.addObject("category", category);
+        modelAndView.addObject("rentTypes", rentTypes);
         return modelAndView;
     }
 
