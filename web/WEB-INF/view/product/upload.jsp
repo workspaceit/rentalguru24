@@ -123,73 +123,76 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Choose Category</label>
-          <select class="selectpicker">
-            <option value="0">please select a category</option>
+          <%--<select class="selectpicker" onchange="subCategory()" id="category">--%>
+          <select onchange="subCategory()" id="category">
+            <option value="0">PLEASE SELECT A CATEGORY</option>
             <d:forEach var="listValue" items="${category}">
               <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
           </select>
-          <p class="help-block error-form" id="errorMsg_category"></p>
+          <p class="help-block error-form" id="errorMsg_categoryIds"></p>
         </div>
         <div class="form-group">
           <label>Choose Sub Category</label>
-          <select class="selectpicker">
-            <optgroup label="Picnic" disabled>
-              <option>Mustard</option>
-              <option>Ketchup</option>
-              <option>Relish</option>
-            </optgroup>
-            <optgroup label="Camping">
-              <option>Tent</option>
-              <option>Flashlight</option>
-              <option>Toilet Paper</option>
-            </optgroup>
+          <%--<select class="selectpicker" id="subCategory">--%>
+          <select id="subCategory">
+            <option value="0">PLEASE SELECT A SUB CATEGORY</option>
           </select>
-          <p class="help-block error-form" id="errorMsg_subCategory"></p>
+          <p class="help-block error-form" id="errorMsg_categoryIds"></p>
+        </div>
+        <div class="form-group">
+          <label>Choose Rent Type</label>
+          <select  id="rentTypeId">
+            <option value="0">PLEASE SELECT A RENT TYPE</option>
+            <d:forEach var="listValue" items="${rentTypes}">
+              <option value="${listValue.id}">${listValue.name}</option>
+            </d:forEach>
+          </select>
+          <p class="help-block error-form" id="errorMsg_rentTypeId"></p>
         </div>
         <div class="form-group">
           <label>Product Title</label>
-          <input type="text" class="form-control" placeholder="">
-          <p class="help-block error-form" id="errorMsg_productTitle"></p>
+          <input type="text" class="form-control" placeholder="" id="name" name="name">
+          <p class="help-block error-form" id="errorMsg_name"></p>
         </div>
         <div class="form-group">
           <label>Product Description</label>
-          <textarea class="form-control cstm-desc"></textarea>
-          <p class="help-block error-form" id="errorMsg_productDescription"></p>
+          <textarea class="form-control cstm-desc" id="description" name="description"></textarea>
+          <p class="help-block error-form" id="errorMsg_description"></p>
         </div>
         <div class="row clearfix">
           <div class="col-md-6">
             <div class="form-group date-con">
               <label>From</label>
-              <input type="text"  class="form-control datepicker" id="dpd1" placeholder="" >
-              <p class="help-block error-form" id="errorMsg_fromDate"></p>
+              <input type="text"  class="form-control datepicker" id="availableFrom" placeholder="" name="availableFrom">
+              <p class="help-block error-form" id="errorMsg_availableFrom"></p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group date-con">
               <label>To</label>
-              <input type="text"  class="form-control datepicker" id="dpd2" placeholder="" >
-              <p class="help-block error-form" id="errorMsg_toDate"></p>
+              <input type="text"  class="form-control datepicker" id="availableTill" placeholder="" name="availableTill">
+              <p class="help-block error-form" id="errorMsg_availableTill"></p>
             </div>
           </div>
         </div>
         <div class="form-group">
           <label>Product Location</label>
-          <input type="text" class="form-control" placeholder="">
-          <p class="help-block error-form" id="errorMsg_productLocation"></p>
+          <input type="text" class="form-control" placeholder="" id="formattedAddress" name="formattedAddress">
+          <p class="help-block error-form" id="errorMsg_formattedAddress"></p>
         </div>
         <div class="row clearfix">
           <div class="col-md-4">
             <div class="form-group">
               <label>Zip Code</label>
-              <input type="text"  class="form-control" placeholder="" >
-              <p class="help-block error-form" id="errorMsg_zipCode"></p>
+              <input type="text"  class="form-control" placeholder="" id="zip" name="zip">
+              <p class="help-block error-form" id="errorMsg_zip"></p>
             </div>
           </div>
           <div class="col-md-8">
             <div class="form-group">
               <label>City</label>
-              <input type="text"  class="form-control" placeholder="" >
+              <input type="text"  class="form-control" placeholder="" id="city" name="city">
               <p class="help-block error-form" id="errorMsg_city"></p>
             </div>
           </div>
@@ -198,22 +201,22 @@
       <div class="col-md-6">
         <div class="form-group">
           <label >Product Current price</label>
-          <input type="text" class="form-control" placeholder="">
-          <p class="help-block error-form" id="errorMsg_productCurrentPrice"></p>
+          <input type="text" class="form-control" placeholder="" id="currentValue" name="currentValue">
+          <p class="help-block error-form" id="errorMsg_currentValue"></p>
         </div>
         <div class="form-group">
           <label>Rent price</label>
-          <input type="text" class="form-control" placeholder="">
-          <p class="help-block error-form" id="errorMsg_rentPrice"></p>
+          <input type="text" class="form-control" placeholder="" id="rentFee" name="rentFee">
+          <p class="help-block error-form" id="errorMsg_rentFee"></p>
         </div>
         <div class="form-group">
           <label for="fallback">Add product images</label>
           <div id="fallback" class="fallback pos-relative">
             Drop files here or click to upload.
-            <span class="inner-load"></span>
+            <span class="inner-load fileUploadGif" hidden></span>
           </div>
-          <p class="help-block error-form" id="errorMsg_productImage"></p>
-
+          <p class="help-block error-form" id="errorMsg_profileImageToken"></p>
+          <input type="hidden" value="" id="profileImageToken" name="profileImageToken">
         </div>
         <div class="row preview-container">
           <p>Preview Area</p>
@@ -232,11 +235,14 @@
       </div>
     </div>
     <div class="col-md-12 text-right" style="padding:0px 100px 20px 0px;">
-      <button class="btn-cstm-sign  pos-relative">
+      <button class="btn-cstm-sign  pos-relative" id="postProduct" onclick="postProduct()">
         Post Product
-        <span class="inner-load"></span>
+        <span class="inner-load postProductGif" hidden></span>
       </button>
     </div>
+  </div>
+  <div class="alert alert-success text-center" role="alert" hidden>
+    Product Upload Successfully
   </div>
 </div>
 <div class="footer">
@@ -298,7 +304,9 @@
     </div>
   </div>
 </div>
-
+<script>
+  var BASEURL = "${BaseUrl}";
+</script>
 <!-- Contact end here -->
 <!-- Main container start here -->
 <!-- Javascript framework and plugins start here -->
@@ -318,13 +326,15 @@
 <script src="<c:url value="/resources/js/jquery.enllax.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap-select.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datepicker.js"/>"></script>
+<script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
 
 
 <script>
   var nowTemp = new Date();
   var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
-  var checkin = $('#dpd1').datepicker({
+  var checkin = $('#availableFrom').datepicker({
+    format: 'dd/mm/yyyy',
     onRender: function (date) {
       return date.valueOf() < now.valueOf() ? 'disabled' : '';
     }
@@ -335,9 +345,10 @@
       checkout.setValue(newDate);
     }
     checkin.hide();
-    $('#dpd2')[0].focus();
+    $('#availableTill')[0].focus();
   }).data('datepicker');
-  var checkout = $('#dpd2').datepicker({
+  var checkout = $('#availableTill').datepicker({
+    format: 'dd/mm/yyyy',
     onRender: function (date) {
       return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
     }
@@ -348,7 +359,7 @@
 
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">
-  $("div#fallback").dropzone({url: "/file/post"});
+//  $("div#fallback").dropzone({url: "/file/post"});
 
   $('.main_product_slider').carousel();
   $('.owl-carousel').owlCarousel({
@@ -419,7 +430,122 @@
     prettyPrint();
   };
 </script>
+<script>
+  function subCategory(){
+    $('#subCategory').find('option:not(:first)').remove();
+    var categoryId = $("#category option:selected").val();
+    $.ajax({
+      url: BASEURL+'/api/utility/get-subcategory/'+categoryId,
+      type: 'GET',
+      success:function(data){
+        if(data.responseStat.status != false){
+          data.responseData[0].subcategory.forEach(function(subCategories){
+          var subCategory = document.getElementById("subCategory");
+          var option = document.createElement("option");
+          option.text = subCategories.name;
+          option.value = subCategories.id;
+          subCategory.add(option, subCategory[1]);
+          });
+        }
+      }
+    });
+  }
+</script>
+<script>
+  Dropzone.autoDiscover = false;
+  $(function() {
+    var productImageFile = $("div#fallback").dropzone(
+      {
+        url: BASEURL+"/fileupload/upload/product-image",
+        paramName: "productImage",
+        maxFilesize: 1,
+        uploadprogress:function(file, progress){
+          $('#postProduct').addAttribute("disabled", "disabled");
+          $('.postProductGif').show();
+          $('.fileUploadGif').show();
+        },
+        success:function(file, response){
+          console.log(response);
+          if(response.responseStat.status == true) {
+            $('.fileUploadGif').hide();
+            $('#postProduct').removeAttrs("disabled","disabled");
+            $('.postProductGif').hide();
+            $('#profileImageToken').val(response.responseData);
+          }
+          else{
+            BindErrorsWithHtml('errorMsg_', response.requestErrors);
+          }
+        },
+        error:function(file, errorMessage, xhr){
+          $('.fileUploadGif').hide();
+          $('#postProduct').removeAttrs("disabled","disabled");
+          $('.postProductGif').hide();
+        }
+      }
+    );
+  });
+</script>
+<script>
+  function postProduct(){
+    $('.postProductGif').show();
+    var categoryId = $('#category option:selected').val();
+    var subCategory = $('#subCategory option:selected').val();
 
+    if(subCategory != null){
+      var categoryIds = JSON.stringify([subCategory]);
+    }else{
+      var categoryIds = JSON.stringify([categoryId]);
+    }
+
+    var fromDate = $('#availableFrom').val();
+    var tillDate = $('#availableTill').val();
+
+    var name = $('#name').val();
+    var description = $('#description').val();
+    var profileImageToken = $('#profileImageToken').val();
+    var currentValue = $('#currentValue').val();
+    var rentFee = $('#rentFee').val();
+    var availableFrom = fromDate.replace(/\//g,"-");
+    var availableTill = tillDate.replace(/\//g,"-");
+    var formattedAddress = $('#formattedAddress').val();
+    var rentTypeId = $('#rentTypeId option:selected').val();
+    var zip = $('#zip').val();
+    var city = $('#city').val();
+
+//    console.log(categoryIds, name, description, profileImageToken, currentValue, rentFee, availableFrom, availableTill, formattedAddress, rentTypeId, zip, city)
+//    console.log(availableFrom, availableTill);
+
+    $.ajax({
+      url: BASEURL+'/api/product/upload',
+      type: 'POST',
+      data: {
+        name: name,
+        description:description,
+        profileImageToken:profileImageToken,
+        currentValue:currentValue,
+        rentFee:rentFee,
+        availableFrom:availableFrom,
+        availableTill:availableTill,
+        categoryIds:categoryIds,
+        formattedAddress:formattedAddress,
+        rentTypeId:rentTypeId,
+        zip:zip,
+        city:city
+      },
+      success: function(data){
+        console.log(data);
+        if(data.responseStat.status == false){
+          BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
+        }else{
+          $('.alert-success').show().delay(5000).fadeOut(500,function(){
+            window.location.href = BASEURL+"/home";
+          });
+        }
+        $('.postProductGif').hide().delay(4998).fadeOut();
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
