@@ -1,9 +1,11 @@
 package controller.web.app;
 
 import controller.BaseHttp;
+import helper.ServiceResponse;
 import model.CategoryModel;
 import model.ProductModel;
 import model.RentTypeModel;
+import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.RentType;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -36,7 +39,11 @@ public class ProductController extends BaseHttp{
     RentTypeModel rentTypeModel;
 
     @RequestMapping(value="/upload",method = RequestMethod.GET)
-    public ModelAndView upload(){
+    public ModelAndView upload(HttpServletRequest request){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        String baseUrl = (String) request.getAttribute("baseURL");
+
         ModelAndView modelAndView = new ModelAndView("/product/upload");
         List<Category> category = categoryModel.getAllCategoryParent();
         List<RentType> rentTypes = rentTypeModel.getAll();
@@ -47,13 +54,19 @@ public class ProductController extends BaseHttp{
     }
 
     @RequestMapping(value = "/details/{product_id}", method = RequestMethod.GET)
-    public String details(@PathVariable("product_id") int productId, Model model){
+    public String details(HttpServletRequest request,@PathVariable("product_id") int productId, Model model){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        String baseUrl = (String) request.getAttribute("baseURL");
+
         RentalProduct rentalProduct = productModel.getById(productId);
         List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0);
         model.addAttribute("rentedProduct", rentalProduct);
         model.addAttribute("newProducts", newProducts);
-        model.addAttribute("BaseUrl",this.getBaseURL());
+        model.addAttribute("BaseUrl",baseUrl);
         return "product/details";
     }
 
 }
+
+

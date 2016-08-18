@@ -35,7 +35,7 @@ public class RentRequestService{
 
     /* **************************** Rent Request action [Started] ************************** */
 
-    @RequestMapping(value = "/request-rent/{productId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/make-request/{productId}", method = RequestMethod.POST)
     public ServiceResponse makeRentRequest(HttpServletRequest request,
                                            @PathVariable("productId") int productId,
                                            @RequestParam("startDate")String startDate,
@@ -101,6 +101,8 @@ public class RentRequestService{
 
         RentRequest rentRequest = new RentRequest();
 
+        rentRequest.setRequestCancel(false);
+        rentRequest.setDisapprove(false);
         rentRequest.setApprove(false);
         rentRequest.setRequestedBy(appCredential);
         rentRequest.setRentalProduct(rentalProduct);

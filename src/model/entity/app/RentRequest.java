@@ -26,7 +26,7 @@ public class RentRequest {
     private Date endDate;
     private Boolean approve;
     private Boolean disapprove;
-    private boolean extension;
+    private boolean isExtension;
     private String remark;
     private Timestamp createdDate;
 
@@ -129,12 +129,12 @@ public class RentRequest {
 
     @Basic
     @Column(name = "extension")
-    public boolean isExtension() {
-        return extension;
+    public boolean isIsExtension() {
+        return isExtension;
     }
 
-    public void setExtension(boolean extension) {
-        this.extension = extension;
+    public void setIsExtension(boolean extension) {
+        this.isExtension = extension;
     }
 
     @Basic

@@ -98,6 +98,7 @@ public class ProductUploadForm {
     }
 
     public void setAvailableFrom(String availableFrom) {
+        availableFrom = (availableFrom!=null)?availableFrom.trim():availableFrom;
         this.availableFrom = availableFrom;
     }
 
@@ -106,6 +107,7 @@ public class ProductUploadForm {
     }
 
     public void setAvailableTill(String availableTill) {
+        availableTill = (availableTill!=null)?availableTill.trim():availableTill;
         this.availableTill = availableTill;
     }
 

@@ -18,6 +18,7 @@ public class SignInController extends BaseHttp{
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index() {
+
         ModelAndView modelAndView = new ModelAndView("public/SignIn");
         modelAndView.addObject("BaseUrl",this.getBaseURL());
         return modelAndView;

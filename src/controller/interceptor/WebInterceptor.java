@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
-public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
+public class WebInterceptor extends HandlerInterceptorAdapter{
 
 
+    private String baseURL;
     //before the actual handler will be executed
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler)
@@ -27,25 +28,20 @@ public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
 
 
         ServiceResponse serviceResponse = new ServiceResponse();
+        AppCredential appCredential =  new AppCredential();
         ServletRequestAttributes ar = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession httpSession = request.getSession();
-
+        this.baseURL = this.getURLWithContextPath(request);
 
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
-            request.setAttribute("serviceResponse", serviceResponse);
-            request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
             serviceResponse.getResponseStat().setIsLogin(true);
-            return true;
-        }else{
-            serviceResponse.getResponseStat().setErrorMsg("Session expired !!!!");
-            response.setContentType("application/json");
-            PrintWriter pw = response.getWriter();
-            ObjectMapper objectMapper = new ObjectMapper();
-            pw.print(objectMapper.writeValueAsString(serviceResponse));
-            System.out.println("INTERCEPTOR postHandle");
-            pw.close();
-            return false;
+            appCredential =(AppCredential) httpSession.getAttribute("appCredential");
+
         }
+        request.setAttribute("baseURL", this.baseURL);
+        request.setAttribute("serviceResponse", serviceResponse);
+        request.setAttribute("appCredential", appCredential);
+        return true;
 
     }
 
@@ -58,5 +54,12 @@ public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
 
         System.out.println("INTERCEPTOR postHandle");
 
+    }
+    public String getBaseURL() {
+        return baseURL;
+    }
+
+    public static String getURLWithContextPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 }
