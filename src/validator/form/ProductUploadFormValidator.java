@@ -66,15 +66,20 @@ public class ProductUploadFormValidator implements Validator {
             }
         }
         if(productUploadForm.getCategoryIdArray().length>0){
-            Integer[] catArray = productUploadForm.getCategoryIdArray();
+            try{
+                Integer[] catArray = productUploadForm.getCategoryIdArray();
 
 
-            for(int catId : catArray){
-                if(this.categoryModel.getById(catId)==null){
-                    errors.rejectValue("categoryIdArray","Category not found for id = "+catId);
-                    break;
+                for(int catId : catArray){
+                    if(this.categoryModel.getById(catId)==null){
+                        errors.rejectValue("categoryIdArray","Category not found for id = "+catId);
+                        break;
+                    }
                 }
+            }catch (Exception ex){
+                errors.rejectValue("categoryIdArray","Category not in valid format");
             }
+
         }
 
 

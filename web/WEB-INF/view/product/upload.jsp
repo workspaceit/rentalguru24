@@ -123,8 +123,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Choose Category</label>
-          <%--<select class="selectpicker" onchange="subCategory()" id="category">--%>
-          <select onchange="subCategory()" id="category">
+          <select onchange="fetchSubcategory()" id="category" class="selectpicker" >
             <option value="">PLEASE SELECT A CATEGORY</option>
             <d:forEach var="listValue" items="${category}">
               <option value="${listValue.id}">${listValue.name}</option>
@@ -135,14 +134,16 @@
         <div class="form-group">
           <label>Choose Sub Category</label>
           <%--<select class="selectpicker" id="subCategory">--%>
-          <select id="subCategory">
+          <select id="subCategory" class="selectpicker" >
             <option value="">PLEASE SELECT A SUB CATEGORY</option>
+            <%--<optgroup id="subcategoryParentLabel" label="" disabled>--%>
+            <%--</optgroup>--%>
           </select>
           <p class="help-block error-form" id="errorMsg_categoryIds"></p>
         </div>
         <div class="form-group">
           <label>Choose Rent Type</label>
-          <select  id="rentTypeId">
+          <select  id="rentTypeId" class="selectpicker" >
             <option value="">PLEASE SELECT A RENT TYPE</option>
             <d:forEach var="listValue" items="${rentTypes}">
               <option value="${listValue.id}">${listValue.name}</option>
@@ -201,12 +202,12 @@
       <div class="col-md-6">
         <div class="form-group">
           <label >Product Current price</label>
-          <input type="text" class="form-control" placeholder="" id="currentValue" name="currentValue">
+          <input type="number" class="form-control" placeholder="" id="currentValue" name="currentValue" min="0">
           <p class="help-block error-form" id="errorMsg_currentValue"></p>
         </div>
         <div class="form-group">
           <label>Rent price</label>
-          <input type="text" class="form-control" placeholder="" id="rentFee" name="rentFee">
+          <input type="number" class="form-control" placeholder="" id="rentFee" name="rentFee" min="0" >
           <p class="help-block error-form" id="errorMsg_rentFee"></p>
         </div>
         <div class="form-group">
@@ -430,22 +431,37 @@
   };
 </script>
 <script>
-  function subCategory(){
-    $('#subCategory').find('option:not(:first)').remove();
+  function fetchSubcategory(){
     var categoryId = $("#category option:selected").val();
+    if(categoryId==""){
+      return;
+    }
+    $('#subCategory').find('option:not(:first)').remove();
+    $('#subCategory').attr("disabled","disabled");
     $.ajax({
       url: BASEURL+'/api/utility/get-subcategory/'+categoryId,
       type: 'GET',
       success:function(data){
-        if(data.responseStat.status != false){
-          data.responseData[0].subcategory.forEach(function(subCategories){
-          var subCategory = document.getElementById("subCategory");
-          var option = document.createElement("option");
-          option.text = subCategories.name;
-          option.value = subCategories.id;
-          subCategory.add(option, subCategory[1]);
-          });
-        }
+          if(data.responseStat.status != false){
+            var subCategorySelectBox = document.getElementById("subCategory");
+            var subcategoryArray = data.responseData[0].subcategory;
+
+
+            subcategoryArray.forEach(function(subCategories){
+
+                  var option = document.createElement("option");
+                  option.text = subCategories.name;
+                  option.value = subCategories.id;
+
+                  subCategorySelectBox.add(option, subCategory[1]);
+            });
+            if(subcategoryArray.length>0){
+              $('#subCategory').removeAttr("disabled");
+            }
+
+          }
+          $('#subCategory').selectpicker('refresh');
+
       }
     });
   }
@@ -486,68 +502,76 @@
 </script>
 <script>
   function postProduct(){
-    $('.postProductGif').show();
-    var categoryId = $('#category option:selected').val();
-    var subCategory = $('#subCategory option:selected').val();
+          $('.postProductGif').show();
+          var categoryId = $('#category option:selected').val();
+          var subCategory = $('#subCategory option:selected').val();
 
-    var categoryArray = [];
-    if(subCategory == ""){
-        categoryArray.push(categoryId);
-    }else{
-      categoryArray.push(subCategory);
-    }
-console.log(categoryArray);
-    var fromDate = $('#availableFrom').val();
-    var tillDate = $('#availableTill').val();
+          var categoryArray = [];
+          if(subCategory == ""){
+              categoryArray.push(parseInt(categoryId));
+          }else{
+            categoryArray.push(parseInt(subCategory));
+          }
+          console.log(categoryArray);
+          var fromDate = $('#availableFrom').val();
+          var tillDate = $('#availableTill').val();
 
-    var name = $('#name').val();
-    var description = $('#description').val();
-    var profileImageToken = $('#profileImageToken').val();
-    var currentValue = $('#currentValue').val();
-    var rentFee = $('#rentFee').val();
-    var categoryIds= JSON.stringify(categoryArray);
-    var availableFrom = fromDate.replace(/\//g,"-");
-    var availableTill = tillDate.replace(/\//g,"-");
-    var formattedAddress = $('#formattedAddress').val();
-    var rentTypeId = $('#rentTypeId option:selected').val();
-    var zip = $('#zip').val();
-    var city = $('#city').val();
+          var name = $('#name').val();
+          var description = $('#description').val();
+          var profileImageToken = $('#profileImageToken').val();
+          var currentValue = $('#currentValue').val();
+          var rentFee = $('#rentFee').val();
+          var categoryIds= JSON.stringify(categoryArray);
+          var availableFrom = fromDate.replace(/\//g,"-");
+          var availableTill = tillDate.replace(/\//g,"-");
+          var formattedAddress = $('#formattedAddress').val();
+          var rentTypeId = $('#rentTypeId option:selected').val();
+          var zip = $('#zip').val();
+          var city = $('#city').val();
 
-//    console.log(categoryIds, name, description, profileImageToken, currentValue, rentFee, availableFrom, availableTill, formattedAddress, rentTypeId, zip, city)
-//    console.log(availableFrom, availableTill);
+      //    console.log(categoryIds, name, description, profileImageToken, currentValue, rentFee, availableFrom, availableTill, formattedAddress, rentTypeId, zip, city)
+      //    console.log(availableFrom, availableTill);
 
-    $.ajax({
-      url: BASEURL+'/api/product/upload',
-      type: 'POST',
-      data: {
-        name: name,
-        description:description,
-        profileImageToken:profileImageToken,
-        currentValue:currentValue,
-        rentFee:rentFee,
-        availableFrom:availableFrom,
-        availableTill:availableTill,
-        categoryIds:categoryIds,
-        formattedAddress:formattedAddress,
-        rentTypeId:rentTypeId,
-        zip:zip,
-        city:city
-      },
-      success: function(data){
-        console.log(data);
-        if(data.responseStat.status == false){
-          BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
-        }else{
-          $('.alert-success').show().delay(5000).fadeOut(500,function(){
-            window.location.href = BASEURL+"/home";
+          $.ajax({
+              url: BASEURL+'/api/auth/product/upload',
+              type: 'POST',
+              data: {
+                  name: name,
+                  description:description,
+                  profileImageToken:profileImageToken,
+                  currentValue:currentValue,
+                  rentFee:rentFee,
+                  availableFrom:availableFrom,
+                  availableTill:availableTill,
+                  categoryIds:categoryIds,
+                  formattedAddress:formattedAddress,
+                  rentTypeId:rentTypeId,
+                  zip:zip,
+                  city:city
+              },
+              success: function(data){
+                  console.log(data);
+                  if(data.responseStat.isLogin){
+
+                  }
+                  if(data.responseStat.status == false){
+                      BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
+                  }else{
+                    $('.alert-success').show().delay(5000).fadeOut(500,function(){
+                       window.location.href = BASEURL+"/home";
+                    });
+                  }
+                  $('.postProductGif').hide().delay(4998).fadeOut();
+                }
           });
-        }
-        $('.postProductGif').hide().delay(4998).fadeOut();
-      }
-    });
   }
-</script>
 
+
+  $(document).ready(function(){
+      setAliasMessage("categoryIds","Category not in valid format","Please select category");
+      setAliasMessage("currentValue","typeMismatch","Current value required");
+  });
+</script>
 </body>
 </html>
 

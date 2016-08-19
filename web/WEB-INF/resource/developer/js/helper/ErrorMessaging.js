@@ -52,9 +52,9 @@ function getAliasMessage(params,msg){
 function setAliasMessage(params,msg,replacedMsg){
     var errorMessageAlias = new ErrorMessageAlias();
 
-    errorMessageAlias.params = params;
-    errorMessageAlias.msg = msg;
-    errorMessageAlias.replacedMsg = replacedMsg;
+    errorMessageAlias.params = params.trim();
+    errorMessageAlias.msg = msg.trim();
+    errorMessageAlias.replacedMsg = replacedMsg.trim();
 
     ErrorMessageAliasList.push(errorMessageAlias);
 }
