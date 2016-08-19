@@ -58,7 +58,7 @@ public class ProductController{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
-
+        System.out.println("baseUrl "+baseUrl);
         RentalProduct rentalProduct = productModel.getById(productId);
         List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0, productId);
         model.addAttribute("rentalProduct", rentalProduct);

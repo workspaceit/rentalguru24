@@ -102,6 +102,8 @@ public class RentRequestService{
 
         RentRequest rentRequest = new RentRequest();
 
+        rentRequest.setIsExpired(false);
+        rentRequest.setIsExtension(false);
         rentRequest.setRequestCancel(false);
         rentRequest.setDisapprove(false);
         rentRequest.setApprove(false);

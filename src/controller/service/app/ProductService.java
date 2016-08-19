@@ -62,7 +62,6 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        serviceResponse.setParameterAlias("categoryIdArray","categoryIds");
         serviceResponse.setParameterAlias("otherImagesTokenArray", "otherImageTokens");
 
 
