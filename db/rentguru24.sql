@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 12, 2016 at 06:54 PM
+-- Generation Time: Aug 18, 2016 at 07:20 PM
 -- Server version: 5.6.31-0ubuntu0.14.04.2
 -- PHP Version: 5.6.23-1+deprecated+dontuse+deb.sury.org~trusty+1
 
@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
+  `is_subcategory` tinyint(1) NOT NULL DEFAULT '0',
   `sorted_order` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -129,14 +130,14 @@ CREATE TABLE IF NOT EXISTS `category` (
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `name`, `parent_id`, `sorted_order`, `created_by`, `created_date`) VALUES
-(8, 'Home', NULL, 1, 0, '2016-08-08 09:04:04'),
-(9, 'HOME APPLIANCE', NULL, 2, 0, '2016-08-08 09:27:59'),
-(10, 'FURNITURE', NULL, 3, 0, '2016-08-08 09:27:08'),
-(11, 'GAMING & PARTY', NULL, 4, 0, '2016-08-08 09:27:08'),
-(12, 'COOL GADGETS', NULL, 5, 0, '2016-08-08 09:27:52'),
-(13, 'BLOGS', NULL, 6, 0, '2016-08-08 09:27:52'),
-(14, 'Swedish washing machine', 9, 7, 0, '2016-08-08 10:40:35');
+INSERT INTO `category` (`id`, `name`, `parent_id`, `is_subcategory`, `sorted_order`, `created_by`, `created_date`) VALUES
+(8, 'Home', NULL, 0, 1, 0, '2016-08-08 09:04:04'),
+(9, 'HOME APPLIANCE', NULL, 0, 2, 0, '2016-08-08 09:27:59'),
+(10, 'FURNITURE', NULL, 0, 3, 0, '2016-08-08 09:27:08'),
+(11, 'GAMING & PARTY', NULL, 0, 4, 0, '2016-08-08 09:27:08'),
+(12, 'COOL GADGETS', NULL, 0, 5, 0, '2016-08-08 09:27:52'),
+(13, 'BLOGS', NULL, 0, 6, 0, '2016-08-08 09:27:52'),
+(14, 'Swedish washing machine', 9, 1, 7, 0, '2016-08-17 11:35:09');
 
 -- --------------------------------------------------------
 
@@ -170,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `owner_id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `description` text NOT NULL,
-  `average_rating` float(2,2) NOT NULL DEFAULT '0.00',
+  `average_rating` float(5,2) NOT NULL DEFAULT '0.00',
   `profile_image` text NOT NULL,
   `other_images` text,
   `current_value` double(200,2) NOT NULL,
@@ -191,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `product` (
 --
 
 INSERT INTO `product` (`id`, `owner_id`, `name`, `description`, `average_rating`, `profile_image`, `other_images`, `current_value`, `rent_fee`, `rent_type_id`, `active`, `currently_available`, `available_from`, `available_till`, `review_status`, `created_date`) VALUES
-(12, 40, 'CK Tempting Glimmer Sheer Creme EyeShadow - 303 Baby Blue', 'Offers high shine high impact colour Lightweight & extra-smooth finish.', 0.00, '{"original":{"path":"product/40/26594005394083.jpg","type":"","size":{"width":458,"height":458}},"thumb":[]}', '[]', 1000.00, 900.00, 1, 1, 0, '2016-08-09 00:00:00', '2016-10-09 00:00:00', 0, '2016-08-09 11:24:47'),
+(12, 40, 'CK Tempting Glimmer Sheer Creme EyeShadow - 303 Baby Blue', 'Offers high shine high impact colour Lightweight & extra-smooth finish.', 2.00, '{"original":{"path":"product/40/26594005394083.jpg","type":"","size":{"width":458,"height":458}},"thumb":[]}', '[]', 1000.00, 900.00, 1, 1, 0, '2016-08-09 00:00:00', '2016-10-09 00:00:00', 0, '2016-08-16 09:44:46'),
 (14, 32, 'dsf', 'sdf', 0.00, '{"original":{"path":"product/32/815788920270.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 0, '2016-08-12 04:42:01'),
 (17, 32, 'dsf', 'sdf', 0.00, '{"original":{"path":"product/32/1087095250392.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 0, '2016-08-12 04:46:32'),
 (19, 32, 'dsf', 'sdf', 0.00, '{"original":{"path":"product/32/1278511427233.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 0, '2016-08-12 04:49:44');
@@ -278,15 +279,7 @@ CREATE TABLE IF NOT EXISTS `product_liked` (
   PRIMARY KEY (`id`),
   KEY `app_credential_id` (`app_credential_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `product_liked`
---
-
-INSERT INTO `product_liked` (`id`, `product_id`, `app_credential_id`, `created_date`) VALUES
-(2, 12, 32, '2016-08-12 11:36:28'),
-(3, 14, 32, '2016-08-12 11:36:28');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -333,7 +326,14 @@ CREATE TABLE IF NOT EXISTS `product_rating` (
   PRIMARY KEY (`id`),
   KEY `app_credential_id` (`app_credential_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `product_rating`
+--
+
+INSERT INTO `product_rating` (`id`, `product_id`, `app_credential_id`, `rate_value`, `created_date`) VALUES
+(6, 12, 32, 2, '2016-08-16 09:45:56');
 
 -- --------------------------------------------------------
 
@@ -390,6 +390,7 @@ INSERT INTO `product_returned` (`id`, `rent_product_id`, `is_returned`, `returne
 CREATE TABLE IF NOT EXISTS `rent_product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rent_request_id` int(11) NOT NULL,
+  `rentee_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `start_date` date NOT NULL,
   `ends_date` date NOT NULL,
@@ -398,16 +399,18 @@ CREATE TABLE IF NOT EXISTS `rent_product` (
   `expired` tinyint(1) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `booking_product` (`product_id`),
-  KEY `rent_request` (`rent_request_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  KEY `rent_request_id` (`rent_request_id`),
+  KEY `product_id` (`product_id`),
+  KEY `rentee_id` (`rentee_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `rent_product`
 --
 
-INSERT INTO `rent_product` (`id`, `rent_request_id`, `product_id`, `start_date`, `ends_date`, `product_returned`, `product_received`, `expired`, `created_date`) VALUES
-(1, 7, 12, '2016-09-24', '2016-09-30', 0, 0, 0, '2016-08-11 11:15:02');
+INSERT INTO `rent_product` (`id`, `rent_request_id`, `rentee_id`, `product_id`, `start_date`, `ends_date`, `product_returned`, `product_received`, `expired`, `created_date`) VALUES
+(1, 50, 32, 12, '2016-09-22', '2016-09-24', 0, 0, 0, '2016-08-18 12:54:15'),
+(2, 48, 32, 12, '2016-10-22', '2016-12-24', 0, 0, 0, '2016-08-18 13:11:02');
 
 -- --------------------------------------------------------
 
@@ -420,25 +423,49 @@ CREATE TABLE IF NOT EXISTS `rent_request` (
   `product_id` int(11) NOT NULL,
   `requested_by` int(11) NOT NULL,
   `request_id` int(11) DEFAULT NULL COMMENT 'Request extension',
+  `expired` tinyint(1) NOT NULL DEFAULT '0',
   `request_cancel` int(11) NOT NULL DEFAULT '0',
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `approve` tinyint(1) NOT NULL DEFAULT '0',
+  `disapprove` tinyint(1) NOT NULL DEFAULT '0',
   `extension` tinyint(1) NOT NULL DEFAULT '0',
+  `remark` text,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `rent_request_app_login_credential` (`requested_by`),
   KEY `rent_request_product` (`product_id`),
   KEY `rent_request_rent_request` (`request_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
 -- Dumping data for table `rent_request`
 --
 
-INSERT INTO `rent_request` (`id`, `product_id`, `requested_by`, `request_id`, `request_cancel`, `start_date`, `end_date`, `approve`, `extension`, `created_date`) VALUES
-(7, 12, 32, NULL, 0, '2016-10-24', '2016-09-24', 0, 0, '2016-08-11 11:41:51'),
-(16, 12, 32, 7, 0, '2016-08-25', '2016-08-26', 1, 0, '2016-08-11 12:12:34');
+INSERT INTO `rent_request` (`id`, `product_id`, `requested_by`, `request_id`, `expired`, `request_cancel`, `start_date`, `end_date`, `approve`, `disapprove`, `extension`, `remark`, `created_date`) VALUES
+(28, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 1, 0, 0, NULL, '2016-08-18 05:17:31'),
+(29, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 1, 0, NULL, '2016-08-18 05:31:36'),
+(30, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:04:02'),
+(31, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:09:22'),
+(32, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:09:32'),
+(33, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:10:26'),
+(34, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:11:57'),
+(35, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:22:23'),
+(36, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:22:54'),
+(37, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:40:22'),
+(38, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:13:20'),
+(39, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:23:58'),
+(40, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:29:00'),
+(41, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, '', '2016-08-17 08:29:06'),
+(42, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, 'sdfsdfsdf', '2016-08-17 08:29:10'),
+(43, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, '', '2016-08-17 08:29:22'),
+(44, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:29:33'),
+(45, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:30:23'),
+(46, 12, 32, NULL, 0, 1, '2016-10-22', '2016-12-24', 0, 0, 0, '                ', '2016-08-18 05:45:38'),
+(47, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 1, 0, NULL, '2016-08-18 05:38:30'),
+(48, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-18 13:11:18'),
+(49, 17, 40, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, 'fgdfgdfg', '2016-08-17 13:06:59'),
+(50, 17, 40, NULL, 0, 0, '2016-09-22', '2016-09-24', 0, 0, 0, 'fgdfgdfg', '2016-08-17 13:07:22');
 
 -- --------------------------------------------------------
 
@@ -759,15 +786,16 @@ ALTER TABLE `product_location`
 -- Constraints for table `product_rating`
 --
 ALTER TABLE `product_rating`
-  ADD CONSTRAINT ` product_rating_app_credential_id` FOREIGN KEY (`app_credential_id`) REFERENCES `activation` (`app_login_credential_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT ` product_rating_app_credential_id` FOREIGN KEY (`app_credential_id`) REFERENCES `app_login_credential` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT ` product_rating_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `rent_product`
 --
 ALTER TABLE `rent_product`
-  ADD CONSTRAINT `booking_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `rent_product_rent)request` FOREIGN KEY (`rent_request_id`) REFERENCES `rent_request` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `rent_product_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `rent_product_rent_request` FOREIGN KEY (`rent_request_id`) REFERENCES `rent_request` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `rent_product_rentee_id` FOREIGN KEY (`rentee_id`) REFERENCES `app_login_credential` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `rent_request`
