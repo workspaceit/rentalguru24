@@ -46,6 +46,7 @@ public class HomeController {
         modelAndView.addObject("products", rentalProducts);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl",baseUrl);
+        modelAndView.addObject("pageTitle", "Reneguru");
         return modelAndView;
     }
 }
