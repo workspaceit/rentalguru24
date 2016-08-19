@@ -19,7 +19,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import java.io.PrintWriter;
 
 public class WebAuthInterceptor extends HandlerInterceptorAdapter{
-
+    private String baseURL;
 
     //before the actual handler will be executed
     public boolean preHandle(HttpServletRequest request,
@@ -36,6 +36,10 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
             request.setAttribute("serviceResponse", serviceResponse);
             request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
             serviceResponse.getResponseStat().setIsLogin(true);
+
+            this.baseURL = this.getURLWithContextPath(request);
+
+            request.setAttribute("baseURL", this.baseURL);
             return true;
         }else{
             serviceResponse.getResponseStat().setErrorMsg("Session expired !!!!");

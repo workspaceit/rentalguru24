@@ -235,11 +235,11 @@
               <div id="slider" class="flexslider">
                 <ul class="slides">
                   <li>
-                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentedProduct.getProfileImage().original.path}'"  src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
+                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
                   </li>
-                  <d:forEach var="productOtherImages" items="${rentedProduct.getOtherImages()}">
+                  <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
                   <li>
-                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${productOtherImages.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentedProduct.profileImage.original.path}" />">
+                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${productOtherImages.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
                   </li>
                   </d:forEach>
                   <!-- items mirrored twice, total of 12 -->
@@ -248,9 +248,9 @@
               <div id="carousel" class="flexslider">
                 <ul class="slides">
                   <li>
-                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentedProduct.getProfileImage().original.path}" />">
+                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}" />">
                   </li>
-                  <d:forEach var="productOtherImages" items="${rentedProduct.getOtherImages()}">
+                  <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
                   <li>
                     <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">
                   </li>
@@ -264,19 +264,28 @@
             <div class="rent_product_info">
               <div class="row">
                 <div class="col-md-8 col-xs-8 col-sm-8">
-                  <h4 class="no-margin"><strong>${rentedProduct.getName()}</strong></h4>
+                  <h4 class="no-margin"><strong>${rentalProduct.getName()}</strong></h4>
                   <div class="row">
                     <div class="col-md-4 col-sm-4 col-xs-12">
                       <fieldset class="rating rent_rating">
-                        <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                        <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                        <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                        <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                        <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="5" />
+                        <label class = "full" for="star5_${rentalProduct.getId()}" title="Awesome - 5 stars"></label>
+
+                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="4" />
+                        <label class = "full" for="star4_${rentalProduct.getId()}" title="Pretty good - 4 stars"></label>
+
+                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="3" />
+                        <label  class = "full" for="star3_${rentalProduct.getId()}" title="Meh - 3 stars"></label>
+
+                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="2" />
+                        <label class = "full" for="star2_${rentalProduct.getId()}" title="Kinda bad - 2 stars"></label>
+
+                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="1" />
+                        <label class = "full" for="star1_${rentalProduct.getId()}" title="Sucks big time - 1 star"></label>
                       </fieldset>
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-12">
-                      <p class="total_review">(${rentedProduct.getAverageRating()} Review)</p>
+                      <p class="total_review">(${rentalProduct.getAverageRating()} Review)</p>
                     </div>
                     <div class="col-md-5 col-sm-5 col-xs-12">
                       <a href=""><p class="total_review">Add Your Review</p></a>
@@ -293,7 +302,7 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <%--<p class="price"><span class="prev_price">$350</span><span class="cur_price">$250</span></p>--%>
-                  <p class="price"><span class="cur_price">$${rentedProduct.getRentFee()}</span></p>
+                  <p class="price"><span class="cur_price">$${rentalProduct.getRentFee()}</span></p>
                 </div>
               </div>
             </div>
@@ -323,20 +332,20 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <h5><strong>Short Overview</strong></h5>
-                  <p class="overview_content no-margin">${rentedProduct.getDescription()}</p>
+                  <p class="overview_content no-margin">${rentalProduct.getDescription()}</p>
                 </div>
               </div>
             </div>
             <div class="product_stock">
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <d:if test="${rentedProduct.isCurrentlyAvailable() == true}">
+                  <d:if test="${rentalProduct.isCurrentlyAvailable() == true}">
                     <p class="no-margin"><strong>Avaialability:</strong><span class="avail_span">Available</span></p>
                   </d:if>
-                  <d:if test="${rentedProduct.isCurrentlyAvailable() == false}">
+                  <d:if test="${rentalProduct.isCurrentlyAvailable() == false}">
                     <p class="no-margin"><strong>Avaialability:</strong><span class="avail_span">Unavailable</span></p>
                   </d:if>
-                  <p class="no-margin"><strong>Category:</strong><span class="avail_span">${rentedProduct.getProductCategories().get(0).getCategory().getName()}</span></p>
+                  <p class="no-margin"><strong>Category:</strong><span class="avail_span">${rentalProduct.getProductCategories().get(0).getCategory().getName()}</span></p>
 
                 </div>
               </div>
@@ -389,11 +398,12 @@
                 </div>
                 <div class="col-md-2 col-sm-4 col-xs-4">
                   <fieldset class="rating rent_rating">
-                    <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                    <input type="radio"  id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                    <input type="radio"  id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                    <input type="radio"  id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                    <input type="radio"  id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                    <input type="radio"  id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+
                   </fieldset>
                 </div>
                 <div class="col-md-1 col-sm-4 col-xs-4">
@@ -458,11 +468,20 @@
                         <label class="title-label productName">${fn:substring(product.name, 0, 20)}<d:if test="${fn:length(product.name)>20}">....</d:if></label>
                         <br>
                         <fieldset class="rating">
-                          <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                          <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                          <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                          <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                          <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${product.getId()}" name="rating${product.getId()}" value="5" />
+                          <label class = "full" for="star5_${product.getId()}" title="Awesome - 5 stars"></label>
+
+                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${product.getId()}" name="rating${product.getId()}" value="4" />
+                          <label class = "full" for="star4_${product.getId()}" title="Pretty good - 4 stars"></label>
+
+                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${product.getId()}" name="rating${product.getId()}" value="3" />
+                          <label  class = "full" for="star3_${product.getId()}" title="Meh - 3 stars"></label>
+
+                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${product.getId()}" name="rating${product.getId()}" value="2" />
+                          <label class = "full" for="star2_${product.getId()}" title="Kinda bad - 2 stars"></label>
+
+                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${product.getId()}" name="rating${product.getId()}" value="1" />
+                          <label class = "full" for="star1_${product.getId()}" title="Sucks big time - 1 star"></label>
                         </fieldset>
 
                       </div>

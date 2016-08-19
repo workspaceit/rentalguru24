@@ -27,7 +27,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/product")
-public class ProductController extends BaseHttp{
+public class ProductController{
     @Autowired
     ProductModel productModel;
 
@@ -41,12 +41,13 @@ public class ProductController extends BaseHttp{
     public ModelAndView upload(HttpServletRequest request){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        String baseUrl = (String) request.getAttribute("baseURL");
 
         ModelAndView modelAndView = new ModelAndView("/product/upload");
         List<Category> category = categoryModel.getAllCategoryParent();
         List<RentType> rentTypes = rentTypeModel.getAll();
 
-        modelAndView.addObject("BaseUrl",this.getBaseURL());
+        modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentTypes", rentTypes);
         return modelAndView;
@@ -60,7 +61,7 @@ public class ProductController extends BaseHttp{
 
         RentalProduct rentalProduct = productModel.getById(productId);
         List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0);
-        model.addAttribute("rentedProduct", rentalProduct);
+        model.addAttribute("rentalProduct", rentalProduct);
         model.addAttribute("newProducts", newProducts);
         model.addAttribute("BaseUrl",baseUrl);
         return "product/details";
