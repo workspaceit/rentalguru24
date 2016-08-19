@@ -26,6 +26,7 @@ public class RentRequest {
     private Date endDate;
     private Boolean approve;
     private Boolean disapprove;
+    private Boolean isExpired;
     private boolean isExtension;
     private String remark;
     private Timestamp createdDate;
@@ -128,8 +129,18 @@ public class RentRequest {
     }
 
     @Basic
+    @Column(name = "expired")
+    public Boolean getIsExpired() {
+        return isExpired;
+    }
+
+    public void setIsExpired(Boolean isExpired) {
+        this.isExpired = isExpired;
+    }
+
+    @Basic
     @Column(name = "extension")
-    public boolean isIsExtension() {
+    public boolean getIsExtension() {
         return isExtension;
     }
 

@@ -86,6 +86,24 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
+    public List<RentRequest> getAllByDateBetweenAndProductId(int productId,Timestamp startDate,Timestamp endsDate){
+        Session session = this.sessionFactory.openSession();
+        try{
+            List<RentRequest>  rentRequestList = session.createQuery(
+                    "FROM RentRequest rentRequest " +
+                            " where ( ( rentRequest.startDate BETWEEN :startDate and :endsDate ) or " +
+                            " ( rentRequest.endDate BETWEEN :startDate and :endsDate ) ) " +
+                            "and rentRequest.rentalProduct.id =:productId "
+            )
+                                                .setParameter("productId", productId)
+                                                .setParameter("startDate", startDate)
+                                                .setParameter("endsDate", endsDate)
+                                                .list();
+            return rentRequestList;
+        }finally {
+            session.close();
+        }
+    }
     public boolean isAlreadyRequested(int requestedBy,int productId,Timestamp startDate,Timestamp endsDate){
         RentRequest rentRequest = this.getAlreadyRentRequested(requestedBy, productId, startDate, endsDate);
         return (rentRequest!=null)?true:false;
@@ -229,6 +247,16 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
+    public void expireByDateBetween(int rentId,int productId,Timestamp startDate,Timestamp endsDate){
+        List<RentRequest>  rentRequests = this.getAllByDateBetweenAndProductId(productId,startDate,endsDate);
 
+        for(RentRequest rentRequest : rentRequests){
+            /****** Update All in the list except the Approved one *********/
+            if(rentRequest.getId() == rentId) continue;
 
+            rentRequest.setIsExpired(true);
+            this.update(rentRequest);
+        }
+
+    }
 }

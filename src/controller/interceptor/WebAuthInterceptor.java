@@ -40,7 +40,7 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
         }else{
             serviceResponse.getResponseStat().setErrorMsg("Session expired !!!!");
             response.setContentType("application/json");
-            response.sendRedirect("/signin");
+            response.sendRedirect(this.getURLWithContextPath(request)+"/signin");
             return false;
         }
     }
@@ -54,5 +54,8 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
 
         System.out.println("INTERCEPTOR postHandle");
         //log it
+    }
+    public static String getURLWithContextPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 }

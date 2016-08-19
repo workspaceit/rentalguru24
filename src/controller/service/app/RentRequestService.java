@@ -145,10 +145,10 @@ public class RentRequestService{
 
         RentProduct rentProduct = new RentProduct();
 
-        boolean isProductInRent = rentProductModel.isProductInRent(rentRequest.getRentalProduct().getId(),
-                DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
-                DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
-        );
+        boolean isProductInRent = rentProductModel.isProductInRent( rentRequest.getRentalProduct().getId(),
+                                                                    DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
+                                                                    DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
+                                                                  );
 
         if(isProductInRent){
             serviceResponse.setRequestError("requestId","You can not approve, your product is in rent");
@@ -174,7 +174,15 @@ public class RentRequestService{
 
         rentProductModel.insert(rentProduct);
 
-        serviceResponse.setResponseData(rentRequest,"No record found");
+        /* ~~~~~~~~~~~~~  Expire Request in Between date ~~~~~~~~~~~~~~~~*/
+
+
+        rentRequestModel.expireByDateBetween(rentRequest.getId(),rentRequest.getRentalProduct().getId(),
+                DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
+                DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
+        );
+
+        serviceResponse.setResponseData(rentRequest, "Internal server error");
         return serviceResponse;
     }
 
@@ -196,12 +204,27 @@ public class RentRequestService{
             return serviceResponse;
         }
 
+        if(rentRequest.getApprove()){
+            serviceResponse.setRequestError("requestId", "Can not be disapproved , request was approved and product is in rent");
+            return serviceResponse;
+        }
+
         if(rentRequest.getDisapprove()){
             serviceResponse.getResponseStat().setErrorMsg("Request already disapproved");
             return serviceResponse;
         }
 
-        rentRequest.setApprove(false);
+        boolean isProductInRent = rentProductModel.isProductInRent( rentRequest.getRentalProduct().getId(),
+                DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
+                DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
+        );
+
+        if(isProductInRent){
+            serviceResponse.setRequestError("requestId", "You can not disapprove, your product is in rent");
+            return serviceResponse;
+        }
+
+
         rentRequest.setDisapprove(true);
 
         rentRequestModel.update(rentRequest);
