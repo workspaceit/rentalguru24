@@ -244,6 +244,9 @@
   <div class="alert alert-success text-center" role="alert" hidden>
     Product Upload Successfully
   </div>
+  <div class="alert alert-danger text-center" role="alert" hidden>
+    Product Upload Successfully
+  </div>
 </div>
 <div class="footer">
   <div class="container">
@@ -551,8 +554,10 @@
               },
               success: function(data){
                   console.log(data);
-                  if(data.responseStat.isLogin){
-
+                  if(!data.responseStat.isLogin){
+                    $('.alert-danger').show().delay(3000).fadeOut(300, function(){
+                      window.location.href= BASEURL+"/signin";
+                    });
                   }
                   if(data.responseStat.status == false){
                       BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);

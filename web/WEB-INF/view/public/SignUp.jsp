@@ -63,6 +63,7 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/font-awesome/css/font-awesome.min.css" />" />
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/animate.css" />" />
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/owl.carousel.css" />" />
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap-select.min.css"/>" />
     <!-- Theme CSS -->
     <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
 
@@ -129,11 +130,10 @@
             <div class="form-group ">
                 <label for="identityTypeId">Identity Type</label>
                 <%--<input type="text" class="form-control" placeholder="Identity Type" id="" name="">--%>
-                <select id="identityTypeId" name="identityTypeId">
+                <select id="identityTypeId" name="identityTypeId" class="selectpicker">
                     <option value="">Please select a identity type</option>
                 </select>
                 <p class="help-block error-form" id="errorMsg_identityTypeId"></p>
-
             </div>
             <div class="form-group">
                 <label for="fallback">Identity Document</label>
@@ -241,6 +241,8 @@
 <script src="<c:url value="/resources/js/owl.carousel.js" />" ></script>
 <script src="<c:url value="/resources/js/jquery.enllax.min.js" />" ></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
+<script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datepicker.js"/>"></script>
+<script src="<c:url value="/resources/js/bootstrap-select.js"/>"></script>
 
 
 <!-- Javascript framework and plugins end here -->
@@ -284,9 +286,8 @@
 
     })(jQuery);
 
-
-
 </script>
+
 <script>
     $(document).ready(function(){
         setAliasMessage("identityDocToken","Identity doc token required","Identity document required");
@@ -306,6 +307,7 @@
                     option.text = identity.name;
                     select.add(option);
                 });
+                $('#identityTypeId').selectpicker('refresh');
             }
         });
     }

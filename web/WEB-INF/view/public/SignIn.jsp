@@ -271,10 +271,9 @@
       success: function(data){
         console.log(data);
         if(data.responseStat.status == true){
-          $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){
+          $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(2000).fadeOut(500,function(){
             window.location.href =BASEURL+"/home";
           });
-
         }else{
           $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){
             $("#signBtn").removeAttrs("disabled","disabled");
