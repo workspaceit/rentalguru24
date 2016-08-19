@@ -202,12 +202,12 @@
       <div class="col-md-6">
         <div class="form-group">
           <label >Product Current price</label>
-          <input type="number" class="form-control" placeholder="" id="currentValue" name="currentValue" min="0">
+          <input type="number" class="form-control" placeholder="" id="currentValue" name="currentValue" min="1">
           <p class="help-block error-form" id="errorMsg_currentValue"></p>
         </div>
         <div class="form-group">
           <label>Rent price</label>
-          <input type="number" class="form-control" placeholder="" id="rentFee" name="rentFee" min="0" >
+          <input type="number" class="form-control" placeholder="" id="rentFee" name="rentFee" min="1" >
           <p class="help-block error-form" id="errorMsg_rentFee"></p>
         </div>
         <div class="form-group">
