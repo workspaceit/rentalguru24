@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.ServiceResponse;
 import model.entity.app.AppCredential;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -27,28 +28,21 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
 
 
         ServiceResponse serviceResponse = new ServiceResponse();
-        AppCredential appCredential = null;// new AppCredential();
         ServletRequestAttributes ar = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession httpSession = request.getSession();
 
 
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
-            try{
-
-                appCredential = (AppCredential)httpSession.getAttribute("appCredential");
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
+            request.setAttribute("serviceResponse", serviceResponse);
+            request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
             serviceResponse.getResponseStat().setIsLogin(true);
+            return true;
+        }else{
+            serviceResponse.getResponseStat().setErrorMsg("Session expired !!!!");
+            response.setContentType("application/json");
+            response.sendRedirect("/signin");
+            return false;
         }
-        request.setAttribute("serviceResponse",serviceResponse);
-
-
-        System.out.println("INTERCEPTOR preHandle");
-//        PrintWriter pw = response.getWriter();
-//        pw.print("{sd:\"sd\"}");
-//        pw.close();
-        return true;
     }
 
     //after the handler is executed

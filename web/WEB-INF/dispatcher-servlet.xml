@@ -40,6 +40,7 @@
        <!--</bean>-->
 
        <mvc:interceptors>
+              <!-- ******* Public Web page  ************-->
               <mvc:interceptor>
                      <mvc:mapping path="/signup"/>
                      <bean class="controller.interceptor.WebInterceptor"/>
@@ -56,6 +57,13 @@
                      <mvc:mapping path="/home/product/details/**"/>
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
+
+              <!-- ******* Auth  Web page  ************-->
+              <mvc:interceptor>
+                     <mvc:mapping path="/product/upload" />
+                     <bean class="controller.interceptor.WebAuthInterceptor"/>
+              </mvc:interceptor>
+
 
               <!-- ******* Public Service  ************-->
               <mvc:interceptor>

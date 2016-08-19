@@ -27,8 +27,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/product")
-@Scope("request")
-public class ProductController extends BaseHttp{
+public class ProductController{
     @Autowired
     ProductModel productModel;
 
