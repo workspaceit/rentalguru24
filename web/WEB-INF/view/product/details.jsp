@@ -458,14 +458,14 @@
                   <div class="panel panel-default">
                     <div class="panel-body">
                       <div class="img-single">
-                        <img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" />
+                        <a href="${BaseUrl}/product/details/${product.getId()}"><img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" /></a>
                         <div class="product-btn-grp">
                           <a href="#" class="gbtn left">Quick view</a>
                           <a href="#" class="gbtn right">Rent Now</a>
                         </div>
                       </div>
                       <div class="block-desc">
-                        <label class="title-label productName">${fn:substring(product.name, 0, 20)}<d:if test="${fn:length(product.name)>20}">....</d:if></label>
+                        <label class="title-label productName"><a href="${BaseUrl}/product/details/${product.getId()}">${fn:substring(product.name, 0, 20)}<d:if test="${fn:length(product.name)>20}">....</d:if></a></label>
                         <br>
                         <fieldset class="rating">
                           <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${product.getId()}" name="rating${product.getId()}" value="5" />

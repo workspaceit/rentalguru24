@@ -60,7 +60,7 @@ public class ProductController{
         String baseUrl = (String) request.getAttribute("baseURL");
 
         RentalProduct rentalProduct = productModel.getById(productId);
-        List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0);
+        List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0, productId);
         model.addAttribute("rentalProduct", rentalProduct);
         model.addAttribute("newProducts", newProducts);
         model.addAttribute("BaseUrl",baseUrl);

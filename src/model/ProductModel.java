@@ -63,6 +63,20 @@ public class ProductModel extends BaseModel{
             session.close();
         }
     }
+    public List<RentalProduct> getRentalProduct(int limit, int offset, int pId){
+        if(limit > 15){
+            limit = 15;
+        }
+        String hql = "FROM RentalProductEntity P WHERE P.id != "+pId+" ORDER BY P.id DESC" ;
+        Session session = this.sessionFactory.openSession();
+        try {
+            return  session.createQuery(hql)
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit).list();
+        }finally {
+            session.close();
+        }
+    }
     public List<SearchedProduct> getSearchedProduct(int limit, int offset){
         if(limit > 15){
             limit = 15;
