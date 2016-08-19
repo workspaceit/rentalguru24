@@ -332,7 +332,7 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <h5><strong>Short Overview</strong></h5>
-                  <p class="overview_content no-margin">${rentalProduct.getDescription()}</p>
+                  <p class="overview_content no-margin">${fn:substring(rentalProduct.getDescription(), 0, 1500)}<d:if test="${fn:length(rentalProduct.getDescription())>1500}">....</d:if></p>
                 </div>
               </div>
             </div>
