@@ -1,81 +1,4 @@
-<%@ page import="controller.BaseHttp" %>
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Reneguru</title>
-        <!-- Favicons -->
-        <!--    <link rel="shortcut icon" href="favicon.ico">-->
-
-        <!-- Mobile -->
-
-        <style>
-            ul{
-                list-style: none outside none;
-                padding-left: 0;
-                margin: 0;
-            }
-            .demo .item{
-                margin-bottom: 60px;
-            }
-            .content-slider li{
-                background-color: #ed3020;
-                text-align: center;
-                color: #FFF;
-            }
-            .content-slider h3 {
-                margin: 0;
-                padding: 70px 0;
-            }
-            .demo{
-                width: 800px;
-            }
-        </style>
-        <script src="<c:url value="/resources/js/jquery1.9.1.min.js"  />" ></script>
-        <script src="<c:url value="/resources/js/lightslider.js" />" > </script>
-        <script>
-            $(document).ready(function () {
-                $("#content-slider").lightSlider({
-                    loop: true,
-                    keyPress: true
-                });
-                $('#image-gallery').lightSlider({
-                    gallery: true,
-                    item: 1,
-                    thumbItem: 9,
-                    slideMargin: 0,
-                    speed: 500,
-                    auto: true,
-                    loop: true,
-                    onSliderLoad: function () {
-                        $('#image-gallery').removeClass('cS-hidden');
-                    }
-                });
-            });
-        </script>
-        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-
-        <!-- CSS start here -->
-        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />"  media="screen">
-        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/styles.css" />"  />
-        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/font-awesome/css/font-awesome.min.css" />" >
-        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/animate.css" />"  />
-        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/owl.carousel.css" />"  />
-        <link rel="stylesheet"  href="<c:url value="/resources/css/flexslider.css" />" />
-        <!-- Theme CSS -->
-        <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"> 
-        <!-- Google fonts end here -->
-    </head>
-    <body class="ux">
+<jsp:directive.include file="../layouts/header.jsp" />
         <!--top Nav Bar-->
         <div class="container-fluid top_nav">
             <div class="row">
@@ -126,7 +49,6 @@
                 </div>
             </div>
         </div>
-
         <!--mid navbar-->
         <div class="container-fluid mid_nav">
             <div class="row">
@@ -147,9 +69,7 @@
                 </div>
             </div>
         </div>
-
         <!--main navbar-->
-
         <nav class="main_nav navbar navbar-default">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -162,7 +82,6 @@
                     </button>
 
                 </div>
-
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse no-padding " id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
@@ -182,7 +101,6 @@
                                 <button class="btn btn-default search_btn" type="submit" style="padding:6px;"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
-
                     </ul>
                     <ul class="nav navbar-nav navbar-right main_navigation">
                         <li><a href="#">HOME</a></li>
@@ -196,7 +114,6 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-
         <!--body content-->
         <div class="home_slider">
             <div class="container">
@@ -211,8 +128,6 @@
                                     <li data-target="#hot-deals" data-slide-to="1"></li>                       
                                 </ol>
                             </div>
-
-
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" role="listbox">
                                 <div class="item active">
@@ -252,10 +167,7 @@
                                             </div>
                                         </div>
                                     </div>                          
-                                </div>  
-
-
-
+                                </div>
                                 <div class="item">
                                     <img src="<c:url value="/resources/img/5.jpg" />" alt="...">
                                     <div class="carousel-caption cap1">
@@ -293,11 +205,8 @@
                                             </div>
                                         </div>
                                     </div>                          
-                                </div>                       
-
+                                </div>
                             </div>
-
-
                         </div>
                     </div>
                     <div class="col-md-8 col-sm-8 col-xs-12">
@@ -312,7 +221,6 @@
                                     <img src="<c:url value="/resources/img/5.jpg" />" alt="...">
                                 </div>
                             </div>
-
                             <!-- Controls -->
                             <a class="left carousel-control" href="#main-product" role="button" data-slide="prev">
                                 <span class="" aria-hidden="true"><i class="fa fa-chevron-left"></i></span>
@@ -327,7 +235,6 @@
                 </div>
             </div>
         </div>
-
         <div class="speciality">
             <div class="container">
                 <div class="row">
@@ -350,7 +257,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-3 col-sm-3 col-xs-6">
                         <div class="spec_container">
                             <label class="spec_head">MONEY BACK</label>
@@ -360,7 +266,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-3 col-sm-3 col-xs-6">
                         <div class="spec_container">
                             <label class="spec_head">MEMBER DISCOUNT</label>
@@ -370,13 +275,9 @@
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
-
         <div class="offer">
             <div class="container">
                 <div class="row">
@@ -409,8 +310,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="container product_carousel">
             <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
                 <!-- Indicators -->
@@ -467,7 +366,6 @@
             </div>
         </div>
         <br>
-
         <div class="gallery">
             <div class="container">
                 <div class="row">
@@ -481,11 +379,9 @@
                                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">SELL OFF</a></li>
                                 <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">TOP RATED</a></li>
                             </ul>
-
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade in active" id="home">
-
                                     <!-- Place somewhere in the <body> of your page -->
                                     <div id="slider" class="flexslider">
                                         <ul class="slides">
@@ -545,8 +441,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="container blog_container">
             <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
                 <!-- Indicators -->
@@ -625,13 +519,11 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="sponser">
             <div class="container">
                 <div class="row">
@@ -654,7 +546,6 @@
                 </div>
             </div>
         </div>
-
         <div class="testimonial">
             <div class="container">
                 <div class="row">
@@ -681,7 +572,6 @@
                                             <p class="client_type no-margin">Furniture Client</p>
                                         </div>
                                     </div>
-
                                 </div>                                
                             </div>
                         </div>
@@ -689,7 +579,6 @@
                 </div>
             </div>
         </div>
-
         <div class="footer">
             <div class="container">
                 <div class="row">
@@ -732,98 +621,4 @@
                 </div>
             </div>
         </div>
-
-        <div class="footer_bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-4">
-                        <div class="bottom_footer_content">
-                            <div class="copyright">
-                                <p class="no-margin"> &#169; Copyright 2016 Reneguru24 | All Rights Reserved</p>
-                            </div>
-                            <div class="social_link">
-                                <p class="no-margin"> <span class="social_link_i"><i class="fa fa-twitter"></i></span><span class="social_link_i"><i class="fa fa-facebook"></i></span><span class="social_link_i"><i class="fa fa-youtube"></i></span><span class="social_link_i"><i class="fa fa-google-plus"></i></span><span class="social_link_i"><i class="fa fa-linkedin"></i></span><span class="social_link_i"><i class="fa fa-pinterest"></i></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            var BASEURL = "${BaseUrl}";
-        </script>
-
-        <!-- Contact end here --> 
-        <!-- Main container start here -->
-        <!-- Javascript framework and plugins start here -->
-        <script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />" ></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js"  />" ></script>
-        <script src="<c:url value="/resources/js/jquery.validate.min.js"  />" ></script>
-        <script src="<c:url value="/resources/js/modernizr.js"  />" ></script>
-        <script type="text/javascript" src="<c:url value="/resources/js/appear.js"  />" ></script>
-        <script src="<c:url value="/resources/js/jquery.knob.js"  />" ></script>
-        <script src="<c:url value="/resources/js/jquery.ccountdown.js"  />" ></script>
-        <script src="<c:url value="/resources/js/init.js"  />" ></script>
-        <script src="<c:url value="/resources/js/general.js"  />" ></script>
-        <script src="<c:url value="/resources/js/jquery.flexslider.js"  />" ></script>
-        <!-- Theme JavaScript -->
-        <script src="<c:url value="/resources/js/clean-blog.min.js"  />" ></script>
-        <script src="<c:url value="/resources/js/owl.carousel.js"  />" ></script>
-
-
-        <!-- Javascript framework and plugins end here -->
-        <script type="text/javascript">
-            $('.main_product_slider').carousel();
-            $('.owl-carousel').owlCarousel({
-                rtl: true,
-                loop: true,
-                margin: 10,
-                nav: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 5
-                    }
-                }
-            });
-        </script>
-        <script>
-            $(document).ready(function () {
-                $('#hot-deals, #main-product').carousel({
-                    interval: 3000
-                });
-
-            });
-        </script>
-        <script>
-            $(window).load(function () {
-                // The slider being synced must be initialized first
-                $('#carousel').flexslider({
-                    animation: "slide",
-                    controlNav: false,
-                    animationLoop: false,
-                    slideshow: false,
-                    itemWidth: 210,
-                    itemMargin: 5,
-                    asNavFor: '#slider'
-                });
-
-                $('#slider').flexslider({
-                    animation: "slide",
-                    controlNav: false,
-                    animationLoop: false,
-                    slideshow: false,
-                    sync: "#carousel"
-                });
-            });
-        </script>
-    </body>
-</html>
-
-
+<jsp:directive.include file="../layouts/footer.jsp" />
