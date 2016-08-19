@@ -124,7 +124,7 @@
         <div class="form-group">
           <label>Choose Category</label>
           <select onchange="fetchSubcategory()" id="category" class="selectpicker" >
-            <option value="">PLEASE SELECT A CATEGORY</option>
+            <option value="0">PLEASE SELECT A CATEGORY</option>
             <d:forEach var="listValue" items="${category}">
               <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
@@ -134,8 +134,8 @@
         <div class="form-group">
           <label>Choose Sub Category</label>
           <%--<select class="selectpicker" id="subCategory">--%>
-          <select id="subCategory" class="selectpicker" >
-            <option value="">PLEASE SELECT A SUB CATEGORY</option>
+          <select id="subCategory" class="selectpicker" disabled="disabled" >
+            <option value="0">PLEASE SELECT A SUB CATEGORY</option>
             <%--<optgroup id="subcategoryParentLabel" label="" disabled>--%>
             <%--</optgroup>--%>
           </select>
@@ -144,7 +144,7 @@
         <div class="form-group">
           <label>Choose Rent Type</label>
           <select  id="rentTypeId" class="selectpicker" >
-            <option value="">PLEASE SELECT A RENT TYPE</option>
+            <option value="0">PLEASE SELECT A RENT TYPE</option>
             <d:forEach var="listValue" items="${rentTypes}">
               <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
@@ -510,7 +510,7 @@
           var subCategory = $('#subCategory option:selected').val();
 
           var categoryArray = [];
-          if(subCategory == ""){
+          if(subCategory == "0"){
               categoryArray.push(parseInt(categoryId));
           }else{
             categoryArray.push(parseInt(subCategory));
@@ -555,18 +555,18 @@
               success: function(data){
                   console.log(data);
                   if(!data.responseStat.isLogin){
-                    $('.alert-danger').show().delay(3000).fadeOut(300, function(){
+                    $('.alert-danger').show().delay(2000).fadeOut(300, function(){
                       window.location.href= BASEURL+"/signin";
                     });
                   }
                   if(data.responseStat.status == false){
                       BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
                   }else{
-                    $('.alert-success').show().delay(5000).fadeOut(500,function(){
+                    $('.alert-success').show().delay(2000).fadeOut(500,function(){
                        window.location.href = BASEURL+"/home";
                     });
                   }
-                  $('.postProductGif').hide().delay(4998).fadeOut();
+                  $('.postProductGif').hide().delay(1998).fadeOut();
                 }
           });
   }
@@ -575,6 +575,8 @@
   $(document).ready(function(){
       setAliasMessage("categoryIds","Category not in valid format","Please select category");
       setAliasMessage("currentValue","typeMismatch","Current value required");
+      setAliasMessage("categoryIds", "Category not found for id = 0", "Please select category");
+      setAliasMessage("rentTypeId", "No rent type found by id  0", "Please select rent type");
   });
 </script>
 </body>
