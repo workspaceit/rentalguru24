@@ -261,7 +261,7 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct {
     }
 
     @JsonIgnore
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "rentalProduct")
     @Where(clause = "product_id = id")
     public ProductLiked getProductLiked() {
         return productLiked;
