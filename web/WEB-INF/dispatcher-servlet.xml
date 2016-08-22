@@ -183,6 +183,8 @@
        </bean>
        <bean id="productRatingModel" class="model.ProductRatingModel" >
        </bean>
+       <bean id="productLikedModel" class="model.ProductLikedModel" >
+       </bean>
 
 
 
