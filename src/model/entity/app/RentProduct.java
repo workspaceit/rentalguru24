@@ -2,6 +2,9 @@ package model.entity.app;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.entity.app.product.rentable.RentalProductEntity;
+import model.entity.app.product.rentable.iface.RentalProduct;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -15,7 +18,7 @@ import java.sql.Timestamp;
 public class RentProduct {
     private int id;
     private RentRequest rentRequest;
-    private int productId;
+    private RentalProduct rentalProduct;
     private int renteeId;
     private Date startDate;
     private Date endsDate;
@@ -36,17 +39,17 @@ public class RentProduct {
         this.id = id;
     }
 
+
     @JsonIgnore
-    @Basic
-    @Column(name = "product_id")
-    public int getProductId() {
-        return productId;
+    @OneToOne(fetch = FetchType.LAZY,optional = false,targetEntity=RentalProductEntity.class)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    public RentalProduct getRentalProduct() {
+        return rentalProduct;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setRentalProduct(RentalProduct rentalProduct) {
+        this.rentalProduct = rentalProduct;
     }
-
 
     @JsonIgnore
     @Basic
@@ -119,7 +122,7 @@ public class RentProduct {
         this.createdDate = createdDate;
     }
 
-    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name = "rent_request_id", referencedColumnName = "id", nullable = false)
     public RentRequest getRentRequest() {
         return rentRequest;

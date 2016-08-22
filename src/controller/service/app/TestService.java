@@ -148,7 +148,7 @@ public class TestService extends BaseService{
     public void postRentProduct(){
         RentProduct rentProduct = new RentProduct();
 
-        rentProduct.setProductId(1);
+       // rentProduct.setRentalProduct(rentProduct);
         rentProduct.setStartDate(new Date(Calendar.getInstance().getTime().getTime()));
         rentProduct.setEndsDate(new Date(Calendar.getInstance().getTime().getTime()));
         rentProduct.setExpired(false);

@@ -171,7 +171,7 @@ public class RentRequestService{
         rentProduct.setExpired(false);
         rentProduct.setStartDate(rentRequest.getStartDate());
         rentProduct.setEndsDate(rentRequest.getEndDate());
-        rentProduct.setProductId(rentRequest.getRentalProduct().getId());
+        rentProduct.setRentalProduct(rentRequest.getRentalProduct());
         rentProduct.setRenteeId(rentRequest.getRequestedBy().getId());
 
         rentProductModel.insert(rentProduct);

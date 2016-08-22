@@ -6,17 +6,21 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.convert.PictureArrayConverter;
 import model.convert.PictureConverter;
 import model.entity.app.AppCredential;
+import model.entity.app.RentProduct;
 import model.entity.app.RentRequest;
 import model.entity.app.RentType;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.ProductLiked;
+import model.entity.app.product.iface.Product;
+import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import model.nonentity.photo.Picture;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,7 @@ import java.util.List;
 //@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "product", schema = "" ) //catalog = "rentguru24"
-public class RentalProductEntity implements RentalProduct {
+public class RentalProductEntity implements RentalProduct,MyRentalProduct {
 
     private int id;
 
@@ -59,7 +63,7 @@ public class RentalProductEntity implements RentalProduct {
 
 //    private List<ProductAvailability> productAvailability;
     private List<RentRequest> rentRequests;
-//    private RentProduct rentProduct;
+    private RentProduct rentProduct;
 
 
 
@@ -309,12 +313,16 @@ public class RentalProductEntity implements RentalProduct {
        this.rentRequests = rentRequests;
     }
 //
-//    @OneToOne(mappedBy = "product")
-//    public RentProduct getRentProduct() {
-//        return rentProduct;
-//    }
-//
-//    public void setRentProduct(RentProduct rentProduct) {
-//        this.rentProduct = rentProduct;
-//    }
+
+    @Override
+    @OneToOne(fetch = FetchType.LAZY, optional = true,mappedBy = "rentalProduct")
+    public RentProduct getRentProduct() {
+        return rentProduct;
+    }
+
+    @Override
+    public void setRentProduct(RentProduct rentProduct) {
+        System.out.println("rentProduct "+rentProduct.getEndsDate());
+        this.rentProduct = rentProduct;
+    }
 }
