@@ -55,7 +55,7 @@ public class ProductLiked {
 
     
     @OneToOne(targetEntity = RentalProductEntity.class)
-    @JoinColumn(name = "product_id", referencedColumnName = "id",insertable = false,updatable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     public RentalProduct getRentalProduct() {
         return rentalProduct;
     }
@@ -80,10 +80,5 @@ public class ProductLiked {
 
     public void setAppCredential(AppCredential appCredential){this.appCredential = appCredential;}
 
-//    @OneToOne
-//    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-//    public RentalProductEntity getProduct(){return  product;}
-//
-//    public void setProduct(RentalProductEntity product){this.product = product;}
 
 }

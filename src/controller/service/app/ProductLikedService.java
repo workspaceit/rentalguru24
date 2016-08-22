@@ -37,7 +37,7 @@ public class ProductLikedService {
             return serviceResponse;
         }
 
-        RentalProduct rentalProduct = productModel.getEntityById(productId);
+        RentalProduct rentalProduct = productModel.getById(productId);
 
         if(rentalProduct.getOwner().getId() == appCredential.getId()){
             serviceResponse.setRequestError("productId","You can not like your own product");
@@ -62,7 +62,7 @@ public class ProductLikedService {
             serviceResponse.setResponseData(productLikedModel.insert(productLiked));
             return serviceResponse;
         }else{
-            serviceResponse.setResponseData(productLikedModel.delete(productId, appCridentialId));
+            productLikedModel.delete(productId, appCridentialId);
             return serviceResponse;
         }
 
