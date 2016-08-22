@@ -11,9 +11,11 @@ import model.entity.app.ProductRating;
 import model.entity.app.RentType;
 import model.entity.app.TempFile;
 import model.entity.app.product.ProductCategory;
+import model.entity.app.product.iface.Product;
 import model.entity.app.product.rentable.ProductLocation;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.SearchedProduct;
+import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -315,6 +317,32 @@ public class ProductService{
 
         return serviceResponse;
     }
+    @RequestMapping(value = "/get-my-rental-product/{product_id}", method = RequestMethod.GET)
+    public ServiceResponse getMyRentalProduct(HttpServletRequest request,
+                                              @PathVariable("product_id") int productId){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        MyRentalProduct mrp = productModel.getMyRentalProductById(productId, appCredential.getId());
+//        System.out.println("mrp : "+mrp.getClass());
+//        System.out.println("mrp : "+mrp.getRentProduct().getEndsDate());
+        serviceResponse.setResponseData(mrp, "No record found");
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/get-my-rental-product", method = RequestMethod.POST)
+    public ServiceResponse getMyRentalProductList(HttpServletRequest request,
+                                                @RequestParam ("limit") int limit,
+                                                @RequestParam ("offset") int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(productModel.getMyRentalProductList(appCredential.getId(), limit, offset), "No record found");
+        return serviceResponse;
+    }
+
+
 
 }
 

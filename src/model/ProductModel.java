@@ -3,6 +3,7 @@ package model;
 
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.SearchedProduct;
+import model.entity.app.product.rentable.iface.MyRentalProduct;
 import org.hibernate.Query;
 
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -99,6 +100,30 @@ public class ProductModel extends BaseModel{
         try {
             session.beginTransaction();
             return session.get(RentalProductEntity.class,id);
+        }finally {
+            session.close();
+        }
+    }
+    public MyRentalProduct getMyRentalProductById(int id,int ownerId){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity P  where P.id =:id and P.owner.id = :ownerId";
+        try {
+            return (MyRentalProduct) session.createQuery(hql)
+                    .setParameter("id", id)
+                    .setParameter("ownerId",ownerId)
+                    .uniqueResult();
+        }finally {
+            session.close();
+        }
+    }
+    public List<MyRentalProduct> getMyRentalProductList(int ownerId,int limit,int offset){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity P  where P.owner.id = :ownerId ORDER BY P.id DESC ";
+        try {
+            return  session.createQuery(hql)
+                    .setParameter("ownerId", ownerId)
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit).list();
         }finally {
             session.close();
         }

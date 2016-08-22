@@ -1,49 +1,43 @@
 package validator.entity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.DigestUtils;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-/**
- * Created by mi on 8/2/16.
- */
 public class Test {
     public static void main(String args[]){
-        Product a = new RentalProduct();
-        System.out.println(a.getClass());
-        System.out.println(((RentalProduct)a).isRentable);
-        Product b = new SellableProduct();
-        System.out.println(b.getClass());
-        System.out.println(((SellableProduct)b).isSellable);
-        new H();
-        new H();
-    }
-}
-class H{
-    public String a;
-    public List<Integer> intList;
 
-    {
-        a= "Static";
-        intList = new ArrayList<>();
-        System.out.println("Executed");
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        A a = new A();
+        I i = new A();
+        J j = new A();
+        try{
+
+            System.out.println(objectMapper.writeValueAsString(a));
+            System.out.println(objectMapper.writeValueAsString(i));
+            System.out.println(objectMapper.writeValueAsString(j));
+        }catch (Exception ex){
+
+        }
     }
 }
 
-abstract class  Product{
+class A implements I,J{
+    @Override
+    public String getABC() {
+        return "ABC";
+    }
 
+    @Override
+    public String getEFG() {
+        return "EFG";
+    }
 }
-class RentalProduct extends Product{
-    public boolean isRentable = false;
+
+interface I{
+    String getABC();
 }
-class SellableProduct extends Product{
-    public boolean isSellable = true;
+@JsonSerialize(as=J.class)
+interface J extends I{
+    String getEFG();
 }

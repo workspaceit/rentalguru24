@@ -250,13 +250,17 @@ public class RentRequestModel extends BaseModel {
     public void expireByDateBetween(int rentId,int productId,Timestamp startDate,Timestamp endsDate){
         List<RentRequest>  rentRequests = this.getAllByDateBetweenAndProductId(productId,startDate,endsDate);
 
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
         for(RentRequest rentRequest : rentRequests){
             /****** Update All in the list except the Approved one *********/
             if(rentRequest.getId() == rentId) continue;
 
             rentRequest.setIsExpired(true);
-            this.update(rentRequest);
+            session.update(rentRequest);
         }
+        session.getTransaction().commit();
+        session.close();
 
     }
 }
