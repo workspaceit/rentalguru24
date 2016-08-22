@@ -27,7 +27,7 @@ import java.util.List;
      ProductLocation getProductLocation();
      List<ProductCategory> getProductCategories();
      boolean getIsLiked();
-     ProductLiked getProductLiked();
+     //ProductLiked getProductLiked();
      @JsonIgnore
      Timestamp getCreatedDate();
 
@@ -43,7 +43,7 @@ import java.util.List;
      void setOwner(AppCredential owner);
      void setProductLocation(ProductLocation productLocation);
      void setProductCategories(List<ProductCategory> productCategories);
-     void setProductLiked(ProductLiked productLiked);
+     //void setProductLiked(ProductLiked productLiked);
      void setIsLiked(boolean isLiked);
 
 

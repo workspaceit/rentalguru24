@@ -260,23 +260,23 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct {
         this.averageRating = averageRating;
     }
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "rentalProduct")
-    @Where(clause = "product_id = id")
-    public ProductLiked getProductLiked() {
-        return productLiked;
-    }
-
-    public void setProductLiked(ProductLiked productLiked) {
-        boolean isLiked = false;
-
-        if(productLiked!=null && productLiked.getId()!=0) isLiked = true;
-
-        this.setIsLiked(isLiked);
-        this.productLiked = productLiked;
-        System.out.println("isLiked "+isLiked);
-        System.out.println("this.productLiked "+this.productLiked);
-    }
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "rentalProduct")
+//    @Where(clause = "product_id = id")
+//    public ProductLiked getProductLiked() {
+//        return productLiked;
+//    }
+//
+//    public void setProductLiked(ProductLiked productLiked) {
+//        boolean isLiked = false;
+//
+//        if(productLiked!=null && productLiked.getId()!=0) isLiked = true;
+//
+//        this.setIsLiked(isLiked);
+//        this.productLiked = productLiked;
+//        System.out.println("isLiked "+isLiked);
+//        System.out.println("this.productLiked "+this.productLiked);
+//    }
 
 
     @Transient

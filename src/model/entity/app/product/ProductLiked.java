@@ -53,6 +53,7 @@ public class ProductLiked {
         this.createdDate = createdDate;
     }
 
+    
     @OneToOne(targetEntity = RentalProductEntity.class)
     @JoinColumn(name = "product_id", referencedColumnName = "id",insertable = false,updatable = false)
     public RentalProduct getRentalProduct() {
