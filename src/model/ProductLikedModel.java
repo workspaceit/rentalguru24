@@ -23,15 +23,14 @@ public class ProductLikedModel extends BaseModel {
         return (productLiked!=null)?true:false;
     }
 
-    public ProductLiked delete(int prductId, int appCridentialId){
+    public void delete(int prductId, int appCridentialId){
 
         ProductLiked productLiked = this.getAlreadyLiked(prductId, appCridentialId);
-//        Session session = this.sessionFactory.openSession();
-//        session.beginTransaction();
-//        session.delete(productLiked);
-//        session.getTransaction().commit();
-//        session.close();
-        return productLiked;
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(productLiked);
+        session.getTransaction().commit();
+        session.close();
     }
 
     public ProductLiked getAlreadyLiked(int prductId, int appCridentialId){
