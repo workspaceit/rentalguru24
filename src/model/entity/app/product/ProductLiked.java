@@ -10,13 +10,13 @@ import java.sql.Timestamp;
  * Created by mi on 8/12/16.
  */
 @Entity
-@Table(name = "product_liked", schema = "")
+@Table(name = "product_liked", schema = "", catalog = "rentguru24")
 public class ProductLiked {
     private int id;
     private int appCredentialId;
     private Timestamp createdDate;
     private RentalProductEntity product;
-
+    private int productId;
 
     @Id
     @Column(name = "id")
@@ -57,6 +57,16 @@ public class ProductLiked {
 
     public void setProduct(RentalProductEntity product) {
         this.product = product;
+    }
+
+    @Basic
+    @Column(name = "product_id")
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
 }
