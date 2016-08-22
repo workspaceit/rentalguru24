@@ -322,7 +322,6 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct {
 
     @Override
     public void setRentProduct(RentProduct rentProduct) {
-        System.out.println("rentProduct "+rentProduct.getEndsDate());
         this.rentProduct = rentProduct;
     }
 }
