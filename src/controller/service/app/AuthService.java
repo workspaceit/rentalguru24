@@ -57,7 +57,6 @@ public class AuthService extends BaseService {
 
         this.serviceResponse.getResponseStat().setMsg("Login success");
         this.setAppcredentialInSession(appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
-        this.setAppcredentialInSession(appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
         return this.serviceResponse;
     }
 

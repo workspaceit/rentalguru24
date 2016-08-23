@@ -115,4 +115,12 @@ public class AppLoginCredentialModel extends BaseModel {
         session.close();
     }
 
+    public List<AppCredential> getAllAppUser(){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM AppCredential WHERE  role < 0";
+        Query query = session.createQuery(hql);
+        List result = query.list();
+        return result;
+    }
+
 }

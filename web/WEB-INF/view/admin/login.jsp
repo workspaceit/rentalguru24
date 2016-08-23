@@ -36,13 +36,13 @@
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
-        <%--<form action="<c:url value="/admin-resources/index2.html"/>" method="post">--%>
+        <form onsubmit="return submitSignInData();">
           <div class="form-group has-feedback">
-            <input type="email" class="form-control" placeholder="Email">
+            <input type="email" class="form-control" placeholder="Email" id="email" name="email">
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Password">
+            <input type="password" class="form-control" placeholder="Password" id="password" name="password">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
@@ -72,6 +72,9 @@
     <!-- iCheck -->
     <script src="<c:url value="/admin-resources/plugins/iCheck/icheck.min.js"/>"></script>
     <script>
+      var BASEURL = "${BaseUrl}";
+    </script>
+    <script>
       $(function () {
         $('input').iCheck({
           checkboxClass: 'icheckbox_square-blue',
@@ -79,6 +82,25 @@
           increaseArea: '20%' // optional
         });
       });
+    </script>
+    <script>
+        function submitSignInData(){
+          var email = $('#email').val();
+          var password = $('#password').val();
+//          console.log(email, password);
+          $.ajax({
+            url: BASEURL+'/admin-signin/by-email-password',
+            type: 'POST',
+            data: {
+              email: email,
+              password : password
+            },
+            success: function(data){
+              console.log(data);
+            }
+          });
+          return false;
+        }
     </script>
   </body>
 </html>
