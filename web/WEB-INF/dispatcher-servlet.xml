@@ -40,6 +40,11 @@
        <!--</bean>-->
 
        <mvc:interceptors>
+              <!-- ******* Admin Panel  ************-->
+              <mvc:interceptor>
+                     <mvc:mapping path="/admin/**"/>
+                     <bean class="controller.interceptor.AdminInterceptor"/>
+              </mvc:interceptor>
               <!-- ******* Public Web page  ************-->
               <mvc:interceptor>
                      <mvc:mapping path="/signup"/>
@@ -85,7 +90,7 @@
        <!-- * ** *** **** Interceptor Ends **** *** ** * -->
 
 
-       <mvc:resources mapping="/admin-resources/**" location="/WEB-INF/resource/"
+       <mvc:resources mapping="/admin-resources/**" location="/WEB-INF/admin-resources/"
                       cache-period="31556926"/>
 
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
