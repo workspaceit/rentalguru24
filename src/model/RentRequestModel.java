@@ -70,8 +70,8 @@ public class RentRequestModel extends BaseModel {
              RentRequest rentRequest =(RentRequest)
                                     session.createQuery(
                                                             "FROM RentRequest rentRequest " +
-                                                            " where ( ( rentRequest.startDate BETWEEN :startDate and :endsDate ) or " +
-                                                            " ( rentRequest.endDate BETWEEN :startDate and :endsDate ) ) " +
+                                                            " where ( ( :startDate BETWEEN rentRequest.startDate and rentRequest.endDate ) or " +
+                                                            " ( :endsDate  BETWEEN rentRequest.endDate and rentRequest.endDate ) ) " +
                                                             " and rentRequest.requestedBy.id =:requestedBy " +
                                                             "and rentRequest.rentalProduct.id =:productId "
                                                         )

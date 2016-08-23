@@ -43,6 +43,9 @@
     .demo{
       width: 800px;
     }
+    .datepicker.dropdown-menu {
+      z-index: 10000;
+    }
   </style>
   <script src="<c:url value="/resources/js/jquery1.9.1.min.js"  />" ></script>
   <script src="<c:url value="/resources/js/lightslider.js" />" > </script>

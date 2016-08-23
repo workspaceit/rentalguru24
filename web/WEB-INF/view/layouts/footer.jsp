@@ -1,25 +1,5 @@
 
-<!--Success Modal -->
-<div id="successModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-body swuccess_modal_body center">
-        <p class="no-margin"><span><i class="fa fa-check fa-2x success"></i></span><span id="successMsg"></span></p>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="errorModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-body swuccess_modal_body center">
-        <p class="no-margin"><span><i class="fa fa-check fa-2x success"></i></span><span id="errorMsg"></span></p>
-      </div>
-    </div>
-  </div>
-</div>
+<jsp:directive.include file="../layouts/error_success_modal.jsp" />
 
 <div class="footer_bottom">
   <div class="container">
@@ -59,6 +39,10 @@
 <script src="<c:url value="/resources/js/clean-blog.min.js"  />" ></script>
 <script src="<c:url value="/resources/js/owl.carousel.js"  />" ></script>
 
+
+<%--Developer Helpers --%>
+<script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
+<script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
 
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">
