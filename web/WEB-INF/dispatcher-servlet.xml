@@ -85,7 +85,8 @@
        <!-- * ** *** **** Interceptor Ends **** *** ** * -->
 
 
-
+       <mvc:resources mapping="/admin-resources/**" location="/WEB-INF/resource/"
+                      cache-period="31556926"/>
 
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
