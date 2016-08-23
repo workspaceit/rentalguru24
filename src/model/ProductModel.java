@@ -104,11 +104,11 @@ public class ProductModel extends BaseModel{
             session.close();
         }
     }
-    public MyRentalProduct getMyRentalProductById(int id,int ownerId){
+    public RentalProduct getMyRentalProductById(int id,int ownerId){
         Session session = this.sessionFactory.openSession();
         String hql = "FROM RentalProductEntity P  where P.id =:id and P.owner.id = :ownerId";
         try {
-            return (MyRentalProduct) session.createQuery(hql)
+            return (RentalProduct) session.createQuery(hql)
                     .setParameter("id", id)
                     .setParameter("ownerId",ownerId)
                     .uniqueResult();
@@ -116,7 +116,7 @@ public class ProductModel extends BaseModel{
             session.close();
         }
     }
-    public List<MyRentalProduct> getMyRentalProductList(int ownerId,int limit,int offset){
+    public List<RentalProduct> getMyRentalProductList(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
         String hql = "FROM RentalProductEntity P  where P.owner.id = :ownerId ORDER BY P.id DESC ";
         try {

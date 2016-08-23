@@ -331,7 +331,7 @@
                                             <a href="${BaseUrl}/product/details/${product.getId()}"><img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" /></a>
                                             <div class="product-btn-grp">
                                                 <a href="" class="gbtn left">Quick view</a>
-                                                <a href="#" class="gbtn right">Rent Now</a>
+                                                <a href="#" data-toggle="modal" data-target="#rentPopUp" class="gbtn right">Rent Now</a>
                                             </div>
                                         </div>
                                         <div class="block-desc">
@@ -624,4 +624,52 @@
                 </div>
             </div>
         </div>
+
+
+<!--Rent form Modal -->
+<div id="rentPopUp" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title center">Rent Form</h4>
+            </div>
+            <form class="rent_submission_form" action="" method="post">
+                <div class="modal-body">
+                    <div class="row clearfix">
+                        <div class="col-md-6">
+                            <div class="form-group date-con">
+                                <label>From</label>
+                                <input type="text" class="form-control datepicker" id="dpd1" placeholder="">
+                                <p class="help-block error-form">Please fill up the field</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group date-con">
+                                <label>To</label>
+                                <input type="text" class="form-control datepicker" id="dpd2" placeholder="">
+                                <p class="help-block error-form">Please fill up the field</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group ">
+
+                                <textarea type="text" class="form-control "  placeholder="" style="resize: none;"></textarea>
+                                <p class="help-block error-form">Please fill up the field</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 <jsp:directive.include file="../layouts/footer.jsp" />

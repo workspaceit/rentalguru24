@@ -1,10 +1,26 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: omar
-  Date: 8/19/16
-  Time: 11:24 AM
-  To change this template use File | Settings | File Templates.
---%>
+
+<!--Success Modal -->
+<div id="successModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body swuccess_modal_body center">
+        <p class="no-margin"><span><i class="fa fa-check fa-2x success"></i></span><span id="successMsg"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="errorModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body swuccess_modal_body center">
+        <p class="no-margin"><span><i class="fa fa-check fa-2x success"></i></span><span id="errorMsg"></span></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="footer_bottom">
   <div class="container">
     <div class="row">

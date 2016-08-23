@@ -24,21 +24,6 @@
 
        <!-- * ** *** **** Interceptor  **** *** ** * -->
 
-       <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
-              <!--<property name="mappings">-->
-                     <!--<props>-->
-                            <!--<prop key="/signup"></prop>-->
-                     <!--</props>-->
-              <!--</property>-->
-
-              <!--<property name="interceptors">-->
-                     <!--<list>-->
-                            <!--<ref bean="maintenanceInterceptor" />-->
-                            <!--<ref bean="executeTimeInterceptor" />-->
-                     <!--</list>-->
-              <!--</property>-->
-       <!--</bean>-->
-
        <mvc:interceptors>
               <!-- ******* Admin Panel  ************-->
               <mvc:interceptor>

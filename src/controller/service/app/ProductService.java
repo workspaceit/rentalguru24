@@ -324,7 +324,7 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        MyRentalProduct mrp = productModel.getMyRentalProductById(productId, appCredential.getId());
+        RentalProduct mrp = productModel.getMyRentalProductById(productId, appCredential.getId());
 //        System.out.println("mrp : "+mrp.getClass());
 //        System.out.println("mrp : "+mrp.getRentProduct().getEndsDate());
         serviceResponse.setResponseData(mrp, "No record found");
