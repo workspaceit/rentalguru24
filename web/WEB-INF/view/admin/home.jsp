@@ -44,8 +44,8 @@
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email Address</th>
-                  <th>.....</th>
-                  <th>.....</th>
+                  <th>Identity Document</th>
+                  <th>Active/Deactive</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -55,9 +55,14 @@
                   <td>${users.getUserInf().getLastName()}</td>
                   <td>${users.getEmail()}</td>
                   <td>
+                    <a class="btn btn-block" href="${BaseUrl}/${users.getUserInf().getIdentityDocUrl()}">
+                      <i class="fa fa-download"></i> Download Document
+                    </a>
+                  </td>
+                  <td>
                     <div class="btn-group">
-                      <button type="button" class="btn btn-default">Action</button>
-                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <button type="button" class="btn btn-success">action</button>
+                      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
                         <span class="sr-only">Toggle Dropdown</span>
                       </button>
@@ -67,7 +72,6 @@
                       </ul>
                     </div>
                   </td>
-                  <td>-</td>
                 </tr>
                 </d:forEach>
                 </tbody>
@@ -76,8 +80,8 @@
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email Address</th>
-                  <th>.....</th>
-                  <th>.....</th>
+                  <th>Identity Document</th>
+                  <th>Active/Deactive</th>
                 </tr>
                 </tfoot>
               </table>

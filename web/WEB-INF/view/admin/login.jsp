@@ -58,7 +58,8 @@
             </div><!-- /.col -->
           </div>
         </form>
-
+        <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
+        </div>
         <%--<a href="#">I forgot my password</a><br>--%>
         <%--<a href="register.html" class="text-center">Register a new membership</a>--%>
 
@@ -89,15 +90,21 @@
           var password = $('#password').val();
 //          console.log(email, password);
           $.ajax({
-            url: BASEURL+'/admin-signin/by-email-password',
+            url: BASEURL + '/admin-signin/by-email-password',
             type: 'POST',
             data: {
               email: email,
-              password : password
+              password: password
             },
-            success: function(data){
-              console.log(data);
-            }
+            success: function (data) {
+              if (data.responseStat.status == true) {
+                $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(2000).fadeOut(500, function () {
+                  window.location.href = BASEURL + "/admin/user/app-user";
+                });
+              } else {
+                $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500);
+              }
+            },
           });
           return false;
         }
