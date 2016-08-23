@@ -75,18 +75,30 @@ public class RentRequestService{
         Timestamp endTimeStamp = DateHelper.getStringToTimeStamp(endsDate, "dd-MM-yyyy");
 
 
-        if(rentProductModel.isProductInRent(productId,startTimeStamp,endTimeStamp)){
-            serviceResponse.setRequestError("productId","Product is not available for rent in given date");
+        if(rentProductModel.isProductInRent(productId, startTimeStamp, endTimeStamp)){
+            serviceResponse.setRequestError("productId","Product is already in rent on given date");
             return serviceResponse;
         }
 
-        if(serviceResponse.hasErrors()){
-            return serviceResponse;
-        }
         RentalProduct rentalProduct = productModel.getEntityById(productId);
+
 
         if(rentalProduct == null){
             serviceResponse.setRequestError("productId","Product does not exist by this id");
+            return serviceResponse;
+        }
+
+        if(startTimeStamp.before(rentalProduct.getAvailableFrom()) || startTimeStamp.after(rentalProduct.getAvailableTill())){
+            serviceResponse.setRequestError("startDate","Product is not available for rent on given date");
+        }
+
+        if(endTimeStamp.before(rentalProduct.getAvailableFrom()) || endTimeStamp.after(rentalProduct.getAvailableTill())){
+            serviceResponse.setRequestError("endsDate","Product is not available for rent on given date");
+        }
+
+
+
+        if(serviceResponse.hasErrors()){
             return serviceResponse;
         }
 
@@ -115,6 +127,7 @@ public class RentRequestService{
 
         rentRequestModel.insert(rentRequest);
 
+        serviceResponse.getResponseStat().setMsg("Request successfully sent");
         serviceResponse.setResponseData(rentRequest, "Internal server error");
 
         return serviceResponse;

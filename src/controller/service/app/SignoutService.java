@@ -24,7 +24,7 @@ public class SignoutService extends BaseService {
 
 
     @RequestMapping( method = RequestMethod.GET)
-    public ServiceResponse signOut(@RequestParam String email,@RequestParam String password){
+    public ServiceResponse signOut(){
         this.destroySession();
 
         this.serviceResponse = new ServiceResponse();
