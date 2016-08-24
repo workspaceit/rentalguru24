@@ -1,6 +1,8 @@
 package controller.service.admin;
 
 
+<<<<<<< HEAD
+=======
 import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+>>>>>>> 005e7e06340ec0db489547718f1d5916414f9970
 
 /**
  * Created by omar on 8/24/16.
  */
+<<<<<<< HEAD
+
+public class AdminUserService {
+
+=======
 @RestController
 @RequestMapping("/api-admin")
 public class AdminUserService {
@@ -30,4 +38,5 @@ public class AdminUserService {
         appLoginCredentialModel.appUserStatusUpdate(appUserId,varified);
         return serviceResponse;
     }
+>>>>>>> 005e7e06340ec0db489547718f1d5916414f9970
 }
