@@ -356,7 +356,7 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
 //
 
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     @Where(clause = "rentProduct.expired = false")
     public List<RentProduct> getRentProduct() {
