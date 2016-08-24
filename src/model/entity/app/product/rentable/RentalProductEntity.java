@@ -1,6 +1,7 @@
 package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.convert.PictureArrayConverter;
@@ -11,7 +12,7 @@ import model.entity.app.RentRequest;
 import model.entity.app.RentType;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.ProductLiked;
-import model.entity.app.product.iface.Product;
+import model.entity.app.product.view.ProductView;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import model.nonentity.photo.Picture;
@@ -22,38 +23,75 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mi on 8/8/16.
  */
 
-//@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
+@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "product", schema = "" ) //catalog = "rentguru24"
-public class RentalProductEntity implements RentalProduct,MyRentalProduct {
+public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
 
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private int id;
 
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private String name;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private String description;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private float averageRating;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private Picture profileImage;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private List<Picture> otherImages;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private double currentValue;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private double rentFee;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private boolean active;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private boolean currentlyAvailable;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private Timestamp availableFrom;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private Timestamp availableTill;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private boolean reviewStatus;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private Timestamp createdDate;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private AppCredential owner;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private ProductLocation productLocation;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private List<ProductCategory> productCategories;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private RentType rentType;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private ProductLiked productLiked;
+
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private boolean isLiked;
 
 
@@ -62,8 +100,11 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct {
 
 
 //    private List<ProductAvailability> productAvailability;
+    @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private List<RentRequest> rentRequests;
-    private RentProduct rentProduct;
+
+    @JsonView({ProductView.MyRentalProductView.class})
+    private List<RentProduct> rentProduct;
 
 
 
@@ -314,14 +355,16 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct {
     }
 //
 
-    @Override
-    @OneToOne(fetch = FetchType.LAZY, optional = true,mappedBy = "rentalProduct")
-    public RentProduct getRentProduct() {
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    @Where(clause = "rentProduct.expired = false")
+    public List<RentProduct> getRentProduct() {
         return rentProduct;
     }
 
-    @Override
-    public void setRentProduct(RentProduct rentProduct) {
+
+    public void setRentProduct(List<RentProduct> rentProduct) {
         this.rentProduct = rentProduct;
     }
 }

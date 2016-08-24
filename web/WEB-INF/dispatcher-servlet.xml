@@ -31,6 +31,11 @@
                      <bean class="controller.interceptor.AdminAuthInterceptor"/>
               </mvc:interceptor>
               <mvc:interceptor>
+                     <mvc:mapping path="/api-admin/**"/>
+                     <bean class="controller.interceptor.AdminAuthInterceptor"/>
+              </mvc:interceptor>
+
+              <mvc:interceptor>
                      <mvc:mapping path="/admin-signin"/>
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
@@ -209,6 +214,8 @@
                             <value>model.entity.app.RentType</value>
                             <value>model.entity.app.ProductRating</value>
                             <value>model.entity.app.product.ProductLiked</value>
+                            <value>model.entity.app.product.ProductReceived</value>
+                            <value>model.entity.app.product.ProductReturned</value>
                      </list>
               </property>
               <property name="hibernateProperties">

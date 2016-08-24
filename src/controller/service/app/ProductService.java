@@ -1,7 +1,7 @@
 package controller.service.app;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import controller.service.BaseService;
 import helper.DateHelper;
 import helper.ImageHelper;
 import helper.ServiceResponse;
@@ -11,15 +11,12 @@ import model.entity.app.ProductRating;
 import model.entity.app.RentType;
 import model.entity.app.TempFile;
 import model.entity.app.product.ProductCategory;
-import model.entity.app.product.iface.Product;
+import model.entity.app.product.view.ProductView;
 import model.entity.app.product.rentable.ProductLocation;
 import model.entity.app.product.rentable.RentalProductEntity;
-import model.entity.app.product.rentable.SearchedProduct;
-import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import validator.form.ProductUploadFormValidator;
@@ -57,6 +54,7 @@ public class ProductService{
     ProductRatingModel productRatingModel;
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    @JsonView(ProductView.RentalProductView.class)
     public ServiceResponse uploadProduct(HttpServletRequest request,
                                          @RequestParam Map<String,String> allRequestParameter,
                                          @Valid ProductUploadForm productUploadForm,
@@ -318,6 +316,7 @@ public class ProductService{
         return serviceResponse;
     }
     @RequestMapping(value = "/get-my-rental-product/{product_id}", method = RequestMethod.GET)
+    @JsonView(ProductView.MyRentalProductView.class)
     public ServiceResponse getMyRentalProduct(HttpServletRequest request,
                                               @PathVariable("product_id") int productId){
 
@@ -330,7 +329,10 @@ public class ProductService{
         serviceResponse.setResponseData(mrp, "No record found");
         return serviceResponse;
     }
+
+
     @RequestMapping(value = "/get-my-rental-product", method = RequestMethod.POST)
+    @JsonView(ProductView.MyRentalProductView.class)
     public ServiceResponse getMyRentalProductList(HttpServletRequest request,
                                                 @RequestParam ("limit") int limit,
                                                 @RequestParam ("offset") int offset){

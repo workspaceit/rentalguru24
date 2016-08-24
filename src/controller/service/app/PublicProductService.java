@@ -1,32 +1,16 @@
 package controller.service.app;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import controller.service.BaseService;
-import helper.DateHelper;
-import helper.ImageHelper;
+import com.fasterxml.jackson.annotation.JsonView;
 import helper.ServiceResponse;
 import model.*;
-import model.entity.app.*;
-import model.entity.app.product.ProductCategory;
-import model.entity.app.product.rentable.RentalProductEntity;
-import model.entity.app.product.rentable.ProductLocation;
+import model.entity.app.product.view.ProductView;
 import model.entity.app.product.rentable.SearchedProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
-import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import validator.form.ProductUploadFormValidator;
-import validator.form.class_file.ProductUploadForm;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by mi on 8/8/16.
@@ -77,6 +61,35 @@ public class PublicProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         List<SearchedProduct> searchedProducts = productModel.getSearchedProduct(limit, offset);
         return searchedProducts;
+    }
+
+
+    @RequestMapping(value = "/get-only-rental-product-attributs", method = RequestMethod.GET)
+    @JsonView(ProductView.RentalProductView.class)
+    public ServiceResponse getOnlyRentalProductAttributes(HttpServletRequest request,
+                                                          @RequestParam ("limit") int limit,
+                                                          @RequestParam ("offset") int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+
+
+        serviceResponse.setResponseData(productModel.getMyRentalProductList(40, limit, offset), "No record found");
+        return serviceResponse;
+
+    }
+
+    @RequestMapping(value = "/get-my-rental-product-attributs", method = RequestMethod.GET)
+    @JsonView(ProductView.MyRentalProductView.class)
+    public ServiceResponse getOnlyMyRentalProductAttributes(HttpServletRequest request,
+                                                          @RequestParam ("limit") int limit,
+                                                          @RequestParam ("offset") int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+
+
+        serviceResponse.setResponseData(productModel.getMyRentalProductList(40, limit, offset), "No record found");
+        return serviceResponse;
+
     }
 
 }
