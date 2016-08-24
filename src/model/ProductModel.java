@@ -4,6 +4,7 @@ package model;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.SearchedProduct;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -50,7 +51,23 @@ public class ProductModel extends BaseModel{
         }
     }
 
-    public List<RentalProduct> getRentalProduct(int limit, int offset){
+    public List<RentalProductEntity>getRentalProduct(){
+        Session session=null;
+        List rentalProducts=null;
+        try {
+            session=this.sessionFactory.openSession();
+            rentalProducts =session.createQuery("from RentalProductEntity").list();
+        }catch (HibernateException ex){
+            ex.printStackTrace();
+        }finally {
+            if (session!=null)
+                session.close();
+        }
+
+        return rentalProducts;
+    }
+
+        public List<RentalProduct> getRentalProduct(int limit, int offset){
         if(limit > 15){
             limit = 15;
         }
