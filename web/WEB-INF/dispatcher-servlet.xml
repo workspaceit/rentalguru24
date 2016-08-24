@@ -28,7 +28,11 @@
               <!-- ******* Admin Panel  ************-->
               <mvc:interceptor>
                      <mvc:mapping path="/admin/**"/>
-                     <bean class="controller.interceptor.AdminInterceptor"/>
+                     <bean class="controller.interceptor.AdminAuthInterceptor"/>
+              </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/admin-signin"/>
+                     <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
               <!-- ******* Public Web page  ************-->
               <mvc:interceptor>
@@ -81,10 +85,13 @@
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
 
-       <!--<mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
-       <mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"
+       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
                       cache-period="31556926"/>
+       <mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
+                      cache-period="31556926"/>
+
+       <!--<mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
 
