@@ -205,7 +205,7 @@
                             <value>model.entity.app.product.rentable.RentalProductEntity</value>
                             <value>model.entity.app.product.rentable.ProductAttribute</value>
                             <value>model.entity.app.product.ProductCategory</value>
-                            <value>model.entity.app.RentProduct</value>
+                            <value>model.entity.app.RentInf</value>
                             <value>model.entity.app.RentRequest</value>
                             <value>model.entity.app.TempFile</value>
                             <value>model.entity.app.IdentityType</value>

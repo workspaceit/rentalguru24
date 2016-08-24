@@ -51,6 +51,7 @@
                 <tbody>
                 <d:forEach var="users" items="${allUsers}">
                 <tr>
+
                   <td>${users.getUserInf().getFirstName()}</td>
                   <td>${users.getUserInf().getLastName()}</td>
                   <td>${users.getEmail()}</td>
@@ -67,8 +68,13 @@
                         <span class="sr-only">Toggle Dropdown</span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
+<<<<<<< HEAD
                         <li><a href="javascript:void(0);" onclick="setActiveDeactivAppUsers(${users.id}, 1)">Active</a></li>
                         <li><a href="javascript:void(0);" onclick="setActiveDeactivAppUsers(${users.id}, 0)">Deactive</a></li>
+=======
+                        <li><a href="#">Active</a></li>
+                        <li><a href="#">Deactive</a></li>
+>>>>>>> fe7872f3ce75c6c0dd08e2cac432531abe7d49dd
                       </ul>
                     </div>
                   </td>

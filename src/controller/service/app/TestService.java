@@ -2,8 +2,6 @@ package controller.service.app;
 
 
 import controller.service.BaseService;
-import helper.DateHelper;
-import helper.ServiceResponse;
 import library.RentGuruMail;
 import model.*;
 
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
@@ -146,12 +143,12 @@ public class TestService extends BaseService{
     }
     @RequestMapping(value = "/test/rentproduct", method = RequestMethod.POST)
     public void postRentProduct(){
-        RentProduct rentProduct = new RentProduct();
+        RentInf rentInf = new RentInf();
 
        // rentProduct.setRentalProduct(rentProduct);
-        rentProduct.setStartDate(new Date(Calendar.getInstance().getTime().getTime()));
-        rentProduct.setEndsDate(new Date(Calendar.getInstance().getTime().getTime()));
-        rentProduct.setExpired(false);
+        rentInf.setStartDate(new Date(Calendar.getInstance().getTime().getTime()));
+        rentInf.setEndsDate(new Date(Calendar.getInstance().getTime().getTime()));
+        rentInf.setExpired(false);
 
 //        RentRequest rentRequest1 = new RentRequest();
 //        rentRequest1.setProductId(1);
@@ -173,7 +170,7 @@ public class TestService extends BaseService{
 //
 //        rentProduct.setRentRequestsById(rentRequestsarr);
 
-        rentProductModel.insert(rentProduct);
+        rentProductModel.insert(rentInf);
     }
 
 
