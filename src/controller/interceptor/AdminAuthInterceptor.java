@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class AdminInterceptor extends HandlerInterceptorAdapter{
+public class AdminAuthInterceptor extends HandlerInterceptorAdapter{
     private String baseURL;
 
     //before the actual handler will be executed
@@ -45,7 +45,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
         }else{
             serviceResponse.getResponseStat().setErrorMsg("Session expired !!!!");
             response.setContentType("application/json");
-            response.sendRedirect(this.getURLWithContextPath(request)+"/admin-login");
+            response.sendRedirect(this.getURLWithContextPath(request)+"/admin-signin");
             return false;
         }
     }
