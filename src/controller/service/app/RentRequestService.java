@@ -1,25 +1,20 @@
 package controller.service.app;
 
-import controller.service.BaseService;
 import helper.DateHelper;
 import helper.ServiceResponse;
 import model.ProductModel;
 import model.RentProductModel;
 import model.RentRequestModel;
 import model.entity.app.AppCredential;
-import model.entity.app.RentProduct;
+import model.entity.app.RentInf;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Map;
 
 /**
  * Created by omar on 8/3/16.
@@ -158,7 +153,7 @@ public class RentRequestService{
             return serviceResponse;
         }
 
-        RentProduct rentProduct = new RentProduct();
+        RentInf rentInf = new RentInf();
 
         boolean isProductInRent = rentProductModel.isProductInRent( rentRequest.getRentalProduct().getId(),
                                                                     DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
@@ -178,16 +173,16 @@ public class RentRequestService{
 
         /* ~~~~~~~~~~~~~  Rent Product Insertion ~~~~~~~~~~~~~~~~*/
 
-        rentProduct.setRentRequest(rentRequest);
-        rentProduct.setProductReceived(false);
-        rentProduct.setProductReturned(false);
-        rentProduct.setExpired(false);
-        rentProduct.setStartDate(rentRequest.getStartDate());
-        rentProduct.setEndsDate(rentRequest.getEndDate());
-        rentProduct.setRentalProduct(rentRequest.getRentalProduct());
-        rentProduct.setRenteeId(rentRequest.getRequestedBy().getId());
+        rentInf.setRentRequest(rentRequest);
+        rentInf.setProductReceived(false);
+        rentInf.setProductReturned(false);
+        rentInf.setExpired(false);
+        rentInf.setStartDate(rentRequest.getStartDate());
+        rentInf.setEndsDate(rentRequest.getEndDate());
+        rentInf.setRentalProduct(rentRequest.getRentalProduct());
+        rentInf.setRenteeId(rentRequest.getRequestedBy().getId());
 
-        rentProductModel.insert(rentProduct);
+        rentProductModel.insert(rentInf);
 
         /* ~~~~~~~~~~~~~  Expire Request in Between date ~~~~~~~~~~~~~~~~*/
 

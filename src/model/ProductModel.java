@@ -118,7 +118,7 @@ public class ProductModel extends BaseModel{
     }
     public List<RentalProduct> getMyRentalProductList(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity P  where P.owner.id = :ownerId ORDER BY P.id DESC ";
+        String hql = "FROM RentalProductEntity myRentalProduct LEFT JOIN FETCH myRentalProduct.rentInf where myRentalProduct.owner.id = :ownerId ORDER BY myRentalProduct.id DESC ";
         try {
             return  session.createQuery(hql)
                     .setParameter("ownerId", ownerId)

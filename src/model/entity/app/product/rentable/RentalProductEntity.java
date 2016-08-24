@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.convert.PictureArrayConverter;
 import model.convert.PictureConverter;
 import model.entity.app.AppCredential;
-import model.entity.app.RentProduct;
+import model.entity.app.RentInf;
 import model.entity.app.RentRequest;
 import model.entity.app.RentType;
 import model.entity.app.product.ProductCategory;
@@ -104,7 +104,7 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
     private List<RentRequest> rentRequests;
 
     @JsonView({ProductView.MyRentalProductView.class})
-    private List<RentProduct> rentProduct;
+    private List<RentInf> rentInf;
 
 
 
@@ -353,18 +353,17 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
     public void setRentRequests(List<RentRequest> rentRequests) {
        this.rentRequests = rentRequests;
     }
-//
 
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    @Where(clause = "rentProduct.expired = false")
-    public List<RentProduct> getRentProduct() {
-        return rentProduct;
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @Where(clause = "expired = false")
+    public List<RentInf> getRentInf() {
+        return rentInf;
     }
 
 
-    public void setRentProduct(List<RentProduct> rentProduct) {
-        this.rentProduct = rentProduct;
+    public void setRentInf(List<RentInf> rentInf) {
+        this.rentInf = rentInf;
     }
 }

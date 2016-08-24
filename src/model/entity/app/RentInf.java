@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "rent_product", schema = "")
-public class RentProduct {
+public class RentInf {
     private int id;
     private RentRequest rentRequest;
     private RentalProduct rentalProduct;
