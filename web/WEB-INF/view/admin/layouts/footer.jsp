@@ -206,6 +206,9 @@ immediately after the control sidebar -->
 <script src="<c:url value="/admin-resources/dist/js/demo.js"/>"></script>
 <!-- page script -->
 <script>
+  var BASEURL = "${BaseUrl}";
+</script>
+<script>
   $(function () {
     $("#example1").DataTable();
     $('#example2').DataTable({

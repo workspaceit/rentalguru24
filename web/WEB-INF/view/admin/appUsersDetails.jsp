@@ -61,14 +61,14 @@
                   </td>
                   <td>
                     <div class="btn-group">
-                      <button type="button" class="btn btn-success">action</button>
-                      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                      <button type="button" class="btn <d:if test="${users.verified == true}">btn-success</d:if> <d:if test="${users.verified == false}">btn-danger</d:if>" id="actionButton_${users.id}"><d:if test="${users.verified == true}">Active</d:if> <d:if test="${users.verified == false}">Deactive</d:if></button>
+                      <button type="button" class="btn <d:if test="${users.verified == true}">btn-success</d:if> <d:if test="${users.verified == false}">btn-danger</d:if> dropdown-toggle" data-toggle="dropdown" id="actionButtonDropdown_${users.id}">
                         <span class="caret"></span>
                         <span class="sr-only">Toggle Dropdown</span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Active</a></li>
-                        <li><a href="#">Deactiv</a></li>
+                        <li><a href="javascript:void(0);" onclick="setActiveDeactivAppUsers(${users.id}, 1)">Active</a></li>
+                        <li><a href="javascript:void(0);" onclick="setActiveDeactivAppUsers(${users.id}, 0)">Deactive</a></li>
                       </ul>
                     </div>
                   </td>
@@ -92,5 +92,36 @@
     </section><!-- /.content -->
   </div><!-- /.content-wrapper -->
     <jsp:directive.include file="layouts/footer.jsp" />
+  <script>
+    function setActiveDeactivAppUsers(id, status){
+      if(status == 1){
+        $("#actionButton_"+id).removeClass("btn-danger")
+        $("#actionButtonDropdown_"+id).removeClass("btn-danger")
+        $("#actionButton_"+id).addClass("btn-success");
+        $("#actionButtonDropdown_"+id).addClass("btn-success");
+        $("#actionButton_"+id).html("Active");
+      }else{
+        $("#actionButton_"+id).removeClass("btn-success")
+        $("#actionButtonDropdown_"+id).removeClass("btn-success")
+        $("#actionButton_"+id).addClass("btn-danger");
+        $("#actionButtonDropdown_"+id).addClass("btn-danger");
+        $("#actionButton_"+id).html("Deactive");
+      }
+      var appUserId = id;
+      var varified = status;
+//      console.log(appUserId, varified);
+      $.ajax({
+        url: BASEURL+"/api-admin/app-user/active-app-user/"+appUserId+"/"+varified,
+        type: 'POST',
+        data:{
+          appUserId: appUserId,
+          varified: varified,
+        },
+        success: function (data){
+          console.log(data);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
