@@ -221,10 +221,9 @@
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
-              <img src="<c:url value="/admin-resources/dist/img/user2-160x160.jpg"/>" class="img-circle" alt="User Image">
+              <img src="<c:url value="/admin-resources/dist/img/defaultProfileImages.png"/>" class="img-circle" alt="User Image">
               <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2012</small>
+                ${adminUser.getUserInf().getFirstName()}
               </p>
             </li>
             <!-- Menu Body -->
@@ -245,7 +244,7 @@
                 <a href="#" class="btn btn-default btn-flat">Profile</a>
               </div>
               <div class="pull-right">
-                <a href="${BaseUrl}/api/signout" class="btn btn-default btn-flat">Sign out</a>
+                <a  class="btn btn-default btn-flat" onclick="signout()">Sign out</a>
               </div>
             </li>
           </ul>
