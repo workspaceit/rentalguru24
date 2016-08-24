@@ -1,6 +1,7 @@
 package controller.service.app;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import helper.ImageHelper;
@@ -8,10 +9,7 @@ import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import model.IdentityTypeModel;
 import model.TempFileModel;
-import model.entity.app.AuthCredential;
-import model.entity.app.IdentityType;
-import model.entity.app.TempFile;
-import model.entity.app.UserInf;
+import model.entity.app.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
@@ -29,11 +27,7 @@ import java.util.*;
 @RestController
 
 @RequestMapping("api/signup")
-@Scope("request")
 public class SignupService{
-
-    private ServiceResponse serviceResponse;
-
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
     @Autowired
@@ -42,19 +36,17 @@ public class SignupService{
     IdentityTypeModel identityTypeModel;
 
 
-    public SignupService() {
-        serviceResponse = new ServiceResponse();
-    }
-
     @RequestMapping(value="/user",method = RequestMethod.POST)
-    public ServiceResponse userSignup(@RequestParam Map<String, String> allRequestParams,
+    public ServiceResponse userSignup(HttpServletRequest request,
+                                      @RequestParam Map<String, String> allRequestParams,
                                       @Valid AuthCredential authCredential,
                                       BindingResult result){
 
 
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
         /*------------ Parameter Alias---------------*/
-        this.serviceResponse.setParameterAlias("id","identityTypeId");
+        serviceResponse.setParameterAlias("id","identityTypeId");
 
         String firstName = allRequestParams.get("firstName");
         String lastName = allRequestParams.get("lastName");
@@ -63,12 +55,12 @@ public class SignupService{
         Long identityDocToken = null;
         try{
             if(allRequestParams.get("identityDocToken")==null || allRequestParams.get("identityDocToken")==""){
-                this.serviceResponse.setRequestError("identityDocToken", "Identity doc token required");
+                serviceResponse.setRequestError("identityDocToken", "Identity doc token required");
             }else{
                 identityDocToken = Long.parseLong(allRequestParams.get("identityDocToken"));
             }
         }catch (Exception ex){
-            this.serviceResponse.setRequestError("identityDocToken", "Identity doc token integer required");
+            serviceResponse.setRequestError("identityDocToken", "Identity doc token integer required");
             identityDocToken = 0L;
         }
 
@@ -78,7 +70,7 @@ public class SignupService{
 
             identityType.setId(Integer.parseInt(allRequestParams.get("identityTypeId")));
         }catch (Exception ex){
-            this.serviceResponse.setRequestError("identityTypeId", "Identity type id required");
+            serviceResponse.setRequestError("identityTypeId", "Identity type id required");
             identityType.setId(0);
         }
 
@@ -114,11 +106,11 @@ public class SignupService{
 
         // new IdentityTypeValidator(identityTypeModel).validate(identityType, result);
 
-        this.serviceResponse.setError(result,true,false);
+        serviceResponse.setError(result,true,false);
 
-        if(this.serviceResponse.hasErrors()){
+        if(serviceResponse.hasErrors()){
 
-            return this.serviceResponse;
+            return serviceResponse;
         }
 
 
@@ -130,12 +122,12 @@ public class SignupService{
 
         TempFile tempFile = this.tempFileModel.getByToken(identityDocToken);
         if(tempFile ==null){
-            this.serviceResponse.setRequestError("identityDocToken", "Identity doc token is not valid");
+            serviceResponse.setRequestError("identityDocToken", "Identity doc token is not valid");
             return serviceResponse;
         }
 
         if(!ImageHelper.isFileExist(tempFile.getPath())){
-            this.serviceResponse.setRequestError("identityDocToken", "No file found associated with the token");
+            serviceResponse.setRequestError("identityDocToken", "No file found associated with the token");
             return serviceResponse;
         }
 
@@ -158,8 +150,8 @@ public class SignupService{
 
         authCredential = appLoginCredentialModel.getById(authCredential.getId());
 
-        this.serviceResponse.getResponseStat().setMsg("Signup successful");
-        this.serviceResponse.setResponseData(authCredential);
+        serviceResponse.getResponseStat().setMsg("Signup successful");
+        serviceResponse.setResponseData(authCredential);
         return serviceResponse;
     }
 

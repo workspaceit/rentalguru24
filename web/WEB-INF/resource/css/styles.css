@@ -1350,6 +1350,36 @@ body {
 .form-signup {
     padding: 40px 140px;
 }
+
+.form-signup  .bootstrap-select{
+    float: none;
+    display: block !important;
+    width: 100% !important;
+}
+.form-signup .bootstrap-select .btn{
+    text-transform: capitalize;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0px;
+    border-radius: 0;
+    padding: 10px 18px;
+    margin-bottom: 15px;
+}
+.form-signup .bootstrap-select .btn:hover{
+    background-color: #EDEDED;
+    border: 1px solid #D8D8D8;
+    color: #232323;
+}
+.form-signup .bootstrap-select .btn:focus{
+    border-color: #a4a4a4;
+    background: transparent;
+    color: #000;
+    outline: 0px !important;
+}
+.form-signup .bootstrap-select .btn:active{
+    outline: 0px;
+}
+
 .btn-cstm-sign {
     border: 2px solid #d68f33;
     font-family: inherit;
@@ -1389,23 +1419,28 @@ body {
 .form-signup .form-control {
     display: block;
     width: 100%;
-    height: 34px;
+    height: 40px;
     border: 0px;
-    padding: 6px 12px;
+    padding: 10px 18px;
     font-size: 14px;
     line-height: 1.42857143;
     color: #555;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: #fff;
     background-image: none;
-    border-bottom: 1px solid #ccc;
+    border: 1px solid #bcbcbc;
     border-radius: 0px;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
     -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+
+.form-signup .form-control:hover{
+    background: #EDEDED;
+}
+
 .form-signup .form-control:focus {
-    border-bottom: 1px solid #d68f33;
+    border: 1px solid #a4a4a4;
 }
 /*Rating custom*/
 
@@ -2211,3 +2246,152 @@ span.tag_span:hover {
     line-height: 25px;
 }
 /*Post product steps*/
+
+.user-dash-container{
+    margin-top: 20px;
+}
+
+.user-dash{
+    margin-bottom: 30px;
+    background: #f2f2f2;
+    padding-bottom: 30px;
+    min-height: 300px;
+}
+.user-dash h3{
+    border-bottom: 2px solid #636363;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+    color: #636363;
+    font-size: 18px;
+}
+.cstm-user-menu{
+    margin: 0px;
+}
+.cstm-user-menu li{
+    list-style: none;
+    height: 30px;
+    margin-bottom: 2px;
+}
+.cstm-user-menu li a{
+    display: block;
+    padding: 10px 5px;
+    font-size: 14px;
+    color: #333;
+}
+.cstm-user-menu li a:hover{
+    background: #fff;
+    color: #000;
+    text-decoration: none;
+}
+.side-container{}
+
+.side-container h3{
+    color: #000;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    font-weight: 500;
+    text-transform: capitalize;
+    border-bottom:2px solid #D1D1D1;
+    padding-bottom: 5px;
+    letter-spacing: 1px;
+}
+.side-container h3:first-letter{
+    color: #000;
+}
+.date-filer{
+    width: 200px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.btn-filter{
+    background-color: #d68f33;
+    color: #fff;
+    margin-top: 10px;
+    padding: 5px 10px;
+    margin: 0px;
+    border: 1px solid #d68f33;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.btn-filter:hover{
+    background: #777;
+    border-color:#777;
+    color: #fff;
+}
+
+/*========User Dashboard, Author: Arnab========*/
+#example1_wrapper {
+    padding: 30px 0px;
+}
+.user_dboard_btn{
+    margin-top: 26px;
+}
+/*========User Dashboard, Author: Arnab========*/
+
+.table-img{
+    float: left;
+    width: 100px;
+    height: 100px;
+    width: 20%;
+}
+.table-desc{
+    float: left;
+    display: inline;
+    width: 80%;
+}
+.table-desc h5{
+    margin-bottom: 0px;
+}
+.table-desc p{
+    margin-top: 5px;
+    margin-bottom: 7px;
+}
+.actions{
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+.actions .btn{
+    float: left;
+    font-size: 12px;
+    padding: 5px 7px;
+    font-weight:600;
+    width: 100px;
+    margin: 5px auto;
+    text-transform:uppercase;
+    letter-spacing: 0px;
+    color: #fff;
+}
+.actions .btn:hover{
+    opacity: 0.8;
+}
+.actions .btn-accept{
+    background: #60b460;
+}
+.actions .btn-reject{
+    background: #f65151;
+}
+.actions .btn-edit{
+    background: #60b460;
+}
+.actions .btn-delete{
+    background: #f65151;
+}
+.profile-pic{
+    min-height: 200px;
+    background: #f0f0f0;
+    padding: 5px;
+}
+.profile-pic-review{
+    width: 100%;
+    height:180px;
+    background: #fff;
+    border:1px solid #ccc;
+    margin-bottom: 10px;
+}
+.form-edit{
+    padding: 0px 20px;
+}

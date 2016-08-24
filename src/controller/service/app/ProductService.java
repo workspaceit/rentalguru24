@@ -340,6 +340,9 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        System.out.println(limit);
+        System.out.println(offset);
+
         serviceResponse.setResponseData(productModel.getMyRentalProductList(appCredential.getId(), limit, offset), "No record found");
         return serviceResponse;
     }

@@ -2,9 +2,11 @@ package controller.service.admin;
 
 import controller.BaseHttp;
 import helper.ServiceResponse;
+import helper.SessionManagement;
 import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,27 +21,26 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/admin-signin")
-@Scope("request")
-public class AdminAuthService extends BaseHttp{
+public class AdminAuthService{
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
 
     @RequestMapping(value = "/by-email-password", method = RequestMethod.POST)
-    public ServiceResponse adminAuthenticateByEmailPassword( @RequestParam String email,@RequestParam String password){
-
+    public ServiceResponse adminAuthenticateByEmailPassword(HttpServletRequest request,@RequestParam String email,@RequestParam String password){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         if(email.isEmpty() || password.isEmpty()){
-            this.serviceResponse.getResponseStat().setErrorMsg("Email or password is worng");
+            serviceResponse.getResponseStat().setErrorMsg("Email or password is worng");
         }
         AuthCredential authCredential = appLoginCredentialModel.adminAuthenticationByEmailPassword(email, password);
         if(authCredential==null){
-            this.serviceResponse.getResponseStat().setErrorMsg("Invalid email or password");
+            serviceResponse.getResponseStat().setErrorMsg("Invalid email or password");
             return serviceResponse;
         }else{
-            this.serviceResponse.setResponseData(authCredential);
+            serviceResponse.setResponseData(authCredential);
         }
         serviceResponse.getResponseStat().setMsg("Login success");
-        this.setAppcredentialInSession(appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
+        SessionManagement.setAppCredentialInSession(request,serviceResponse,appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
 
-        return this.serviceResponse;
+        return serviceResponse;
     }
 }

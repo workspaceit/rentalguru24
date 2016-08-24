@@ -70,15 +70,37 @@
                      <bean class="controller.interceptor.ServiceInterceptor"/>
               </mvc:interceptor>
 
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/signin/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/signup/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/signout/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/admin-signin/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/utility/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/fileupload/upload/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+
               <!-- ******* Service with Auth check ************-->
               <mvc:interceptor>
                      <mvc:mapping path="/api/auth/**"/>
                      <bean class="controller.interceptor.ServiceAuthInterceptor"/>
               </mvc:interceptor>
-
-
-
-
        </mvc:interceptors>
 
        <!-- * ** *** **** Interceptor Ends **** *** ** * -->
@@ -90,13 +112,18 @@
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
 
-       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
+       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
+
+       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24files/"
                       cache-period="31556926"/>
-       <mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
+       <mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"
                       cache-period="31556926"/>
 
-       <!--<mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
+
+
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
 
@@ -220,9 +247,9 @@
               </property>
               <property name="hibernateProperties">
                      <props>
-                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>
+                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24_develop</prop>
                             <prop key="hibernate.connection.username">root</prop>
-                            <prop key="hibernate.connection.password" />
+                            <prop key="hibernate.connection.password" >wsit97480</prop>
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
                             <prop key="hibernate.show_sql">true</prop>
                             <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>

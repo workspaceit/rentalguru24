@@ -9,11 +9,11 @@ import model.entity.app.Category;
 import model.entity.app.IdentityType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,8 +23,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/api/utility")
-@Scope("request")
-public class UtilityServices extends BaseService{
+public class UtilityServices {
 
     @Autowired
     IdentityTypeModel identityTypeModel;
@@ -34,53 +33,63 @@ public class UtilityServices extends BaseService{
     RentTypeModel rentTypeModel;
 
     @RequestMapping(value = "/get-identity", method = RequestMethod.GET)
-    public ServiceResponse getAllIdentityType(){
-        this.serviceResponse.setResponseData(identityTypeModel.getAll());
-        return  this.serviceResponse;
+    public ServiceResponse getAllIdentityType(HttpServletRequest request){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        serviceResponse.setResponseData(identityTypeModel.getAll());
+        return  serviceResponse;
     }
 
     @RequestMapping(value = "/get-identity/{id}", method = RequestMethod.GET)
-    public ServiceResponse getById(@PathVariable("id")int id){
+    public ServiceResponse getById(HttpServletRequest request,@PathVariable("id")int id){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
-        this.serviceResponse.setResponseData(identityTypeModel.getById(id));
-        return  this.serviceResponse;
+        serviceResponse.setResponseData(identityTypeModel.getById(id));
+        return  serviceResponse;
     }
     @RequestMapping(value = "/get-category", method = RequestMethod.GET)
-    public ServiceResponse getAllCategory(){
+    public ServiceResponse getAllCategory(HttpServletRequest request){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
-        this.serviceResponse.setResponseData(categoryModel.getAll(),"No category found");
-        return this.serviceResponse;
+        serviceResponse.setResponseData(categoryModel.getAll(),"No category found");
+        return serviceResponse;
     }
 
     @RequestMapping(value = "/get-parent-category/", method = RequestMethod.GET)
-    public ServiceResponse getAllParentCategoryById(){
-        this.serviceResponse.setResponseData(categoryModel.getAllCategoryParent(),"No category found");
-        return this.serviceResponse;
+    public ServiceResponse getAllParentCategoryById(HttpServletRequest request){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+
+        serviceResponse.setResponseData(categoryModel.getAllCategoryParent(),"No category found");
+        return serviceResponse;
     }
 
     @RequestMapping(value = "/get-category/{id}", method = RequestMethod.GET)
-    public ServiceResponse getAllCategoryById(@PathVariable("id")int id){
+    public ServiceResponse getAllCategoryById(HttpServletRequest request,@PathVariable("id")int id){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
-        this.serviceResponse.setResponseData(categoryModel.getById(id),"No category found");
-        return this.serviceResponse;
+        serviceResponse.setResponseData(categoryModel.getById(id),"No category found");
+        return serviceResponse;
     }
     @RequestMapping(value = "/get-subcategory/{parentId}", method = RequestMethod.GET)
-    public ServiceResponse getSubCategoryByPrentId(@PathVariable("parentId")int parentId){
+    public ServiceResponse getSubCategoryByPrentId(HttpServletRequest request,@PathVariable("parentId")int parentId){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
-        this.serviceResponse.setResponseData(categoryModel.getByParentId(parentId),"No subcategory found");
-        return this.serviceResponse;
+        serviceResponse.setResponseData(categoryModel.getByParentId(parentId),"No subcategory found");
+        return serviceResponse;
     }
     @RequestMapping(value = "/get-rent-type/{id}", method = RequestMethod.GET)
-    public ServiceResponse getRentTypeById(@PathVariable("id")int id){
+    public ServiceResponse getRentTypeById(HttpServletRequest request,@PathVariable("id")int id){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
-        this.serviceResponse.setResponseData(rentTypeModel.getById(id),"No rent type found");
-        return this.serviceResponse;
+        serviceResponse.setResponseData(rentTypeModel.getById(id),"No rent type found");
+        return serviceResponse;
     }
     @RequestMapping(value = "/get-rent-type", method = RequestMethod.GET)
-    public ServiceResponse getRentType(){
+    public ServiceResponse getRentType(HttpServletRequest request){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
-        this.serviceResponse.setResponseData(rentTypeModel.getAll(),"No record found");
-        return this.serviceResponse;
+        serviceResponse.setResponseData(rentTypeModel.getAll(),"No record found");
+        return serviceResponse;
     }
 
 }

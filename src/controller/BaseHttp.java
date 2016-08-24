@@ -46,6 +46,7 @@ public class BaseHttp {
     public void setAppcredentialInSession(AppCredential appCredential){
         this.appCredential = appCredential;
         this.serviceResponse.getResponseStat().setIsLogin(true);
+        this.httpSession.setMaxInactiveInterval(-1);
         this.httpSession.setAttribute("appCredential", appCredential);
     }
     public void destroySession(){

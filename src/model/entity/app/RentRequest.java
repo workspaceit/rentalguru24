@@ -44,7 +44,7 @@ public class RentRequest {
     }
 
 
-    @ManyToOne(targetEntity=RentalProductEntity.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity=RentalProductEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     public RentalProduct getRentalProduct() {
         return rentalProduct;

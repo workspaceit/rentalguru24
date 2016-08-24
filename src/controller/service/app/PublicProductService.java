@@ -35,7 +35,7 @@ public class PublicProductService{
 
     @Autowired
     ProductRatingModel productRatingModel;
-
+    @JsonView(ProductView.RentalProductView.class)
     @RequestMapping(value = "/get-product", method = RequestMethod.GET)
     public ServiceResponse getProduct(HttpServletRequest request,
                                       @RequestParam ("limit") int limit,
@@ -45,7 +45,7 @@ public class PublicProductService{
         serviceResponse.setResponseData(rentalProducts,"No product found");
         return serviceResponse;
     }
-
+    @JsonView(ProductView.RentalProductView.class)
     @RequestMapping(value = "/get-product/{id}", method = RequestMethod.GET)
     public ServiceResponse getProductSearchById(HttpServletRequest request,
                                                 @PathVariable("id") int id){
@@ -53,7 +53,7 @@ public class PublicProductService{
         serviceResponse.setResponseData(productModel.getProductSearchById(id),"Product not found");
        return serviceResponse;
     }
-
+    @JsonView(ProductView.RentalProductView.class)
     @RequestMapping(value = "/get-searched-product", method = RequestMethod.GET)
     public List<SearchedProduct> getSearchedProduct(HttpServletRequest request,
                                                     @RequestParam ("limit") int limit,
