@@ -21,12 +21,12 @@ public class AdminUsersController {
     AppLoginCredentialModel appLoginCredentialModel;
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
-        ModelAndView modelAndView = new ModelAndView("admin/home");
+        ModelAndView modelAndView = new ModelAndView("admin/appUsersDetails");
         String baseUrl = (String) request.getAttribute("baseURL");
         List <AppCredential> appCredentials = appLoginCredentialModel.getAllAppUser();
         modelAndView.addObject("allUsers", appCredentials);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Admin Home");
+        modelAndView.addObject("PageTitle", "Admin Users Details");
         return modelAndView;
     }
 }
