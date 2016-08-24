@@ -15,6 +15,6 @@ public interface MyRentalProduct {
 //    List<RentRequest> getRentRequests();
 //    void setRentRequests(List<RentRequest> rentRequests);
 
-    RentProduct getRentProduct();
-    void setRentProduct(RentProduct rentProduct);
+    List<RentProduct> getRentProduct();
+    void setRentProduct(List<RentProduct> rentProduct);
 }

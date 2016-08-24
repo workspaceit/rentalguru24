@@ -1,34 +1,16 @@
 package controller.service.app;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import controller.service.BaseService;
-import helper.DateHelper;
-import helper.ImageHelper;
 import helper.ServiceResponse;
 import model.*;
-import model.entity.app.*;
-import model.entity.app.product.ProductCategory;
-import model.entity.app.product.ProductView;
-import model.entity.app.product.rentable.RentalProductEntity;
-import model.entity.app.product.rentable.ProductLocation;
+import model.entity.app.product.view.ProductView;
 import model.entity.app.product.rentable.SearchedProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
-import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import validator.form.ProductUploadFormValidator;
-import validator.form.class_file.ProductUploadForm;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by mi on 8/8/16.

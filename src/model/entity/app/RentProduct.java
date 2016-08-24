@@ -1,6 +1,7 @@
 package model.entity.app;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.hibernate.annotations.LazyToOne;
@@ -13,6 +14,8 @@ import java.sql.Timestamp;
 /**
  * Created by mi on 8/1/16.
  */
+
+@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "rent_product", schema = "")
 public class RentProduct {
@@ -41,8 +44,8 @@ public class RentProduct {
 
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY,optional = false,targetEntity=RentalProductEntity.class)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY,optional = false,targetEntity=RentalProductEntity.class)
+    @JoinColumn(name = "product_id", referencedColumnName = "id",insertable = false,updatable = false)
     public RentalProduct getRentalProduct() {
         return rentalProduct;
     }

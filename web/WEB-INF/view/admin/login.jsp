@@ -99,7 +99,7 @@
             success: function (data) {
               if (data.responseStat.status == true) {
                 $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(2000).fadeOut(500, function () {
-                  window.location.href = BASEURL + "/admin/user/app-user";
+                  window.location.href = BASEURL + "/admin/user/dashboard";
                 });
               } else {
                 $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500);

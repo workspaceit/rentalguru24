@@ -12,8 +12,7 @@ import model.entity.app.RentRequest;
 import model.entity.app.RentType;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.ProductLiked;
-import model.entity.app.product.ProductView;
-import model.entity.app.product.iface.Product;
+import model.entity.app.product.view.ProductView;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import model.nonentity.photo.Picture;
@@ -24,14 +23,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mi on 8/8/16.
  */
 
-//@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
+@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "product", schema = "" ) //catalog = "rentguru24"
 public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
@@ -106,7 +104,7 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
     private List<RentRequest> rentRequests;
 
     @JsonView({ProductView.MyRentalProductView.class})
-    private RentProduct rentProduct;
+    private List<RentProduct> rentProduct;
 
 
 
@@ -358,13 +356,15 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
 //
 
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true,mappedBy = "rentalProduct")
-    public RentProduct getRentProduct() {
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    @Where(clause = "rentProduct.expired = false")
+    public List<RentProduct> getRentProduct() {
         return rentProduct;
     }
 
 
-    public void setRentProduct(RentProduct rentProduct) {
+    public void setRentProduct(List<RentProduct> rentProduct) {
         this.rentProduct = rentProduct;
     }
 }
