@@ -257,13 +257,3 @@
     </div>
   </nav>
 </header>
-<script>
-  function signout(){
-    $.ajax({
-      url: BASEURL+"/api/signout",
-      success: function(data){
-        console.log(data);
-      }
-    });
-  }
-</script>

@@ -214,3 +214,13 @@ immediately after the control sidebar -->
     });
   });
 </script>
+<script>
+  function signout(){
+    $.ajax({
+      url: BASEURL+"/api/signout",
+      success: function(data){
+        console.log(data);
+      }
+    });
+  }
+</script>
