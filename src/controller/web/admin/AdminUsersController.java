@@ -15,15 +15,18 @@ import java.util.List;
  * Created by omar on 8/23/16.
  */
 @Controller
-@RequestMapping("/admin/user/app-user")
+@RequestMapping("/admin/user")
 public class AdminUsersController {
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/app-user", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("admin/appUsersDetails");
         String baseUrl = (String) request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List <AppCredential> appCredentials = appLoginCredentialModel.getAllAppUser();
+
+        modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("allUsers", appCredentials);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Admin Users Details");
