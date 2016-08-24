@@ -1,3 +1,5 @@
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%--<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>--%>
 <%--
   Created by IntelliJ IDEA.
   User: omar
@@ -193,21 +195,9 @@ immediately after the control sidebar -->
 <script src="<c:url value="/admin-resources/plugins/fastclick/fastclick.min.js"/>"></script>
 <!-- AdminLTE App -->
 <script src="<c:url value="/admin-resources/dist/js/app.min.js"/>"></script>
-<!-- Sparkline -->
-<script src="<c:url value="/admin-resources/plugins/sparkline/jquery.sparkline.min.js"/>"></script>
-<!-- jvectormap -->
-<script src="<c:url value="/admin-resources/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"/>"></script>
-<script src="<c:url value="/admin-resources/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"/>"></script>
-<!-- ChartJS 1.0.1 -->
-<script src="<c:url value="/admin-resources/plugins/chartjs/Chart.min.js"/>"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<c:url value="/admin-resources/dist/js/pages/dashboard2.js"/>"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<c:url value="/admin-resources/dist/js/demo.js"/>"></script>
 <!-- page script -->
-<script>
-  var BASEURL = "${BaseUrl}";
-</script>
 <script>
   $(function () {
     $("#example1").DataTable();
