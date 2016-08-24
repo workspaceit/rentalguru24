@@ -51,6 +51,7 @@
                 <tbody>
                 <d:forEach var="users" items="${allUsers}">
                 <tr>
+
                   <td>${users.getUserInf().getFirstName()}</td>
                   <td>${users.getUserInf().getLastName()}</td>
                   <td>${users.getEmail()}</td>
@@ -68,7 +69,7 @@
                       </button>
                       <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Active</a></li>
-                        <li><a href="#">Deactiv</a></li>
+                        <li><a href="#">Deactive</a></li>
                       </ul>
                     </div>
                   </td>
