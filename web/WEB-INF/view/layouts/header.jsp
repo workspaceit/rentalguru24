@@ -11,8 +11,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -84,4 +82,4 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
   <!-- Google fonts end here -->
 </head>
-<body class="ux">
+

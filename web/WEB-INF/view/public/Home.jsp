@@ -1,119 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
 <jsp:directive.include file="../layouts/header.jsp" />
+<body class="ux">
         <!--top Nav Bar-->
-        <div class="container-fluid top_nav">
-            <div class="row">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-6">
-                            <ul class="top_nav_ul">
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>            
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Action</a></li>            
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-6 ">
-                            <ul class="top_nav_ul right top_nav_ul">
-                                <d:if test="${IsLogIn != true}">
-                                <li class="dropdown">
-                                    <a href="${BaseUrl}/signin" class="dropdown-toggle top_nav_a"
-                                       aria-expanded="false">
-                                        <i class="fa fa-user"></i>Login
-                                    </a>                      
-                                </li>
-                                <li class="dropdown">
-                                    <a href="${BaseUrl}/signup" class="dropdown-toggle top_nav_a"
-                                       aria-expanded="false">
-                                        <i class="fa fa-lock"></i>Register
-                                    </a>                      
-                                </li>
-                                </d:if>
-                                <li class="dropdown no-margin">
-                                    <a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">
-                                        <i class="fa fa-bars"></i>
-                                    </a>                      
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <jsp:directive.include file="../layouts/top-nav.jsp" />
         <!--mid navbar-->
-        <div class="container-fluid mid_nav">
-            <div class="row">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-6">
-                            <ul class="mid_nav_logo_ul">
-                                <li class=>
-                                    <img src="<c:url value="/resources/img/logo.png" />" >
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-6 ">
-                            <label class="right mid_nav_contact"><i class="fa fa-mobile fa-2x contact_icon"></i><span class="conatct_number">2300-3560-222</span></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <jsp:directive.include file="../layouts/mid-nav.jsp" />
         <!--main navbar-->
-        <nav class="main_nav navbar navbar-default">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse no-padding " id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown catagory_drop">
-                            <a href="#" class="dropdown-toggle catagory_drop_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i>Select a category <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <d:forEach var="listValue" items="${category}">
-                                    <%--<li><a href="#">Action</a></li>--%>
-                                    <li><a href="#">${listValue.name}</a></li>
-                                </d:forEach>
-                            </ul>
-                        </li>
-                        <form class="navbar-form navbar-left no-padding main_search_form" role="search">
-
-                            <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
-                            <div class="input-group-btn search_button">
-                                <button class="btn btn-default search_btn" type="submit" style="padding:6px;"><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right main_navigation">
-                        <li><a href="#">HOME</a></li>
-                        <li><a href="#">HOME APPLIANCE</a></li>
-                        <li><a href="#">FURNITURE</a></li>
-                        <li><a href="#">GAMING & PARTY</a></li>
-                        <li><a href="#">COOL GADGETS</a></li>
-                        <li><a href="#">BLOG</a></li>
-
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
+        <jsp:directive.include file="../layouts/main-nav.jsp" />
         <!--body content-->
         <div class="home_slider">
             <div class="container">
@@ -797,6 +691,6 @@
         $("#currentProductId").val(productId);
     }
 
-
-
 </script>
+</body>
+</html>
