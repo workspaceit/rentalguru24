@@ -1,5 +1,6 @@
 package controller.service.app;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.service.BaseService;
 import helper.DateHelper;
@@ -11,6 +12,7 @@ import model.entity.app.ProductRating;
 import model.entity.app.RentType;
 import model.entity.app.TempFile;
 import model.entity.app.product.ProductCategory;
+import model.entity.app.product.ProductView;
 import model.entity.app.product.iface.Product;
 import model.entity.app.product.rentable.ProductLocation;
 import model.entity.app.product.rentable.RentalProductEntity;
@@ -330,7 +332,10 @@ public class ProductService{
         serviceResponse.setResponseData(mrp, "No record found");
         return serviceResponse;
     }
+
+
     @RequestMapping(value = "/get-my-rental-product", method = RequestMethod.POST)
+    @JsonView(ProductView.RentalProductView.class)
     public ServiceResponse getMyRentalProductList(HttpServletRequest request,
                                                 @RequestParam ("limit") int limit,
                                                 @RequestParam ("offset") int offset){

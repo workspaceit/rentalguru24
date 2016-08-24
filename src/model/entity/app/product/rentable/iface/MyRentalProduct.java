@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by MI on 14-Aug-16.
  */
-@JsonSerialize(as=MyRentalProduct.class,include= JsonSerialize.Inclusion.NON_EMPTY)
+
 public interface MyRentalProduct {
 
 //    List<RentRequest> getRentRequests();

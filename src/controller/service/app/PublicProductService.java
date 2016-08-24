@@ -1,5 +1,6 @@
 package controller.service.app;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import controller.service.BaseService;
 import helper.DateHelper;
@@ -8,6 +9,7 @@ import helper.ServiceResponse;
 import model.*;
 import model.entity.app.*;
 import model.entity.app.product.ProductCategory;
+import model.entity.app.product.ProductView;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.ProductLocation;
 import model.entity.app.product.rentable.SearchedProduct;
@@ -77,6 +79,35 @@ public class PublicProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         List<SearchedProduct> searchedProducts = productModel.getSearchedProduct(limit, offset);
         return searchedProducts;
+    }
+
+
+    @RequestMapping(value = "/get-only-rental-product-attributs", method = RequestMethod.GET)
+    @JsonView(ProductView.RentalProductView.class)
+    public ServiceResponse getOnlyRentalProductAttributes(HttpServletRequest request,
+                                                          @RequestParam ("limit") int limit,
+                                                          @RequestParam ("offset") int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+
+
+        serviceResponse.setResponseData(productModel.getMyRentalProductList(40, limit, offset), "No record found");
+        return serviceResponse;
+
+    }
+
+    @RequestMapping(value = "/get-my-rental-product-attributs", method = RequestMethod.GET)
+    @JsonView(ProductView.MyRentalProductView.class)
+    public ServiceResponse getOnlyMyRentalProductAttributes(HttpServletRequest request,
+                                                          @RequestParam ("limit") int limit,
+                                                          @RequestParam ("offset") int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+
+
+        serviceResponse.setResponseData(productModel.getMyRentalProductList(40, limit, offset), "No record found");
+        return serviceResponse;
+
     }
 
 }
