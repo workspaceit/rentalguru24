@@ -23,8 +23,6 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<c:url value="/admin-resources/plugins/datatables/dataTables.bootstrap.css"/>">
-  <!-- jvectormap -->
-  <link rel="stylesheet" href="<c:url value="/admin-resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css"/>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<c:url value="/admin-resources/dist/css/AdminLTE.min.css"/>">
   <!-- AdminLTE Skins. Choose a skin from the css/skins

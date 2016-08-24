@@ -56,7 +56,7 @@
                   <td>${users.getUserInf().getLastName()}</td>
                   <td>${users.getEmail()}</td>
                   <td>
-                    <a class="btn btn-block" href="${BaseUrl}/identitydoc-file/${users.getUserInf().getIdentityDocUrl()}">
+                    <a class="btn btn-block" target="_blank" href="${BaseUrl}/identitydoc-file/${users.getUserInf().getIdentityDocUrl()}">
                       <i class="fa fa-download"></i> Download Document
                     </a>
                   </td>
@@ -68,13 +68,8 @@
                         <span class="sr-only">Toggle Dropdown</span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
-<<<<<<< HEAD
                         <li><a href="javascript:void(0);" onclick="setActiveDeactivAppUsers(${users.id}, 1)">Active</a></li>
                         <li><a href="javascript:void(0);" onclick="setActiveDeactivAppUsers(${users.id}, 0)">Deactive</a></li>
-=======
-                        <li><a href="#">Active</a></li>
-                        <li><a href="#">Deactive</a></li>
->>>>>>> fe7872f3ce75c6c0dd08e2cac432531abe7d49dd
                       </ul>
                     </div>
                   </td>
