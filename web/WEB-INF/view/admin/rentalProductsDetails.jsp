@@ -62,10 +62,10 @@
                                         <td>${product.rentFee}</td>
                                         <d:choose>
                                             <d:when test="${product.reviewStatus==true}">
-                                                <td style="color: green">Appoved</td>
+                                                <td style="color: green"><div id="${product.id}">Appoved</div></td>
                                             </d:when>
                                             <d:otherwise>
-                                                <td style="color: red">Disapproved</td>
+                                                <td style="color: red"><div id="${product.id}" >Disapproved</div></td>
                                             </d:otherwise>
                                         </d:choose>
 
@@ -78,8 +78,8 @@
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li ><a href="#">Approve</a></li>
-                                                    <li ><a href="#">Disapprove</a></li>
+                                                    <li ><a href="javascript:void(0)" onclick="approve(${product.id})">Approve</a></li>
+                                                    <li ><a href="javascript:void(0)" onclick="disapprove(${product.id})">Disapprove</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -88,11 +88,12 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Email Address</th>
-                                    <th>Identity Document</th>
-                                    <th>Active/Deactive</th>
+                                    <th>Picture</th>
+                                    <th>Title</th>
+                                    <th>Owner Name</th>
+                                    <th>Current Value</th>
+                                    <th>Rent Fee</th>
+                                    <th>Status</th>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -108,6 +109,93 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <jsp:directive.include file="layouts/footer.jsp"/>
+
+    <div class="modal" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-text"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+        <jsp:directive.include file="layouts/footer.jsp"/>
+    <script>
+
+      $(document).ready(function(){
+          $('#myModal').modal('hide')
+      });
+        function approve(prdocutId){
+            var status=$('#'+prdocutId).html();
+
+
+
+
+            if(status=='Appoved'){
+                $('#modal-text').text('This Product is already approved');
+                $('#myModal').modal('show')
+            }else{
+                $.ajax({
+                    type: "POST",
+                    url: '${BaseUrl}/api-admin/product/approve-product',
+                    data: ({
+                        pid:prdocutId
+                    }),
+                    success: function(data) {
+                        $('#'+prdocutId).text('Appoved').css("color", "green");
+
+                        $('#modal-text').text(data.responseStat.msg);
+                        $('#myModal').modal('show')
+                    },
+                    error: function() {
+                        alert('Error occured');
+                    }
+                });
+            }
+
+
+        }
+
+        function disapprove(prdocutId){
+            var status=$('#'+prdocutId).html();
+            if(status=='Disapproved'){
+                $('#modal-text').text('This Product is already Disapproved');
+                $('#myModal').modal('show');
+            }else{
+                $.ajax({
+                    type: "POST",
+                    url: '${BaseUrl}/api-admin/product/disapprove-product',
+                    data: ({
+                    pid:prdocutId
+                    }),
+                    success: function(data) {
+                        $('#'+prdocutId).text('Disapproved').css("color", "red");
+                        $('#modal-text').text(data.responseStat.msg);
+                        $('#myModal').modal('show')
+                    },
+                    error: function() {
+                        alert('Error occured');
+                    }
+                });
+            }
+
+        }
+
+    </script>
+
 </body>
 </html>
