@@ -115,12 +115,25 @@ public class AppLoginCredentialModel extends BaseModel {
         session.close();
     }
 
-    public List<AppCredential> getAllAppUser(){
+    public List<AuthCredential> getAllAppUser(){
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM AppCredential WHERE  role < 0";
+        String hql = "FROM AuthCredential WHERE  role < 0";
         Query query = session.createQuery(hql);
         List result = query.list();
         return result;
     }
 
+    public void appUserStatusUpdate(int appUserId, int varified){
+        Session session = this.sessionFactory.openSession();
+        AuthCredential authCredential = session.get(AuthCredential.class, appUserId);
+        if(varified == 1){
+            authCredential.setVerified(true);
+        }else {
+            authCredential.setVerified(false);
+        }
+        session.beginTransaction();
+        session.update(authCredential);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

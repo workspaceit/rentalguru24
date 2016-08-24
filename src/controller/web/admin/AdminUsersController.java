@@ -2,6 +2,7 @@ package controller.web.admin;
 
 import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
+import model.entity.app.AuthCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +25,10 @@ public class AdminUsersController {
         ModelAndView modelAndView = new ModelAndView("admin/appUsersDetails");
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        List <AppCredential> appCredentials = appLoginCredentialModel.getAllAppUser();
+        List <AuthCredential> authCredentials = appLoginCredentialModel.getAllAppUser();
 
         modelAndView.addObject("adminUser", appCredential);
-        modelAndView.addObject("allUsers", appCredentials);
+        modelAndView.addObject("allUsers", authCredentials);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Admin Users Details");
         return modelAndView;
