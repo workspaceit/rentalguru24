@@ -55,7 +55,7 @@
                   <td>${users.getUserInf().getLastName()}</td>
                   <td>${users.getEmail()}</td>
                   <td>
-                    <a class="btn btn-block" href="${BaseUrl}/${users.getUserInf().getIdentityDocUrl()}">
+                    <a class="btn btn-block" href="${BaseUrl}/identitydoc-file/${users.getUserInf().getIdentityDocUrl()}">
                       <i class="fa fa-download"></i> Download Document
                     </a>
                   </td>
