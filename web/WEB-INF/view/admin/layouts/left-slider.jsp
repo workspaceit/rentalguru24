@@ -46,7 +46,7 @@
         </ul>
       </li>
 
-      <li class="treeview active">
+      <li class="treeview">
         <a href="#">
           <i class="fa fa-dashboard"></i> <span>Product</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
