@@ -19,7 +19,8 @@
   <!--    <link rel="shortcut icon" href="favicon.ico">-->
 
   <!-- Mobile -->
-
+  <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css"/>"/>
+  <link rel="stylesheet" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
   <style>
     ul{
       list-style: none outside none;
@@ -45,6 +46,9 @@
       z-index: 10000;
     }
   </style>
+  <script type="text/javascript" src="<c:url value="/resources/js/jquery.js"/>"></script>
+  <script src="<c:url value="/resources/js/jquery.zoom.js"/>"></script>
+
   <script src="<c:url value="/resources/js/jquery1.9.1.min.js"  />" ></script>
   <script src="<c:url value="/resources/js/lightslider.js" />" > </script>
   <script>
@@ -76,6 +80,11 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/animate.css" />"  />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/owl.carousel.css" />"  />
   <link rel="stylesheet"  href="<c:url value="/resources/css/flexslider.css" />" />
+  <link type="text/css" href="<c:url value="/resources/css/jquery-ui-1.10.0.custom.css"/>" rel="stylesheet" />
+
+  <link rel="stylesheet" href="<c:url value="/resources/css/easyzoom.css"/> " />
+  <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/datepicker.css"/> " />
+  <link rel="stylesheet" href="<c:url value="/resources/css/zoom.css"/>" />
   <!-- Theme CSS -->
   <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
 
