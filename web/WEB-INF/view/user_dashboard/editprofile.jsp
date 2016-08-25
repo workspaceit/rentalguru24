@@ -20,10 +20,10 @@
 
                         </div>
                         <div class="form-group" style="margin-bottom:0px;">
-                            <label for="terms">Upload photo</label>
+                            <label for="fallback">Upload photo</label>
                             <div id="fallback" class="fallback pos-relative" >
                                 Choose a profile picture
-                                <span class="inner-load"></span>
+                                <span class="inner-load" hidden id="editProfilePicUploadLoader"></span>
                             </div>
                         </div>
                     </div>
@@ -31,25 +31,26 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="firstname">First name</label>
-                                <input type="text" class="form-control" placeholder="ex.John">
+                                <input type="text" class="form-control" placeholder="ex.John" id="firstname" name="firstname" value="${usersDetails.getUserInf().getFirstName()}">
                             </div>
                             <div class="form-group">
                                 <label for="lastname">Last name</label>
-                                <input type="text" class="form-control" placeholder="ex.Wick">
+                                <input type="text" class="form-control" placeholder="ex.Wick" id="lastname" name="lastname" value="${usersDetails.getUserInf().getLastName()}">
                             </div>
                             <div class="form-group">
                                 <label for="dateofbirth">Email</label>
-                                <input type="email" class="form-control" placeholder="ex.email@email.com">
+                                <input type="email" class="form-control" placeholder="ex.email@email.com" id="dateofbirth" name="dateofbirth" value="${userDetails.getEmail()}">
                             </div>
                             <div class="form-group">
                                 <label for="address">Password</label>
-                                <input type="password" class="form-control" placeholder="ex.password">
+                                <input type="password" class="form-control" placeholder="ex.password" id="address" name="address">
                             </div>
                             <div class="form-group">
                                 <label>Identity Type</label>
                                 <select class="selectpicker">
+                                    <option value="0">Please select a identity type</option>
                                     <d:forEach var="identity" items="${identityTypes}">
-                                    <option>${identity.name}</option>
+                                    <option value="${identity.id}">${identity.name}</option>
                                     </d:forEach>
                                 </select>
                             </div>
@@ -57,7 +58,7 @@
                         <div class="col-md-12 text-right">
                             <button class="btn-cstm-sign  pos-relative" style="margin-right:0px;">
                                 Edit Profile
-                                <span class="inner-load"></span>
+                                <span class="inner-load" hidden id="editProfileLoder"></span>
                             </button>
                             <br>
                             <div class="alert alert-success text-center" role="alert">Profile Edit Successfully done</div>
