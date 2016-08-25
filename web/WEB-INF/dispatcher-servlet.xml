@@ -68,6 +68,12 @@
                      <bean class="controller.interceptor.WebAuthInterceptor"/>
               </mvc:interceptor>
 
+              <!-- ******* Auth  File Upload [For Profile Edit ]  ************-->
+              <mvc:interceptor>
+                     <mvc:mapping path="/fileupload/upload/user/profile-image" />
+                     <bean class="controller.interceptor.ServiceAuthInterceptor"/>
+              </mvc:interceptor>
+
 
               <!-- ******* Public Service  ************-->
               <mvc:interceptor>

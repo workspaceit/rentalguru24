@@ -22,12 +22,14 @@ public class ImageHelper {
 //    private static String GLOBAL_PATH = "/home/wsit/rentguru24files_beta/";
 
         /*------------------Local---------------------*/
-   // private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
-    private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
+    private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
+ //   private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
     private static String DOC_FOLDER= "identityDoc/";
     private static String DOC_PATH= GLOBAL_PATH+DOC_FOLDER;
     private static String PRODUCT_FOLDER= "product/";
     private static String PRODUCT_PATH= GLOBAL_PATH+PRODUCT_FOLDER;
+    private static String PROFILE_FOLDER= "profile/";
+    private static String PROFILE_PATH= GLOBAL_PATH+PROFILE_FOLDER;
     private static String TEMP_FOLDER= "temp/";
     private static String TEMP_FILE_PATH= GLOBAL_PATH+TEMP_FOLDER;
 
@@ -94,8 +96,36 @@ public class ImageHelper {
             e.printStackTrace();
         }
 
+        return picture;
+    }
+    public static Picture moveProfileImage(int appCredentialId,String oldPath){
+        String fileName = appCredentialId+"/"+System.nanoTime()+"."+getExtension(oldPath);
+        String filePath = PROFILE_PATH+fileName;
+        Picture picture = new Picture();
+        try{
+
+            File docFile =new File(GLOBAL_PATH+oldPath);
+
+            createDirIfNotExist(PROFILE_PATH + appCredentialId);
+
+            if(docFile.renameTo(new File(filePath))){
+                BufferedImage in = ImageIO.read(new File(filePath));
+
+                picture.getOriginal().setPath(PRODUCT_FOLDER + fileName);
+                picture.getOriginal().getSize().setHeight(in.getHeight());
+                picture.getOriginal().getSize().setWidth(in.getWidth());
+                in.flush();
+
+            }else{
+                System.out.println("File is failed to move!"+filePath);
+            }
+            System.out.println(GLOBAL_PATH+oldPath);
 
 
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
 
         return picture;
     }

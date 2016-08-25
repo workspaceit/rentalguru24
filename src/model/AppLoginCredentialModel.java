@@ -88,6 +88,21 @@ public class AppLoginCredentialModel extends BaseModel {
         }
         return true;
     }
+    public boolean isEmailUsedByOtherButMe(int id,String email){
+        Session session = this.sessionFactory.openSession();
+        String hql = "from AppCredential where email = :email and id !=:id";
+
+        AppCredential appCredential = (AppCredential) session.createQuery(hql)
+                                                        .setParameter("id", id)
+                                                        .setParameter("email", email)
+                                                        .uniqueResult();
+
+
+        if(appCredential==null){
+            return false;
+        }
+        return true;
+    }
     public void insert(AuthCredential authCredential){
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -116,7 +131,6 @@ public class AppLoginCredentialModel extends BaseModel {
     public void update(AuthCredential authCredential){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
-        //session.save(appCredential.getUser());
         session.update(authCredential);
         session.getTransaction().commit();
         session.close();
@@ -131,7 +145,6 @@ public class AppLoginCredentialModel extends BaseModel {
 
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
-
         session.update(authCredential);
         session.getTransaction().commit();
         session.close();
