@@ -72,7 +72,7 @@ public class DashboardController {
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        List <RentRequest>rentRequests=rentRequestModel.getByRequestedBy(appCredential.getId());
+        List <RentRequest>rentRequests=rentRequestModel.getAllPendingRequestByRequestedBy(appCredential.getId());
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Rent Request");
         modelAndView.addObject("myRentRequests", rentRequests );
