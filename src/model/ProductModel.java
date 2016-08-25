@@ -163,6 +163,17 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
+    public List<RentalProduct> getMyRentalProductList(int ownerId) {
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity myRentalProduct LEFT JOIN FETCH myRentalProduct.rentInf where myRentalProduct.owner.id = :ownerId ORDER BY myRentalProduct.id DESC  ";
+        try {
+            return session.createQuery(hql)
+                    .setParameter("ownerId", ownerId)
+                    .list();
+        } finally {
+            session.close();
+        }
+    }
 
     public boolean approveRentalProduct(int productId) {
         Session session = null;
