@@ -1,7 +1,9 @@
 package controller.web.app;
 
 import model.ProductModel;
+import model.RentRequestModel;
 import model.entity.app.AppCredential;
+import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ import java.util.List;
 public class DashboardController {
     @Autowired
     ProductModel productModel;
+
+    @Autowired
+    RentRequestModel rentRequestModel;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
@@ -48,6 +53,16 @@ public class DashboardController {
     public ModelAndView getAllRentRequest(HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView("user_dashboard/rentRequest");
         String baseUrl=(String)request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<RentRequest>rentRequests=rentRequestModel.getAllPendingRequestByProductOwner(appCredential.getId());
+
+
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "Rent Request");
+        modelAndView.addObject("rentRequests", rentRequests );
+        return modelAndView;
+
+
 
     }
 }

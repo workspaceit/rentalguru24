@@ -1,168 +1,236 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: omar
+  Date: 8/24/16
+  Time: 5:51 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
-<jsp:directive.include file="../layouts/header.jsp" />
+<jsp:directive.include file="../layouts/header.jsp"/>
 <body class="ux">
 <!--top Nav Bar-->
-<jsp:directive.include file="../layouts/top-nav.jsp" />
+<jsp:directive.include file="../layouts/top-nav.jsp"/>
 <!--mid navbar-->
-<jsp:directive.include file="../layouts/mid-nav.jsp" />
+<jsp:directive.include file="../layouts/mid-nav.jsp"/>
 <!--main navbar-->
-<jsp:directive.include file="../layouts/main-nav.jsp" />
+<jsp:directive.include file="../layouts/main-nav.jsp"/>
 <!--end main Nav-->
-<!--Dashboard-->
-<div class="container user-dash-container">
-  <div class="row">
-    <div class="col-md-3 user-dash">
-      <h3>User Dashboard</h3>
-      <ul class="cstm-user-menu">
-        <li><a href="#">Financial Transaction</a></li>
-        <li><a href="#">Rent History</a></li>
-        <li><a href="#">My Bookings</a></li>
-        <li><a href="#">Rent Request</a></li>
-        <li><a href="#">Profile Edit</a></li>
-      </ul>
-    </div>
-    <div class="col-md-9 side-container">
-      <h3>Rent Request</h3>
-      <div class="row clearfix no-margin">
-        <div class="col-md-4 col-sm-4 col-xs-12">
-          <div class="form-group date-con">
-            <label>From</label>
-            <input type="text"  class="form-control datepicker" id="dpd1" placeholder="" >
-            <p class="help-block error-form">Please fill up the field</p>
-          </div>
-        </div>
-
-        <div class="col-md-4 col-sm-4 col-xs-12">
-          <div class="form-group date-con">
-            <label>To</label>
-            <input type="text"  class="form-control datepicker" id="dpd2" placeholder="" >
-            <p class="help-block error-form">Please fill up the field</p>
-          </div>
-        </div>
-        <button class="btn-filter user_dboard_btn">Date Filters</button>
-      </div>
-      <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          <table class="table table-bordered table-striped user_dashboard_table">
-            <thead>
-            <tr>
-              <th>Lorem</th>
-              <th>Ipsum</th>
-              <th>Platform(s)</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>
-                <div class="table-img">
-                  <img src="http://placehold.it/100x100" />
-                </div>
-                <div class="table-desc">
-                  <h5>Well furnished Sofa</h5>
-                  <p>Phasellus non quam erat. Sed gravida et nulla at volutpat. Suspendisse ut cursus lorem, nec dignissim tellus. Donec a commodo tellus. </p>
-                  <p><span>Jan 28,2016</span> to <span>Feb 27,2016</span></p>
-                </div>
-              </td>
-              <td>System Architect</td>
-              <td>
-                <div class="actions">
-                  <button class="btn btn-edit">Edit</button>
-                  <button class="btn btn-delete">Delete</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>Garrett Winters</td>
-              <td>Accountant</td>
-              <td>Tokyo</td>
-            </tr>
-
-            </tbody>
-            <tfoot>
-            <tr>
-              <th>Rendering engine</th>
-              <th>Browser</th>
-              <th>Platform(s)</th>
-            </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 <!-- Dashboard-->
-<jsp:directive.include file="../layouts/footer.jsp" />
+<div class="container user-dash-container">
+    <div class="row">
+        <div class="col-md-3 user-dash">
+            <h3>User Dashboard</h3>
+            <ul class="cstm-user-menu">
+                <li><a href="#">Financial Transaction</a></li>
+                <li><a href="#">Rent History</a></li>
+                <li><a href="#">My Bookings</a></li>
+                <li><a href="${BaseUrl}/user/dashboard/rentrequest">Rent Request</a></li>
+                <li><a href="#">Profile Edit</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9 side-container">
+            <h3>Financial Transaction Record</h3>
+
+            <div class="row clearfix no-margin">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group date-con">
+                        <label>From</label>
+                        <input type="text" class="form-control datepicker" id="dpd1" placeholder="">
+
+                        <p class="help-block error-form">Please fill up the field</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group date-con">
+                        <label>To</label>
+                        <input type="text" class="form-control datepicker" id="dpd2" placeholder="">
+
+                        <p class="help-block error-form">Please fill up the field</p>
+                    </div>
+                </div>
+                <button class="btn-filter user_dboard_btn">Date Filters</button>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <table id="example1" class="table table-bordered table-striped user_dashboard_table">
+                        <thead>
+                        <tr>
+                            <th>Requested Product</th>
+                            <th>Requested By</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Action</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <d:forEach var="rentRequest" items="${rentRequests}">
+                            <tr>
+                                <td></td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+                            </tr>
+                        </d:forEach>
+                        </tbody>
+                        <th>Requested Product</th>
+                        <th>Requested By</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Action</th>
+                        <tfoot>
+
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!--Dashboard-->
+<jsp:directive.include file="../layouts/footer.jsp"/>
 <!-- Javascript framework and plugins end here -->
 <script>
-  (function ($) {
-    $('.spinner .btn:first-of-type').on('click', function () {
-      $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
-    });
-    $('.spinner .btn:last-of-type').on('click', function () {
-      $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
-    });
-  })(jQuery);
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+    var checkin = $('#dpd1').datepicker({
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.setValue(newDate);
+        }
+        checkin.hide();
+        $('#dpd2')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#dpd2').datepicker({
+        onRender: function (date) {
+            return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        checkout.hide();
+    }).data('datepicker');
 </script>
-<script>
-  $('#h-slider').slider({
-    range: true,
-    values: [17, 67]
-  });
-</script>
-<script>
-
-  (function ($) {
-
-    //Plugin activation
-    $(window).enllax();
-
-    //            $('#some-id').enllax();
-
-    //            $('selector').enllax({
-    //                type: 'background', // 'foreground'
-    //                ratio: 0.5,
-    //                direction: 'vertical' // 'horizontal'
-    //            });
-
-  })(jQuery);
-</script>
-
 <script type="text/javascript">
-  //            $(document).ready(function () {
-  //                $("#successModal").modal('show');
-  //            });
+    $('.main_product_slider').carousel();
+    $('.owl-carousel').owlCarousel({
+        rtl: true,
+        loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
 </script>
 <script>
-  $(document).ready(function () {
-    $('#example1').DataTable();
-  });
+    (function ($) {
+        $('.spinner .btn:first-of-type').on('click', function () {
+            $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
+        });
+        $('.spinner .btn:last-of-type').on('click', function () {
+            $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
+        });
+    })(jQuery);
 </script>
 <script>
-  var nowTemp = new Date();
-  var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    $('#h-slider').slider({
+        range: true,
+        values: [17, 67]
+    });
+</script>
+<script>
 
-  var checkin = $('#dpd1').datepicker({
-    onRender: function (date) {
-      return date.valueOf() < now.valueOf() ? 'disabled' : '';
-    }
-  }).on('changeDate', function (ev) {
-    if (ev.date.valueOf() > checkout.date.valueOf()) {
-      var newDate = new Date(ev.date)
-      newDate.setDate(newDate.getDate() + 1);
-      checkout.setValue(newDate);
-    }
-    checkin.hide();
-    $('#dpd2')[0].focus();
-  }).data('datepicker');
-  var checkout = $('#dpd2').datepicker({
-    onRender: function (date) {
-      return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
-    }
-  }).on('changeDate', function (ev) {
-    checkout.hide();
-  }).data('datepicker');
+    (function ($) {
+
+        //Plugin activation
+        $(window).enllax();
+
+        //            $('#some-id').enllax();
+
+        //            $('selector').enllax({
+        //                type: 'background', // 'foreground'
+        //                ratio: 0.5,
+        //                direction: 'vertical' // 'horizontal'
+        //            });
+
+    })(jQuery);
+</script>
+<script>
+    $(window).load(function () {
+        // The slider being synced must be initialized first
+        $('#carousel').flexslider({
+            animation: "slide",
+            controlNav: false,
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 210,
+            itemMargin: 5,
+            asNavFor: '#slider'
+        });
+
+        $('#slider').flexslider({
+            animation: "slide",
+            controlNav: false,
+            animationLoop: false,
+            slideshow: false,
+            sync: "#carousel"
+        });
+    });
+</script>
+<script type="text/javascript">
+    //  $(document).ready(function () {
+    //    $("#successModal").modal('show');
+    //  });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#example1').DataTable();
+    });
+</script>
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+    var checkin = $('#dpd1').datepicker({
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        if (ev.date.valueOf() > checkout.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            checkout.setValue(newDate);
+        }
+        checkin.hide();
+        $('#dpd2')[0].focus();
+    }).data('datepicker');
+    var checkout = $('#dpd2').datepicker({
+        onRender: function (date) {
+            return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        checkout.hide();
+    }).data('datepicker');
 </script>
 
 </body>
