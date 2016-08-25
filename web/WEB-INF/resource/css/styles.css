@@ -2337,10 +2337,15 @@ span.tag_span:hover {
     height: 100px;
     width: 20%;
 }
+.table-img img{
+    max-width: 100%;
+    height: 100px;
+}
 .table-desc{
     float: left;
     display: inline;
     width: 80%;
+    padding-left: 15px;
 }
 .table-desc h5{
     margin-bottom: 0px;

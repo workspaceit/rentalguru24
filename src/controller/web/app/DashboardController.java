@@ -1,8 +1,10 @@
 package controller.web.app;
 
+import model.IdentityTypeModel;
 import model.ProductModel;
 import model.RentRequestModel;
 import model.entity.app.AppCredential;
+import model.entity.app.IdentityType;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class DashboardController {
 
     @Autowired
     RentRequestModel rentRequestModel;
+
+    @Autowired
+    IdentityTypeModel identityTypeModel;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
@@ -100,9 +105,13 @@ public class DashboardController {
         ModelAndView modelAndView = new ModelAndView("user_dashboard/editprofile");
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<IdentityType> identityTypes = identityTypeModel.getAll();
+
+
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Profile Edit");
         modelAndView.addObject("usersDetails", appCredential );
+        modelAndView.addObject("identityTypes", identityTypes );
         return modelAndView;
     }
 
