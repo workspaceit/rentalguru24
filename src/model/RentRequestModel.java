@@ -5,6 +5,7 @@ import model.entity.app.product.rentable.RentalProductEntity;
 import org.hibernate.Session;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +37,9 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getByProductOwnerAndProductId(int ownerId,int productId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery(" SELECT rentRequest FROM RentRequest rentRequest " +
                     " INNER Join FETCH rentRequest.requestedBy " +
@@ -51,6 +55,9 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getByRequestedByAndProductId(int requestedById,int productId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery(" SELECT rentRequest FROM RentRequest rentRequest " +
                     " INNER Join FETCH rentRequest.requestedBy " +
@@ -88,6 +95,7 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getAllByDateBetweenAndProductId(int productId,Timestamp startDate,Timestamp endsDate){
         Session session = this.sessionFactory.openSession();
+
         try{
             List<RentRequest>  rentRequestList = session.createQuery(
                     "FROM RentRequest rentRequest " +
@@ -110,6 +118,9 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getByProductOwner(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy " +
                                         " where rentRequest.rentalProduct.owner.id =:ownerId ORDER BY rentRequest.id desc ")
@@ -123,6 +134,9 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getAllApproveRequestByProductOwner(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                                         " where rentRequest.rentalProduct.owner.id =:ownerId and rentRequest.approve = true ORDER BY rentRequest.id desc ")
@@ -136,6 +150,9 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getAllDisapproveRequestByProductOwner(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                                         " where rentRequest.rentalProduct.owner.id =:ownerId" +
@@ -165,6 +182,9 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getAllCanceledRequestByProductOwner(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                                         " where rentRequest.rentalProduct.owner.id =:ownerId " +
@@ -180,6 +200,9 @@ public class RentRequestModel extends BaseModel {
 
     public List<RentRequest> getByRequestedBy(int requestedById,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy " +
                     " where rentRequest.requestedBy.id =:requestedById ORDER BY rentRequest.id desc ")
@@ -193,10 +216,15 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getAllPendingRequestByRequestedBy(int requestedById,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                     " where rentRequest.requestedBy.id =:requestedById" +
                     " and rentRequest.disapprove = false" +
+                    " and rentRequest.requestCancel = false" +
+                    " and rentRequest.isExpired = false" +
                     " and rentRequest.approve = false ORDER BY rentRequest.id desc ")
                     .setParameter("requestedById",requestedById)
                     .setFirstResult(offset * limit)
@@ -208,6 +236,9 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getAllApproveRequestByRequestedBy(int requestedById,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                     " where rentRequest.requestedBy.id =:requestedById and rentRequest.approve = true ORDER BY rentRequest.id desc ")
@@ -221,6 +252,9 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getAllDisapproveRequestByRequestedBy(int requestedById,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                     " where rentRequest.requestedBy.id =:requestedById" +
@@ -235,6 +269,9 @@ public class RentRequestModel extends BaseModel {
     }
     public List<RentRequest> getAllCanceledRequestByRequestedBy(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
+        if(limit<=0){
+            return new ArrayList<>();
+        }
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                     " where rentRequest.requestedBy.id =:ownerId " +

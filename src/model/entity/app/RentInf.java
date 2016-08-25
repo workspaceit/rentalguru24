@@ -44,8 +44,8 @@ public class RentInf {
 
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY,optional = false,targetEntity=RentalProductEntity.class)
-    @JoinColumn(name = "product_id", referencedColumnName = "id",insertable = false,updatable = false)
+    @OneToOne(fetch = FetchType.LAZY,targetEntity=RentalProductEntity.class)
+    @JoinColumn(name = "product_id", referencedColumnName = "id",nullable = false)
     public RentalProduct getRentalProduct() {
         return rentalProduct;
     }

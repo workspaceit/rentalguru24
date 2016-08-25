@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,6 +76,9 @@ public class ProductModel extends BaseModel {
         if (limit > 15) {
             limit = 15;
         }
+        if(limit<=0){
+                return new ArrayList<>();
+        }
         String hql = "FROM RentalProductEntity P  ORDER BY P.id DESC";
         Session session = this.sessionFactory.openSession();
         try {
@@ -89,6 +93,9 @@ public class ProductModel extends BaseModel {
     public List<RentalProduct> getRentalProduct(int limit, int offset, int productId) {
         if (limit > 15) {
             limit = 15;
+        }
+        if(limit<=0){
+            return new ArrayList<>();
         }
         String hql = "FROM RentalProductEntity P WHERE P.id !=:productId  ORDER BY P.id DESC";
         Session session = this.sessionFactory.openSession();
@@ -105,6 +112,9 @@ public class ProductModel extends BaseModel {
     public List<SearchedProduct> getSearchedProduct(int limit, int offset) {
         if (limit > 15) {
             limit = 15;
+        }
+        if(limit<=0){
+            return new ArrayList<>();
         }
         Session session = this.sessionFactory.openSession();
         try {

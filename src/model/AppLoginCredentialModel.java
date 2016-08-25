@@ -24,11 +24,27 @@ public class AppLoginCredentialModel extends BaseModel {
 
     public AppCredential getAppCredentialById(int id){
         Session session = this.sessionFactory.openSession();
-        return session.get(AppCredential.class,id);
+        try{
+            return session.get(AppCredential.class,id);
+        }finally {
+            session.close();
+        }
     }
     public AuthCredential getById(int id){
         Session session = this.sessionFactory.openSession();
-        return session.get(AuthCredential.class,id);
+        try{
+            return session.get(AuthCredential.class,id);
+        }finally {
+            session.close();
+        }
+    }
+    public boolean isVerified(int id){
+        AuthCredential authCredential = this.getById(id);
+        return authCredential.isVerified();
+    }
+    public boolean isBlocked(int id){
+        AuthCredential authCredential = this.getById(id);
+        return authCredential.isBlocked();
     }
     public AuthCredential authenticationByEmailPassword(String email,String password){
         bCryptPasswordEncoder = new BCryptPasswordEncoder();

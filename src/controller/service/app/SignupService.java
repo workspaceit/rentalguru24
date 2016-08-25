@@ -131,6 +131,8 @@ public class SignupService{
             return serviceResponse;
         }
 
+        authCredential.setVerified(true);
+        authCredential.setBlocked(false);
         authCredential.getUserInf().setIdentityDocUrl(tempFile.getPath());
 
 

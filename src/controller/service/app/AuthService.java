@@ -37,9 +37,19 @@ public class AuthService  {
         }
         AuthCredential authCredential = appLoginCredentialModel.authenticationByAccessToken(accessToken);
 
+
         if(authCredential==null){
             serviceResponse.getResponseStat().setErrorMsg("Invalid access token !! Ha ha ha ....");
             return serviceResponse;
+        }else if(!authCredential.isVerified()){
+            serviceResponse.getResponseStat().setErrorMsg("Your account is not verified yet");
+            return serviceResponse;
+
+        }else if(!authCredential.isBlocked()){
+            serviceResponse.getResponseStat().setErrorMsg("This account is blocked by system admin");
+            return serviceResponse;
+        }else{
+            serviceResponse.setResponseData(authCredential);
         }
 
         serviceResponse.getResponseStat().setMsg("Login success");
@@ -60,6 +70,13 @@ public class AuthService  {
 
         if(authCredential==null){
             serviceResponse.getResponseStat().setErrorMsg("Invalid email or password");
+            return serviceResponse;
+        }else if(!authCredential.isVerified()){
+            serviceResponse.getResponseStat().setErrorMsg("Your account is not verified yet");
+            return serviceResponse;
+
+        }else if(!authCredential.isBlocked()){
+            serviceResponse.getResponseStat().setErrorMsg("This account is blocked by system admin");
             return serviceResponse;
         }else{
             serviceResponse.setResponseData(authCredential);
