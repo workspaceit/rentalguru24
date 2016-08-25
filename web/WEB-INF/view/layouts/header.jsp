@@ -83,6 +83,7 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/owl.carousel.css" />"  />
   <link rel="stylesheet"  href="<c:url value="/resources/css/flexslider.css" />" />
   <link type="text/css" href="<c:url value="/resources/css/jquery-ui-1.10.0.custom.css"/>" rel="stylesheet" />
+  <script src="<c:url value="/resources/js/bootstrap-select.js"/>"></script>
 
   <link rel="stylesheet" href="<c:url value="/resources/css/easyzoom.css"/> " />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/datepicker.css"/> " />

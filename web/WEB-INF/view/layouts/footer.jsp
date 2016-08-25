@@ -25,7 +25,6 @@
 <!-- Contact end here -->
 <!-- Main container start here -->
 <!-- Javascript framework and plugins start here -->
-<script type="text/javascript" src="<c:url value="/resources/js/jquery.js" />" ></script>
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js"  />" ></script>
 <script src="<c:url value="/resources/js/jquery.validate.min.js"  />" ></script>
 <script src="<c:url value="/resources/js/modernizr.js"  />" ></script>

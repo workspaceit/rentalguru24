@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group" style="margin-bottom:0px;">
                             <label for="terms">Upload photo</label>
-                            <div id="fallback" class="fallback pos-relative" >                            
+                            <div id="fallback" class="fallback pos-relative" >
                                 Choose a profile picture
                                 <span class="inner-load"></span>
                             </div>
@@ -44,7 +44,7 @@
                             <div class="form-group">
                                 <label for="address">Password</label>
                                 <input type="password" class="form-control" placeholder="ex.password">
-                            </div>                     
+                            </div>
                             <div class="form-group">
                                 <label>Identity Type</label>
                                 <select class="selectpicker">
@@ -68,7 +68,6 @@
         </div>
         <!--Dashboard-->
         <jsp:directive.include file="../layouts/footer.jsp" />
-
         <!-- Javascript framework and plugins end here -->
         <script type="text/javascript">
             $('.main_product_slider').carousel();
@@ -146,9 +145,9 @@
             });
         </script>
         <script type="text/javascript">
-            $(document).ready(function () {
-                $("#successModal").modal('show');
-            });
+//            $(document).ready(function () {
+//                $("#successModal").modal('show');
+//            });
         </script>
         <script>
             $(document).ready(function () {
