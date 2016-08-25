@@ -36,8 +36,8 @@ public class DashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        List<RentalProduct> rentalProducts = productModel.getMyRentalProductList(appCredential.);
-        System.out.println(rentalProducts.size());
+//        List<RentalProduct> rentalProducts = productModel.getMyRentalProductList(appCredential.);
+//        System.out.println(rentalProducts.size());
 
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Product");
