@@ -360,14 +360,14 @@
                     paramName: "documentIdentity",
                     maxFilesize: 1,
                     uploadprogress:function(file, progress){
-                        $('#signUpButton').addAttribute("disabled","disabled");
+                        $('#signUpButton').attr("disabled","disabled");
                         $('.signUpGif').show();
                         $('.fileUploadGif').show();
                     },
                     success:function(file, response){
                         if(response.responseStat.status == true) {
                             $('.fileUploadGif').hide();
-                            $('#signUpButton').removeAttrs("disabled","disabled");
+                            $('#signUpButton').removeAttr("disabled","disabled");
                             $('.signUpGif').hide();
                             $('#identityDocToken').val(response.responseData);
                         }
@@ -377,7 +377,7 @@
                     },
                     error:function(file, errorMessage, xhr){
                         $('.fileUploadGif').hide();
-                        $('#signUpButton').removeAttrs("disabled","disabled");
+                        $('#signUpButton').removeAttr("disabled","disabled");
                         $('.signUpGif').hide();
                     }
                 }

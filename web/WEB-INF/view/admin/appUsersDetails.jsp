@@ -95,19 +95,8 @@
     <jsp:directive.include file="layouts/footer.jsp" />
   <script>
     function setActiveDeactivAppUsers(id, status){
-      if(status == 1){
-        $("#actionButton_"+id).removeClass("btn-danger")
-        $("#actionButtonDropdown_"+id).removeClass("btn-danger")
-        $("#actionButton_"+id).addClass("btn-success");
-        $("#actionButtonDropdown_"+id).addClass("btn-success");
-        $("#actionButton_"+id).html("Active");
-      }else{
-        $("#actionButton_"+id).removeClass("btn-success")
-        $("#actionButtonDropdown_"+id).removeClass("btn-success")
-        $("#actionButton_"+id).addClass("btn-danger");
-        $("#actionButtonDropdown_"+id).addClass("btn-danger");
-        $("#actionButton_"+id).html("Deactive");
-      }
+      $("#actionButton_"+id).attr("disabled","disabled");
+      $("#actionButtonDropdown_"+id).attr("disabled","disabled");
       var appUserId = id;
       var varified = status;
 //      console.log(appUserId, varified);
@@ -119,6 +108,28 @@
           varified: varified,
         },
         success: function (data){
+          console.log(data);
+          if(data.responseStat.status == true){
+            if(status == 1){
+              $("#actionButton_"+id).removeClass("btn-danger")
+              $("#actionButtonDropdown_"+id).removeClass("btn-danger")
+              $("#actionButton_"+id).addClass("btn-success");
+              $("#actionButtonDropdown_"+id).addClass("btn-success");
+              $("#actionButton_"+id).html("Active");
+            }else{
+              $("#actionButton_"+id).removeClass("btn-success")
+              $("#actionButtonDropdown_"+id).removeClass("btn-success")
+              $("#actionButton_"+id).addClass("btn-danger");
+              $("#actionButtonDropdown_"+id).addClass("btn-danger");
+              $("#actionButton_"+id).html("Deactive");
+            }
+            $("#actionButton_"+id).removeAttr("disabled","disabled");
+            $("#actionButtonDropdown_"+id).removeAttr("disabled","disabled");
+          }else{
+            console.log("fail");
+          }
+        },
+        error:function(data){
           console.log(data);
         }
       });

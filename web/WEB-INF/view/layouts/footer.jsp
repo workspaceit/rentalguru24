@@ -99,5 +99,15 @@
     });
   });
 </script>
+<script>
+  function signout(){
+    $.ajax({
+      url: BASEURL+"/api/signout",
+      success: function(data){
+        window.location.href =BASEURL+"/signin";
+      }
+    });
+  }
+</script>
 
 

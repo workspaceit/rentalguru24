@@ -219,7 +219,7 @@ immediately after the control sidebar -->
     $.ajax({
       url: BASEURL+"/api/signout",
       success: function(data){
-        console.log(data);
+        window.location.href =BASEURL+"/admin-signin";
       }
     });
   }

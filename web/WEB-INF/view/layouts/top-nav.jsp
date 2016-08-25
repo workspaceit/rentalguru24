@@ -42,9 +42,16 @@
                 </a>
               </li>
             </d:if>
+            <d:if test="${IsLogin != false}">
+              <li class="dropdown">
+                <a href="javascript:void(0);" onclick="signout()" class="dropdown-toggle top_nav_a"
+                   aria-expanded="false">
+                  <i class="fa fa-user"></i>Signout
+                </a>
+              </li>
+            </d:if>
             <li class="dropdown no-margin">
-              <a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true"
-                 aria-expanded="false">
+              <a href="${BaseUrl}/user/dashboard">
                 <i class="fa fa-bars"></i>
               </a>
             </li>
