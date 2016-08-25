@@ -12,16 +12,7 @@
         <!--Dashboard-->
         <div class="container user-dash-container">
             <div class="row">
-                <div class="col-md-3 user-dash">
-                    <h3>User Dashboard</h3>
-                    <ul class="cstm-user-menu">
-                        <li><a href="#">Financial Transaction</a></li>
-                        <li><a href="#">Rent History</a></li>
-                        <li><a href="#">My Bookings</a></li>
-                        <li><a href="#">Rent Request</a></li>
-                        <li><a href="#">Profile Edit</a></li>
-                    </ul>
-                </div>
+                <jsp:directive.include file="../layouts/userDashboardLeftMemu.jsp" />
                 <div class="col-md-9 side-container">
                     <h3>Rent Request</h3>
                     <div class="row clearfix no-margin">

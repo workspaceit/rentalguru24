@@ -76,12 +76,14 @@
 
   <!-- CSS start here -->
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />"  media="screen">
+  <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap-select.min.css"/>" />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/styles.css" />"  />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/font-awesome/css/font-awesome.min.css" />" >
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/animate.css" />"  />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/owl.carousel.css" />"  />
   <link rel="stylesheet"  href="<c:url value="/resources/css/flexslider.css" />" />
   <link type="text/css" href="<c:url value="/resources/css/jquery-ui-1.10.0.custom.css"/>" rel="stylesheet" />
+  <script src="<c:url value="/resources/js/bootstrap-select.js"/>"></script>
 
   <link rel="stylesheet" href="<c:url value="/resources/css/easyzoom.css"/> " />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/datepicker.css"/> " />

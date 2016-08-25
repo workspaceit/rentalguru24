@@ -149,6 +149,22 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
+
+    //OVERLOADED FUNCTION for user dashboard
+    public List<RentRequest> getAllApproveRequestByProductOwner(int ownerId){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
+                    " where rentRequest.rentalProduct.owner.id =:ownerId and rentRequest.approve = true ORDER BY rentRequest.id desc ")
+                    .setParameter("ownerId", ownerId)
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
+
+
     public List<RentRequest> getAllDisapproveRequestByProductOwner(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
         if(limit<=0){
@@ -161,6 +177,21 @@ public class RentRequestModel extends BaseModel {
                     .setParameter("ownerId",ownerId)
                     .setFirstResult(offset * limit)
                     .setMaxResults(limit)
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
+
+    //OVERLOADED FUNCTION for user Dashboard
+    public List<RentRequest> getAllDisapproveRequestByProductOwner(int ownerId){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
+                    " where rentRequest.rentalProduct.owner.id =:ownerId" +
+                    " and rentRequest.disapprove = true ORDER BY rentRequest.id desc ")
+                    .setParameter("ownerId",ownerId)
                     .list();
         }finally {
             session.close();
@@ -291,6 +322,22 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
+
+    //OVERLOADED for user Dashboard
+    public List<RentRequest> getAllApproveRequestByRequestedBy(int requestedById){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
+                    " where rentRequest.requestedBy.id =:requestedById and rentRequest.approve = true ORDER BY rentRequest.id desc ")
+                    .setParameter("requestedById", requestedById)
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
+
+
     public List<RentRequest> getAllDisapproveRequestByRequestedBy(int requestedById,int limit,int offset){
         Session session = this.sessionFactory.openSession();
         if(limit<=0){
@@ -308,6 +355,22 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
+
+    //OVERLOADED MODEL for user Dashboard
+    public List<RentRequest> getAllDisapproveRequestByRequestedBy(int requestedById){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
+                    " where rentRequest.requestedBy.id =:requestedById" +
+                    " and rentRequest.disapprove = true ORDER BY rentRequest.id desc ")
+                    .setParameter("requestedById", requestedById)
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
+
     public List<RentRequest> getAllCanceledRequestByRequestedBy(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
         if(limit<=0){

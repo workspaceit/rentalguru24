@@ -53,24 +53,19 @@
               <th>Requested By</th>
               <th>Start Date</th>
               <th>End Date</th>
-              <th>Action</th>
+              <th>Status</th>
+
 
             </tr>
             </thead>
             <tbody>
-            <d:forEach var="myRentRequest" items="${myRentRequests}">
-            <tr id="${myRentRequest.id}">
-              <td width="300px">${myRentRequest.rentalProduct.name}<br><br><a href="#" target="_blank">Product Details</a></td>
-              <td>${myRentRequest.requestedBy.userInf.firstName}</td>
-              <td>${myRentRequest.startDate}</td>
-              <td>${myRentRequest.endDate}</td>
-              <td width="100px">
-                <div class="actions">
-
-                  <button class="btn btn-delete" onclick="cancelRequest(${myRentRequest.id})">Cancel</button>
-                </div>
-              </td>
-
+            <d:forEach var="rentRequest" items="${rentRequests}">
+            <tr id="${rentRequest.id}">
+              <td width="300px">${rentRequest.rentalProduct.name}<br><br><a href="#" target="_blank">Product Details</a></td>
+              <td>${rentRequest.requestedBy.userInf.firstName}</td>
+              <td>${rentRequest.startDate}</td>
+              <td>${rentRequest.endDate}</td>
+              <td style="color: green">Approved</td>
             </tr>
             </d:forEach>
 
@@ -80,64 +75,12 @@
     </div>
 
   </div>
-  <div class="modal" id="myModal" role="dialog">
-    <div class="modal-dialog">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Message</h4>
-        </div>
-        <div class="modal-body">
-          <p id="modal-text"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
 </div>
 <!--Dashboard-->
 <jsp:directive.include file="../layouts/footer.jsp"/>
 <!-- Javascript framework and plugins end here -->
-<script>
-  function cancelRequest(requestId){
-    $.ajax({
-      type: "GET",
-      url: '${BaseUrl}/api/auth/rent/cancel-request/'+requestId,
 
-      success: function(data) {
-
-
-        if(data.responseStat.status==true){
-          $('#' + requestId).fadeOut(300);
-        }else{
-          $('#modal-text').text(data.responseStat.msg)
-          $('#myModal').modal('show')
-        }
-
-
-
-      },
-      error: function() {
-        alert('Error occured');
-      }
-    });
-
-
-
-  }
-
-
-
-
-
-
-
-</script>
 
 
 <script>
