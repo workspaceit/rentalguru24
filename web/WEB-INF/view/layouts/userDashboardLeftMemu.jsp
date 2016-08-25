@@ -18,6 +18,6 @@
     <li><a href="${BaseUrl}/user/dashboard/my-dispproved-bookings">My Disapproved Booking</a> </li>
     <li><a href="${BaseUrl}/user/dashboard/my-approved-rentrequest">My Approved Rent Request</a> </li>
     <li><a href="${BaseUrl}/user/dashboard/my-disapproved-rentrequest">My Disapproved Rent Request</a> </li>
-    <li><a href="#">Profile Edit</a></li>
+    <li><a href="${BaseUrl}/user/dashboard/my-profile-edit">Profile Edit</a></li>
   </ul>
 </div>
