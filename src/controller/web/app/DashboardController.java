@@ -35,12 +35,10 @@ public class DashboardController {
         ModelAndView modelAndView = new ModelAndView("user_dashboard/myproducts");
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
-//        List<RentalProduct> rentalProducts = productModel.getMyRentalProductList(appCredential.);
-//        System.out.println(rentalProducts.size());
-
+        List<RentalProduct> rentalProducts = productModel.getMyRentalProductList(appCredential.getId());
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Product");
+        modelAndView.addObject("myRentalProduct", rentalProducts);
         return modelAndView;
     }
 }
