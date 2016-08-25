@@ -63,8 +63,8 @@
             <tr id="${rentRequest.id}">
               <td width="300px">${rentRequest.rentalProduct.name}<br><br><a href="#" target="_blank">Product Details</a></td>
               <td>${rentRequest.requestedBy.userInf.firstName}</td>
-              <td>${rentRequest.startDate}</td>
-              <td>${rentRequest.endDate}</td>
+              <td><fmt:formatDate value="${rentRequest.startDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
+              <td><fmt:formatDate value="${rentRequest.endDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
               <td style="color: red">Disapproved</td>
             </tr>
             </d:forEach>

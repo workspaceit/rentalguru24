@@ -62,12 +62,12 @@
                             <tr id="${rentRequest.id}">
                                 <td width="300px">${rentRequest.rentalProduct.name}<br><br><a href="#" target="_blank">Product Details</a></td>
                                 <td>${rentRequest.requestedBy.userInf.firstName}</td>
-                                <td>${rentRequest.startDate}</td>
-                                <td>${rentRequest.endDate}</td>
+                                <td><fmt:formatDate value="${rentRequest.startDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
+                                <td><fmt:formatDate value="${rentRequest.endDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
                                 <td width="100px">
                                     <div class="actions">
                                         <button class="btn btn-edit" onclick="requestApprove(${rentRequest.id})">Approve</button>
-                                        <button class="btn btn-delete" onclick="requestDisapprove(${rentRequest.id})">Disapproved</button>
+                                        <button class="btn btn-delete" onclick="requestDisapprove(${rentRequest.id})">Disapprove</button>
                                     </div>
                                 </td>
 
