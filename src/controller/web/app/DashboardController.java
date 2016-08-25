@@ -80,4 +80,18 @@ public class DashboardController {
         return modelAndView;
 
     }
+
+    @RequestMapping(value = "/my-approved-rentrequest",method = RequestMethod.GET)
+    public ModelAndView getAllMyApprovedBookings(HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView("user_dashboard/myApprovedBookings");
+        String baseUrl=(String)request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<RentRequest> rentRequests=rentRequestModel.getAllApproveRequestByRequestedBy(appCredential.getId());
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "My Approved Booking Request");
+        modelAndView.addObject("rentRequests", rentRequests );
+        return modelAndView;
+
+
+    }
 }

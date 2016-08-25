@@ -26,7 +26,11 @@
         <li><a href="#">Financial Transaction</a></li>
         <li><a href="#">Rent History</a></li>
         <li><a href="${BaseUrl}/user/dashboard/my-rentrequest">My Bookings</a></li>
+        <li><a href="${BaseUrl}/user/dashboard/my-approved-rentrequest">My Approved Booking</a> </li>
+        <li><a href="#">My Disapproved Bookings</a></li>
         <li><a href="${BaseUrl}/user/dashboard/rentrequest">Rent Request</a></li>
+        <li><a href="#">My Approved Rent Request</a> </li>
+        <li><a href="#">My Disapproved Rent Request</a></li>
         <li><a href="#">Profile Edit</a></li>
       </ul>
     </div>
