@@ -57,7 +57,12 @@
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
 
+
               <!-- ******* Auth  Web page  ************-->
+              <mvc:interceptor>
+                     <mvc:mapping path="/user/dashboard/**"/>
+                     <bean class="controller.interceptor.WebAuthInterceptor"/>
+              </mvc:interceptor>
               <mvc:interceptor>
                      <mvc:mapping path="/product/upload" />
                      <bean class="controller.interceptor.WebAuthInterceptor"/>
