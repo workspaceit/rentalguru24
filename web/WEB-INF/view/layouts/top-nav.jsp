@@ -42,7 +42,7 @@
                 </a>
               </li>
             </d:if>
-            <d:if test="${IsLogin != false}">
+            <d:if test="${IsLogIn != false}">
               <li class="dropdown">
                 <a href="javascript:void(0);" onclick="signout()" class="dropdown-toggle top_nav_a"
                    aria-expanded="false">
