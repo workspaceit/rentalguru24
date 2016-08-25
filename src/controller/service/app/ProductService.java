@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.DateHelper;
 import helper.ImageHelper;
 import helper.ServiceResponse;
+import helper.SessionManagement;
 import model.*;
 import model.entity.app.AppCredential;
 import model.entity.app.ProductRating;
@@ -62,6 +63,17 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        if(!appLoginCredentialModel.isVerified(appCredential.getId())){
+            serviceResponse.getResponseStat().setErrorMsg("You account is not verified");
+            SessionManagement.destroySession(request);
+            return serviceResponse;
+        }
+
+        if(appLoginCredentialModel.isBlocked(appCredential.getId())){
+            serviceResponse.getResponseStat().setErrorMsg("You account is blocked");
+            SessionManagement.destroySession(request);
+            return serviceResponse;
+        }
         serviceResponse.setParameterAlias("otherImagesTokenArray", "otherImageTokens");
 
 

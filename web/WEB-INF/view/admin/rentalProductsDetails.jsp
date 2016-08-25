@@ -156,10 +156,11 @@
                         pid:prdocutId
                     }),
                     success: function(data) {
-                        $('#'+prdocutId).text('Appoved').css("color", "green");
+
 
                         $('#modal-text').text(data.responseStat.msg);
                         $('#myModal').modal('show')
+                        $('#'+prdocutId).text('Appoved').css("color", "green");
                     },
                     error: function() {
                         alert('Error occured');
@@ -183,9 +184,10 @@
                     pid:prdocutId
                     }),
                     success: function(data) {
-                        $('#'+prdocutId).text('Disapproved').css("color", "red");
+
                         $('#modal-text').text(data.responseStat.msg);
                         $('#myModal').modal('show')
+                        $('#'+prdocutId).text('Disapproved').css("color", "red");
                     },
                     error: function() {
                         alert('Error occured');
