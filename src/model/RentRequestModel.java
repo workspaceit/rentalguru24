@@ -171,8 +171,10 @@ public class RentRequestModel extends BaseModel {
         try{
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                                         " where rentRequest.rentalProduct.owner.id =:ownerId" +
-                                         " and rentRequest.disapprove = false" +
-                                         " and rentRequest.approve = false ORDER BY rentRequest.id desc ")
+                                        " and rentRequest.disapprove = false" +
+                                        " and rentRequest.approve = false " +
+                                        " and rentRequest.requestCancel = false " +
+                                        " ORDER BY rentRequest.id desc ")
                     .setParameter("ownerId",ownerId)
                     .setFirstResult(offset * limit)
                     .setMaxResults(limit)
@@ -189,6 +191,7 @@ public class RentRequestModel extends BaseModel {
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                     " where rentRequest.rentalProduct.owner.id =:ownerId" +
                     " and rentRequest.disapprove = false" +
+                    " and rentRequest.requestCancel = false" +
                     " and rentRequest.approve = false ORDER BY rentRequest.id desc ")
                     .setParameter("ownerId",ownerId)
                     .list();
