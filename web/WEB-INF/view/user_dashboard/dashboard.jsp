@@ -20,20 +20,9 @@
 <!-- Dashboard-->
 <div class="container user-dash-container">
   <div class="row">
-    <div class="col-md-3 user-dash">
-      <h3>User Dashboard</h3>
-      <ul class="cstm-user-menu">
-        <li><a href="#">Financial Transaction</a></li>
-        <li><a href="#">Rent History</a></li>
-        <li><a href="${BaseUrl}/user/dashboard/my-rentrequest">My Bookings</a></li>
-        <li><a href="${BaseUrl}/user/dashboard/my-approved-rentrequest">My Approved Booking</a> </li>
-        <li><a href="#">My Disapproved Bookings</a></li>
-        <li><a href="${BaseUrl}/user/dashboard/rentrequest">Rent Request</a></li>
-        <li><a href="#">My Approved Rent Request</a> </li>
-        <li><a href="#">My Disapproved Rent Request</a></li>
-        <li><a href="#">Profile Edit</a></li>
-      </ul>
-    </div>
+
+    <jsp:directive.include file="../layouts/userDashboardLeftMemu.jsp" />
+
     <div class="col-md-9 side-container">
       <h3>Financial Transaction Record</h3>
       <div class="row clearfix no-margin">

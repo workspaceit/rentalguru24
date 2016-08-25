@@ -36,7 +36,7 @@ public class DashboardController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/myproducts", method = RequestMethod.GET)
+    @RequestMapping(value = "/my-products", method = RequestMethod.GET)
     public ModelAndView getMyProducts(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("user_dashboard/myproducts");
         String baseUrl = (String) request.getAttribute("baseURL");
