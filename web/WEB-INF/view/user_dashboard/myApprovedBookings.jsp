@@ -20,16 +20,7 @@
 <!-- Dashboard-->
 <div class="container user-dash-container">
   <div class="row">
-    <div class="col-md-3 user-dash">
-      <h3>User Dashboard</h3>
-      <ul class="cstm-user-menu">
-        <li><a href="#">Financial Transaction</a></li>
-        <li><a href="#">Rent History</a></li>
-        <li><a href="#">My Bookings</a></li>
-        <li><a href="${BaseUrl}/user/dashboard/rentrequest">Rent Request</a></li>
-        <li><a href="#">Profile Edit</a></li>
-      </ul>
-    </div>
+    <jsp:directive.include file="../layouts/userDashboardLeftMemu.jsp" />
     <div class="col-md-9 side-container">
       <h3>Financial Transaction Record</h3>
 
@@ -62,6 +53,7 @@
               <th>Requested By</th>
               <th>Start Date</th>
               <th>End Date</th>
+              <th>Status</th>
 
 
             </tr>
@@ -69,10 +61,11 @@
             <tbody>
             <d:forEach var="rentRequest" items="${rentRequests}">
             <tr id="${rentRequest.id}">
-              <td width="300px">${myRentRequest.rentalProduct.name}<br><br><a href="#" target="_blank">Product Details</a></td>
+              <td width="300px">${rentRequest.rentalProduct.name}<br><br><a href="#" target="_blank">Product Details</a></td>
               <td>${rentRequest.requestedBy.userInf.firstName}</td>
               <td>${rentRequest.startDate}</td>
               <td>${rentRequest.endDate}</td>
+              <td style="color: green">Approved</td>
             </tr>
             </d:forEach>
 
