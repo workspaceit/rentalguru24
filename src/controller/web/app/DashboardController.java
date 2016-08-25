@@ -52,7 +52,7 @@ public class DashboardController {
         ModelAndView modelAndView=new ModelAndView("user_dashboard/rentRequest");
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        System.out.println("********************************/n"+appCredential.getId()+"**********************************");
+
         List<RentRequest>rentRequests=rentRequestModel.getAllPendingRequestByProductOwner(appCredential.getId());
 
 
