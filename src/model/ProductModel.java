@@ -61,7 +61,7 @@ public class ProductModel extends BaseModel {
         List rentalProducts = null;
         try {
             session = this.sessionFactory.openSession();
-            rentalProducts = session.createQuery("from RentalProductEntity").list();
+            rentalProducts = session.createQuery("from RentalProductEntity R ORDER BY R.id DESC").list();
         } catch (HibernateException ex) {
             ex.printStackTrace();
         } finally {
