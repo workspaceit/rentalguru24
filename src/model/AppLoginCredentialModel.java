@@ -133,7 +133,7 @@ public class AppLoginCredentialModel extends BaseModel {
 
     public List<AuthCredential> getAllAppUser(){
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM AuthCredential WHERE  role < 0";
+        String hql = "FROM AuthCredential  WHERE  role < 0 ORDER BY id DESC";
         Query query = session.createQuery(hql);
         List result = query.list();
         return result;

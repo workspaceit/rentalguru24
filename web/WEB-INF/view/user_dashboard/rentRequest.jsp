@@ -58,7 +58,7 @@
                     <table id="example1" class="table table-bordered table-striped user_dashboard_table">
                         <thead>
                         <tr>
-                            <th>Requested Product</th>
+                            <th>Requested Product Name</th>
                             <th>Requested By</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -69,12 +69,17 @@
                         <tbody>
                         <d:forEach var="rentRequest" items="${rentRequests}">
                             <tr>
-                                <td></td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                                <td width="300px">${rentRequest.rentalProduct.name}</td>
+                                <td>${rentRequest.requestedBy.userInf.firstName}</td>
+                                <td>${rentRequest.startDate}</td>
+                                <td>${rentRequest.endDate}</td>
+                                <td width="100px">
+                                    <div class="actions">
+                                        <button class="btn btn-edit">Edit</button>
+                                        <button class="btn btn-delete">Delete</button>
+                                    </div>
+                                </td>
+
                             </tr>
                         </d:forEach>
                         </tbody>

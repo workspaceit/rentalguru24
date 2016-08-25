@@ -69,7 +69,7 @@
                                             </d:otherwise>
                                         </d:choose>
 
-                                        <td>
+                                        <td width="80">
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-success">action</button>
                                                 <button type="button" class="btn btn-success dropdown-toggle"
