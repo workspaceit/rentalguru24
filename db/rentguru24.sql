@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `app_login_credential` (
   `user_inf_id` int(11) NOT NULL,
   `role` int(11) NOT NULL,
   `email` varchar(500) NOT NULL,
-  `password` varchar(500) NOT NULL,
+  `oldPassword` varchar(500) NOT NULL,
   `accesstoken` varchar(500) NOT NULL,
   `varified` tinyint(1) NOT NULL,
   `blocked` tinyint(1) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `app_login_credential` (
 -- Dumping data for table `app_login_credential`
 --
 
-INSERT INTO `app_login_credential` (`id`, `user_inf_id`, `role`, `email`, `password`, `accesstoken`, `varified`, `blocked`, `created_date`) VALUES
+INSERT INTO `app_login_credential` (`id`, `user_inf_id`, `role`, `email`, `oldPassword`, `accesstoken`, `varified`, `blocked`, `created_date`) VALUES
 (32, 33, -1, 'mousum@workspace.com', 'e10adc3949ba59abbe56e057f20f883e', '61ec56ac9b9442af7cda8b85977e7849', 0, 0, '2016-08-08 07:14:22'),
 (33, 34, -1, 'tomal@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '5f08323684a25d460fbd4a574f64af96', 0, 0, '2016-08-08 08:02:14'),
 (34, 35, -1, 'developer@wsit.com', 'e10adc3949ba59abbe56e057f20f883e', '84e2761bca190cb87d9e0306f27b6c82', 0, 0, '2016-08-08 08:24:21'),

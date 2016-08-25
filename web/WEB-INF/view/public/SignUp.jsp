@@ -123,8 +123,8 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
+                <label for="oldPassword">Password</label>
+                <input type="oldPassword" class="form-control" placeholder="ex.oldPassword" id="oldPassword" name="oldPassword">
                 <p class="help-block error-form" id="errorMsg_password"></p>
             </div>
             <div class="form-group ">
@@ -318,10 +318,10 @@
         var firstName = $("#firstName").val();
         var lastName = $("#lastName").val();
         var email = $("#email").val();
-        var password = $("#password").val();
+        var oldPassword = $("#oldPassword").val();
         var identityTypeId = $("#identityTypeId option:selected").val();
         var identityDocToken = $("#identityDocToken").val();
-//        console.log(firstName, lastName, email, password, identityTypeId, identityDocToken);
+//        console.log(firstName, lastName, email, oldPassword, identityTypeId, identityDocToken);
         $.ajax({
             url: BASEURL+'/api/signup/user',
             type: 'POST',
@@ -329,7 +329,7 @@
                 firstName:firstName,
                 lastName:lastName,
                 email:email,
-                password:password,
+                oldPassword:oldPassword,
                 identityTypeId:identityTypeId,
                 identityDocToken:identityDocToken
             },

@@ -79,7 +79,7 @@ public class ProductModel extends BaseModel {
         if(limit<=0){
                 return new ArrayList<>();
         }
-        String hql = "FROM RentalProductEntity P  ORDER BY P.id DESC";
+        String hql = "FROM RentalProductEntity p where p.active = true and p.reviewStatus = true ORDER BY p.id DESC";
         Session session = this.sessionFactory.openSession();
         try {
             return session.createQuery(hql)
@@ -97,7 +97,7 @@ public class ProductModel extends BaseModel {
         if(limit<=0){
             return new ArrayList<>();
         }
-        String hql = "FROM RentalProductEntity P WHERE P.id !=:productId  ORDER BY P.id DESC";
+        String hql = "FROM RentalProductEntity p WHERE p.active = true and p.reviewStatus = true and p.id !=:productId  ORDER BY p.id DESC";
         Session session = this.sessionFactory.openSession();
         try {
             return session.createQuery(hql)
@@ -118,7 +118,7 @@ public class ProductModel extends BaseModel {
         }
         Session session = this.sessionFactory.openSession();
         try {
-            String hql = "FROM RentalProductEntity P ORDER BY P.id DESC";
+            String hql = "FROM RentalProductEntity p WHERE p.active = true and p.reviewStatus = true ORDER BY p.id DESC";
             Query query = session.createQuery(hql);
             query.setFirstResult(offset * limit);
             query.setMaxResults(limit);
@@ -140,7 +140,7 @@ public class ProductModel extends BaseModel {
 
     public RentalProduct getMyRentalProductById(int id, int ownerId) {
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity P  where P.id =:id and P.owner.id = :ownerId";
+        String hql = "FROM RentalProductEntity p WHERE p.active = true and p.reviewStatus = true and p.id =:id and p.owner.id = :ownerId";
         try {
             return (RentalProduct) session.createQuery(hql)
                     .setParameter("id", id)

@@ -42,7 +42,7 @@
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="Password" id="password" name="password">
+            <input type="oldPassword" class="form-control" placeholder="Password" id="oldPassword" name="oldPassword">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
@@ -60,7 +60,7 @@
         </form>
         <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
         </div>
-        <%--<a href="#">I forgot my password</a><br>--%>
+        <%--<a href="#">I forgot my oldPassword</a><br>--%>
         <%--<a href="register.html" class="text-center">Register a new membership</a>--%>
 
       </div><!-- /.login-box-body -->
@@ -87,14 +87,14 @@
     <script>
         function submitSignInData(){
           var email = $('#email').val();
-          var password = $('#password').val();
-//          console.log(email, password);
+          var oldPassword = $('#oldPassword').val();
+//          console.log(email, oldPassword);
           $.ajax({
-            url: BASEURL + '/admin-signin/by-email-password',
+            url: BASEURL + '/admin-signin/by-email-oldPassword',
             type: 'POST',
             data: {
               email: email,
-              password: password
+              oldPassword: oldPassword
             },
             success: function (data) {
               if (data.responseStat.status == true) {

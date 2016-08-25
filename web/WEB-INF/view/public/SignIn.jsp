@@ -109,8 +109,8 @@
         <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
+        <label for="oldPassword">Password</label>
+        <input type="oldPassword" class="form-control" placeholder="ex.oldPassword" id="oldPassword" name="oldPassword">
       </div>
       <div class="checkbox">
         <label><input type="checkbox"> Remember me</label>
@@ -260,13 +260,13 @@
     $("#alertMsg").hide();
     $("#signInProgressImg").show();
     var email = $("#email").val();
-    var password = $("#password").val();
+    var oldPassword = $("#oldPassword").val();
     $.ajax({
-      url: BASEURL+'/api/signin/by-email-password',
+      url: BASEURL+'/api/signin/by-email-oldPassword',
       type: 'POST',
       data: {
         email: email,
-        password : password
+        oldPassword : oldPassword
       },
       success: function(data){
         console.log(data);
