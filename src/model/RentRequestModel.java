@@ -239,6 +239,22 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
+
+    //OVERLOADED for user dashboard
+    public List<RentRequest> getByRequestedBy(int requestedById){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy " +
+                    " where rentRequest.requestedBy.id =:requestedById ORDER BY rentRequest.id desc ")
+                    .setParameter("requestedById", requestedById)
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
+
+
     public List<RentRequest> getAllPendingRequestByRequestedBy(int requestedById,int limit,int offset){
         Session session = this.sessionFactory.openSession();
         if(limit<=0){

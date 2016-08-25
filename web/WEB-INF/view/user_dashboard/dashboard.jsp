@@ -25,7 +25,7 @@
       <ul class="cstm-user-menu">
         <li><a href="#">Financial Transaction</a></li>
         <li><a href="#">Rent History</a></li>
-        <li><a href="#">My Bookings</a></li>
+        <li><a href="${BaseUrl}/user/dashboard/my-rentrequest">My Bookings</a></li>
         <li><a href="${BaseUrl}/user/dashboard/rentrequest">Rent Request</a></li>
         <li><a href="#">Profile Edit</a></li>
       </ul>
