@@ -68,40 +68,108 @@
                         </thead>
                         <tbody>
                         <d:forEach var="rentRequest" items="${rentRequests}">
-                            <tr>
-                                <td width="300px">${rentRequest.rentalProduct.name}</td>
+                            <tr id="${rentRequest.id}">
+                                <td width="300px">${rentRequest.rentalProduct.name}<br><br><a href="#" target="_blank">Product Details</a></td>
                                 <td>${rentRequest.requestedBy.userInf.firstName}</td>
                                 <td>${rentRequest.startDate}</td>
                                 <td>${rentRequest.endDate}</td>
                                 <td width="100px">
                                     <div class="actions">
-                                        <button class="btn btn-edit">Edit</button>
-                                        <button class="btn btn-delete">Delete</button>
+                                        <button class="btn btn-edit" onclick="requestApprove(${rentRequest.id})">Approve</button>
+                                        <button class="btn btn-delete" onclick="requestDisapprove(${rentRequest.id})">Disapproved</button>
                                     </div>
                                 </td>
 
                             </tr>
                         </d:forEach>
-                        </tbody>
-                        <th>Requested Product</th>
-                        <th>Requested By</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Action</th>
-                        <tfoot>
 
-                        </tfoot>
                     </table>
                 </div>
             </div>
         </div>
 
     </div>
+    <div class="modal" id="myModal" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Message</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-text"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 <!--Dashboard-->
 <jsp:directive.include file="../layouts/footer.jsp"/>
 <!-- Javascript framework and plugins end here -->
+<script>
+    function requestApprove(requestId){
+        $.ajax({
+                type: "GET",
+                url: '${BaseUrl}/api/auth/rent/approve-request/'+requestId,
+
+                success: function(data) {
+
+
+                    if(data.responseStat.status==true){
+                        $('#' + requestId).fadeOut(300);
+                    }else{
+                        $('#modal-text').text(data.responseStat.msg)
+                        $('#myModal').modal('show')
+                    }
+
+
+
+                },
+                error: function() {
+                    alert('Error occured');
+                }
+            });
+
+
+
+    }
+
+    function requestDisapprove(requestId) {
+
+            $.ajax({
+                type: "GET",
+                url: '${BaseUrl}/api/auth/rent/disapprove-request/'+requestId,
+
+                success: function (data) {
+
+                    if(data.responseStat.status==true){
+                        $('#' + requestId).fadeOut(300);
+                    }else{
+                        $('#modal-text').text(data.responseStat.msg)
+                        $('#myModal').modal('show')
+                    }
+                },
+                error: function () {
+                    alert('Error occured');
+                }
+            });
+
+
+    }
+
+
+
+
+
+</script>
+
+
 <script>
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);

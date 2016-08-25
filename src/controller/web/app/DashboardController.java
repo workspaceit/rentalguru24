@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class DashboardController {
         ModelAndView modelAndView=new ModelAndView("user_dashboard/rentRequest");
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        System.out.println("********************************/n"+appCredential.getId()+"**********************************");
+
         List<RentRequest>rentRequests=rentRequestModel.getAllPendingRequestByProductOwner(appCredential.getId());
 
 
@@ -62,6 +63,21 @@ public class DashboardController {
         return modelAndView;
 
 
+
+    }
+
+    @RequestMapping(value = "/my-rentrequest",method = RequestMethod.GET)
+    public ModelAndView getMyRentRequest(HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView("user_dashboard/myrentRequest");
+        String baseUrl=(String)request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        List <RentRequest>rentRequests=rentRequestModel.getByRequestedBy(appCredential.getId());
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "My Rent Request");
+        modelAndView.addObject("myRentRequests", rentRequests );
+
+        return modelAndView;
 
     }
 }
