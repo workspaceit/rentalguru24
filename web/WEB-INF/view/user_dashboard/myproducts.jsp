@@ -56,7 +56,7 @@
                                     <tr>
                                         <td>
                                             <div class="table-img">
-                                                <img src="<c:url value="${BaseUrl}/${product.getProfileImage().getOriginal().getPath()}" />" />
+                                                <img class="image-responsive" src="<c:url value="${BaseUrl}/images/${product.getProfileImage().getOriginal().getPath()}" />" />
                                             </div>
                                             <div class="table-desc">
                                                 <h5>${product.getName()}</h5>
