@@ -94,4 +94,15 @@ public class DashboardController {
 
 
     }
+
+    @RequestMapping(value = "/my-profile-edit", method = RequestMethod.GET)
+    public ModelAndView getMyprofileEdit(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("user_dashboard/editprofile");
+        String baseUrl=(String)request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "My Profile Edit");
+        modelAndView.addObject("usersDetails", appCredential );
+        return modelAndView;
+    }
 }

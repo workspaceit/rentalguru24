@@ -20,9 +20,7 @@
 <!-- Dashboard-->
 <div class="container user-dash-container">
   <div class="row">
-
     <jsp:directive.include file="../layouts/userDashboardLeftMemu.jsp" />
-
     <div class="col-md-9 side-container">
       <h3>Financial Transaction Record</h3>
       <div class="row clearfix no-margin">

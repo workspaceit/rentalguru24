@@ -76,6 +76,7 @@
 
   <!-- CSS start here -->
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />"  media="screen">
+  <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap-select.min.css"/>" />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/styles.css" />"  />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/font-awesome/css/font-awesome.min.css" />" >
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/animate.css" />"  />
