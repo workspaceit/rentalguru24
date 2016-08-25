@@ -43,7 +43,7 @@
       width: 800px;
     }
     .datepicker.dropdown-menu {
-      z-index: 10000;
+      z-index: 9999999 !important;
     }
   </style>
   <script type="text/javascript" src="<c:url value="/resources/js/jquery.js"/>"></script>

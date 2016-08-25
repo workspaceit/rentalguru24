@@ -45,7 +45,7 @@ public class AuthService  {
             serviceResponse.getResponseStat().setErrorMsg("Your account is not verified yet");
             return serviceResponse;
 
-        }else if(!authCredential.isBlocked()){
+        }else if(authCredential.isBlocked()){
             serviceResponse.getResponseStat().setErrorMsg("This account is blocked by system admin");
             return serviceResponse;
         }else{
@@ -75,7 +75,7 @@ public class AuthService  {
             serviceResponse.getResponseStat().setErrorMsg("Your account is not verified yet");
             return serviceResponse;
 
-        }else if(!authCredential.isBlocked()){
+        }else if(authCredential.isBlocked()){
             serviceResponse.getResponseStat().setErrorMsg("This account is blocked by system admin");
             return serviceResponse;
         }else{
