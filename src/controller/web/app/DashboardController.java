@@ -105,4 +105,16 @@ public class DashboardController {
         modelAndView.addObject("usersDetails", appCredential );
         return modelAndView;
     }
+
+    @RequestMapping(value = "/my-dispproved-rentrequest",method = RequestMethod.GET)
+    public ModelAndView getAllMyDisapprovedBookings(HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView("user_dashboard/myDisapprovedBookings");
+        String baseUrl=(String)request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<RentRequest> rentRequests=rentRequestModel.getAllDisapproveRequestByRequestedBy(appCredential.getId());
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "My Disapproved Booking Request");
+        modelAndView.addObject("rentRequests", rentRequests );
+        return modelAndView;
+    }
 }
