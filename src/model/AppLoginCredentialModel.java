@@ -18,10 +18,10 @@ import java.util.List;
  */
 public class AppLoginCredentialModel extends BaseModel {
     private  BCryptPasswordEncoder bCryptPasswordEncoder;
-    public AppLoginCredentialModel() {
 
+    public String getPasswordAsMd5DigestAsHex(String password){
+        return DigestUtils.md5DigestAsHex(password.getBytes());
     }
-
     public AppCredential getAppCredentialById(int id){
         Session session = this.sessionFactory.openSession();
         try{
@@ -51,10 +51,9 @@ public class AppLoginCredentialModel extends BaseModel {
 
         Session session = this.sessionFactory.openSession();
         String hql = "from AuthCredential where email = :email and password = :password";
-        System.out.println(DigestUtils.md5DigestAsHex(password.getBytes()));
         Query query = session.createQuery(hql);
         query.setParameter("email", email);
-        query.setParameter("password", DigestUtils.md5DigestAsHex(password.getBytes()));
+        query.setParameter("password", this.getPasswordAsMd5DigestAsHex(password));
         return (AuthCredential)query.uniqueResult();
     }
     public AuthCredential adminAuthenticationByEmailPassword(String email,String password){
@@ -62,10 +61,9 @@ public class AppLoginCredentialModel extends BaseModel {
 
         Session session = this.sessionFactory.openSession();
         String hql = "from AuthCredential where email = :email and password = :password and role = 1";
-        System.out.println(DigestUtils.md5DigestAsHex(password.getBytes()));
         Query query = session.createQuery(hql);
         query.setParameter("email", email);
-        query.setParameter("password", DigestUtils.md5DigestAsHex(password.getBytes()));
+        query.setParameter("password", this.getPasswordAsMd5DigestAsHex(password));
         return (AuthCredential)query.uniqueResult();
     }
     public AuthCredential authenticationByAccessToken(String accessToken){
@@ -93,8 +91,8 @@ public class AppLoginCredentialModel extends BaseModel {
     public void insert(AuthCredential authCredential){
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        authCredential.setPassword(DigestUtils.md5DigestAsHex(authCredential.getPassword().getBytes()));
-        authCredential.setAccesstoken(DigestUtils.md5DigestAsHex((authCredential.getEmail() + authCredential.getPassword()).getBytes()));
+        authCredential.setPassword(this.getPasswordAsMd5DigestAsHex(authCredential.getPassword()));
+        authCredential.setAccesstoken(this.getPasswordAsMd5DigestAsHex((authCredential.getEmail() + authCredential.getPassword())));
 
 
         Session session = this.sessionFactory.openSession();
@@ -105,6 +103,7 @@ public class AppLoginCredentialModel extends BaseModel {
         session.close();
 
     }
+
     public void insert(AppCredential appCredential){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
@@ -121,6 +120,22 @@ public class AppLoginCredentialModel extends BaseModel {
         session.update(authCredential);
         session.getTransaction().commit();
         session.close();
+    }
+    /* For Profile Edit */
+    public void updateWithNewPassword(AuthCredential authCredential){
+        bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+        authCredential.setPassword(this.getPasswordAsMd5DigestAsHex(authCredential.getPassword()));
+        authCredential.setAccesstoken(this.getPasswordAsMd5DigestAsHex((authCredential.getEmail() + authCredential.getPassword())));
+
+
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.update(authCredential);
+        session.getTransaction().commit();
+        session.close();
+
     }
     public void update(AppCredential appCredential){
         Session session = this.sessionFactory.openSession();
@@ -152,4 +167,5 @@ public class AppLoginCredentialModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+
 }

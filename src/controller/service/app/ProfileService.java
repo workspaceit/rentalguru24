@@ -3,7 +3,9 @@ package controller.service.app;
 import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
+import model.entity.app.AuthCredential;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,15 +38,44 @@ public class ProfileService {
 
 
 
-        new ProfileValidator().validate(profileForm,result);
+        new ProfileValidator().validate(profileForm, result);
         serviceResponse.setError(result,true,false);
 
         if(serviceResponse.hasErrors()){
             return serviceResponse;
         }
 
+        AuthCredential authCredential = appCredentialModel.getById(appCredential.getId());
+
         System.out.println("getFirstName " + profileForm.getFirstName());
         System.out.println("getLastName "+ profileForm.getLastName());
+        System.out.println("getEmail "+ profileForm.getEmail());
+        System.out.println("getNewPassword " + profileForm.getNewPassword());
+        System.out.println("getOldPassword "+ profileForm.getOldPassword());
+
+
+
+        if(!profileForm.getEmail().isEmpty()) {
+            authCredential.setEmail(profileForm.getEmail());
+        }
+        if(!profileForm.getFirstName().isEmpty()) {
+            authCredential.getUserInf().setFirstName(profileForm.getFirstName());
+        }
+        if(!profileForm.getLastName().isEmpty()){
+            authCredential.getUserInf().setFirstName(profileForm.getLastName());
+        }
+
+        if(!profileForm.getNewPassword().isEmpty()){
+            boolean isOldPassword = authCredential.getPassword().equals(appCredentialModel.getPasswordAsMd5DigestAsHex(profileForm.getOldPassword()));
+            if(!isOldPassword){
+                serviceResponse.setRequestError("oldPassword","Password miss matched");
+            }
+            authCredential.setPassword(profileForm.getNewPassword());
+        }
+
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
+        }
 
         return  serviceResponse;
     }

@@ -9,6 +9,7 @@ public class ProfileForm {
     private String email;
     private String oldPassword;
     private String newPassword;
+    private Long profileImageToken;
 
     public String getFirstName() {
         return (firstName==null)?"":firstName.trim();
@@ -48,5 +49,13 @@ public class ProfileForm {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public Long getProfileImageToken() {
+        return (profileImageToken ==null)?-1: profileImageToken;
+    }
+
+    public void setProfileImageToken(Long profileImageToken) {
+        this.profileImageToken = profileImageToken;
     }
 }
