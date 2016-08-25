@@ -48,9 +48,9 @@
                             <div class="form-group">
                                 <label>Identity Type</label>
                                 <select class="selectpicker">
-                                    <option>Mustard</option>
-                                    <option>Ketchup</option>
-                                    <option>Relish</option>
+                                    <d:forEach var="identity" items="${identityTypes}">
+                                    <option>${identity.name}</option>
+                                    </d:forEach>
                                 </select>
                             </div>
                         </div>
