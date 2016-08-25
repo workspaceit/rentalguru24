@@ -47,24 +47,23 @@
                             <table class="table table-bordered table-striped user_dashboard_table">
                                 <thead>
                                     <tr>
-                                        <th>Lorem</th>
-                                        <th>Ipsum</th>
-                                        <th>Platform(s)</th>
+                                        <th>Product</th>
+                                        <th>Edit / Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <d:forEach var="product" items="${myRentalProduct}">
                                     <tr>
                                         <td>
                                             <div class="table-img">
-                                                <img src="http://placehold.it/100x100" />
+                                                <img src="<c:url value="${BaseUrl}/${product.getProfileImage().getOriginal().getPath()}" />" />
                                             </div>
                                             <div class="table-desc">
-                                                <h5>Well furnished Sofa</h5>
-                                                <p>Phasellus non quam erat. Sed gravida et nulla at volutpat. Suspendisse ut cursus lorem, nec dignissim tellus. Donec a commodo tellus. </p>
-                                                <p><span>Jan 28,2016</span> to <span>Feb 27,2016</span></p>
+                                                <h5>${product.getName()}</h5>
+                                                <p>${product.getDescription()}</p>
+                                                <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableFrom()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableTill()}"/></span></p>
                                             </div>
                                         </td>
-                                        <td>System Architect</td>
                                         <td>
                                             <div class="actions">
                                                 <button class="btn btn-edit">Edit</button>
@@ -72,18 +71,12 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                    </tr>
-
+                                </d:forEach>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
+                                        <th>Product</th>
+                                        <th>Edit / Delete</th>
                                     </tr>
                                 </tfoot>
                             </table>
