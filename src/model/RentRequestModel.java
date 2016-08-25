@@ -2,6 +2,7 @@ package model;
 
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.RentalProductEntity;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import java.sql.Timestamp;
@@ -179,6 +180,24 @@ public class RentRequestModel extends BaseModel {
         }finally {
             session.close();
         }
+    }
+
+    public List<RentRequest>getAllPendingRequestByProductOwner(int ownerId){
+        Session session = null;
+        try{
+            session=this.sessionFactory.openSession();
+            return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
+                    " where rentRequest.rentalProduct.owner.id =:ownerId" +
+                    " and rentRequest.disapprove = false" +
+                    " and rentRequest.approve = false ORDER BY rentRequest.id desc ")
+                    .setParameter("ownerId",ownerId)
+                    .list();
+        }
+        finally {
+            if (session!=null)
+            session.close();
+        }
+
     }
     public List<RentRequest> getAllCanceledRequestByProductOwner(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();

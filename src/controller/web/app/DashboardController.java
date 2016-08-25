@@ -43,4 +43,11 @@ public class DashboardController {
         modelAndView.addObject("pageTitle", "My Product");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/rentrequest",method = RequestMethod.GET)
+    public ModelAndView getAllRentRequest(HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView("user_dashboard/rentRequest");
+        String baseUrl=(String)request.getAttribute("baseURL");
+
+    }
 }
