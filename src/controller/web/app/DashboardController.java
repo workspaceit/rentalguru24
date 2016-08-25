@@ -129,4 +129,16 @@ public class DashboardController {
         modelAndView.addObject("rentRequests", rentRequests );
         return modelAndView;
     }
+
+    @RequestMapping(value = "/my-disapproved-rentrequest",method = RequestMethod.GET)
+    public ModelAndView getAllMyDisApprovedRentRequest(HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView("user_dashboard/myDisapprovedRentrequest");
+        String baseUrl=(String)request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<RentRequest> rentRequests=rentRequestModel.getAllDisapproveRequestByProductOwner(appCredential.getId());
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "My Disapproved Rent Request");
+        modelAndView.addObject("rentRequests", rentRequests );
+        return modelAndView;
+    }
 }
