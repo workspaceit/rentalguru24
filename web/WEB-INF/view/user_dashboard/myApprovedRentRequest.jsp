@@ -65,7 +65,7 @@
               <td>${rentRequest.requestedBy.userInf.firstName}</td>
               <td>${rentRequest.startDate}</td>
               <td>${rentRequest.endDate}</td>
-              <td style="color: red">Disapproved</td>
+              <td style="color: green">Approved</td>
             </tr>
             </d:forEach>
 

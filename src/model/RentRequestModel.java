@@ -149,6 +149,22 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
+
+    //OVERLOADED FUNCTION for user dashboard
+    public List<RentRequest> getAllApproveRequestByProductOwner(int ownerId){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
+                    " where rentRequest.rentalProduct.owner.id =:ownerId and rentRequest.approve = true ORDER BY rentRequest.id desc ")
+                    .setParameter("ownerId",ownerId)
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
+
+
     public List<RentRequest> getAllDisapproveRequestByProductOwner(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
         if(limit<=0){
@@ -333,7 +349,7 @@ public class RentRequestModel extends BaseModel {
             return session.createQuery("FROM RentRequest rentRequest INNER Join FETCH rentRequest.requestedBy" +
                     " where rentRequest.requestedBy.id =:requestedById" +
                     " and rentRequest.disapprove = true ORDER BY rentRequest.id desc ")
-                    .setParameter("requestedById",requestedById)
+                    .setParameter("requestedById", requestedById)
                     .list();
         }finally {
             session.close();

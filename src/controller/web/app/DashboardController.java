@@ -81,7 +81,7 @@ public class DashboardController {
 
     }
 
-    @RequestMapping(value = "/my-approved-rentrequest",method = RequestMethod.GET)
+    @RequestMapping(value = "/my-approved-bookings",method = RequestMethod.GET)
     public ModelAndView getAllMyApprovedBookings(HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView("user_dashboard/myApprovedBookings");
         String baseUrl=(String)request.getAttribute("baseURL");
@@ -106,7 +106,7 @@ public class DashboardController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/my-dispproved-rentrequest",method = RequestMethod.GET)
+    @RequestMapping(value = "/my-dispproved-bookings",method = RequestMethod.GET)
     public ModelAndView getAllMyDisapprovedBookings(HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView("user_dashboard/myDisapprovedBookings");
         String baseUrl=(String)request.getAttribute("baseURL");
@@ -114,6 +114,18 @@ public class DashboardController {
         List<RentRequest> rentRequests=rentRequestModel.getAllDisapproveRequestByRequestedBy(appCredential.getId());
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Disapproved Booking Request");
+        modelAndView.addObject("rentRequests", rentRequests );
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/my-approved-rentrequest",method = RequestMethod.GET)
+    public ModelAndView getAllMyApprovedRentRequest(HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView("user_dashboard/myApprovedRentRequest");
+        String baseUrl=(String)request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<RentRequest> rentRequests=rentRequestModel.getAllApproveRequestByProductOwner(appCredential.getId());
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "My Approved Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
         return modelAndView;
     }
