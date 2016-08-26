@@ -42,6 +42,21 @@ public class RentRequestService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+
+        RentalProduct rentalProduct = productModel.getEntityById(productId);
+
+
+        if(rentalProduct == null){
+            serviceResponse.setRequestError("productId","Product does not exist by this id");
+            return serviceResponse;
+        }
+
+        if(rentalProduct.getOwner().getId() == appCredential.getId()){
+            serviceResponse.setRequestError("productId","You can not rent your own product");
+            return serviceResponse;
+        }
+
+
         if(startDate==null || startDate.isEmpty()){
             serviceResponse.setRequestError("startDate","Start date is required");
         }
@@ -75,13 +90,7 @@ public class RentRequestService{
             return serviceResponse;
         }
 
-        RentalProduct rentalProduct = productModel.getEntityById(productId);
 
-
-        if(rentalProduct == null){
-            serviceResponse.setRequestError("productId","Product does not exist by this id");
-            return serviceResponse;
-        }
 
         if(startTimeStamp.before(rentalProduct.getAvailableFrom()) || startTimeStamp.after(rentalProduct.getAvailableTill())){
             serviceResponse.setRequestError("startDate","Product is not available for rent on given date");
@@ -97,10 +106,7 @@ public class RentRequestService{
             return serviceResponse;
         }
 
-        if(rentalProduct.getOwner().getId() == appCredential.getId()){
-            serviceResponse.setRequestError("productId","You can not rent your own product");
-            return serviceResponse;
-        }
+
 
         if(rentRequestModel.isAlreadyRequested(appCredential.getId(),productId,startTimeStamp,endTimeStamp)){
             serviceResponse.getResponseStat().setErrorMsg("You are already requested for this product in between those date");
@@ -458,4 +464,7 @@ public class RentRequestService{
         serviceResponse.setResponseData(rentRequestModel.getAllCanceledRequestByRequestedBy(appCredential.getId(), limit, offset),"No record found");
         return serviceResponse;
     }
+
+
+
 }

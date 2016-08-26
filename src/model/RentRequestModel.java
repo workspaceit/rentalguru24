@@ -81,7 +81,8 @@ public class RentRequestModel extends BaseModel {
                                                             " where ( ( :startDate BETWEEN rentRequest.startDate and rentRequest.endDate ) or " +
                                                             " ( :endsDate  BETWEEN rentRequest.endDate and rentRequest.endDate ) ) " +
                                                             " and rentRequest.requestedBy.id =:requestedBy " +
-                                                            "and rentRequest.rentalProduct.id =:productId "
+                                                            " and rentRequest.rentalProduct.id =:productId " +
+                                                            " and rentRequest.requestCancel = false "
                                                         )
                                                         .setParameter("productId", productId)
                                                         .setParameter("requestedBy", requestedBy)

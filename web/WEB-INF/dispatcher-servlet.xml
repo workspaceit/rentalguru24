@@ -230,6 +230,8 @@
        </bean>
        <bean id="productLikedModel" class="model.ProductLikedModel" >
        </bean>
+       <bean id="requestProductReturnModel" class="model.RequestProductReturnModel" >
+       </bean>
 
 
 
@@ -258,6 +260,7 @@
                             <value>model.entity.app.product.ProductLiked</value>
                             <value>model.entity.app.product.ProductReceived</value>
                             <value>model.entity.app.product.ProductReturned</value>
+                            <value>model.entity.app.product.RequestProductReturn</value>
                      </list>
               </property>
               <property name="hibernateProperties">
