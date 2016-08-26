@@ -315,18 +315,18 @@
                   <a class="ehe_btn" href=""><i class="fa  fa-exchange"></i></a>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                  <p class="value_input_label">Quantity</p>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-6 input-group spinner">
-                  <input type="text" class="form-control value_input" value="42">
-                  <div class="input-group-btn-vertical">
-                    <button class="btn btn-default value_controller" type="button"><i class="fa fa-plus"></i></button>
-                    <button class="btn btn-default value_controller" type="button"><i class="fa fa-minus"></i></button>
-                  </div>
-                </div>
-              </div>
+              <%--<div class="row">--%>
+                <%--<div class="col-md-3 col-sm-3 col-xs-3">--%>
+                  <%--<p class="value_input_label">Quantity</p>--%>
+                <%--</div>--%>
+                <%--<div class="col-md-4 col-sm-4 col-xs-6 input-group spinner">--%>
+                  <%--<input type="text" class="form-control value_input" value="42">--%>
+                  <%--<div class="input-group-btn-vertical">--%>
+                    <%--<button class="btn btn-default value_controller" type="button"><i class="fa fa-plus"></i></button>--%>
+                    <%--<button class="btn btn-default value_controller" type="button"><i class="fa fa-minus"></i></button>--%>
+                  <%--</div>--%>
+                <%--</div>--%>
+              <%--</div>--%>
             </div>
             <div class="product_overview">
               <div class="row">

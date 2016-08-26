@@ -1,5 +1,6 @@
 package controller.web.app;
 
+import helper.ServiceResponse;
 import model.IdentityTypeModel;
 import model.ProductModel;
 import model.RentRequestModel;
@@ -36,8 +37,14 @@ public class DashboardController {
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("user_dashboard/dashboard");
         String baseUrl = (String) request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "User Dashboard");
+        modelAndView.addObject("appCredential", appCredential);
         return modelAndView;
     }
 
@@ -47,9 +54,14 @@ public class DashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<RentalProduct> rentalProducts = productModel.getMyRentalProductList(appCredential.getId());
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Product");
         modelAndView.addObject("myRentalProduct", rentalProducts);
+        modelAndView.addObject("appCredential", appCredential);
         return modelAndView;
     }
 
@@ -58,17 +70,16 @@ public class DashboardController {
         ModelAndView modelAndView=new ModelAndView("user_dashboard/rentRequest");
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
         List<RentRequest>rentRequests=rentRequestModel.getAllPendingRequestByProductOwner(appCredential.getId());
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
-
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
+        modelAndView.addObject("appCredential", appCredential);
         return modelAndView;
-
-
-
     }
 
     @RequestMapping(value = "/my-rentrequest",method = RequestMethod.GET)
@@ -76,14 +87,16 @@ public class DashboardController {
         ModelAndView modelAndView=new ModelAndView("user_dashboard/myrentRequest");
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
         List <RentRequest>rentRequests=rentRequestModel.getAllPendingRequestByRequestedBy(appCredential.getId());
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Rent Request");
         modelAndView.addObject("myRentRequests", rentRequests );
-
+        modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
-
     }
 
     @RequestMapping(value = "/my-approved-bookings",method = RequestMethod.GET)
@@ -92,12 +105,15 @@ public class DashboardController {
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<RentRequest> rentRequests=rentRequestModel.getAllApproveRequestByRequestedBy(appCredential.getId());
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Approved Booking Request");
         modelAndView.addObject("rentRequests", rentRequests );
+        modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
-
-
     }
 
     @RequestMapping(value = "/my-profile-edit", method = RequestMethod.GET)
@@ -106,8 +122,10 @@ public class DashboardController {
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<IdentityType> identityTypes = identityTypeModel.getAll();
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
-
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Profile Edit");
         modelAndView.addObject("appCredential", appCredential );
@@ -121,9 +139,14 @@ public class DashboardController {
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<RentRequest> rentRequests=rentRequestModel.getAllDisapproveRequestByRequestedBy(appCredential.getId());
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Disapproved Booking Request");
         modelAndView.addObject("rentRequests", rentRequests );
+        modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
     }
 
@@ -133,9 +156,14 @@ public class DashboardController {
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<RentRequest> rentRequests=rentRequestModel.getAllApproveRequestByProductOwner(appCredential.getId());
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Approved Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
+        modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
     }
 
@@ -145,9 +173,14 @@ public class DashboardController {
         String baseUrl=(String)request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<RentRequest> rentRequests=rentRequestModel.getAllDisapproveRequestByProductOwner(appCredential.getId());
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Disapproved Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
+        modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
     }
 }

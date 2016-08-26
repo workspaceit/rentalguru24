@@ -22,28 +22,28 @@
     <div class="row">
         <jsp:directive.include file="../layouts/userDashboardLeftMemu.jsp" />
         <div class="col-md-9 side-container">
-            <h3>Financial Transaction Record</h3>
+            <h3>Rent Request</h3>
 
-            <div class="row clearfix no-margin">
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="form-group date-con">
-                        <label>From</label>
-                        <input type="text" class="form-control datepicker" id="dpd1" placeholder="">
+            <%--<div class="row clearfix no-margin">--%>
+                <%--<div class="col-md-4 col-sm-4 col-xs-12">--%>
+                    <%--<div class="form-group date-con">--%>
+                        <%--<label>From</label>--%>
+                        <%--<input type="text" class="form-control datepicker" id="dpd1" placeholder="">--%>
 
-                        <p class="help-block error-form">Please fill up the field</p>
-                    </div>
-                </div>
+                        <%--<p class="help-block error-form">Please fill up the field</p>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
 
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="form-group date-con">
-                        <label>To</label>
-                        <input type="text" class="form-control datepicker" id="dpd2" placeholder="">
+                <%--<div class="col-md-4 col-sm-4 col-xs-12">--%>
+                    <%--<div class="form-group date-con">--%>
+                        <%--<label>To</label>--%>
+                        <%--<input type="text" class="form-control datepicker" id="dpd2" placeholder="">--%>
 
-                        <p class="help-block error-form">Please fill up the field</p>
-                    </div>
-                </div>
-                <button class="btn-filter user_dboard_btn">Date Filters</button>
-            </div>
+                        <%--<p class="help-block error-form">Please fill up the field</p>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<button class="btn-filter user_dboard_btn">Date Filters</button>--%>
+            <%--</div>--%>
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <table id="example1" class="table table-bordered table-striped user_dashboard_table">

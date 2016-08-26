@@ -44,9 +44,15 @@
             </d:if>
             <d:if test="${IsLogIn != false}">
               <li class="dropdown">
+                <a href="${BaseUrl}/user/dashboard/my-profile-edit" class="dropdown-toggle top_nav_a"
+                   aria-expanded="false">
+                  <i class="fa fa-user"></i>${appCredential.getUserInf().getFirstName()}
+                </a>
+              </li>
+              <li class="dropdown">
                 <a href="javascript:void(0);" onclick="signout()" class="dropdown-toggle top_nav_a"
                    aria-expanded="false">
-                  <i class="fa fa-user"></i>Signout
+                  <i class="fa fa-sign-out "></i>Signout
                 </a>
               </li>
             </d:if>
