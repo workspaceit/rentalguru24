@@ -99,7 +99,7 @@ public class FileController {
         serviceResponse.setResponseData(tempFile.getToken());
         return serviceResponse;
     }
-    @RequestMapping(value = "/user/profile-image", headers = "Content-Type=multipart/form-data",method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/user/profile-image", headers = "Content-Type=multipart/form-data",method = RequestMethod.POST)
     public ServiceResponse uploadProfileImage(HttpServletRequest request,@RequestParam("profileImage") MultipartFile file){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 

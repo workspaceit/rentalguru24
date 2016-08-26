@@ -58,4 +58,16 @@ public class ProfileForm {
     public void setProfileImageToken(Long profileImageToken) {
         this.profileImageToken = profileImageToken;
     }
+
+    public boolean isInUpdateState(){
+          if(!getFirstName().isEmpty() ||
+             !getLastName().isEmpty() ||
+             !getEmail().isEmpty() ||
+             !getNewPassword().isEmpty() ||
+             getProfileImageToken()>0){
+                System.out.println(" return true;");
+              return true;
+          }
+        return false;
+    }
 }

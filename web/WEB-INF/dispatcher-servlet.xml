@@ -70,7 +70,7 @@
 
               <!-- ******* Auth  File Upload [For Profile Edit ]  ************-->
               <mvc:interceptor>
-                     <mvc:mapping path="/fileupload/upload/user/profile-image" />
+                     <mvc:mapping path="/fileupload/upload/auth/**" />
                      <bean class="controller.interceptor.ServiceAuthInterceptor"/>
               </mvc:interceptor>
 
@@ -125,10 +125,14 @@
 
        <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
                       <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
        <!--<mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
                       <!--cache-period="31556926"/>-->
 
        <mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24files/"
+                      cache-period="31556926"/>
+       <mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/"
                       cache-period="31556926"/>
        <mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"
                       cache-period="31556926"/>

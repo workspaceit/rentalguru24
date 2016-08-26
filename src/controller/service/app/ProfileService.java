@@ -91,52 +91,53 @@ public class ProfileService {
                 authCredential.setPassword(profileForm.getNewPassword());
             }
         }
-        TempFile tempFile = null;
+
         if(profileForm.getProfileImageToken()>0) {
-            tempFile = this.tempFileModel.getByToken(profileForm.getProfileImageToken());
+            TempFile tempFile = this.tempFileModel.getByToken(profileForm.getProfileImageToken());
             if (tempFile == null) {
                 serviceResponse.setRequestError("profileImageToken", "Profile Image token is not valid");
+                return serviceResponse;
             }
+             /*----- Move Product image form temp to original ---- */
+
+            if(!ImageHelper.isFileExist(tempFile.getPath())){
+                serviceResponse.setRequestError("profileImageToken", "No file found associated with the token");
+                return serviceResponse;
+            }
+
+            Picture profileImage = null;
+            try {
+                profileImage = ImageHelper.moveProfileImage(authCredential.getId(), tempFile.getPath());
+            } catch (Exception e) {
+                //e.printStackTrace();
+                serviceResponse.setRequestError("profileImageToken", "Unable to save profile image");
+                return serviceResponse;
+            }
+            if(profileImage==null){
+                serviceResponse.setRequestError("profileImageToken", "Unable to save profile image");
+                return serviceResponse;
+            }
+
+            authCredential.getUserInf().setProfilePicture(profileImage);
         }
 
         if(serviceResponse.hasErrors()){
             return serviceResponse;
         }
 
-        /*----- Move Product image form temp to original ---- */
-
-        if(!ImageHelper.isFileExist(tempFile.getPath())){
-            serviceResponse.setRequestError("profileImageToken", "No file found associated with the token");
-            return serviceResponse;
-        }
-
-        Picture profileImage = null;
-        try {
-            profileImage = ImageHelper.moveProfileImage(authCredential.getId(), tempFile.getPath());
-        } catch (Exception e) {
-            //e.printStackTrace();
-            serviceResponse.setRequestError("profileImageToken", "Unable to save profile image");
-            return serviceResponse;
-        }
-        if(profileImage==null){
-            serviceResponse.setRequestError("profileImageToken", "Unable to save profile image");
-            return serviceResponse;
-        }
-
-
-
-        authCredential.getUserInf().setProfilePicture(profileImage);
-
-
-
         /* Update section */
-        if(isPasswordChanged){
-            appCredentialModel.updateWithNewPassword(authCredential);
-        }else{
-            appCredentialModel.update(authCredential);
+        if(profileForm.isInUpdateState()){
+            if(isPasswordChanged){
+                appCredentialModel.updateWithNewPassword(authCredential);
+                serviceResponse.setResponseData(appCredentialModel.getById(authCredential.getId()));
+            }else{
+                appCredentialModel.update(authCredential);
+                serviceResponse.setResponseData(appCredentialModel.getAppCredentialById(authCredential.getId()));
+            }
         }
 
-        serviceResponse.setResponseData(appCredentialModel.getById(authCredential.getId()));
+
+
         return  serviceResponse;
     }
 }
