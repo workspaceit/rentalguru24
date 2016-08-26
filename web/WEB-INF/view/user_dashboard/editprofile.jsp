@@ -25,44 +25,55 @@
                                 Choose a profile picture
                                 <span class="inner-load" hidden id="editProfilePicUploadLoader"></span>
                             </div>
+                            <p class="help-block error-form" id="errorMsg_profileImageToken"></p>
                         </div>
                     </div>
-                    <form class="form-signup clearfix form-edit col-md-9">
+                    <form class="form-signup clearfix form-edit col-md-9" onsubmit="return postEditProfile();">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="firstname">First name</label>
-                                <input type="text" class="form-control" placeholder="ex.John" id="firstname" name="firstname" value="${usersDetails.getUserInf().getFirstName()}">
+                                <label for="firstName">First name</label>
+                                <input type="text" class="form-control" placeholder="ex.John" id="firstName" name="firstName" value="${appCredential.getUserInf().getFirstName()}">
+                                <p class="help-block error-form" id="errorMsg_firstName"></p>
                             </div>
                             <div class="form-group">
-                                <label for="lastname">Last name</label>
-                                <input type="text" class="form-control" placeholder="ex.Wick" id="lastname" name="lastname" value="${usersDetails.getUserInf().getLastName()}">
+                                <label for="lastName">Last name</label>
+                                <input type="text" class="form-control" placeholder="ex.Wick" id="lastName" name="lastName" value="${appCredential.getUserInf().getLastName()}">
+                                <p class="help-block error-form" id="errorMsg_lastName"></p>
                             </div>
                             <div class="form-group">
-                                <label for="dateofbirth">Email</label>
-                                <input type="email" class="form-control" placeholder="ex.email@email.com" id="dateofbirth" name="dateofbirth" value="${userDetails.getEmail()}">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email" value="${appCredential.getEmail()}">
+                                <p class="help-block error-form" id="errorMsg_email"></p>
                             </div>
                             <div class="form-group">
-                                <label for="address">Password</label>
-                                <input type="password" class="form-control" placeholder="ex.password" id="address" name="address">
+                                <label for="oldPassword">Old Password</label>
+                                <input type="password" class="form-control" placeholder="ex.password" id="oldPassword" name="oldPassword">
+                                <p class="help-block error-form" id="errorMsg_oldPassword"></p>
                             </div>
                             <div class="form-group">
-                                <label>Identity Type</label>
-                                <select class="selectpicker">
-                                    <option value="0">Please select a identity type</option>
-                                    <d:forEach var="identity" items="${identityTypes}">
-                                    <option value="${identity.id}">${identity.name}</option>
-                                    </d:forEach>
-                                </select>
+                                <label for="newPassword">New Password</label>
+                                <input type="password" class="form-control" placeholder="ex.password" id="newPassword" name="newPassword">
+                                <p class="help-block error-form" id="errorMsg_newPassword"></p>
                             </div>
+                            <%--<div class="form-group">--%>
+                                <%--<label>Identity Type</label>--%>
+                                <%--<select class="selectpicker">--%>
+                                    <%--<option value="0">Please select a identity type</option>--%>
+                                    <%--<d:forEach var="identity" items="${identityTypes}">--%>
+                                    <%--<option value="${identity.id}">${identity.name}</option>--%>
+                                    <%--</d:forEach>--%>
+                                <%--</select>--%>
+                            <%--</div>--%>
                         </div>
                         <div class="col-md-12 text-right">
-                            <button class="btn-cstm-sign  pos-relative" style="margin-right:0px;">
+                            <button class="btn-cstm-sign  pos-relative" style="margin-right:0px;" id="editProfileButton" >
                                 Edit Profile
                                 <span class="inner-load" hidden id="editProfileLoder"></span>
                             </button>
                             <br>
-                            <div class="alert alert-success text-center" role="alert">Profile Edit Successfully done</div>
+                            <div class="alert alert-success text-center" role="alert" hidden >Profile Edit Successfully done</div>
                         </div>
+                        <input value="" id="profileImageToken" name="profileImageToken" type="hidden" >
                     </form>
                 </div>
             </div>
@@ -205,10 +216,82 @@
                 });
 
                 // scrollYou
-                $('.scrollMe .dropdown-menu').scrollyou();
+//                $('.scrollMe .dropdown-menu').scrollyou();
 
-                prettyPrint();
+//                prettyPrint();
             };
+        </script>
+        <script>
+            Dropzone.autoDiscover = false;
+            $(function() {
+                var profilePictureFile = $("div#fallback").dropzone(
+                        {
+                            url: BASEURL+"/fileupload/upload/auth/user/profile-image",
+                            paramName: "profileImage",
+                            maxFilesize: 1,
+                            uploadprogress:function(file, progress){
+                                $('#editProfileButton').attr("disabled","disabled");
+                                $('#editProfileLoder').show();
+                                $('#editProfilePicUploadLoader').show();
+                            },
+                            success:function(file, response){
+                                if(response.responseStat.status == true) {
+                                    $('#editProfilePicUploadLoader').hide();
+                                    $('#editProfileButton').removeAttr("disabled","disabled");
+                                    $('#editProfileLoder').hide();
+                                    $('#profileImageToken').val(response.responseData);
+                                } else{
+                                    BindErrorsWithHtml('errorMsg_', response.requestErrors);
+                                }
+                            },
+                            previewsContainer: ".profile-pic-review",
+                            error:function(file, errorMessage, xhr){
+                                $('#editProfilePicUploadLoader').hide();
+                                $('#editProfileButton').removeAttr("disabled","disabled");
+                                $('#editProfileLoder').hide();
+                            }
+                        }
+                );
+            });
+        </script>
+        <script>
+            function postEditProfile(){
+                $('#editProfileLoder').show();
+                var firstName = $('#firstName').val();
+                var lastName = $('#lastName').val();
+                var email = $('#email').val();
+                var oldPassword = $('#oldPassword').val();
+                var newPassword = $('#newPassword').val();
+                var profileImageToken = $('#profileImageToken').val();
+//                console.log(firstName, lastName, email, oldPassword, newPassword, profileImageToken);
+                $.ajax({
+                    url: BASEURL+"/api/auth/profile/edit",
+                    type: "POST",
+                    data: {
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        oldPassword: oldPassword,
+                        newPassword: newPassword,
+                        profileImageToken: profileImageToken,
+                    },
+                    success: function(data){
+                        console.log(data);
+                        if(data.responseStat.status == false){
+                            BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
+                        }else{
+                            $('.alert-success').show().delay(5000).fadeOut(500,function(){
+                            });
+                        }
+                        $('#editProfileLoder').hide();
+                    },
+                    error: function(data){
+                        console.log('fail');
+                        $('#editProfileLoder').hide();
+                    }
+                });
+                return false;
+            }
         </script>
 
     </body>

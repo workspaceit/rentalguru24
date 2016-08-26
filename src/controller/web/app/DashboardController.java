@@ -110,7 +110,7 @@ public class DashboardController {
 
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "My Profile Edit");
-        modelAndView.addObject("usersDetails", appCredential );
+        modelAndView.addObject("appCredential", appCredential );
         modelAndView.addObject("identityTypes", identityTypes );
         return modelAndView;
     }

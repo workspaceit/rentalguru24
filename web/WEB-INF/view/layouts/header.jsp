@@ -88,6 +88,7 @@
   <link rel="stylesheet" href="<c:url value="/resources/css/easyzoom.css"/> " />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/datepicker.css"/> " />
   <link rel="stylesheet" href="<c:url value="/resources/css/zoom.css"/>" />
+  <script src="<c:url value="/resources/js/dropzone.js"/>"></script>
   <!-- Theme CSS -->
   <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
 
