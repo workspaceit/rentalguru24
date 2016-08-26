@@ -3,12 +3,14 @@ package controller.service.app;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.ImageHelper;
 import helper.ServiceResponse;
+import helper.SessionManagement;
 import model.AppLoginCredentialModel;
 import model.TempFileModel;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import model.entity.app.TempFile;
 import model.nonentity.photo.Picture;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
@@ -134,7 +136,10 @@ public class ProfileService {
                 appCredentialModel.update(authCredential);
                 serviceResponse.setResponseData(appCredentialModel.getAppCredentialById(authCredential.getId()));
             }
+            SessionManagement.setAppCredentialInSession(request,serviceResponse,appCredentialModel.getAppCredentialById(authCredential.getId()));
+
         }
+
 
 
 

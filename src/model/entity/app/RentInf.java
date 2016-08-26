@@ -2,14 +2,17 @@ package model.entity.app;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import model.entity.app.product.RequestProductReturn;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by mi on 8/1/16.
@@ -28,7 +31,9 @@ public class RentInf {
     private boolean expired;
     private boolean productReturned;
     private boolean productReceived;
+    private List<RequestProductReturn> productReturnRequest;
     private Timestamp createdDate;
+
 
 
     @Id
@@ -135,4 +140,14 @@ public class RentInf {
         this.rentRequest = rentRequest;
     }
 
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="rentInf")
+    //@JoinColumn(name = "rent_product_id", referencedColumnName = "id", nullable = false)
+    @Where(clause="expired=false")
+    public List<RequestProductReturn> getProductReturnRequest() {
+        return productReturnRequest;
+    }
+
+    public void setProductReturnRequest(List<RequestProductReturn> productReturnRequest) {
+        this.productReturnRequest = productReturnRequest;
+    }
 }
