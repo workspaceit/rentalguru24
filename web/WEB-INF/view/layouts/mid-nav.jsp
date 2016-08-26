@@ -12,7 +12,7 @@
         <div class="col-md-6 col-sm-6 col-xs-6">
           <ul class="mid_nav_logo_ul">
             <li class=>
-              <img src="<c:url value="/resources/img/logo.png" />" >
+              <a href="${BaseUrl}/home"><img src="<c:url value="/resources/img/logo.png" />" ></a>
             </li>
           </ul>
         </div>

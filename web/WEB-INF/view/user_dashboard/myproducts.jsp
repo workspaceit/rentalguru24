@@ -14,7 +14,7 @@
             <div class="row">
                 <jsp:directive.include file="../layouts/userDashboardLeftMemu.jsp" />
                 <div class="col-md-9 side-container">
-                    <h3>My Products</h3>
+                    <h3>My Products <button  onclick="location.href='${BaseUrl}/product/upload'" class="btn-filter user_dboard_btn">Add New Product</button></h3>
                     <%--<div class="row clearfix no-margin">--%>
                         <%--<div class="col-md-4 col-sm-4 col-xs-12">--%>
                             <%--<div class="form-group date-con">--%>

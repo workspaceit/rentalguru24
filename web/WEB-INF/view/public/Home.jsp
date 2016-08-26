@@ -177,28 +177,26 @@
                 <div class="row">
                     <div class="col-sm-6 col-xs-12 col-md-6">
                         <div class="big_ass_offer">
-
-                            <img src="<c:url value="/resources/img/1.jpg" />" >
+                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom2.getProfileImage().getOriginal().getPath()}" />">
                             <div class="offer_cap_big ">
-                                <h2 class="type">GUEST ROOM</h2>
-                                <h1 class="name">SOFA</h1>
-                                <p class="discount no-margin">-20%</p>
+                                <h2 class="type"></h2>
+                                <h1 class="name"><a href="${BaseUrl}/product/details/${rentalProductsRandom2.getId()}">${fn:substring(rentalProductsRandom2.name, 0, 20)}<d:if test="${fn:length(rentalProductsRandom2.name)>20}">....</d:if></a></h1>
+                                <p class="discount no-margin">$${rentalProductsRandom2.rentFee}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xs-12 col-md-6">
                         <div class="small_ass_offer small_1">
-                            <img src="<c:url value="/resources/img/2.jpg" />"  >
+                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom3.getProfileImage().getOriginal().getPath()}" />">
                             <div class="offer_cap_small_1 ">
                                 <div class="small_1_text">
-                                    <h3 class="s_type "><strong>OFFICE</strong> CHAIR</h3>
-                                    <h4 class="s_name ">COLLECTION</h4>
+                                    <%--<h3 class="s_type "><strong>${rentalProductsRandom3.getProductCategories().getCategory().getName()}</strong></h3>--%>
                                 </div>
-                                <p class="s_price no-margin">$200.00</p>
+                                <p class="s_price no-margin">$${rentalProductsRandom3.rentFee}</p>
                             </div>
                         </div>
                         <div class="small_ass_offer">
-                            <img src="<c:url value="/resources/img/3.jpg" />">
+                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom4.getProfileImage().getOriginal().getPath()}" />">
                         </div>
                     </div>
                 </div>
@@ -273,9 +271,9 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs gallery_nav" role="tablist">
                                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">FEATURED</a></li>
-                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">TOP SELLER</a></li>
-                                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">SELL OFF</a></li>
-                                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">TOP RATED</a></li>
+                                <%--<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">TOP SELLER</a></li>--%>
+                                <%--<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">SELL OFF</a></li>--%>
+                                <%--<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">TOP RATED</a></li>--%>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
@@ -283,55 +281,41 @@
                                     <!-- Place somewhere in the <body> of your page -->
                                     <div id="slider" class="flexslider">
                                         <ul class="slides">
-                                            <li>
-                                                <img src="http://placehold.it/700x400" >
-                                            </li>
-                                            <li>
-                                                <img src="http://placehold.it/700x400"   >
-                                            </li>
-                                            <li>
-                                                <img src="http://placehold.it/700x400"  >
-                                            </li>
-                                            <li>
-                                                <img src="http://placehold.it/700x400"   >
-                                            </li>
+                                            <d:forEach var="ascendingProduct" items="${productsAscending}">
+                                                <li>
+                                                    <img src="<c:url value="${BaseUrl}/images/${ascendingProduct.getProfileImage().getOriginal().getPath()}" />" >
+                                                </li>
+                                            </d:forEach>
                                             <!-- items mirrored twice, total of 12 -->
                                         </ul>
                                     </div>
                                     <div id="carousel" class="flexslider">
                                         <ul class="slides">
-                                            <li>
-                                                <img src="http://placehold.it/700x400"  >
-                                            </li>
-                                            <li>
-                                                <img src="http://placehold.it/700x400"  >
-                                            </li>
-                                            <li>
-                                                <img src="http://placehold.it/700x400"  >
-                                            </li>
-                                            <li>
-                                                <img src="http://placehold.it/700x400"  >
-                                            </li>
+                                            <d:forEach var="ascendingProduct" items="${productsAscending}">
+                                                <li>
+                                                    <img src="<c:url value="${BaseUrl}/images/${ascendingProduct.getProfileImage().getOriginal().getPath()}" />" >
+                                                </li>
+                                            </d:forEach>
                                             <!-- items mirrored twice, total of 12 -->
                                         </ul>
                                     </div>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade " id="profile">dfgdfg</div>
-                                <div role="tabpanel" class="tab-pane fade " id="messages">dfgdfg</div>
-                                <div role="tabpanel" class="tab-pane fade " id="settings">dfgdfgd</div>
+                                <%--<div role="tabpanel" class="tab-pane fade " id="profile">dfgdfg</div>--%>
+                                <%--<div role="tabpanel" class="tab-pane fade " id="messages">dfgdfg</div>--%>
+                                <%--<div role="tabpanel" class="tab-pane fade " id="settings">dfgdfgd</div>--%>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 mcol-xs-12">
                         <div class="best_offer">
-                            <img src="<c:url value="/resources/img/15.jpg" />">
+                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom1.getProfileImage().getOriginal().getPath()}" />">
                             <div class="best_offer_text">
                                 <div class="offer_rate">
-                                    <p class="offer_head"><span class="pre_rate">FROM</span><span class="rate">$250</span></p>
+                                    <p class="offer_head"><span class="pre_rate">FROM</span><span class="rate">$${rentalProductsRandom1.rentFee}</span></p>
                                 </div>
                                 <div class="offer_des">
-                                    <p class="name">Bedroom Bed</p>
-                                    <a href="" class="btn shop_btn"> SHOP NOW</a>
+                                    <p class="name"><a href="${BaseUrl}/product/details/${rentalProductsRandom1.getId()}">${fn:substring(rentalProductsRandom1.name, 0, 20)}<d:if test="${fn:length(rentalProductsRandom1.name)>20}">....</d:if></a></p>
+                                    <a href="javascript:void(0)" onclick="showRentRequestPopUp(${product.getId()})" class="btn shop_btn">RENT NOW</a>
                                 </div>
                             </div>
                         </div>
@@ -339,144 +323,144 @@
                 </div>
             </div>
         </div>
-        <div class="container blog_container">
-            <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
-                <h2 class="block-head">Latest Blog</h2>
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <div class="row clearfix">
-                            <div class="col-md-4 blog-single">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="blog-img">
-                                            <img src="<c:url value="/resources/img/18.jpg" />" />
-                                        </div>
-                                        <div class="blog-desc">
-                                            <p class="date-comment">
-                                                <span><i class="fa fa-calendar"></i> 15 JAN 2016</span>
-                                                <span><i class="fa fa-comments"></i>4 Comments</span>
-                                            </p>
-                                            <h4 class="blog-title">Products That Fight Static</h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.
-                                            </p>
-                                            <div class="text-center">
-                                                <button class="btn-read">Read More</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 blog-single">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="blog-img">
-                                            <img src="<c:url value="/resources/img/17.jpg"  />" />
-                                        </div>
-                                        <div class="blog-desc">
-                                            <p class="date-comment">
-                                                <span><i class="fa fa-calendar"></i> 15 JAN 2016</span>
-                                                <span><i class="fa fa-comments"></i>4 Comments</span>
-                                            </p>
-                                            <h4 class="blog-title">Products That Fight Static</h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.
-                                            </p>
-                                            <div class="text-center">
-                                                <button class="btn-read">Read More</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 blog-single">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="blog-img">
-                                            <img src="<c:url value="/resources/img/16.jpg"   />" />
-                                        </div>
-                                        <div class="blog-desc">
-                                            <p class="date-comment">
-                                                <span><i class="fa fa-calendar"></i> 15 JAN 2016</span>
-                                                <span><i class="fa fa-comments"></i> 4 Comments</span>
-                                            </p>
-                                            <h4 class="blog-title">Products That Fight Static</h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.
-                                            </p>
-                                            <div class="text-center">
-                                                <button class="btn-read">Read More</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sponser">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12 sponser_slider">
-                        <div class="owl-carousel">
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
+        <%--<div class="container blog_container">--%>
+            <%--<div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>--%>
+                <%--<!-- Indicators -->--%>
+                <%--<ol class="carousel-indicators">--%>
+                    <%--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>--%>
+                    <%--<li data-target="#carousel-example-generic" data-slide-to="1"></li>--%>
+                    <%--<li data-target="#carousel-example-generic" data-slide-to="2"></li>--%>
+                <%--</ol>--%>
+                <%--<h2 class="block-head">Latest Blog</h2>--%>
+                <%--<div class="carousel-inner" role="listbox">--%>
+                    <%--<div class="item active">--%>
+                        <%--<div class="row clearfix">--%>
+                            <%--<div class="col-md-4 blog-single">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="blog-img">--%>
+                                            <%--<img src="<c:url value="/resources/img/18.jpg" />" />--%>
+                                        <%--</div>--%>
+                                        <%--<div class="blog-desc">--%>
+                                            <%--<p class="date-comment">--%>
+                                                <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
+                                                <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
+                                            <%--</p>--%>
+                                            <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
+                                            <%--<p>--%>
+                                                <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
+                                            <%--</p>--%>
+                                            <%--<div class="text-center">--%>
+                                                <%--<button class="btn-read">Read More</button>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-4 blog-single">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="blog-img">--%>
+                                            <%--<img src="<c:url value="/resources/img/17.jpg"  />" />--%>
+                                        <%--</div>--%>
+                                        <%--<div class="blog-desc">--%>
+                                            <%--<p class="date-comment">--%>
+                                                <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
+                                                <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
+                                            <%--</p>--%>
+                                            <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
+                                            <%--<p>--%>
+                                                <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
+                                            <%--</p>--%>
+                                            <%--<div class="text-center">--%>
+                                                <%--<button class="btn-read">Read More</button>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-4 blog-single">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="blog-img">--%>
+                                            <%--<img src="<c:url value="/resources/img/16.jpg"   />" />--%>
+                                        <%--</div>--%>
+                                        <%--<div class="blog-desc">--%>
+                                            <%--<p class="date-comment">--%>
+                                                <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
+                                                <%--<span><i class="fa fa-comments"></i> 4 Comments</span>--%>
+                                            <%--</p>--%>
+                                            <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
+                                            <%--<p>--%>
+                                                <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
+                                            <%--</p>--%>
+                                            <%--<div class="text-center">--%>
+                                                <%--<button class="btn-read">Read More</button>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<div class="sponser">--%>
+            <%--<div class="container">--%>
+                <%--<div class="row">--%>
+                    <%--<div class="col-md-12 col-sm-12 col-xs-12 sponser_slider">--%>
+                        <%--<div class="owl-carousel">--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonial">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12 sponser_slider">
-                        <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
-                            <!-- Indicators -->
-                            <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol>
-                            <h2 class="block-head">CLIENT FEEDBACK</h2>
-                            <div class="carousel-inner" role="listbox">
-                                <div class="item active">
-                                    <p class="feedback_icon"><i class="fa fa-quote-right fa-2x"></i></p>
-                                    <p class="feedback_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at magna elementum, consectetur purus a, euismod odio. Duis mattis libero metus, id eleifend nisl gravida non. Pellentesque felis nibh, fringilla a nibh et, pulvinar blandit nibh. </p>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<div class="testimonial">--%>
+            <%--<div class="container">--%>
+                <%--<div class="row">--%>
+                    <%--<div class="col-md-12 col-sm-12 col-xs-12 sponser_slider">--%>
+                        <%--<div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>--%>
+                            <%--<!-- Indicators -->--%>
+                            <%--<ol class="carousel-indicators">--%>
+                                <%--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>--%>
+                                <%--<li data-target="#carousel-example-generic" data-slide-to="1"></li>--%>
+                                <%--<li data-target="#carousel-example-generic" data-slide-to="2"></li>--%>
+                            <%--</ol>--%>
+                            <%--<h2 class="block-head">CLIENT FEEDBACK</h2>--%>
+                            <%--<div class="carousel-inner" role="listbox">--%>
+                                <%--<div class="item active">--%>
+                                    <%--<p class="feedback_icon"><i class="fa fa-quote-right fa-2x"></i></p>--%>
+                                    <%--<p class="feedback_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at magna elementum, consectetur purus a, euismod odio. Duis mattis libero metus, id eleifend nisl gravida non. Pellentesque felis nibh, fringilla a nibh et, pulvinar blandit nibh. </p>--%>
 
-                                    <div class="client_details">
-                                        <div class="client_img">
-                                            <img src="<c:url value="/resources/img/20.jpg" />" >
-                                        </div>
-                                        <div class="client_info">
-                                            <p class="client_name no-margin"><strong>John Doe</strong></p>
-                                            <p class="client_type no-margin">Furniture Client</p>
-                                        </div>
-                                    </div>
-                                </div>                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                    <%--<div class="client_details">--%>
+                                        <%--<div class="client_img">--%>
+                                            <%--<img src="<c:url value="/resources/img/20.jpg" />" >--%>
+                                        <%--</div>--%>
+                                        <%--<div class="client_info">--%>
+                                            <%--<p class="client_name no-margin"><strong>John Doe</strong></p>--%>
+                                            <%--<p class="client_type no-margin">Furniture Client</p>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>                                --%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <div class="footer">
             <div class="container">
                 <div class="row">
