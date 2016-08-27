@@ -570,9 +570,7 @@
 
 <%--Hidden Values for Front Developer --%>
 <input type="hidden" value="" id="currentProductId" />
-<script>
-    var isLoggedin =${IsLogIn};
-</script>
+
 
 <jsp:directive.include file="../layouts/footer.jsp" />
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datepicker.js" />" ></script>

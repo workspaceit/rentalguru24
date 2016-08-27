@@ -66,8 +66,9 @@
                                 <td><fmt:formatDate value="${rentRequest.endDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
                                 <td width="100px">
                                     <div class="actions">
-                                        <button class="btn btn-edit" onclick="requestApprove(${rentRequest.id})">Approve</button>
-                                        <button class="btn btn-delete" onclick="requestDisapprove(${rentRequest.id})">Disapprove</button>
+                                        <%--<button class="btn btn-edit" onclick="requestApprove(${rentRequest.id})">Approve</button>--%>
+                                        <button class="btn btn-edit" onclick="getDetails(${rentRequest.getId()})">Details</button>
+                                        <%--<button class="btn btn-delete" onclick="requestDisapprove(${rentRequest.id})">Disapprove</button>--%>
                                     </div>
                                 </td>
 
@@ -154,12 +155,12 @@
 
     }
 
-
-
-
-
 </script>
-
+<script>
+    function getDetails(product_id){
+        window.location.href = BASEURL+"/rent/request/"+product_id;
+    }
+</script>
 
 <script>
     var nowTemp = new Date();
