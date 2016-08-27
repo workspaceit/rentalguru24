@@ -1,14 +1,7 @@
 package model;
 
-import model.entity.app.RentRequest;
-import model.entity.app.product.RequestProductReturn;
+import model.entity.app.product.rentable.RequestProductReturn;
 import org.hibernate.Session;
-
-
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 /**
  * Created by mi on 8/26/16.

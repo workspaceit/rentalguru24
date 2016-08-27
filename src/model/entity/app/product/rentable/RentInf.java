@@ -1,12 +1,11 @@
-package model.entity.app;
+package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import model.entity.app.product.RequestProductReturn;
-import model.entity.app.product.rentable.RentalProductEntity;
+import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -31,8 +30,14 @@ public class RentInf {
     private boolean expired;
     private boolean productReturned;
     private boolean productReceived;
-    private List<RequestProductReturn> productReturnRequest;
+    private List<RequestProductReturn> productReturnRequestList;
+    public RequestProductReturn productReturnRequest;
+
+    private List<RentalProductReturned> rentalProductReturnedList;
+    public RentalProductReturned rentalProductReturned;
+
     private Timestamp createdDate;
+    public boolean abc = true;
 
 
 
@@ -143,11 +148,28 @@ public class RentInf {
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="rentInf")
     //@JoinColumn(name = "rent_product_id", referencedColumnName = "id", nullable = false)
     @Where(clause="expired=false")
-    public List<RequestProductReturn> getProductReturnRequest() {
-        return productReturnRequest;
+    @Fetch(value = FetchMode.SUBSELECT)
+    public List<RequestProductReturn> getProductReturnRequestList() {
+        return productReturnRequestList;
     }
 
-    public void setProductReturnRequest(List<RequestProductReturn> productReturnRequest) {
-        this.productReturnRequest = productReturnRequest;
+    public void setProductReturnRequestList(List<RequestProductReturn> productReturnRequestList) {
+        if(productReturnRequestList!=null && productReturnRequestList.size()>0){
+            productReturnRequest = productReturnRequestList.get(0);
+        }
+        this.productReturnRequestList = productReturnRequestList;
+    }
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "rent_product_id", referencedColumnName = "id", nullable = false)
+    @Fetch(value = FetchMode.SUBSELECT)
+    public List<RentalProductReturned> getRentalProductReturnedList() {
+        return rentalProductReturnedList;
+    }
+
+    public void setRentalProductReturnedList(List<RentalProductReturned> rentalProductReturnedList) {
+        if(rentalProductReturnedList!=null && rentalProductReturnedList.size()>0){
+            rentalProductReturned = rentalProductReturnedList.get(0);
+        }
+        this.rentalProductReturnedList = rentalProductReturnedList;
     }
 }

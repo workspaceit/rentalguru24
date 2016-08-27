@@ -6,6 +6,7 @@ import library.RentGuruMail;
 import model.*;
 
 import model.entity.app.*;
+import model.entity.app.product.rentable.RentInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;

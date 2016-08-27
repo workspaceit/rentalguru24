@@ -67,6 +67,10 @@
                      <mvc:mapping path="/product/upload" />
                      <bean class="controller.interceptor.WebAuthInterceptor"/>
               </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/rent/request/**" />
+                     <bean class="controller.interceptor.WebAuthInterceptor"/>
+              </mvc:interceptor>
 
               <!-- ******* Auth  File Upload [For Profile Edit ]  ************-->
               <mvc:interceptor>
@@ -232,6 +236,10 @@
        </bean>
        <bean id="requestProductReturnModel" class="model.RequestProductReturnModel" >
        </bean>
+       <bean id="rentalProductReturnedModel" class="model.RentalProductReturnedModel" >
+       </bean>
+       <bean id="rentalProductReturnedHistoryModel" class="model.RentalProductReturnedHistoryModel" >
+       </bean>
 
 
 
@@ -249,7 +257,7 @@
                             <value>model.entity.app.product.rentable.RentalProductEntity</value>
                             <value>model.entity.app.product.rentable.ProductAttribute</value>
                             <value>model.entity.app.product.ProductCategory</value>
-                            <value>model.entity.app.RentInf</value>
+                            <value>model.entity.app.product.rentable.RentInf</value>
                             <value>model.entity.app.RentRequest</value>
                             <value>model.entity.app.TempFile</value>
                             <value>model.entity.app.IdentityType</value>
@@ -258,9 +266,9 @@
                             <value>model.entity.app.RentType</value>
                             <value>model.entity.app.ProductRating</value>
                             <value>model.entity.app.product.ProductLiked</value>
-                            <value>model.entity.app.product.ProductReceived</value>
-                            <value>model.entity.app.product.ProductReturned</value>
-                            <value>model.entity.app.product.RequestProductReturn</value>
+                            <value>model.entity.app.product.rentable.RequestProductReturn</value>
+                            <value>model.entity.app.product.rentable.RentalProductReturned</value>
+                            <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
                      </list>
               </property>
               <property name="hibernateProperties">
@@ -297,7 +305,7 @@
 
               <!--<prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>-->
               <!--<prop key="hibernate.connection.username">root</prop>-->
-              <!--<prop key="hibernate.connection.oldPassword" />-->
+              <!--<prop key="hibernate.connection.password" />-->
               <!--<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>-->
               <!--<prop key="hibernate.show_sql">true</prop>-->
               <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->

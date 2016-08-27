@@ -1,7 +1,6 @@
 package model;
 
-import model.entity.app.RentInf;
-import model.entity.app.product.rentable.RentalProductEntity;
+import model.entity.app.product.rentable.RentInf;
 import org.hibernate.Query;
 import org.hibernate.Session;
 

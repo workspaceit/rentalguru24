@@ -6,7 +6,7 @@ import model.ProductModel;
 import model.RentProductModel;
 import model.RentRequestModel;
 import model.entity.app.AppCredential;
-import model.entity.app.RentInf;
+import model.entity.app.product.rentable.RentInf;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;

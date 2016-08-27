@@ -1,16 +1,17 @@
-package model.entity.app.product;
+package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import model.entity.app.RentInf;
-import model.entity.app.product.rentable.RentalProductEntity;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.entity.app.product.rentable.iface.RentalProduct;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by mi on 8/26/16.
  */
+@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "request_product_return", schema = "")
 public class RequestProductReturn {
@@ -20,6 +21,7 @@ public class RequestProductReturn {
     private String remarks;
     private Boolean isExpired;
     private Timestamp createdDate;
+    private List<RentalProductReturnedHistory> rentalProductReturnedHistory;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +33,8 @@ public class RequestProductReturn {
     public void setId(int id) {
         this.id = id;
     }
+
+
     @JsonIgnore
     @OneToOne(fetch = FetchType.EAGER,targetEntity = RentalProductEntity.class)
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
@@ -84,5 +88,13 @@ public class RequestProductReturn {
         this.createdDate = createdDate;
     }
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_returned_id", referencedColumnName = "id", nullable = false)
+    public List<RentalProductReturnedHistory> getRentalProductReturnedHistory() {
+        return rentalProductReturnedHistory;
+    }
 
+    public void setRentalProductReturnedHistory( List<RentalProductReturnedHistory>  rentalProductReturnedHistory) {
+        this.rentalProductReturnedHistory = rentalProductReturnedHistory;
+    }
 }

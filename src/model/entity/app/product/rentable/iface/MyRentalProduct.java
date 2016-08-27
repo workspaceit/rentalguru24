@@ -1,6 +1,6 @@
 package model.entity.app.product.rentable.iface;
 
-import model.entity.app.RentInf;
+import model.entity.app.product.rentable.RentInf;
 
 import java.util.List;
 
