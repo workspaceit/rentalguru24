@@ -21,7 +21,6 @@ public class RequestProductReturn {
     private String remarks;
     private Boolean isExpired;
     private Timestamp createdDate;
-    private List<RentalProductReturnedHistory> rentalProductReturnedHistory;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,13 +87,5 @@ public class RequestProductReturn {
         this.createdDate = createdDate;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_returned_id", referencedColumnName = "id", nullable = false)
-    public List<RentalProductReturnedHistory> getRentalProductReturnedHistory() {
-        return rentalProductReturnedHistory;
-    }
 
-    public void setRentalProductReturnedHistory( List<RentalProductReturnedHistory>  rentalProductReturnedHistory) {
-        this.rentalProductReturnedHistory = rentalProductReturnedHistory;
-    }
 }

@@ -1,7 +1,6 @@
 package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import model.entity.app.product.rentable.iface.RentalProduct;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -16,7 +15,8 @@ public class RentalProductReturned {
     private int id;
     private boolean confirm;
     private boolean dispute;
-    private Timestamp created;
+    private boolean expired;
+    private Timestamp createdDate;
     private RentInf rentInf;
     private List<RentalProductReturnedHistory> rentalProductReturnedHistories;
 
@@ -52,47 +52,34 @@ public class RentalProductReturned {
     }
 
     @Basic
-    @Column(name = "created")
-    public Timestamp getCreated() {
-        return created;
+    @Column(name = "expired")
+    public boolean isExpired() {
+        return expired;
     }
 
-    public void setCreated(Timestamp created) {
-        this.created = created;
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RentalProductReturned that = (RentalProductReturned) o;
-
-        if (id != that.id) return false;
-        if (confirm != that.confirm) return false;
-        if (dispute != that.dispute) return false;
-        if (created != null ? !created.equals(that.created) : that.created != null) return false;
-
-        return true;
+    @Basic
+    @Column(name = "created_date")
+    public Timestamp getCreatedDate() {
+        return createdDate;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (confirm ? 1 : 0);
-        result = 31 * result + (dispute ? 1 : 0);
-        result = 31 * result + (created != null ? created.hashCode() : 0);
-        return result;
+    public void setCreatedDate(Timestamp created) {
+        this.createdDate = created;
     }
 
-    @OneToMany(mappedBy = "rentalProductReturned",cascade = CascadeType.ALL)
-    //@JoinColumn(name = "product_returned_id",referencedColumnName = "id",nullable = false,insertable = false,updatable = false)
+
+    @OneToMany(cascade=CascadeType.ALL,mappedBy = "rentalProductReturned")
+//    @JoinColumn(name = "product_returned_id",referencedColumnName = "id",nullable = false)
     public List<RentalProductReturnedHistory> getRentalProductReturnedHistories() {
         return rentalProductReturnedHistories;
     }
 
-    public void setRentalProductReturnedHistories(List<RentalProductReturnedHistory> rentalProductReturnedHistoriesById) {
-        this.rentalProductReturnedHistories = rentalProductReturnedHistoriesById;
+    public void setRentalProductReturnedHistories(List<RentalProductReturnedHistory> rentalProductReturnedHistories) {
+        this.rentalProductReturnedHistories = rentalProductReturnedHistories;
     }
 
     @JsonIgnore

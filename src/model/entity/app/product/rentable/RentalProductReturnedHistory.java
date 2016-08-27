@@ -1,6 +1,7 @@
 package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -61,7 +62,7 @@ public class RentalProductReturnedHistory {
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_returned_id",referencedColumnName = "id",insertable = false,updatable = false)
+    @JoinColumn(name = "product_returned_id",referencedColumnName = "id",nullable = false)
     public RentalProductReturned getRentalProductReturned() {
         return rentalProductReturned;
     }
