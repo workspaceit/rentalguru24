@@ -1,6 +1,6 @@
 package model;
 
-import model.entity.app.product.rentable.RequestProductReturn;
+import model.entity.app.product.rentable.RentalProductReturnRequest;
 import org.hibernate.Session;
 
 /**
@@ -8,19 +8,19 @@ import org.hibernate.Session;
  */
 public class RequestProductReturnModel extends BaseModel {
 
-    public RequestProductReturn getById(int id){
+    public RentalProductReturnRequest getById(int id){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
         try{
-            return session.get(RequestProductReturn.class, id);
+            return session.get(RentalProductReturnRequest.class, id);
         }finally {
             session.close();
         }
     }
-    public void insert(RequestProductReturn requestProductReturn){
+    public void insert(RentalProductReturnRequest rentalProductReturnRequest){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
-        session.save(requestProductReturn);
+        session.save(rentalProductReturnRequest);
         session.getTransaction().commit();
         session.close();
     }

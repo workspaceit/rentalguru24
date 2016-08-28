@@ -5,7 +5,7 @@ import model.RentProductModel;
 import model.RequestProductReturnModel;
 import model.entity.app.AppCredential;
 import model.entity.app.product.rentable.RentInf;
-import model.entity.app.product.rentable.RequestProductReturn;
+import model.entity.app.product.rentable.RentalProductReturnRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,13 +32,13 @@ public class RentalProductReturnRequestService {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
 
-        RequestProductReturn requestProductReturn = new RequestProductReturn();
+        RentalProductReturnRequest rentalProductReturnRequest = new RentalProductReturnRequest();
         RentInf rentInf = rentProductModel.getById(rentalInfId);
 
         System.out.println(rentInf.getRentalProduct().getId());
-        requestProductReturn.setRentInf(rentInf);
-        requestProductReturn.setIsExpired(false);
-        requestProductReturnModel.insert(requestProductReturn);
+        rentalProductReturnRequest.setRentInf(rentInf);
+        rentalProductReturnRequest.setIsExpired(false);
+        requestProductReturnModel.insert(rentalProductReturnRequest);
         serviceResponse.setResponseData(rentProductModel.getById(rentalInfId));
         return serviceResponse;
 

@@ -15,7 +15,7 @@ public class RentalProductReturned {
     private int id;
     private boolean confirm;
     private boolean dispute;
-    private boolean expired;
+    private boolean isExpired;
     private Timestamp createdDate;
     private RentInf rentInf;
     private List<RentalProductReturnedHistory> rentalProductReturnedHistories;
@@ -53,12 +53,12 @@ public class RentalProductReturned {
 
     @Basic
     @Column(name = "expired")
-    public boolean isExpired() {
-        return expired;
+    public boolean getIsExpired() {
+        return isExpired;
     }
 
-    public void setExpired(boolean expired) {
-        this.expired = expired;
+    public void setIsExpired(boolean expired) {
+        this.isExpired = expired;
     }
 
     @Basic
@@ -72,8 +72,8 @@ public class RentalProductReturned {
     }
 
 
+
     @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL,mappedBy = "rentalProductReturned")
-   // @JoinColumn(name = "product_returned_id",referencedColumnName = "id",nullable = false)
     public List<RentalProductReturnedHistory> getRentalProductReturnedHistories() {
         return rentalProductReturnedHistories;
     }

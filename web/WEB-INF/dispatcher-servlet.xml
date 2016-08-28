@@ -266,7 +266,7 @@
                             <value>model.entity.app.RentType</value>
                             <value>model.entity.app.ProductRating</value>
                             <value>model.entity.app.product.ProductLiked</value>
-                            <value>model.entity.app.product.rentable.RequestProductReturn</value>
+                            <value>model.entity.app.product.rentable.RentalProductReturnRequest</value>
                             <value>model.entity.app.product.rentable.RentalProductReturned</value>
                             <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
                      </list>

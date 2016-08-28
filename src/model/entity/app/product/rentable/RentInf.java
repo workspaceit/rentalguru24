@@ -30,14 +30,13 @@ public class RentInf {
     private boolean expired;
     private boolean productReturned;
     private boolean productReceived;
-    private List<RequestProductReturn> productReturnRequestList;
-    public RequestProductReturn productReturnRequest;
+    private List<RentalProductReturnRequest> rentalProductReturnRequestList;
+    public RentalProductReturnRequest rentalProductReturnRequest;
 
     private List<RentalProductReturned> rentalProductReturnedList;
     public RentalProductReturned rentalProductReturned;
 
     private Timestamp createdDate;
-    public boolean abc = true;
 
 
 
@@ -145,22 +144,25 @@ public class RentInf {
         this.rentRequest = rentRequest;
     }
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy="rentInf")
-    //@JoinColumn(name = "rent_product_id", referencedColumnName = "id", nullable = false)
-    @Where(clause="expired=false")
     @Fetch(value = FetchMode.SUBSELECT)
-    public List<RequestProductReturn> getProductReturnRequestList() {
-        return productReturnRequestList;
+    @Where(clause = "expired=false")
+    public List<RentalProductReturnRequest> getRentalProductReturnRequestList() {
+        return rentalProductReturnRequestList;
     }
 
-    public void setProductReturnRequestList(List<RequestProductReturn> productReturnRequestList) {
-        if(productReturnRequestList!=null && productReturnRequestList.size()>0){
-            productReturnRequest = productReturnRequestList.get(0);
+    public void setRentalProductReturnRequestList(List<RentalProductReturnRequest> rentalProductReturnRequestList) {
+        if(rentalProductReturnRequestList !=null && rentalProductReturnRequestList.size()>0){
+            rentalProductReturnRequest = rentalProductReturnRequestList.get(0);
         }
-        this.productReturnRequestList = productReturnRequestList;
+        this.rentalProductReturnRequestList = rentalProductReturnRequestList;
     }
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "rent_product_id", referencedColumnName = "id", nullable = false)
+    @Where(clause="expired=false")
     @Fetch(value = FetchMode.SUBSELECT)
     public List<RentalProductReturned> getRentalProductReturnedList() {
         return rentalProductReturnedList;

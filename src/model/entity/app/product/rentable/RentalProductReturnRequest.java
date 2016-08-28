@@ -13,8 +13,8 @@ import java.util.List;
  */
 @JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
-@Table(name = "request_product_return", schema = "")
-public class RequestProductReturn {
+@Table(name = "rental_product_return_request", schema = "")
+public class RentalProductReturnRequest {
     private int id;
     private RentalProduct rentalProduct;
     private RentInf rentInf;
