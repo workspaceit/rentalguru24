@@ -61,7 +61,7 @@ public class RentalProductReturnedHistory {
 
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_returned_id",referencedColumnName = "id",nullable = false)
     public RentalProductReturned getRentalProductReturned() {
         return rentalProductReturned;

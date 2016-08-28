@@ -72,8 +72,8 @@ public class RentalProductReturned {
     }
 
 
-    @OneToMany(cascade=CascadeType.ALL,mappedBy = "rentalProductReturned")
-//    @JoinColumn(name = "product_returned_id",referencedColumnName = "id",nullable = false)
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL,mappedBy = "rentalProductReturned")
+   // @JoinColumn(name = "product_returned_id",referencedColumnName = "id",nullable = false)
     public List<RentalProductReturnedHistory> getRentalProductReturnedHistories() {
         return rentalProductReturnedHistories;
     }

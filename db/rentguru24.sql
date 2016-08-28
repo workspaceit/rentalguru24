@@ -360,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `rental_product_returned` (
   `confirm` tinyint(1) NOT NULL DEFAULT '0',
   `dispute` tinyint(1) NOT NULL DEFAULT '0',
   `expired` tinyint(1) NOT NULL DEFAULT '0',
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `rent_product_id_2` (`rent_product_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
