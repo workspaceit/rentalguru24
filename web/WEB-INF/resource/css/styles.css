@@ -517,7 +517,7 @@ span.rate {
     background-color: #476914;
     color: #fff;
 }
-.owl-prev {
+.sponser_slider .owl-prev {
     position: absolute;
     left: 0;
     top: -132px;
@@ -527,17 +527,18 @@ span.rate {
     height: 132px;
     background: #2b2b2b;
 }
-.owl-next {
+.sponser_slider .owl-next {
     position: absolute;
     right: 0;
-    top: -132px;
+    top: -70px;
     color: transparent;
     display: none;
     content: " ";
-    height: 132px;
+    height: 80px;
     background: #2b2b2b;
 }
-.owl-prev:after {
+
+.sponser_slider .owl-prev:after {
     content: "\f053";
     font-family: FontAwesome;
     color: #fbfbfb;
@@ -547,7 +548,7 @@ span.rate {
     left: 10px;
     top: 44%;
 }
-.owl-next:after {
+.sponser_slider .owl-next:after {
     content: "\f054";
     font-family: FontAwesome;
     color: #fbfbfb;
@@ -2400,3 +2401,266 @@ span.tag_span:hover {
 .form-edit{
     padding: 0px 20px;
 }
+/*================Product_approval_page // Author Arnab 26/08/2016=======================*/
+.product_img_container{
+    max-height: 400px;
+    overflow: hidden;
+}
+.color{
+    color: #d68f33 !important;
+}
+.req_information .p_name{
+    border-bottom: 3px solid #DADADA;
+    position: relative;
+    padding: 10px 0px;
+}
+.p_name:after{
+    content: "";
+    width: 30px;
+    height: 3px;
+    background-color: #d68f33;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+}
+.aprove_btn:hover{
+    background: green;
+    color: #fff;
+    text-decoration: none;
+}
+.deny_btn:hover{
+    background: red;
+    color: #fff;
+    text-decoration: none;
+}
+.rqst_option_btn{
+    margin: 12px 0px 0px 0px;
+    background: transparent;
+    border: 1px solid ;
+    border-radius: 5px;    
+    text-decoration: none;    
+    transition: all 0.5s ease;
+    padding: 7px;
+    font-size: 13px;  
+}
+.aprove_btn{
+    border-color: transparent;
+    color: green;
+}
+.deny_btn{
+    border-color: transparent;
+    color: red
+}
+.aprove_btn.selected{
+    background-color: green;
+    color: #fff;
+}
+.deny_btn.selected{
+    background-color: red;
+    color: #fff;
+}
+.rqst_main_content_wrap{
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.order_time_interval li {
+    display: inline;
+    padding-right: 10px;
+}
+.justify{
+    text-align: justify;
+}
+.p_des{
+    padding: 0px 0px 20px 0px;
+    border-bottom: 2px solid #DADADA;
+}
+.p_des_head{
+    padding-top: 15px;
+}
+.order_time_interval{
+    padding: 20px 0px;
+    border-bottom: 2px solid #DADADA;
+}
+span.time_date {
+    font-size: 15px;
+    color: #d68f33;
+}
+.product_info_container{
+    position: relative;
+}
+.app_button{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.rqst_product_slider .owl-prev:hover {
+    background-color: #d68f33;
+}
+.rqst_product_slider .owl-next:hover {
+    background-color: #d68f33;
+}
+.rqst_product_slider .owl-prev {
+    position: absolute;
+    left: 0;
+    bottom: -21px;
+    color: transparent;
+    display: none;
+    content: " ";
+    height: 20px;
+    width: 48%;
+    background: #2b2b2b;
+}
+.rqst_product_slider .owl-next {
+    position: absolute;
+    right: 0;
+    top: 1px;
+    color: transparent;
+    display: none;
+    content: " ";
+    height: 20px;
+    width: 48%;
+    background: #2b2b2b;
+}
+.rqst_product_slider .owl-prev:after {
+    content: "\f053";
+    font-family: FontAwesome;
+    color: #fbfbfb;
+    position: absolute;
+    /* height: 100px; */
+    /* background: red; */
+    left: 15%;
+    top: 3px;
+    right: 50%;
+    font-size: 11px;
+}
+.rqst_product_slider .owl-next:after {
+    content: "\f054";    
+    font-family: FontAwesome;
+    color: #fbfbfb;
+    position: absolute;
+    /* height: 100px; */
+    /* background: red; */
+    left: 15%;
+    top: 3px;
+    right: 50%;
+    font-size: 11px;
+}
+.other_image_rqst_product{
+    padding: 30
+}
+
+.aproval_container_title {
+    color: #d68f33;
+    border-bottom: 3px solid #DADADA;
+    padding-bottom: 10px;
+    position: relative;
+}
+.aproval_container_title:before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 3px;
+    background-color: #d68f33; 
+    bottom: -3px;
+}
+.user_img{
+    width: 100%;
+}
+.all_info{
+    width: 100%;
+    float: left;
+    margin-bottom: 15px;
+}
+.info_title{
+    width: 30%;
+    float: left;
+}
+.detail_info{
+    width: 70%;
+    float: left;
+}
+.info_per_row {
+    padding: 15px 0px;
+}
+.social_link_client_rqst li {
+    display: inline;
+    padding: 0px 10px;
+}
+.social_link_client_rqst li a i {
+    font-size: 30px;
+    transition: all 0.5s ease;
+}
+.social_link_client_rqst li a i:hover {
+    color: #d68f33;
+   
+}
+.user_info_wrap .social_link_header{
+    margin-top: 0px;
+
+}
+.social_link_client_rqst .facebook{
+    color: #3765a3;
+}
+.social_link_client_rqst .twitter{
+    color: #2aa9e0;
+}
+.social_link_client_rqst .linkedin{
+    color: #0274b3;
+}
+.rent_client_other_info_head {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DADADA;
+    margin-bottom: 25px;
+}
+.confirmation_link_ul{
+    padding: 20px 0px;
+}
+.confirmation_link_ul li {
+    display: inline;
+    float: right;
+    margin-left: 16px;
+}
+.approve_btn:hover{
+    background-color: transparent;
+    color: #004C70;
+    border-color: #004C70;
+}
+.cancel_btn:hover{
+    background-color: transparent;
+    color: #F2635F;
+    border-color: #F2635F;
+}
+.approval_btn{
+    border: 1px solid;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: all 1s ease;
+    font-size: 15px;
+    font-weight: 900;
+
+}
+.approve_btn{
+    background-color: #004C70;
+    color: #fff;
+    border-color: #004C70;
+}
+.cancel_btn{
+    background-color: #F2635F;
+    color: #fff;
+    border-color: #F2635F;
+}
+.invoice_head{
+    border-bottom: 3px solid #DADADA;
+    position: relative;
+    padding: 10px 0px;
+}
+.invoice_head:after{
+    content: "";
+    width: 30px;
+    height: 3px;
+    background-color: #d68f33;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+}
+/*================Product_approval_page // Author Arnab 26/08/2016=======================*/
