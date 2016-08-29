@@ -40,6 +40,9 @@ public class ProductService{
     ProductModel productModel;
 
     @Autowired
+    ProductLocationModel productLocationModel;
+
+    @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
 
     @Autowired
@@ -277,19 +280,19 @@ public class ProductService{
 
         rentalProduct.setProductCategories(productCategoryList);
 
-        rentalProduct.setProductLocation(new ProductLocation());
-        rentalProduct.getProductLocation().setCity(productUploadForm.getCity());
-        rentalProduct.getProductLocation().setState(productUploadForm.getState());
-        rentalProduct.getProductLocation().setLat(productUploadForm.getLat());
-        rentalProduct.getProductLocation().setLng(productUploadForm.getLng());
-        rentalProduct.getProductLocation().setZip(productUploadForm.getZip());
-        rentalProduct.getProductLocation().setFormattedAddress(productUploadForm.getFormattedAddress());
+        ProductLocation productLocation = new ProductLocation();
+        productLocation.setCity(productUploadForm.getCity());
+        productLocation.setState(productUploadForm.getState());
+        productLocation.setLat(productUploadForm.getLat());
+        productLocation.setLng(productUploadForm.getLng());
+        productLocation.setZip(productUploadForm.getZip());
+        productLocation.setFormattedAddress(productUploadForm.getFormattedAddress());
 
+        productLocation.setRentalProduct(rentalProduct);
 
+        productLocationModel.insert(productLocation);
 
-        productModel.update(rentalProduct);
-
-        serviceResponse.setResponseData(rentalProduct);
+        serviceResponse.setResponseData(productModel.getById(rentalProduct.getId()));
         return serviceResponse;
     }
 
