@@ -269,13 +269,13 @@
                             <value>model.entity.app.product.rentable.RentalProductReturnRequest</value>
                             <value>model.entity.app.product.rentable.RentalProductReturned</value>
                             <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
+                            <value>model.entity.admin.AdminPaypalCredential</value>
+                            <value>model.entity.admin.AdminSiteFeesEntity</value>
                      </list>
               </property>
               <property name="hibernateProperties">
                      <props>
                             <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>
-                            <prop key="hibernate.connection.username">root</prop>
-                            <prop key="hibernate.connection.password" />
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
                             <prop key="hibernate.show_sql">true</prop>
                             <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
