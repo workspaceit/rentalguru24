@@ -51,6 +51,7 @@ public class ProductController{
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentTypes", rentTypes);
         modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("pageTitle", "Product Upload");
         return modelAndView;
     }
 

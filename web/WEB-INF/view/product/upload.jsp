@@ -130,30 +130,30 @@
           <input type="hidden" value="" id="profileImageToken" name="profileImageToken">
         </div>
         <%----%>
-        <%--Dropzone For Other Images--%>
-        <div class="form-group">
-          <label for="fallbackOther">Add product Other images</label>
-          <div id="fallbackOther" class="fallback pos-relative">
-            Drop files here or click to upload.
-            <span class="inner-load otherFileUploadGif" hidden></span>
-          </div>
-          <p class="help-block error-form" id="errorMsg_"></p>
-          <input type="hidden" value="" id="" name="">
-        </div>
-        <%----%>
-        <div class="row preview-container">
-          <p>Preview Area</p>
-          <div class="col-xs-6 col-md-6">
-            <a href="#" class="thumbnail">
-              <img src="http://placehold.it/200x200" alt="...">
-            </a>
-          </div>
-          <div class="col-xs-6 col-md-6">
-            <a href="#" class="thumbnail">
-              <img src="http://placehold.it/200x200" alt="...">
-            </a>
-          </div>
-        </div>
+        <%--&lt;%&ndash;Dropzone For Other Images&ndash;%&gt;--%>
+        <%--<div class="form-group">--%>
+          <%--<label for="fallbackOther">Add product Other images</label>--%>
+          <%--<div id="fallbackOther" class="fallback pos-relative">--%>
+            <%--Drop files here or click to upload.--%>
+            <%--<span class="inner-load otherFileUploadGif" hidden></span>--%>
+          <%--</div>--%>
+          <%--<p class="help-block error-form" id="errorMsg_"></p>--%>
+          <%--<input type="hidden" value="" id="" name="">--%>
+        <%--</div>--%>
+        <%--&lt;%&ndash;&ndash;%&gt;--%>
+        <%--<div class="row preview-container">--%>
+          <%--<p>Preview Area</p>--%>
+          <%--<div class="col-xs-6 col-md-6">--%>
+            <%--<a href="#" class="thumbnail">--%>
+              <%--<img src="http://placehold.it/200x200" alt="...">--%>
+            <%--</a>--%>
+          <%--</div>--%>
+          <%--<div class="col-xs-6 col-md-6">--%>
+            <%--<a href="#" class="thumbnail">--%>
+              <%--<img src="http://placehold.it/200x200" alt="...">--%>
+            <%--</a>--%>
+          <%--</div>--%>
+        <%--</div>--%>
       </div>
     </div>
     <div class="col-md-12 text-right" style="padding:0px 100px 20px 0px;">
@@ -170,26 +170,26 @@
     Product Upload Successfully
   </div>
 </div>
-<%------------------------------------------------------------------%>
-<div class="table table-striped" class="files" id="previews">
+<%--&lt;%&ndash;--------------------------------------------------------------&ndash;%&gt;--%>
+<%--<div class="table table-striped" class="files" id="previews">--%>
 
-  <div id="template" class="file-row">
-    <!-- This is used as the file preview template -->
-    <div>
-      <span class="preview"><img data-dz-thumbnail /></span>
-    </div>
-    <div>
-      <strong class="error text-danger" data-dz-errormessage></strong>
-    </div>
+  <%--<div id="template" class="file-row">--%>
+    <%--<!-- This is used as the file preview template -->--%>
     <%--<div>--%>
-    <%--<p class="size" data-dz-size></p>--%>
-    <%--<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">--%>
-    <%--<div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>--%>
+      <%--<span class="preview"><img data-dz-thumbnail /></span>--%>
     <%--</div>--%>
+    <%--<div>--%>
+      <%--<strong class="error text-danger" data-dz-errormessage></strong>--%>
     <%--</div>--%>
-  </div>
-</div>
-<%------------------------------------------------------------------------------------%>
+    <%--&lt;%&ndash;<div>&ndash;%&gt;--%>
+    <%--&lt;%&ndash;<p class="size" data-dz-size></p>&ndash;%&gt;--%>
+    <%--&lt;%&ndash;<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">&ndash;%&gt;--%>
+    <%--&lt;%&ndash;<div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>&ndash;%&gt;--%>
+    <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+    <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+  <%--</div>--%>
+<%--</div>--%>
+<%--&lt;%&ndash;--------------------------------------------------------------------------------&ndash;%&gt;--%>
 <jsp:directive.include file="../layouts/top-footer.jsp" />
 <jsp:directive.include file="../layouts/footer.jsp" />
 
@@ -351,7 +351,7 @@
           this.addFile(file);
         },
         uploadprogress:function(file, progress){
-          $('#postProduct').addAttribute("disabled", "disabled");
+          $('#postProduct').attr("disabled", "disabled");
           $('.postProductGif').show();
           $('.fileUploadGif').show();
         },
@@ -376,39 +376,40 @@
     );
   });
 
-  $(function() {
-    var productOtherImageFile = $("div#fallbackOther").dropzone(
-            {
-              url: BASEURL+"",
-              paramName: "",
-              maxFilesize: 1,
-              previewTemplate: previewTemplate,
-              thumbnailWidth: 200,
-              thumbnailHeight: 200,
-              uploadprogress:function(file, progress){
-                $('#postProduct').addAttribute("disabled", "disabled");
-                $('.postProductGif').show();
-                $('.otherFileUploadGif').show();
-              },
-              success:function(file, response){
-                if(response.responseStat.status == true) {
-                  $('.otherFileUploadGif').hide();
-                  $('#postProduct').removeAttrs("disabled","disabled");
-                  $('.postProductGif').hide();
-                  $('#').val(response.responseData);
-                }
-                else{
-                  BindErrorsWithHtml('errorMsg_', response.requestErrors);
-                }
-              },
-              error:function(file, errorMessage, xhr){
-                $('.fileUploadGif').hide();
-                $('#postProduct').removeAttrs("disabled","disabled");
-                $('.postProductGif').hide();
-              }
-            }
-    );
-  });
+//  $(function() {
+//    var productOtherImageFile = $("div#fallbackOther").dropzone(
+//            {
+//              url: BASEURL+"",
+//              paramName: "",
+//              maxFilesize: 1,
+//              previewTemplate: previewTemplate,
+//              thumbnailWidth: 200,
+//              thumbnailHeight: 200,
+//              uploadprogress:function(file, progress){
+//                $('#postProduct').attr("disabled", "disabled");
+//                $('.postProductGif').show();
+//                $('.otherFileUploadGif').show();
+//              },
+//              success:function(file, response){
+//                console.log(response.responseData);
+//                if(response.responseStat.status == true) {
+//                  $('.otherFileUploadGif').hide();
+//                  $('#postProduct').removeAttrs("disabled","disabled");
+//                  $('.postProductGif').hide();
+//                  $('#').val(response.responseData);
+//                }
+//                else{
+//                  BindErrorsWithHtml('errorMsg_', response.requestErrors);
+//                }
+//              },
+//              error:function(file, errorMessage, xhr){
+//                $('.fileUploadGif').hide();
+//                $('#postProduct').removeAttrs("disabled","disabled");
+//                $('.postProductGif').hide();
+//              }
+//            }
+//    );
+//  });
 
 </script>
 <script>
