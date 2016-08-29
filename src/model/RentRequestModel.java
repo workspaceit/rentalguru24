@@ -5,6 +5,7 @@ import model.entity.app.product.rentable.RentalProductEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
