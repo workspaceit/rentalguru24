@@ -3,15 +3,18 @@ package controller.service.admin;
 
 import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
+import model.IdentityTypeModel;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
+import model.entity.app.IdentityType;
+import model.entity.app.UserInf;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * Created by omar on 8/24/16.
@@ -23,6 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminUserService {
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
+
+
     @RequestMapping(value = "/app-user/active-app-user/{app_user_id}/{varified}", method = RequestMethod.POST)
     public ServiceResponse setActiveAppUser(HttpServletRequest request, @PathVariable("app_user_id") int appUserId, @PathVariable("varified") int varified){
 
@@ -33,5 +38,34 @@ public class AdminUserService {
         }
         appLoginCredentialModel.appUserStatusUpdate(appUserId,varified);
         return serviceResponse;
+    }
+
+    @RequestMapping(value="/admin/create-new",method = RequestMethod.POST)
+    public ServiceResponse adminSignup(HttpServletRequest request,
+                                       @RequestParam Map<String, String> allRequestParams,
+                                       @Valid AuthCredential authCredential
+                                      ){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        String firstName = allRequestParams.get("firstName");
+        String lastName = allRequestParams.get("lastName");
+        String email = allRequestParams.get("email");
+        String password = allRequestParams.get("password");
+        UserInf userInf = new UserInf();
+//        user.setUserAddress(userAddress);
+
+        userInf.setFirstName(firstName);
+        userInf.setLastName(lastName);
+        authCredential.setUserInf(userInf);
+        authCredential.setRole(1);
+        authCredential.setEmail(email);
+        authCredential.setPassword(password);
+        IdentityType identityType=new IdentityType();
+        identityType.setId(1);
+        authCredential.getUserInf().setIdentityType(identityType);
+        appLoginCredentialModel.insert(authCredential);
+        serviceResponse.getResponseStat().setMsg("Signup successful");
+        serviceResponse.setResponseData(authCredential);
+        return serviceResponse;
+
     }
 }

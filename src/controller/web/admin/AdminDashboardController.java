@@ -25,4 +25,14 @@ public class AdminDashboardController {
         modelAndViev.addObject("PageTitle", "Admin Dashboard");
         return modelAndViev;
     }
+
+    @RequestMapping(value ="/create-new-admin",method = RequestMethod.GET)
+    public ModelAndView createNewAdmin(HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView("admin/createNewAdmin");
+        String baseUrl=(String)request.getAttribute("baseURL");
+        modelAndView.addObject("BaseUrl", baseUrl);
+
+        return modelAndView;
+
+    }
 }

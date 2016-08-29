@@ -50,7 +50,7 @@
         </ul>
 
         <ul class="treeview-menu">
-          <li><a href="#"><i class="fa fa-circle-o"></i>Create New Admin</a></li>
+          <li><a href="/admin/user/create-new-admin"><i class="fa fa-circle-o"></i>Create New Admin</a></li>
         </ul>
       </li>
 
