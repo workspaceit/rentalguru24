@@ -269,6 +269,8 @@
                             <value>model.entity.app.product.rentable.RentalProductReturnRequest</value>
                             <value>model.entity.app.product.rentable.RentalProductReturned</value>
                             <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
+                            <value>model.entity.admin.AdminPaypalCredential</value>
+                            <value>model.entity.admin.AdminSiteFeesEntity</value>
                      </list>
               </property>
               <property name="hibernateProperties">

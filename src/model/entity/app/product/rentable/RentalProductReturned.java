@@ -20,7 +20,8 @@ public class RentalProductReturned {
     private boolean isExpired;
     private Timestamp createdDate;
     private RentInf rentInf;
-    private String remarks;
+    private String renteeRemarks;
+    private String renterRemarks;
     private List<RentalProductReturnedHistory> rentalProductReturnedHistories;
 
     @Id
@@ -86,13 +87,23 @@ public class RentalProductReturned {
     }
 
     @Basic
-    @Column(name = "remarks")
-    public String getRemarks() {
-        return remarks;
+    @Column(name = "rentee_remarks")
+    public String getRenteeRemarks() {
+        return renteeRemarks;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setRenteeRemarks(String remarks) {
+        this.renteeRemarks = remarks;
+    }
+
+    @Basic
+    @Column(name = "renter_remarks")
+    public String getRenterRemarks() {
+        return renterRemarks;
+    }
+
+    public void setRenterRemarks(String renterRemarks) {
+        this.renterRemarks = renterRemarks;
     }
 
     @JsonIgnore

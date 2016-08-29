@@ -22,8 +22,8 @@ public class ReturnProductService {
     @Autowired
     RentInfModel rentInfModel;
 
-    @RequestMapping(value = "/{rentInfId}", method = RequestMethod.GET)
-    public ServiceResponse getProduct(HttpServletRequest request,
+    @RequestMapping(value = "/{rentInfId}", method = RequestMethod.POST)
+    public ServiceResponse renturnProduct(HttpServletRequest request,
                                       @PathVariable("rentInfId") int rentInfId,
                                         @RequestParam(value = "remarks",required = false) String remarks){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
@@ -31,7 +31,7 @@ public class ReturnProductService {
         RentInf rentInf = rentInfModel.getById(rentInfId);
 
         if(rentInf==null){
-            serviceResponse.setRequestError("rentInfId","This rent is not belongs to you moran !! Suck a lemon");
+            serviceResponse.setRequestError("rentInfId","No rent information is found by this rentInfId");
             return serviceResponse;
         }
 
@@ -50,7 +50,7 @@ public class ReturnProductService {
         RentalProductReturned rentalProductReturned = new RentalProductReturned();
         rentalProductReturned.setConfirm(false);
         rentalProductReturned.setDispute(false);
-        rentalProductReturned.setRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
+        rentalProductReturned.setRenteeRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
 
 
         rentInf.setProductReturned(true);
@@ -63,4 +63,6 @@ public class ReturnProductService {
 
         return serviceResponse;
     }
+
+
 }
