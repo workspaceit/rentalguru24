@@ -37,7 +37,7 @@ public class TestService extends BaseService{
     RentRequestModel rentRequestModel;
 
     @Autowired
-    RentProductModel rentProductModel;
+    RentInfModel rentInfModel;
 
     @Autowired
     RentGuruMail rentGuruMail;
@@ -171,7 +171,7 @@ public class TestService extends BaseService{
 //
 //        rentProduct.setRentRequestsById(rentRequestsarr);
 
-        rentProductModel.insert(rentInf);
+        rentInfModel.insert(rentInf);
     }
 
 

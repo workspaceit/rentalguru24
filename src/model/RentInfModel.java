@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 /**
  * Created by omar on 8/3/16.
  */
-public class RentProductModel extends BaseModel {
+public class RentInfModel extends BaseModel {
     public RentInf getById(int id) {
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
@@ -23,6 +23,13 @@ public class RentProductModel extends BaseModel {
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
         session.save(rentInf);
+        session.getTransaction().commit();
+        session.close();
+    }
+    public void update(RentInf rentInf){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(rentInf);
         session.getTransaction().commit();
         session.close();
     }

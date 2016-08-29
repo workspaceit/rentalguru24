@@ -1,16 +1,16 @@
 package controller.service.app;
 
 import helper.ServiceResponse;
-import model.RentProductModel;
-import model.RequestProductReturnModel;
+import model.ProductModel;
+import model.RentInfModel;
+import model.RentalProductReturnRequestModel;
+import model.RentalProductReturnedModel;
 import model.entity.app.AppCredential;
 import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.RentalProductReturnRequest;
+import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,27 +21,42 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/auth/return-request")
 public class RentalProductReturnRequestService {
     @Autowired
-    RequestProductReturnModel requestProductReturnModel;
+    RentalProductReturnRequestModel rentalProductReturnRequestModel;
     @Autowired
-    RentProductModel rentProductModel;
+    RentInfModel rentInfModel;
+    @Autowired
+    ProductModel productModel;
 
 
     @RequestMapping(value = "/{rentalInfId}",method = RequestMethod.GET)
-    public ServiceResponse requestForReturnProductByProductOwner(HttpServletRequest request,@PathVariable int rentalInfId){
+    public ServiceResponse requestForReturnProductByProductOwner(HttpServletRequest request,
+                                                                 @PathVariable int rentalInfId,
+                                                                 @RequestParam(value = "remarks",required = false) String remarks){
+
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
 
         RentalProductReturnRequest rentalProductReturnRequest = new RentalProductReturnRequest();
-        RentInf rentInf = rentProductModel.getById(rentalInfId);
+        RentInf rentInf = rentInfModel.getById(rentalInfId);
 
-        System.out.println(rentInf.getRentalProduct().getId());
+        if(rentInf.getRentalProduct().getOwner().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("rentalInfId","This rent request is not belongs to you");
+            return serviceResponse;
+        }
+
+        if(rentalProductReturnRequestModel.alreadyRequestedToReturn(rentalInfId)){
+            serviceResponse.setRequestError("rentalInfId","You have already requested to return your product");
+            return serviceResponse;
+        }
+
         rentalProductReturnRequest.setRentInf(rentInf);
         rentalProductReturnRequest.setIsExpired(false);
-        requestProductReturnModel.insert(rentalProductReturnRequest);
-        serviceResponse.setResponseData(rentProductModel.getById(rentalInfId));
+        rentalProductReturnRequest.setRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
+
+        rentalProductReturnRequestModel.insert(rentalProductReturnRequest);
+
+        serviceResponse.setResponseData(rentInfModel.getById(rentalInfId));
         return serviceResponse;
-
-
     }
 }

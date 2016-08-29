@@ -51,7 +51,7 @@ public class RentalProductReturnedHistory {
     }
 
     @Basic
-    @Column(name = "created")
+    @Column(name = "created_date")
     public Timestamp getCreated() {
         return created;
     }

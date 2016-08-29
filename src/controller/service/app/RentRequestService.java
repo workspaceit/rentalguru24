@@ -3,7 +3,7 @@ package controller.service.app;
 import helper.DateHelper;
 import helper.ServiceResponse;
 import model.ProductModel;
-import model.RentProductModel;
+import model.RentInfModel;
 import model.RentRequestModel;
 import model.entity.app.AppCredential;
 import model.entity.app.product.rentable.RentInf;
@@ -25,7 +25,7 @@ public class RentRequestService{
     @Autowired
     RentRequestModel rentRequestModel;
     @Autowired
-    RentProductModel rentProductModel;
+    RentInfModel rentInfModel;
     @Autowired
     ProductModel productModel;
 
@@ -85,7 +85,7 @@ public class RentRequestService{
         Timestamp endTimeStamp = DateHelper.getStringToTimeStamp(endsDate, "dd-MM-yyyy");
 
 
-        if(rentProductModel.isProductInRent(productId, startTimeStamp, endTimeStamp)){
+        if(rentInfModel.isProductInRent(productId, startTimeStamp, endTimeStamp)){
             serviceResponse.setRequestError("productId","Product is already in rent on given date");
             return serviceResponse;
         }
@@ -161,7 +161,7 @@ public class RentRequestService{
 
         RentInf rentInf = new RentInf();
 
-        boolean isProductInRent = rentProductModel.isProductInRent( rentRequest.getRentalProduct().getId(),
+        boolean isProductInRent = rentInfModel.isProductInRent( rentRequest.getRentalProduct().getId(),
                                                                     DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
                                                                     DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
                                                                   );
@@ -188,7 +188,7 @@ public class RentRequestService{
         rentInf.setRentalProduct(rentRequest.getRentalProduct());
         rentInf.setRenteeId(rentRequest.getRequestedBy().getId());
 
-        rentProductModel.insert(rentInf);
+        rentInfModel.insert(rentInf);
 
         /* ~~~~~~~~~~~~~  Expire Request in Between date ~~~~~~~~~~~~~~~~*/
 
@@ -230,7 +230,7 @@ public class RentRequestService{
             return serviceResponse;
         }
 
-        boolean isProductInRent = rentProductModel.isProductInRent( rentRequest.getRentalProduct().getId(),
+        boolean isProductInRent = rentInfModel.isProductInRent( rentRequest.getRentalProduct().getId(),
                 DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
                 DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
         );

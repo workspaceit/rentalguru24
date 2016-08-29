@@ -226,7 +226,7 @@
        </bean>
        <bean id="rentRequestModel" class="model.RentRequestModel" >
        </bean>
-       <bean id="rentProductModel" class="model.RentProductModel" >
+       <bean id="rentProductModel" class="model.RentInfModel" >
        </bean>
        <bean id="productModel" class="model.ProductModel" >
        </bean>
@@ -234,7 +234,7 @@
        </bean>
        <bean id="productLikedModel" class="model.ProductLikedModel" >
        </bean>
-       <bean id="requestProductReturnModel" class="model.RequestProductReturnModel" >
+       <bean id="requestProductReturnModel" class="model.RentalProductReturnRequestModel" >
        </bean>
        <bean id="rentalProductReturnedModel" class="model.RentalProductReturnedModel" >
        </bean>

@@ -35,6 +35,7 @@ public class PublicProductService{
 
     @Autowired
     ProductRatingModel productRatingModel;
+
     @JsonView(ProductView.RentalProductView.class)
     @RequestMapping(value = "/get-product", method = RequestMethod.GET)
     public ServiceResponse getProduct(HttpServletRequest request,

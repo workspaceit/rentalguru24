@@ -47,7 +47,7 @@ public class RentalProductReturnRequest {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rent_product_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "rent_inf_id", referencedColumnName = "id", nullable = false)
     public RentInf getRentInf() {
         return rentInf;
     }

@@ -19,7 +19,7 @@ import java.util.List;
 
 @JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
-@Table(name = "rent_product", schema = "")
+@Table(name = "rent_inf", schema = "")
 public class RentInf {
     private int id;
     private RentRequest rentRequest;
@@ -30,6 +30,10 @@ public class RentInf {
     private boolean expired;
     private boolean productReturned;
     private boolean productReceived;
+
+    public boolean hasReturnRequest = false;
+    public boolean hasReceiveConfirmation = false;
+
     private List<RentalProductReturnRequest> rentalProductReturnRequestList;
     public RentalProductReturnRequest rentalProductReturnRequest;
 
@@ -154,14 +158,15 @@ public class RentInf {
 
     public void setRentalProductReturnRequestList(List<RentalProductReturnRequest> rentalProductReturnRequestList) {
         if(rentalProductReturnRequestList !=null && rentalProductReturnRequestList.size()>0){
+            this.hasReturnRequest = true;
             rentalProductReturnRequest = rentalProductReturnRequestList.get(0);
         }
         this.rentalProductReturnRequestList = rentalProductReturnRequestList;
     }
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "rent_product_id", referencedColumnName = "id", nullable = false)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "rentInf")
+//    @JoinColumn(name = "rent_inf_id", referencedColumnName = "id", nullable = false)
     @Where(clause="expired=false")
     @Fetch(value = FetchMode.SUBSELECT)
     public List<RentalProductReturned> getRentalProductReturnedList() {
@@ -170,6 +175,7 @@ public class RentInf {
 
     public void setRentalProductReturnedList(List<RentalProductReturned> rentalProductReturnedList) {
         if(rentalProductReturnedList!=null && rentalProductReturnedList.size()>0){
+            this.hasReceiveConfirmation = true;
             rentalProductReturned = rentalProductReturnedList.get(0);
         }
         this.rentalProductReturnedList = rentalProductReturnedList;

@@ -1,6 +1,7 @@
 package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * Created by mi on 8/27/16.
  */
+@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "rental_product_returned", schema = "")
 public class RentalProductReturned {
@@ -18,6 +20,7 @@ public class RentalProductReturned {
     private boolean isExpired;
     private Timestamp createdDate;
     private RentInf rentInf;
+    private String remarks;
     private List<RentalProductReturnedHistory> rentalProductReturnedHistories;
 
     @Id
@@ -82,9 +85,19 @@ public class RentalProductReturned {
         this.rentalProductReturnedHistories = rentalProductReturnedHistories;
     }
 
+    @Basic
+    @Column(name = "remarks")
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="rent_product_id",referencedColumnName = "id",nullable = false,insertable = false,updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name="rent_inf_id",referencedColumnName = "id",nullable = false)
     public RentInf getRentInf() {
         return rentInf;
     }
