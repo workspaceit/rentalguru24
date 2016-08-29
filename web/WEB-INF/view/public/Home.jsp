@@ -273,9 +273,9 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs gallery_nav" role="tablist">
                                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">FEATURED</a></li>
-                                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">TOP SELLER</a></li>
-                                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">SELL OFF</a></li>
-                                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">TOP RATED</a></li>
+                                <%--<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">TOP SELLER</a></li>--%>
+                                <%--<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">SELL OFF</a></li>--%>
+                                <%--<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">TOP RATED</a></li>--%>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
@@ -284,16 +284,16 @@
                                     <div id="slider" class="flexslider">
                                         <ul class="slides">
                                             <li>
-                                                <img src="http://placehold.it/700x400" >
-                                            </li>
-                                            <li>
-                                                <img src="http://placehold.it/700x400"   >
+                                                <img src="http://placehold.it/700x400"  >
                                             </li>
                                             <li>
                                                 <img src="http://placehold.it/700x400"  >
                                             </li>
                                             <li>
-                                                <img src="http://placehold.it/700x400"   >
+                                                <img src="http://placehold.it/700x400"  >
+                                            </li>
+                                            <li>
+                                                <img src="http://placehold.it/700x400"  >
                                             </li>
                                             <!-- items mirrored twice, total of 12 -->
                                         </ul>
@@ -316,9 +316,9 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade " id="profile">dfgdfg</div>
-                                <div role="tabpanel" class="tab-pane fade " id="messages">dfgdfg</div>
-                                <div role="tabpanel" class="tab-pane fade " id="settings">dfgdfgd</div>
+                                <%--<div role="tabpanel" class="tab-pane fade " id="profile">dfgdfg</div>--%>
+                                <%--<div role="tabpanel" class="tab-pane fade " id="messages">dfgdfg</div>--%>
+                                <%--<div role="tabpanel" class="tab-pane fade " id="settings">dfgdfgd</div>--%>
                             </div>
                         </div>
                     </div>
@@ -340,87 +340,87 @@
             </div>
         </div>
         <div class="container blog_container">
-            <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
-                <h2 class="block-head">Latest Blog</h2>
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <div class="row clearfix">
-                            <div class="col-md-4 blog-single">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="blog-img">
-                                            <img src="<c:url value="/resources/img/18.jpg" />" />
-                                        </div>
-                                        <div class="blog-desc">
-                                            <p class="date-comment">
-                                                <span><i class="fa fa-calendar"></i> 15 JAN 2016</span>
-                                                <span><i class="fa fa-comments"></i>4 Comments</span>
-                                            </p>
-                                            <h4 class="blog-title">Products That Fight Static</h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.
-                                            </p>
-                                            <div class="text-center">
-                                                <button class="btn-read">Read More</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 blog-single">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="blog-img">
-                                            <img src="<c:url value="/resources/img/17.jpg"  />" />
-                                        </div>
-                                        <div class="blog-desc">
-                                            <p class="date-comment">
-                                                <span><i class="fa fa-calendar"></i> 15 JAN 2016</span>
-                                                <span><i class="fa fa-comments"></i>4 Comments</span>
-                                            </p>
-                                            <h4 class="blog-title">Products That Fight Static</h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.
-                                            </p>
-                                            <div class="text-center">
-                                                <button class="btn-read">Read More</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 blog-single">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="blog-img">
-                                            <img src="<c:url value="/resources/img/16.jpg"   />" />
-                                        </div>
-                                        <div class="blog-desc">
-                                            <p class="date-comment">
-                                                <span><i class="fa fa-calendar"></i> 15 JAN 2016</span>
-                                                <span><i class="fa fa-comments"></i> 4 Comments</span>
-                                            </p>
-                                            <h4 class="blog-title">Products That Fight Static</h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.
-                                            </p>
-                                            <div class="text-center">
-                                                <button class="btn-read">Read More</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <%--<div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>--%>
+                <%--<!-- Indicators -->--%>
+                <%--<ol class="carousel-indicators">--%>
+                    <%--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>--%>
+                    <%--<li data-target="#carousel-example-generic" data-slide-to="1"></li>--%>
+                    <%--<li data-target="#carousel-example-generic" data-slide-to="2"></li>--%>
+                <%--</ol>--%>
+                <%--<h2 class="block-head">Latest Blog</h2>--%>
+                <%--<div class="carousel-inner" role="listbox">--%>
+                    <%--<div class="item active">--%>
+                        <%--<div class="row clearfix">--%>
+                            <%--<div class="col-md-4 blog-single">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="blog-img">--%>
+                                            <%--<img src="<c:url value="/resources/img/18.jpg" />" />--%>
+                                        <%--</div>--%>
+                                        <%--<div class="blog-desc">--%>
+                                            <%--<p class="date-comment">--%>
+                                                <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
+                                                <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
+                                            <%--</p>--%>
+                                            <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
+                                            <%--<p>--%>
+                                                <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
+                                            <%--</p>--%>
+                                            <%--<div class="text-center">--%>
+                                                <%--<button class="btn-read">Read More</button>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-4 blog-single">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="blog-img">--%>
+                                            <%--<img src="<c:url value="/resources/img/17.jpg"  />" />--%>
+                                        <%--</div>--%>
+                                        <%--<div class="blog-desc">--%>
+                                            <%--<p class="date-comment">--%>
+                                                <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
+                                                <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
+                                            <%--</p>--%>
+                                            <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
+                                            <%--<p>--%>
+                                                <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
+                                            <%--</p>--%>
+                                            <%--<div class="text-center">--%>
+                                                <%--<button class="btn-read">Read More</button>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-4 blog-single">--%>
+                                <%--<div class="panel panel-default">--%>
+                                    <%--<div class="panel-body">--%>
+                                        <%--<div class="blog-img">--%>
+                                            <%--<img src="<c:url value="/resources/img/16.jpg"   />" />--%>
+                                        <%--</div>--%>
+                                        <%--<div class="blog-desc">--%>
+                                            <%--<p class="date-comment">--%>
+                                                <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
+                                                <%--<span><i class="fa fa-comments"></i> 4 Comments</span>--%>
+                                            <%--</p>--%>
+                                            <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
+                                            <%--<p>--%>
+                                                <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
+                                            <%--</p>--%>
+                                            <%--<div class="text-center">--%>
+                                                <%--<button class="btn-read">Read More</button>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
         </div>
         <div class="sponser">
             <div class="container">
@@ -470,7 +470,7 @@
                                             <p class="client_type no-margin">Furniture Client</p>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -570,9 +570,7 @@
 
 <%--Hidden Values for Front Developer --%>
 <input type="hidden" value="" id="currentProductId" />
-<script>
-    var isLoggedin =${IsLogIn};
-</script>
+
 
 <jsp:directive.include file="../layouts/footer.jsp" />
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datepicker.js" />" ></script>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 18, 2016 at 07:20 PM
+-- Generation Time: Aug 27, 2016 at 06:49 PM
 -- Server version: 5.6.31-0ubuntu0.14.04.2
 -- PHP Version: 5.6.23-1+deprecated+dontuse+deb.sury.org~trusty+1
 
@@ -54,27 +54,31 @@ CREATE TABLE IF NOT EXISTS `app_login_credential` (
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `app_credential_unser_inf_id` (`user_inf_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=50 ;
 
 --
 -- Dumping data for table `app_login_credential`
 --
 
 INSERT INTO `app_login_credential` (`id`, `user_inf_id`, `role`, `email`, `password`, `accesstoken`, `varified`, `blocked`, `created_date`) VALUES
-(32, 33, -1, 'mousum@workspace.com', 'e10adc3949ba59abbe56e057f20f883e', '61ec56ac9b9442af7cda8b85977e7849', 0, 0, '2016-08-08 07:14:22'),
-(33, 34, -1, 'tomal@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '5f08323684a25d460fbd4a574f64af96', 0, 0, '2016-08-08 08:02:14'),
-(34, 35, -1, 'developer@wsit.com', 'e10adc3949ba59abbe56e057f20f883e', '84e2761bca190cb87d9e0306f27b6c82', 0, 0, '2016-08-08 08:24:21'),
-(35, 36, -1, 'rafi@workspace.com', 'e10adc3949ba59abbe56e057f20f883e', '273f1a8b06d9e0063f2bb9ed21bbf624', 0, 0, '2016-08-08 08:56:09'),
-(36, 37, -1, 'mausum@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'f54f2b3b33936bd2d91a6ec219d62485', 0, 0, '2016-08-08 09:09:28'),
-(37, 38, -1, 'fayme@work.com', 'e10adc3949ba59abbe56e057f20f883e', '85e7bc630a1f1259ce0b0c1e88366cd2', 0, 0, '2016-08-08 09:40:15'),
-(38, 39, -1, 'f@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '34ac9072ee5000706b88e49c67d58af8', 0, 0, '2016-08-08 11:34:16'),
-(39, 40, -1, 'tmina@yahoo.com', '6182a61e266111245440159ef6901169', '5e514d2bb99e4beb79815e2a2bcccfbe', 0, 0, '2016-08-09 07:43:33'),
-(40, 41, -1, 'lima@yahoo.com', '6182a61e266111245440159ef6901169', '1642e525a70dee1eb3352ed35220011d', 0, 0, '2016-08-09 10:53:17'),
-(41, 42, -1, 'e@sdf.com', 'd58e3582afa99040e27b92b13c8f2280', '54ba615ccb87199abaaa485199e38dc8', 0, 0, '2016-08-09 12:29:42'),
-(42, 43, -1, 'dsa@sdf.com', 'a8f5f167f44f4964e6c998dee827110c', '47dbc11357bb1d0645dfddf39de6a840', 0, 0, '2016-08-09 12:30:35'),
-(43, 44, -1, 'asd@sdf.comn', '89aaaeeda8a4f50e0ad8fb8ad6e6e437', '85effe24aea679cf4ce8ffa3f9284305', 0, 0, '2016-08-09 12:31:21'),
-(44, 45, -1, 'dummy20@tummy.com', '5a2dd3b5557333af7d0d89a8790379e9', '9c98b4bc3ada6a81c946bc278c531c91', 0, 0, '2016-08-10 12:07:05'),
-(45, 46, -1, 'dummy21@tummy.com', '5a2dd3b5557333af7d0d89a8790379e9', 'e2e3a9a544ccedef1e317a57d351bc47', 0, 0, '2016-08-10 12:10:22');
+(32, 33, -1, 'mousum@workspace.com', 'e10adc3949ba59abbe56e057f20f883e', '61ec56ac9b9442af7cda8b85977e7849', 1, 0, '2016-08-25 05:36:49'),
+(33, 34, -1, 'tomal@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '5f08323684a25d460fbd4a574f64af96', 1, 0, '2016-08-25 05:36:49'),
+(34, 35, 1, 'admin@admin.com', 'e10adc3949ba59abbe56e057f20f883e', '84e2761bca190cb87d9e0306f27b6c82', 1, 0, '2016-08-25 05:36:49'),
+(35, 36, -1, 'rafi@workspace.com', 'e10adc3949ba59abbe56e057f20f883e', '273f1a8b06d9e0063f2bb9ed21bbf624', 1, 0, '2016-08-25 05:36:49'),
+(36, 37, -1, 'mausum@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'f54f2b3b33936bd2d91a6ec219d62485', 1, 0, '2016-08-25 05:36:49'),
+(37, 38, -1, 'fayme@work.com', 'e10adc3949ba59abbe56e057f20f883e', '85e7bc630a1f1259ce0b0c1e88366cd2', 1, 0, '2016-08-25 05:36:49'),
+(38, 39, -1, 'f@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '34ac9072ee5000706b88e49c67d58af8', 1, 0, '2016-08-25 05:36:49'),
+(39, 40, -1, 'tmina@yahoo.com', '6182a61e266111245440159ef6901169', '5e514d2bb99e4beb79815e2a2bcccfbe', 1, 0, '2016-08-25 05:36:49'),
+(40, 41, -1, 'lima@yahoo.com', '6182a61e266111245440159ef6901169', '1642e525a70dee1eb3352ed35220011d', 1, 0, '2016-08-25 05:36:49'),
+(41, 42, -1, 'e@sdf.com', 'd58e3582afa99040e27b92b13c8f2280', '54ba615ccb87199abaaa485199e38dc8', 1, 0, '2016-08-25 05:36:49'),
+(42, 43, -1, 'dsa@sdf.com', 'a8f5f167f44f4964e6c998dee827110c', '47dbc11357bb1d0645dfddf39de6a840', 1, 0, '2016-08-25 05:36:49'),
+(43, 44, -1, 'asd@sdf.comn', '89aaaeeda8a4f50e0ad8fb8ad6e6e437', '85effe24aea679cf4ce8ffa3f9284305', 1, 0, '2016-08-25 05:36:49'),
+(44, 45, -1, 'dummy20@tummy.com', '5a2dd3b5557333af7d0d89a8790379e9', '9c98b4bc3ada6a81c946bc278c531c91', 1, 0, '2016-08-25 05:36:49'),
+(45, 46, -1, 'dummy21@tummy.com', '5a2dd3b5557333af7d0d89a8790379e9', 'e2e3a9a544ccedef1e317a57d351bc47', 1, 0, '2016-08-25 05:36:49'),
+(46, 47, -1, 'modon@chand.com', 'e10adc3949ba59abbe56e057f20f883e', 'b93d8b1f80f8138952d5efc58ec1cd15', 1, 0, '2016-08-25 05:36:49'),
+(47, 48, -1, 'sdfsdf@sdfsdf.com', '89400617397134a1fc9c9fbcb7e1d10a', '27dd99c4e7a880f1803ce2268c4b0806', 1, 0, '2016-08-25 10:04:00'),
+(48, 49, -1, 'sdfd@sdf.com', '73a90acaae2b1ccc0e969709665bc62f', '05dfffc43184c7fe95f7b9c20bddf8af', 1, 0, '2016-08-25 10:57:16'),
+(49, 50, -1, 'dfg@sdf.com', '73a90acaae2b1ccc0e969709665bc62f', '6ddeeff683d14043a081a86c127a96ef', 1, 0, '2016-08-25 11:00:35');
 
 -- --------------------------------------------------------
 
@@ -124,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   PRIMARY KEY (`id`),
   KEY `category_app_login_credential` (`created_by`),
   KEY `category_category` (`parent_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `category`
@@ -137,7 +141,8 @@ INSERT INTO `category` (`id`, `name`, `parent_id`, `is_subcategory`, `sorted_ord
 (11, 'GAMING & PARTY', NULL, 0, 4, 0, '2016-08-08 09:27:08'),
 (12, 'COOL GADGETS', NULL, 0, 5, 0, '2016-08-08 09:27:52'),
 (13, 'BLOGS', NULL, 0, 6, 0, '2016-08-08 09:27:52'),
-(14, 'Swedish washing machine', 9, 1, 7, 0, '2016-08-17 11:35:09');
+(14, 'Swedish washing machine', 9, 1, 7, 0, '2016-08-17 11:35:09'),
+(15, 'HOME SUBCAT ', 8, 1, 8, 0, '2016-08-17 11:35:09');
 
 -- --------------------------------------------------------
 
@@ -184,7 +189,8 @@ CREATE TABLE IF NOT EXISTS `product` (
   `review_status` tinyint(1) NOT NULL DEFAULT '0',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `product_app_login_credential` (`owner_id`)
+  KEY `product_app_login_credential` (`owner_id`),
+  KEY `FKln4s7fuq1817jdxhcg74s21hj` (`rent_type_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
@@ -192,10 +198,10 @@ CREATE TABLE IF NOT EXISTS `product` (
 --
 
 INSERT INTO `product` (`id`, `owner_id`, `name`, `description`, `average_rating`, `profile_image`, `other_images`, `current_value`, `rent_fee`, `rent_type_id`, `active`, `currently_available`, `available_from`, `available_till`, `review_status`, `created_date`) VALUES
-(12, 40, 'CK Tempting Glimmer Sheer Creme EyeShadow - 303 Baby Blue', 'Offers high shine high impact colour Lightweight & extra-smooth finish.', 2.00, '{"original":{"path":"product/40/26594005394083.jpg","type":"","size":{"width":458,"height":458}},"thumb":[]}', '[]', 1000.00, 900.00, 1, 1, 0, '2016-08-09 00:00:00', '2016-10-09 00:00:00', 0, '2016-08-16 09:44:46'),
-(14, 32, 'dsf', 'sdf', 0.00, '{"original":{"path":"product/32/815788920270.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 0, '2016-08-12 04:42:01'),
-(17, 32, 'dsf', 'sdf', 0.00, '{"original":{"path":"product/32/1087095250392.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 0, '2016-08-12 04:46:32'),
-(19, 32, 'dsf', 'sdf', 0.00, '{"original":{"path":"product/32/1278511427233.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 0, '2016-08-12 04:49:44');
+(12, 40, 'CK Tempting Glimmer Sheer Creme EyeShadow - 303 Baby Blue', 'Offers high shine high impact colour Lightweight & extra-smooth finish.', 5.00, '{"original":{"path":"product/40/26594005394083.jpg","type":"","size":{"width":458,"height":458}},"thumb":[]}', '[]', 1000.00, 900.00, 1, 1, 0, '2016-08-30 00:00:00', '2016-11-09 00:00:00', 1, '2016-08-25 06:52:01'),
+(14, 32, 'dsf', 'sdf', 3.00, '{"original":{"path":"product/32/815788920270.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 1, '2016-08-25 06:33:01'),
+(17, 32, 'dsf', 'sdf', 4.00, '{"original":{"path":"product/32/1087095250392.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 1, '2016-08-25 06:33:01'),
+(19, 32, 'dsf', 'sdf', 5.00, '{"original":{"path":"product/32/1278511427233.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', '[]', 34.00, 3.00, 2, 1, 1, '2016-08-24 00:00:00', '2016-08-25 00:00:00', 1, '2016-08-25 06:33:01');
 
 -- --------------------------------------------------------
 
@@ -279,7 +285,14 @@ CREATE TABLE IF NOT EXISTS `product_liked` (
   PRIMARY KEY (`id`),
   KEY `app_credential_id` (`app_credential_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `product_liked`
+--
+
+INSERT INTO `product_liked` (`id`, `product_id`, `app_credential_id`, `created_date`) VALUES
+(1, 12, 41, '2016-08-22 09:09:58');
 
 -- --------------------------------------------------------
 
@@ -338,48 +351,52 @@ INSERT INTO `product_rating` (`id`, `product_id`, `app_credential_id`, `rate_val
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_received`
+-- Table structure for table `rental_product_returned`
 --
 
-CREATE TABLE IF NOT EXISTS `product_received` (
+CREATE TABLE IF NOT EXISTS `rental_product_returned` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rent_product_id` int(11) NOT NULL,
-  `is_received` tinyint(1) NOT NULL,
-  `received_date` datetime NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `confirm` tinyint(1) NOT NULL DEFAULT '0',
+  `dispute` tinyint(1) NOT NULL DEFAULT '0',
+  `expired` tinyint(1) NOT NULL DEFAULT '0',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `rent_product_id` (`rent_product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  KEY `rent_product_id_2` (`rent_product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `product_received`
+-- Dumping data for table `rental_product_returned`
 --
 
-INSERT INTO `product_received` (`id`, `rent_product_id`, `is_received`, `received_date`, `created`) VALUES
-(1, 1, 1, '2016-08-11 00:00:00', '2016-08-11 12:57:50');
+INSERT INTO `rental_product_returned` (`id`, `rent_product_id`, `confirm`, `dispute`, `expired`, `created`) VALUES
+(1, 1, 0, 0, 0, '2016-08-11 12:58:15'),
+(2, 1, 0, 0, 0, '2016-08-11 12:58:15');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_returned`
+-- Table structure for table `rental_product_returned_history`
 --
 
-CREATE TABLE IF NOT EXISTS `product_returned` (
+CREATE TABLE IF NOT EXISTS `rental_product_returned_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `rent_product_id` int(11) NOT NULL,
-  `is_returned` tinyint(1) NOT NULL,
-  `returned_date` datetime NOT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `product_returned_id` int(11) NOT NULL,
+  `confirm` tinyint(1) NOT NULL DEFAULT '0',
+  `dispute` tinyint(1) NOT NULL DEFAULT '0',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `rent_product_id` (`rent_product_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  KEY `product_returned_id` (`product_returned_id`),
+  KEY `product_returned_id_2` (`product_returned_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `product_returned`
+-- Dumping data for table `rental_product_returned_history`
 --
 
-INSERT INTO `product_returned` (`id`, `rent_product_id`, `is_returned`, `returned_date`, `created`) VALUES
-(1, 1, 0, '2016-08-11 00:00:00', '2016-08-11 12:58:15');
+INSERT INTO `rental_product_returned_history` (`id`, `product_returned_id`, `confirm`, `dispute`, `created`) VALUES
+(2, 1, 1, 0, '2016-08-27 06:15:33'),
+(3, 1, 0, 1, '2016-08-27 06:15:33');
 
 -- --------------------------------------------------------
 
@@ -409,8 +426,8 @@ CREATE TABLE IF NOT EXISTS `rent_product` (
 --
 
 INSERT INTO `rent_product` (`id`, `rent_request_id`, `rentee_id`, `product_id`, `start_date`, `ends_date`, `product_returned`, `product_received`, `expired`, `created_date`) VALUES
-(1, 50, 32, 12, '2016-09-22', '2016-09-24', 0, 0, 0, '2016-08-18 12:54:15'),
-(2, 48, 32, 12, '2016-10-22', '2016-12-24', 0, 0, 0, '2016-08-18 13:11:02');
+(1, 66, 32, 12, '2016-08-24', '2016-08-25', 0, 0, 0, '2016-08-24 06:50:34'),
+(2, 66, 32, 12, '2016-08-24', '2016-08-25', 0, 0, 0, '2016-08-24 07:45:27');
 
 -- --------------------------------------------------------
 
@@ -436,36 +453,20 @@ CREATE TABLE IF NOT EXISTS `rent_request` (
   KEY `rent_request_app_login_credential` (`requested_by`),
   KEY `rent_request_product` (`product_id`),
   KEY `rent_request_rent_request` (`request_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=73 ;
 
 --
 -- Dumping data for table `rent_request`
 --
 
 INSERT INTO `rent_request` (`id`, `product_id`, `requested_by`, `request_id`, `expired`, `request_cancel`, `start_date`, `end_date`, `approve`, `disapprove`, `extension`, `remark`, `created_date`) VALUES
-(28, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 1, 0, 0, NULL, '2016-08-18 05:17:31'),
-(29, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 1, 0, NULL, '2016-08-18 05:31:36'),
-(30, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:04:02'),
-(31, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:09:22'),
-(32, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:09:32'),
-(33, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:10:26'),
-(34, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:11:57'),
-(35, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:22:23'),
-(36, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:22:54'),
-(37, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 07:40:22'),
-(38, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:13:20'),
-(39, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:23:58'),
-(40, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:29:00'),
-(41, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, '', '2016-08-17 08:29:06'),
-(42, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, 'sdfsdfsdf', '2016-08-17 08:29:10'),
-(43, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, '', '2016-08-17 08:29:22'),
-(44, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:29:33'),
-(45, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-17 08:30:23'),
-(46, 12, 32, NULL, 0, 1, '2016-10-22', '2016-12-24', 0, 0, 0, '                ', '2016-08-18 05:45:38'),
-(47, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 1, 0, NULL, '2016-08-18 05:38:30'),
-(48, 12, 32, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, NULL, '2016-08-18 13:11:18'),
-(49, 17, 40, NULL, 0, 0, '2016-10-22', '2016-12-24', 0, 0, 0, 'fgdfgdfg', '2016-08-17 13:06:59'),
-(50, 17, 40, NULL, 0, 0, '2016-09-22', '2016-09-24', 0, 0, 0, 'fgdfgdfg', '2016-08-17 13:07:22');
+(66, 12, 32, NULL, 0, 0, '2016-09-06', '2016-09-08', 0, 0, 0, 'fhgjkjhg', '2016-08-23 12:16:05'),
+(67, 12, 32, NULL, 0, 0, '2016-09-01', '2016-09-03', 0, 0, 0, NULL, '2016-08-23 12:16:10'),
+(68, 12, 32, NULL, 0, 0, '2016-09-05', '2016-09-07', 0, 0, 0, NULL, '2016-08-23 12:16:20'),
+(69, 12, 32, NULL, 0, 0, '2016-09-04', '2016-09-04', 0, 0, 0, NULL, '2016-08-23 12:17:10'),
+(70, 14, 40, NULL, 0, 0, '2016-08-24', '2016-08-25', 0, 0, 0, NULL, '2016-08-24 09:20:31'),
+(71, 12, 32, NULL, 0, 1, '2016-08-31', '2016-08-31', 0, 0, 0, NULL, '2016-08-26 06:00:55'),
+(72, 12, 32, NULL, 0, 0, '2016-08-30', '2016-08-31', 0, 0, 0, NULL, '2016-08-26 06:01:34');
 
 -- --------------------------------------------------------
 
@@ -493,6 +494,42 @@ INSERT INTO `rent_type` (`id`, `name`, `created_date`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `request_product_return`
+--
+
+CREATE TABLE IF NOT EXISTS `request_product_return` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `rent_product_id` int(11) NOT NULL,
+  `expired` tinyint(1) NOT NULL DEFAULT '0',
+  `remarks` text,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`,`rent_product_id`),
+  KEY `rent_product_id` (`rent_product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `request_product_return`
+--
+
+INSERT INTO `request_product_return` (`id`, `product_id`, `rent_product_id`, `expired`, `remarks`, `created_date`) VALUES
+(1, 12, 1, 1, '', '2016-08-26 10:31:47'),
+(2, 12, 1, 1, NULL, '2016-08-26 11:03:08'),
+(3, 12, 1, 1, NULL, '2016-08-26 11:05:11'),
+(4, 12, 1, 1, NULL, '2016-08-26 11:41:29'),
+(5, 12, 1, 1, NULL, '2016-08-26 11:43:54'),
+(6, 12, 1, 1, NULL, '2016-08-26 11:45:50'),
+(7, 12, 1, 1, NULL, '2016-08-26 11:46:53'),
+(8, 12, 1, 1, NULL, '2016-08-26 11:51:32'),
+(9, 12, 1, 1, NULL, '2016-08-26 11:51:40'),
+(10, 12, 1, 1, NULL, '2016-08-26 11:52:59'),
+(11, 12, 1, 1, NULL, '2016-08-26 11:54:35'),
+(12, 12, 1, 0, NULL, '2016-08-26 11:55:04');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `temp_file`
 --
 
@@ -502,7 +539,7 @@ CREATE TABLE IF NOT EXISTS `temp_file` (
   `path` text NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=141 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=151 ;
 
 --
 -- Dumping data for table `temp_file`
@@ -613,7 +650,16 @@ INSERT INTO `temp_file` (`id`, `token`, `path`, `created_date`) VALUES
 (137, 1000568425, 'temp/538099.jpg', '2016-08-12 04:44:55'),
 (138, 1000675201, 'temp/374906.jpg', '2016-08-12 04:46:17'),
 (139, 1000362158, 'temp/704563.jpg', '2016-08-12 04:47:25'),
-(140, 1000504935, 'temp/886440.jpg', '2016-08-12 04:49:30');
+(140, 1000504935, 'temp/886440.jpg', '2016-08-12 04:49:30'),
+(141, 1000000054, 'temp/80071.txt', '2016-08-24 09:15:56'),
+(142, 1000699850, 'temp/250284.txt', '2016-08-24 09:17:35'),
+(143, 1000732860, 'temp/187931.txt', '2016-08-25 09:59:15'),
+(145, 1000809813, 'temp/471386.jpg', '2016-08-25 10:28:41'),
+(146, 1000055582, 'temp/809728.jpg', '2016-08-25 10:31:07'),
+(147, 1000018199, 'temp/510776.jpg', '2016-08-25 10:33:53'),
+(148, 1000353427, 'temp/789629.jpg', '2016-08-25 10:33:57'),
+(149, 1000628083, 'temp/810872.jpg', '2016-08-25 10:35:55'),
+(150, 1000474321, 'temp/446489.jpg', '2016-08-25 10:36:32');
 
 -- --------------------------------------------------------
 
@@ -629,7 +675,7 @@ CREATE TABLE IF NOT EXISTS `user_address` (
   `state` varchar(200) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
 
 --
 -- Dumping data for table `user_address`
@@ -667,7 +713,11 @@ INSERT INTO `user_address` (`id`, `address`, `zip`, `city`, `state`, `created_da
 (29, '', '', '', '', '2016-08-09 12:30:35'),
 (30, '', '', '', '', '2016-08-09 12:31:21'),
 (32, '', '', '', '', '2016-08-10 12:07:05'),
-(33, '', '', '', '', '2016-08-10 12:10:22');
+(33, '', '', '', '', '2016-08-10 12:10:22'),
+(34, '', '', '', '', '2016-08-24 09:19:43'),
+(35, '', '', '', '', '2016-08-25 10:04:00'),
+(36, '', '', '', '', '2016-08-25 10:57:16'),
+(37, '', '', '', '', '2016-08-25 11:00:35');
 
 -- --------------------------------------------------------
 
@@ -681,32 +731,37 @@ CREATE TABLE IF NOT EXISTS `user_inf` (
   `identity_type_id` int(11) NOT NULL,
   `first_name` varchar(500) NOT NULL,
   `last_name` varchar(500) NOT NULL,
+  `profile_pic` text,
   `identity_doc_path` text NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `identity_type` (`identity_type_id`),
   KEY `user_inf_user_address` (`user_address_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
 -- Dumping data for table `user_inf`
 --
 
-INSERT INTO `user_inf` (`id`, `user_address_id`, `identity_type_id`, `first_name`, `last_name`, `identity_doc_path`, `created_date`) VALUES
-(33, 19, 1, 'Mausum', 'Nandi', 'identityDoc/32/10300038890383.documentIdentity', '2016-08-08 07:14:22'),
-(34, 20, 1, 'Taiful', 'Islam', 'identityDoc/33/13172418657778.documentIdentity', '2016-08-08 08:02:14'),
-(35, 21, 1, 'developer', 'wsit', 'identityDoc/34/14499115145635.jpg', '2016-08-08 08:24:21'),
-(36, 22, 1, 'Maidul', 'Rafi', 'identityDoc/35/16406680045445.documentIdentity', '2016-08-08 08:56:09'),
-(37, 23, 1, 'Mausum', 'Nandy', 'identityDoc/36/17206486365557.documentIdentity', '2016-08-08 09:09:28'),
-(38, 24, 1, 'fayme', 'Pauli', 'identityDoc/37/19053048474532.documentIdentity', '2016-08-08 09:40:15'),
-(39, 25, 2, 'fa', 'y me', 'identityDoc/38/25894182279794.docx', '2016-08-08 11:34:16'),
-(40, 26, 1, 'Tahmina', 'A', 'identityDoc/39/13320013602830.docx', '2016-08-09 07:43:33'),
-(41, 27, 2, 'Lima', 'N', 'identityDoc/40/24704427305911.docx', '2016-08-09 10:53:17'),
-(42, 28, 1, 'xc', 'zxc', 'identityDoc/41/30488810011776.png', '2016-08-09 12:29:42'),
-(43, 29, 2, 'asd', 'sad', 'identityDoc/42/30542282440316.png', '2016-08-09 12:30:35'),
-(44, 30, 1, 'asd', 'asd', 'identityDoc/43/30587637477572.png', '2016-08-09 12:31:21'),
-(45, 32, 1, 'dummy', 'tummy', 'identityDoc/44/26962367826164.docx', '2016-08-10 12:07:05'),
-(46, 33, 1, 'dummy', 'tummy', 'identityDoc/45/27159631397218.docx', '2016-08-10 12:10:22');
+INSERT INTO `user_inf` (`id`, `user_address_id`, `identity_type_id`, `first_name`, `last_name`, `profile_pic`, `identity_doc_path`, `created_date`) VALUES
+(33, 19, 1, 'Mausum', 'Nandi', '{"original":{"path":"product/32/22855382016713.jpg","type":"","size":{"width":660,"height":371}},"thumb":[]}', 'identityDoc/32/10300038890383.documentIdentity', '2016-08-25 10:12:41'),
+(34, 20, 1, 'Taiful', 'Islam', NULL, 'identityDoc/33/13172418657778.documentIdentity', '2016-08-08 08:02:14'),
+(35, 21, 1, 'developer', 'wsit', NULL, 'identityDoc/34/14499115145635.jpg', '2016-08-08 08:24:21'),
+(36, 22, 1, 'Maidul', 'Rafi', NULL, 'identityDoc/35/16406680045445.documentIdentity', '2016-08-08 08:56:09'),
+(37, 23, 1, 'Mausum', 'Nandy', NULL, 'identityDoc/36/17206486365557.documentIdentity', '2016-08-08 09:09:28'),
+(38, 24, 1, 'fayme', 'Pauli', NULL, 'identityDoc/37/19053048474532.documentIdentity', '2016-08-08 09:40:15'),
+(39, 25, 2, 'fa', 'y me', NULL, 'identityDoc/38/25894182279794.docx', '2016-08-08 11:34:16'),
+(40, 26, 1, 'Tahmina', 'A', NULL, 'identityDoc/39/13320013602830.docx', '2016-08-09 07:43:33'),
+(41, 27, 2, 'Lima', 'N', NULL, 'identityDoc/40/24704427305911.docx', '2016-08-09 10:53:17'),
+(42, 28, 1, 'xc', 'zxc', NULL, 'identityDoc/41/30488810011776.png', '2016-08-09 12:29:42'),
+(43, 29, 2, 'asd', 'sad', NULL, 'identityDoc/42/30542282440316.png', '2016-08-09 12:30:35'),
+(44, 30, 1, 'asd', 'asd', NULL, 'identityDoc/43/30587637477572.png', '2016-08-09 12:31:21'),
+(45, 32, 1, 'dummy', 'tummy', NULL, 'identityDoc/44/26962367826164.docx', '2016-08-10 12:07:05'),
+(46, 33, 1, 'dummy', 'tummy', NULL, 'identityDoc/45/27159631397218.docx', '2016-08-10 12:10:22'),
+(47, 34, 1, 'Modon', 'Chand', NULL, 'identityDoc/46/18881855098272.txt', '2016-08-24 09:19:43'),
+(48, 35, 1, 'sdfsdf', 'sdfsdf', NULL, 'identityDoc/47/20898679824950.txt', '2016-08-25 10:04:00'),
+(49, 36, 2, 'sdfs', 'sdfsdf', 'null', 'identityDoc/48/24094491958505.txt', '2016-08-25 10:57:16'),
+(50, 37, 2, 'Mausum', 'Nandi', '{"original":{"path":"","type":"","size":{"width":0,"height":0}},"thumb":[]}', 'identityDoc/49/24293334369307.txt', '2016-08-25 11:00:35');
 
 --
 -- Constraints for dumped tables
@@ -722,6 +777,7 @@ ALTER TABLE `activation`
 -- Constraints for table `app_login_credential`
 --
 ALTER TABLE `app_login_credential`
+  ADD CONSTRAINT `FKe4ymatsj2ooqxvsilddn8gm18` FOREIGN KEY (`user_inf_id`) REFERENCES `user_inf` (`id`),
   ADD CONSTRAINT `app_credential_unser_inf_id` FOREIGN KEY (`user_inf_id`) REFERENCES `user_inf` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -734,6 +790,7 @@ ALTER TABLE `attributes`
 -- Constraints for table `attribute_values`
 --
 ALTER TABLE `attribute_values`
+  ADD CONSTRAINT `FKsdv2mmlr5ql1jh9y8v7xldnpx` FOREIGN KEY (`attributes_id`) REFERENCES `attributes` (`id`),
   ADD CONSTRAINT `attribute_values_app_login_credential` FOREIGN KEY (`created_by`) REFERENCES `app_login_credential` (`id`),
   ADD CONSTRAINT `attribute_values_attributes` FOREIGN KEY (`attributes_id`) REFERENCES `attributes` (`id`);
 
@@ -741,12 +798,15 @@ ALTER TABLE `attribute_values`
 -- Constraints for table `category`
 --
 ALTER TABLE `category`
+  ADD CONSTRAINT `FK2y94svpmqttx80mshyny85wqr` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`),
   ADD CONSTRAINT `category_category` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`);
 
 --
 -- Constraints for table `product`
 --
 ALTER TABLE `product`
+  ADD CONSTRAINT `FK1eghvssbn7wvaaw0wyuom9oe0` FOREIGN KEY (`owner_id`) REFERENCES `app_login_credential` (`id`),
+  ADD CONSTRAINT `FKln4s7fuq1817jdxhcg74s21hj` FOREIGN KEY (`rent_type_id`) REFERENCES `rent_type` (`id`),
   ADD CONSTRAINT `product_app_login_credential` FOREIGN KEY (`owner_id`) REFERENCES `app_login_credential` (`id`);
 
 --
@@ -766,6 +826,8 @@ ALTER TABLE `product_availability`
 -- Constraints for table `product_category`
 --
 ALTER TABLE `product_category`
+  ADD CONSTRAINT `FK2k3smhbruedlcrvu6clued06x` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `FKkud35ls1d40wpjb5htpp14q4e` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
   ADD CONSTRAINT `product_category_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `product_category_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
@@ -773,6 +835,8 @@ ALTER TABLE `product_category`
 -- Constraints for table `product_liked`
 --
 ALTER TABLE `product_liked`
+  ADD CONSTRAINT `FK8l2tmap6x86bax3ptc8lbuaev` FOREIGN KEY (`app_credential_id`) REFERENCES `app_login_credential` (`id`),
+  ADD CONSTRAINT `FKhbu26ux8f4ile47coe7qxawcf` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `app_login_credential_app_credential_id` FOREIGN KEY (`app_credential_id`) REFERENCES `app_login_credential` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `product_liked_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -787,12 +851,28 @@ ALTER TABLE `product_location`
 --
 ALTER TABLE `product_rating`
   ADD CONSTRAINT ` product_rating_app_credential_id` FOREIGN KEY (`app_credential_id`) REFERENCES `app_login_credential` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT ` product_rating_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT ` product_rating_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FKoyyqmab7rl4l8vbjnqiorvi32` FOREIGN KEY (`app_credential_id`) REFERENCES `app_login_credential` (`id`),
+  ADD CONSTRAINT `FKt3mecsgki7hdg8srke4baeidk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+
+--
+-- Constraints for table `rental_product_returned`
+--
+ALTER TABLE `rental_product_returned`
+  ADD CONSTRAINT `product_returned_rent_product_id` FOREIGN KEY (`rent_product_id`) REFERENCES `rent_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `rental_product_returned_history`
+--
+ALTER TABLE `rental_product_returned_history`
+  ADD CONSTRAINT `product_returned_history_product_returned_id` FOREIGN KEY (`product_returned_id`) REFERENCES `rental_product_returned` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `rent_product`
 --
 ALTER TABLE `rent_product`
+  ADD CONSTRAINT `FKpji1gl0wk5bp6horjvboc9pdx` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `FKqf9yqapca3lt13h4pwjudun7c` FOREIGN KEY (`rent_request_id`) REFERENCES `rent_request` (`id`),
   ADD CONSTRAINT `rent_product_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `rent_product_rent_request` FOREIGN KEY (`rent_request_id`) REFERENCES `rent_request` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `rent_product_rentee_id` FOREIGN KEY (`rentee_id`) REFERENCES `app_login_credential` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -801,14 +881,27 @@ ALTER TABLE `rent_product`
 -- Constraints for table `rent_request`
 --
 ALTER TABLE `rent_request`
+  ADD CONSTRAINT `FK7uf4ynnkep50aokr0mfu57km0` FOREIGN KEY (`request_id`) REFERENCES `rent_request` (`id`),
+  ADD CONSTRAINT `FKa4pt960yimr4ioulhhi47umia` FOREIGN KEY (`requested_by`) REFERENCES `app_login_credential` (`id`),
+  ADD CONSTRAINT `FKp8eka0j8hacs3kuwv6n6v78i0` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `rent_request_app_login_credential` FOREIGN KEY (`requested_by`) REFERENCES `app_login_credential` (`id`),
   ADD CONSTRAINT `rent_request_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `rent_request_rent_request` FOREIGN KEY (`request_id`) REFERENCES `rent_request` (`id`);
 
 --
+-- Constraints for table `request_product_return`
+--
+ALTER TABLE `request_product_return`
+  ADD CONSTRAINT `FKq22espjqbg5w5ehhtahrhoyuu` FOREIGN KEY (`rent_product_id`) REFERENCES `rent_product` (`id`),
+  ADD CONSTRAINT `FKt91udmx9wva0tng2h2tihvjkf` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `request_product_return_productid` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `request_product_return_rpid` FOREIGN KEY (`rent_product_id`) REFERENCES `rent_product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `user_inf`
 --
 ALTER TABLE `user_inf`
+  ADD CONSTRAINT `FK8xvlcxq6qd8fxwao83trys367` FOREIGN KEY (`identity_type_id`) REFERENCES `identity_type` (`id`),
   ADD CONSTRAINT `user_inf_identity_type` FOREIGN KEY (`identity_type_id`) REFERENCES `identity_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `user_inf_user_address` FOREIGN KEY (`user_address_id`) REFERENCES `user_address` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 

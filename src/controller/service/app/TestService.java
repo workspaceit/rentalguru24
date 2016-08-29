@@ -6,6 +6,7 @@ import library.RentGuruMail;
 import model.*;
 
 import model.entity.app.*;
+import model.entity.app.product.rentable.RentInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class TestService extends BaseService{
     RentRequestModel rentRequestModel;
 
     @Autowired
-    RentProductModel rentProductModel;
+    RentInfModel rentInfModel;
 
     @Autowired
     RentGuruMail rentGuruMail;
@@ -170,7 +171,7 @@ public class TestService extends BaseService{
 //
 //        rentProduct.setRentRequestsById(rentRequestsarr);
 
-        rentProductModel.insert(rentInf);
+        rentInfModel.insert(rentInf);
     }
 
 

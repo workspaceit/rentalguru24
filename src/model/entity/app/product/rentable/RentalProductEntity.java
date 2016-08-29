@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.convert.PictureArrayConverter;
 import model.convert.PictureConverter;
 import model.entity.app.AppCredential;
-import model.entity.app.RentInf;
 import model.entity.app.RentRequest;
 import model.entity.app.RentType;
 import model.entity.app.product.ProductCategory;
@@ -99,7 +98,7 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
     /* Not ready to to deploy in develop server */
 
 
-//    private List<ProductAvailability> productAvailability;
+    //    private List<ProductAvailability> productAvailability;
     @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private List<RentRequest> rentRequests;
 
@@ -348,10 +347,10 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinColumn(name="product_id",referencedColumnName = "id")
     public List<RentRequest> getRentRequests() {
-         return rentRequests;
+        return rentRequests;
     }
     public void setRentRequests(List<RentRequest> rentRequests) {
-       this.rentRequests = rentRequests;
+        this.rentRequests = rentRequests;
     }
 
 

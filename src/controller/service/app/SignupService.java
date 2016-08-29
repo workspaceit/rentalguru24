@@ -10,6 +10,7 @@ import model.AppLoginCredentialModel;
 import model.IdentityTypeModel;
 import model.TempFileModel;
 import model.entity.app.*;
+import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.validation.BindingResult;
@@ -89,7 +90,7 @@ public class SignupService{
 //        user.setUserAddress(userAddress);
         userInf.setFirstName(firstName);
         userInf.setLastName(lastName);
-
+        userInf.setProfilePicture(new Picture());
 
         authCredential.setUserInf(userInf);
         authCredential.setRole(-1);

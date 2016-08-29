@@ -21,6 +21,9 @@
 <script>
   var BASEURL = "${BaseUrl}";
 </script>
+<script>
+  var isLoggedin =${IsLogIn};
+</script>
 
 <!-- Contact end here -->
 <!-- Main container start here -->
@@ -107,6 +110,11 @@
       }
     });
   }
+</script>
+<script>
+  $(document).ready(function(){
+    $('#example1').DataTable();
+  });
 </script>
 
 

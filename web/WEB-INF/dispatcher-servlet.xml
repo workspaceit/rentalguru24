@@ -67,6 +67,16 @@
                      <mvc:mapping path="/product/upload" />
                      <bean class="controller.interceptor.WebAuthInterceptor"/>
               </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/rent/request/**" />
+                     <bean class="controller.interceptor.WebAuthInterceptor"/>
+              </mvc:interceptor>
+
+              <!-- ******* Auth  File Upload [For Profile Edit ]  ************-->
+              <mvc:interceptor>
+                     <mvc:mapping path="/fileupload/upload/auth/**" />
+                     <bean class="controller.interceptor.ServiceAuthInterceptor"/>
+              </mvc:interceptor>
 
 
               <!-- ******* Public Service  ************-->
@@ -119,10 +129,14 @@
 
        <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
                       <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
        <!--<mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
                       <!--cache-period="31556926"/>-->
 
        <mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24files/"
+                      cache-period="31556926"/>
+       <mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/"
                       cache-period="31556926"/>
        <mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"
                       cache-period="31556926"/>
@@ -212,13 +226,19 @@
        </bean>
        <bean id="rentRequestModel" class="model.RentRequestModel" >
        </bean>
-       <bean id="rentProductModel" class="model.RentProductModel" >
+       <bean id="rentProductModel" class="model.RentInfModel" >
        </bean>
        <bean id="productModel" class="model.ProductModel" >
        </bean>
        <bean id="productRatingModel" class="model.ProductRatingModel" >
        </bean>
        <bean id="productLikedModel" class="model.ProductLikedModel" >
+       </bean>
+       <bean id="requestProductReturnModel" class="model.RentalProductReturnRequestModel" >
+       </bean>
+       <bean id="rentalProductReturnedModel" class="model.RentalProductReturnedModel" >
+       </bean>
+       <bean id="rentalProductReturnedHistoryModel" class="model.RentalProductReturnedHistoryModel" >
        </bean>
 
 
@@ -237,7 +257,7 @@
                             <value>model.entity.app.product.rentable.RentalProductEntity</value>
                             <value>model.entity.app.product.rentable.ProductAttribute</value>
                             <value>model.entity.app.product.ProductCategory</value>
-                            <value>model.entity.app.RentInf</value>
+                            <value>model.entity.app.product.rentable.RentInf</value>
                             <value>model.entity.app.RentRequest</value>
                             <value>model.entity.app.TempFile</value>
                             <value>model.entity.app.IdentityType</value>
@@ -246,8 +266,9 @@
                             <value>model.entity.app.RentType</value>
                             <value>model.entity.app.ProductRating</value>
                             <value>model.entity.app.product.ProductLiked</value>
-                            <value>model.entity.app.product.ProductReceived</value>
-                            <value>model.entity.app.product.ProductReturned</value>
+                            <value>model.entity.app.product.rentable.RentalProductReturnRequest</value>
+                            <value>model.entity.app.product.rentable.RentalProductReturned</value>
+                            <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
                      </list>
               </property>
               <property name="hibernateProperties">

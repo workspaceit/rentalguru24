@@ -157,10 +157,26 @@
         <input type="hidden" value="" id="identityDocToken" name="identityDocToken">
     </form>
 </div>
+<%------------------------------------------------------------------%>
+<div class="table table-striped" class="files" id="previews">
 
-
-
-
+    <div id="template" class="file-row">
+        <!-- This is used as the file preview template -->
+        <div>
+            <span class="preview"><img data-dz-thumbnail /></span>
+        </div>
+        <div>
+            <strong class="error text-danger" data-dz-errormessage></strong>
+        </div>
+        <%--<div>--%>
+            <%--<p class="size" data-dz-size></p>--%>
+            <%--<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">--%>
+                <%--<div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    </div>
+</div>
+<%------------------------------------------------------------------------------------%>
 <div class="footer">
     <div class="container">
         <div class="row">
@@ -353,12 +369,28 @@
 
 <script>
     Dropzone.autoDiscover = false;
+    var previewNode = document.querySelector("#template");
+    previewNode.id = "";
+    var previewTemplate = previewNode.parentNode.innerHTML;
+    previewNode.parentNode.removeChild(previewNode);
     $(function() {
         var identityDocFile = $("div#fallback").dropzone(
                 {
                     url: BASEURL+"/fileupload/upload/document-identity",
                     paramName: "documentIdentity",
                     maxFilesize: 1,
+                    previewTemplate: previewTemplate,
+                    thumbnailWidth: 200,
+                    thumbnailHeight: 200,
+                    maxFiles: 1,
+//                    previewsContainer: "#previews",
+//                    totaluploadprogress: function(progress, uploadProgress, totalBytesSent) {
+//
+//                    },
+                    maxfilesexceeded: function(file) {
+                        this.removeAllFiles();
+                        this.addFile(file);
+                    },
                     uploadprogress:function(file, progress){
                         $('#signUpButton').attr("disabled","disabled");
                         $('.signUpGif').show();

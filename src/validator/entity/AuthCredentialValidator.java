@@ -57,7 +57,7 @@ public class AuthCredentialValidator implements Validator {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(authCredential.getEmail());
         if (!matcher.matches()) {
-            errors.rejectValue("email", "Email is not valid format");
+            errors.rejectValue("email", "Email is not in valid format");
         }
 
         if(this.insertValidation){

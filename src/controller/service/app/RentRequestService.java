@@ -3,10 +3,10 @@ package controller.service.app;
 import helper.DateHelper;
 import helper.ServiceResponse;
 import model.ProductModel;
-import model.RentProductModel;
+import model.RentInfModel;
 import model.RentRequestModel;
 import model.entity.app.AppCredential;
-import model.entity.app.RentInf;
+import model.entity.app.product.rentable.RentInf;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class RentRequestService{
     @Autowired
     RentRequestModel rentRequestModel;
     @Autowired
-    RentProductModel rentProductModel;
+    RentInfModel rentInfModel;
     @Autowired
     ProductModel productModel;
 
@@ -41,6 +41,21 @@ public class RentRequestService{
 
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+
+        RentalProduct rentalProduct = productModel.getEntityById(productId);
+
+
+        if(rentalProduct == null){
+            serviceResponse.setRequestError("productId","Product does not exist by this id");
+            return serviceResponse;
+        }
+
+        if(rentalProduct.getOwner().getId() == appCredential.getId()){
+            serviceResponse.setRequestError("productId","You can not rent your own product");
+            return serviceResponse;
+        }
+
 
         if(startDate==null || startDate.isEmpty()){
             serviceResponse.setRequestError("startDate","Start date is required");
@@ -70,18 +85,12 @@ public class RentRequestService{
         Timestamp endTimeStamp = DateHelper.getStringToTimeStamp(endsDate, "dd-MM-yyyy");
 
 
-        if(rentProductModel.isProductInRent(productId, startTimeStamp, endTimeStamp)){
+        if(rentInfModel.isProductInRent(productId, startTimeStamp, endTimeStamp)){
             serviceResponse.setRequestError("productId","Product is already in rent on given date");
             return serviceResponse;
         }
 
-        RentalProduct rentalProduct = productModel.getEntityById(productId);
 
-
-        if(rentalProduct == null){
-            serviceResponse.setRequestError("productId","Product does not exist by this id");
-            return serviceResponse;
-        }
 
         if(startTimeStamp.before(rentalProduct.getAvailableFrom()) || startTimeStamp.after(rentalProduct.getAvailableTill())){
             serviceResponse.setRequestError("startDate","Product is not available for rent on given date");
@@ -97,10 +106,7 @@ public class RentRequestService{
             return serviceResponse;
         }
 
-        if(rentalProduct.getOwner().getId() == appCredential.getId()){
-            serviceResponse.setRequestError("productId","You can not rent your own product");
-            return serviceResponse;
-        }
+
 
         if(rentRequestModel.isAlreadyRequested(appCredential.getId(),productId,startTimeStamp,endTimeStamp)){
             serviceResponse.getResponseStat().setErrorMsg("You are already requested for this product in between those date");
@@ -155,7 +161,7 @@ public class RentRequestService{
 
         RentInf rentInf = new RentInf();
 
-        boolean isProductInRent = rentProductModel.isProductInRent( rentRequest.getRentalProduct().getId(),
+        boolean isProductInRent = rentInfModel.isProductInRent( rentRequest.getRentalProduct().getId(),
                                                                     DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
                                                                     DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
                                                                   );
@@ -182,7 +188,7 @@ public class RentRequestService{
         rentInf.setRentalProduct(rentRequest.getRentalProduct());
         rentInf.setRenteeId(rentRequest.getRequestedBy().getId());
 
-        rentProductModel.insert(rentInf);
+        rentInfModel.insert(rentInf);
 
         /* ~~~~~~~~~~~~~  Expire Request in Between date ~~~~~~~~~~~~~~~~*/
 
@@ -224,7 +230,7 @@ public class RentRequestService{
             return serviceResponse;
         }
 
-        boolean isProductInRent = rentProductModel.isProductInRent( rentRequest.getRentalProduct().getId(),
+        boolean isProductInRent = rentInfModel.isProductInRent( rentRequest.getRentalProduct().getId(),
                 DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
                 DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
         );
@@ -458,4 +464,7 @@ public class RentRequestService{
         serviceResponse.setResponseData(rentRequestModel.getAllCanceledRequestByRequestedBy(appCredential.getId(), limit, offset),"No record found");
         return serviceResponse;
     }
+
+
+
 }

@@ -1,6 +1,6 @@
 package model;
 
-import model.entity.app.RentInf;
+import model.entity.app.product.rentable.RentInf;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -9,11 +9,27 @@ import java.sql.Timestamp;
 /**
  * Created by omar on 8/3/16.
  */
-public class RentProductModel extends BaseModel {
+public class RentInfModel extends BaseModel {
+    public RentInf getById(int id) {
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        try {
+            return session.get(RentInf.class, id);
+        } finally {
+            session.close();
+        }
+    }
     public void insert(RentInf rentInf){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
         session.save(rentInf);
+        session.getTransaction().commit();
+        session.close();
+    }
+    public void update(RentInf rentInf){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(rentInf);
         session.getTransaction().commit();
         session.close();
     }
@@ -26,7 +42,9 @@ public class RentProductModel extends BaseModel {
         try{
             session = this.sessionFactory.openSession();
             String hql = "from RentInf where ( ( startDate BETWEEN :startDate and :endsDate ) or" +
-                    " ( endsDate BETWEEN :startDate and :endsDate ) ) and rentalProduct.id = :productId and expired = false ";
+                    " ( endsDate BETWEEN :startDate and :endsDate ) ) " +
+                    " and rentalProduct.id = :productId " +
+                    " and expired = false ";
 
             Query query =  session.createQuery(hql);
 
