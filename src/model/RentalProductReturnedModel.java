@@ -27,6 +27,13 @@ public class RentalProductReturnedModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+    public void update(RentalProductReturned rentalProductReturned){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(rentalProductReturned);
+        session.getTransaction().commit();
+        session.close();
+    }
 
     public boolean alreadyReturnedProduct(int rentInfId){
         Session session = this.sessionFactory.openSession();
@@ -43,7 +50,8 @@ public class RentalProductReturnedModel extends BaseModel {
     public boolean alreadyReceivedProduct(int rentalProductReturnedId){
         Session session = this.sessionFactory.openSession();
         RentalProductReturned rentalProductReturned =(RentalProductReturned) session.createQuery("FROM RentalProductReturned rentalProductReturned where " +
-                " rentalProductReturned.isExpired = false and rentalProductReturned.confirm = true ")
+                "  rentalProductReturned.id = :rentalProductReturnedId" +
+                " and rentalProductReturned.confirm = true ")
                 .setParameter("rentalProductReturnedId",rentalProductReturnedId)
                 .setMaxResults(1)
                 .uniqueResult();

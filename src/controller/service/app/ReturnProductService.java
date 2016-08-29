@@ -22,7 +22,7 @@ public class ReturnProductService {
     @Autowired
     RentInfModel rentInfModel;
 
-    @RequestMapping(value = "/{rentInfId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{rentInfId}", method = RequestMethod.POST)
     public ServiceResponse renturnProduct(HttpServletRequest request,
                                       @PathVariable("rentInfId") int rentInfId,
                                         @RequestParam(value = "remarks",required = false) String remarks){
@@ -50,7 +50,7 @@ public class ReturnProductService {
         RentalProductReturned rentalProductReturned = new RentalProductReturned();
         rentalProductReturned.setConfirm(false);
         rentalProductReturned.setDispute(false);
-        rentalProductReturned.setRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
+        rentalProductReturned.setRenteeRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
 
 
         rentInf.setProductReturned(true);
