@@ -105,58 +105,6 @@
 <jsp:directive.include file="../layouts/footer.jsp"/>
 <!-- Javascript framework and plugins end here -->
 <script>
-    function requestApprove(requestId){
-        $.ajax({
-                type: "GET",
-                url: '${BaseUrl}/api/auth/rent/approve-request/'+requestId,
-
-                success: function(data) {
-
-
-                    if(data.responseStat.status==true){
-                        $('#' + requestId).fadeOut(300);
-                    }else{
-                        $('#modal-text').text(data.responseStat.msg)
-                        $('#myModal').modal('show')
-                    }
-
-
-
-                },
-                error: function() {
-                    alert('Error occured');
-                }
-            });
-
-
-
-    }
-
-    function requestDisapprove(requestId) {
-
-            $.ajax({
-                type: "GET",
-                url: '${BaseUrl}/api/auth/rent/disapprove-request/'+requestId,
-
-                success: function (data) {
-
-                    if(data.responseStat.status==true){
-                        $('#' + requestId).fadeOut(300);
-                    }else{
-                        $('#modal-text').text(data.responseStat.msg)
-                        $('#myModal').modal('show')
-                    }
-                },
-                error: function () {
-                    alert('Error occured');
-                }
-            });
-
-
-    }
-
-</script>
-<script>
     function getDetails(product_id){
         window.location.href = BASEURL+"/rent/request/"+product_id;
     }

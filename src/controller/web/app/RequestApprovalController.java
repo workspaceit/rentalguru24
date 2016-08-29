@@ -32,12 +32,16 @@ public class RequestApprovalController {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
         String baseUrl = (String) request.getAttribute("baseURL");
-
-        if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
-            modelAndView.addObject("rentRequest", rentRequest);
-            modelAndView.addObject("BaseUrl",baseUrl);
-        }else{
-
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+        if(rentRequest != null){
+            if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
+                modelAndView.addObject("IsLogIn", IsLogin);
+                modelAndView.addObject("rentRequest", rentRequest);
+                modelAndView.addObject("BaseUrl",baseUrl);
+            }else{
+                return new ModelAndView("redirect:/home");
+            }
+        } else{
             return new ModelAndView("redirect:/home");
         }
         modelAndView.addObject("pageTitle", "Request Approval");
