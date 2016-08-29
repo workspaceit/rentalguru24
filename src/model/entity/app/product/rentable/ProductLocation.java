@@ -2,6 +2,7 @@ package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import model.entity.app.product.rentable.iface.RentalProduct;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -23,6 +24,8 @@ public class ProductLocation {
     private Float lng = null;
     private Timestamp createdDate;
 
+    private RentalProduct rentalProduct;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -33,15 +36,15 @@ public class ProductLocation {
     public void setId(int id) {
         this.id = id;
     }
-    @Basic
-    @Column(name = "product_id")
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
+//    @Basic
+//    @Column(name = "product_id")
+//    public int getProductId() {
+//        return productId;
+//    }
+//
+//    public void setProductId(int productId) {
+//        this.productId = productId;
+//    }
     @Basic
     @Column(name = "city")
     public String getCity() {
@@ -108,4 +111,14 @@ public class ProductLocation {
         this.createdDate = createdDate;
     }
 
+    @JsonIgnore
+    @OneToOne(targetEntity = RentalProductEntity.class,fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+    public RentalProduct getRentalProduct() {
+        return rentalProduct;
+    }
+
+    public void setRentalProduct(RentalProduct rentalProduct) {
+        this.rentalProduct = rentalProduct;
+    }
 }

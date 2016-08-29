@@ -271,10 +271,11 @@ public class ProductService{
             productCategory.setCategory(categoryModel.getById(categoryId));
             productCategoryList.add(productCategory);
         }
-        rentalProduct.setProductCategories(productCategoryList);
 
 
         productModel.insert(rentalProduct);
+
+        rentalProduct.setProductCategories(productCategoryList);
 
         rentalProduct.setProductLocation(new ProductLocation());
         rentalProduct.getProductLocation().setCity(productUploadForm.getCity());
@@ -283,7 +284,8 @@ public class ProductService{
         rentalProduct.getProductLocation().setLng(productUploadForm.getLng());
         rentalProduct.getProductLocation().setZip(productUploadForm.getZip());
         rentalProduct.getProductLocation().setFormattedAddress(productUploadForm.getFormattedAddress());
-        rentalProduct.getProductLocation().setProductId(rentalProduct.getId());
+
+
 
         productModel.update(rentalProduct);
 

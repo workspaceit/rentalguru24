@@ -54,25 +54,76 @@ public class ReceiveProductService {
             return serviceResponse;
         }
 
+        if(rentalProductReturned.isDispute()) {
+            serviceResponse.setRequestError("rentalProductReturnId","You have already confirmed received the product ");
+            return serviceResponse;
+        }
+
         if(rentalProductReturned.getIsExpired()) {
             serviceResponse.setRequestError("rentalProductReturnId","This record is expired");
             return serviceResponse;
         }
 
 
+        this.processProductReturnConfirmDispute(serviceResponse,rentalProductReturned,remarks,true,false);
+
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/dispute-receive/{rentalProductReturnId}", method = RequestMethod.POST)
+    public ServiceResponse disputeReturnProduct(HttpServletRequest request,
+                                          @PathVariable("rentalProductReturnId") int rentalProductReturnId,
+                                          @RequestParam(value = "remarks",required = false) String remarks){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
 
+        RentalProductReturned rentalProductReturned = rentalProductReturnedModel.getById(rentalProductReturnId);
 
-        rentalProductReturned.setConfirm(true);
-        rentalProductReturned.setDispute(false);
+        if(rentalProductReturned==null){
+            serviceResponse.setRequestError("rentalProductReturnId","No product return information is found by this rentalProductReturnId");
+            return serviceResponse;
+        }
+
+        if(rentalProductReturned.getRentInf().getRentalProduct().getOwner().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("rentalProductReturnId","Can't confirm received ,you are not product owner !! Suck a lemon");
+            return serviceResponse;
+        }
+
+        if(rentalProductReturned.isConfirm()) {
+            serviceResponse.setRequestError("rentalProductReturnId","You have already confirmed received the product ");
+            return serviceResponse;
+        }
+
+        if(rentalProductReturned.isDispute()) {
+            serviceResponse.setRequestError("rentalProductReturnId","You have already confirmed received the product ");
+            return serviceResponse;
+        }
+
+        if(rentalProductReturned.getIsExpired()) {
+            serviceResponse.setRequestError("rentalProductReturnId","This record is expired");
+            return serviceResponse;
+        }
+
+
+        this.processProductReturnConfirmDispute(serviceResponse,rentalProductReturned,remarks,false,true);
+
+        return serviceResponse;
+    }
+    private ServiceResponse processProductReturnConfirmDispute(ServiceResponse serviceResponse,
+                                                               RentalProductReturned rentalProductReturned,
+                                                               String remarks,
+                                                               Boolean confirm,
+                                                               Boolean dispute){
+        rentalProductReturned.setConfirm(confirm);
+        rentalProductReturned.setDispute(dispute);
         rentalProductReturned.setIsExpired(true);
         rentalProductReturned.setRenterRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
 
 
 
-        /* Update RentalProductReturned .. Set Product receive confirmed true */
-        rentalProductReturned.getRentInf().setProductReceived(true);
-
+        /* Update RentalProductReturned .. Set Product receive on confirmed true/false  */
+        rentalProductReturned.getRentInf().setProductReceived(confirm);
         rentalProductReturnedModel.update(rentalProductReturned);
 
         /* Insert to RentalProductReturnedHistory .. */
@@ -90,8 +141,6 @@ public class ReceiveProductService {
         rentalProductReturned.getRentInf().getRentalProduct().setCurrentlyAvailable(true);
 
         productModel.update(rentalProductReturned.getRentInf().getRentalProduct());
-
-
         serviceResponse.setResponseData(rentalProductReturned);
 
         return serviceResponse;

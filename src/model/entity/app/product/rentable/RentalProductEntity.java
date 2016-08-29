@@ -254,8 +254,8 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
 
 
 
-    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "product_id", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,mappedBy = "rentalProduct")
+//    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     public ProductLocation getProductLocation() {
         return productLocation;
     }
