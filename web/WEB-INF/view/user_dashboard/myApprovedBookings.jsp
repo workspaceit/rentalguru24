@@ -61,7 +61,7 @@
             <tbody>
             <d:forEach var="rentRequest" items="${rentRequests}">
             <tr id="${rentRequest.id}">
-              <td width="300px">${rentRequest.rentalProduct.name}<br><br><a href="#" target="_blank">Product Details</a></td>
+              <td width="300px">${rentRequest.rentalProduct.name}<br><br><a href="${BaseUrl}/rent/request/${rentRequest.getId()}" target="_blank">Order Details</a></td>
               <td>${rentRequest.requestedBy.userInf.firstName}</td>
               <td><fmt:formatDate value="${rentRequest.startDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
               <td><fmt:formatDate value="${rentRequest.endDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>

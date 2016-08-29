@@ -42,7 +42,7 @@ public class ProductController{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
-
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         ModelAndView modelAndView = new ModelAndView("/product/upload");
         List<Category> category = categoryModel.getAllCategoryParent();
         List<RentType> rentTypes = rentTypeModel.getAll();
@@ -50,6 +50,8 @@ public class ProductController{
         modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentTypes", rentTypes);
+        modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("pageTitle", "Product Upload");
         return modelAndView;
     }
 

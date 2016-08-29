@@ -230,6 +230,8 @@
        </bean>
        <bean id="productModel" class="model.ProductModel" >
        </bean>
+       <bean id="productLocationModel" class="model.ProductLocationModel" >
+       </bean>
        <bean id="productRatingModel" class="model.ProductRatingModel" >
        </bean>
        <bean id="productLikedModel" class="model.ProductLikedModel" >

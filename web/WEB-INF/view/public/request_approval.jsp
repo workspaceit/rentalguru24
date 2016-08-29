@@ -3,6 +3,8 @@
 <jsp:directive.include file="../layouts/header.jsp" />
     <body class="ux">
         <!--top Nav Bar-->
+
+        <jsp:directive.include file="../layouts/top-nav.jsp" />
         <jsp:directive.include file="../layouts/mid-nav.jsp" />
 
          <div class="parallax-window bg1" data-enllax-ratio="0.7">
@@ -22,8 +24,8 @@
                             <div class="col-md-3 col-xs-3 col-xs-12">
                                 <div class="product_img_container">
 
-                                    <d:if test="${rentRequest.getRequestedBy().getUserInf().getProfilePicture() != null}">
-                                        <img src="${BaseUrl}/profile-image/${rentRequest.getRequestedBy().getUserInf().getProfilePicture()}" class=" img-responsive user_img">
+                                    <d:if test="${rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath() != null}">
+                                        <img src="${BaseUrl}/profile-image/${rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath()}" class=" img-responsive user_img">
                                     </d:if>
                                     <d:if test="${rentRequest.getRequestedBy().getUserInf().getProfilePicture() == null}">
                                         <img src="${BaseUrl}/resources/img/defaultProfileInmage.png" class=" img-responsive user_img">
@@ -79,12 +81,12 @@
                                     <tr>
                                         <td>Start Date</td>
                                         <td></td>
-                                        <td><fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.getStartDate()}"/></td>
+                                        <td><fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.getStartDate()}"/></td>
                                     </tr>
                                     <tr>
                                         <td>End Date</td>
                                         <td></td>
-                                        <td><fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.getEndDate()}"/></td>
+                                        <td><fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.getEndDate()}"/></td>
                                     </tr>
                                     <tr>
                                         <td>Number of Days</td>
@@ -116,7 +118,7 @@
                         <ul class="confirmation_link_ul">
                             <d:if test="${rentRequest.getApprove() == false && rentRequest.getDisapprove() == false}">
                                 <li>
-                                    <BUTTON onclick="requestDisapprove(${rentRequest.getId()})" class="cancel_btn approval_btn">Cancel
+                                    <BUTTON onclick="requestDisapprove(${rentRequest.getId()})" class="cancel_btn approval_btn">Disapprove
                                         <span id="disapproveProgressImg" class="inner-load approveGif" hidden></span>
                                     </BUTTON>
                                 </li>
@@ -132,7 +134,7 @@
                                 </div>
                             </d:if>
                             <d:if test="${rentRequest.getDisapprove() == true}">
-                                <div class="alert alert-success">
+                                <div class="alert alert-danger">
                                     <strong>Product Disapproveed For Rent</strong>.
                                 </div>
                             </d:if>
@@ -141,6 +143,10 @@
                 </div>
             </div>
             <div class="alert alert-danger" id="errorMsg_requestId" hidden></div>
+            <div class="alert alert-danger" id="approveError" hidden>Something Went Wrong</div>
+            <div class="alert alert-danger" id="disApproveError" hidden>Something Went Wrong</div>
+            <div class="alert alert-success" id="approveSuccess" hidden>Product Approve</div>
+            <div class="alert alert-success" id="disApproveSuccess" hidden>Product Disapprove</div>
             <h3 class="aproval_container_title">Product Information</h3>
             <div class="product_info_wrap">
                 <div class="row">
@@ -266,10 +272,16 @@
                         if(data.responseStat.status==true){
                             $('.approve_btn').removeAttrs("disabled", "disabled");
                             $('#approveProgressImg').hide();
+                            $("#approveSuccess").fadeIn(500).delay(2000).fadeOut(500,function(){
+                                window.location.href =BASEURL+"/user/dashboard/rentrequest";
+                            });
                         }else{
                             BindErrorsWithHtml('errorMsg_', data.responseStat.requestErrors);
                             $('.approve_btn').removeAttrs("disabled", "disabled");
                             $('#approveProgressImg').hide();
+                            $("#approveError").fadeIn(500).delay(2000).fadeOut(500,function(){
+                                window.location.href =BASEURL+"/user/dashboard/rentrequest";
+                            });
                         }
                     },
                     error: function() {
@@ -291,10 +303,17 @@
                         if(data.responseStat.status==true){
                             $('.cancel_btn').removeAttrs("disabled", "disabled");
                             $('#disapproveProgressImg').hide();
+                            $("#disApproveSuccess").fadeIn(500).delay(2000).fadeOut(500,function(){
+                                window.location.href =BASEURL+"/user/dashboard/rentrequest";
+                            });
+
                         }else{
                             BindErrorsWithHtml('errorMsg_', data.responseStat.requestErrors);
                             $('.cancel_btn').removeAttrs("disabled", "disabled");
                             $('#disapproveProgressImg').hide();
+                            $("#disApproveError").fadeIn(500).delay(2000).fadeOut(500,function(){
+                                window.location.href =BASEURL+"/user/dashboard/rentrequest";
+                            });
                         }
                     },
                     error: function () {
