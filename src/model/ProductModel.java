@@ -274,45 +274,30 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public List<MyRentedProduct> getMyCurrentRentedProduct(int renteeId, int limit, int offset) {
-        Session session = this.sessionFactory.openSession(); //FETCH myRentedProduct.rentInf
-        String hql = "FROM RentalProductEntity myRentedProduct INNER JOIN RentInf rentinf where rentinf.rentalProduct.id = myRentedProduct.id " +
-                " and rentinf.rentee.id=:renteeId ORDER BY myRentedProduct.id DESC  ";
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity myRentedProduct LEFT JOIN  FETCH myRentedProduct.rentInf reninf " +
+                " where reninf.rentee.id=:renteeId " +
+                " and reninf.expired = false ORDER BY myRentedProduct.id DESC  ";
         try {
             return session.createQuery(hql)
                     .setParameter("renteeId", renteeId)
                     .setFirstResult(offset * limit)
                     .setMaxResults(limit).list();
+        } finally {
+
+            session.close();
+        }
+    }
+    public List<MyRentedProduct> getMyCurrentRentedProduct(int renteeId) {
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity myRentedProduct LEFT JOIN  FETCH myRentedProduct.rentInf reninf " +
+                " where reninf.rentee.id=:renteeId " +
+                " and reninf.expired = false ORDER BY myRentedProduct.id DESC  ";
+        try {
+            return session.createQuery(hql)
+                    .setParameter("renteeId", renteeId)
+                    .list();
         } finally {
 
             session.close();

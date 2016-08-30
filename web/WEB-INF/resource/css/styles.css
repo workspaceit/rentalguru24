@@ -2365,7 +2365,7 @@ span.tag_span:hover {
     font-size: 12px;
     padding: 5px 7px;
     font-weight:600;
-    width: 100px;
+    width: 100%;
     margin: 5px auto;
     text-transform:uppercase;
     letter-spacing: 0px;

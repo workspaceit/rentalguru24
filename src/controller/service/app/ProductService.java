@@ -363,6 +363,22 @@ public class ProductService{
         serviceResponse.setResponseData(productModel.getMyRentalProductList(appCredential.getId(), limit, offset), "No record found");
         return serviceResponse;
     }
+    @RequestMapping(value = "/get-my-rented-product", method = RequestMethod.POST)
+    @JsonView(ProductView.MyRentalProductView.class)
+    public ServiceResponse getMyRentedProductList(HttpServletRequest request,
+                                                  @RequestParam ("limit") int limit,
+                                                  @RequestParam ("offset") int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        System.out.println(limit);
+        System.out.println(offset);
+
+        serviceResponse.setResponseData(productModel.getMyCurrentRentedProduct(appCredential.getId(), limit, offset), "No record found");
+        return serviceResponse;
+    }
+
 
 
 

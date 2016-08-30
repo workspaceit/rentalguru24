@@ -88,7 +88,7 @@
                                             </div>
                                         </td>
 
-                                        <td><a href="#">Edit</a></td>
+                                        <td><a href="${BaseUrl}/admin/user/get-admin-edit-page/${adminUser.id}">Edit</a></td>
 
                                     </tr>
                                 </d:forEach>
