@@ -40,7 +40,7 @@ public class CategoryModel extends BaseModel {
     public List<Category> getAll(){
         Session session = this.sessionFactory.openSession();
         try{
-            return session.createQuery("select distinct category FROM Category category LEFT JOIN FETCH category.subcategory where category.isSubcategory = false")
+            return session.createQuery("select distinct category FROM Category category LEFT JOIN FETCH category.subcategory where category.isSubcategory = false ORDER BY category.sortedOrder")
                     .list();
         }finally{
             session.close();
