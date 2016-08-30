@@ -304,4 +304,36 @@ public class ProductModel extends BaseModel {
         }
     }
 
+    /* My product on rent */
+
+    public List<MyRentalProduct> getMyCurrentProductOnRent(int renteeId, int limit, int offset) {
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity myRentedProduct LEFT JOIN  FETCH myRentedProduct.rentInf reninf " +
+                " where myRentedProduct.owner.id=:renteeId " +
+                " and reninf.expired = false ORDER BY myRentedProduct.id DESC  ";
+        try {
+            return session.createQuery(hql)
+                    .setParameter("renteeId", renteeId)
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit).list();
+        } finally {
+
+            session.close();
+        }
+    }
+    public List<MyRentalProduct> getMyCurrentProductOnRent(int renteeId) {
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity myRentedProduct LEFT JOIN  FETCH myRentedProduct.rentInf reninf " +
+                " where myRentedProduct.owner.id=:renteeId " +
+                " and reninf.expired = false ORDER BY myRentedProduct.id DESC  ";
+        try {
+            return session.createQuery(hql)
+                    .setParameter("renteeId", renteeId)
+                    .list();
+        } finally {
+
+            session.close();
+        }
+    }
+
 }

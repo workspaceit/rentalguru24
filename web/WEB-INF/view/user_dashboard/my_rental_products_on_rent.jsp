@@ -14,7 +14,7 @@
             <div class="row">
                 <jsp:directive.include file="../layouts/userDashboardLeftMemu.jsp" />
                 <div class="col-md-9 side-container">
-                    <h3>My Rented Product</h3>
+                    <h3>My Products On Rent</h3>
                     <%--<div class="row clearfix no-margin">--%>
                         <%--<div class="col-md-4 col-sm-4 col-xs-12">--%>
                             <%--<div class="form-group date-con">--%>
@@ -43,7 +43,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <d:forEach var="product" items="${myRentedProduct}">
+                                <d:forEach var="product" items="${myProductOnRent}">
                                     <tr>
                                         <td>
                                             <div class="table-img">
@@ -52,19 +52,21 @@
                                             <div class="table-desc">
                                                 <h5>${product.getName()}</h5>
                                                 <p>${product.getDescription()}</p>
+
+
+
                                                 <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableFrom()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableTill()}"/></span></p>
-                                                <h5>Product Owner</h5>
+                                                <h5>Rented By</h5>
                                                 <d:forEach var="rentInf" items="${product.getRentInf()}">
-                                                    <d:if test="${rentInf.getRentee().getId() ==appCredential.getId()}">
-                                                        <p>${product.getOwner().getUserInf().getFirstName()} ${product.getOwner().getUserInf().getLastName()}</p>
-                                                        <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getStartDate()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getEndsDate()}"/></span></p>
-                                                    </d:if>
+                                                            <p>${rentInf.getRentee().getUserInf().getFirstName()} ${rentInf.getRentee().getUserInf().getLastName()}</p>
+                                                            <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getStartDate()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getEndsDate()}"/></span></p>
                                                 </d:forEach>
+                                                <%--.getUserInf().getFirstName()--%>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="actions">
-                                                <button class="btn btn-edit">Return Product</button>
+                                                <button class="btn btn-edit">Request Return</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -73,7 +75,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>Product</th>
-                                        <th>Edit / Delete</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>

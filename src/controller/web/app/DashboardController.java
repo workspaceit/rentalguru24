@@ -7,6 +7,7 @@ import model.RentRequestModel;
 import model.entity.app.AppCredential;
 import model.entity.app.IdentityType;
 import model.entity.app.RentRequest;
+import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.MyRentedProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -199,10 +200,28 @@ public class DashboardController {
         modelAndView.addObject("pageTitle", "My Rented Product");
         modelAndView.addObject("myRentedProduct", rentalProducts);
         modelAndView.addObject("appCredential", appCredential);
-        System.out.println("rentalProducts "+rentalProducts.size());
+        System.out.println("rentalProducts " + rentalProducts.size());
         for(MyRentedProduct mp : rentalProducts){
             System.out.println("rentalProducts "+mp.getName());
         }
+        return modelAndView;
+    }
+    @RequestMapping(value = "/my-products-on-rent", method = RequestMethod.GET)
+    public ModelAndView getMyRentedProductsOnRent(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("user_dashboard/my_rental_products_on_rent");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<MyRentalProduct> rentalProducts = productModel.getMyCurrentProductOnRent(appCredential.getId());
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "My Rented Product");
+        modelAndView.addObject("myProductOnRent", rentalProducts);
+        modelAndView.addObject("appCredential", appCredential);
+
+
         return modelAndView;
     }
 
