@@ -129,6 +129,21 @@
           <p class="help-block error-form" id="errorMsg_profileImageToken"></p>
           <input type="hidden" value="" id="profileImageToken" name="profileImageToken">
         </div>
+
+        <%--Dropzone For Other Images--%>
+        <div class="form-group">
+          <label for="fallbackOther">Add product Other images</label>
+          <div id="fallbackOther" class="fallback pos-relative">
+            Drop files here or click to upload.
+            <span class="inner-load otherFileUploadGif" hidden></span>
+          </div>
+          <p class="help-block error-form" id="errorMsg_"></p>
+          <input type="hidden" value="" id="otherImagesToken" name="otherImagesToken">
+        </div>
+        <div class="alert alert-warning" id="otherImageWarning" hidden>
+          You can only upload 3 picture
+        </div>
+        <%----%>
         <%--<div class="row preview-container">--%>
           <%--<p>Preview Area</p>--%>
           <%--<div class="col-xs-6 col-md-6">--%>
@@ -211,7 +226,7 @@
 
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">
-//  $("div#fallback").dropzone({url: "/file/post"});
+  //  $("div#fallback").dropzone({url: "/file/post"});
 
   $('.main_product_slider').carousel();
   $('.owl-carousel').owlCarousel({
@@ -294,25 +309,25 @@
       url: BASEURL+'/api/utility/get-subcategory/'+categoryId,
       type: 'GET',
       success:function(data){
-          if(data.responseStat.status != false){
-            var subCategorySelectBox = document.getElementById("subCategory");
-            var subcategoryArray = data.responseData[0].subcategory;
+        if(data.responseStat.status != false){
+          var subCategorySelectBox = document.getElementById("subCategory");
+          var subcategoryArray = data.responseData[0].subcategory;
 
 
-            subcategoryArray.forEach(function(subCategories){
+          subcategoryArray.forEach(function(subCategories){
 
-                  var option = document.createElement("option");
-                  option.text = subCategories.name;
-                  option.value = subCategories.id;
+            var option = document.createElement("option");
+            option.text = subCategories.name;
+            option.value = subCategories.id;
 
-                  subCategorySelectBox.add(option, subCategory[1]);
-            });
-            if(subcategoryArray.length>0){
-              $('#subCategory').removeAttr("disabled");
-            }
-
+            subCategorySelectBox.add(option, subCategory[1]);
+          });
+          if(subcategoryArray.length>0){
+            $('#subCategory').removeAttr("disabled");
           }
-          $('#subCategory').selectpicker('refresh');
+
+        }
+        $('#subCategory').selectpicker('refresh');
 
       }
     });
@@ -324,121 +339,166 @@
   previewNode.id = "";
   var previewTemplate = previewNode.parentNode.innerHTML;
   previewNode.parentNode.removeChild(previewNode);
+  var otherImagesTokenArray = [];
   $(function() {
     var productImageFile = $("div#fallback").dropzone(
-      {
-        url: BASEURL+"/fileupload/upload/product-image",
-        paramName: "productImage",
-        maxFilesize: 1,
-        previewTemplate: previewTemplate,
-        thumbnailWidth: 200,
-        thumbnailHeight: 200,
-        maxFiles: 1,
-        maxfilesexceeded: function(file) {
-          this.removeAllFiles();
-          this.addFile(file);
-        },
-        uploadprogress:function(file, progress){
-          $('#postProduct').attr("disabled", "disabled");
-          $('.postProductGif').show();
-          $('.fileUploadGif').show();
-        },
-        success:function(file, response){
-          console.log(response);
-          if(response.responseStat.status == true) {
-            $('.fileUploadGif').hide();
-            $('#postProduct').removeAttrs("disabled","disabled");
-            $('.postProductGif').hide();
-            $('#profileImageToken').val(response.responseData);
-          }
-          else{
-            BindErrorsWithHtml('errorMsg_', response.requestErrors);
-          }
-        },
-        error:function(file, errorMessage, xhr){
-          $('.fileUploadGif').hide();
-          $('#postProduct').removeAttrs("disabled","disabled");
-          $('.postProductGif').hide();
-        }
-      }
+            {
+              url: BASEURL+"/fileupload/upload/product-image",
+              paramName: "productImage",
+              maxFilesize: 1,
+              previewTemplate: previewTemplate,
+              thumbnailWidth: 200,
+              thumbnailHeight: 200,
+              maxFiles: 1,
+              maxfilesexceeded: function(file) {
+                this.removeAllFiles();
+                this.addFile(file);
+              },
+              uploadprogress:function(file, progress){
+                $('#postProduct').attr("disabled", "disabled");
+                $('.postProductGif').show();
+                $('.fileUploadGif').show();
+              },
+              success:function(file, response){
+                console.log(response);
+                if(response.responseStat.status == true) {
+                  $('.fileUploadGif').hide();
+                  $('#postProduct').removeAttrs("disabled","disabled");
+                  $('.postProductGif').hide();
+                  $('#profileImageToken').val(response.responseData);
+                }
+                else{
+                  BindErrorsWithHtml('errorMsg_', response.requestErrors);
+                }
+              },
+              error:function(file, errorMessage, xhr){
+                $('.fileUploadGif').hide();
+                $('#postProduct').removeAttrs("disabled","disabled");
+                $('.postProductGif').hide();
+              }
+            }
+    );
+  });
+
+  $(function() {
+    var productOtherImageFile = $("div#fallbackOther").dropzone(
+            {
+              url: BASEURL+"/fileupload/upload/product-image",
+              paramName: "productImage",
+              maxFilesize: 1,
+              previewTemplate: previewTemplate,
+              thumbnailWidth: 200,
+              thumbnailHeight: 200,
+              maxFiles: 3,
+              maxfilesexceeded: function(file) {
+                this.removeFile(file);
+                $('#otherImageWarning').show().delay(2000).fadeOut(300, function(){
+                });
+              },
+              uploadprogress:function(file, progress){
+                $('#postProduct').attr("disabled", "disabled");
+                $('.postProductGif').show();
+                $('.otherFileUploadGif').show();
+              },
+              success:function(file, response){
+                if(response.responseStat.status == true) {
+                  $('.otherFileUploadGif').hide();
+                  $('#postProduct').removeAttrs("disabled","disabled");
+                  $('.postProductGif').hide();
+                  otherImagesTokenArray.push(response.responseData);
+                  var otherImagesToken = JSON.stringify(otherImagesTokenArray);
+                  $('#otherImagesToken').val(otherImagesToken);
+                }
+                else{
+                  BindErrorsWithHtml('errorMsg_', response.requestErrors);
+                }
+              },
+              error:function(file, errorMessage, xhr){
+                $('.fileUploadGif').hide();
+                $('#postProduct').removeAttrs("disabled","disabled");
+                $('.postProductGif').hide();
+              }
+            }
     );
   });
 
 </script>
 <script>
   function postProduct(){
-          $('.postProductGif').show();
-          var categoryId = $('#category option:selected').val();
-          var subCategory = $('#subCategory option:selected').val();
+    $('.postProductGif').show();
+    var categoryId = $('#category option:selected').val();
+    var subCategory = $('#subCategory option:selected').val();
 
-          var categoryArray = [];
-          if(subCategory == "0"){
-              categoryArray.push(parseInt(categoryId));
-          }else{
-            categoryArray.push(parseInt(subCategory));
-          }
-          console.log(categoryArray);
-          var fromDate = $('#availableFrom').val();
-          var tillDate = $('#availableTill').val();
+    var categoryArray = [];
+    if(subCategory == "0"){
+      categoryArray.push(parseInt(categoryId));
+    }else{
+      categoryArray.push(parseInt(subCategory));
+    }
+    console.log(categoryArray);
+    var fromDate = $('#availableFrom').val();
+    var tillDate = $('#availableTill').val();
 
-          var name = $('#name').val();
-          var description = $('#description').val();
-          var profileImageToken = $('#profileImageToken').val();
-          var currentValue = $('#currentValue').val();
-          var rentFee = $('#rentFee').val();
-          var categoryIds= JSON.stringify(categoryArray);
-          var availableFrom = fromDate.replace(/\//g,"-");
-          var availableTill = tillDate.replace(/\//g,"-");
-          var formattedAddress = $('#formattedAddress').val();
-          var rentTypeId = $('#rentTypeId option:selected').val();
-          var zip = $('#zip').val();
-          var city = $('#city').val();
+    var name = $('#name').val();
+    var description = $('#description').val();
+    var profileImageToken = $('#profileImageToken').val();
+    var otherImagesToken = $('#otherImagesToken').val();
+    var currentValue = $('#currentValue').val();
+    var rentFee = $('#rentFee').val();
+    var categoryIds= JSON.stringify(categoryArray);
+    var availableFrom = fromDate.replace(/\//g,"-");
+    var availableTill = tillDate.replace(/\//g,"-");
+    var formattedAddress = $('#formattedAddress').val();
+    var rentTypeId = $('#rentTypeId option:selected').val();
+    var zip = $('#zip').val();
+    var city = $('#city').val();
 
-      //    console.log(categoryIds, name, description, profileImageToken, currentValue, rentFee, availableFrom, availableTill, formattedAddress, rentTypeId, zip, city)
-      //    console.log(availableFrom, availableTill);
+//        console.log(categoryIds, name, description, profileImageToken, currentValue, rentFee, availableFrom, availableTill, formattedAddress, rentTypeId, zip, city)
+//        console.log(otherImagesToken);
 
-          $.ajax({
-              url: BASEURL+'/api/auth/product/upload',
-              type: 'POST',
-              data: {
-                  name: name,
-                  description:description,
-                  profileImageToken:profileImageToken,
-                  currentValue:currentValue,
-                  rentFee:rentFee,
-                  availableFrom:availableFrom,
-                  availableTill:availableTill,
-                  categoryIds:categoryIds,
-                  formattedAddress:formattedAddress,
-                  rentTypeId:rentTypeId,
-                  zip:zip,
-                  city:city
-              },
-              success: function(data){
-                  console.log(data);
-                  if(!data.responseStat.isLogin){
-                    $('.alert-danger').show().delay(2000).fadeOut(300, function(){
-                      window.location.href= BASEURL+"/signin";
-                    });
-                  }
-                  if(data.responseStat.status == false){
-                      BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
-                  }else{
-                    $('.alert-success').show().delay(2000).fadeOut(500,function(){
-                       window.location.href = BASEURL+"/home";
-                    });
-                  }
-                  $('.postProductGif').hide().delay(1998).fadeOut();
-                }
+    $.ajax({
+      url: BASEURL+'/api/auth/product/upload',
+      type: 'POST',
+      data: {
+        name: name,
+        description:description,
+        profileImageToken:profileImageToken,
+        otherImagesToken:otherImagesToken,
+        currentValue:currentValue,
+        rentFee:rentFee,
+        availableFrom:availableFrom,
+        availableTill:availableTill,
+        categoryIds:categoryIds,
+        formattedAddress:formattedAddress,
+        rentTypeId:rentTypeId,
+        zip:zip,
+        city:city
+      },
+      success: function(data){
+        console.log(data);
+        if(!data.responseStat.isLogin){
+          $('.alert-danger').show().delay(2000).fadeOut(300, function(){
+            window.location.href= BASEURL+"/signin";
           });
+        }
+        if(data.responseStat.status == false){
+          BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
+        }else{
+          $('.alert-success').show().delay(2000).fadeOut(500,function(){
+            window.location.href = BASEURL+"/home";
+          });
+        }
+        $('.postProductGif').hide().delay(1998).fadeOut();
+      }
+    });
   }
 
 
   $(document).ready(function(){
-      setAliasMessage("categoryIds","Category not in valid format","Please select category");
-      setAliasMessage("currentValue","typeMismatch","Current value required");
-      setAliasMessage("categoryIds", "Category not found for id = 0", "Please select category");
-      setAliasMessage("rentTypeId", "No rent type found by id  0", "Please select rent type");
+    setAliasMessage("categoryIds","Category not in valid format","Please select category");
+    setAliasMessage("currentValue","typeMismatch","Current value required");
+    setAliasMessage("categoryIds", "Category not found for id = 0", "Please select category");
+    setAliasMessage("rentTypeId", "No rent type found by id  0", "Please select rent type");
   });
 </script>
 </body>
