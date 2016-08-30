@@ -29,23 +29,69 @@ public class AdminUserService {
 
 
     @RequestMapping(value = "/app-user/active-app-user/{app_user_id}/{varified}", method = RequestMethod.POST)
-    public ServiceResponse setActiveAppUser(HttpServletRequest request, @PathVariable("app_user_id") int appUserId, @PathVariable("varified") int varified){
+    public ServiceResponse setActiveAppUser(HttpServletRequest request, @PathVariable("app_user_id") int appUserId, @PathVariable("varified") int varified) {
 
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        ServiceResponse serviceResponse = (ServiceResponse) request.getAttribute("serviceResponse");
 
-        if(serviceResponse.hasErrors()){
+        if (serviceResponse.hasErrors()) {
             return serviceResponse;
         }
-        appLoginCredentialModel.appUserStatusUpdate(appUserId,varified);
+        appLoginCredentialModel.appUserStatusUpdate(appUserId, varified);
         return serviceResponse;
     }
 
-    @RequestMapping(value="/admin/create-new",method = RequestMethod.POST)
+
+    @RequestMapping(value = "/admin/active-admin/{admin_id}", method = RequestMethod.POST)
+    public ServiceResponse adminActivate(HttpServletRequest request, @PathVariable("admin_id") int appUserId) {
+        ServiceResponse serviceResponse = (ServiceResponse) request.getAttribute("serviceResponse");
+
+        AuthCredential adminUser = appLoginCredentialModel.getById(appUserId);
+
+        if (adminUser == null) {
+            serviceResponse.getResponseStat().setStatus(false);
+            serviceResponse.getResponseStat().setMsg("No admin Exist");
+            return serviceResponse;
+        }
+
+
+        adminUser.setVerified(true);
+        appLoginCredentialModel.update(adminUser);
+        serviceResponse.getResponseStat().setStatus(true);
+        serviceResponse.getResponseStat().setMsg("Admin activated succesfully");
+        return serviceResponse;
+
+    }
+
+    @RequestMapping(value = "/admin/deactive-admin/{admin_id}", method = RequestMethod.POST)
+    public ServiceResponse adminDeactivate(HttpServletRequest request, @PathVariable("admin_id") int appUserId) {
+        ServiceResponse serviceResponse = (ServiceResponse) request.getAttribute("serviceResponse");
+
+        AuthCredential adminUser = appLoginCredentialModel.getById(appUserId);
+
+        if (adminUser == null) {
+            serviceResponse.getResponseStat().setStatus(false);
+            serviceResponse.getResponseStat().setMsg("No admin Exist");
+            return serviceResponse;
+        }
+
+
+        adminUser.setVerified(false);
+        appLoginCredentialModel.update(adminUser);
+        serviceResponse.getResponseStat().setStatus(true);
+        serviceResponse.getResponseStat().setMsg("Admin activated succesfully");
+        return serviceResponse;
+
+    }
+
+
+
+
+    @RequestMapping(value = "/admin/create-new", method = RequestMethod.POST)
     public ServiceResponse adminSignup(HttpServletRequest request,
                                        @RequestParam Map<String, String> allRequestParams,
                                        @Valid AuthCredential authCredential
-                                      ){
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+    ) {
+        ServiceResponse serviceResponse = (ServiceResponse) request.getAttribute("serviceResponse");
         String firstName = allRequestParams.get("firstName");
         String lastName = allRequestParams.get("lastName");
         String email = allRequestParams.get("email");
@@ -59,7 +105,7 @@ public class AdminUserService {
         authCredential.setRole(1);
         authCredential.setEmail(email);
         authCredential.setPassword(password);
-        IdentityType identityType=new IdentityType();
+        IdentityType identityType = new IdentityType();
         identityType.setId(1);
         authCredential.getUserInf().setIdentityType(identityType);
         appLoginCredentialModel.insert(authCredential);

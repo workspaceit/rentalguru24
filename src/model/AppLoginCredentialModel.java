@@ -88,6 +88,9 @@ public class AppLoginCredentialModel extends BaseModel {
         }
         return true;
     }
+
+
+
     public boolean isEmailUsedByOtherButMe(int id,String email){
         Session session = this.sessionFactory.openSession();
         String hql = "from AppCredential where email = :email and id !=:id";
@@ -165,6 +168,17 @@ public class AppLoginCredentialModel extends BaseModel {
         Query query = session.createQuery(hql);
         List result = query.list();
         return result;
+    }
+
+    public List<AuthCredential>getAllAdmin(){
+        Session session=null;
+        try {
+            session=this.sessionFactory.openSession();
+            String hql="FROM AuthCredential  WHERE  role = 1 ORDER BY id DESC";
+            return session.createQuery(hql).list();
+        }finally {
+            session.close();
+        }
     }
 
     public void appUserStatusUpdate(int appUserId, int varified){
