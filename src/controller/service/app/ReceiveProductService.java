@@ -119,7 +119,7 @@ public class ReceiveProductService {
         rentalProductReturned.setDispute(dispute);
         rentalProductReturned.setIsExpired(true);
         rentalProductReturned.setRenterRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
-
+        //rentalProductReturned.getRentInf().setExpired(false);
 
 
         /* Update RentalProductReturned .. Set Product receive on confirmed true/false  */

@@ -186,7 +186,7 @@ public class RentRequestService{
         rentInf.setStartDate(rentRequest.getStartDate());
         rentInf.setEndsDate(rentRequest.getEndDate());
         rentInf.setRentalProduct(rentRequest.getRentalProduct());
-        rentInf.setRenteeId(rentRequest.getRequestedBy().getId());
+        rentInf.setRentee(rentRequest.getRequestedBy());
 
         rentInfModel.insert(rentInf);
 

@@ -2,6 +2,7 @@ package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.hibernate.annotations.Fetch;
@@ -24,7 +25,7 @@ public class RentInf {
     private int id;
     private RentRequest rentRequest;
     private RentalProduct rentalProduct;
-    private int renteeId;
+    private AppCredential rentee;
     private Date startDate;
     private Date endsDate;
     private boolean expired;
@@ -67,16 +68,16 @@ public class RentInf {
         this.rentalProduct = rentalProduct;
     }
 
-    @JsonIgnore
-    @Basic
-    @Column(name = "rentee_id")
-    public int getRenteeId() {
-        return renteeId;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rentee_id",referencedColumnName = "id",nullable = false)
+    public AppCredential getRentee() {
+        return rentee;
     }
 
-    public void setRenteeId(int renteeId) {
-        this.renteeId = renteeId;
+    public void setRentee(AppCredential rentee) {
+        this.rentee = rentee;
     }
+
 
     @Basic
     @Column(name = "start_date")
@@ -138,6 +139,7 @@ public class RentInf {
         this.createdDate = createdDate;
     }
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name = "rent_request_id", referencedColumnName = "id", nullable = false)
     public RentRequest getRentRequest() {
@@ -166,7 +168,6 @@ public class RentInf {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "rentInf")
-//    @JoinColumn(name = "rent_inf_id", referencedColumnName = "id", nullable = false)
     @Where(clause="expired=false")
     @Fetch(value = FetchMode.SUBSELECT)
     public List<RentalProductReturned> getRentalProductReturnedList() {

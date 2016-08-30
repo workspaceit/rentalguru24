@@ -7,6 +7,7 @@ import model.*;
 
 import model.entity.app.*;
 import model.entity.app.product.rentable.RentInf;
+import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,9 @@ public class TestService extends BaseService{
 
     @Autowired
     RentGuruMail rentGuruMail;
+
+    @Autowired
+    ProductModel productModel;
 
     @RequestMapping(value = "/test/att", method = RequestMethod.POST)
     public void postAttribute(@RequestParam Map<String, String> allRequestParams){
@@ -175,7 +179,10 @@ public class TestService extends BaseService{
     }
 
 
-
-
+    @RequestMapping(value = "/category/{category_id}", method = RequestMethod.GET)
+    public List<RentalProduct> getCategory(@PathVariable("category_id") int category_id){
+        List rentalProduct = productModel.getProductByCategoryId(category_id);
+        return rentalProduct;
+    }
 
 }

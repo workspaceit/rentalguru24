@@ -22,7 +22,7 @@ public class ReturnProductService {
     @Autowired
     RentInfModel rentInfModel;
 
-    @RequestMapping(value = "/{rentInfId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/confirm-return/{rentInfId}", method = RequestMethod.POST)
     public ServiceResponse renturnProduct(HttpServletRequest request,
                                       @PathVariable("rentInfId") int rentInfId,
                                         @RequestParam(value = "remarks",required = false) String remarks){
@@ -63,6 +63,7 @@ public class ReturnProductService {
 
         return serviceResponse;
     }
+
 
 
 }

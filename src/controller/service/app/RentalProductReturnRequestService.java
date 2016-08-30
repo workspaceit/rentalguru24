@@ -28,7 +28,7 @@ public class RentalProductReturnRequestService {
     ProductModel productModel;
 
 
-    @RequestMapping(value = "/{rentalInfId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/make-request/{rentalInfId}",method = RequestMethod.POST)
     public ServiceResponse requestForReturnProductByProductOwner(HttpServletRequest request,
                                                                  @PathVariable int rentalInfId,
                                                                  @RequestParam(value = "remarks",required = false) String remarks){

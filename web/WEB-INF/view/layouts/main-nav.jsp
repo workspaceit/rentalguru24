@@ -38,13 +38,10 @@
         </form>
       </ul>
       <ul class="nav navbar-nav navbar-right main_navigation">
-        <li><a href="#">HOME</a></li>
-        <li><a href="#">HOME APPLIANCE</a></li>
-        <li><a href="#">FURNITURE</a></li>
-        <li><a href="#">GAMING & PARTY</a></li>
-        <li><a href="#">COOL GADGETS</a></li>
-        <li><a href="#">BLOG</a></li>
-
+        <d:forEach var="listValue" items="${category}">
+          <%--<li><a href="#">Action</a></li>--%>
+          <li><a href="${BaseUrl}/home/category/${listValue.id}">${listValue.name}</a></li>
+        </d:forEach>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
