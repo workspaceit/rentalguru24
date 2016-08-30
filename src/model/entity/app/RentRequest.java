@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.iface.RentalProduct;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -46,6 +48,7 @@ public class RentRequest {
 
     @ManyToOne(targetEntity=RentalProductEntity.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+//    @LazyToOne(LazyToOneOption.NO_PROXY)
     public RentalProduct getRentalProduct() {
         return rentalProduct;
     }
@@ -53,12 +56,12 @@ public class RentRequest {
 
 
     public void setRentalProduct(RentalProduct rentalProduct) {
-        System.out.println("rentalProductEntity " + rentalProduct.getId());
         this.rentalProduct = rentalProduct;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(optional = false)
     @JoinColumn(name = "requested_by", referencedColumnName = "id", nullable = false)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
     public AppCredential getRequestedBy() {
         return requestedBy;
     }
