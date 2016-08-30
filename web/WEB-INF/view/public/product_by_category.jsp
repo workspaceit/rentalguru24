@@ -222,37 +222,37 @@
               <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="img-single">
-                    <a href="${BaseUrl}/product/details/${product.getId()}"><img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" /></a>
+                    <a href="${BaseUrl}/product/details/${product[0].getId()}"><img src="<c:url value="${BaseUrl}/images/${product[0].profileImage.original.path}" />" /></a>
                     <div class="product-btn-grp">
                       <a href="" class="gbtn left">Quick view</a>
                         <%--data-toggle="modal" data-target="#rentPopUp"--%>
-                      <a href="javascript:void(0)" onclick="showRentRequestPopUp(${product.getId()})" class="gbtn right">Rent Now</a>
+                      <a href="javascript:void(0)" onclick="showRentRequestPopUp(${product[0].getId()})" class="gbtn right">Rent Now</a>
                     </div>
                   </div>
                   <div class="block-desc">
-                    <label class="title-label productName"><a href="${BaseUrl}/product/details/${product.getId()}">${fn:substring(product.name, 0, 20)}<d:if test="${fn:length(product.name)>20}">....</d:if></a></label>
+                    <label class="title-label productName"><a href="${BaseUrl}/product/details/${product[0].getId()}">${fn:substring(product[0].name, 0, 20)}<d:if test="${fn:length(product[0].name)>20}">....</d:if></a></label>
                     <br>
                     <fieldset class="rating ">
-                      <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${product.getId()}" name="rating${product.getId()}" value="5" />
-                      <label class = "full" for="star5_${product.getId()}" title="Awesome - 5 stars"></label>
+                      <input <d:if test="${fn:substringBefore(product[0].averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${product[0].getId()}" name="rating${product[0].getId()}" value="5" />
+                      <label class = "full" for="star5_${product[0].getId()}" title="Awesome - 5 stars"></label>
 
-                      <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${product.getId()}" name="rating${product.getId()}" value="4" />
-                      <label class = "full" for="star4_${product.getId()}" title="Pretty good - 4 stars"></label>
+                      <input <d:if test="${fn:substringBefore(product[0].averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${product[0].getId()}" name="rating${product[0].getId()}" value="4" />
+                      <label class = "full" for="star4_${product[0].getId()}" title="Pretty good - 4 stars"></label>
 
-                      <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${product.getId()}" name="rating${product.getId()}" value="3" />
-                      <label  class = "full" for="star3_${product.getId()}" title="Meh - 3 stars"></label>
+                      <input <d:if test="${fn:substringBefore(product[0].averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${product[0].getId()}" name="rating${product[0].getId()}" value="3" />
+                      <label  class = "full" for="star3_${product[0].getId()}" title="Meh - 3 stars"></label>
 
-                      <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${product.getId()}" name="rating${product.getId()}" value="2" />
-                      <label class = "full" for="star2_${product.getId()}" title="Kinda bad - 2 stars"></label>
+                      <input <d:if test="${fn:substringBefore(product[0].averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${product[0].getId()}" name="rating${product[0].getId()}" value="2" />
+                      <label class = "full" for="star2_${product[0].getId()}" title="Kinda bad - 2 stars"></label>
 
-                      <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${product.getId()}" name="rating${product.getId()}" value="1" />
-                      <label class = "full" for="star1_${product.getId()}" title="Sucks big time - 1 star"></label>
+                      <input <d:if test="${fn:substringBefore(product[0].averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${product[0].getId()}" name="rating${product[0].getId()}" value="1" />
+                      <label class = "full" for="star1_${product[0].getId()}" title="Sucks big time - 1 star"></label>
                     </fieldset>
                   </div>
                   <div class="block-action">
                     <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
                     <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                    <div class="price-tag">$${product.rentFee}</div>
+                    <div class="price-tag">$${product[0].rentFee}</div>
                   </div>
                 </div>
               </div>
@@ -342,85 +342,85 @@
 <div class="container blog_container">
   <%--<div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>--%>
   <%--<!-- Indicators -->--%>
-    <%--<ol class="carousel-indicators">--%>
-    <%--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>--%>
-    <%--<li data-target="#carousel-example-generic" data-slide-to="1"></li>--%>
-    <%--<li data-target="#carousel-example-generic" data-slide-to="2"></li>--%>
-    <%--</ol>--%>
-    <%--<h2 class="block-head">Latest Blog</h2>--%>
-    <%--<div class="carousel-inner" role="listbox">--%>
-    <%--<div class="item active">--%>
-    <%--<div class="row clearfix">--%>
-    <%--<div class="col-md-4 blog-single">--%>
-    <%--<div class="panel panel-default">--%>
-    <%--<div class="panel-body">--%>
-    <%--<div class="blog-img">--%>
-    <%--<img src="<c:url value="/resources/img/18.jpg" />" />--%>
-    <%--</div>--%>
-    <%--<div class="blog-desc">--%>
-    <%--<p class="date-comment">--%>
-    <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
-    <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
-    <%--</p>--%>
-    <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
-    <%--<p>--%>
-    <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
-    <%--</p>--%>
-    <%--<div class="text-center">--%>
-    <%--<button class="btn-read">Read More</button>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--<div class="col-md-4 blog-single">--%>
-    <%--<div class="panel panel-default">--%>
-    <%--<div class="panel-body">--%>
-    <%--<div class="blog-img">--%>
-    <%--<img src="<c:url value="/resources/img/17.jpg"  />" />--%>
-    <%--</div>--%>
-    <%--<div class="blog-desc">--%>
-    <%--<p class="date-comment">--%>
-    <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
-    <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
-    <%--</p>--%>
-    <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
-    <%--<p>--%>
-    <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
-    <%--</p>--%>
-    <%--<div class="text-center">--%>
-    <%--<button class="btn-read">Read More</button>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--<div class="col-md-4 blog-single">--%>
-    <%--<div class="panel panel-default">--%>
-    <%--<div class="panel-body">--%>
-    <%--<div class="blog-img">--%>
-    <%--<img src="<c:url value="/resources/img/16.jpg"   />" />--%>
-    <%--</div>--%>
-    <%--<div class="blog-desc">--%>
-    <%--<p class="date-comment">--%>
-    <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
-    <%--<span><i class="fa fa-comments"></i> 4 Comments</span>--%>
-    <%--</p>--%>
-    <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
-    <%--<p>--%>
-    <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
-    <%--</p>--%>
-    <%--<div class="text-center">--%>
-    <%--<button class="btn-read">Read More</button>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
+  <%--<ol class="carousel-indicators">--%>
+  <%--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>--%>
+  <%--<li data-target="#carousel-example-generic" data-slide-to="1"></li>--%>
+  <%--<li data-target="#carousel-example-generic" data-slide-to="2"></li>--%>
+  <%--</ol>--%>
+  <%--<h2 class="block-head">Latest Blog</h2>--%>
+  <%--<div class="carousel-inner" role="listbox">--%>
+  <%--<div class="item active">--%>
+  <%--<div class="row clearfix">--%>
+  <%--<div class="col-md-4 blog-single">--%>
+  <%--<div class="panel panel-default">--%>
+  <%--<div class="panel-body">--%>
+  <%--<div class="blog-img">--%>
+  <%--<img src="<c:url value="/resources/img/18.jpg" />" />--%>
+  <%--</div>--%>
+  <%--<div class="blog-desc">--%>
+  <%--<p class="date-comment">--%>
+  <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
+  <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
+  <%--</p>--%>
+  <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
+  <%--<p>--%>
+  <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
+  <%--</p>--%>
+  <%--<div class="text-center">--%>
+  <%--<button class="btn-read">Read More</button>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--<div class="col-md-4 blog-single">--%>
+  <%--<div class="panel panel-default">--%>
+  <%--<div class="panel-body">--%>
+  <%--<div class="blog-img">--%>
+  <%--<img src="<c:url value="/resources/img/17.jpg"  />" />--%>
+  <%--</div>--%>
+  <%--<div class="blog-desc">--%>
+  <%--<p class="date-comment">--%>
+  <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
+  <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
+  <%--</p>--%>
+  <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
+  <%--<p>--%>
+  <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
+  <%--</p>--%>
+  <%--<div class="text-center">--%>
+  <%--<button class="btn-read">Read More</button>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--<div class="col-md-4 blog-single">--%>
+  <%--<div class="panel panel-default">--%>
+  <%--<div class="panel-body">--%>
+  <%--<div class="blog-img">--%>
+  <%--<img src="<c:url value="/resources/img/16.jpg"   />" />--%>
+  <%--</div>--%>
+  <%--<div class="blog-desc">--%>
+  <%--<p class="date-comment">--%>
+  <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
+  <%--<span><i class="fa fa-comments"></i> 4 Comments</span>--%>
+  <%--</p>--%>
+  <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
+  <%--<p>--%>
+  <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
+  <%--</p>--%>
+  <%--<div class="text-center">--%>
+  <%--<button class="btn-read">Read More</button>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
+  <%--</div>--%>
 </div>
 <div class="sponser">
   <div class="container">

@@ -70,27 +70,27 @@ public class HomeController {
 
         ModelAndView modelAndView = new ModelAndView("public/product_by_category");
         List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId);
+        if(rentalProducts != null){
+            List<Category> category = categoryModel.getAll();
+            List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
+            RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
+            RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
+            RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
+            RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
-        List<Category> category = categoryModel.getAll();
-        List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
-        RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
-        RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
-        RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
-        RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
-
-
-        modelAndView.addObject("products",rentalProducts);
-        modelAndView.addObject("productsAscending", rentalProductsAscending);
-        modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
-        modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
-        modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
-        modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
-        modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl",baseUrl);
-        modelAndView.addObject("pageTitle", "Product By Category");
-        return modelAndView;
+            modelAndView.addObject("category", category);
+            modelAndView.addObject("products", rentalProducts);
+            modelAndView.addObject("productsAscending", rentalProductsAscending);
+            modelAndView.addObject("IsLogIn", IsLogin);
+            modelAndView.addObject("BaseUrl",baseUrl);
+            modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
+            modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
+            modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
+            modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
+            modelAndView.addObject("pageTitle", "Product By Category");
+            return modelAndView;
+        }else{
+            return new ModelAndView("redirect:/home");
+        }
     }
-
-
 }
