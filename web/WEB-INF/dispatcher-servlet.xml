@@ -248,6 +248,14 @@
        </bean>
 
 
+       <bean id="adminSitesFeesModel" class="model.admin.AdminSitesFeesModel" >
+       </bean>
+       <bean id="adminPaypalCredentailModel" class="model.admin.AdminPaypalCredentailModel" >
+       </bean>
+
+
+
+
 
         <!-- ******************** Hibernate Session,Entity, *********************************** -->
        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
