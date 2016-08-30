@@ -4,6 +4,7 @@ package model;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.SearchedProduct;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
+import model.entity.app.product.rentable.iface.MyRentedProduct;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
@@ -258,6 +259,21 @@ public class ProductModel extends BaseModel {
 
         return flag;
 
+    }
+
+
+    public List<MyRentedProduct> getMyCurrentRentedProduct(int renteeId, int limit, int offset) {
+        Session session = this.sessionFactory.openSession(); //FETCH myRentedProduct.rentInf
+        String hql = "FROM RentalProductEntity myRentedProduct INNER JOIN RentInf rentinf where rentinf.rentalProduct.id = myRentedProduct.id " +
+                " and rentinf.rentee.id=:renteeId ORDER BY myRentedProduct.id DESC  ";
+        try {
+            return session.createQuery(hql)
+                    .setParameter("renteeId", renteeId)
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit).list();
+        } finally {
+            session.close();
+        }
     }
 
 }

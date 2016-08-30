@@ -53,6 +53,10 @@
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
               <mvc:interceptor>
+                     <mvc:mapping path="/home/category/**"/>
+                     <bean class="controller.interceptor.WebInterceptor"/>
+              </mvc:interceptor>
+              <mvc:interceptor>
                      <mvc:mapping path="/product/details/**"/>
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>

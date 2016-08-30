@@ -11,6 +11,7 @@ import model.entity.app.RentRequest;
 import model.entity.app.RentType;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.ProductLiked;
+import model.entity.app.product.rentable.iface.MyRentedProduct;
 import model.entity.app.product.view.ProductView;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -31,7 +32,7 @@ import java.util.List;
 @JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "product", schema = "" ) //catalog = "rentguru24"
-public class RentalProductEntity implements RentalProduct,MyRentalProduct  {
+public class RentalProductEntity implements RentalProduct,MyRentalProduct,MyRentedProduct {
 
     @JsonView({ProductView.RentalProductView.class,ProductView.MyRentalProductView.class})
     private int id;

@@ -113,7 +113,7 @@ public class ImageHelper {
             if(docFile.renameTo(new File(filePath))){
                 BufferedImage in = ImageIO.read(new File(filePath));
 
-                picture.getOriginal().setPath(PRODUCT_FOLDER + fileName);
+                picture.getOriginal().setPath(PROFILE_FOLDER + fileName);
                 picture.getOriginal().getSize().setHeight(in.getHeight());
                 picture.getOriginal().getSize().setWidth(in.getWidth());
                 in.flush();
