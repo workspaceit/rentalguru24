@@ -1,6 +1,8 @@
 package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
@@ -180,5 +182,15 @@ public class RentInf {
             rentalProductReturned = rentalProductReturnedList.get(0);
         }
         this.rentalProductReturnedList = rentalProductReturnedList;
+    }
+    @Override
+    public String toString(){
+        ObjectMapper om = new ObjectMapper();
+        try {
+            return om.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

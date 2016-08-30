@@ -63,9 +63,15 @@ public class ProductController{
         System.out.println("baseUrl "+baseUrl);
         RentalProduct rentalProduct = productModel.getById(productId);
         List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0, productId);
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+        List<Category> category = categoryModel.getAll();
+
+        model.addAttribute("IsLogIn", IsLogin);
         model.addAttribute("rentalProduct", rentalProduct);
         model.addAttribute("newProducts", newProducts);
         model.addAttribute("BaseUrl",baseUrl);
+        model.addAttribute("category", category);
+        model.addAttribute("pageTitle", "Product Details");
         return "product/details";
     }
 

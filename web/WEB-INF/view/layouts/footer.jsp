@@ -43,6 +43,7 @@
 <script src="<c:url value="/resources/js/jquery.enllax.min.js"/>"></script>
 <script src="<c:url value="/resources/js/jquery-ui-1.9.2.custom.min.js"/> " type="text/javascript"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datepicker.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/cloudzoom.js" />"></script>
 
 <script src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
