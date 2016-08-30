@@ -146,9 +146,10 @@
 
 
                 if(data.responseStat.status==true){
-                    alert(data.responseStat.msg);
-                }else{
+                    window.location.replace("${BaseUrl}/admin/user/get-all-admin")
 
+                }else{
+                    alert(data.responseStat.msg);
                 }
 
 

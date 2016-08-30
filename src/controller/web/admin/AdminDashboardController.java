@@ -5,6 +5,7 @@ import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,6 +52,21 @@ public class AdminDashboardController {
 
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("adminUsers",adminUsers);
+
+
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value ="/get-admin-edit-page/{admin_id}",method = RequestMethod.GET)
+    public ModelAndView editAdminPage(HttpServletRequest request,@PathVariable("admin_id") int appUserId){
+        ModelAndView modelAndView=new ModelAndView("admin/editAdminProfile");
+        String baseUrl=(String)request.getAttribute("baseURL");
+        AuthCredential admin=appLoginCredentialModel.getById(appUserId);
+
+
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("adminUser",admin);
 
 
         return modelAndView;
