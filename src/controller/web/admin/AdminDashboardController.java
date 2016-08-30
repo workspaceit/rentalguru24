@@ -1,12 +1,16 @@
 package controller.web.admin;
 
+import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
+import model.entity.app.AuthCredential;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by omar on 8/24/16.
@@ -14,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/admin/user")
 public class AdminDashboardController {
+    @Autowired
+    AppLoginCredentialModel appLoginCredentialModel;
+
     @RequestMapping(value = "/dashboard",method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndViev = new ModelAndView("admin/dashboard");
@@ -31,6 +38,20 @@ public class AdminDashboardController {
         ModelAndView modelAndView=new ModelAndView("admin/createNewAdmin");
         String baseUrl=(String)request.getAttribute("baseURL");
         modelAndView.addObject("BaseUrl", baseUrl);
+
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value ="/get-all-admin",method = RequestMethod.GET)
+    public ModelAndView showAllAdminList(HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView("admin/adminUserDetails");
+        String baseUrl=(String)request.getAttribute("baseURL");
+        List<AuthCredential>adminUsers=appLoginCredentialModel.getAllAdmin();
+
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("adminUsers",adminUsers);
+
 
         return modelAndView;
 

@@ -46,7 +46,7 @@
         </ul>
 
         <ul class="treeview-menu">
-          <li><a href="#"><i class="fa fa-circle-o"></i>Admin User</a></li>
+          <li><a href="${BaseUrl}/admin/user/get-all-admin"><i class="fa fa-circle-o"></i>Admin User</a></li>
         </ul>
 
         <ul class="treeview-menu">
