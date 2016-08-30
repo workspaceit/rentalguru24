@@ -6,15 +6,20 @@ import helper.SessionManagement;
 import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
+import model.entity.app.UserInf;
+import model.nonentity.photo.Picture;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * Created by omar on 8/23/16.
@@ -43,4 +48,7 @@ public class AdminAuthService{
 
         return serviceResponse;
     }
+
+
+
 }
