@@ -67,15 +67,10 @@
       </li>
 
       <li class="treeview">
-        <a href="#">
-          <i class="fa fa-dashboard"></i> <span>Utility</span> <i class="fa fa-angle-left pull-right"></i>
+        <a href="${BaseUrl}/admin/user/get-utility">
+          <i class="fa fa-dashboard"></i> <span>Utility</span> </i>
         </a>
-        <ul class="treeview-menu">
-          <li><a href="#"><i class="fa fa-circle-o"></i>Update Paypal Settings</a></li>
-        </ul>
-        <ul class="treeview-menu">
-          <li><a href="#"><i class="fa fa-circle-o"></i>Update Commision Settings </a></li>
-        </ul>
+
       </li>
 
     </ul>

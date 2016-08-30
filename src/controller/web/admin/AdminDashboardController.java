@@ -1,5 +1,6 @@
 package controller.web.admin;
 
+import model.AdminPaypalCredentailModel;
 import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
@@ -21,6 +22,8 @@ import java.util.List;
 public class AdminDashboardController {
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
+
+
 
     @RequestMapping(value = "/dashboard",method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
@@ -71,5 +74,13 @@ public class AdminDashboardController {
 
         return modelAndView;
 
+    }
+    @RequestMapping(value ="/get-utility",method = RequestMethod.GET)
+    public ModelAndView getUtilitypage(HttpServletRequest request){
+        ModelAndView modelAndView=new ModelAndView("admin/Utility");
+        String baseUrl=(String)request.getAttribute("baseURL");
+
+        modelAndView.addObject("BaseUrl", baseUrl);
+        return modelAndView;
     }
 }
