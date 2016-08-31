@@ -85,7 +85,7 @@
         </div>
 
         <div class="col-md-6 col-sm-6 col-xs-6 ">
-          <label class="right mid_nav_contact"><i class="fa fa-mobile fa-2x contact_icon"></i><span class="conatct_number">2300-3560-222</span></label>
+          <%--<label class="right mid_nav_contact"><i class="fa fa-mobile fa-2x contact_icon"></i><span class="conatct_number">2300-3560-222</span></label>--%>
         </div>
       </div>
     </div>

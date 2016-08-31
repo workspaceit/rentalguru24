@@ -11,4 +11,5 @@ public class ProductView {
 
     public static class RentalProductView { }
     public static class MyRentalProductView { }
+    public static class MyRentedProductView { }
 }

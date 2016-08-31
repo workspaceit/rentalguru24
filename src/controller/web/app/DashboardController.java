@@ -18,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by omar on 8/24/16.
@@ -191,7 +193,9 @@ public class DashboardController {
         ModelAndView modelAndView = new ModelAndView("user_dashboard/my_rented_products");
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        List<MyRentedProduct> rentalProducts = productModel.getMyCurrentRentedProduct(appCredential.getId());
+//        List<MyRentedProduct> rentalProducts = productModel.getMyCurrentRentedProduct(appCredential.getId());
+        Set<MyRentedProduct> rentalProducts =  new HashSet<MyRentedProduct>(productModel.getMyCurrentRentedProduct(appCredential.getId()));
+
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
