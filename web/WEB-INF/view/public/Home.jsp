@@ -99,43 +99,43 @@
         <div class="speciality">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-3 col-xs-6">
-                        <div class="spec_container">
-                            <label class="spec_head">FREE SHIPPING</label>
-                            <label class="spec_body">ALL ORDER</label>
-                            <div class="spec_icon">
-                                <i class="fa fa-truck"></i>
-                            </div>
-                        </div>
-                    </div>
+                    <%--<div class="col-md-3 col-sm-3 col-xs-6">--%>
+                        <%--<div class="spec_container">--%>
+                            <%--<label class="spec_head">FREE SHIPPING</label>--%>
+                            <%--<label class="spec_body">ALL ORDER</label>--%>
+                            <%--<div class="spec_icon">--%>
+                                <%--<i class="fa fa-truck"></i>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
 
-                    <div class="col-md-3 col-sm-3 col-xs-6">
-                        <div class="spec_container">
-                            <label class="spec_head">24/7 CUSTOMER</label>
-                            <label class="spec_body">SUPPORT</label>
-                            <div class="spec_icon">
-                                <i class="fa fa-headphones"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-6">
-                        <div class="spec_container">
-                            <label class="spec_head">MONEY BACK</label>
-                            <label class="spec_body">GUARANTEE</label>
-                            <div class="spec_icon">
-                                <i class="fa fa-mail-reply-all "></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-6">
-                        <div class="spec_container">
-                            <label class="spec_head">MEMBER DISCOUNT</label>
-                            <label class="spec_body">FIRST ORDER</label>
-                            <div class="spec_icon">
-                                <i class="fa fa-bullhorn"></i>
-                            </div>
-                        </div>
-                    </div>
+                    <%--<div class="col-md-3 col-sm-3 col-xs-6">--%>
+                        <%--<div class="spec_container">--%>
+                            <%--<label class="spec_head">24/7 CUSTOMER</label>--%>
+                            <%--<label class="spec_body">SUPPORT</label>--%>
+                            <%--<div class="spec_icon">--%>
+                                <%--<i class="fa fa-headphones"></i>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-md-3 col-sm-3 col-xs-6">--%>
+                        <%--<div class="spec_container">--%>
+                            <%--<label class="spec_head">MONEY BACK</label>--%>
+                            <%--<label class="spec_body">GUARANTEE</label>--%>
+                            <%--<div class="spec_icon">--%>
+                                <%--<i class="fa fa-mail-reply-all "></i>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-md-3 col-sm-3 col-xs-6">--%>
+                        <%--<div class="spec_container">--%>
+                            <%--<label class="spec_head">MEMBER DISCOUNT</label>--%>
+                            <%--<label class="spec_body">FIRST ORDER</label>--%>
+                            <%--<div class="spec_icon">--%>
+                                <%--<i class="fa fa-bullhorn"></i>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                 </div>
             </div>
         </div>
@@ -291,110 +291,30 @@
             </div>
         </div>
         <div class="container blog_container">
-            <%--<div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>--%>
-                <%--<!-- Indicators -->--%>
-                <%--<ol class="carousel-indicators">--%>
-                    <%--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>--%>
-                    <%--<li data-target="#carousel-example-generic" data-slide-to="1"></li>--%>
-                    <%--<li data-target="#carousel-example-generic" data-slide-to="2"></li>--%>
-                <%--</ol>--%>
-                <%--<h2 class="block-head">Latest Blog</h2>--%>
-                <%--<div class="carousel-inner" role="listbox">--%>
-                    <%--<div class="item active">--%>
-                        <%--<div class="row clearfix">--%>
-                            <%--<div class="col-md-4 blog-single">--%>
-                                <%--<div class="panel panel-default">--%>
-                                    <%--<div class="panel-body">--%>
-                                        <%--<div class="blog-img">--%>
-                                            <%--<img src="<c:url value="/resources/img/18.jpg" />" />--%>
-                                        <%--</div>--%>
-                                        <%--<div class="blog-desc">--%>
-                                            <%--<p class="date-comment">--%>
-                                                <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
-                                                <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
-                                            <%--</p>--%>
-                                            <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
-                                            <%--<p>--%>
-                                                <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
-                                            <%--</p>--%>
-                                            <%--<div class="text-center">--%>
-                                                <%--<button class="btn-read">Read More</button>--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-md-4 blog-single">--%>
-                                <%--<div class="panel panel-default">--%>
-                                    <%--<div class="panel-body">--%>
-                                        <%--<div class="blog-img">--%>
-                                            <%--<img src="<c:url value="/resources/img/17.jpg"  />" />--%>
-                                        <%--</div>--%>
-                                        <%--<div class="blog-desc">--%>
-                                            <%--<p class="date-comment">--%>
-                                                <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
-                                                <%--<span><i class="fa fa-comments"></i>4 Comments</span>--%>
-                                            <%--</p>--%>
-                                            <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
-                                            <%--<p>--%>
-                                                <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
-                                            <%--</p>--%>
-                                            <%--<div class="text-center">--%>
-                                                <%--<button class="btn-read">Read More</button>--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-md-4 blog-single">--%>
-                                <%--<div class="panel panel-default">--%>
-                                    <%--<div class="panel-body">--%>
-                                        <%--<div class="blog-img">--%>
-                                            <%--<img src="<c:url value="/resources/img/16.jpg"   />" />--%>
-                                        <%--</div>--%>
-                                        <%--<div class="blog-desc">--%>
-                                            <%--<p class="date-comment">--%>
-                                                <%--<span><i class="fa fa-calendar"></i> 15 JAN 2016</span>--%>
-                                                <%--<span><i class="fa fa-comments"></i> 4 Comments</span>--%>
-                                            <%--</p>--%>
-                                            <%--<h4 class="blog-title">Products That Fight Static</h4>--%>
-                                            <%--<p>--%>
-                                                <%--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate luctus enim sit amet dapibus. Praesent sagittis molestie felis, lobortis dictum massa molestie ac.--%>
-                                            <%--</p>--%>
-                                            <%--<div class="text-center">--%>
-                                                <%--<button class="btn-read">Read More</button>--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
+
+        </div>
+        <%--<div class="sponser">--%>
+            <%--<div class="container">--%>
+                <%--<div class="row">--%>
+                    <%--<div class="col-md-12 col-sm-12 col-xs-12 sponser_slider">--%>
+                        <%--<div class="owl-carousel">--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+                            <%--<div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>--%>
+
                         <%--</div>--%>
                     <%--</div>--%>
                 <%--</div>--%>
             <%--</div>--%>
-        </div>
-        <div class="sponser">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12 sponser_slider">
-                        <div class="owl-carousel">
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-                            <div class="item"><img src="<c:url value="/resources/img/19.jpg" />"></div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%--</div>--%>
         <div class="testimonial">
             <div class="container">
                 <div class="row">
