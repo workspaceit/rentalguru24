@@ -27,7 +27,7 @@ public class RequestApprovalController {
     RentRequestModel rentRequestModel;
     @RequestMapping(value = "/request/{rent_request_id}",method = RequestMethod.GET)
     public ModelAndView getRequestApproval(HttpServletRequest request, @PathVariable("rent_request_id") int rentRequestId){
-        ModelAndView modelAndView = new ModelAndView("public/request_approval");
+        ModelAndView modelAndView = new ModelAndView("user_dashboard/order_details");
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);

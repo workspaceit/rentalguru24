@@ -273,14 +273,18 @@
                             $('.approve_btn').removeAttrs("disabled", "disabled");
                             $('#approveProgressImg').hide();
                             $("#approveSuccess").fadeIn(500).delay(2000).fadeOut(500,function(){
-                                window.location.href =BASEURL+"/user/dashboard/rentrequest";
+                                setTimeout(function(){
+                                    location.reload();
+                                }, 2000);
                             });
                         }else{
                             BindErrorsWithHtml('errorMsg_', data.responseStat.requestErrors);
                             $('.approve_btn').removeAttrs("disabled", "disabled");
                             $('#approveProgressImg').hide();
                             $("#approveError").fadeIn(500).delay(2000).fadeOut(500,function(){
-                                window.location.href =BASEURL+"/user/dashboard/rentrequest";
+                                setTimeout(function(){
+                                    location.reload();
+                                });
                             });
                         }
                     },
