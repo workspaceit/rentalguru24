@@ -58,8 +58,12 @@
                                                     <d:if test="${rentInf.getRentee().getId() ==appCredential.getId()}">
                                                         <p>${product.getOwner().getUserInf().getFirstName()} ${product.getOwner().getUserInf().getLastName()}</p>
                                                         <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getStartDate()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getEndsDate()}"/></span></p>
+                                                        <d:if test="${rentInf.rentalProductReturnRequest != null}">
+                                                            <p class="help-block info">Owner has requested to return product</p>
+                                                        </d:if>
                                                     </d:if>
                                                 </d:forEach>
+
                                             </div>
                                         </td>
                                         <td>

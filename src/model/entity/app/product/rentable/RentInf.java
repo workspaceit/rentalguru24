@@ -38,9 +38,10 @@ public class RentInf {
     public boolean hasReceiveConfirmation = false;
 
     private List<RentalProductReturnRequest> rentalProductReturnRequestList;
-    public RentalProductReturnRequest rentalProductReturnRequest;
-
     private List<RentalProductReturned> rentalProductReturnedList;
+
+
+    public RentalProductReturnRequest rentalProductReturnRequest;
     public RentalProductReturned rentalProductReturned;
 
     private Timestamp createdDate;
@@ -183,14 +184,21 @@ public class RentInf {
         }
         this.rentalProductReturnedList = rentalProductReturnedList;
     }
-    @Override
-    public String toString(){
-        ObjectMapper om = new ObjectMapper();
-        try {
-            return om.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+
+    @Transient
+    public RentalProductReturnRequest getRentalProductReturnRequest() {
+        return rentalProductReturnRequest;
+    }
+
+    public void setRentalProductReturnRequest(RentalProductReturnRequest rentalProductReturnRequest) {
+        this.rentalProductReturnRequest = rentalProductReturnRequest;
+    }
+    @Transient
+    public RentalProductReturned getRentalProductReturned() {
+        return rentalProductReturned;
+    }
+
+    public void setRentalProductReturned(RentalProductReturned rentalProductReturned) {
+        this.rentalProductReturned = rentalProductReturned;
     }
 }

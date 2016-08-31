@@ -60,6 +60,30 @@
                                                 <d:forEach var="rentInf" items="${product.getRentInf()}">
                                                             <p>${rentInf.getRentee().getUserInf().getFirstName()} ${rentInf.getRentee().getUserInf().getLastName()}</p>
                                                             <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getStartDate()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getEndsDate()}"/></span></p>
+                                                            <d:if test="${rentInf.rentalProductReturned != null}">
+                                                                <d:if test="${rentInf.rentalProductReturned != null}">
+                                                                    <d:choose>
+                                                                        <d:when test="${rentInf.rentalProductReturned.confirmed}">
+                                                                            <div class="alert alert-success">
+                                                                                <strong>Confirmed</strong>
+                                                                                <d:if test="${rentInf.rentalProductReturnedHistories != null && rentInf.rentalProductReturnedHistories.size()>0}">
+                                                                                    rentInf.rentalProductReturnedHistories[rentalProductReturnedHistories.length-1].
+                                                                                </d:if>
+                                                                            </div>
+                                                                        </d:when> <!-- if condition -->
+                                                                        <d:when test="${rentInf.rentalProductReturned.dispute}">
+                                                                            <div class="alert alert-success">
+                                                                                <strong>Dispute</strong>.
+                                                                            </div>
+                                                                        </d:when> <!-- else if condition -->
+                                                                        <d:otherwise>
+                                                                            <button class="btn btn-accept">Confirm</button>
+                                                                            <button class="btn btn-warning">Dispute</button>
+                                                                        </d:otherwise>    <!-- else condition -->
+                                                                    </d:choose>
+                                                                </d:if>
+
+                                                            </d:if>
                                                 </d:forEach>
                                                 <%--.getUserInf().getFirstName()--%>
                                             </div>

@@ -1,8 +1,6 @@
 package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -16,7 +14,7 @@ public class RentalProductReturnedHistory {
     private int id;
     private boolean confirm;
     private boolean dispute;
-    private Timestamp created;
+    private Timestamp createdDate;
     private RentalProductReturned rentalProductReturned;
 
     @Id
@@ -52,12 +50,12 @@ public class RentalProductReturnedHistory {
 
     @Basic
     @Column(name = "created_date")
-    public Timestamp getCreated() {
-        return created;
+    public Timestamp getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreated(Timestamp created) {
-        this.created = created;
+    public void setCreatedDate(Timestamp created) {
+        this.createdDate = created;
     }
 
 
