@@ -4,6 +4,10 @@ package controller.service.admin;
 import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import model.IdentityTypeModel;
+import model.admin.AdminPaypalCredentailModel;
+import model.admin.AdminSitesFeesModel;
+import model.entity.admin.AdminPaypalCredential;
+import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import model.entity.app.IdentityType;
@@ -26,6 +30,13 @@ import java.util.Map;
 public class AdminUserService {
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
+
+    @Autowired
+    AdminPaypalCredentailModel adminPaypalCredentailModel;
+
+    @Autowired
+    AdminSitesFeesModel adminSitesFeesModel;
+
 
 
     @RequestMapping(value = "/app-user/active-app-user/{app_user_id}/{varified}", method = RequestMethod.POST)
@@ -180,5 +191,75 @@ public class AdminUserService {
         serviceResponse.setResponseData(authCredential);
         return serviceResponse;
 
+    }
+
+    @RequestMapping(value = "admin/update-paypal", method = RequestMethod.POST)
+    public ServiceResponse adminChangePayPalApi(HttpServletRequest request,
+                                                @RequestParam Map<String, String> allRequestParams,
+                                                @Valid AuthCredential authCredential){
+        ServiceResponse serviceResponse = (ServiceResponse) request.getAttribute("serviceResponse");
+        String apiKey = allRequestParams.get("api_key");
+        String apiSecret = allRequestParams.get("api_secret");
+
+        AdminPaypalCredential adminPaypalCredential=adminPaypalCredentailModel.getAdminPaypalCredentail();
+
+        if (!apiKey.equals("")){
+            adminPaypalCredential.setApiKey(apiKey);
+        }
+
+        if (!apiSecret.equals("")){
+            adminPaypalCredential.setApiSecret(apiSecret);
+        }
+
+        adminPaypalCredentailModel.UpdateAdminPaypalCredientail(adminPaypalCredential);
+
+        serviceResponse.getResponseStat().setMsg("Paypal Configuration Changed Succesfully");
+        serviceResponse.getResponseStat().setStatus(true);
+
+
+        return serviceResponse;
+
+
+    }
+
+    @RequestMapping(value = "admin/update-site-fees", method = RequestMethod.POST)
+    public ServiceResponse adminChangeSiteFees(HttpServletRequest request,
+                                               @RequestParam Map<String, String> allRequestParams,
+                                               @Valid AuthCredential authCredential){
+        ServiceResponse serviceResponse = (ServiceResponse) request.getAttribute("serviceResponse");
+        String type = allRequestParams.get("type");
+        String amount = allRequestParams.get("amount");
+        float realAmount=0;
+        try {
+            realAmount=Float.parseFloat(amount);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            serviceResponse.getResponseStat().setMsg("Amount is not valid");
+            serviceResponse.getResponseStat().setStatus(false);
+            return serviceResponse;
+        }
+
+        AdminSiteFeesEntity adminSiteFeesEntity=adminSitesFeesModel.getAdminSiteFees();
+
+        if (type.equals("1")){
+            adminSiteFeesEntity.setFixed(true);
+            adminSiteFeesEntity.setPercentage(false);
+            adminSiteFeesEntity.setFixedValue(realAmount);
+            adminSiteFeesEntity.setPercentageValue(0);
+
+        }else {
+            adminSiteFeesEntity.setFixed(false);
+            adminSiteFeesEntity.setPercentage(true);
+            adminSiteFeesEntity.setFixedValue(0);
+            adminSiteFeesEntity.setPercentageValue(realAmount);
+        }
+
+
+        adminSitesFeesModel.updateSiteFees(adminSiteFeesEntity);
+        serviceResponse.getResponseStat().setMsg("Site fees updated successfully");
+        serviceResponse.getResponseStat().setStatus(true);
+
+
+        return serviceResponse;
     }
 }

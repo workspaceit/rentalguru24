@@ -66,7 +66,7 @@
 
                                 <div class="form-group">
                                     <label id="errorMessage" style="color: red"></label>
-
+                                    <label id="alertMsg" style="color: green"></label>
                                 </div>
 
                             </form>
@@ -146,7 +146,11 @@
 
 
                 if(data.responseStat.status==true){
-                    window.location.replace("${BaseUrl}/admin/user/get-all-admin")
+                    $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(2000).fadeOut(500, function () {
+                        window.location.replace("${BaseUrl}/admin/user/get-all-admin")
+                    });
+
+
 
                 }else{
                     alert(data.responseStat.msg);

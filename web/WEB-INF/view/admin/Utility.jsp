@@ -47,17 +47,17 @@
                     <table>
                       <tr>
                         <td width="200px">Api Key:</td>
-                        <td><strong>asdqw423wadfafdgq346tdafgafg</strong></td>
+                        <td><strong>${paypalCredientail.apiKey}</strong></td>
                       </tr>
 
                       <tr>
                         <td width="200px">Api Secret:</td>
-                        <td><strong>asdqw423wadfafdgq346tdafgafg</strong></td>
+                        <td><strong>${paypalCredientail.apiSecret}</strong></td>
                       </tr>
 
                     </table>
 
-                    <button style="margin-top: 30px" class="btn btn-success">Update</button>
+                    <a style="margin-top: 30px" class="btn btn-success" href="${BaseUrl}/admin/user/edit-paypal-configuration" role="button">Update</a>
                   </div><!-- /.col -->
                   </div>
                 </section>
@@ -78,18 +78,35 @@
                   <div class="col-sm-4 invoice-col">
                     <table>
                       <tr>
-                        <td width="200px">Api Key:</td>
-                        <td><strong>asdqw423wadfafdgq346tdafgafg</strong></td>
+                        <td width="200px">Commission Type</td>
+                        <d:choose>
+                          <d:when test="${siteFeesCredientail.fixed==true}">
+                            <td><strong>Fixed</strong></td>
+                          </d:when>
+                          <d:when test="${siteFeesCredientail.percentage==true}">
+                            <td><strong>In Percentage</strong></td>
+                          </d:when>
+                        </d:choose>
+
                       </tr>
 
                       <tr>
-                        <td width="200px">Api Secret:</td>
-                        <td><strong>asdqw423wadfafdgq346tdafgafg</strong></td>
+                        <td width="200px">Commission Amount</td>
+                        <d:choose>
+                          <d:when test="${siteFeesCredientail.fixed==true}">
+                            <td><strong>$ ${siteFeesCredientail.fixedValue}</strong></td>
+                          </d:when>
+                          <d:when test="${siteFeesCredientail.percentage==true}">
+                            <td><strong>${siteFeesCredientail.percentageValue} %</strong></td>
+
+                          </d:when>
+                        </d:choose>
+
                       </tr>
 
                     </table>
 
-                    <button style="margin-top: 30px" class="btn btn-success">Update</button>
+                    <a style="margin-top: 30px" class="btn btn-success" href="${BaseUrl}/admin/user/edit-site-fees" role="button">Update</a>
                   </div><!-- /.col -->
                 </div>
               </section>

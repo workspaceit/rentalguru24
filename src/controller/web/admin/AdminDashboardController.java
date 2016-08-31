@@ -1,7 +1,10 @@
 package controller.web.admin;
 
-import model.AdminPaypalCredentailModel;
 import model.AppLoginCredentialModel;
+import model.admin.AdminPaypalCredentailModel;
+import model.admin.AdminSitesFeesModel;
+import model.entity.admin.AdminPaypalCredential;
+import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +26,14 @@ public class AdminDashboardController {
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
 
+    @Autowired
+    AdminPaypalCredentailModel adminPaypalCredentailModel;
 
+    @Autowired
+    AdminSitesFeesModel adminSitesFeesModel;
 
-    @RequestMapping(value = "/dashboard",method = RequestMethod.GET)
-    public ModelAndView index(HttpServletRequest request){
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public ModelAndView index(HttpServletRequest request) {
         ModelAndView modelAndViev = new ModelAndView("admin/dashboard");
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
@@ -37,49 +44,77 @@ public class AdminDashboardController {
         return modelAndViev;
     }
 
-    @RequestMapping(value ="/create-new-admin",method = RequestMethod.GET)
-    public ModelAndView createNewAdmin(HttpServletRequest request){
-        ModelAndView modelAndView=new ModelAndView("admin/createNewAdmin");
-        String baseUrl=(String)request.getAttribute("baseURL");
+    @RequestMapping(value = "/create-new-admin", method = RequestMethod.GET)
+    public ModelAndView createNewAdmin(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("admin/createNewAdmin");
+        String baseUrl = (String) request.getAttribute("baseURL");
         modelAndView.addObject("BaseUrl", baseUrl);
 
         return modelAndView;
 
     }
 
-    @RequestMapping(value ="/get-all-admin",method = RequestMethod.GET)
-    public ModelAndView showAllAdminList(HttpServletRequest request){
-        ModelAndView modelAndView=new ModelAndView("admin/adminUserDetails");
-        String baseUrl=(String)request.getAttribute("baseURL");
-        List<AuthCredential>adminUsers=appLoginCredentialModel.getAllAdmin();
+    @RequestMapping(value = "/get-all-admin", method = RequestMethod.GET)
+    public ModelAndView showAllAdminList(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("admin/adminUserDetails");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        List<AuthCredential> adminUsers = appLoginCredentialModel.getAllAdmin();
 
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("adminUsers",adminUsers);
+        modelAndView.addObject("adminUsers", adminUsers);
 
 
         return modelAndView;
 
     }
 
-    @RequestMapping(value ="/get-admin-edit-page/{admin_id}",method = RequestMethod.GET)
-    public ModelAndView editAdminPage(HttpServletRequest request,@PathVariable("admin_id") int appUserId){
-        ModelAndView modelAndView=new ModelAndView("admin/editAdminProfile");
-        String baseUrl=(String)request.getAttribute("baseURL");
-        AuthCredential admin=appLoginCredentialModel.getById(appUserId);
+    @RequestMapping(value = "/get-admin-edit-page/{admin_id}", method = RequestMethod.GET)
+    public ModelAndView editAdminPage(HttpServletRequest request, @PathVariable("admin_id") int appUserId) {
+        ModelAndView modelAndView = new ModelAndView("admin/editAdminProfile");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        AuthCredential admin = appLoginCredentialModel.getById(appUserId);
 
 
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("adminUser",admin);
+        modelAndView.addObject("adminUser", admin);
 
 
         return modelAndView;
 
     }
-    @RequestMapping(value ="/get-utility",method = RequestMethod.GET)
-    public ModelAndView getUtilitypage(HttpServletRequest request){
-        ModelAndView modelAndView=new ModelAndView("admin/Utility");
-        String baseUrl=(String)request.getAttribute("baseURL");
 
+    @RequestMapping(value = "/get-utility", method = RequestMethod.GET)
+    public ModelAndView getUtilitypage(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("admin/Utility");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminSiteFeesEntity adminSiteFeesEntity = adminSitesFeesModel.getAdminSiteFees();
+
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("paypalCredientail", adminPaypalCredential);
+        modelAndView.addObject("siteFeesCredientail", adminSiteFeesEntity);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/edit-paypal-configuration", method = RequestMethod.GET)
+    public ModelAndView getPaypalEditPage(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("admin/editPaypalConfiguration");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        modelAndView.addObject("paypalCredientail", adminPaypalCredential);
+
+        modelAndView.addObject("BaseUrl", baseUrl);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/edit-site-fees", method = RequestMethod.GET)
+    public ModelAndView getSiteFeesPage(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("admin/editSiteFeesConfiguration");
+
+
+        String baseUrl = (String) request.getAttribute("baseURL");
+        AdminSiteFeesEntity adminSiteFeesEntity = adminSitesFeesModel.getAdminSiteFees();
+        modelAndView.addObject("siteFeesCredientail", adminSiteFeesEntity);
         modelAndView.addObject("BaseUrl", baseUrl);
         return modelAndView;
     }
