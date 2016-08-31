@@ -84,7 +84,7 @@ public class DashboardController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/my-rentrequest",method = RequestMethod.GET)
+    @RequestMapping(value = "/my-booking",method = RequestMethod.GET)
     public ModelAndView getMyRentRequest(HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView("user_dashboard/myrentRequest");
         String baseUrl=(String)request.getAttribute("baseURL");

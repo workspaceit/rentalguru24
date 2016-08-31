@@ -204,7 +204,7 @@
                 </div>
             </div>
         </div>
-        <div class="container product_carousel">
+        <div class="container product_carousel" id="newProductPartialRender">
             <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
                 <!-- Indicators -->
                 <ol class="carousel-indicators">

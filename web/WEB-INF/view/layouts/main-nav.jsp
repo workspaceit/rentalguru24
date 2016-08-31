@@ -37,12 +37,40 @@
           </div>
         </form>
       </ul>
+      <%--<ul class="nav navbar-nav navbar-right main_navigation">--%>
+        <%--<d:forEach var="listValue" items="${category}">--%>
+          <%--<li><a href="${BaseUrl}/home/category/${listValue.id}">${listValue.name}</a></li>--%>
+        <%--</d:forEach>--%>
+      <%--</ul>--%>
       <ul class="nav navbar-nav navbar-right main_navigation">
         <d:forEach var="listValue" items="${category}">
           <%--<li><a href="#">Action</a></li>--%>
-          <li><a href="${BaseUrl}/home/category/${listValue.id}">${listValue.name}</a></li>
+          <li><a onclick="getProductByCategory(${listValue.id})" href="#newProductPartialRender">${listValue.name}</a></li>
         </d:forEach>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<script>
+  $(document).ready(function() {
+    $('a[href^="#"]').click(function() {
+      var target = $(this.hash);
+      if (target.length == 0) target = $('a[name="' + this.hash.substr(1) + '"]');
+      if (target.length == 0) target = $('html');
+      $('html, body').animate({ scrollTop: target.offset().top }, 1500);
+      return false;
+    });
+  });
+  function getProductByCategory(categoryId){
+    var newUrl = BASEURL+"/home/category/"+categoryId;
+    $.ajax({
+      url: BASEURL+"/home/partial-rendering/category/"+categoryId,
+      type: "GET",
+      success: function(data){
+        history.pushState({}, null, newUrl);
+        $("#newProductPartialRender").html(data);
+      }
+    });
+  }
+
+</script>

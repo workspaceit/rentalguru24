@@ -93,4 +93,12 @@ public class HomeController {
             return new ModelAndView("redirect:/home");
         }
     }
+
+    @RequestMapping(value = "/partial-rendering/category/{category_id}", method = RequestMethod.GET)
+    public ModelAndView getCategory(@PathVariable("category_id") int category_id){
+        ModelAndView modelAndView = new ModelAndView("public/partial_rendering_new_product");
+        List rentalProduct = productModel.getProductByCategoryId(category_id);
+        modelAndView.addObject("products",rentalProduct);
+        return modelAndView;
+    }
 }
