@@ -264,7 +264,7 @@ public class ProductModel extends BaseModel {
 
     public List<RentalProduct> getProductByCategoryId(int categoryId){
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity rentalProduct INNER JOIN rentalProduct.productCategories productCategory WHERE productCategory.category.id=:categoryId";
+        String hql = "FROM RentalProductEntity rentalProduct LEFT JOIN FETCH rentalProduct.productCategories productCategory WHERE productCategory.category.id=:categoryId";
         try{
             return session.createQuery(hql)
                     .setParameter("categoryId", categoryId)

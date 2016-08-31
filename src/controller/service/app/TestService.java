@@ -179,9 +179,10 @@ public class TestService extends BaseService{
     }
 
 
-    @RequestMapping(value = "/category/{category_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/partial-rendering/category/{category_id}", method = RequestMethod.GET)
     public List<RentalProduct> getCategory(@PathVariable("category_id") int category_id){
         List rentalProduct = productModel.getProductByCategoryId(category_id);
+
         return rentalProduct;
     }
 
