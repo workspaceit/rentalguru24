@@ -57,42 +57,58 @@
 
                                                 <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableFrom()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableTill()}"/></span></p>
                                                 <h5>Rented By</h5>
+                                                <d:set var="locaIsProductRenturned" value="${false}" ></d:set>
                                                 <d:forEach var="rentInf" items="${product.getRentInf()}">
-                                                            <p>${rentInf.getRentee().getUserInf().getFirstName()} ${rentInf.getRentee().getUserInf().getLastName()}</p>
-                                                            <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getStartDate()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getEndsDate()}"/></span></p>
-                                                            <d:if test="${rentInf.rentalProductReturned != null}">
-                                                                <d:if test="${rentInf.rentalProductReturned != null}">
-                                                                    <d:choose>
-                                                                        <d:when test="${rentInf.rentalProductReturned.confirmed}">
-                                                                            <div class="alert alert-success">
-                                                                                <strong>Confirmed</strong>
-                                                                                <d:if test="${rentInf.rentalProductReturnedHistories != null && rentInf.rentalProductReturnedHistories.size()>0}">
-                                                                                    rentInf.rentalProductReturnedHistories[rentalProductReturnedHistories.length-1].
-                                                                                </d:if>
-                                                                            </div>
-                                                                        </d:when> <!-- if condition -->
-                                                                        <d:when test="${rentInf.rentalProductReturned.dispute}">
-                                                                            <div class="alert alert-success">
-                                                                                <strong>Dispute</strong>.
-                                                                            </div>
-                                                                        </d:when> <!-- else if condition -->
-                                                                        <d:otherwise>
-                                                                            <button class="btn btn-accept">Confirm</button>
-                                                                            <button class="btn btn-warning">Dispute</button>
-                                                                        </d:otherwise>    <!-- else condition -->
-                                                                    </d:choose>
-                                                                </d:if>
+                                                    <d:set var="productRenturned" value="${tyre}" ></d:set>
+                                                    <p>${rentInf.getRentee().getUserInf().getFirstName()} ${rentInf.getRentee().getUserInf().getLastName()}</p>
+                                                    <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getStartDate()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getEndsDate()}"/></span></p>
+                                                    <d:if test="${rentInf.rentalProductReturned != null}">
+                                                        <d:if test="${rentInf.rentalProductReturned != null}">
+                                                            <d:choose>
+                                                                <d:when test="${rentInf.rentalProductReturned.confirm==true}">
+                                                                    <div class="alert alert-success">
+                                                                        <strong>Confirmed on
+                                                                            <d:set var="rentalProductReturnedHistories" value="${rentInf.rentalProductReturned.rentalProductReturnedHistories}" />
+                                                                            <d:if test="${rentalProductReturnedHistories != null && rentalProductReturnedHistories.size()>0}">
+                                                                                <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentalProductReturnedHistories[rentalProductReturnedHistories.size()-1].createdDate}"/> </span>
+                                                                            </d:if>
+                                                                        </strong>
+                                                                    </div>
+                                                                </d:when>
+                                                                <d:when test="${rentInf.rentalProductReturned.dispute==true}">
+                                                                    <div class="alert alert-success">
+                                                                        <strong>Dispute on
+                                                                            <d:set var="rentalProductReturnedHistories" value="${rentInf.rentalProductReturned.rentalProductReturnedHistories}" />
+                                                                            <d:if test="${rentalProductReturnedHistories != null && rentalProductReturnedHistories.size()>0}">
+                                                                                <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentalProductReturnedHistories[rentalProductReturnedHistories.size()-1].createdDate}"/> </span>
+                                                                            </d:if>
+                                                                        </strong>
+                                                                    </div>
+                                                                </d:when>
+                                                                <d:otherwise>
+                                                                    <button class="btn btn-warning" onclick="productReceiveConfirm(${rentInf.rentalProductReturned.id})" >Confirm</button>
+                                                                    <button class="btn btn-accept" onclick="productReceiveDispute(${rentInf.rentalProductReturned.id})" >Dispute</button>
+                                                                </d:otherwise>
+                                                            </d:choose>
+                                                        </d:if>
 
-                                                            </d:if>
+                                                    </d:if>
                                                 </d:forEach>
-                                                <%--.getUserInf().getFirstName()--%>
+
+
+
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="actions">
-                                                <button class="btn btn-edit">Request Return</button>
-                                            </div>
-                                        </td>
+                                        <d:if test="${!locaIsProductRenturned}" >
+                                            <d:forEach var="rentInf" items="${product.getRentInf()}">
+                                                <td>
+                                                    <div class="actions">
+                                                        <button class="btn btn-edit" onclick="requestToReturnProduct(${rentInf.id})">Request Return</button>
+                                                    </div>
+                                                </td>
+                                            </d:forEach>
+                                        </d:if>
+
                                     </tr>
                                 </d:forEach>
                                 </tbody>
@@ -179,6 +195,51 @@
             }).on('changeDate', function (ev) {
                 checkout.hide();
             }).data('datepicker');
+
+
+            function requestToReturnProduct(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/return-request/make-request/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
+                });
+            }
+            function productReceiveConfirm(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/receive-product/confirm-receive/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
+                });
+            }
+            function productReceiveDispute(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/receive-product/dispute-receive/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
+                });
+            }
+
         </script>
 
     </body>

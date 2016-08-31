@@ -68,8 +68,48 @@
                                         </td>
                                         <td>
                                             <div class="actions">
-                                                <button class="btn btn-edit">Return Product</button>
-                                            </div>
+
+                                                <d:forEach var="rentInf" items="${product.getRentInf()}">
+                                                    <d:if test="${rentInf.rentalProductReturned != null}">
+                                                        <d:choose>
+                                                            <d:when test="${rentInf.rentalProductReturned.confirm==true}">
+                                                                <div class="alert alert-success">
+                                                                    <strong>Confirmed on
+                                                                        <d:set var="rentalProductReturnedHistories" value="${rentInf.rentalProductReturned.rentalProductReturnedHistories}" />
+                                                                        <d:if test="${rentalProductReturnedHistories != null && rentalProductReturnedHistories.size()>0}">
+                                                                            <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentalProductReturnedHistories[rentalProductReturnedHistories.size()-1].createdDate}"/> </span>
+                                                                        </d:if>
+                                                                    </strong>
+                                                                </div>
+                                                            </d:when>
+                                                            <d:when test="${rentInf.rentalProductReturned.dispute==true}">
+                                                                <div class="alert alert-warning">
+                                                                    <strong>Dispute on
+                                                                        <d:set var="rentalProductReturnedHistories" value="${rentInf.rentalProductReturned.rentalProductReturnedHistories}" />
+                                                                        <d:if test="${rentalProductReturnedHistories != null && rentalProductReturnedHistories.size()>0}">
+                                                                            <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentalProductReturnedHistories[rentalProductReturnedHistories.size()-1].createdDate}"/> </span>
+                                                                        </d:if>
+                                                                    </strong>
+                                                                </div>
+                                                            </d:when>
+                                                            <d:otherwise>
+                                                                <div class="alert alert-info">
+                                                                    <strong>Confirmation pending</strong>
+                                                                </div>
+                                                            </d:otherwise>
+                                                        </d:choose>
+                                                    </d:if>
+                                                    <d:if test="${rentInf.rentalProductReturned == null}">
+                                                        <d:forEach var="rentInf" items="${product.getRentInf()}">
+                                                        <td>
+                                                            <div class="actions">
+                                                                <button class="btn btn-edit" onclick="returnProduct(${rentInf.id})">Return Product</button>
+                                                            </div>
+                                                        </td>
+                                                        </d:forEach>
+
+                                                    </d:if>
+                                                </d:forEach>
                                         </td>
                                     </tr>
                                 </d:forEach>
@@ -124,9 +164,20 @@
         </script>
 
         <script type="text/javascript">
-//            $(document).ready(function () {
-//                $("#successModal").modal('show');
-//            });
+            function returnProduct(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/return-product/confirm-return/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
+                });
+            }
         </script>
         <script>
             $(document).ready(function () {
