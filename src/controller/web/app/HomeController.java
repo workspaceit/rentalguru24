@@ -42,6 +42,7 @@ public class HomeController {
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<Category> category = categoryModel.getAll();
         List<RentalProduct> rentalProducts = productModel.getRentalProduct(8, 0);
+        List<RentalProduct> rentalProductsTop = productModel.getRentalProduct(2, 0);
         List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
         RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
         RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
@@ -53,6 +54,7 @@ public class HomeController {
         modelAndView.addObject("productsAscending", rentalProductsAscending);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl",baseUrl);
+        modelAndView.addObject("rentalProductsTop",rentalProductsTop);
         modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
         modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
         modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);

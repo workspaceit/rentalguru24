@@ -68,7 +68,6 @@
                                         </td>
                                         <td>
                                             <div class="actions">
-
                                                 <d:forEach var="rentInf" items="${product.getRentInf()}">
                                                     <d:if test="${rentInf.rentalProductReturned != null}">
                                                         <d:choose>
@@ -105,6 +104,10 @@
                                                             <div class="actions">
                                                                 <button class="btn btn-edit" onclick="returnProduct(${rentInf.id})">Return Product</button>
                                                             </div>
+                                                            <div class="alert alert-success" id="successReturnProduct${rentInf.id}" hidden>
+                                                                Return request sent Succesfully.
+                                                            </div>
+                                                            <div class="alert alert-danger" id="errorReturnReturn${rentInf.id}" hidden></div>
                                                         </td>
                                                         </d:forEach>
 
@@ -171,7 +174,15 @@
                     url: BASEURL+'/api/auth/return-product/confirm-return/'+rentalInfId,
                     data:{remarks:remarks},
                     success: function (data) {
+                        if(data.responseStat.status == true){
+                            $("#successReturnProduct"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
 
+                            });
+                        }else{
+                            $("#errorReturnProduct"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }
                     },
                     error: function () {
                         alert('Error occured');
