@@ -24,48 +24,82 @@
                             </div>
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" role="listbox">
-                                <d:set var="topProductActive" value="active" />
-                                <d:forEach var="topProduct" items="${rentalProductsTop}">
-                                <div class="item ${topProductActive}">
-                                    <d:set var="topProductActive" value="" />
-                                    <a href="${BaseUrl}/product/details/${topProduct.getId()}"><img src="<c:url value="${BaseUrl}/images/${topProduct.profileImage.original.path}" />" /></a>
+                                <div class="item active">
+                                    <img src="<c:url value="/resources/img/4.jpg" />" alt="...">
                                     <div class="carousel-caption cap1">
-                                        <p onclick="showRentRequestPopUp(${topProduct.getId()})"><i class="fa fa-shopping-basket"></i> Rent Now </p>
+                                        <p><i class="fa fa-shopping-basket"></i> RENT NOW</p>
                                     </div>
+                                    <div class="custom_cap cap2">
+                                        <ul class="cap_ul">
+                                            <li><span class="amount">7</span><span class="term">DAYS</span></li>
+                                            <li><span class="amount">54</span><span class="term">WEEK</span></li>
+                                            <li><span class="amount">250</span><span class="term">MONTH</span></li>
+                                            <li><span class="amount">5000</span><span class="term">YEAR</span></li>
+                                        </ul>
+                                    </div> 
                                     <div class="custom_cap cap3">
-                                        <label class="title-label productName"><a href="${BaseUrl}/product/details/${topProduct.getId()}">${fn:substring(topProduct.name, 0, 20)}<d:if test="${fn:length(topProduct.name)>20}">....</d:if></a></label>
-                                        <fieldset class="rating ">
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${topProduct.getId()}" name="rating${topProduct.getId()}" value="5" />
-                                            <label class = "full" for="star5_${topProduct.getId()}" title="Awesome - 5 stars"></label>
-
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${topProduct.getId()}" name="rating${topProduct.getId()}" value="4" />
-                                            <label class = "full" for="star4_${topProduct.getId()}" title="Pretty good - 4 stars"></label>
-
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${topProduct.getId()}" name="rating${topProduct.getId()}" value="3" />
-                                            <label  class = "full" for="star3_${topProduct.getId()}" title="Meh - 3 stars"></label>
-
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${topProduct.getId()}" name="rating${topProduct.getId()}" value="2" />
-                                            <label class = "full" for="star2_${topProduct.getId()}" title="Kinda bad - 2 stars"></label>
-
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${topProduct.getId()}" name="rating${topProduct.getId()}" value="1" />
-                                            <label class = "full" for="star1_${topProduct.getId()}" title="Sucks big time - 1 star"></label>
+                                        <label class="product_name">Casual couch</label>
+                                        <fieldset class="rating">
+                                            <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                                            <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                                            <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                                            <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
                                         </fieldset>
                                         <div class="divider"></div>
                                         <div class="row option_but">
                                             <div class="col-md-5 col-sm-5 col-xs-12">
                                                 <div class="option">
+                                                    <a href=""><i class="fa fa-eye"></i></a>
                                                     <a href=""><i class="fa fa-heart"></i></a>
                                                     <a href=""><i class="fa  fa-exchange"></i></a>
                                                 </div>
                                             </div>
                                             <div class="col-md-7 col-sm-7 col-xs-12">
-                                                <%--<label class="prev_price">$350</label>--%>
-                                                <div class="price-tag">$ ${topProduct.rentFee}</div>
+                                                <label class="prev_price">$350</label>
+                                                <label class="present_price">$250</label>
                                             </div>
                                         </div>
                                     </div>                          
                                 </div>
-                                </d:forEach>
+                                <div class="item">
+                                    <img src="<c:url value="/resources/img/5.jpg" />" alt="...">
+                                    <div class="carousel-caption cap1">
+                                        <p><i class="fa fa-shopping-basket"></i>RENT NOW</p>
+                                    </div>
+                                    <div class="custom_cap cap2">
+                                        <ul class="cap_ul">
+                                            <li><span class="amount">5</span><span class="term">DAYS</span></li>
+                                            <li><span class="amount">40</span><span class="term">WEEK</span></li>
+                                            <li><span class="amount">150</span><span class="term">MONTH</span></li>
+                                            <li><span class="amount">500</span><span class="term">YEAR</span></li>
+                                        </ul>
+                                    </div> 
+                                    <div class="custom_cap cap3">
+                                        <label class="product_name">Casual couch</label>
+                                        <fieldset class="rating">
+                                            <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                                            <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                                            <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                                            <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                                        </fieldset>
+                                        <div class="divider"></div>
+                                        <div class="row option_but">
+                                            <div class="col-md-5 col-sm-5 col-xs-12">
+                                                <div class="option">
+                                                    <a href=""><i class="fa fa-eye"></i></a>
+                                                    <a href=""><i class="fa fa-heart"></i></a>
+                                                    <a href=""><i class="fa  fa-exchange"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7 col-sm-7 col-xs-12">
+                                                <label class="prev_price">$350</label>
+                                                <label class="present_price">$250</label>
+                                            </div>
+                                        </div>
+                                    </div>                          
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,13 +108,12 @@
 
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner clearfix" role="listbox">
-                                <d:set var="topProductActive" value="active" />
-                                <d:forEach var="topProduct" items="${rentalProductsTop}">
-                                    <div class="item active">
-                                        <d:set var="topProductActive" value="" />
-                                        <a href="${BaseUrl}/product/details/${topProduct.getId()}"><img src="<c:url value="${BaseUrl}/images/${topProduct.profileImage.original.path}" />" /></a>
-                                    </div>
-                                </d:forEach>
+                                <div class="item active">
+                                    <img src="<c:url value="/resources/img/4.jpg" />" alt="...">
+                                </div>
+                                <div class="item">
+                                    <img src="<c:url value="/resources/img/5.jpg" />" alt="...">
+                                </div>
                             </div>
                             <!-- Controls -->
                             <a class="left carousel-control" href="#main-product" role="button" data-slide="prev">
@@ -144,26 +177,28 @@
                 <div class="row">
                     <div class="col-sm-6 col-xs-12 col-md-6">
                         <div class="big_ass_offer">
-                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom2.getProfileImage().getOriginal().getPath()}" />">
+
+                            <img src="<c:url value="/resources/img/1.jpg" />" >
                             <div class="offer_cap_big ">
-                                <h2 class="type"></h2>
-                                <h1 class="name"><a href="${BaseUrl}/product/details/${rentalProductsRandom2.getId()}">${fn:substring(rentalProductsRandom2.name, 0, 20)}<d:if test="${fn:length(rentalProductsRandom2.name)>20}">....</d:if></a></h1>
-                                <p class="discount no-margin">$${rentalProductsRandom2.rentFee}</p>
+                                <h2 class="type">GUEST ROOM</h2>
+                                <h1 class="name">SOFA</h1>
+                                <p class="discount no-margin">-20%</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-xs-12 col-md-6">
                         <div class="small_ass_offer small_1">
-                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom3.getProfileImage().getOriginal().getPath()}" />">
+                            <img src="<c:url value="/resources/img/2.jpg" />"  >
                             <div class="offer_cap_small_1 ">
                                 <div class="small_1_text">
-                                    <%--<h3 class="s_type "><strong>${rentalProductsRandom3.getProductCategories().getCategory().getName()}</strong></h3>--%>
+                                    <h3 class="s_type "><strong>OFFICE</strong> CHAIR</h3>
+                                    <h4 class="s_name ">COLLECTION</h4>
                                 </div>
-                                <p class="s_price no-margin">$${rentalProductsRandom3.rentFee}</p>
+                                <p class="s_price no-margin">$200.00</p>
                             </div>
                         </div>
                         <div class="small_ass_offer">
-                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom4.getProfileImage().getOriginal().getPath()}" />">
+                            <img src="<c:url value="/resources/img/3.jpg" />">
                         </div>
                     </div>
                 </div>
@@ -248,21 +283,35 @@
                                     <!-- Place somewhere in the <body> of your page -->
                                     <div id="slider" class="flexslider">
                                         <ul class="slides">
-                                            <d:forEach var="ascendingProduct" items="${productsAscending}">
-                                                <li>
-                                                    <img src="<c:url value="${BaseUrl}/images/${ascendingProduct.getProfileImage().getOriginal().getPath()}" />" >
-                                                </li>
-                                            </d:forEach>
+                                            <li>
+                                                <img src="http://placehold.it/700x400"  >
+                                            </li>
+                                            <li>
+                                                <img src="http://placehold.it/700x400"  >
+                                            </li>
+                                            <li>
+                                                <img src="http://placehold.it/700x400"  >
+                                            </li>
+                                            <li>
+                                                <img src="http://placehold.it/700x400"  >
+                                            </li>
                                             <!-- items mirrored twice, total of 12 -->
                                         </ul>
                                     </div>
                                     <div id="carousel" class="flexslider">
                                         <ul class="slides">
-                                            <d:forEach var="ascendingProduct" items="${productsAscending}">
-                                                <li>
-                                                    <img src="<c:url value="${BaseUrl}/images/${ascendingProduct.getProfileImage().getOriginal().getPath()}" />" >
-                                                </li>
-                                            </d:forEach>
+                                            <li>
+                                                <img src="http://placehold.it/700x400"  >
+                                            </li>
+                                            <li>
+                                                <img src="http://placehold.it/700x400"  >
+                                            </li>
+                                            <li>
+                                                <img src="http://placehold.it/700x400"  >
+                                            </li>
+                                            <li>
+                                                <img src="http://placehold.it/700x400"  >
+                                            </li>
                                             <!-- items mirrored twice, total of 12 -->
                                         </ul>
                                     </div>
@@ -275,14 +324,14 @@
                     </div>
                     <div class="col-md-6 col-sm-12 mcol-xs-12">
                         <div class="best_offer">
-                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom1.getProfileImage().getOriginal().getPath()}" />">
+                            <img src="<c:url value="/resources/img/15.jpg" />">
                             <div class="best_offer_text">
                                 <div class="offer_rate">
-                                    <p class="offer_head"><span class="pre_rate">FROM</span><span class="rate">$${rentalProductsRandom1.rentFee}</span></p>
+                                    <p class="offer_head"><span class="pre_rate">FROM</span><span class="rate">$250</span></p>
                                 </div>
                                 <div class="offer_des">
-                                    <p class="name"><a href="${BaseUrl}/product/details/${rentalProductsRandom1.getId()}">${fn:substring(rentalProductsRandom1.name, 0, 20)}<d:if test="${fn:length(rentalProductsRandom1.name)>20}">....</d:if></a></p>
-                                    <a href="javascript:void(0)" onclick="showRentRequestPopUp(${product.getId()})" class="btn shop_btn">RENT NOW</a>
+                                    <p class="name">Bedroom Bed</p>
+                                    <a href="" class="btn shop_btn"> SHOP NOW</a>
                                 </div>
                             </div>
                         </div>

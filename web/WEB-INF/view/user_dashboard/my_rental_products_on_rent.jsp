@@ -52,9 +52,6 @@
                                             <div class="table-desc">
                                                 <h5>${product.getName()}</h5>
                                                 <p>${product.getDescription()}</p>
-
-
-
                                                 <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableFrom()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableTill()}"/></span></p>
                                                 <h5>Rented By</h5>
                                                 <d:set var="locaIsProductRenturned" value="${false}" ></d:set>
@@ -86,29 +83,36 @@
                                                                     </div>
                                                                 </d:when>
                                                                 <d:otherwise>
-                                                                    <button class="btn btn-warning" onclick="productReceiveConfirm(${rentInf.rentalProductReturned.id})" >Confirm</button>
-                                                                    <button class="btn btn-accept" onclick="productReceiveDispute(${rentInf.rentalProductReturned.id})" >Dispute</button>
+                                                                    <button class="btn btn-warning confirm${rentInf.rentalProductReturned.id}" onclick="productReceiveConfirm(${rentInf.rentalProductReturned.id})" >Confirm</button>
+                                                                    <button class="btn btn-accept dispute${rentInf.rentalProductReturned.id}" onclick="productReceiveDispute(${rentInf.rentalProductReturned.id})" >Dispute</button>
                                                                 </d:otherwise>
                                                             </d:choose>
                                                         </d:if>
-
                                                     </d:if>
+                                                    <div class="alert alert-success" id="successConfirm${rentInf.rentalProductReturned.id}" hidden>
+                                                        Product return request has been confirm.
+                                                    </div>
+                                                    <div class="alert alert-success" id="successDispute${rentInf.rentalProductReturned.id}" hidden>
+                                                        Product return request has been Dispute.
+                                                    </div>
+                                                    <div class="alert alert-success" id="errorConfirmDispute${rentInf.rentalProductReturned.id}" hidden>
+                                                    </div>
                                                 </d:forEach>
-
-
-
                                             </div>
                                         </td>
                                         <d:if test="${!locaIsProductRenturned}" >
                                             <d:forEach var="rentInf" items="${product.getRentInf()}">
                                                 <td>
                                                     <div class="actions">
-                                                        <button class="btn btn-edit" onclick="requestToReturnProduct(${rentInf.id})">Request Return</button>
+                                                        <button class="btn btn-edit" onclick="requestToReturnProduct(${rentInf.id})" id="buttonRequestReturn">Request Return</button>
                                                     </div>
+                                                    <div class="alert alert-success" id="successRequestReturn${rentInf.id}" hidden>
+                                                        Product return request has been sent.
+                                                    </div>
+                                                    <div class="alert alert-danger" id="errorRequestReturn${rentInf.id}" hidden></div>
                                                 </td>
                                             </d:forEach>
                                         </d:if>
-
                                     </tr>
                                 </d:forEach>
                                 </tbody>
@@ -204,7 +208,15 @@
                     url: BASEURL+'/api/auth/return-request/make-request/'+rentalInfId,
                     data:{remarks:remarks},
                     success: function (data) {
+                        if(data.responseStat.status == true){
+                            $("#successRequestReturn"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
 
+                            });
+                        }else{
+                            $("#errorRequestReturn"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }
                     },
                     error: function () {
                         alert('Error occured');
@@ -218,7 +230,19 @@
                     url: BASEURL+'/api/auth/receive-product/confirm-receive/'+rentalInfId,
                     data:{remarks:remarks},
                     success: function (data) {
+                        if(data.responseStat.status == true){
+                            $(".confirm"+rentalInfId).hide();
+                            $(".dispute"+rentalInfId).hide();
+                            $("#successConfirm"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
 
+                            });
+                        }else{
+                            $(".btn-warning"+rentalInfId).hide();
+                            $(".btn-accept"+rentalInfId).hide();
+                            $("#errorConfirmDispute"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }
                     },
                     error: function () {
                         alert('Error occured');
@@ -232,7 +256,19 @@
                     url: BASEURL+'/api/auth/receive-product/dispute-receive/'+rentalInfId,
                     data:{remarks:remarks},
                     success: function (data) {
+                        if(data.responseStat.status == true){
+                            $(".confirm"+rentalInfId).hide();
+                            $(".dispute"+rentalInfId).hide();
+                            $("#successDispute"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
 
+                            });
+                        }else{
+                            $(".btn-warning"+rentalInfId).hide();
+                            $(".btn-accept"+rentalInfId).hide();
+                            $("#errorConfirmDispute"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }
                     },
                     error: function () {
                         alert('Error occured');
