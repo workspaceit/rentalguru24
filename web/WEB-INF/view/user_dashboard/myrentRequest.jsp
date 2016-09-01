@@ -60,20 +60,18 @@
             <tbody>
             <d:forEach var="myRentRequest" items="${myRentRequests}">
             <tr id="${myRentRequest.id}">
-              <td width="300px">${rentRequest.rentalProduct.name}<br><br><a href="${BaseUrl}/rent/request/${rentRequest.getId()}" target="_blank">Order Details</a></td>
+              <td width="300px">${myRentRequest.rentalProduct.name}<br><br><a href="${BaseUrl}/rent/request/${myRentRequest.getId()}" target="_blank">Order Details</a></td>
               <td>${myRentRequest.requestedBy.userInf.firstName}</td>
               <td><fmt:formatDate value="${myRentRequest.startDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
               <td><fmt:formatDate value="${myRentRequest.endDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
               <td width="100px">
                 <div class="actions">
-
                   <button class="btn btn-delete" onclick="cancelRequest(${myRentRequest.id})">Cancel</button>
                 </div>
               </td>
 
             </tr>
             </d:forEach>
-
           </table>
         </div>
       </div>

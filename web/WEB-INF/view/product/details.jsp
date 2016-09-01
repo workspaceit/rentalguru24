@@ -227,7 +227,7 @@
               </div>
 
               <div class="form-group">
-                <label for="email">Your Review:</label>
+                <label for="review">Your Review:</label>
                 <textarea type="text" class="form-control review_form_element" id="review" ></textarea>
               </div>
               <div class="row">

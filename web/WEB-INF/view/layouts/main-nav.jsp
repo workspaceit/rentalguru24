@@ -45,7 +45,7 @@
       <ul class="nav navbar-nav navbar-right main_navigation">
         <d:forEach var="listValue" items="${category}">
           <%--<li><a href="#">Action</a></li>--%>
-          <li><a onclick="getProductByCategory(${listValue.id})" href="#newProductPartialRender">${listValue.name}</a></li>
+          <li><a onclick="getProductByCategory(${listValue.id})" href="#newProductPartialRender" class="scrollToSection">${listValue.name}</a></li>
         </d:forEach>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -53,7 +53,7 @@
 </nav>
 <script>
   $(document).ready(function() {
-    $('a[href^="#"]').click(function() {
+    $('.scrollToSection').click(function() {
       var target = $(this.hash);
       if (target.length == 0) target = $('a[name="' + this.hash.substr(1) + '"]');
       if (target.length == 0) target = $('html');
