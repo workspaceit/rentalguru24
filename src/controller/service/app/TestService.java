@@ -186,4 +186,14 @@ public class TestService extends BaseService{
         return rentalProduct;
     }
 
+//    @RequestMapping(value = "/date/{productId}/{rentInfId}", method = RequestMethod.GET)
+//    public List<Object> getDatesRemaining(@PathVariable("productId") int productId, @PathVariable("rentInfId") int rentInfId){
+//        RentalProduct rentalProduct = productModel.getById(productId);
+//        RentInf rentInf = rentInfModel.getById(rentInfId);
+//        List<Objects>
+//        objects.add(rentalProduct);
+//        objects.add(rentInf);
+//        return objects;
+//    }
+
 }

@@ -23,7 +23,7 @@
                                 </ol>
                             </div>
                             <!-- Wrapper for slides -->
-                            <div class="carousel-inner" role="listbox">
+                            <div class="carousel-inner home_left_carousel" role="listbox">
                                 <d:set var="topProductActive" value="active" />
                                 <d:forEach var="topProduct" items="${rentalProductsTop}">
                                 <div class="item ${topProductActive}">
@@ -71,13 +71,12 @@
                     </div>
                     <div class="col-md-8 col-sm-8 col-xs-12">
                         <div id="main-product" class="carousel slide main_product_slider" data-ride="carousel">
-
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner clearfix" role="listbox">
-                                <d:set var="topProductActive" value="active" />
+                                <d:set var="topProductImageActive" value="active" />
                                 <d:forEach var="topProduct" items="${rentalProductsTop}">
-                                    <div class="item active">
-                                        <d:set var="topProductActive" value="" />
+                                    <div class="item ${topProductImageActive}">
+                                        <d:set var="topProductImageActive" value="" />
                                         <a href="${BaseUrl}/product/details/${topProduct.getId()}"><img src="<c:url value="${BaseUrl}/images/${topProduct.profileImage.original.path}" />" /></a>
                                     </div>
                                 </d:forEach>
@@ -96,9 +95,9 @@
                 </div>
             </div>
         </div>
-        <div class="speciality">
-            <div class="container">
-                <div class="row">
+        <%--<div class="speciality">--%>
+            <%--<div class="container">--%>
+                <%--<div class="row">--%>
                     <%--<div class="col-md-3 col-sm-3 col-xs-6">--%>
                         <%--<div class="spec_container">--%>
                             <%--<label class="spec_head">FREE SHIPPING</label>--%>
@@ -139,36 +138,36 @@
                 </div>
             </div>
         </div>
-        <div class="offer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-xs-12 col-md-6">
-                        <div class="big_ass_offer">
-                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom2.getProfileImage().getOriginal().getPath()}" />">
-                            <div class="offer_cap_big ">
-                                <h2 class="type"></h2>
-                                <h1 class="name"><a href="${BaseUrl}/product/details/${rentalProductsRandom2.getId()}">${fn:substring(rentalProductsRandom2.name, 0, 20)}<d:if test="${fn:length(rentalProductsRandom2.name)>20}">....</d:if></a></h1>
-                                <p class="discount no-margin">$${rentalProductsRandom2.rentFee}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xs-12 col-md-6">
-                        <div class="small_ass_offer small_1">
-                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom3.getProfileImage().getOriginal().getPath()}" />">
-                            <div class="offer_cap_small_1 ">
-                                <div class="small_1_text">
-                                    <%--<h3 class="s_type "><strong>${rentalProductsRandom3.getProductCategories().getCategory().getName()}</strong></h3>--%>
-                                </div>
-                                <p class="s_price no-margin">$${rentalProductsRandom3.rentFee}</p>
-                            </div>
-                        </div>
-                        <div class="small_ass_offer">
-                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom4.getProfileImage().getOriginal().getPath()}" />">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%--<div class="offer">--%>
+            <%--<div class="container">--%>
+                <%--<div class="row">--%>
+                    <%--<div class="col-sm-6 col-xs-12 col-md-6">--%>
+                        <%--<div class="big_ass_offer">--%>
+                            <%--<img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom2.getProfileImage().getOriginal().getPath()}" />">--%>
+                            <%--<div class="offer_cap_big ">--%>
+                                <%--<h2 class="type"></h2>--%>
+                                <%--<h1 class="name"><a href="${BaseUrl}/product/details/${rentalProductsRandom2.getId()}">${fn:substring(rentalProductsRandom2.name, 0, 20)}<d:if test="${fn:length(rentalProductsRandom2.name)>20}">....</d:if></a></h1>--%>
+                                <%--<p class="discount no-margin">$${rentalProductsRandom2.rentFee}</p>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-sm-6 col-xs-12 col-md-6">--%>
+                        <%--<div class="small_ass_offer small_1">--%>
+                            <%--<img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom3.getProfileImage().getOriginal().getPath()}" />">--%>
+                            <%--<div class="offer_cap_small_1 ">--%>
+                                <%--<div class="small_1_text">--%>
+                                    <%--&lt;%&ndash;<h3 class="s_type "><strong>${rentalProductsRandom3.getProductCategories().getCategory().getName()}</strong></h3>&ndash;%&gt;--%>
+                                <%--</div>--%>
+                                <%--<p class="s_price no-margin">$${rentalProductsRandom3.rentFee}</p>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="small_ass_offer">--%>
+                            <%--<img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom4.getProfileImage().getOriginal().getPath()}" />">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <div class="container product_carousel" id="newProductPartialRender">
             <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
                 <!-- Indicators -->
@@ -186,7 +185,7 @@
                             <div class="col-md-3 single-item">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
-                                        <div class="img-single">
+                                        <div class="img-single product_home_img_wrap">
                                             <a href="${BaseUrl}/product/details/${product.getId()}"><img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" /></a>
                                             <div class="product-btn-grp">
                                                 <a href="" class="gbtn left">Quick view</a>
@@ -229,70 +228,70 @@
             </div>
         </div>
         <br>
-        <div class="gallery">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 mcol-xs-12">
-                        <p class="gallery_head">GALLERY</p>
-                        <div class="home_left_tab">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs gallery_nav" role="tablist">
-                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">FEATURED</a></li>
-                                <%--<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">TOP SELLER</a></li>--%>
-                                <%--<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">SELL OFF</a></li>--%>
-                                <%--<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">TOP RATED</a></li>--%>
-                            </ul>
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                    <!-- Place somewhere in the <body> of your page -->
-                                    <div id="slider" class="flexslider">
-                                        <ul class="slides">
-                                            <d:forEach var="ascendingProduct" items="${productsAscending}">
-                                                <li>
-                                                    <img src="<c:url value="${BaseUrl}/images/${ascendingProduct.getProfileImage().getOriginal().getPath()}" />" >
-                                                </li>
-                                            </d:forEach>
-                                            <!-- items mirrored twice, total of 12 -->
-                                        </ul>
-                                    </div>
-                                    <div id="carousel" class="flexslider">
-                                        <ul class="slides">
-                                            <d:forEach var="ascendingProduct" items="${productsAscending}">
-                                                <li>
-                                                    <img src="<c:url value="${BaseUrl}/images/${ascendingProduct.getProfileImage().getOriginal().getPath()}" />" >
-                                                </li>
-                                            </d:forEach>
-                                            <!-- items mirrored twice, total of 12 -->
-                                        </ul>
-                                    </div>
-                                </div>
-                                <%--<div role="tabpanel" class="tab-pane fade " id="profile">dfgdfg</div>--%>
-                                <%--<div role="tabpanel" class="tab-pane fade " id="messages">dfgdfg</div>--%>
-                                <%--<div role="tabpanel" class="tab-pane fade " id="settings">dfgdfgd</div>--%>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12 mcol-xs-12">
-                        <div class="best_offer">
-                            <img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom1.getProfileImage().getOriginal().getPath()}" />">
-                            <div class="best_offer_text">
-                                <div class="offer_rate">
-                                    <p class="offer_head"><span class="pre_rate">FROM</span><span class="rate">$${rentalProductsRandom1.rentFee}</span></p>
-                                </div>
-                                <div class="offer_des">
-                                    <p class="name"><a href="${BaseUrl}/product/details/${rentalProductsRandom1.getId()}">${fn:substring(rentalProductsRandom1.name, 0, 20)}<d:if test="${fn:length(rentalProductsRandom1.name)>20}">....</d:if></a></p>
-                                    <a href="javascript:void(0)" onclick="showRentRequestPopUp(${product.getId()})" class="btn shop_btn">RENT NOW</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container blog_container">
+        <%--<div class="img-single">--%>
+            <%--<div class="container">--%>
+                <%--<div class="row">--%>
+                    <%--<div class="col-md-6 col-sm-12 mcol-xs-12">--%>
+                        <%--<p class="gallery_head">GALLERY</p>--%>
+                        <%--<div class="home_left_tab">--%>
+                            <%--<!-- Nav tabs -->--%>
+                            <%--<ul class="nav nav-tabs gallery_nav" role="tablist">--%>
+                                <%--<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">FEATURED</a></li>--%>
+                                <%--&lt;%&ndash;<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">TOP SELLER</a></li>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">SELL OFF</a></li>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">TOP RATED</a></li>&ndash;%&gt;--%>
+                            <%--</ul>--%>
+                            <%--<!-- Tab panes -->--%>
+                            <%--<div class="tab-content">--%>
+                                <%--<div role="tabpanel" class="tab-pane fade in active" id="home">--%>
+                                    <%--<!-- Place somewhere in the <body> of your page -->--%>
+                                    <%--<div id="slider" class="flexslider">--%>
+                                        <%--<ul class="slides">--%>
+                                            <%--<d:forEach var="ascendingProduct" items="${productsAscending}">--%>
+                                                <%--<li>--%>
+                                                    <%--<img src="<c:url value="${BaseUrl}/images/${ascendingProduct.getProfileImage().getOriginal().getPath()}" />" >--%>
+                                                <%--</li>--%>
+                                            <%--</d:forEach>--%>
+                                            <%--<!-- items mirrored twice, total of 12 -->--%>
+                                        <%--</ul>--%>
+                                    <%--</div>--%>
+                                    <%--<div id="carousel" class="flexslider">--%>
+                                        <%--<ul class="slides">--%>
+                                            <%--<d:forEach var="ascendingProduct" items="${productsAscending}">--%>
+                                                <%--<li>--%>
+                                                    <%--<img src="<c:url value="${BaseUrl}/images/${ascendingProduct.getProfileImage().getOriginal().getPath()}" />" >--%>
+                                                <%--</li>--%>
+                                            <%--</d:forEach>--%>
+                                            <%--<!-- items mirrored twice, total of 12 -->--%>
+                                        <%--</ul>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                                <%--&lt;%&ndash;<div role="tabpanel" class="tab-pane fade " id="profile">dfgdfg</div>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<div role="tabpanel" class="tab-pane fade " id="messages">dfgdfg</div>&ndash;%&gt;--%>
+                                <%--&lt;%&ndash;<div role="tabpanel" class="tab-pane fade " id="settings">dfgdfgd</div>&ndash;%&gt;--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-md-6 col-sm-12 mcol-xs-12">--%>
+                        <%--<div class="best_offer">--%>
+                            <%--<img src="<c:url value="${BaseUrl}/images/${rentalProductsRandom1.getProfileImage().getOriginal().getPath()}" />">--%>
+                            <%--<div class="best_offer_text">--%>
+                                <%--<div class="offer_rate">--%>
+                                    <%--<p class="offer_head"><span class="pre_rate">FROM</span><span class="rate">$${rentalProductsRandom1.rentFee}</span></p>--%>
+                                <%--</div>--%>
+                                <%--<div class="offer_des">--%>
+                                    <%--<p class="name"><a href="${BaseUrl}/product/details/${rentalProductsRandom1.getId()}">${fn:substring(rentalProductsRandom1.name, 0, 20)}<d:if test="${fn:length(rentalProductsRandom1.name)>20}">....</d:if></a></p>--%>
+                                    <%--<a href="javascript:void(0)" onclick="showRentRequestPopUp(${product.getId()})" class="btn shop_btn">RENT NOW</a>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<div class="container blog_container">--%>
 
-        </div>
+        <%--</div>--%>
         <%--<div class="sponser">--%>
             <%--<div class="container">--%>
                 <%--<div class="row">--%>
@@ -537,7 +536,7 @@
         if(format == undefined){
             format = "";
         }
-        if(datesArray.length!=3){
+        if(datesArray.length!=3{"original":{"path":"product/50/7085960021649.jpeg","type":"","size":{"width":259,"height":195}},"thumb":[]}){
             return "";
         }
 

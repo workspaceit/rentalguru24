@@ -56,11 +56,11 @@
                 </a>
               </li>
             </d:if>
-            <li class="dropdown no-margin">
-              <a href="${BaseUrl}/user/dashboard">
-                <i class="fa fa-bars"></i>
-              </a>
-            </li>
+            <%--<li class="dropdown no-margin">--%>
+              <%--<a href="${BaseUrl}/user/dashboard">--%>
+                <%--<i class="fa fa-bars"></i>--%>
+              <%--</a>--%>
+            <%--</li>--%>
           </ul>
         </div>
       </div>
