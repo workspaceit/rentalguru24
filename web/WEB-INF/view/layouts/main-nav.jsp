@@ -21,11 +21,14 @@
     <div class="collapse navbar-collapse no-padding " id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="dropdown catagory_drop">
-          <a href="#" class="dropdown-toggle catagory_drop_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i>Select a category <span class="caret"></span></a>
+          <a data-category-id="" id="dropdownCategorySelect" class="dropdown-toggle catagory_drop_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-bars"></i>Select a category
+            <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu">
             <d:forEach var="listValue" items="${category}">
               <%--<li><a href="#">Action</a></li>--%>
-              <li><a href="#">${listValue.name}</a></li>
+              <li><a onclick="selectedCategory(${listValue.id})" id="selected${listValue.id}" data-category-name="${listValue.name}">${listValue.name}</a></li>
             </d:forEach>
           </ul>
         </li>
@@ -43,9 +46,9 @@
         <%--</d:forEach>--%>
       <%--</ul>--%>
       <ul class="nav navbar-nav navbar-right main_navigation">
-        <d:forEach var="listValue" items="${category}">
+        <d:forEach var="listValueMenue" items="${category}">
           <%--<li><a href="#">Action</a></li>--%>
-          <li><a onclick="getProductByCategory(${listValue.id})" href="#newProductPartialRender" class="scrollToSection">${listValue.name}</a></li>
+          <li><a onclick="getProductByCategory(${listValueMenue.id})" href="#newProductPartialRender" class="scrollToSection" >${listValueMenue.name}</a></li>
         </d:forEach>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -60,6 +63,7 @@
       $('html, body').animate({ scrollTop: target.offset().top }, 1500);
       return false;
     });
+
   });
   function getProductByCategory(categoryId){
     var newUrl = BASEURL+"/home/category/"+categoryId;
@@ -72,5 +76,9 @@
       }
     });
   }
-
+  function selectedCategory(categoryId){
+    var categoryName=$("#selected"+categoryId).data("category-name");
+    $("#dropdownCategorySelect").attr("data-category-id",categoryId);
+    $("#dropdownCategorySelect").html('<i class="fa fa-bars"></i>'+categoryName+'<span class="caret"></span>');
+  }
 </script>
