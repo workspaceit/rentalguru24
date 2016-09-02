@@ -110,8 +110,8 @@ public class UserInf {
         this.createdDate = createdDate;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinColumn(name = "user_address_id", referencedColumnName = "id", nullable = true)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "user_address_id", referencedColumnName = "id", nullable = false)
     public UserAddress getUserAddress() {
         return userAddress;
     }

@@ -114,6 +114,12 @@
                      <mvc:mapping path="/fileupload/upload/**"/>
                      <bean class="controller.interceptor.ServiceInterceptor"/>
               </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/facebook/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+
+
 
               <!-- ******* Service with Auth check ************-->
               <mvc:interceptor>
@@ -133,14 +139,14 @@
        <!--Local-->
        <mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
                       cache-period="31556926"/>
-       <mvc:resources mapping="/profile-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
+       <mvc:resources mapping="/profile-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/profile/"
                       cache-period="31556926"/>
        <mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
                       cache-period="31556926"/>
        <!--Local Live-->
        <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24files/"-->
        <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/"-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/profile/"-->
        <!--cache-period="31556926"/>-->
        <!--<mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"-->
        <!--cache-period="31556926"/>-->
@@ -148,7 +154,7 @@
 
        <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/rentguru24files/"-->
        <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/"-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/profile/"-->
        <!--cache-period="31556926"/>-->
        <!--<mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"-->
        <!--cache-period="31556926"/>-->

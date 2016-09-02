@@ -17,12 +17,12 @@ public class ImageHelper {
     //server settings for pictures and images
     /* ------------------- Develop ----------------------------- */
     //private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
-    private static String GLOBAL_PATH = "/home/rentguru24files/";
+    //private static String GLOBAL_PATH = "/home/rentguru24files/";
     /* -------------------- Beta ---------------------------------- */
 //    private static String GLOBAL_PATH = "/home/wsit/rentguru24files_beta/";
 
         /*------------------Local---------------------*/
-  //  private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
+    private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
 
   //  private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
 
@@ -199,6 +199,36 @@ public class ImageHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+    public static Picture saveProfileImage(int appCredentialId,InputStream inputStream) {
+        InputStream in = new BufferedInputStream(inputStream);
+        OutputStream out = null;
+        String fileName = getRandomNumber() + ".jpg";
+        String fileFolder = PROFILE_PATH+"/"+appCredentialId+"/";
+        String filePath = PROFILE_PATH+"/"+appCredentialId+"/"+fileName;
+        Picture picture = new Picture();
+        try {
+            createDirIfNotExist(fileFolder);
+            out = new BufferedOutputStream(new FileOutputStream(filePath));
+            for ( int i; (i = in.read()) != -1; ) {
+                out.write(i);
+            }
+            in.close();
+            out.close();
+
+            BufferedImage bIm = ImageIO.read(new File(filePath));
+            picture.getOriginal().setPath(appCredentialId+"/" + fileName);
+            picture.getOriginal().getSize().setHeight(bIm.getHeight());
+            picture.getOriginal().getSize().setWidth(bIm.getWidth());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return picture;
+
 
     }
     public static String getRandomNumber(){
