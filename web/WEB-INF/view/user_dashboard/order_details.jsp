@@ -139,6 +139,38 @@
                                 </div>
                             </d:if>
                         </ul>
+
+                        <ul id="productReceiveConfirmationUl" style="display: none;" class="confirmation_link_ul">
+                                <li>
+                                    <BUTTON onclick="requestDisapprove(${rentRequest.getId()})" class="cancel_btn approval_btn">Disapprove
+                                        <span id="disapproveProgressImg" class="inner-load approveGif" hidden></span>
+                                    </BUTTON>
+                                </li>
+                                <li>
+                                    <BUTTON onclick="requestApprove(${rentRequest.getId()})" class="approve_btn approval_btn">Approve
+                                        <span id="approveProgressImg" class="inner-load disapproveGif" hidden></span>
+                                    </BUTTON>
+                                </li>
+
+
+                                <div class="alert alert-success">
+                                    <strong>Product Approveed For Rent</strong>.
+                                </div>
+
+
+                                <div class="alert alert-danger">
+                                    <strong>Product Disapproveed For Rent</strong>.
+                                </div>
+                        </ul>
+                        <ul id="productReturnRequestUl" style="display: none;" class="confirmation_link_ul">
+                            <li>
+                                <BUTTON onclick="requestToReturnProduct(${rentRequest.getId()})" class="cancel_btn approval_btn">Request to return
+                                    <span class="inner-load approveGif" hidden></span>
+                                </BUTTON>
+                            </li>
+                        </ul>
+
+
                     </div>
                 </div>
             </div>
@@ -260,7 +292,11 @@
         </div>
         <jsp:directive.include file="../layouts/top-footer.jsp" />
         <jsp:directive.include file="../layouts/footer.jsp" />
+        <input type="hidden" value="${rentRequest.getId()}" id="rentRequestId" />
         <script>
+            $(document).ready(function(){
+                fetchRentInfByRentRequestId($("#rentRequestId").val());
+            });
             function requestApprove(requestId){
                 $('.approve_btn').attr("disabled", "disabled");
                 $('#approveProgressImg').show();
@@ -324,6 +360,97 @@
                         alert('Error occured');
                         $('.cancel_btn').removeAttrs("disabled", "disabled");
                         $('#disapproveProgressImg').hide();
+                    }
+                });
+            }
+            function fetchRentInfByRentRequestId(requestId) {
+                $.ajax({
+                    type: "GET",
+                    url: '${BaseUrl}/api/auth/rent-inf/get-by-rent-request-id/'+requestId,
+
+                    success: function (data) {
+                        console.log(data);
+                        if(data.responseStat.status==true){
+                            var rentInf = data.responseData;
+                            if(rentInf.rentalProductReturnRequest == undefined && rentInf.rentalProductReturned == undefined){
+                                $("#productReturnRequestUl").fadeIn();
+                            }
+                        }else{
+
+
+
+                        }
+
+
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+
+
+            /* For Product Owner */
+            function requestToReturnProduct(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/return-request/make-request/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+                        if(data.responseStat.status == true){
+
+                        }else{
+
+                        }
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
+                });
+            }
+            function productReceiveConfirm(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/receive-product/confirm-receive/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+                        if(data.responseStat.status == true){
+
+
+                        }else{
+
+                        }
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
+                });
+            }
+            function productReceiveDispute(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/receive-product/dispute-receive/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+                        if(data.responseStat.status == true){
+                            $(".confirm"+rentalInfId).hide();
+                            $(".dispute"+rentalInfId).hide();
+                            $("#successDispute"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }else{
+                            $(".btn-warning"+rentalInfId).hide();
+                            $(".btn-accept"+rentalInfId).hide();
+                            $("#errorConfirmDispute"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }
+                    },
+                    error: function () {
+                        alert('Error occured');
                     }
                 });
             }

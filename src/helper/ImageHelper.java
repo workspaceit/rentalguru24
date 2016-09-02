@@ -16,8 +16,8 @@ import java.util.Random;
 public class ImageHelper {
     //server settings for pictures and images
     /* ------------------- Develop ----------------------------- */
-    private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
-
+    //private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
+    private static String GLOBAL_PATH = "/home/rentguru24files/";
     /* -------------------- Beta ---------------------------------- */
 //    private static String GLOBAL_PATH = "/home/wsit/rentguru24files_beta/";
 

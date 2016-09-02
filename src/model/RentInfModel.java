@@ -34,8 +34,22 @@ public class RentInfModel extends BaseModel {
         session.close();
     }
     public boolean isProductInRent(int productId,Timestamp startDate,Timestamp endsDate){
-        RentInf rentInf = this.getProductInRent(productId,startDate,endsDate);
+        RentInf rentInf = this.getProductInRent(productId, startDate, endsDate);
         return ( rentInf != null  );
+    }
+    public RentInf getByRentRequestId(int requestId){
+        Session session = null;
+        try{
+            session = this.sessionFactory.openSession();
+            String hql = "from RentInf rentInf where  rentInf.rentRequest.id = :rentRequestId";
+
+            return  (RentInf)session.createQuery(hql)
+                    .setParameter("rentRequestId", requestId)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            session.close();
+        }
     }
     public RentInf getProductInRent(int productId,Timestamp startDate,Timestamp endsDate){
         Session session = null;
@@ -46,13 +60,10 @@ public class RentInfModel extends BaseModel {
                     " and rentalProduct.id = :productId " +
                     " and expired = false ";
 
-            Query query =  session.createQuery(hql);
-
-            query.setParameter("productId", productId);
-            query.setParameter("startDate",startDate);
-            query.setParameter("endsDate", endsDate);
-
-            return  (RentInf)query.uniqueResult();
+            return  (RentInf) session.createQuery(hql).setParameter("productId", productId)
+                    .setParameter("startDate", startDate)
+                    .setParameter("endsDate", endsDate)
+                    .uniqueResult();
         }finally {
             session.close();
         }
