@@ -10,6 +10,8 @@
   <!--    <link rel="shortcut icon" href="favicon.ico">-->
   <!-- Mobile -->
   <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css" />" />
+  <meta name="google-signin-client_id" content="109533534799-85f6m6k04935qsuc6on9ubqe7e8rtndj.apps.googleusercontent.com">
+
   <style>
     ul{
       list-style: none outside none;
@@ -120,6 +122,7 @@
       <%--For Social Login Button--%>
         <button class="btn-cstm-sign pos-relative" onclick="loginWithFacebook()">Login in with facebook
         </button>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
   </form>
 </div>
@@ -371,6 +374,23 @@
       });
   }
 
+</script>
+
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
+
+<script>
+  function onSignIn(googleUser) {
+    console.log(googleUser);
+    var profile = googleUser.getBasicProfile();
+    console.log(profile);
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail());
+  }
 </script>
 </body>
 </html>
