@@ -536,7 +536,7 @@
         if(format == undefined){
             format = "";
         }
-        if(datesArray.length!=3{"original":{"path":"product/50/7085960021649.jpeg","type":"","size":{"width":259,"height":195}},"thumb":[]}){
+        if(datesArray.length!=3){
             return "";
         }
 

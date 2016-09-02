@@ -16,10 +16,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>${pageTitle}</title>
-  <!-- Favicons -->
-  <!--    <link rel="shortcut icon" href="favicon.ico">-->
-
-  <!-- Mobile -->
   <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css"/>"/>
   <link rel="stylesheet" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
   <style>
@@ -49,7 +45,6 @@
   </style>
   <script type="text/javascript" src="<c:url value="/resources/js/jquery.js"/>"></script>
   <script src="<c:url value="/resources/js/jquery.zoom.js"/>"></script>
-
   <script src="<c:url value="/resources/js/jquery1.9.1.min.js"  />" ></script>
   <script src="<c:url value="/resources/js/lightslider.js" />" > </script>
   <script>
@@ -73,7 +68,6 @@
     });
   </script>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-
   <!-- CSS start here -->
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />"  media="screen">
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap-select.min.css"/>" />
@@ -85,14 +79,12 @@
   <link type="text/css" href="<c:url value="/resources/css/jquery-ui-1.10.0.custom.css"/>" rel="stylesheet" />
   <script src="<c:url value="/resources/js/bootstrap-select.js"/>"></script>
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/cloudzoom.css" />" />
-
   <link rel="stylesheet" href="<c:url value="/resources/css/easyzoom.css"/> " />
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/datepicker.css"/> " />
   <link rel="stylesheet" href="<c:url value="/resources/css/zoom.css"/>" />
   <script src="<c:url value="/resources/js/dropzone.js"/>"></script>
   <!-- Theme CSS -->
   <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
-
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
   <!-- Google fonts end here -->
 </head>

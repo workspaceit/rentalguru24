@@ -136,6 +136,16 @@
 
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
+
+
+       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/images/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
+
+
        <!--Local-->
        <mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
                       cache-period="31556926"/>
@@ -158,6 +168,7 @@
        <!--cache-period="31556926"/>-->
        <!--<mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"-->
        <!--cache-period="31556926"/>-->
+
 
 
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />

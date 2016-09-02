@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: omar
-  Date: 8/24/16
-  Time: 10:56 AM
-  To change this template use File | Settings | File Templates.
---%>
 <div class="container-fluid top_nav">
   <div class="row">
     <div class="container">
@@ -56,11 +49,6 @@
                 </a>
               </li>
             </d:if>
-            <%--<li class="dropdown no-margin">--%>
-              <%--<a href="${BaseUrl}/user/dashboard">--%>
-                <%--<i class="fa fa-bars"></i>--%>
-              <%--</a>--%>
-            <%--</li>--%>
           </ul>
         </div>
       </div>

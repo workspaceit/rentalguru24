@@ -377,18 +377,12 @@
                             }
                         }else{
 
-
-
                         }
-
-
                     },
                     error: function () {
-
                     }
                 });
             }
-
 
             /* For Product Owner */
             function requestToReturnProduct(rentalInfId){

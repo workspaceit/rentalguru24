@@ -2,14 +2,12 @@
 <%@page import="java.util.Map.Entry"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Reneguru</title>
   <!-- Favicons -->
   <!--    <link rel="shortcut icon" href="favicon.ico">-->
-
   <!-- Mobile -->
   <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css" />" />
   <style>
@@ -57,7 +55,6 @@
     });
   </script>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-
   <!-- CSS start here -->
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />" media="screen">
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/styles.css" />" />
@@ -66,7 +63,6 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/owl.carousel.css"  />" />
   <!-- Theme CSS -->
   <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
-
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
   <!-- Google fonts end here -->
 </head>
@@ -83,7 +79,6 @@
             </li>
           </ul>
         </div>
-
         <div class="col-md-6 col-sm-6 col-xs-6 ">
           <%--<label class="right mid_nav_contact"><i class="fa fa-mobile fa-2x contact_icon"></i><span class="conatct_number">2300-3560-222</span></label>--%>
         </div>
@@ -91,46 +86,41 @@
     </div>
   </div>
 </div>
-
-
 <div class="parallax-window bg1" data-enllax-ratio="0.7">
   <div class="container title-block">
     <h1>Sign in</h1>
     <p>Sign in for the great Deals. Explore More</p>
   </div>
 </div>
-
-
 <div class="container center-bg">
   <form class="form-signup clearfix" onsubmit="return submitSignInData();">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
+    <div class="col-md-6" id="signin_left">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox"> Remember me</label>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
+      <div class="col-md-12 text-center">
+        <button class="btn-cstm-sign pos-relative" id="signBtn">Sign in
+          <span id="signInProgressImg" class="inner-load signUpGif" hidden></span>
+        </button>
+        <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
+        </div>
       </div>
-      <div class="checkbox">
-        <label><input type="checkbox"> Remember me</label>
-      </div>
-
     </div>
-
-    <div class="col-md-12 text-center">
-      <button class="btn-cstm-sign pos-relative" id="signBtn">Sign in
-        <span id="signInProgressImg" class="inner-load signUpGif" hidden></span>
-      </button>
-      <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
-
-      </div>
+    <div class="col-md-6" id="signin_right">
+      <%--For Social Login Button--%>
     </div>
   </form>
 </div>
-
-
-
 <div class="footer">
   <div class="container">
     <div class="row">
