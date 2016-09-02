@@ -131,19 +131,19 @@
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
 
-       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/images/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
+       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/omar/IdeaProjects/rentguru24files/"
+                      cache-period="31556926"/>
+       <mvc:resources mapping="/profile-image/**" location="file:/home/omar/IdeaProjects/rentguru24files/"
+                      cache-period="31556926"/>
+       <mvc:resources mapping="/images/**" location="file:/home/omar/IdeaProjects/rentguru24files/"
+                      cache-period="31556926"/>
 
-       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24files/"
-                      cache-period="31556926"/>
-       <mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/"
-                      cache-period="31556926"/>
-       <mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"
-                      cache-period="31556926"/>
+   <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24es/"-->
+                  <!--cache-period="31556"/>-->
+   <!--<mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24es/"-->
+                  <!--cache-period="31556"/>-->
+   <!--<mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24es/"-->
+                  <!--cache-period="31556"/>-->
 
 
 

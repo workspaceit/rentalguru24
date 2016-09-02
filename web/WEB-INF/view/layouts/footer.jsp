@@ -1,6 +1,4 @@
-
 <jsp:directive.include file="../layouts/error_success_modal.jsp" />
-
 <div class="footer_bottom">
   <div class="container">
     <div class="row">
@@ -17,14 +15,12 @@
     </div>
   </div>
 </div>
-
 <script>
   var BASEURL = "${BaseUrl}";
 </script>
 <script>
   var isLoggedin =${IsLogIn};
 </script>
-
 <!-- Contact end here -->
 <!-- Main container start here -->
 <!-- Javascript framework and plugins start here -->
@@ -44,13 +40,10 @@
 <script src="<c:url value="/resources/js/jquery-ui-1.9.2.custom.min.js"/> " type="text/javascript"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datepicker.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/cloudzoom.js" />"></script>
-
 <script src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-
 <%--Developer Helpers --%>
 <script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
-
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">
   $('.main_product_slider').carousel();

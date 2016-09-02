@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: omar
-  Date: 8/24/16
-  Time: 10:58 AM
-  To change this template use File | Settings | File Templates.
---%>
 <nav class="main_nav navbar navbar-default">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -15,7 +8,6 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse no-padding " id="bs-example-navbar-collapse-1">
@@ -27,27 +19,19 @@
           </a>
           <ul class="dropdown-menu">
             <d:forEach var="listValue" items="${category}">
-              <%--<li><a href="#">Action</a></li>--%>
               <li><a onclick="selectedCategory(${listValue.id})" id="selected${listValue.id}" data-category-name="${listValue.name}">${listValue.name}</a></li>
             </d:forEach>
           </ul>
         </li>
         <form class="navbar-form navbar-left no-padding main_search_form" role="search">
-
           <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
           <div class="input-group-btn search_button">
             <button class="btn btn-default search_btn" type="submit" style="padding:6px;"><i class="fa fa-search"></i></button>
           </div>
         </form>
       </ul>
-      <%--<ul class="nav navbar-nav navbar-right main_navigation">--%>
-        <%--<d:forEach var="listValue" items="${category}">--%>
-          <%--<li><a href="${BaseUrl}/home/category/${listValue.id}">${listValue.name}</a></li>--%>
-        <%--</d:forEach>--%>
-      <%--</ul>--%>
       <ul class="nav navbar-nav navbar-right main_navigation">
         <d:forEach var="listValueMenue" items="${category}">
-          <%--<li><a href="#">Action</a></li>--%>
           <li><a onclick="getProductByCategory(${listValueMenue.id})" href="#newProductPartialRender" class="scrollToSection" >${listValueMenue.name}</a></li>
         </d:forEach>
       </ul>
