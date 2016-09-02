@@ -95,28 +95,29 @@
 <div class="container center-bg">
   <form class="form-signup clearfix" onsubmit="return submitSignInData();">
     <div class="col-md-6" id="signin_left">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox"> Remember me</label>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
-      </div>
-      <div class="checkbox">
-        <label><input type="checkbox"> Remember me</label>
+      <div class="col-md-12 text-center">
+        <button class="btn-cstm-sign pos-relative" id="signBtn">Sign in
+          <span id="signInProgressImg" class="inner-load signUpGif" hidden></span>
+        </button>
+        <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
+        </div>
       </div>
     </div>
     <div class="col-md-6" id="signin_right">
       <%--For Social Login Button--%>
-    </div>
-    <div class="col-md-12 text-center">
-      <button class="btn-cstm-sign pos-relative" id="signBtn">Sign in
-        <span id="signInProgressImg" class="inner-load signUpGif" hidden></span>
-      </button>
-      <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
-
-      </div>
     </div>
   </form>
 </div>
