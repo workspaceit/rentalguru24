@@ -93,7 +93,7 @@
   </div>
 </div>
 <div class="container center-bg">
-  <form class="form-signup clearfix" onsubmit="return submitSignInData();">
+  <form class="form-signup clearfix" onsubmit="return false;">
     <div class="col-md-6" id="signin_left">
       <div class="col-md-12">
         <div class="form-group">
@@ -109,7 +109,7 @@
         </div>
       </div>
       <div class="col-md-12 text-center">
-        <button class="btn-cstm-sign pos-relative" id="signBtn">Sign in
+        <button class="btn-cstm-sign pos-relative" id="signBtn" onclick="submitSignInData()">Sign in
           <span id="signInProgressImg" class="inner-load signUpGif" hidden></span>
         </button>
         <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
@@ -118,6 +118,8 @@
     </div>
     <div class="col-md-6" id="signin_right">
       <%--For Social Login Button--%>
+        <button class="btn-cstm-sign pos-relative" onclick="loginWithFacebook()">Login in with facebook
+        </button>
     </div>
   </form>
 </div>
@@ -276,6 +278,99 @@
     return false;
   }
 </script>
+<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+//      document.getElementById('status').innerHTML = 'Please log ' +
+//              'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+//      document.getElementById('status').innerHTML = 'Please log ' +
+//              'into Facebook.';
+    }
+  }
 
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '591163881067974', // Office Live : 591163881067974 , Local : 141550766294824
+      cookie     : true,  // enable cookies to allow the server to access
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v2.5' // use graph api version 2.5
+    });
+
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  function loginWithFacebook(){
+    FB.login(function(response) {
+      if (response.authResponse) {
+        loginWithFbAccessToken(response.authResponse.accessToken);
+        console.log(response);
+        console.log('Welcome!  Fetching your information.... ');
+//        FB.api('/me',{fields:"email,name"}, function(response) {
+//          console.log(response);
+//          console.log('Good to see you, ' + response.name + '.');
+//        });
+      } else {
+        console.log('User cancelled login or did not fully authorize.');
+      }
+    },{scope: 'email,public_profile'});
+  }
+  function loginWithFbAccessToken(accessToken){
+      $.ajax({
+        url: BASEURL+'/api/facebook/signup-user/by-fb-access-token',
+        type: 'POST',
+        data: {
+          accessToken:accessToken
+        },
+        success: function(data){
+          console.log(data);
+          if(data.responseStat.status == true){
+            $("#alertMsg").html("Login success").fadeIn(500).delay(2000).fadeOut(500,function(){
+              window.location.href =BASEURL+"/home";
+            });
+          }else{
+            $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){
+              $("#signBtn").removeAttrs("disabled","disabled");
+            });
+          }
+
+
+        }
+      });
+  }
+
+</script>
 </body>
 </html>

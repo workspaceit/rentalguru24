@@ -2,6 +2,7 @@ package controller.service.app.social_media;
 
 import helper.ImageHelper;
 import helper.ServiceResponse;
+import helper.SessionManagement;
 import model.AppLoginCredentialModel;
 import model.IdentityTypeModel;
 import model.entity.app.AppCredential;
@@ -11,6 +12,7 @@ import model.entity.app.UserInf;
 import model.nonentity.photo.Picture;
 import model.nonentity.social_media.FaceBookInf;
 import model.nonentity.social_media.FaceBookProfilePicture;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,7 +51,6 @@ public class FaceBookService {
     @RequestMapping(value = "/signup-user/by-fb-access-token",method = RequestMethod.POST)
     public ServiceResponse signUpByAccessToken(HttpServletRequest request ,@RequestParam String accessToken){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         RestTemplate restTemplate = new RestTemplate();
 
         //
@@ -117,6 +118,10 @@ public class FaceBookService {
         authCredential.getUserInf().setProfilePicture(profileImage);
         appLoginCredentialModel.update(authCredential);
         serviceResponse.setResponseData(appLoginCredentialModel.getById(authCredential.getId()));
+
+        /*Creating Session */
+        SessionManagement.setAppCredentialInSession(request,serviceResponse,appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
+
         return serviceResponse;
     }
 }

@@ -86,7 +86,7 @@
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me',{fields: 'name, email'}, function(response) {
+    FB.api('/me',{fields: 'name, email,'}, function(response) {
       console.log(response);
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
@@ -101,7 +101,7 @@
   the FB.login() function when clicked.
 -->
 
-<fb:login-button scope="email,name" onlogin="checkLoginState();">
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 </fb:login-button>
 
 <div id="status">
