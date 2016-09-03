@@ -17,12 +17,12 @@ public class ImageHelper {
     //server settings for pictures and images
     /* ------------------- Develop ----------------------------- */
   //  private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
-    //private static String GLOBAL_PATH = "/home/rentguru24files/";
+    private static String GLOBAL_PATH = "/home/rentguru24files/";
     /* -------------------- Beta ---------------------------------- */
 //    private static String GLOBAL_PATH = "/home/wsit/rentguru24files_beta/";
 
         /*------------------Local---------------------*/
-    private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
+  //  private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
 
   //  private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
 

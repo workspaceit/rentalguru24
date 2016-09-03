@@ -12,7 +12,6 @@
                             <property name="objectMapper">
                                    <bean class="json.HibernateAwareObjectMapper" >
                                           <!--<property name="serializationInclusion" value="NON_NULL" />-->
-
                                    </bean>
                             </property>
 
@@ -22,7 +21,13 @@
 
        <context:component-scan base-package="controller"   />
 
+
+
+       <!-- * ** *** **** **** *** ** * -->
+       <!-- * ** *** **** **** *** ** * -->
        <!-- * ** *** **** Interceptor  **** *** ** * -->
+       <!-- * ** *** **** **** *** ** * -->
+       <!-- * ** *** **** **** *** ** * -->
 
        <mvc:interceptors>
               <!-- ******* Admin Panel  ************-->
@@ -139,8 +144,12 @@
               </mvc:interceptor>
        </mvc:interceptors>
 
-       <!-- * ** *** **** Interceptor Ends **** *** ** * -->
 
+               <!-- * ** *** **** **** *** ** * -->
+               <!-- * ** *** **** **** *** ** * -->
+       <!-- * ** *** **** Interceptor Ends **** *** ** * -->
+               <!-- * ** *** **** **** *** ** * -->
+               <!-- * ** *** **** **** *** ** * -->
 
        <mvc:resources mapping="/admin-resources/**" location="/WEB-INF/admin-resources/"
                       cache-period="31556926"/>
@@ -164,29 +173,41 @@
                       <!--cache-period="31556926"/>-->
        <!--<mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
                       <!--cache-period="31556926"/>-->
+
+
        <!--Local Live-->
-       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24files/"
-       cache-period="31556926"/>
-       <mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/profile/"
-       cache-period="31556926"/>
-       <mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"
-       cache-period="31556926"/>
+       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24files/"-->
+       <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/profile/"-->
+       <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"-->
+       <!--cache-period="31556926"/>-->
+
+
+
        <!--Live Client Server-->
 
-       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/rentguru24files/"-->
-       <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/profile/"-->
-       <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"-->
-       <!--cache-period="31556926"/>-->
+       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/rentguru24files/"
+       cache-period="31556926"/>
+       <mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/profile/"
+       cache-period="31556926"/>
+       <mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"
+       cache-period="31556926"/>
 
-
+<!--*******************************************************************************************************-->
 
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
        <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
 
+ <!--*******************************************************************************************************-->
+
+
+
 
        <!-- ******************** View Resolve  *********************************** -->
+
+
+
        <!--<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
        <!--<property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>-->
        <!--</bean>-->
@@ -326,9 +347,9 @@
               </property>
               <property name="hibernateProperties">
                      <props>
-                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24_develop</prop>
+                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>
                             <prop key="hibernate.connection.username">root</prop>
-                            <prop key="hibernate.connection.password" >wsit97480</prop>
+                            <prop key="hibernate.connection.password" />
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
                             <prop key="hibernate.show_sql">true</prop>
                             <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
