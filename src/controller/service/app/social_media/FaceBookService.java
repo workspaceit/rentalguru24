@@ -83,8 +83,11 @@ public class FaceBookService {
 
 
         if(appLoginCredentialModel.isEmailExist(fbInf.getEmail())){
-            serviceResponse.getResponseStat().setMsg("Account found");
+            serviceResponse.getResponseStat().setMsg("Login Success");
+
             serviceResponse.setResponseData(appLoginCredentialModel.getByEmail(fbInf.getEmail()));
+            AppCredential appCredential = appLoginCredentialModel.getAppcredentialByEmail(fbInf.getEmail());
+            SessionManagement.setAppCredentialInSession(request, serviceResponse,appCredential);
             return serviceResponse;
         }
 

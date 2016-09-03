@@ -60,6 +60,10 @@
                      <mvc:mapping path="/product/details/**"/>
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/reset-password/**"/>
+                     <bean class="controller.interceptor.WebInterceptor"/>
+              </mvc:interceptor>
 
 
               <!-- ******* Auth  Web page  ************-->
@@ -118,7 +122,10 @@
                      <mvc:mapping path="/api/facebook/**"/>
                      <bean class="controller.interceptor.ServiceInterceptor"/>
               </mvc:interceptor>
-
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/reset-password/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
 
 
               <!-- ******* Service with Auth check ************-->
@@ -240,8 +247,6 @@
        </bean>
        <bean id="rentTypeModel" class="model.RentTypeModel" >
        </bean>
-       <bean id="deviceInfoModel" class="model.DeviceInfoModel">
-       </bean>
        <bean id="appLoginCredentialModel" class="model.AppLoginCredentialModel">
        </bean>
        <bean id="attributesModel" class="model.AttributesModel" >
@@ -276,8 +281,10 @@
        </bean>
        <bean id="adminPaypalCredentailModel" class="model.admin.AdminPaypalCredentailModel" >
        </bean>
-
-
+       <bean id="deviceInfoModel" class="model.DeviceInfoModel" >
+       </bean>
+       <bean id="passwordResetModel" class="model.PasswordResetModel" >
+       </bean>
 
 
 
@@ -309,6 +316,8 @@
                             <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
                             <value>model.entity.admin.AdminPaypalCredential</value>
                             <value>model.entity.admin.AdminSiteFeesEntity</value>
+                            <value>model.entity.app.PasswordResetsEntity</value>
+                            <value>model.entity.app.DeviceInfoEntity</value>
                      </list>
               </property>
               <property name="hibernateProperties">
