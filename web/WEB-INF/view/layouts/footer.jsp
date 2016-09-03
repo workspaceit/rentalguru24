@@ -146,6 +146,46 @@
       }
     });
   }
+  /*****************  Fetch product by category ***********/
+
+  function fetchProductByCategoryAndScrollDown(categoryId,elem){
+    event.preventDefault();
+    getProductByCategory(categoryId,elem);
+    return false;
+  }
+  function getProductByCategory(categoryId,elem){
+    if(showInfo != undefined){
+      showInfo("Loading...")
+    }
+    var newUrl = BASEURL+"/home/category/"+categoryId;
+    $.ajax({
+      url: BASEURL+"/home/partial-rendering/category/"+categoryId,
+      type: "GET",
+      success: function(data){
+        history.pushState({}, null, newUrl);
+        $("#newProductPartialRender").html(data);
+
+        /*Scrolling down*/
+        if(elem != undefined && elem!=null){
+          scrollDownWithAnimation(elem);
+          hideInfo();
+        }
+      }
+    });
+  }
+  function scrollDownWithAnimation(elem){
+    var target = $(elem.hash);
+    if (target.length == 0) target = $('a[name="' + elem.hash.substr(1) + '"]');
+    if (target.length == 0) target = $('html');
+    $('html, body').animate({ scrollTop: target.offset().top }, 700);
+  }
+  function selectedCategory(categoryId){
+    var categoryName=$("#selected"+categoryId).data("category-name");
+    $("#dropdownCategorySelect").attr("data-category-id",categoryId);
+    $("#dropdownCategorySelect").html('<i class="fa fa-bars"></i>'+categoryName+'<span class="caret"></span>');
+  }
+
+
 </script>
 <script>
   $(document).ready(function () {

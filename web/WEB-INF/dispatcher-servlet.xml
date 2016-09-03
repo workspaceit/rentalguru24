@@ -119,7 +119,11 @@
                      <bean class="controller.interceptor.ServiceInterceptor"/>
               </mvc:interceptor>
               <mvc:interceptor>
-                     <mvc:mapping path="/api/facebook/**"/>
+                     <mvc:mapping path="/api/social-media/facebook/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/social-media/google/**"/>
                      <bean class="controller.interceptor.ServiceInterceptor"/>
               </mvc:interceptor>
               <mvc:interceptor>
@@ -322,9 +326,9 @@
               </property>
               <property name="hibernateProperties">
                      <props>
-                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>
+                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24_develop</prop>
                             <prop key="hibernate.connection.username">root</prop>
-                            <prop key="hibernate.connection.password" />
+                            <prop key="hibernate.connection.password" >wsit97480</prop>
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
                             <prop key="hibernate.show_sql">true</prop>
                             <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
