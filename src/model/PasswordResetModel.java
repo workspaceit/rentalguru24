@@ -42,4 +42,5 @@ public class PasswordResetModel extends BaseModel {
             session.close();
         }
     }
+
 }
