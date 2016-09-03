@@ -70,7 +70,7 @@ public class HomeController {
         String baseUrl = (String) request.getAttribute("baseURL");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
-        ModelAndView modelAndView = new ModelAndView("public/product_by_category");
+        ModelAndView modelAndView = new ModelAndView("public/Home");
         List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId);
         if(rentalProducts != null){
             List<Category> category = categoryModel.getAll();
@@ -91,7 +91,7 @@ public class HomeController {
             modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
             modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
             modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
-            modelAndView.addObject("pageTitle", "Product By Category");
+            modelAndView.addObject("pageTitle", "RentGuru");
             return modelAndView;
         }else{
             return new ModelAndView("redirect:/home");

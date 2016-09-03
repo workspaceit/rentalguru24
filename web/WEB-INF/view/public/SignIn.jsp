@@ -122,7 +122,8 @@
       <%--For Social Login Button--%>
         <button class="btn-cstm-sign pos-relative" onclick="loginWithFacebook()">Login in with facebook
         </button>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <button class="btn-cstm-sign pos-relative" id="loginWithGooGleBtn">Login in with google
+        </button>
     </div>
   </form>
 </div>
@@ -206,8 +207,8 @@
 <script src="<c:url value="/resources/js/owl.carousel.js"  />" ></script>
 <script src="<c:url value="/resources/js/jquery.enllax.min.js" />" ></script>
 
-
-
+<%--Google Js API--%>
+<script src="https://apis.google.com/js/api:client.js"></script>
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">
   $("div#fallback").dropzone({ url: BASEURL+"/file/post" });
@@ -282,6 +283,7 @@
   }
 </script>
 <script>
+
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -338,7 +340,7 @@
   function loginWithFacebook(){
     FB.login(function(response) {
       if (response.authResponse) {
-        loginWithFbAccessToken(response.authResponse.accessToken);
+        loginWithFaceBookAccessToken(response.authResponse.accessToken);
         console.log(response);
         console.log('Welcome!  Fetching your information.... ');
 //        FB.api('/me',{fields:"email,name"}, function(response) {
@@ -350,9 +352,10 @@
       }
     },{scope: 'email,public_profile'});
   }
-  function loginWithFbAccessToken(accessToken){
+
+  function loginWithFaceBookAccessToken(accessToken){
       $.ajax({
-        url: BASEURL+'/api/facebook/signup-user/by-fb-access-token',
+        url: BASEURL+'/api/social-media/facebook/login/by-facebook-access-token',
         type: 'POST',
         data: {
           accessToken:accessToken
@@ -374,23 +377,67 @@
       });
   }
 
+  /*Google Login */
+  var googleUser = {};
+  var loginWithGoogle = function() {
+    gapi.load('auth2', function(){
+      // Retrieve the singleton for the GoogleAuth library and set up the client.
+      auth2 = gapi.auth2.init({
+        client_id: '109533534799-85f6m6k04935qsuc6on9ubqe7e8rtndj.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        // Request scopes in addition to 'profile' and 'email'
+        //scope: 'additional_scope'
+      });
+      attachSignin(document.getElementById('loginWithGooGleBtn'));
+    });
+  };
+
+  function attachSignin(element) {
+    auth2.attachClickHandler(element, {},
+            function(googleUser) {
+              try{
+                loginWithGoogleAccessToken(googleUser.Zi.access_token);
+              }catch(ex){
+                console.log(ex);
+              }
+            }, function(error) {
+              alert(JSON.stringify(error, undefined, 2));
+            });
+  }
+  function loginWithGoogleAccessToken(accessToken){
+    $.ajax({
+      url: BASEURL+'/api/social-media/google/login/by-google-access-token',
+      type: 'POST',
+      data: {
+        accessToken:accessToken
+      },
+      success: function(data){
+        console.log(data);
+        if(data.responseStat.status == true){
+          $("#alertMsg").html("Login success").fadeIn(500).delay(2000).fadeOut(500,function(){
+            window.location.href =BASEURL+"/home";
+          });
+        }else{
+          $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){
+            $("#signBtn").removeAttrs("disabled","disabled");
+          });
+        }
+
+
+      }
+    });
+  }
+
+  loginWithGoogle();
 </script>
 
 
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 
 
 
 <script>
-  function onSignIn(googleUser) {
-    console.log(googleUser);
-    var profile = googleUser.getBasicProfile();
-    console.log(profile);
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
-  }
+
 </script>
 </body>
 </html>

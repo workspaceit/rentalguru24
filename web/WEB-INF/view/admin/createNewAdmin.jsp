@@ -115,7 +115,7 @@
         }else if(!confirmPassword.trim()){
             message="Confirm Password field is empty";
             flag=false;
-        }else if(!password===confirmPassword){
+        }else if(!password.match(confirmPassword)){
             message="Confirm Password mismatched";
             flag=false;
         }

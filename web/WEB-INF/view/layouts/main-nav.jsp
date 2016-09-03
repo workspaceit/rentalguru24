@@ -32,37 +32,9 @@
       </ul>
       <ul class="nav navbar-nav navbar-right main_navigation">
         <d:forEach var="listValueMenue" items="${category}">
-          <li><a onclick="getProductByCategory(${listValueMenue.id})" href="#newProductPartialRender" class="scrollToSection" >${listValueMenue.name}</a></li>
+          <li><a id="categoryAnchor_${listValueMenue.id}" onclick="fetchProductByCategoryAndScrollDown(${listValueMenue.id},this)" href="#newProductPartialRender" class="scrollToSection" >${listValueMenue.name}</a></li>
         </d:forEach>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<script>
-  $(document).ready(function() {
-    $('.scrollToSection').click(function() {
-      var target = $(this.hash);
-      if (target.length == 0) target = $('a[name="' + this.hash.substr(1) + '"]');
-      if (target.length == 0) target = $('html');
-      $('html, body').animate({ scrollTop: target.offset().top }, 1500);
-      return false;
-    });
-
-  });
-  function getProductByCategory(categoryId){
-    var newUrl = BASEURL+"/home/category/"+categoryId;
-    $.ajax({
-      url: BASEURL+"/home/partial-rendering/category/"+categoryId,
-      type: "GET",
-      success: function(data){
-        history.pushState({}, null, newUrl);
-        $("#newProductPartialRender").html(data);
-      }
-    });
-  }
-  function selectedCategory(categoryId){
-    var categoryName=$("#selected"+categoryId).data("category-name");
-    $("#dropdownCategorySelect").attr("data-category-id",categoryId);
-    $("#dropdownCategorySelect").html('<i class="fa fa-bars"></i>'+categoryName+'<span class="caret"></span>');
-  }
-</script>

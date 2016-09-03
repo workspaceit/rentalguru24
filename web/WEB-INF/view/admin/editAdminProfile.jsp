@@ -103,7 +103,7 @@
         message="Email is not valid";
         flag=false;
 
-      } else if(!password===confirmPassword){
+      } else if(!password.match(confirmPassword)){
         message="Confirm Password mismatched";
         flag=false;
       }
