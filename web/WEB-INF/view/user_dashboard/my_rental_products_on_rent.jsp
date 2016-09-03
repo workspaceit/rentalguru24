@@ -52,23 +52,67 @@
                                             <div class="table-desc">
                                                 <h5>${product.getName()}</h5>
                                                 <p>${product.getDescription()}</p>
-
-
-
                                                 <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableFrom()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableTill()}"/></span></p>
                                                 <h5>Rented By</h5>
+                                                <d:set var="locaIsProductRenturned" value="${false}" ></d:set>
                                                 <d:forEach var="rentInf" items="${product.getRentInf()}">
-                                                            <p>${rentInf.getRentee().getUserInf().getFirstName()} ${rentInf.getRentee().getUserInf().getLastName()}</p>
-                                                            <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getStartDate()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getEndsDate()}"/></span></p>
+                                                    <d:set var="productRenturned" value="${tyre}" ></d:set>
+                                                    <p>${rentInf.getRentee().getUserInf().getFirstName()} ${rentInf.getRentee().getUserInf().getLastName()}</p>
+                                                    <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getStartDate()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getEndsDate()}"/></span></p>
+                                                    <d:if test="${rentInf.rentalProductReturned != null}">
+                                                        <d:if test="${rentInf.rentalProductReturned != null}">
+                                                            <d:choose>
+                                                                <d:when test="${rentInf.rentalProductReturned.confirm==true}">
+                                                                    <div class="alert alert-success">
+                                                                        <strong>Confirmed on
+                                                                            <d:set var="rentalProductReturnedHistories" value="${rentInf.rentalProductReturned.rentalProductReturnedHistories}" />
+                                                                            <d:if test="${rentalProductReturnedHistories != null && rentalProductReturnedHistories.size()>0}">
+                                                                                <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentalProductReturnedHistories[rentalProductReturnedHistories.size()-1].createdDate}"/> </span>
+                                                                            </d:if>
+                                                                        </strong>
+                                                                    </div>
+                                                                </d:when>
+                                                                <d:when test="${rentInf.rentalProductReturned.dispute==true}">
+                                                                    <div class="alert alert-success">
+                                                                        <strong>Dispute on
+                                                                            <d:set var="rentalProductReturnedHistories" value="${rentInf.rentalProductReturned.rentalProductReturnedHistories}" />
+                                                                            <d:if test="${rentalProductReturnedHistories != null && rentalProductReturnedHistories.size()>0}">
+                                                                                <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentalProductReturnedHistories[rentalProductReturnedHistories.size()-1].createdDate}"/> </span>
+                                                                            </d:if>
+                                                                        </strong>
+                                                                    </div>
+                                                                </d:when>
+                                                                <d:otherwise>
+                                                                    <button class="btn btn-warning confirm${rentInf.rentalProductReturned.id}" onclick="productReceiveConfirm(${rentInf.rentalProductReturned.id})" >Confirm</button>
+                                                                    <button class="btn btn-accept dispute${rentInf.rentalProductReturned.id}" onclick="productReceiveDispute(${rentInf.rentalProductReturned.id})" >Dispute</button>
+                                                                </d:otherwise>
+                                                            </d:choose>
+                                                        </d:if>
+                                                    </d:if>
+                                                    <div class="alert alert-success" id="successConfirm${rentInf.rentalProductReturned.id}" hidden>
+                                                        Product return request has been confirm.
+                                                    </div>
+                                                    <div class="alert alert-success" id="successDispute${rentInf.rentalProductReturned.id}" hidden>
+                                                        Product return request has been Dispute.
+                                                    </div>
+                                                    <div class="alert alert-success" id="errorConfirmDispute${rentInf.rentalProductReturned.id}" hidden>
+                                                    </div>
                                                 </d:forEach>
-                                                <%--.getUserInf().getFirstName()--%>
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="actions">
-                                                <button class="btn btn-edit">Request Return</button>
-                                            </div>
-                                        </td>
+                                        <d:if test="${!locaIsProductRenturned}" >
+                                            <d:forEach var="rentInf" items="${product.getRentInf()}">
+                                                <td>
+                                                    <div class="actions">
+                                                        <button class="btn btn-edit" onclick="requestToReturnProduct(${rentInf.id})" id="buttonRequestReturn">Request Return</button>
+                                                    </div>
+                                                    <div class="alert alert-success" id="successRequestReturn${rentInf.id}" hidden>
+                                                        Product return request has been sent.
+                                                    </div>
+                                                    <div class="alert alert-danger" id="errorRequestReturn${rentInf.id}" hidden></div>
+                                                </td>
+                                            </d:forEach>
+                                        </d:if>
                                     </tr>
                                 </d:forEach>
                                 </tbody>
@@ -88,75 +132,81 @@
         <jsp:directive.include file="../layouts/footer.jsp" />
         <!-- Javascript framework and plugins end here -->
         <script>
-            (function ($) {
-                $('.spinner .btn:first-of-type').on('click', function () {
-                    $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
+            function requestToReturnProduct(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/return-request/make-request/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+                        if(data.responseStat.status == true){
+                            $("#successRequestReturn"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }else{
+                            $("#errorRequestReturn"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
                 });
-                $('.spinner .btn:last-of-type').on('click', function () {
-                    $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
+            }
+            function productReceiveConfirm(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/receive-product/confirm-receive/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+                        if(data.responseStat.status == true){
+                            $(".confirm"+rentalInfId).hide();
+                            $(".dispute"+rentalInfId).hide();
+                            $("#successConfirm"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }else{
+                            $(".btn-warning"+rentalInfId).hide();
+                            $(".btn-accept"+rentalInfId).hide();
+                            $("#errorConfirmDispute"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
                 });
-            })(jQuery);
+            }
+            function productReceiveDispute(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/receive-product/dispute-receive/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+                        if(data.responseStat.status == true){
+                            $(".confirm"+rentalInfId).hide();
+                            $(".dispute"+rentalInfId).hide();
+                            $("#successDispute"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }else{
+                            $(".btn-warning"+rentalInfId).hide();
+                            $(".btn-accept"+rentalInfId).hide();
+                            $("#errorConfirmDispute"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+
+                            });
+                        }
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
+                });
+            }
         </script>
-        <script>
-            $('#h-slider').slider({
-                range: true,
-                values: [17, 67]
-            });
-        </script>
-        <script>
-
-            (function ($) {
-
-                //Plugin activation
-                $(window).enllax();
-
-                //            $('#some-id').enllax();
-
-                //            $('selector').enllax({
-                //                type: 'background', // 'foreground'
-                //                ratio: 0.5,
-                //                direction: 'vertical' // 'horizontal'
-                //            });
-
-            })(jQuery);
-        </script>
-
-        <script type="text/javascript">
-//            $(document).ready(function () {
-//                $("#successModal").modal('show');
-//            });
-        </script>
-        <script>
-            $(document).ready(function () {
-                $('#example1').DataTable();
-            });
-        </script>
-        <script>
-            var nowTemp = new Date();
-            var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-
-            var checkin = $('#dpd1').datepicker({
-                onRender: function (date) {
-                    return date.valueOf() < now.valueOf() ? 'disabled' : '';
-                }
-            }).on('changeDate', function (ev) {
-                if (ev.date.valueOf() > checkout.date.valueOf()) {
-                    var newDate = new Date(ev.date)
-                    newDate.setDate(newDate.getDate() + 1);
-                    checkout.setValue(newDate);
-                }
-                checkin.hide();
-                $('#dpd2')[0].focus();
-            }).data('datepicker');
-            var checkout = $('#dpd2').datepicker({
-                onRender: function (date) {
-                    return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
-                }
-            }).on('changeDate', function (ev) {
-                checkout.hide();
-            }).data('datepicker');
-        </script>
-
     </body>
 </html>
 

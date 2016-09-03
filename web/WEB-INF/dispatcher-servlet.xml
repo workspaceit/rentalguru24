@@ -60,6 +60,10 @@
                      <mvc:mapping path="/product/details/**"/>
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/reset-password/**"/>
+                     <bean class="controller.interceptor.WebInterceptor"/>
+              </mvc:interceptor>
 
 
               <!-- ******* Auth  Web page  ************-->
@@ -114,6 +118,15 @@
                      <mvc:mapping path="/fileupload/upload/**"/>
                      <bean class="controller.interceptor.ServiceInterceptor"/>
               </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/facebook/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+              <mvc:interceptor>
+                     <mvc:mapping path="/api/reset-password/**"/>
+                     <bean class="controller.interceptor.ServiceInterceptor"/>
+              </mvc:interceptor>
+
 
               <!-- ******* Service with Auth check ************-->
               <mvc:interceptor>
@@ -131,19 +144,37 @@
        <mvc:resources mapping="/resources/**" location="/WEB-INF/resource/"
                       cache-period="31556926"/>
 
+
+       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/images/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
+
+
+       <!--Local-->
        <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
                       <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/"-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/profile/"-->
                       <!--cache-period="31556926"/>-->
        <!--<mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
                       <!--cache-period="31556926"/>-->
-
+       <!--Local Live-->
        <mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24files/"
-                      cache-period="31556926"/>
-       <mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/"
-                      cache-period="31556926"/>
+       cache-period="31556926"/>
+       <mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/profile/"
+       cache-period="31556926"/>
        <mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"
-                      cache-period="31556926"/>
+       cache-period="31556926"/>
+       <!--Live Client Server-->
+
+       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/rentguru24files/"-->
+       <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/profile/"-->
+       <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"-->
+       <!--cache-period="31556926"/>-->
 
 
 
@@ -153,11 +184,11 @@
 
        <!-- ******************** View Resolve  *********************************** -->
        <!--<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
-              <!--<property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>-->
+       <!--<property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>-->
        <!--</bean>-->
 
        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
-       <!--<bean id="viewResolver"  class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
+              <!--<bean id="viewResolver"  class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
               <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
               <property name="prefix" value="/WEB-INF/view/" />
               <property name="suffix" value=".jsp" />
@@ -216,8 +247,6 @@
        </bean>
        <bean id="rentTypeModel" class="model.RentTypeModel" >
        </bean>
-       <bean id="deviceInfoModel" class="model.DeviceInfoModel">
-       </bean>
        <bean id="appLoginCredentialModel" class="model.AppLoginCredentialModel">
        </bean>
        <bean id="attributesModel" class="model.AttributesModel" >
@@ -252,12 +281,14 @@
        </bean>
        <bean id="adminPaypalCredentailModel" class="model.admin.AdminPaypalCredentailModel" >
        </bean>
+       <bean id="deviceInfoModel" class="model.DeviceInfoModel" >
+       </bean>
+       <bean id="passwordResetModel" class="model.PasswordResetModel" >
+       </bean>
 
 
 
-
-
-        <!-- ******************** Hibernate Session,Entity, *********************************** -->
+       <!-- ******************** Hibernate Session,Entity, *********************************** -->
        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
               <property name="annotatedClasses">
                      <list>
@@ -285,6 +316,8 @@
                             <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
                             <value>model.entity.admin.AdminPaypalCredential</value>
                             <value>model.entity.admin.AdminSiteFeesEntity</value>
+                            <value>model.entity.app.PasswordResetsEntity</value>
+                            <value>model.entity.app.DeviceInfoEntity</value>
                      </list>
               </property>
               <property name="hibernateProperties">
@@ -304,7 +337,7 @@
        <!-- ******************** Email and Email Template   *********************************** -->
 
        <!--<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
-              <!--&lt;!&ndash;<property name="resourceLoaderPath"><value>/WEB-INF/mailTemplate/</value></property>&ndash;&gt;-->
+       <!--&lt;!&ndash;<property name="resourceLoaderPath"><value>/WEB-INF/mailTemplate/</value></property>&ndash;&gt;-->
        <!--</bean>-->
 
 
@@ -316,13 +349,13 @@
 
 
 
-       </beans>
+</beans>
 
 
-              <!--<prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>-->
-              <!--<prop key="hibernate.connection.username">root</prop>-->
-              <!--<prop key="hibernate.connection.password" />-->
-              <!--<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>-->
-              <!--<prop key="hibernate.show_sql">true</prop>-->
-              <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
-              <!--<prop key="hibernate.enable_lazy_load_no_trans">true</prop>-->
+        <!--<prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>-->
+        <!--<prop key="hibernate.connection.username">root</prop>-->
+        <!--<prop key="hibernate.connection.password" />-->
+        <!--<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>-->
+        <!--<prop key="hibernate.show_sql">true</prop>-->
+        <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
+        <!--<prop key="hibernate.enable_lazy_load_no_trans">true</prop>-->

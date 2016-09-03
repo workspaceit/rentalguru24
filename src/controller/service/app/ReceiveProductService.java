@@ -117,7 +117,7 @@ public class ReceiveProductService {
                                                                Boolean dispute){
         rentalProductReturned.setConfirm(confirm);
         rentalProductReturned.setDispute(dispute);
-        rentalProductReturned.setIsExpired(true);
+        //rentalProductReturned.setIsExpired(true);
         rentalProductReturned.setRenterRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
         //rentalProductReturned.getRentInf().setExpired(false);
 

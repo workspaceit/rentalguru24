@@ -1,12 +1,14 @@
 package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
+import model.entity.app.product.view.ProductView;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
@@ -38,9 +40,11 @@ public class RentInf {
     public boolean hasReceiveConfirmation = false;
 
     private List<RentalProductReturnRequest> rentalProductReturnRequestList;
-    public RentalProductReturnRequest rentalProductReturnRequest;
-
     private List<RentalProductReturned> rentalProductReturnedList;
+
+    @JsonView({ProductView.MyRentalProductView.class,ProductView.MyRentedProductView.class})
+    public RentalProductReturnRequest rentalProductReturnRequest;
+    @JsonView({ProductView.MyRentalProductView.class,ProductView.MyRentedProductView.class})
     public RentalProductReturned rentalProductReturned;
 
     private Timestamp createdDate;
@@ -183,14 +187,22 @@ public class RentInf {
         }
         this.rentalProductReturnedList = rentalProductReturnedList;
     }
-    @Override
-    public String toString(){
-        ObjectMapper om = new ObjectMapper();
-        try {
-            return om.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+
+    @Transient
+    public RentalProductReturnRequest getRentalProductReturnRequest() {
+        return rentalProductReturnRequest;
+    }
+
+    public void setRentalProductReturnRequest(RentalProductReturnRequest rentalProductReturnRequest) {
+        this.rentalProductReturnRequest = rentalProductReturnRequest;
+    }
+
+    @Transient
+    public RentalProductReturned getRentalProductReturned() {
+        return rentalProductReturned;
+    }
+
+    public void setRentalProductReturned(RentalProductReturned rentalProductReturned) {
+        this.rentalProductReturned = rentalProductReturned;
     }
 }

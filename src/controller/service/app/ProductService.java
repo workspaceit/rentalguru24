@@ -12,6 +12,7 @@ import model.entity.app.ProductRating;
 import model.entity.app.RentType;
 import model.entity.app.TempFile;
 import model.entity.app.product.ProductCategory;
+import model.entity.app.product.rentable.iface.MyRentedProduct;
 import model.entity.app.product.view.ProductView;
 import model.entity.app.product.rentable.ProductLocation;
 import model.entity.app.product.rentable.RentalProductEntity;
@@ -26,9 +27,7 @@ import validator.form.class_file.ProductUploadForm;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by mi on 8/8/16.
@@ -372,10 +371,15 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+
+        List<MyRentedProduct> myRentedProducts = productModel.getMyCurrentRentedProduct(appCredential.getId(), limit, offset);
+        Set<MyRentedProduct> myRentedProducts1 =  new HashSet<MyRentedProduct>(productModel.getMyCurrentRentedProduct(appCredential.getId()));
         System.out.println(limit);
         System.out.println(offset);
+        System.out.println("myRentedProducts "+myRentedProducts.size());
+        System.out.println("getMyCurrentRentedProduct " + myRentedProducts1.size());
 
-        serviceResponse.setResponseData(productModel.getMyCurrentRentedProduct(appCredential.getId(), limit, offset), "No record found");
+                serviceResponse.setResponseData(myRentedProducts, "No record found");
         return serviceResponse;
     }
     @RequestMapping(value = "/get-my-products-on-rent", method = RequestMethod.POST)

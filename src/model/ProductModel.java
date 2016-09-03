@@ -5,13 +5,10 @@ import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.SearchedProduct;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.MyRentedProduct;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
+import org.hibernate.*;
 
 import model.entity.app.product.rentable.iface.RentalProduct;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -264,7 +261,7 @@ public class ProductModel extends BaseModel {
 
     public List<RentalProduct> getProductByCategoryId(int categoryId){
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity rentalProduct INNER JOIN rentalProduct.productCategories productCategory WHERE productCategory.category.id=:categoryId";
+        String hql = "FROM RentalProductEntity rentalProduct LEFT JOIN FETCH rentalProduct.productCategories productCategory WHERE productCategory.category.id=:categoryId";
         try{
             return session.createQuery(hql)
                     .setParameter("categoryId", categoryId)
@@ -290,8 +287,9 @@ public class ProductModel extends BaseModel {
         }
     }
     public List<MyRentedProduct> getMyCurrentRentedProduct(int renteeId) {
+
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity myRentedProduct LEFT JOIN  FETCH myRentedProduct.rentInf reninf " +
+        String hql = "FROM RentalProductEntity myRentedProduct JOIN FETCH myRentedProduct.rentInf reninf " +
                 " where reninf.rentee.id=:renteeId " +
                 " and reninf.expired = false ORDER BY myRentedProduct.id DESC  ";
         try {
@@ -307,8 +305,12 @@ public class ProductModel extends BaseModel {
     /* My product on rent */
 
     public List<MyRentalProduct> getMyCurrentProductOnRent(int renteeId, int limit, int offset) {
+        if(limit<=0){
+            return new ArrayList<>();
+        }
+
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity myRentedProduct LEFT JOIN  FETCH myRentedProduct.rentInf reninf " +
+        String hql = "select DISTINCT myRentedProduct FROM RentalProductEntity myRentedProduct JOIN  FETCH myRentedProduct.rentInf reninf " +
                 " where myRentedProduct.owner.id=:renteeId " +
                 " and reninf.expired = false ORDER BY myRentedProduct.id DESC  ";
         try {
@@ -323,12 +325,14 @@ public class ProductModel extends BaseModel {
     }
     public List<MyRentalProduct> getMyCurrentProductOnRent(int renteeId) {
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity myRentedProduct LEFT JOIN  FETCH myRentedProduct.rentInf reninf " +
+        String hql = "select DISTINCT(myRentedProduct) FROM RentalProductEntity myRentedProduct JOIN  FETCH myRentedProduct.rentInf reninf " +
                 " where myRentedProduct.owner.id=:renteeId " +
                 " and reninf.expired = false ORDER BY myRentedProduct.id DESC  ";
         try {
             return session.createQuery(hql)
                     .setParameter("renteeId", renteeId)
+                    .setFirstResult(0)
+                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                     .list();
         } finally {
 

@@ -1,17 +1,17 @@
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
-
+<%@page import="java.util.Map.Entry"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Reneguru</title>
   <!-- Favicons -->
   <!--    <link rel="shortcut icon" href="favicon.ico">-->
-
   <!-- Mobile -->
   <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css" />" />
+  <meta name="google-signin-client_id" content="109533534799-85f6m6k04935qsuc6on9ubqe7e8rtndj.apps.googleusercontent.com">
+
   <style>
     ul{
       list-style: none outside none;
@@ -57,7 +57,6 @@
     });
   </script>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-
   <!-- CSS start here -->
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />" media="screen">
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/styles.css" />" />
@@ -66,7 +65,6 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/owl.carousel.css"  />" />
   <!-- Theme CSS -->
   <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
-
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
   <!-- Google fonts end here -->
 </head>
@@ -83,54 +81,51 @@
             </li>
           </ul>
         </div>
-
         <div class="col-md-6 col-sm-6 col-xs-6 ">
-          <label class="right mid_nav_contact"><i class="fa fa-mobile fa-2x contact_icon"></i><span class="conatct_number">2300-3560-222</span></label>
+          <%--<label class="right mid_nav_contact"><i class="fa fa-mobile fa-2x contact_icon"></i><span class="conatct_number">2300-3560-222</span></label>--%>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
 <div class="parallax-window bg1" data-enllax-ratio="0.7">
   <div class="container title-block">
     <h1>Sign in</h1>
     <p>Sign in for the great Deals. Explore More</p>
   </div>
 </div>
-
-
 <div class="container center-bg">
-  <form class="form-signup clearfix" onsubmit="return submitSignInData();">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
+  <form class="form-signup clearfix" onsubmit="return false;">
+    <div class="col-md-6" id="signin_left">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox"> Remember me</label>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
+      <div class="col-md-12 text-center">
+        <button class="btn-cstm-sign pos-relative" id="signBtn" onclick="submitSignInData()">Sign in
+          <span id="signInProgressImg" class="inner-load signUpGif" hidden></span>
+        </button>
+        <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
+        </div>
       </div>
-      <div class="checkbox">
-        <label><input type="checkbox"> Remember me</label>
-      </div>
-
     </div>
-
-    <div class="col-md-12 text-center">
-      <button class="btn-cstm-sign pos-relative" id="signBtn">Sign in
-        <span id="signInProgressImg" class="inner-load signUpGif" hidden></span>
-      </button>
-      <div id="alertMsg" class="alert alert-success text-center" role="alert" hidden>
-
-      </div>
+    <div class="col-md-6" id="signin_right">
+      <%--For Social Login Button--%>
+        <button class="btn-cstm-sign pos-relative" onclick="loginWithFacebook()">Login in with facebook
+        </button>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
   </form>
 </div>
-
-
-
 <div class="footer">
   <div class="container">
     <div class="row">
@@ -286,6 +281,116 @@
     return false;
   }
 </script>
+<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+//      document.getElementById('status').innerHTML = 'Please log ' +
+//              'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+//      document.getElementById('status').innerHTML = 'Please log ' +
+//              'into Facebook.';
+    }
+  }
 
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '591163881067974', // Office Live : 591163881067974 , Local : 141550766294824
+      cookie     : true,  // enable cookies to allow the server to access
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v2.5' // use graph api version 2.5
+    });
+
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  function loginWithFacebook(){
+    FB.login(function(response) {
+      if (response.authResponse) {
+        loginWithFbAccessToken(response.authResponse.accessToken);
+        console.log(response);
+        console.log('Welcome!  Fetching your information.... ');
+//        FB.api('/me',{fields:"email,name"}, function(response) {
+//          console.log(response);
+//          console.log('Good to see you, ' + response.name + '.');
+//        });
+      } else {
+        console.log('User cancelled login or did not fully authorize.');
+      }
+    },{scope: 'email,public_profile'});
+  }
+  function loginWithFbAccessToken(accessToken){
+      $.ajax({
+        url: BASEURL+'/api/facebook/signup-user/by-fb-access-token',
+        type: 'POST',
+        data: {
+          accessToken:accessToken
+        },
+        success: function(data){
+          console.log(data);
+          if(data.responseStat.status == true){
+            $("#alertMsg").html("Login success").fadeIn(500).delay(2000).fadeOut(500,function(){
+              window.location.href =BASEURL+"/home";
+            });
+          }else{
+            $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){
+              $("#signBtn").removeAttrs("disabled","disabled");
+            });
+          }
+
+
+        }
+      });
+  }
+
+</script>
+
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
+
+<script>
+  function onSignIn(googleUser) {
+    console.log(googleUser);
+    var profile = googleUser.getBasicProfile();
+    console.log(profile);
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail());
+  }
+</script>
 </body>
 </html>

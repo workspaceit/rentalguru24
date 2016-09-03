@@ -30,3 +30,14 @@ function showInfoAndHide(msg,delay){
                 $("#infoModal").modal('hide');
         }, delay);
 }
+function showInfo(msg){
+        if(delay == undefined){
+                delay = 5000;
+        }
+        msg = (msg.length>50)?msg.substring(0,50)+"...":msg;
+        $("#infoMsg").html(msg);
+        $("#infoModal").modal('show');
+}
+function hideInfo(){
+        $("#infoModal").modal('hide');
+}

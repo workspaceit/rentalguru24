@@ -29,7 +29,20 @@ public class IdentityTypeModel extends BaseModel {
             return true;
         return false;
     }
-
+    public IdentityType getFirst(){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM IdentityType";
+        Query query = session.createQuery(hql);
+        return (IdentityType)query.setMaxResults(1).uniqueResult();
+//        List result =query.list();
+//        for (Iterator<IdentityType> iter = result.iterator(); iter.hasNext(); ) {
+//            IdentityType element = iter.next();
+//            System.out.println(element.getId());
+//            System.out.println(element.getName());
+//            System.out.println(element.getCreatedDate());
+//        }
+//        return result;
+    }
     public List<IdentityType> getAll(){
         Session session = this.sessionFactory.openSession();
         String hql = "FROM IdentityType";

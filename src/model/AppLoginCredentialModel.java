@@ -38,6 +38,24 @@ public class AppLoginCredentialModel extends BaseModel {
             session.close();
         }
     }
+    public AuthCredential getByEmail(String email){
+        Session session = this.sessionFactory.openSession();
+        try{
+            return (AuthCredential)session.createQuery("from AuthCredential where email = :email ")
+                    .setParameter("email",email).uniqueResult();
+        }finally {
+            session.close();
+        }
+    }
+    public AppCredential getAppcredentialByEmail(String email){
+        Session session = this.sessionFactory.openSession();
+        try{
+            return (AppCredential)session.createQuery("from AppCredential where email = :email ")
+                    .setParameter("email",email).uniqueResult();
+        }finally {
+            session.close();
+        }
+    }
     public boolean isVerified(int id){
         AuthCredential authCredential = this.getById(id);
         return authCredential.isVerified();
