@@ -128,6 +128,9 @@
                                     </BUTTON>
                                 </li>
                             </d:if>
+
+                        </ul>
+                        <ul class="confirmation_link_ul">
                             <d:if test="${rentRequest.getApprove() == true}">
                                 <div class="alert alert-success">
                                     <strong>Product Approveed For Rent</strong>.
@@ -152,45 +155,56 @@
                                         <span id="productReceiveDisputeProgressImg" class="inner-load disapproveGif" hidden></span>
                                     </BUTTON>
                                 </li>
-                        </d:if>
-                                <li>
-                                    <div  id="productReceiveConfirmParentDiv" style="display: none;" >
-                                        <p>Product received : </p>
-                                        <div  class="alert alert-danger">
-                                            <strong id="productReceiveConfirmStrong" >Confirmed</strong>
-                                        </div>
-                                    </div>
-
-                                </li>
-                                <li>
-                                    <div  id="productReceiveDisputeParentDiv" style="display: none;" >
-                                        <p>Product received : </p>
-                                        <div class="alert alert-danger">
-                                            <strong id="productReceiveDisputeStrong"  >Disputed</strong>
-                                        </div>
-                                    </div>
-                                </li>
+                            </d:if>
+                        </ul>
+                        <ul  class="confirmation_link_ul" >
                             <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
                                 <li>
-                                    <BUTTON id="productReturnRequestBtn" onclick="requestToReturnProduct(${rentRequest.getId()})" class="cancel_btn approval_btn" style="display: none;" >Request to return
+                                    <BUTTON id="productReturnRequestBtn" class="cancel_btn approval_btn" style="display: none;" >Request to return
                                         <span class="inner-load approveGif" hidden></span>
                                     </BUTTON>
                                 </li>
                             </d:if>
                             <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
                                 <li>
-                                    <BUTTON id="productReturnBtn" onclick="requestToReturnProduct(${rentRequest.getId()})" class="cancel_btn approval_btn" style="display: none;" >Return product
+                                    <BUTTON id="productReturnBtn"  class="cancel_btn approval_btn" style="display: none;" >Return product
                                         <span class="inner-load approveGif" hidden></span>
                                     </BUTTON>
                                 </li>
                             </d:if>
                         </ul>
+                        <ul  class="confirmation_link_ul" >
+                            <li>
+                                <div  id="productReceiveConfirmParentDiv" style="display: none;" >
+                                    <p>Product received : </p>
+                                    <div  class="alert alert-danger">
+                                        <strong id="productReceiveConfirmStrong" >Confirmed</strong>
+                                    </div>
+                                </div>
 
+                            </li>
+                            <li>
+                                <div  id="productReceiveDisputeParentDiv" style="display: none;" >
+                                    <p>Product received : </p>
+                                    <div class="alert alert-danger">
+                                        <strong id="productReceiveDisputeStrong"  >Disputed</strong>
+                                    </div>
+                                </div>
+                            </li>
+                            <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
+                                <li>
+                                    <div  id="productReceivePendingParentDiv" style="display: none;" >
+                                        <p>Product received : </p>
+                                        <div  class="alert alert-danger">
+                                            <strong >User have not confirmed yet</strong>
+                                        </div>
+                                    </div>
 
-
-
+                                </li>
+                            </d:if>
+                        </ul>
                     </div>
-                </div>g
+                </div>
             </div>
             <div class="alert alert-danger" id="errorMsg_requestId" hidden></div>
             <div class="alert alert-danger" id="approveError" hidden>Something Went Wrong</div>
@@ -391,12 +405,12 @@
                         console.log(data);
                         if(data.responseStat.status==true){
                             var rentInf = data.responseData;
-                            if(rentInf.rentalProductReturned == undefined){
-                                $("#productReturnBtn").fadeIn();
-                            }else{
+
+                             if(rentInf.rentalProductReturned != undefined){
                                 if(rentInf.rentalProductReturned.confirm==false && rentInf.rentalProductReturned.dispute==false ){
                                     $("#productReceiveConfirmBtn").fadeIn();
                                     $("#productReceiveDisputeBtn").fadeIn();
+                                    $("#productReceivePendingParentDiv").fadeIn();
 
                                     $("#productReceiveConfirmBtn:not(.bound)").addClass('bound').bind("click",function(){
                                         productReceiveConfirm(rentInf.rentalProductReturned.id);
@@ -420,10 +434,16 @@
                                     var createdDate =  dateFormat(new Date(latestHistory.createdDate), "dddd, mmm dS, yyyy, h:MM:ss TT");
                                     $("#productReceiveDisputeStrong").append(" on "+createdDate);
                                     $("#productReceiveDisputeParentDiv").fadeIn();
+
                                 }
                             }
-                            if(rentInf.rentalProductReturnRequest == undefined){
-                                $("#productReturnRequestBtn").fadeIn();
+                            if(rentInf.rentalProductReturned == undefined && rentInf.rentalProductReturnRequest == undefined){
+                                $("#productReturnRequestBtn").fadeIn().addClass('bound').bind("click",function(){
+                                    requestToReturnProduct(rentInf.id);
+                                });
+                                $("#productReturnBtn").fadeIn().addClass('bound').bind("click",function(){
+                                    returnProduct(rentInf.id);
+                                });
                             }
                         }else{
 
@@ -443,7 +463,7 @@
                     data:{remarks:remarks},
                     success: function (data) {
                         if(data.responseStat.status == true){
-
+                            location.reload();
                         }else{
 
                         }
@@ -481,6 +501,25 @@
                     success: function (data) {
                         if(data.responseStat.status == true){
                             location.reload();
+                        }else{
+
+                        }
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
+                });
+            }
+            function returnProduct(rentalInfId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/return-product/confirm-return/'+rentalInfId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+                        if(data.responseStat.status == true){
+                            location.reload();
+
                         }else{
 
                         }

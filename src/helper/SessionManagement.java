@@ -19,4 +19,20 @@ public class SessionManagement {
     public static void destroySession(HttpServletRequest request){
         request.getSession().invalidate();
     }
+    public static void setPreviousUrl(HttpServletRequest request,String url){
+
+        request.getSession().setAttribute("prevUrl", url);
+        System.out.println("**********FROM SETTER*********");
+        System.out.println(url);
+        System.out.println((String) request.getSession().getAttribute("prevUrl"));
+        /* For Ever Session is open unless signout ... Not a Good idea */
+    }
+    public static String getPreviousUrl(HttpServletRequest request){
+
+        return (String)request.getSession().getAttribute("prevUrl");
+    }
+    public static void destroyPreviousUrl(HttpServletRequest request){
+
+        request.getSession().setAttribute("prevUrl", null);
+    }
 }

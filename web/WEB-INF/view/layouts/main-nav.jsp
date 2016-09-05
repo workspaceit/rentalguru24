@@ -30,9 +30,9 @@
           </div>
         </form>
       </ul>
-      <ul class="nav navbar-nav navbar-right main_navigation">
+      <ul id="categoryPageLinkUl" class="nav navbar-nav navbar-right main_navigation">
         <d:forEach var="listValueMenue" items="${category}">
-          <li><a id="categoryAnchor_${listValueMenue.id}" onclick="fetchProductByCategoryAndScrollDown(${listValueMenue.id},this)" href="#newProductPartialRender" class="scrollToSection" >${listValueMenue.name}</a></li>
+          <li><a id="categoryAnchor_${listValueMenue.id}" categoryId="${listValueMenue.id}" href="#newProductPartialRender" class="scrollToSection" >${listValueMenue.name}</a></li>
         </d:forEach>
       </ul>
     </div><!-- /.navbar-collapse -->

@@ -151,9 +151,16 @@
     });
   }
   /*****************  Fetch product by category ***********/
-
-  function fetchProductByCategoryAndScrollDown(categoryId,elem){
+  $("#categoryPageLinkUl").find("li>a").click(function(event){
+    var categoryId = $(this).attr("categoryId");
+    $(this).bind('click', fetchProductByCategoryAndScrollDown(categoryId,this,event));
+  });
+  function fetchProductByCategoryAndScrollDown(categoryId,elem,event){
     event.preventDefault();
+    if($("#newProductPartialRender").length==0){
+      window.location.href =BASEURL+"/home/category/"+categoryId;
+      return;
+    }
     getProductByCategory(categoryId,elem);
     return false;
   }
