@@ -68,36 +68,32 @@ public class PasswordResetService extends UtilituHelper{
         String conPassword = allRequestParams.get("conPassword");
 
         AppCredential appCredential = appLoginCredentialModel.getAppcredentialByEmail(email);
-        PasswordResetsEntity passwordResetsEntity = passwordResetModel.getByAppCredentialId(appCredential.getId());
-
-        String validToken = passwordResetsEntity.getToken();
-        System.out.println("valid = "+validToken);
-        System.out.println("token = " + token);
 
         if(appCredential == null){
             serviceResponse.setRequestError("email","given email doesn't exist in system");
             return serviceResponse;
-        }else{
-            if(token.equals(validToken)){
-                if(password.equals(conPassword)){
-                    if(password.length() >= 6){
-                        AuthCredential authCredential = appLoginCredentialModel.getByEmail(email);
-                        authCredential.setPassword(password);
-                        appLoginCredentialModel.updateWithNewPassword(authCredential);
-                        serviceResponse.getResponseStat().setMsg("Password reset successful");
-                    }else{
-                        serviceResponse.setRequestError("password","Password can't be less then 6 character");
-                        return serviceResponse;
-                    }
-                }else {
-                    serviceResponse.setRequestError("password","Password mismatch");
+        }
+
+        PasswordResetsEntity passwordResetsEntity = passwordResetModel.getByAppCredentialId(appCredential.getId());
+        String validToken = passwordResetsEntity.getToken();
+        if(token.equals(validToken)){
+            if(password.equals(conPassword)){
+                if(password.length() >= 6){
+                    AuthCredential authCredential = appLoginCredentialModel.getByEmail(email);
+                    authCredential.setPassword(password);
+                    appLoginCredentialModel.updateWithNewPassword(authCredential);
+                    serviceResponse.getResponseStat().setMsg("Password reset successful");
+                }else{
+                    serviceResponse.setRequestError("password","Password can't be less then 6 character");
                     return serviceResponse;
                 }
             }else {
-                serviceResponse.setRequestError("token","Password reset token mismatch ");
+                serviceResponse.setRequestError("conPassword","Password mismatch");
                 return serviceResponse;
             }
-
+        }else {
+            serviceResponse.setRequestError("token","Password reset token mismatch ");
+            return serviceResponse;
         }
         return serviceResponse;
     }
