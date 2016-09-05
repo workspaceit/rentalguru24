@@ -128,6 +128,9 @@
                                     </BUTTON>
                                 </li>
                             </d:if>
+
+                        </ul>
+                        <ul class="confirmation_link_ul">
                             <d:if test="${rentRequest.getApprove() == true}">
                                 <div class="alert alert-success">
                                     <strong>Product Approveed For Rent</strong>.
@@ -140,37 +143,66 @@
                             </d:if>
                         </ul>
 
-                        <ul id="productReceiveConfirmationUl" style="display: none;" class="confirmation_link_ul">
+                        <ul id="productReceiveConfirmationUl" class="confirmation_link_ul">
+                            <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
                                 <li>
-                                    <BUTTON onclick="requestDisapprove(${rentRequest.getId()})" class="cancel_btn approval_btn">Disapprove
-                                        <span id="disapproveProgressImg" class="inner-load approveGif" hidden></span>
+                                    <BUTTON id="productReceiveConfirmBtn" class="cancel_btn approval_btn" style="display: none;" >Confirm
+                                        <span id="productReceiveConfirmBtnProgressIm" class="inner-load approveGif" hidden></span>
                                     </BUTTON>
                                 </li>
                                 <li>
-                                    <BUTTON onclick="requestApprove(${rentRequest.getId()})" class="approve_btn approval_btn">Approve
-                                        <span id="approveProgressImg" class="inner-load disapproveGif" hidden></span>
+                                    <BUTTON id="productReceiveDisputeBtn" class="approve_btn approval_btn" style="display: none;" >Dispute
+                                        <span id="productReceiveDisputeProgressImg" class="inner-load disapproveGif" hidden></span>
                                     </BUTTON>
                                 </li>
-
-
-                                <div class="alert alert-success">
-                                    <strong>Product Approveed For Rent</strong>.
-                                </div>
-
-
-                                <div class="alert alert-danger">
-                                    <strong>Product Disapproveed For Rent</strong>.
-                                </div>
+                            </d:if>
                         </ul>
-                        <ul id="productReturnRequestUl" style="display: none;" class="confirmation_link_ul">
+                        <ul  class="confirmation_link_ul" >
+                            <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
+                                <li>
+                                    <BUTTON id="productReturnRequestBtn" class="cancel_btn approval_btn" style="display: none;" >Request to return
+                                        <span class="inner-load approveGif" hidden></span>
+                                    </BUTTON>
+                                </li>
+                            </d:if>
+                            <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
+                                <li>
+                                    <BUTTON id="productReturnBtn"  class="cancel_btn approval_btn" style="display: none;" >Return product
+                                        <span class="inner-load approveGif" hidden></span>
+                                    </BUTTON>
+                                </li>
+                            </d:if>
+                        </ul>
+                        <ul  class="confirmation_link_ul" >
                             <li>
-                                <BUTTON onclick="requestToReturnProduct(${rentRequest.getId()})" class="cancel_btn approval_btn">Request to return
-                                    <span class="inner-load approveGif" hidden></span>
-                                </BUTTON>
+                                <div  id="productReceiveConfirmParentDiv" style="display: none;" >
+                                    <p>Product received : </p>
+                                    <div  class="alert alert-danger">
+                                        <strong id="productReceiveConfirmStrong" >Confirmed</strong>
+                                    </div>
+                                </div>
+
                             </li>
+                            <li>
+                                <div  id="productReceiveDisputeParentDiv" style="display: none;" >
+                                    <p>Product received : </p>
+                                    <div class="alert alert-danger">
+                                        <strong id="productReceiveDisputeStrong"  >Disputed</strong>
+                                    </div>
+                                </div>
+                            </li>
+                            <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
+                                <li>
+                                    <div  id="productReceivePendingParentDiv" style="display: none;" >
+                                        <p>Product received : </p>
+                                        <div  class="alert alert-danger">
+                                            <strong >User have not confirmed yet</strong>
+                                        </div>
+                                    </div>
+
+                                </li>
+                            </d:if>
                         </ul>
-
-
                     </div>
                 </div>
             </div>
@@ -364,6 +396,7 @@
                 });
             }
             function fetchRentInfByRentRequestId(requestId) {
+
                 $.ajax({
                     type: "GET",
                     url: '${BaseUrl}/api/auth/rent-inf/get-by-rent-request-id/'+requestId,
@@ -372,8 +405,45 @@
                         console.log(data);
                         if(data.responseStat.status==true){
                             var rentInf = data.responseData;
-                            if(rentInf.rentalProductReturnRequest == undefined && rentInf.rentalProductReturned == undefined){
-                                $("#productReturnRequestUl").fadeIn();
+
+                             if(rentInf.rentalProductReturned != undefined){
+                                if(rentInf.rentalProductReturned.confirm==false && rentInf.rentalProductReturned.dispute==false ){
+                                    $("#productReceiveConfirmBtn").fadeIn();
+                                    $("#productReceiveDisputeBtn").fadeIn();
+                                    $("#productReceivePendingParentDiv").fadeIn();
+
+                                    $("#productReceiveConfirmBtn:not(.bound)").addClass('bound').bind("click",function(){
+                                        productReceiveConfirm(rentInf.rentalProductReturned.id);
+                                    });
+                                    $("#productReceiveDisputeBtn:not(.bound)").addClass('bound').bind("click",function(){
+                                        productReceiveDispute(rentInf.rentalProductReturned.id);
+                                    });
+                                }else if(rentInf.rentalProductReturned.confirm){
+                                    var rentalProductReturnedHistories = rentInf.rentalProductReturned.rentalProductReturnedHistories;
+                                    var latestHistory = rentalProductReturnedHistories[rentalProductReturnedHistories.length - 1];
+
+                                    var createdDate =  dateFormat(new Date(latestHistory.createdDate), "dddd, mmm dS, yyyy, h:MM:ss TT");
+
+                                    $("#productReceiveConfirmStrong").append(" on "+createdDate);
+                                    $("#productReceiveConfirmParentDiv").fadeIn();
+
+                                }else if(rentInf.rentalProductReturned.dispute){
+                                    var rentalProductReturnedHistories = rentInf.rentalProductReturned.rentalProductReturnedHistories;
+                                    var latestHistory = rentalProductReturnedHistories[rentalProductReturnedHistories.length - 1];
+
+                                    var createdDate =  dateFormat(new Date(latestHistory.createdDate), "dddd, mmm dS, yyyy, h:MM:ss TT");
+                                    $("#productReceiveDisputeStrong").append(" on "+createdDate);
+                                    $("#productReceiveDisputeParentDiv").fadeIn();
+
+                                }
+                            }
+                            if(rentInf.rentalProductReturned == undefined && rentInf.rentalProductReturnRequest == undefined){
+                                $("#productReturnRequestBtn").fadeIn().addClass('bound').bind("click",function(){
+                                    requestToReturnProduct(rentInf.id);
+                                });
+                                $("#productReturnBtn").fadeIn().addClass('bound').bind("click",function(){
+                                    returnProduct(rentInf.id);
+                                });
                             }
                         }else{
 
@@ -393,6 +463,25 @@
                     data:{remarks:remarks},
                     success: function (data) {
                         if(data.responseStat.status == true){
+                            location.reload();
+                        }else{
+
+                        }
+                    },
+                    error: function () {
+                        alert('Error occured');
+                    }
+                });
+            }
+            function productReceiveConfirm(rentalProductReturnId){
+                var remarks = "";
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+'/api/auth/receive-product/confirm-receive/'+rentalProductReturnId,
+                    data:{remarks:remarks},
+                    success: function (data) {
+                        if(data.responseStat.status == true){
+                            location.reload();
 
                         }else{
 
@@ -403,16 +492,15 @@
                     }
                 });
             }
-            function productReceiveConfirm(rentalInfId){
+            function productReceiveDispute(rentalProductReturnId){
                 var remarks = "";
                 $.ajax({
                     type: "POST",
-                    url: BASEURL+'/api/auth/receive-product/confirm-receive/'+rentalInfId,
+                    url: BASEURL+'/api/auth/receive-product/dispute-receive/'+rentalProductReturnId,
                     data:{remarks:remarks},
                     success: function (data) {
                         if(data.responseStat.status == true){
-
-
+                            location.reload();
                         }else{
 
                         }
@@ -422,25 +510,18 @@
                     }
                 });
             }
-            function productReceiveDispute(rentalInfId){
+            function returnProduct(rentalInfId){
                 var remarks = "";
                 $.ajax({
                     type: "POST",
-                    url: BASEURL+'/api/auth/receive-product/dispute-receive/'+rentalInfId,
+                    url: BASEURL+'/api/auth/return-product/confirm-return/'+rentalInfId,
                     data:{remarks:remarks},
                     success: function (data) {
                         if(data.responseStat.status == true){
-                            $(".confirm"+rentalInfId).hide();
-                            $(".dispute"+rentalInfId).hide();
-                            $("#successDispute"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
+                            location.reload();
 
-                            });
                         }else{
-                            $(".btn-warning"+rentalInfId).hide();
-                            $(".btn-accept"+rentalInfId).hide();
-                            $("#errorConfirmDispute"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
 
-                            });
                         }
                     },
                     error: function () {

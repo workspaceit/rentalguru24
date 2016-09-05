@@ -1,5 +1,6 @@
 package controller.service.app;
 
+import helper.DateHelper;
 import helper.ServiceResponse;
 import model.ProductModel;
 import model.RentInfModel;
@@ -132,8 +133,8 @@ public class ReceiveProductService {
         rentalProductReturnedHistory.setConfirm(rentalProductReturned.isConfirm());
         rentalProductReturnedHistory.setDispute(rentalProductReturned.isDispute());
         rentalProductReturnedHistory.setRentalProductReturned(rentalProductReturned);
-
-
+        rentalProductReturnedHistory.setCreatedDate(DateHelper.getUtcDateProcessedTimeStamp());
+        System.out.println("DateHelper.getUtcDateProcessedTimeStamp().getTime() " + DateHelper.getUtcDateProcessedTimeStamp().getTime());
 
         rentalProductReturnedHistoryModel.insert(rentalProductReturnedHistory);
 

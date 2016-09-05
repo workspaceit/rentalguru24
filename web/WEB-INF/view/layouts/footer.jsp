@@ -44,6 +44,10 @@
 <%--Developer Helpers --%>
 <script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
+
+<%--Developer 3rd party Lib--%>
+<%--Doc http://blog.stevenlevithan.com/archives/date-time-format--%>
+<script src="<c:url value="/resources/developer/third_party/date.format.js" />" ></script>
 <!-- Javascript framework and plugins end here -->
 <script>
   var nowTemp = new Date();
@@ -147,9 +151,16 @@
     });
   }
   /*****************  Fetch product by category ***********/
-
-  function fetchProductByCategoryAndScrollDown(categoryId,elem){
+  $("#categoryPageLinkUl").find("li>a").click(function(event){
+    var categoryId = $(this).attr("categoryId");
+    $(this).bind('click', fetchProductByCategoryAndScrollDown(categoryId,this,event));
+  });
+  function fetchProductByCategoryAndScrollDown(categoryId,elem,event){
     event.preventDefault();
+    if($("#newProductPartialRender").length==0){
+      window.location.href =BASEURL+"/home/category/"+categoryId;
+      return;
+    }
     getProductByCategory(categoryId,elem);
     return false;
   }

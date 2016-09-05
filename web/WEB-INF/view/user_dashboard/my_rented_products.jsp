@@ -132,30 +132,7 @@
         <!-- Dashboard-->
         <jsp:directive.include file="../layouts/footer.jsp" />
         <!-- Javascript framework and plugins end here -->
-        <script type="text/javascript">
-            function returnProduct(rentalInfId){
-                var remarks = "";
-                $.ajax({
-                    type: "POST",
-                    url: BASEURL+'/api/auth/return-product/confirm-return/'+rentalInfId,
-                    data:{remarks:remarks},
-                    success: function (data) {
-                        if(data.responseStat.status == true){
-                            $("#successReturnProduct"+rentalInfId).show().fadeIn(500).delay(2000).fadeOut(500,function(){
 
-                            });
-                        }else{
-                            $("#errorReturnProduct"+rentalInfId).html(data.responseStat.requestErrors[0].msg).show().fadeIn(500).delay(2000).fadeOut(500,function(){
-
-                            });
-                        }
-                    },
-                    error: function () {
-                        alert('Error occured');
-                    }
-                });
-            }
-        </script>
     </body>
 </html>
 

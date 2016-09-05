@@ -39,9 +39,12 @@ public class RentalProductReturnRequestService {
 
         RentalProductReturnRequest rentalProductReturnRequest = new RentalProductReturnRequest();
         RentInf rentInf = rentInfModel.getById(rentalInfId);
-
+        if(rentInf==null){
+            serviceResponse.setRequestError("rentalInfId","No rent information is found by this rentInfId");
+            return serviceResponse;
+        }
         if(rentInf.getRentalProduct().getOwner().getId() != appCredential.getId()){
-            serviceResponse.setRequestError("rentalInfId","This rent request is not belongs to you");
+            serviceResponse.setRequestError("rentalInfId","This rent is not belongs to you");
             return serviceResponse;
         }
 
