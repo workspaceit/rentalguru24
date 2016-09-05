@@ -34,8 +34,12 @@ public class RequestApprovalController {
         String baseUrl = (String) request.getAttribute("baseURL");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         if(rentRequest != null){
-            if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
+            if(rentRequest.getRequestedBy().getId() == appCredential.getId()
+                    ||
+                    rentRequest.getRentalProduct().getOwner().getId() == appCredential.getId()){
                 modelAndView.addObject("IsLogIn", IsLogin);
+                modelAndView.addObject("IsLogIn", IsLogin);
+                modelAndView.addObject("appCredential", appCredential);
                 modelAndView.addObject("rentRequest", rentRequest);
                 modelAndView.addObject("BaseUrl",baseUrl);
             }else{

@@ -51,6 +51,10 @@ public class RentalProductReturnedHistory {
     @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {
+        if(createdDate!=null){
+
+            System.out.println("createdDate.getTime() "+createdDate.getTime());
+        }
         return createdDate;
     }
 

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -23,21 +24,12 @@ public class DateHelper {
 
         return processedTime;
     }
-    public static String getUtcDateProcessedTimeStamp() {
-        String processedTime = "";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        try {
-            Date date = dateFormat.parse(dateFormat.format(new Date()));
-            Timestamp timeStampDate = new Timestamp(date.getTime());
-            Long longTime = timeStampDate.getTime() / 1000;
-            return Long.toString(longTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public static Timestamp getUtcDateProcessedTimeStamp() {
+        Instant instant = Instant.now();
+
+        return new Timestamp(instant.getEpochSecond()*1000);
 
 
-        return "";
     }
     public static String getUtcDateTime(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

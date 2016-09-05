@@ -347,7 +347,7 @@
               </property>
               <property name="hibernateProperties">
                      <props>
-                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>
+                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24?useTimezone=true&amp;serverTimezone=UTC</prop>
                             <prop key="hibernate.connection.username">root</prop>
                             <prop key="hibernate.connection.password" />
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
