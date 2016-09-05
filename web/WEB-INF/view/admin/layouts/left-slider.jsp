@@ -53,7 +53,6 @@
           <li><a href="${BaseUrl}/admin/user/create-new-admin"><i class="fa fa-circle-o"></i>Create New Admin</a></li>
         </ul>
       </li>
-
       <li class="treeview">
         <a href="#">
           <i class="fa fa-dashboard"></i> <span>Product</span> <i class="fa fa-angle-left pull-right"></i>
@@ -70,9 +69,20 @@
         <a href="${BaseUrl}/admin/user/get-utility">
           <i class="fa fa-dashboard"></i> <span>Utility</span> </i>
         </a>
-
       </li>
 
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-dashboard"></i> <span>Category</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/user/add-category"><i class="fa fa-circle-o"></i>Add Category</a></li>
+        </ul>
+
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/user/"><i class="fa fa-circle-o"></i>Add Subcategory</a></li>
+        </ul>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->

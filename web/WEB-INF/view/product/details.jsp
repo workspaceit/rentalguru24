@@ -53,9 +53,9 @@
                     <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
                   </li>
                   <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
-                  <li>
-                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${productOtherImages.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
-                  </li>
+                    <li>
+                      <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${productOtherImages.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
+                    </li>
                   </d:forEach>
                   <!-- items mirrored twice, total of 12 -->
                 </ul>
@@ -66,9 +66,9 @@
                     <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}" />">
                   </li>
                   <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
-                  <li>
-                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">
-                  </li>
+                    <li>
+                      <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">
+                    </li>
                   </d:forEach>
                   <!-- items mirrored twice, total of 12 -->
                 </ul>
@@ -81,27 +81,32 @@
                 <div class="col-md-8 col-xs-8 col-sm-8">
                   <h4 class="no-margin"><strong>${rentalProduct.getName()}</strong></h4>
                   <div class="row">
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                      <fieldset class="rating rent_rating">
-                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="5" />
-                        <label class = "full" for="star5_${rentalProduct.getId()}" title="Awesome - 5 stars"></label>
+                    <d:if test="${rentalProduct.averageRating != 0}">
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                        <fieldset class="rating rent_rating">
+                          <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="5" />
+                          <label class = "full" for="star5_${rentalProduct.getId()}" title="Awesome - 5 stars"></label>
 
-                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="4" />
-                        <label class = "full" for="star4_${rentalProduct.getId()}" title="Pretty good - 4 stars"></label>
+                          <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="4" />
+                          <label class = "full" for="star4_${rentalProduct.getId()}" title="Pretty good - 4 stars"></label>
 
-                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="3" />
-                        <label  class = "full" for="star3_${rentalProduct.getId()}" title="Meh - 3 stars"></label>
+                          <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="3" />
+                          <label  class = "full" for="star3_${rentalProduct.getId()}" title="Meh - 3 stars"></label>
 
-                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="2" />
-                        <label class = "full" for="star2_${rentalProduct.getId()}" title="Kinda bad - 2 stars"></label>
+                          <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="2" />
+                          <label class = "full" for="star2_${rentalProduct.getId()}" title="Kinda bad - 2 stars"></label>
 
-                        <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="1" />
-                        <label class = "full" for="star1_${rentalProduct.getId()}" title="Sucks big time - 1 star"></label>
-                      </fieldset>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                      <p class="total_review">(${rentalProduct.getAverageRating()} Review)</p>
-                    </div>
+                          <input <d:if test="${fn:substringBefore(rentalProduct.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${rentalProduct.getId()}" name="rating${rentalProduct.getId()}" value="1" />
+                          <label class = "full" for="star1_${rentalProduct.getId()}" title="Sucks big time - 1 star"></label>
+                        </fieldset>
+
+                      </div>
+                    </d:if>
+                    <d:if test="${rentalProduct.averageRating != 0}">
+                      <div class="col-md-3 col-sm-3 col-xs-12">
+                        <p class="total_review">(${rentalProduct.getAverageRating()} Review)</p>
+                      </div>
+                    </d:if>
                     <div class="col-md-5 col-sm-5 col-xs-12">
                       <a href=""><p class="total_review">Add Your Review</p></a>
                     </div>
@@ -117,7 +122,7 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <%--<p class="price"><span class="prev_price">$350</span><span class="cur_price">$250</span></p>--%>
-                  <p class="price"><span class="cur_price">$${rentalProduct.getRentFee()}</span></p>
+                  <p class="price"><span class="cur_price">$${rentalProduct.getRentFee()}/${rentalProduct.getRentType().getName()}</span></p>
                 </div>
               </div>
             </div>
@@ -131,16 +136,16 @@
                 </div>
               </div>
               <%--<div class="row">--%>
-                <%--<div class="col-md-3 col-sm-3 col-xs-3">--%>
-                  <%--<p class="value_input_label">Quantity</p>--%>
-                <%--</div>--%>
-                <%--<div class="col-md-4 col-sm-4 col-xs-6 input-group spinner">--%>
-                  <%--<input type="text" class="form-control value_input" value="42">--%>
-                  <%--<div class="input-group-btn-vertical">--%>
-                    <%--<button class="btn btn-default value_controller" type="button"><i class="fa fa-plus"></i></button>--%>
-                    <%--<button class="btn btn-default value_controller" type="button"><i class="fa fa-minus"></i></button>--%>
-                  <%--</div>--%>
-                <%--</div>--%>
+              <%--<div class="col-md-3 col-sm-3 col-xs-3">--%>
+              <%--<p class="value_input_label">Quantity</p>--%>
+              <%--</div>--%>
+              <%--<div class="col-md-4 col-sm-4 col-xs-6 input-group spinner">--%>
+              <%--<input type="text" class="form-control value_input" value="42">--%>
+              <%--<div class="input-group-btn-vertical">--%>
+              <%--<button class="btn btn-default value_controller" type="button"><i class="fa fa-plus"></i></button>--%>
+              <%--<button class="btn btn-default value_controller" type="button"><i class="fa fa-minus"></i></button>--%>
+              <%--</div>--%>
+              <%--</div>--%>
               <%--</div>--%>
             </div>
             <div class="product_overview">

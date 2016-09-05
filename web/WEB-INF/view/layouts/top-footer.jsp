@@ -22,9 +22,6 @@
         <p class="footer_head">MY ACCOUNT</p>
         <ul class="footer_ul">
           <li>Login</li>
-          <li>My Cart</li>
-          <li>Wishlist</li>
-          <li>Checkout</li>
         </ul>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">

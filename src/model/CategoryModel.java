@@ -13,7 +13,7 @@ public class CategoryModel extends BaseModel {
     public void insert(Category category){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
-        session.save(category);
+        session.saveOrUpdate(category);
         session.getTransaction().commit();
         session.close();
     }
@@ -52,6 +52,15 @@ public class CategoryModel extends BaseModel {
             return session.createQuery("select distinct category FROM Category category INNER JOIN FETCH category.subcategory where category.id =:parentId")
                     .setParameter("parentId", parentId).list();
         }finally{
+            session.close();
+        }
+    }
+
+    public int maxSortOrder(){
+        Session session = this.sessionFactory.openSession();
+        try{
+            return (int) session.createQuery("SELECT MAX(category.sortedOrder) FROM Category category").uniqueResult();
+        }finally {
             session.close();
         }
     }

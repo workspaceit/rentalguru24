@@ -176,13 +176,13 @@
                     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                 </ol>
-                <h2 class="block-head">New Product</h2>
+                <h2 class="block-head">New Products</h2>
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
                         <div class="row clearfix">
                             <d:forEach var="product" items="${products}">
-                            <div class="col-md-3 single-item">
+                            <div class="col-md-3 col-sm-6 col-xs-12 single-item">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <div class="img-single product_home_img_wrap">
@@ -196,6 +196,7 @@
                                         <div class="block-desc">
                                             <label class="title-label productName"><a href="${BaseUrl}/product/details/${product.getId()}">${fn:substring(product.name, 0, 20)}<d:if test="${fn:length(product.name)>20}">....</d:if></a></label>
                                             <br>
+                                            <d:if test="${product.averageRating != 0}">
                                             <fieldset class="rating ">
                                                 <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${product.getId()}" name="rating${product.getId()}" value="5" />
                                                 <label class = "full" for="star5_${product.getId()}" title="Awesome - 5 stars"></label>
@@ -212,11 +213,15 @@
                                                 <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${product.getId()}" name="rating${product.getId()}" value="1" />
                                                 <label class = "full" for="star1_${product.getId()}" title="Sucks big time - 1 star"></label>
                                             </fieldset>
+                                            </d:if>
+                                            <d:if test="${product.averageRating == 0}">
+                                                <label>Not rated yet</label>
+                                            </d:if>
                                         </div>
                                         <div class="block-action">
                                             <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
                                             <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                                            <div class="price-tag">$${product.rentFee}</div>
+                                            <div class="price-tag">$${product.rentFee}/${product.rentType.name}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -347,50 +352,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <p class="footer_head">INFORMATION</p>
-                        <ul class="footer_ul">
-                            <li>About US</li>
-                            <li>Privacy</li>
-                            <li>Conditions</li>
-                            <li>Online Support</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <p class="footer_head">MY ACCOUNT</p>
-                        <ul class="footer_ul">
-                            <li>Login</li>
-                            <li>My Cart</li>
-                            <li>Wishlist</li>
-                            <li>Checkout</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <p class="footer_head">INFORMATION</p>
-                        <ul class="footer_ul">
-                            <li>Specials</li>
-                            <li>New Products</li>
-                            <li>Best Sellers</li>
-                            <li>Our Stored</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <p class="footer_head">ORDERS</p>
-                        <ul class="footer_ul">
-                            <li>Payment Option</li>
-                            <li>Shipping Delivery</li>
-                            <li>Returns</li>
-                            <li>Shipping</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+        <jsp:directive.include file="../layouts/top-footer.jsp" />
 <!--Rent form Modal -->
 <div id="requestRentPopUp" class="modal fade" role="dialog">
     <div class="modal-dialog">

@@ -3,6 +3,7 @@ package controller.web.admin;
 
 import model.ProductModel;
 
+import model.entity.app.AppCredential;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,12 @@ public class AdminRentalProductController {
         ModelAndView modelAndView =new ModelAndView("admin/rentalProductsDetails");
         String baseUrl = (String) request.getAttribute("baseURL");
         List <RentalProductEntity>rentalProductEntities=productModel.getRentalProduct();
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("rentalProducts", rentalProductEntities);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Rental Product Details");
-
 
         return modelAndView;
 

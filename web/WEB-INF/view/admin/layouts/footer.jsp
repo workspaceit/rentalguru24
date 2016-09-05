@@ -198,6 +198,8 @@ immediately after the control sidebar -->
 <!-- AdminLTE for demo purposes -->
 <script src="<c:url value="/admin-resources/dist/js/demo.js"/>"></script>
 <!-- page script -->
+<script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
+<script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
 <script>
   var BASEURL = "${BaseUrl}";
 </script>

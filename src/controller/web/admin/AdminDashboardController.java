@@ -34,22 +34,24 @@ public class AdminDashboardController {
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
-        ModelAndView modelAndViev = new ModelAndView("admin/dashboard");
+        ModelAndView modelAndView = new ModelAndView("admin/dashboard");
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        modelAndViev.addObject("adminUser", appCredential);
-        modelAndViev.addObject("BaseUrl", baseUrl);
-        modelAndViev.addObject("PageTitle", "Admin Dashboard");
-        return modelAndViev;
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Admin Dashboard");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/create-new-admin", method = RequestMethod.GET)
     public ModelAndView createNewAdmin(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("admin/createNewAdmin");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
         modelAndView.addObject("BaseUrl", baseUrl);
-
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("PageTitle", "Create New Admin");
         return modelAndView;
 
     }
@@ -57,11 +59,14 @@ public class AdminDashboardController {
     @RequestMapping(value = "/get-all-admin", method = RequestMethod.GET)
     public ModelAndView showAllAdminList(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("admin/adminUserDetails");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
         List<AuthCredential> adminUsers = appLoginCredentialModel.getAllAdmin();
 
+        modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("adminUsers", adminUsers);
+        modelAndView.addObject("PageTitle", "All Admin");
 
 
         return modelAndView;
@@ -77,7 +82,7 @@ public class AdminDashboardController {
 
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("adminUser", admin);
-
+        modelAndView.addObject("PageTitle", "Admin Edit");
 
         return modelAndView;
 
@@ -89,10 +94,13 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
         AdminSiteFeesEntity adminSiteFeesEntity = adminSitesFeesModel.getAdminSiteFees();
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("paypalCredientail", adminPaypalCredential);
         modelAndView.addObject("siteFeesCredientail", adminSiteFeesEntity);
+        modelAndView.addObject("PageTitle", "Utility");
         return modelAndView;
     }
 
@@ -102,8 +110,11 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
         modelAndView.addObject("paypalCredientail", adminPaypalCredential);
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Edit Paypal Configration");
         return modelAndView;
     }
 
@@ -114,8 +125,23 @@ public class AdminDashboardController {
 
         String baseUrl = (String) request.getAttribute("baseURL");
         AdminSiteFeesEntity adminSiteFeesEntity = adminSitesFeesModel.getAdminSiteFees();
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("siteFeesCredientail", adminSiteFeesEntity);
         modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Edit Site Fee");
+        return modelAndView;
+    }
+    @RequestMapping(value = "/add-category", method = RequestMethod.GET)
+    public ModelAndView getAddCategory(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/addCategory");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        String baseUrl = (String) request.getAttribute("baseURL");
+
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Add Category");
         return modelAndView;
     }
 }
