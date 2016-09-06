@@ -33,4 +33,17 @@ public class AdminUsersController {
         modelAndView.addObject("PageTitle", "Admin Users Details");
         return modelAndView;
     }
+    @RequestMapping(value = "/app-user-active", method = RequestMethod.GET)
+    public ModelAndView getAllActiveAppUser(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/allActiveAppUser");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List <AuthCredential> authCredentials = appLoginCredentialModel.getAllAppUser();
+
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("allUsers", authCredentials);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Admin Active Users Details");
+        return modelAndView;
+    }
 }

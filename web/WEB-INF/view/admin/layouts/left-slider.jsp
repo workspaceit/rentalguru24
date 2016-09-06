@@ -16,7 +16,6 @@
       </div>
       <div class="pull-left info">
         <p>${adminUser.getUserInf().getFirstName()}</p>
-        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
     </div>
     <!-- search form -->
@@ -43,6 +42,12 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/app-user"><i class="fa fa-circle-o"></i> App User</a></li>
+        </ul>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/user/app-user-active"><i class="fa fa-circle-o"></i>All Active App User</a></li>
+        </ul>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/user/app-user-inactive"><i class="fa fa-circle-o"></i>All inactive App User</a></li>
         </ul>
 
         <ul class="treeview-menu">

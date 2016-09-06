@@ -69,6 +69,40 @@
   <!-- Google fonts end here -->
 </head>
 <body class="ux">
+<div class="container-fluid top_nav">
+  <div class="row">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-5">
+          <ul class="top_nav_ul">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-7 ">
+          <ul class="top_nav_ul right top_nav_ul">
+              <li class="dropdown">
+                <a href="${BaseUrl}/signup" class="dropdown-toggle top_nav_a"
+                   aria-expanded="false">
+                  <i class="fa fa-lock"></i>Register
+                </a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!--top Nav Bar-->
 <div class="container-fluid mid_nav">
   <div class="row">
@@ -77,7 +111,7 @@
         <div class="col-md-6 col-sm-6 col-xs-6">
           <ul class="mid_nav_logo_ul">
             <li class=>
-              <img src="<c:url value="/resources/img/logo.png" />" >
+              <a href="${BaseUrl}/home"><img src="<c:url value="/resources/img/logo.png" />" ></a>
             </li>
           </ul>
         </div>
@@ -154,9 +188,6 @@
         <p class="footer_head">MY ACCOUNT</p>
         <ul class="footer_ul">
           <li>Login</li>
-          <li>My Cart</li>
-          <li>Wishlist</li>
-          <li>Checkout</li>
         </ul>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-12">

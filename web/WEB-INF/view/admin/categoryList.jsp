@@ -51,7 +51,7 @@
                     <td>${category.getName()}</td>
                     <th>
                       <button class="btn btn-block btn-info" onclick="location.href='${BaseUrl}/admin/user/edit-category/'+${category.getId()}">Edit</button>
-                      <button class="btn btn-block btn-danger" onclick="deleteCategory(${category.getId()})">Delete</button>
+                      <%--<button class="btn btn-block btn-danger" onclick="deleteCategory(${category.getId()})">Delete</button>--%>
                     </th>
                     <td>
                       <d:if test="${category.getSubcategory().size() > 0}">
@@ -65,7 +65,7 @@
                                 <td>${subCategory.getName()}</td>
                                 <td>
                                   <button class="btn btn-block btn-info" onclick="location.href='${BaseUrl}/admin/user/edit-sub-category/'+${subCategory.getId()}">Edit</button>
-                                  <button class="btn btn-block btn-danger">Delete</button>
+                                  <%--<button class="btn btn-block btn-danger">Delete</button>--%>
                                 </td>
                               </tr>
                             </d:forEach>
