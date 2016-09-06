@@ -1,12 +1,14 @@
 package controller.web.admin;
 
 import model.AppLoginCredentialModel;
+import model.CategoryModel;
 import model.admin.AdminPaypalCredentailModel;
 import model.admin.AdminSitesFeesModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
+import model.entity.app.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.HttpRetryException;
 import java.util.List;
 
 /**
@@ -31,6 +34,9 @@ public class AdminDashboardController {
 
     @Autowired
     AdminSitesFeesModel adminSitesFeesModel;
+
+    @Autowired
+    CategoryModel categoryModel;
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
@@ -142,6 +148,61 @@ public class AdminDashboardController {
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Add Category");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/add-sub-category", method = RequestMethod.GET)
+    public ModelAndView getAddSubCategory(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/addSubCategory");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        List<Category> category = categoryModel.getAll();
+
+        modelAndView.addObject("category", category);
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Add Subcategory");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/category-list", method = RequestMethod.GET)
+    public ModelAndView getCategoryList(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/categoryList");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        List<Category> category = categoryModel.getAll();
+
+        modelAndView.addObject("category", category);
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Category List");
+        return modelAndView;
+    }
+    @RequestMapping(value = "/edit-category/{category_id}", method = RequestMethod.GET)
+    public ModelAndView editCategory(HttpServletRequest request, @PathVariable("category_id") int categoryId){
+        ModelAndView modelAndView = new ModelAndView("admin/editCategory");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        Category category = categoryModel.getById(categoryId);
+
+        modelAndView.addObject("category", category);
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Edit Category");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/edit-sub-category/{sub_category_id}", method = RequestMethod.GET)
+    public ModelAndView editSubcategory(HttpServletRequest request,@PathVariable("sub_category_id") int subCategoryId){
+        ModelAndView modelAndView = new ModelAndView("admin/editSubCategory");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        Category subCategory = categoryModel.getById(subCategoryId);
+
+        modelAndView.addObject("subCategory", subCategory);
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Edit Category");
         return modelAndView;
     }
 }

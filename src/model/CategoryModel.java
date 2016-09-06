@@ -17,6 +17,13 @@ public class CategoryModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+    public void delete(Category category){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(category);
+        session.getTransaction().commit();
+        session.close();
+    }
     public Category getById(int id){
         Session session = this.sessionFactory.openSession();
         String hql = "FROM Category where id = :id";

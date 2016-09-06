@@ -76,11 +76,14 @@
           <i class="fa fa-dashboard"></i> <span>Category</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/user/category-list"><i class="fa fa-circle-o"></i>Category and subcategory List</a></li>
+        </ul>
+        <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/add-category"><i class="fa fa-circle-o"></i>Add Category</a></li>
         </ul>
 
         <ul class="treeview-menu">
-          <li><a href="${BaseUrl}/admin/user/"><i class="fa fa-circle-o"></i>Add Subcategory</a></li>
+          <li><a href="${BaseUrl}/admin/user/add-sub-category"><i class="fa fa-circle-o"></i>Add Subcategory</a></li>
         </ul>
       </li>
     </ul>

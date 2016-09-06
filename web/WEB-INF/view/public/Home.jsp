@@ -215,7 +215,7 @@
                                             </fieldset>
                                             </d:if>
                                             <d:if test="${product.averageRating == 0}">
-                                                <label>Not rated yet</label>
+                                                <label class="no-rating-label">Not rated yet</label>
                                             </d:if>
                                         </div>
                                         <div class="block-action">
