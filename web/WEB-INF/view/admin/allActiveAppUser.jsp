@@ -49,14 +49,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <d:forEach var="users" items="${allUsers}">
-                  <tr>
-                    <td>${users.getUserInf().getFirstName()}</td>
-                    <td>${users.getUserInf().getLastName()}</td>
-                    <td>${users.getEmail()}</td>
-                    <td></td>
-                  </tr>
-                </d:forEach>
+                  <d:forEach var="users" items="${allUsers}">
+                    <d:if test="${users.isVerified() == true}">
+                      <tr>
+                        <td>${users.getUserInf().getFirstName()}</td>
+                        <td>${users.getUserInf().getLastName()}</td>
+                        <td>${users.getEmail()}</td>
+                        <td>Active</td>
+                      </tr>
+                    </d:if>
+                  </d:forEach>
                 </tbody>
                 <tfoot>
                 <tr>
