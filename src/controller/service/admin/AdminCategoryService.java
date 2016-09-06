@@ -117,19 +117,15 @@ public class AdminCategoryService {
     public ServiceResponse deleteCategory(HttpServletRequest request, @RequestParam int categoryId){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         List<Category> subCategoryList = categoryModel.getByParentId(categoryId);
-        List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(categoryId);
-        if(rentalProduct.size() <= 0){
-            if(categoryId < 0){
-                serviceResponse.setRequestError("category", "can't fiend category by this name");
+        for(Category subcategory : subCategoryList){
+            List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(subcategory.getId(),1,0);
+            if(rentalProduct!=null && rentalProduct.size() >= 0){
+                serviceResponse.setRequestError("category", "Can not delete category, there is subcategory \'"+subcategory.getName()+"\' which has product");
                 return serviceResponse;
             }
-            Category category = categoryModel.getById(categoryId);
-            categoryModel.delete(category);
-            serviceResponse.getResponseStat().setMsg("Category successfully delete");
-            return serviceResponse;
         }
-        serviceResponse.setRequestError("category", "There are products under this category");
-        serviceResponse.setResponseData(subCategoryList);
+
+        categoryModel.delete(categoryId);
         return serviceResponse;
     }
 }

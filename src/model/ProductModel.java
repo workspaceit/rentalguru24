@@ -278,10 +278,30 @@ public class ProductModel extends BaseModel {
 
     public List<RentalProduct> getProductByCategoryId(int categoryId){
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity rentalProduct LEFT JOIN FETCH rentalProduct.productCategories productCategory WHERE productCategory.category.id=:categoryId";
+        String hql = "FROM RentalProductEntity rentalProduct " +
+                    "  LEFT JOIN FETCH rentalProduct.productCategories " +
+                  " productCategory WHERE productCategory.category.id=:categoryId" +
+                " order by rentalProduct.id desc ";
         try{
             return session.createQuery(hql)
                     .setParameter("categoryId", categoryId)
+                    .list();
+        } finally {
+
+            session.close();
+        }
+    }
+    public List<RentalProduct> getProductByCategoryId(int categoryId, int limit, int offset){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity rentalProduct " +
+                     " LEFT JOIN FETCH rentalProduct.productCategories productCategory " +
+                     "  WHERE productCategory.category.id=:categoryId"+
+                    " order by rentalProduct.id desc ";
+        try{
+            return session.createQuery(hql)
+                    .setParameter("categoryId", categoryId)
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit)
                     .list();
         } finally {
 

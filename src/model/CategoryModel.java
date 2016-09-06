@@ -17,6 +17,16 @@ public class CategoryModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+    public void delete(int categoryId){
+        Category category = this.getById(categoryId);
+        if(category == null) return;
+
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(category);
+        session.getTransaction().commit();
+        session.close();
+    }
     public void delete(Category category){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
@@ -71,4 +81,5 @@ public class CategoryModel extends BaseModel {
             session.close();
         }
     }
+
 }

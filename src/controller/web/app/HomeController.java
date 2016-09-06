@@ -76,7 +76,7 @@ public class HomeController {
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
         ModelAndView modelAndView = new ModelAndView("public/Home");
-        List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId);
+        List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId,8,1);
         if(rentalProducts != null){
             List<RentalProduct> rentalProductsTop = productModel.getRentalProductOrderByRating(3, 0);
             if(rentalProductsTop==null || rentalProductsTop.size()==0){
