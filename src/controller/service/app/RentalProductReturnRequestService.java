@@ -1,5 +1,6 @@
 package controller.service.app;
 
+import helper.DateHelper;
 import helper.ServiceResponse;
 import model.ProductModel;
 import model.RentInfModel;
@@ -56,7 +57,7 @@ public class RentalProductReturnRequestService {
         rentalProductReturnRequest.setRentInf(rentInf);
         rentalProductReturnRequest.setIsExpired(false);
         rentalProductReturnRequest.setRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
-
+        rentalProductReturnRequest.setCreatedDate(DateHelper.getUtcDateProcessedTimeStamp());
         rentalProductReturnRequestModel.insert(rentalProductReturnRequest);
 
         serviceResponse.setResponseData(rentInfModel.getById(rentalInfId));

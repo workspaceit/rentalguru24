@@ -117,6 +117,7 @@
                             thumbnailWidth: 200,
                             thumbnailHeight: 175,
                             maxFiles: 1,
+                            acceptedFiles: "image/jpeg,image/png,image/jpg",
                             maxfilesexceeded: function(file) {
                                 this.removeAllFiles();
                                 this.addFile(file);

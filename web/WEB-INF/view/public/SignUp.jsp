@@ -102,30 +102,30 @@
 
 
 <div class="container center-bg">
-    <form class="form-signup clearfix" onsubmit="return submitSignUpData();">
+    <form class="form-signup clearfix" onsubmit="return submitSignUpData();" >
         <div class="col-md-6">
             <div class="form-group">
                 <label for="firstname">First name</label>
                 <input type="text" class="form-control" placeholder="ex.John" id="firstName" name="firstName">
-                <p class="help-block error-form" id="errorMsg_firstName"></p>
+                <p class="help-block error-form" id="errorMsg_firstName" for="firstName" custom-validation="required"></p>
             </div>
             <div class="form-group">
                 <label for="lastname">Last name</label>
                 <input type="text" class="form-control" placeholder="ex.Wick" id="lastName" name="lastName">
-                <p class="help-block error-form" id="errorMsg_lastName"></p>
+                <p class="help-block error-form" id="errorMsg_lastName" for="lastName" custom-validation="required" ></p>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
-                <p class="help-block error-form" id="errorMsg_email"></p>
+                <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email" >
+                <p class="help-block error-form" id="errorMsg_email" for="email" custom-validation="required" ></p>
             </div>
 
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
-                <p class="help-block error-form" id="errorMsg_password"></p>
+                <input type="password" class="form-control" placeholder="ex.password" id="password" name="password" >
+                <p class="help-block error-form" id="errorMsg_password" for="password" custom-validation="required" ></p>
             </div>
             <div class="form-group ">
                 <label for="identityTypeId">Identity Type</label>
@@ -133,7 +133,7 @@
                 <select id="identityTypeId" name="identityTypeId" class="selectpicker">
                     <option value="">Please select a identity type</option>
                 </select>
-                <p class="help-block error-form" id="errorMsg_identityTypeId"></p>
+                <p class="help-block error-form" id="errorMsg_identityTypeId" for="identityTypeId" custom-validation="required" ></p>
             </div>
             <div class="form-group">
                 <label for="fallback">Identity Document</label>
@@ -141,8 +141,12 @@
                     Drop files here or click to upload.
                     <span class="inner-load fileUploadGif" hidden></span>
                 </div>
+
                 <%--<input type="file" name="documentIdentity">--%>
+                <p class="help-info" id="nameFileAttached"></p>
                 <p class="help-block error-form" id="errorMsg_identityDocToken"></p>
+                <p class="help-block error-form" id="errorMsg_documentIdentity" for="identityDocToken" custom-validation="required" errorMsg="Please upload identity document" ></p>
+
             </div>
         </div>
         <div class="col-md-12 text-center">
@@ -331,6 +335,10 @@
 </script>
 <script>
     function submitSignUpData(){
+        UnBindErrors("errorMsg_");
+        if(!requiredValidation("errorMsg_")){
+            return false;
+        }
         $('.signUpGif').show();
         var firstName = $("#firstName").val();
         var lastName = $("#lastName").val();
@@ -388,30 +396,44 @@
 //                    totaluploadprogress: function(progress, uploadProgress, totalBytesSent) {
 //
 //                    },
+                    acceptedFiles: "image/jpeg,image/png,application/pdf",
                     maxfilesexceeded: function(file) {
                         this.removeAllFiles();
                         this.addFile(file);
                     },
-                    uploadprogress:function(file, progress){
+                    addedfile:function(file){
                         $('#signUpButton').attr("disabled","disabled");
                         $('.signUpGif').show();
                         $('.fileUploadGif').show();
+                        $('#identityDocUploadProgress').show();
+
+                    },
+                    uploadprogress:function(file, progress){
+                        console.log("progress "+progress);
+
                     },
                     success:function(file, response){
+                        UnBindErrors('errorMsg_');
+
                         if(response.responseStat.status == true) {
-                            $('.fileUploadGif').hide();
-                            $('#signUpButton').removeAttr("disabled","disabled");
-                            $('.signUpGif').hide();
+                            $('#nameFileAttached').html(response.responseStat.msg);
                             $('#identityDocToken').val(response.responseData);
                         }
                         else{
-                            BindErrorsWithHtml('errorMsg_', response.requestErrors);
+                            $('#nameFileAttached').html("");
+                            BindErrorsWithHtml('errorMsg_', response.responseStat.requestErrors);
                         }
+                        $('.fileUploadGif').hide();
+                        $('#signUpButton').removeAttr("disabled","disabled");
+                        $('.signUpGif').hide();
+
                     },
                     error:function(file, errorMessage, xhr){
                         $('.fileUploadGif').hide();
                         $('#signUpButton').removeAttr("disabled","disabled");
                         $('.signUpGif').hide();
+                        $('#nameFileAttached').html("");
+                        $('#identityDocUploadProgress').show();
                     }
                 }
         );

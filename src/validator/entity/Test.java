@@ -12,21 +12,22 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Test {
     public static void main(String args[]){
+        List<String> contentTypeList = new ArrayList<String>(){
+            {
+                add("application/pdf");
+                add("image/jpeg");
+                add("image/pjpeg");
+                add("image/jpeg");
+                add("image/png");
 
-
-        Instant instant = Instant.now();
-        System.out.println(instant.getEpochSecond());
-
-        System.out.println(instant.getNano());
-//        String[] email  = jsonNode.findValuesAsText("kind");
-//       // System.out.print(jsonNode.r);
-//        if(email!=null)
-//            System.out.print(email);
-
+            }
+        };
+        System.out.println(contentTypeList.contains("image/jpeg") + " " + contentTypeList.contains("image/**"));
     }
 }
 

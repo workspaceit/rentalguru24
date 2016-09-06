@@ -32,9 +32,9 @@
         <div class="col-xs-12 col-md-6 col-sm-6">
           <div class="breadcrumb rent_page_bread">
             <ol class="breadcrumb">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Library</a></li>
-              <li class="active">Data</li>
+              <d:if test="${rentalProduct.productCategories!=null && rentalProduct.productCategories.size()>0}" >
+                <li><a href="${BaseUrl}/home/category/${rentalProduct.productCategories.get(0).category.id}">${rentalProduct.productCategories.get(0).category.name}</a></li>
+              </d:if>
             </ol>
           </div>
         </div>

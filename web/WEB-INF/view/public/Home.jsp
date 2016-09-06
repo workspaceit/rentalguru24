@@ -15,7 +15,7 @@
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div id="hot-deals" class="carousel slide left_home_car" data-ride="carousel">
                             <div class="left_slide_head">
-                                HOT DEALS
+                                MOST RATED
                                 <!-- Indicators -->
                                 <ol class="carousel-indicators custom_car_ind">
                                     <li data-target="#hot-deals" data-slide-to="0" class="active"></li>
@@ -188,7 +188,7 @@
                                         <div class="img-single product_home_img_wrap">
                                             <a href="${BaseUrl}/product/details/${product.getId()}"><img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" /></a>
                                             <div class="product-btn-grp">
-                                                <a href="" class="gbtn left">Quick view</a>
+                                                <a href="${BaseUrl}/product/details/${product.getId()}" class="gbtn left">View details</a>
                                                 <%--data-toggle="modal" data-target="#rentPopUp"--%>
                                                 <a href="javascript:void(0)" onclick="showRentRequestPopUp(${product.getId()})" class="gbtn right">Rent Now</a>
                                             </div>

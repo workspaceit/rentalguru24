@@ -41,10 +41,11 @@ public class ProductController{
     public ModelAndView upload(HttpServletRequest request){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<Category> category = (List<Category>) request.getAttribute("category");
+
         String baseUrl = (String) request.getAttribute("baseURL");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         ModelAndView modelAndView = new ModelAndView("/product/upload");
-        List<Category> category = categoryModel.getAllCategoryParent();
         List<RentType> rentTypes = rentTypeModel.getAll();
 
         modelAndView.addObject("BaseUrl",baseUrl);
@@ -59,12 +60,13 @@ public class ProductController{
     public String details(HttpServletRequest request,@PathVariable("product_id") int productId, Model model){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<Category> category = (List<Category>) request.getAttribute("category");
+
         String baseUrl = (String) request.getAttribute("baseURL");
         System.out.println("baseUrl "+baseUrl);
         RentalProduct rentalProduct = productModel.getById(productId);
         List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0, productId);
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-        List<Category> category = categoryModel.getAll();
 
         model.addAttribute("IsLogIn", IsLogin);
         model.addAttribute("rentalProduct", rentalProduct);

@@ -36,13 +36,17 @@ public class HomeController {
     public ModelAndView index(HttpServletRequest request) {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<Category> category = (List<Category>) request.getAttribute("category");
+
         String baseUrl = (String) request.getAttribute("baseURL");
 
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-        List<Category> category = categoryModel.getAll();
         List<RentalProduct> rentalProducts = productModel.getRentalProduct(8, 0);
-        List<RentalProduct> rentalProductsTop = productModel.getRentalProduct(2, 0);
+        List<RentalProduct> rentalProductsTop = productModel.getRentalProductOrderByRating(3, 0);
+        if(rentalProductsTop==null || rentalProductsTop.size()==0){
+            rentalProductsTop = productModel.getRentalProduct(3, 0);
+        }
         List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
         RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
         RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
@@ -67,14 +71,17 @@ public class HomeController {
     public ModelAndView getProductByCategoryId(HttpServletRequest request, @PathVariable("category_id") int categoryId){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<Category> category = (List<Category>) request.getAttribute("category");
         String baseUrl = (String) request.getAttribute("baseURL");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
         ModelAndView modelAndView = new ModelAndView("public/Home");
         List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId);
         if(rentalProducts != null){
-            List<Category> category = categoryModel.getAll();
-            List<RentalProduct> rentalProductsTop = productModel.getRentalProduct(2, 0);
+            List<RentalProduct> rentalProductsTop = productModel.getRentalProductOrderByRating(3, 0);
+            if(rentalProductsTop==null || rentalProductsTop.size()==0){
+                rentalProductsTop = productModel.getRentalProduct(3, 0);
+            }
             List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
             RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
             RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
@@ -99,7 +106,8 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/partial-rendering/category/{category_id}", method = RequestMethod.GET)
-    public ModelAndView getCategory(@PathVariable("category_id") int category_id){
+    public ModelAndView getCategory(HttpServletRequest request,@PathVariable("category_id") int category_id){
+        String baseUrl = (String) request.getAttribute("baseURL");
         ModelAndView modelAndView = new ModelAndView("public/partial_rendering_new_product");
         List rentalProduct = productModel.getProductByCategoryId(category_id);
         modelAndView.addObject("products",rentalProduct);

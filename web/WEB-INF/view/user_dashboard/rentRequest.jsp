@@ -48,7 +48,7 @@
                     <table id="example1" class="table table-bordered table-striped user_dashboard_table">
                         <thead>
                         <tr>
-                            <th>Requested Product Name</th>
+                            <th>Product Title</th>
                             <th>Requested By</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -59,6 +59,7 @@
                         <tbody>
                         <d:forEach var="rentRequest" items="${rentRequests}">
                             <tr id="${rentRequest.id}">
+                                <td>${rentRequest.rentalProduct.name}</td>
                                 <td>${rentRequest.requestedBy.userInf.firstName}</td>
                                 <td><fmt:formatDate value="${rentRequest.startDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
                                 <td><fmt:formatDate value="${rentRequest.endDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>

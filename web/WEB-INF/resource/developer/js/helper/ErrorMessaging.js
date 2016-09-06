@@ -58,3 +58,29 @@ function setAliasMessage(params,msg,replacedMsg){
 
     ErrorMessageAliasList.push(errorMessageAlias);
 }
+function requiredValidation(preFix){
+    var flag = true;
+    $("[id^="+preFix+"]").each(function(){
+        if($(this).attr("custom-validation")!=undefined){
+            try{
+                var validationTypes = $(this).attr("custom-validation").split(",");
+
+                if(validationTypes.indexOf("required")>=0){
+                    var fieldId = $(this).attr("for");
+                    if($("#"+fieldId).val()==null || $("#"+fieldId).val()=="" ){
+                        flag = false;
+                        $(this).show();
+                        var errorMsg = ($(this).attr("errorMsg")!=undefined)?$(this).attr("errorMsg"):"Field required";
+                        $(this).html(errorMsg);
+                    }
+                }
+
+
+            }catch(ex){
+                console.log(ex);
+             }
+
+        }
+    });
+    return flag;
+}

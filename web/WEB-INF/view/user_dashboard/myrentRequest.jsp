@@ -49,7 +49,7 @@
           <table id="example1" class="table table-bordered table-striped user_dashboard_table">
             <thead>
             <tr>
-              <th>Product Name</th>
+              <th>Product Title</th>
               <th>Requested By</th>
               <th>Start Date</th>
               <th>End Date</th>

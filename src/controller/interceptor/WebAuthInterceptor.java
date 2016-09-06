@@ -10,7 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.ServiceResponse;
+import model.CategoryModel;
 import model.entity.app.AppCredential;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,7 +22,8 @@ import java.io.PrintWriter;
 
 public class WebAuthInterceptor extends HandlerInterceptorAdapter{
     private String baseURL;
-
+    @Autowired
+    CategoryModel categoryModel;
     //before the actual handler will be executed
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler)
@@ -39,6 +42,7 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
 
             this.baseURL = this.getURLWithContextPath(request);
 
+            request.setAttribute("category",categoryModel.getAll());
             request.setAttribute("baseURL", this.baseURL);
             return true;
         }else{

@@ -350,6 +350,7 @@
               thumbnailWidth: 200,
               thumbnailHeight: 200,
               maxFiles: 1,
+              acceptedFiles: "image/jpeg,image/png,image/jpg",
               maxfilesexceeded: function(file) {
                 this.removeAllFiles();
                 this.addFile(file);
@@ -390,6 +391,7 @@
               thumbnailWidth: 200,
               thumbnailHeight: 200,
               maxFiles: 3,
+              acceptedFiles: "image/jpeg,image/png,image/jpg",
               maxfilesexceeded: function(file) {
                 this.removeFile(file);
                 $('#otherImageWarning').show().delay(2000).fadeOut(300, function(){

@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -21,17 +23,52 @@ import java.util.Random;
 @RestController
 @RequestMapping("/fileupload/upload")
 public class FileController {
+    private List<String> documentContentTypeList;
+    private List<String> productImgContentTypeList;
+    private List<String> profileImgContentTypeList;
     @Autowired
     TempFileModel tempFileModel;
+    public FileController(){
+        documentContentTypeList = new ArrayList<String>(){
+            {
+                add("application/pdf");
+                add("image/jpeg");
+                add("image/pjpeg");
+                add("image/jpeg");
+                add("image/png");
 
+            }
+        };
+        productImgContentTypeList = new ArrayList<String>(){
+            {
+                add("image/jpeg");
+                add("image/pjpeg");
+                add("image/jpeg");
+                add("image/png");
+
+            }
+        };
+        profileImgContentTypeList = new ArrayList<String>(){
+            {
+                add("image/jpeg");
+                add("image/pjpeg");
+                add("image/jpeg");
+                add("image/png");
+
+            }
+        };
+    }
     @RequestMapping(value = "/document-identity", headers = "Content-Type=multipart/form-data",method = RequestMethod.POST)
     public ServiceResponse uploadDocumentIdentity(HttpServletRequest request,@RequestParam("documentIdentity") MultipartFile file){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
         model.entity.app.TempFile tempFile = new model.entity.app.TempFile();
+        /*---------Content type validation -----------------*/
+        if(!documentContentTypeList.contains(file.getContentType())){
+            serviceResponse.setRequestError("documentIdentity", file.getContentType()+" not allowed");
+            return serviceResponse;
+        }
 
-
-        /*---------Only Doc type validation -----------------*/
 
         try {
             byte[] fileByte = file.getBytes();
@@ -55,6 +92,7 @@ public class FileController {
 
 
         this.tempFileModel.insert(tempFile);
+        serviceResponse.getResponseStat().setMsg( file.getOriginalFilename()+" has been uploaded");
         serviceResponse.setResponseData(tempFile.getToken());
         return serviceResponse;
     }
@@ -64,9 +102,12 @@ public class FileController {
         model.entity.app.TempFile tempFile = new model.entity.app.TempFile();
 
 
-        /*---------Only Doc type validation -----------------*/
-        System.out.println("File Size"+file.getSize());
 
+        /*---------Content type validation -----------------*/
+        if(!productImgContentTypeList.contains(file.getContentType())){
+            serviceResponse.setRequestError("productImage", file.getContentType()+" not allowed");
+            return serviceResponse;
+        }
 
 
         long fileSizeLimit = 2 *1024 *1024; // 2 MB
@@ -107,7 +148,10 @@ public class FileController {
 
 
         /*---------Only Doc type validation -----------------*/
-
+        if(!profileImgContentTypeList.contains(file.getContentType())){
+            serviceResponse.setRequestError("productImage", file.getContentType()+" not allowed");
+            return serviceResponse;
+        }
         try {
             byte[] fileByte = file.getBytes();
             System.out.println("Byte Received " +fileByte.length);

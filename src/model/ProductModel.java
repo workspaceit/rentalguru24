@@ -87,6 +87,23 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
+    public List<RentalProduct> getRentalProductOrderByRating(int limit, int offset) {
+        if (limit > 15) {
+            limit = 15;
+        }
+        if(limit<=0){
+            return new ArrayList<>();
+        }
+        String hql = "FROM RentalProductEntity p where p.active = true and p.reviewStatus = true ORDER BY p.averageRating DESC";
+        Session session = this.sessionFactory.openSession();
+        try {
+            return session.createQuery(hql)
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit).list();
+        } finally {
+            session.close();
+        }
+    }
     public RentalProduct getRentalProductRandom() {
 
         String hql = "FROM RentalProductEntity p where p.active = true and p.reviewStatus = true ORDER BY RAND()";

@@ -143,18 +143,18 @@
                             </d:if>
                         </ul>
 
-                        <ul id="productReceiveConfirmationUl" class="confirmation_link_ul">
+                        <ul id="productReceiveConfirmationUl" style="display: none;" class="confirmation_link_ul">
                             <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
                                 <li>
-                                    <BUTTON id="productReceiveConfirmBtn" class="cancel_btn approval_btn" style="display: none;" >Confirm
+                                    <p>Have you receive the product ?</p>
+                                    <BUTTON id="productReceiveConfirmBtn" class="cancel_btn approval_btn"  >Confirm
                                         <span id="productReceiveConfirmBtnProgressIm" class="inner-load approveGif" hidden></span>
                                     </BUTTON>
-                                </li>
-                                <li>
-                                    <BUTTON id="productReceiveDisputeBtn" class="approve_btn approval_btn" style="display: none;" >Dispute
+                                    <BUTTON id="productReceiveDisputeBtn" class="approve_btn approval_btn"  >Dispute
                                         <span id="productReceiveDisputeProgressImg" class="inner-load disapproveGif" hidden></span>
                                     </BUTTON>
                                 </li>
+
                             </d:if>
                         </ul>
                         <ul  class="confirmation_link_ul" >
@@ -192,6 +192,11 @@
                                 </div>
                             </li>
                             <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
+
+                                    <div id="productReturnRequestParentDiv" style="display: none;" class="alert alert-danger">
+                                        <strong id="productReturnRequestString" >User have requested to return product </strong>
+                                    </div>
+
                                 <li>
                                     <div  id="productReceivePendingParentDiv" style="display: none;" >
                                         <p>Product received : </p>
@@ -408,10 +413,8 @@
 
                              if(rentInf.rentalProductReturned != undefined){
                                 if(rentInf.rentalProductReturned.confirm==false && rentInf.rentalProductReturned.dispute==false ){
-                                    $("#productReceiveConfirmBtn").fadeIn();
-                                    $("#productReceiveDisputeBtn").fadeIn();
-                                    $("#productReceivePendingParentDiv").fadeIn();
-
+                                    $("#productReceiveConfirmationUl").fadeIn();
+                                    $("#productReceivePendingParentDiv").fadeIn(); // Showing that user have not confirm nither dispute
                                     $("#productReceiveConfirmBtn:not(.bound)").addClass('bound').bind("click",function(){
                                         productReceiveConfirm(rentInf.rentalProductReturned.id);
                                     });
@@ -444,6 +447,10 @@
                                 $("#productReturnBtn").fadeIn().addClass('bound').bind("click",function(){
                                     returnProduct(rentInf.id);
                                 });
+                            }else if(rentInf.rentalProductReturnRequest != undefined){
+                                var createdDate =  dateFormat(new Date(rentInf.rentalProductReturnRequest.createdDate), "dddd, mmm dS, yyyy, h:MM:ss TT");
+                                $("#productReturnRequestParentDiv").fadeIn();
+                                $("#productReturnRequestString").append(" On "+createdDate).fadeIn();
                             }
                         }else{
 

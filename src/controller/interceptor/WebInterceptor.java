@@ -6,7 +6,10 @@ package controller.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.ServiceResponse;
+import model.CategoryModel;
 import model.entity.app.AppCredential;
+import model.entity.app.Category;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,10 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class WebInterceptor extends HandlerInterceptorAdapter{
 
-
+    @Autowired
+    CategoryModel categoryModel;
     private String baseURL;
     //before the actual handler will be executed
     public boolean preHandle(HttpServletRequest request,
@@ -31,6 +36,7 @@ public class WebInterceptor extends HandlerInterceptorAdapter{
         AppCredential appCredential =  new AppCredential();
         ServletRequestAttributes ar = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession httpSession = request.getSession();
+
         this.baseURL = this.getURLWithContextPath(request);
 
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
@@ -38,6 +44,7 @@ public class WebInterceptor extends HandlerInterceptorAdapter{
             appCredential =(AppCredential) httpSession.getAttribute("appCredential");
 
         }
+        request.setAttribute("category",categoryModel.getAll());
         request.setAttribute("baseURL", this.baseURL);
         request.setAttribute("serviceResponse", serviceResponse);
         request.setAttribute("appCredential", appCredential);

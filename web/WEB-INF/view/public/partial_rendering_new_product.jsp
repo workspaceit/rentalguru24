@@ -29,7 +29,7 @@
                 <div class="img-single">
                   <a href="${BaseUrl}/product/details/${product.getId()}"><img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" /></a>
                   <div class="product-btn-grp">
-                    <a href="" class="gbtn left">Quick view</a>
+                    <a href="${BaseUrl}/product/details/${product.getId()}" class="gbtn left">View details</a>
                       <%--data-toggle="modal" data-target="#rentPopUp"--%>
                     <a href="javascript:void(0)" onclick="showRentRequestPopUp(${product.getId()})" class="gbtn right">Rent Now</a>
                   </div>
