@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: omar
-  Date: 9/5/16
-  Time: 2:53 PM
+  Date: 9/6/16
+  Time: 4:22 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -28,18 +28,18 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-body">
-              <form role="form" onsubmit="return addNewCategor();">
+              <form role="form" onsubmit="return editSubcategor();">
                 <div class="box-body">
                   <div class="form-group">
-                    <label for="categoryName" >Category Name</label>
-                    <input name="categoryName" id="categoryName" class="form-control" >
+                    <label for="subCategoryName" >Subcategory Name</label>
+                    <input name="subCategoryName" id="subCategoryName" class="form-control" value="${subCategory.getName()}" data-subCategoryId="${subCategory.getId()}">
                     <p class="help-block error-form" id="errorMsg_name"></p>
                   </div>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
                   <button class="btn btn-primary" >Submit</button>
                 </div>
-                <div class="alert alert-success" id="alertSuccess" hidden></div>
+                <div class="alert alert-success" id="alertSuccess" hidden>Category name change successful</div>
                 <div class="alert alert-danger" id="errorMsg_categoryName" hidden></div>
               </form>
             </div><!-- /.box-body -->
@@ -50,18 +50,20 @@
   </div><!-- /.content-wrapper -->
   <jsp:directive.include file="layouts/footer.jsp" />
   <script>
-    function addNewCategor(){
-      var categoryName = $('#categoryName').val();
+    function editSubcategor(){
+      var subCategoryId = $('#subCategoryName').data("subcategoryid");
+      var subCategoryName = $('#subCategoryName').val();
       $.ajax({
         type: "POST",
-        url: '${BaseUrl}/api-admin/category/add-category',
+        url: '${BaseUrl}/api-admin/category/edit-category',
         data: {
-          categoryName: categoryName
+          categoryName: subCategoryName,
+          categoryId: subCategoryId
         },
         success: function(data) {
           if(data.responseStat.status==true){
             $("#alertSuccess").show().fadeIn(500).delay(2000).fadeOut(500, function () {
-              $("#alertSuccess").hide();
+              window.location.href =BASEURL+"/admin/user/category-list";
             });
           }else{
             BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
@@ -79,4 +81,3 @@
   </script>
 </body>
 </html>
-

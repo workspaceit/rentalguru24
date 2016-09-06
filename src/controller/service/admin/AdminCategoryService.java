@@ -2,8 +2,10 @@ package controller.service.admin;
 
 import helper.ServiceResponse;
 import model.CategoryModel;
+import model.ProductModel;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
+import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +23,9 @@ import java.util.*;
 public class AdminCategoryService {
     @Autowired
     CategoryModel categoryModel;
+
+    @Autowired
+    ProductModel productModel;
     @RequestMapping(value = "/add-category", method = RequestMethod.POST)
     private ServiceResponse setCategory(HttpServletRequest request, @RequestParam String categoryName){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
@@ -48,20 +53,27 @@ public class AdminCategoryService {
     private ServiceResponse setSubCategory(HttpServletRequest request, @RequestParam int categoryId, @RequestParam String subCategoryName){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
+        if(categoryId <= 0){
+            serviceResponse.setRequestError("categoryName", "Please select category");
+            return serviceResponse;
+        }
         if(subCategoryName == null){
-            serviceResponse.setRequestError("subCategoryName", "Category Name Required");
+            serviceResponse.setRequestError("subCategoryName", "Subcategory Name Required");
             return serviceResponse;
         }
         subCategoryName = subCategoryName.trim();
         if(subCategoryName.isEmpty()){
-            serviceResponse.setRequestError("subCategoryName", "Category Name Required");
+            serviceResponse.setRequestError("subCategoryName", "Subategory Name Required");
             return serviceResponse;
         }
 
         int lastSortedOrder = categoryModel.maxSortOrder();
 
         Category category = categoryModel.getById(categoryId);
+        if(category == null){
+            serviceResponse.setRequestError("category", "can't fiend category by this name");
+            return serviceResponse;
+        }
 
         Category subCategory = new Category();
         subCategory.setName(subCategoryName);
@@ -76,6 +88,48 @@ public class AdminCategoryService {
 
         categoryModel.insert(category);
         serviceResponse.getResponseStat().setMsg("Subcategory Add successful");
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/edit-category", method = RequestMethod.POST)
+    public ServiceResponse editCategory(HttpServletRequest request, @RequestParam int categoryId, @RequestParam String categoryName){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        if(categoryId < 0){
+            serviceResponse.setRequestError("category", "can't fiend category by this name");
+            return serviceResponse;
+        }
+        if(categoryName == null){
+            serviceResponse.setRequestError("category", "category Name required");
+            return serviceResponse;
+        }
+        categoryName = categoryName.trim();
+        if(categoryName.isEmpty()){
+            serviceResponse.setRequestError("categoryName", "Category Name Required");
+            return serviceResponse;
+        }
+
+        Category category = categoryModel.getById(categoryId);
+        category.setName(categoryName);
+        categoryModel.insert(category);
+        serviceResponse.getResponseStat().setMsg("Category successfully updated");
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/delete-category", method = RequestMethod.POST)
+    public ServiceResponse deleteCategory(HttpServletRequest request, @RequestParam int categoryId){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        List<Category> subCategoryList = categoryModel.getByParentId(categoryId);
+        List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(categoryId);
+        if(rentalProduct.size() <= 0){
+            if(categoryId < 0){
+                serviceResponse.setRequestError("category", "can't fiend category by this name");
+                return serviceResponse;
+            }
+            Category category = categoryModel.getById(categoryId);
+            categoryModel.delete(category);
+            serviceResponse.getResponseStat().setMsg("Category successfully delete");
+            return serviceResponse;
+        }
+        serviceResponse.setRequestError("category", "There are products under this category");
+        serviceResponse.setResponseData(subCategoryList);
         return serviceResponse;
     }
 }
