@@ -27,6 +27,18 @@ public class CategoryModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+    public void delete(List<Category> categoryList){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        for(Category category : categoryList){
+            for(Category subCategory : category.getSubcategory()){
+                session.delete(subCategory);
+            }
+            session.delete(category);
+        }
+        session.getTransaction().commit();
+        session.close();
+    }
     public void delete(Category category){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();

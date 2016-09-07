@@ -51,7 +51,7 @@
                     <td>${category.getName()}</td>
                     <th>
                       <button class="btn btn-block btn-info" onclick="location.href='${BaseUrl}/admin/user/edit-category/'+${category.getId()}">Edit</button>
-                      <%--<button class="btn btn-block btn-danger" onclick="deleteCategory(${category.getId()})">Delete</button>--%>
+                      <button class="btn btn-block btn-danger" onclick="deleteCategory(${category.getId()})">Delete</button>
                     </th>
                     <td>
                       <d:if test="${category.getSubcategory().size() > 0}">
@@ -97,14 +97,31 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Modal Success</h4>
+              <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--%>
+              <h4 class="modal-title">Success</h4>
             </div>
-            <div class="modal-body">
-              <p>One fine body&hellip;</p>
+            <div class="modal-body success">
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+              <%--<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>--%>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </div><!-- /.example-modal -->
+
+    <div class="example-modal">
+      <div class="modal modal-danger">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--%>
+              <h4 class="modal-title">Error</h4>
+            </div>
+            <div class="modal-body danger">
+            </div>
+            <div class="modal-footer">
+              <%--<button type="button" class="btn btn-outline pull-left" data-dismiss="modal-danger">Close</button>--%>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -124,9 +141,16 @@
       success: function(data){
         console.log(data);
         if(data.responseStat.status == true){
+          $('.success').html(data.responseStat.msg);
+          $('.modal-success').show().fadeIn(500).delay(2000).fadeOut(500, function (){
+              $('.modal-success').modal('hide');
+          });
 
         }else{
-
+          $('.danger').html(data.responseStat.requestErrors[0].msg);
+          $('.modal-danger').show().fadeIn(500).delay(2000).fadeOut(500, function (){
+            $('.modal-danger').modal('hide');
+          });
         }
       }
     });

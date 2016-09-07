@@ -137,16 +137,37 @@ public class AdminCategoryService {
     @RequestMapping(value = "/delete-category", method = RequestMethod.POST)
     public ServiceResponse deleteCategory(HttpServletRequest request, @RequestParam int categoryId){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        List<Category> subCategoryList = categoryModel.getByParentId(categoryId);
-        for(Category subcategory : subCategoryList){
-            List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(subcategory.getId(),1,0);
-            if(rentalProduct!=null && rentalProduct.size() >= 0){
-                serviceResponse.setRequestError("category", "Can not delete category, there is subcategory \'"+subcategory.getName()+"\' which has product");
+        List<Category> categoryList = categoryModel.getByParentId(categoryId);
+        for(Category category : categoryList){
+            List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(category.getId(),1,0);
+            if(rentalProduct!=null && rentalProduct.size() > 0){
+                serviceResponse.setRequestError("categoryId", "Can not delete category, there is category \'"+category.getName()+"\' which has product");
                 return serviceResponse;
             }
+            for(Category subCategory : category.getSubcategory()){
+                List<RentalProduct> rentalProductSub = productModel.getProductByCategoryId(subCategory.getId(),1,0);
+                if(rentalProductSub!=null && rentalProductSub.size() > 0){
+                    serviceResponse.setRequestError("categoryId", "Can not delete category, there is subcategory \'"+subCategory.getName()+"\' which has product");
+                    return serviceResponse;
+                }
+            }
         }
-
-        categoryModel.delete(categoryId);
+        if(categoryList == null || categoryList.size() == 0){
+            Category category = categoryModel.getById(categoryId);
+            if(category == null){
+                serviceResponse.setRequestError("categoryId", "Category not found");
+                return serviceResponse;
+            }
+            List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(category.getId(),1,0);
+            if(rentalProduct!=null && rentalProduct.size() > 0){
+                serviceResponse.setRequestError("categoryId", "Can not delete category, there is category \'"+category.getName()+"\' which has product");
+                return serviceResponse;
+            }
+            categoryModel.delete(categoryId);
+        }else{
+            categoryModel.delete(categoryList);
+        }
+        serviceResponse.getResponseStat().setMsg("Category successfully deleted");
         return serviceResponse;
     }
 }
