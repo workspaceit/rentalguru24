@@ -219,8 +219,8 @@
                                             </d:if>
                                         </div>
                                         <div class="block-action">
-                                            <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
-                                            <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
+                                            <%--<button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>--%>
+                                            <%--<button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>--%>
                                             <div class="price-tag">$${product.rentFee}/${product.rentType.name}</div>
                                         </div>
                                     </div>

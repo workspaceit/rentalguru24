@@ -110,6 +110,7 @@ public class HomeController {
         String baseUrl = (String) request.getAttribute("baseURL");
         ModelAndView modelAndView = new ModelAndView("public/partial_rendering_new_product");
         List rentalProduct = productModel.getProductByCategoryId(category_id);
+        modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("products",rentalProduct);
         return modelAndView;
     }

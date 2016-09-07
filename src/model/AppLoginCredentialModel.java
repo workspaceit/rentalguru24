@@ -187,6 +187,20 @@ public class AppLoginCredentialModel extends BaseModel {
         List result = query.list();
         return result;
     }
+    public List<AuthCredential> getAllVerifiedAppUser(){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM AuthCredential  WHERE  role < 0 and verified = true ORDER BY id DESC";
+        Query query = session.createQuery(hql);
+        List result = query.list();
+        return result;
+    }
+    public List<AuthCredential>getAllUnVerifiedAppUser(){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM AuthCredential  WHERE  role < 0 and verified = false  ORDER BY id DESC";
+        Query query = session.createQuery(hql);
+        List result = query.list();
+        return result;
+    }
 
     public List<AuthCredential>getAllAdmin(){
         Session session=null;

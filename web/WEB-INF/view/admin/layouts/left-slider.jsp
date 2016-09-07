@@ -44,10 +44,10 @@
           <li><a href="${BaseUrl}/admin/user/app-user"><i class="fa fa-circle-o"></i> App User</a></li>
         </ul>
         <ul class="treeview-menu">
-          <li><a href="${BaseUrl}/admin/user/app-user-active"><i class="fa fa-circle-o"></i>All Active App User</a></li>
+          <li><a href="${BaseUrl}/admin/user/app-user/verified"><i class="fa fa-circle-o"></i>Verified Users</a></li>
         </ul>
         <ul class="treeview-menu">
-          <li><a href="${BaseUrl}/admin/user/app-user-inactive"><i class="fa fa-circle-o"></i>All inactive App User</a></li>
+          <li><a href="${BaseUrl}/admin/user/app-user/unverified"><i class="fa fa-circle-o"></i>Un-verified Users</a></li>
         </ul>
 
         <ul class="treeview-menu">

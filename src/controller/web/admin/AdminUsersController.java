@@ -33,12 +33,12 @@ public class AdminUsersController {
         modelAndView.addObject("PageTitle", "Admin Users Details");
         return modelAndView;
     }
-    @RequestMapping(value = "/app-user-active", method = RequestMethod.GET)
+    @RequestMapping(value = "/app-user/verified", method = RequestMethod.GET)
     public ModelAndView getAllActiveAppUser(HttpServletRequest request){
-        ModelAndView modelAndView = new ModelAndView("admin/allActiveAppUser");
+        ModelAndView modelAndView = new ModelAndView("admin/appUsersDetails");
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        List <AuthCredential> authCredentials = appLoginCredentialModel.getAllAppUser();
+        List <AuthCredential> authCredentials = appLoginCredentialModel.getAllVerifiedAppUser();
 
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("allUsers", authCredentials);
@@ -47,12 +47,12 @@ public class AdminUsersController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/app-user-inactive", method = RequestMethod.GET)
+    @RequestMapping(value = "/app-user/unverified", method = RequestMethod.GET)
     public ModelAndView getAllInactiveAppUser(HttpServletRequest request){
-        ModelAndView modelAndView = new ModelAndView("admin/allInactiveAppUser");
+        ModelAndView modelAndView = new ModelAndView("admin/appUsersDetails");
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        List <AuthCredential> authCredentials = appLoginCredentialModel.getAllAppUser();
+        List <AuthCredential> authCredentials = appLoginCredentialModel.getAllUnVerifiedAppUser();
 
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("allUsers", authCredentials);

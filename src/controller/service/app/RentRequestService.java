@@ -2,6 +2,8 @@ package controller.service.app;
 
 import helper.DateHelper;
 import helper.ServiceResponse;
+import helper.SessionManagement;
+import model.AppLoginCredentialModel;
 import model.ProductModel;
 import model.RentInfModel;
 import model.RentRequestModel;
@@ -28,6 +30,8 @@ public class RentRequestService{
     RentInfModel rentInfModel;
     @Autowired
     ProductModel productModel;
+    @Autowired
+    AppLoginCredentialModel appLoginCredentialModel;
 
     /* **************************** Rent Request action [Started] ************************** */
 
@@ -42,7 +46,11 @@ public class RentRequestService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-
+        if(!appLoginCredentialModel.isVerified(appCredential.getId())){
+            serviceResponse.getResponseStat().setErrorMsg("You account is not verified");
+            SessionManagement.destroySession(request);
+            return serviceResponse;
+        }
         RentalProduct rentalProduct = productModel.getEntityById(productId);
 
 

@@ -37,7 +37,7 @@ public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
             serviceResponse.getResponseStat().setIsLogin(true);
             return true;
         }else{
-            serviceResponse.getResponseStat().setErrorMsg("Session expired !!!!");
+            serviceResponse.getResponseStat().setErrorMsg("Please login first !!");
             response.setContentType("application/json");
             PrintWriter pw = response.getWriter();
             ObjectMapper objectMapper = new ObjectMapper();

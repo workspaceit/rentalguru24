@@ -65,6 +65,7 @@
 
               <mvc:interceptor>
                  <mvc:mapping path="/home/category/**"/>
+                  <mvc:mapping path="/home/partial-rendering/category/**"/>
                  <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
               <mvc:interceptor>
@@ -355,9 +356,9 @@
                      <props>
                             <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24?useTimezone=true&amp;serverTimezone=UTC</prop>
                             <prop key="hibernate.connection.username">root</prop>
-                            <prop key="hibernate.connection.password" />
+                            <prop key="hibernate.connection.password"/>
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
-                            <prop key="hibernate.show_sql">true</prop>
+                            <!--<prop key="hibernate.show_sql">true</prop>-->
                             <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                             <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
                      </props>
