@@ -30,6 +30,11 @@ public class AdminCategoryService {
     private ServiceResponse setCategory(HttpServletRequest request, @RequestParam String categoryName){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        List<Category> categoriList = categoryModel.getAll();
+
+
+
         if(categoryName == null){
             serviceResponse.setRequestError("categoryName", "Category Name Required");
             return serviceResponse;

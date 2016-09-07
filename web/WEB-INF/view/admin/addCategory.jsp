@@ -61,13 +61,13 @@
         },
         success: function(data) {
           if(data.responseStat.status==true){
-            $('.btn-primary').removeAttrs('disabled', 'disabled');
             $("#alertSuccess").show().fadeIn(500).delay(2000).fadeOut(500, function () {
+              $('.btn-primary').removeAttr('disabled', 'disabled');
             });
           }else{
             BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
             $("#errorMsg_categoryName").show().fadeIn(500).delay(2000).fadeOut(500, function () {
-              $('.btn-primary').removeAttrs('disabled', 'disabled');
+              $('.btn-primary').removeAttr('disabled', 'disabled');
             });
           }
         },

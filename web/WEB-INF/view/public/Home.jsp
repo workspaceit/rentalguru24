@@ -34,6 +34,7 @@
                                     </div>
                                     <div class="custom_cap cap3">
                                         <label class="title-label productName"><a href="${BaseUrl}/product/details/${topProduct.getId()}">${fn:substring(topProduct.name, 0, 20)}<d:if test="${fn:length(topProduct.name)>20}">....</d:if></a></label>
+                                        <d:if test="${topProduct.averageRating != 0}">
                                         <fieldset class="rating ">
                                             <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${topProduct.getId()}" name="rating${topProduct.getId()}" value="5" />
                                             <label class = "full" for="star5_${topProduct.getId()}" title="Awesome - 5 stars"></label>
@@ -50,13 +51,17 @@
                                             <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${topProduct.getId()}" name="rating${topProduct.getId()}" value="1" />
                                             <label class = "full" for="star1_${topProduct.getId()}" title="Sucks big time - 1 star"></label>
                                         </fieldset>
+                                        </d:if>
+                                        <d:if test="${topProduct.averageRating == 0}">
+                                            <label class="no-rating-label">Not rated yet</label>
+                                        </d:if>
                                         <div class="divider"></div>
                                         <div class="row option_but">
                                             <div class="col-md-5 col-sm-5 col-xs-12">
-                                                <div class="option">
-                                                    <a href=""><i class="fa fa-heart"></i></a>
-                                                    <a href=""><i class="fa  fa-exchange"></i></a>
-                                                </div>
+                                                <%--<div class="option">--%>
+                                                    <%--<a href=""><i class="fa fa-heart"></i></a>--%>
+                                                    <%--<a href=""><i class="fa  fa-exchange"></i></a>--%>
+                                                <%--</div>--%>
                                             </div>
                                             <div class="col-md-7 col-sm-7 col-xs-12">
                                                 <%--<label class="prev_price">$350</label>--%>
