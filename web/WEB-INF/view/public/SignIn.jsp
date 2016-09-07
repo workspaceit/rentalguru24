@@ -158,9 +158,9 @@
       <a class="btn btn-block btn-social btn-google-plus" id="loginWithGooGleBtn" >
         <i class="fa fa-google-plus"></i> Sign in with Google
       </a>
-      <a class="btn btn-block btn-social btn-twitter">
-        <i class="fa fa-twitter"></i> Sign in with Twitter
-      </a>
+      <%--<a class="btn btn-block btn-social btn-twitter">--%>
+        <%--<i class="fa fa-twitter"></i> Sign in with Twitter--%>
+      <%--</a>--%>
     </div>
 
     <div class="col-md-12 text-center">

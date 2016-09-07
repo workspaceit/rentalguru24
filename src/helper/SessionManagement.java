@@ -1,6 +1,6 @@
 package helper;
 
-import jdk.nashorn.internal.ir.RuntimeNode;
+
 import model.entity.app.AppCredential;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,23 +16,21 @@ public class SessionManagement {
         /* For Ever Session is open unless signout ... Not a Good idea */
         request.getSession().setMaxInactiveInterval(-1);
     }
+    public static void setAdminCredentialInSession(HttpServletRequest request,ServiceResponse serviceResponse,AppCredential appCredential){
+
+        serviceResponse.getResponseStat().setIsLogin(true);
+        request.getSession().setAttribute("adminAppCredential", appCredential);
+        /* For Ever Session is open unless signout ... Not a Good idea */
+        request.getSession().setMaxInactiveInterval(-1);
+    }
     public static void destroySession(HttpServletRequest request){
         request.getSession().invalidate();
     }
-    public static void setPreviousUrl(HttpServletRequest request,String url){
-
-        request.getSession().setAttribute("prevUrl", url);
-        System.out.println("**********FROM SETTER*********");
-        System.out.println(url);
-        System.out.println((String) request.getSession().getAttribute("prevUrl"));
-        /* For Ever Session is open unless signout ... Not a Good idea */
+    public static void setVerificationSession(HttpServletRequest request,Boolean verified){
+        request.getSession().setAttribute("appVerification", verified);
     }
-    public static String getPreviousUrl(HttpServletRequest request){
-
-        return (String)request.getSession().getAttribute("prevUrl");
+    public static Boolean getVerificationSession(HttpServletRequest request,Boolean verified){
+        return (Boolean)request.getSession().getAttribute("appVerification");
     }
-    public static void destroyPreviousUrl(HttpServletRequest request){
 
-        request.getSession().setAttribute("prevUrl", null);
-    }
 }

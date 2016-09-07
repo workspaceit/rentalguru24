@@ -49,7 +49,10 @@ public class AuthService  {
         }
 
         serviceResponse.getResponseStat().setMsg("Login success");
-        SessionManagement.setAppCredentialInSession(request,serviceResponse,appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
+        /************** Session Creation *******/
+        SessionManagement.setAppCredentialInSession(request, serviceResponse, appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
+        SessionManagement.setVerificationSession(request, authCredential.isVerified());
+
         serviceResponse.setResponseData(authCredential);
         return serviceResponse;
     }
@@ -75,7 +78,11 @@ public class AuthService  {
         }
 
         serviceResponse.getResponseStat().setMsg("Login success");
+        /************** Session Creation *******/
         SessionManagement.setAppCredentialInSession(request, serviceResponse, appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
+        SessionManagement.setVerificationSession(request, authCredential.isVerified());
+
+        serviceResponse.setResponseData(authCredential);
         return serviceResponse;
     }
 
