@@ -28,7 +28,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-body">
-              <form role="form" onsubmit="return addNewCategor();">
+              <form role="form" onsubmit="return addNewCategor();" id="addCategoryForm">
                 <div class="box-body">
                   <div class="form-group">
                     <label for="categoryName" >Category Name</label>
@@ -52,6 +52,7 @@
   <script>
     function addNewCategor(){
       $('.btn-primary').attr('disabled', 'disabled');
+      $(':input').attr('disabled','disabled');
       var categoryName = $('#categoryName').val();
       $.ajax({
         type: "POST",
@@ -61,13 +62,16 @@
         },
         success: function(data) {
           if(data.responseStat.status==true){
-            $('.btn-primary').removeAttrs('disabled', 'disabled');
             $("#alertSuccess").show().fadeIn(500).delay(2000).fadeOut(500, function () {
+              $('.btn-primary').removeAttr('disabled', 'disabled');
+              $(':input').removeAttr('disabled','disabled');
+              window.location.href =BASEURL+"/admin/user/category-list";
             });
           }else{
             BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
             $("#errorMsg_categoryName").show().fadeIn(500).delay(2000).fadeOut(500, function () {
-              $('.btn-primary').removeAttrs('disabled', 'disabled');
+              $(':input').removeAttr('disabled','disabled');
+              $('.btn-primary').removeAttr('disabled', 'disabled');
             });
           }
         },
