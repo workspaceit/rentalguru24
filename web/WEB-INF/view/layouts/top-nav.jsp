@@ -3,20 +3,20 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-5">
-          <ul class="top_nav_ul">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>
+          <%--<ul class="top_nav_ul">--%>
+            <%--<li class="dropdown">--%>
+              <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>--%>
               <%--<ul class="dropdown-menu">--%>
                 <%--<li><a href="#">Action</a></li>--%>
               <%--</ul>--%>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+            <%--</li>--%>
+            <%--<li class="dropdown">--%>
+              <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>--%>
               <%--<ul class="dropdown-menu">--%>
                 <%--<li><a href="#">Action</a></li>--%>
               <%--</ul>--%>
-            </li>
-          </ul>
+            <%--</li>--%>
+          <%--</ul>--%>
         </div>
 
         <div class="col-md-6 col-sm-6 col-xs-7 ">
