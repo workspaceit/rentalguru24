@@ -30,14 +30,16 @@ public class AdminCategoryService {
     private ServiceResponse setCategory(HttpServletRequest request, @RequestParam String categoryName){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        categoryName = categoryName.trim();
 
         List<Category> categoriList = categoryModel.getAll();
         for (Category category: categoriList){
-            if(category.getName().equals(categoryName)){
+            if(category.getName().equalsIgnoreCase(categoryName)){
                 serviceResponse.setRequestError("categoryName", "Category name already exist");
                 return serviceResponse;
             }
         }
+
         if(categoryName == null){
             serviceResponse.setRequestError("categoryName", "Category name Required");
             return serviceResponse;
@@ -61,12 +63,12 @@ public class AdminCategoryService {
     private ServiceResponse setSubCategory(HttpServletRequest request, @RequestParam int categoryId, @RequestParam String subCategoryName){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
+        subCategoryName = subCategoryName.trim();
         List<Category> subCategoriesList = categoryModel.getByParentId(categoryId);
         for(Category category : subCategoriesList){
             if(category.getSubcategory().size() >= 0){
                 for(Category subCategory : category.getSubcategory()){
-                    if(subCategory.getName().equals(subCategoryName)){
+                    if(subCategory.getName().equalsIgnoreCase(subCategoryName)){
                         serviceResponse.setRequestError("subCategoryName", "Subcategory name already exist");
                         return serviceResponse;
                     }
@@ -168,6 +170,24 @@ public class AdminCategoryService {
             categoryModel.delete(categoryList);
         }
         serviceResponse.getResponseStat().setMsg("Category successfully deleted");
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/delete-subcategory", method = RequestMethod.POST)
+    public ServiceResponse deleteSubcategory(HttpServletRequest request, @RequestParam int subCategoryid){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Category subCategory = categoryModel.getById(subCategoryid);
+        if(subCategory == null){
+            serviceResponse.setRequestError("subCategoryid", "Subcategory not found");
+            return serviceResponse;
+        }
+        List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(subCategory.getId(),1,0);
+        if(rentalProduct!=null && rentalProduct.size() > 0){
+            serviceResponse.setRequestError("subCategoryid", "Can not delete subcategory, there is subcategory \'"+subCategory.getName()+"\' which has product");
+            return serviceResponse;
+        }
+        serviceResponse.getResponseStat().setMsg("subcategory successfully deleted");
+        categoryModel.delete(subCategory);
         return serviceResponse;
     }
 }

@@ -65,7 +65,7 @@
                                 <td>${subCategory.getName()}</td>
                                 <td>
                                   <button class="btn btn-block btn-info" onclick="location.href='${BaseUrl}/admin/user/edit-sub-category/'+${subCategory.getId()}">Edit</button>
-                                  <%--<button class="btn btn-block btn-danger">Delete</button>--%>
+                                  <button class="btn btn-block btn-danger" onclick="deleteSubcategory(${subCategory.getId()})">Delete</button>
                                 </td>
                               </tr>
                             </d:forEach>
@@ -144,6 +144,31 @@
           $('.success').html(data.responseStat.msg);
           $('.modal-success').show().fadeIn(500).delay(2000).fadeOut(500, function (){
               $('.modal-success').modal('hide');
+          });
+
+        }else{
+          $('.danger').html(data.responseStat.requestErrors[0].msg);
+          $('.modal-danger').show().fadeIn(500).delay(2000).fadeOut(500, function (){
+            $('.modal-danger').modal('hide');
+          });
+        }
+      }
+    });
+  }
+  function deleteSubcategory(subCategoryid){
+    $.ajax({
+      url: BASEURL+"/api-admin/category/delete-subcategory",
+      type: "POST",
+      data:{
+        subCategoryid:subCategoryid
+      },
+      success: function(data){
+        console.log(data);
+        if(data.responseStat.status == true){
+          $('.success').html(data.responseStat.msg);
+          $('.modal-success').show().fadeIn(500).delay(2000).fadeOut(500, function (){
+            $('.modal-success').modal('hide');
+            window.location.href =BASEURL+"/admin/user/category-list";
           });
 
         }else{
