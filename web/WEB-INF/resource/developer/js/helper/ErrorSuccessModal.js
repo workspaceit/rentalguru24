@@ -38,3 +38,7 @@ function showInfo(msg){
 function hideInfo(){
         $("#infoModal").modal('hide');
 }
+function showUserVerificationAlert(delay){
+        var msg = "Your account is not verified yet";
+        showInfoAndHide(msg,delay);
+}

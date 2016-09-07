@@ -25,7 +25,7 @@ public class ServiceInterceptor extends HandlerInterceptorAdapter{
                              HttpServletResponse response, Object handler)
             throws Exception {
 
-
+        request.setAttribute("baseURL", this.getURLWithContextPath(request));
         ServiceResponse serviceResponse = new ServiceResponse();
         ServletRequestAttributes ar = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession httpSession = request.getSession();
@@ -45,5 +45,8 @@ public class ServiceInterceptor extends HandlerInterceptorAdapter{
 
         System.out.println("INTERCEPTOR postHandle");
 
+    }
+    public static String getURLWithContextPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 }

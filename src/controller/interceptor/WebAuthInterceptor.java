@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.ServiceResponse;
+import helper.SessionManagement;
 import model.CategoryModel;
 import model.entity.app.AppCredential;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
             request.setAttribute("serviceResponse", serviceResponse);
             request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
+            request.setAttribute("appUserVerification",(Boolean) SessionManagement.getAppUserVerification(request));
             serviceResponse.getResponseStat().setIsLogin(true);
 
             this.baseURL = this.getURLWithContextPath(request);

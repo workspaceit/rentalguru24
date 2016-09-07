@@ -1,6 +1,7 @@
 package controller.service.app;
 
 
+import helper.MailHelper;
 import helper.ServiceResponse;
 import helper.UtilituHelper;
 import model.AppLoginCredentialModel;
@@ -33,30 +34,39 @@ public class PasswordResetService extends UtilituHelper{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = appLoginCredentialModel.getAppcredentialByEmail(email);
         AuthCredential authCredential = appLoginCredentialModel.getByEmail(email);
+        String baseUrl = (String) request.getAttribute("baseURL");
 
-        if(appCredential == null){
-            serviceResponse.setRequestError("email","given email doesn't exist in system");
-            return serviceResponse;
-        } else {
-            Boolean isExist = passwordResetModel.isExist(appCredential.getId());
-            String token = appLoginCredentialModel.getPasswordAsMd5DigestAsHex(email+getRandomNumber());
-            if(isExist){
-                PasswordResetsEntity passwordResetsEntity = passwordResetModel.getByAppCredentialId(appCredential.getId());
-                passwordResetModel.delete(passwordResetsEntity);
-                PasswordResetsEntity passwordResetsEntityNew = new PasswordResetsEntity();
-                passwordResetsEntityNew.setToken(token);
-                passwordResetsEntityNew.setAuthCredential(authCredential);
-                serviceResponse.setResponseData(passwordResetModel.insert(passwordResetsEntityNew));
-                serviceResponse.getResponseStat().setMsg("Password reset successful");
-            }else {
-                PasswordResetsEntity passwordResetsEntity = new PasswordResetsEntity();
-                passwordResetsEntity.setToken(token);
-                passwordResetsEntity.setAuthCredential(authCredential);
-                serviceResponse.setResponseData(passwordResetModel.insert(passwordResetsEntity));
-                serviceResponse.getResponseStat().setMsg("Password reset successful");
-            }
+        if(email==null || email==""){
+            serviceResponse.setRequestError("email","Email required");
             return serviceResponse;
         }
+
+        email = email.trim();
+
+        if(appCredential == null){
+            serviceResponse.setRequestError("email","Given email doesn't exist in system");
+            return serviceResponse;
+        }
+
+        Boolean isExist = passwordResetModel.isExist(appCredential.getId());
+        String token = appLoginCredentialModel.getPasswordAsMd5DigestAsHex(email + getRandomNumber());
+        if(isExist){
+            PasswordResetsEntity passwordResetsEntity = passwordResetModel.getByAppCredentialId(appCredential.getId());
+            passwordResetModel.delete(passwordResetsEntity);
+            PasswordResetsEntity passwordResetsEntityNew = new PasswordResetsEntity();
+            passwordResetsEntityNew.setToken(token);
+            passwordResetsEntityNew.setAuthCredential(authCredential);
+            serviceResponse.setResponseData(passwordResetModel.insert(passwordResetsEntityNew));
+            serviceResponse.getResponseStat().setMsg("Password reset successful");
+        }else {
+            PasswordResetsEntity passwordResetsEntity = new PasswordResetsEntity();
+            passwordResetsEntity.setToken(token);
+            passwordResetsEntity.setAuthCredential(authCredential);
+            serviceResponse.setResponseData(passwordResetModel.insert(passwordResetsEntity));
+            serviceResponse.getResponseStat().setMsg("An email is sent please reset it from that link");
+        }
+        MailHelper.sendPasswordRestMail(email.trim(),token,baseUrl+"/reset-password/change-password/");
+        return serviceResponse;
     }
 
     @RequestMapping(value = "/change-password/{token}", method = RequestMethod.POST)
@@ -75,6 +85,10 @@ public class PasswordResetService extends UtilituHelper{
         }
 
         PasswordResetsEntity passwordResetsEntity = passwordResetModel.getByAppCredentialId(appCredential.getId());
+        if(passwordResetsEntity==null){
+            serviceResponse.setRequestError("conPassword","Token is not valid");
+            return serviceResponse;
+        }
         String validToken = passwordResetsEntity.getToken();
         if(token.equals(validToken)){
             if(password.equals(conPassword)){

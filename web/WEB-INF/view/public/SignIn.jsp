@@ -135,10 +135,12 @@
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email">
+          <p class="help-block error-form" id="errorMsg_email" for="email" custom-validation="required" errorMsg="Please provide email" ></p>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" class="form-control" placeholder="ex.password" id="password" name="password">
+          <p class="help-block error-form" id="errorMsg_password" for="password" custom-validation="required" errorMsg="Please provide password" ></p>
         </div>
         <div class="checkbox">
           <label><input type="checkbox"> Remember me</label>
@@ -252,6 +254,9 @@
 
 <%--Google Js API--%>
 <script src="https://apis.google.com/js/api:client.js"></script>
+<%--Developer Helpers --%>
+<script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
+<script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">
   $("div#fallback").dropzone({ url: BASEURL+"/file/post" });
@@ -295,6 +300,10 @@
 </script>
 <script>
   function submitSignInData(){
+    UnBindErrors("errorMsg_");
+    if(!requiredValidation("errorMsg_")){
+      return false;
+    }
     $("#signBtn").attr("disabled","disabled");
     $("#alertMsg").hide();
     $("#signInProgressImg").show();

@@ -3,14 +3,14 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-4">
-        <%--<div class="bottom_footer_content">--%>
-          <%--<div class="copyright">--%>
-            <%--<p class="no-margin"> &#169; Copyright 2016 Reneguru24 | All Rights Reserved</p>--%>
-          <%--</div>--%>
-          <%--<div class="social_link">--%>
-            <%--<p class="no-margin"> <span class="social_link_i"><i class="fa fa-twitter"></i></span><span class="social_link_i"><i class="fa fa-facebook"></i></span><span class="social_link_i"><i class="fa fa-youtube"></i></span><span class="social_link_i"><i class="fa fa-google-plus"></i></span><span class="social_link_i"><i class="fa fa-linkedin"></i></span><span class="social_link_i"><i class="fa fa-pinterest"></i></span></p>--%>
-          <%--</div>--%>
-        <%--</div>--%>
+        <div class="bottom_footer_content">
+          <div class="copyright">
+            <p class="no-margin"> &#169; Copyright 2016 Reneguru24 | All Rights Reserved</p>
+          </div>
+          <div class="social_link">
+            <p class="no-margin"> <span class="social_link_i"><i class="fa fa-twitter"></i></span><span class="social_link_i"><i class="fa fa-facebook"></i></span><span class="social_link_i"><i class="fa fa-youtube"></i></span><span class="social_link_i"><i class="fa fa-google-plus"></i></span><span class="social_link_i"><i class="fa fa-linkedin"></i></span><span class="social_link_i"><i class="fa fa-pinterest"></i></span></p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -19,7 +19,10 @@
   var BASEURL = "${BaseUrl}";
 </script>
 <script>
+
   var isLoggedin =${IsLogIn};
+  var isUserVerified = ${appUserVerification};
+  isUserVerified = (typeof isUserVerified == "boolean")?isUserVerified:null;
 </script>
 <!-- Contact end here -->
 <!-- Main container start here -->

@@ -34,6 +34,7 @@ public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
             request.setAttribute("serviceResponse", serviceResponse);
             request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
+            request.setAttribute("baseURL", this.getURLWithContextPath(request));
             serviceResponse.getResponseStat().setIsLogin(true);
             return true;
         }else{
@@ -58,5 +59,8 @@ public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
 
         System.out.println("INTERCEPTOR postHandle");
 
+    }
+    public static String getURLWithContextPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 }

@@ -53,14 +53,14 @@
                                         <div class="divider"></div>
                                         <div class="row option_but">
                                             <div class="col-md-5 col-sm-5 col-xs-12">
-                                                <div class="option">
-                                                    <a href=""><i class="fa fa-heart"></i></a>
-                                                    <a href=""><i class="fa  fa-exchange"></i></a>
-                                                </div>
+                                                <%--<div class="option">--%>
+                                                    <%--<a href=""><i class="fa fa-heart"></i></a>--%>
+                                                    <%--<a href=""><i class="fa  fa-exchange"></i></a>--%>
+                                                <%--</div>--%>
                                             </div>
                                             <div class="col-md-7 col-sm-7 col-xs-12">
                                                 <%--<label class="prev_price">$350</label>--%>
-                                                <div class="price-tag">$ ${topProduct.rentFee}</div>
+                                                <div class="price-tag">$ ${topProduct.rentFee}/${topProduct.rentType.name}</div>
                                             </div>
                                         </div>
                                     </div>                          
@@ -435,6 +435,10 @@
 
     function showRentRequestPopUp(productId){
         if(isLoggedin){
+            if(!isUserVerified){
+                showUserVerificationAlert();
+                return;
+            }
             setCurrentSelectedRentalProductId(productId);
             $("#rentRequestFrom").val("");
             $("#rentRequestTill").val("");

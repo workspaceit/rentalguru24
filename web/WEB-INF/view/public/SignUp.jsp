@@ -133,7 +133,7 @@
                 <select id="identityTypeId" name="identityTypeId" class="selectpicker">
                     <option value="">Please select a identity type</option>
                 </select>
-                <p class="help-block error-form" id="errorMsg_identityTypeId" for="identityTypeId" custom-validation="required" ></p>
+                <p class="help-block error-form" id="errorMsg_identityTypeId" for="identityTypeId" custom-validation="required" errorMsg="Please select identity type" ></p>
             </div>
             <div class="form-group">
                 <label for="fallback">Identity Document</label>

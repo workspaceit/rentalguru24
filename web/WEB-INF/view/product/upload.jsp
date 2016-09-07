@@ -427,6 +427,10 @@
 </script>
 <script>
   function postProduct(){
+    if(!isUserVerified){
+      showUserVerificationAlert();
+      return;
+    }
     $('.postProductGif').show();
     var categoryId = $('#category option:selected').val();
     var subCategory = $('#subCategory option:selected').val();
