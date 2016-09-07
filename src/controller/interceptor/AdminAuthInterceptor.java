@@ -5,6 +5,7 @@ package controller.interceptor;
  */
 
 import helper.ServiceResponse;
+import helper.SessionManagement;
 import model.entity.app.AppCredential;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -27,10 +28,10 @@ public class AdminAuthInterceptor extends HandlerInterceptorAdapter{
         ServiceResponse serviceResponse = new ServiceResponse();
         ServletRequestAttributes ar = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession httpSession = request.getSession();
+        Object adminAuthSessionObject = SessionManagement.getAdminCredential(request);
 
-
-        if(httpSession.getAttribute("appCredential") instanceof AppCredential){
-            AppCredential appCredential =(AppCredential)httpSession.getAttribute("appCredential");
+        if(adminAuthSessionObject instanceof AppCredential){
+            AppCredential appCredential =(AppCredential)adminAuthSessionObject;
             if(appCredential.getRole() ==1){
                 request.setAttribute("serviceResponse", serviceResponse);
                 request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));

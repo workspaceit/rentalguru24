@@ -254,7 +254,7 @@
         console.log(data);
         if(data.responseStat.status == true){
           $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(2000).fadeOut(500,function(){
-            window.location.href =BASEURL+"/signin";
+            //window.location.href =BASEURL+"/signin";
           });
         }else{
           BindErrorsWithHtml('errorMsg_', data.responseStat.requestErrors);

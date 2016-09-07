@@ -68,8 +68,8 @@ public class HomeController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/category/{category_id}", method = RequestMethod.GET)
-    public ModelAndView getProductByCategoryId(HttpServletRequest request, @PathVariable("category_id") int categoryId){
+    @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
+    public ModelAndView getProductByCategoryId(HttpServletRequest request, @PathVariable("categoryId") int categoryId){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
@@ -83,7 +83,7 @@ public class HomeController {
         else
             modelAndView.addObject("productListTitle","");
 
-        List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId,8,1);
+        List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
         if(rentalProducts != null){
             List<RentalProduct> rentalProductsTop = productModel.getRentalProductOrderByRating(3, 0);
             if(rentalProductsTop==null || rentalProductsTop.size()==0){
@@ -123,7 +123,7 @@ public class HomeController {
         else
             modelAndView.addObject("productListTitle","");
 
-        List rentalProduct = productModel.getProductByCategoryId(categoryId);
+        List rentalProduct = productModel.getProductByCategoryId(categoryId,8,0);
         modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("products",rentalProduct);
         return modelAndView;

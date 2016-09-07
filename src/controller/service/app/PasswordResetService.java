@@ -86,7 +86,7 @@ public class PasswordResetService extends UtilituHelper{
 
         PasswordResetsEntity passwordResetsEntity = passwordResetModel.getByAppCredentialId(appCredential.getId());
         if(passwordResetsEntity==null){
-            serviceResponse.setRequestError("conPassword","Token is not valid");
+            serviceResponse.setRequestError("token","Token is not valid");
             return serviceResponse;
         }
         String validToken = passwordResetsEntity.getToken();
