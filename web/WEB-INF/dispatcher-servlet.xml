@@ -175,12 +175,12 @@
 
 
        <!--Local-->
-       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/profile/"-->
-                      <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
+       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
+                      cache-period="31556926"/>
+       <mvc:resources mapping="/profile-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/profile/"
+                      cache-period="31556926"/>
+       <mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
+                      cache-period="31556926"/>
 
 
        <!--Local Live-->
@@ -195,12 +195,12 @@
 
        <!--Live Client Server-->
 
-       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/rentguru24files/"
-       cache-period="31556926"/>
-       <mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/profile/"
-       cache-period="31556926"/>
-       <mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"
-       cache-period="31556926"/>
+       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/rentguru24files/"-->
+       <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/profile/"-->
+       <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"-->
+       <!--cache-period="31556926"/>-->
 
 <!--*******************************************************************************************************-->
 

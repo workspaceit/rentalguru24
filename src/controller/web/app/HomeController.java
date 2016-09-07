@@ -54,6 +54,7 @@ public class HomeController {
         RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
         modelAndView.addObject("category", category);
+        modelAndView.addObject("productListTitle","New product");
         modelAndView.addObject("products", rentalProducts);
         modelAndView.addObject("productsAscending", rentalProductsAscending);
         modelAndView.addObject("IsLogIn", IsLogin);
@@ -76,6 +77,12 @@ public class HomeController {
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
         ModelAndView modelAndView = new ModelAndView("public/Home");
+        Category categorySelected = categoryModel.getById(categoryId);
+        if(categorySelected!=null)
+            modelAndView.addObject("productListTitle",categorySelected.getName());
+        else
+            modelAndView.addObject("productListTitle","");
+
         List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId,8,1);
         if(rentalProducts != null){
             List<RentalProduct> rentalProductsTop = productModel.getRentalProductOrderByRating(3, 0);
@@ -105,11 +112,18 @@ public class HomeController {
         }
     }
 
-    @RequestMapping(value = "/partial-rendering/category/{category_id}", method = RequestMethod.GET)
-    public ModelAndView getCategory(HttpServletRequest request,@PathVariable("category_id") int category_id){
+    @RequestMapping(value = "/partial-rendering/category/{categoryId}", method = RequestMethod.GET)
+    public ModelAndView getCategory(HttpServletRequest request,@PathVariable("categoryId") int categoryId){
+        Category categorySelected = categoryModel.getById(categoryId);
+
         String baseUrl = (String) request.getAttribute("baseURL");
         ModelAndView modelAndView = new ModelAndView("public/partial_rendering_new_product");
-        List rentalProduct = productModel.getProductByCategoryId(category_id);
+        if(categorySelected!=null)
+            modelAndView.addObject("productListTitle",categorySelected.getName());
+        else
+            modelAndView.addObject("productListTitle","");
+
+        List rentalProduct = productModel.getProductByCategoryId(categoryId);
         modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("products",rentalProduct);
         return modelAndView;

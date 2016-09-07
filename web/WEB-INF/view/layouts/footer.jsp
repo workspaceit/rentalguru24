@@ -21,7 +21,16 @@
 <script>
 
   var isLoggedin =${IsLogIn};
-  var isUserVerified = ${appUserVerification};
+  var isUserVerified = "${appUserVerification}";
+  if(isUserVerified!=""){
+    try{
+      isUserVerified = JSON.parse(isUserVerified);
+    }catch(ex){
+      console.log(ex);
+      isUserVerified = false;
+    }
+
+  }
   isUserVerified = (typeof isUserVerified == "boolean")?isUserVerified:null;
 </script>
 <!-- Contact end here -->
@@ -160,6 +169,7 @@
   });
   function fetchProductByCategoryAndScrollDown(categoryId,elem,event){
     event.preventDefault();
+    $("#productBlockHead").html($("#categoryAnchor_"+categoryId).html());
     if($("#newProductPartialRender").length==0){
       window.location.href =BASEURL+"/home/category/"+categoryId;
       return;
