@@ -32,16 +32,19 @@ public class AdminCategoryService {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
         List<Category> categoriList = categoryModel.getAll();
-
-
-
+        for (Category category: categoriList){
+            if(category.getName().equals(categoryName)){
+                serviceResponse.setRequestError("categoryName", "Category name already exist");
+                return serviceResponse;
+            }
+        }
         if(categoryName == null){
-            serviceResponse.setRequestError("categoryName", "Category Name Required");
+            serviceResponse.setRequestError("categoryName", "Category name Required");
             return serviceResponse;
         }
         categoryName = categoryName.trim();
         if(categoryName.isEmpty()){
-            serviceResponse.setRequestError("categoryName", "Category Name Required");
+            serviceResponse.setRequestError("categoryName", "Category name Required");
             return serviceResponse;
         }
         int lastSortedOrder = categoryModel.maxSortOrder();
@@ -50,7 +53,7 @@ public class AdminCategoryService {
         category.setCreatedBy(appCredential.getId());
         category.setSortedOrder((lastSortedOrder+1));
         categoryModel.insert(category);
-        serviceResponse.getResponseStat().setMsg("Category Add successful");
+        serviceResponse.getResponseStat().setMsg("Category add successful");
         return serviceResponse;
     }
 
@@ -63,12 +66,12 @@ public class AdminCategoryService {
             return serviceResponse;
         }
         if(subCategoryName == null){
-            serviceResponse.setRequestError("subCategoryName", "Subcategory Name Required");
+            serviceResponse.setRequestError("subCategoryName", "Subcategory name Required");
             return serviceResponse;
         }
         subCategoryName = subCategoryName.trim();
         if(subCategoryName.isEmpty()){
-            serviceResponse.setRequestError("subCategoryName", "Subategory Name Required");
+            serviceResponse.setRequestError("subCategoryName", "Subategory name Required");
             return serviceResponse;
         }
 
@@ -76,7 +79,7 @@ public class AdminCategoryService {
 
         Category category = categoryModel.getById(categoryId);
         if(category == null){
-            serviceResponse.setRequestError("category", "can't fiend category by this name");
+            serviceResponse.setRequestError("category", "Can't fiend category by this name");
             return serviceResponse;
         }
 
@@ -92,7 +95,7 @@ public class AdminCategoryService {
         category.setSubcategory(subCategoryArray);
 
         categoryModel.insert(category);
-        serviceResponse.getResponseStat().setMsg("Subcategory Add successful");
+        serviceResponse.getResponseStat().setMsg("Subcategory add successful");
         return serviceResponse;
     }
     @RequestMapping(value = "/edit-category", method = RequestMethod.POST)
@@ -103,12 +106,12 @@ public class AdminCategoryService {
             return serviceResponse;
         }
         if(categoryName == null){
-            serviceResponse.setRequestError("category", "category Name required");
+            serviceResponse.setRequestError("category", "category name required");
             return serviceResponse;
         }
         categoryName = categoryName.trim();
         if(categoryName.isEmpty()){
-            serviceResponse.setRequestError("categoryName", "Category Name Required");
+            serviceResponse.setRequestError("categoryName", "Category name required");
             return serviceResponse;
         }
 
