@@ -34,7 +34,7 @@ public class AdminAuthInterceptor extends HandlerInterceptorAdapter{
             AppCredential appCredential =(AppCredential)adminAuthSessionObject;
             if(appCredential.getRole() ==1){
                 request.setAttribute("serviceResponse", serviceResponse);
-                request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
+                request.setAttribute("appCredential", appCredential);
                 serviceResponse.getResponseStat().setIsLogin(true);
 
                 this.baseURL = this.getURLWithContextPath(request);
