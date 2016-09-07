@@ -60,6 +60,9 @@
   <jsp:directive.include file="layouts/footer.jsp" />
   <script>
     function addSubCategory(){
+      $('.btn-primary').attr('disabled', 'disabled');
+      $(':input').attr('disabled','disabled');
+      $('#category').attr('disabled','disabled');
       var categoryId = $("#category option:selected").val();
       var subCategoryName = $("#subCategoryName").val();
       $.ajax({
@@ -70,13 +73,19 @@
           subCategoryName:subCategoryName
         },
         success: function(data){
-          console.log(data);
           if(data.responseStat.status==true){
             $("#alertSuccess").show().fadeIn(500).delay(2000).fadeOut(500, function () {
+              $('.btn-primary').removeAttr('disabled', 'disabled');
+              $(':input').removeAttr('disabled','disabled');
+              $('#category').removeAttr('disabled','disabled');
+              window.location.href =BASEURL+"/admin/user/category-list";
             });
           }else{
             BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
             $("#errorMsg_"+data.responseStat.requestErrors[0].params).show().fadeIn(500).delay(2000).fadeOut(500, function () {
+              $('.btn-primary').removeAttr('disabled', 'disabled');
+              $(':input').removeAttr('disabled','disabled');
+              $('#category').removeAttr('disabled','disabled');
             });
           }
         }

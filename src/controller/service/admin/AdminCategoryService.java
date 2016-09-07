@@ -61,6 +61,19 @@ public class AdminCategoryService {
     private ServiceResponse setSubCategory(HttpServletRequest request, @RequestParam int categoryId, @RequestParam String subCategoryName){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        List<Category> subCategoriesList = categoryModel.getByParentId(categoryId);
+        for(Category category : subCategoriesList){
+            if(category.getSubcategory().size() >= 0){
+                for(Category subCategory : category.getSubcategory()){
+                    if(subCategory.getName().equals(subCategoryName)){
+                        serviceResponse.setRequestError("subCategoryName", "Subcategory name already exist");
+                        return serviceResponse;
+                    }
+                }
+            }
+        }
+
         if(categoryId <= 0){
             serviceResponse.setRequestError("categoryName", "Please select category");
             return serviceResponse;
