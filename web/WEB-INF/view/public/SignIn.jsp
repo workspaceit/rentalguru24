@@ -142,6 +142,7 @@
         </div>
         <div class="checkbox">
           <label><input type="checkbox"> Remember me</label>
+          <label style="float: right"><a href="${BaseUrl}/reset-password/request">forgot your password ?</a></label>
         </div>
       </div>
 

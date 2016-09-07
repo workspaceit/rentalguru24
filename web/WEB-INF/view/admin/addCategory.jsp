@@ -39,7 +39,7 @@
                 <div class="box-footer">
                   <button class="btn btn-primary" >Submit</button>
                 </div>
-                <div class="alert alert-success" id="alertSuccess" hidden></div>
+                <div class="alert alert-success" id="alertSuccess" hidden>Category Add Successful </div>
                 <div class="alert alert-danger" id="errorMsg_categoryName" hidden></div>
               </form>
             </div><!-- /.box-body -->
@@ -51,6 +51,7 @@
   <jsp:directive.include file="layouts/footer.jsp" />
   <script>
     function addNewCategor(){
+      $('.btn-primary').attr('disabled', 'disabled');
       var categoryName = $('#categoryName').val();
       $.ajax({
         type: "POST",
@@ -60,13 +61,13 @@
         },
         success: function(data) {
           if(data.responseStat.status==true){
+            $('.btn-primary').removeAttrs('disabled', 'disabled');
             $("#alertSuccess").show().fadeIn(500).delay(2000).fadeOut(500, function () {
-              $("#alertSuccess").hide();
             });
           }else{
             BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
             $("#errorMsg_categoryName").show().fadeIn(500).delay(2000).fadeOut(500, function () {
-
+              $('.btn-primary').removeAttrs('disabled', 'disabled');
             });
           }
         },

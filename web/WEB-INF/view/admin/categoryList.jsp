@@ -92,6 +92,24 @@
         </div><!-- /.col -->
       </div><!-- /.row -->
     </section><!-- /.content -->
+    <div class="example-modal">
+      <div class="modal modal-success">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Modal Success</h4>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </div><!-- /.example-modal -->
   </div><!-- /.content-wrapper -->
   <jsp:directive.include file="layouts/footer.jsp" />
 </body>
