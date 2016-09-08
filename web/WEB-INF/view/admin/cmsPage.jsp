@@ -65,6 +65,12 @@
   function addCMSPage(){
     var pageName = $('#pageName').val();
     var pageKey = $('#pageKey').val();
+
+    var find = ' ';
+    var replace = new RegExp(find, 'g');
+    pageKey = pageKey.replace(replace, '');
+    pageKey = pageKey.toLowerCase();
+    $('#pageKey').val(pageKey);
     var pageContent = CKEDITOR.instances.editor1.getData();;
     $.ajax({
       url: BASEURL+'/api-admin/cms/add-page',

@@ -125,4 +125,14 @@ public class AdminCmsPageModel extends BaseModel {
             session.close();
         }
     }
+    public void delete(int cmsPageId){
+        AdminCmsPage adminCmsPage = this.getById(cmsPageId);
+        if(adminCmsPage == null) return;
+
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(adminCmsPage);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

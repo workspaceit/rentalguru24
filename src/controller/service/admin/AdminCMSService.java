@@ -32,8 +32,6 @@ public class AdminCMSService {
         pageKey = pageKey.trim();
         pageKey = pageKey.toLowerCase();
 
-        pageName = pageName.trim();
-
         Pattern pattern = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(pageName);
         boolean hasSpecialCharacter = matcher.find();
@@ -131,6 +129,8 @@ public class AdminCMSService {
     public ServiceResponse deletePage(HttpServletRequest request, @RequestParam int cmsPageId){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        adminCmsPageModel.delete(cmsPageId);
+        serviceResponse.getResponseStat().setMsg("Page delete successful");
         return serviceResponse;
     }
 }

@@ -17,25 +17,15 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Data Tables
-        <small>advanced tables</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
-      </ol>
-    </section>
-
+    <section class="content-header"></section>
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Table With Full Features</h3>
+              <h3 class="box-title"> CMS Page List<small></small></h3>
+              <div class="alert alert-success" hidden></div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -57,7 +47,7 @@
                   </td>
                   <td>
                     <button type="button" class="btn btn-primary">Edit</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteCmsPage(${cmsPage.getId()})">Delete</button>
                   </td>
                 </tr>
                 </d:forEach>
@@ -120,6 +110,27 @@
           console.log(data);
         }
       });
+    }
+  </script>
+  <script>
+    function deleteCmsPage(cmsPageId){
+      $.ajax({
+        url: BASEURL+'/api-admin/cms/delete-page',
+        type: 'POST',
+        data:{
+          cmsPageId: cmsPageId
+        },
+        success: function(data){
+          if(data.responseStat.status == true){
+            $('.alert-success').html(data.responseStat.msg);
+            $('.alert-success').show().fadeIn(500).delay(2000).fadeOut(500, function () {
+              window.location.href =BASEURL+"/admin/cms/get-all";
+            });
+          }else{
+            console.log(data);
+          }
+        }
+      })
     }
   </script>
 </body>
