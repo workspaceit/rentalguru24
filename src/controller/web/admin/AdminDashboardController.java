@@ -40,9 +40,6 @@ public class AdminDashboardController {
     @Autowired
     CategoryModel categoryModel;
 
-    @Autowired
-    AdminCmsPageModel adminCmsPageModel;
-
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("admin/dashboard");
@@ -210,16 +207,5 @@ public class AdminDashboardController {
         modelAndView.addObject("PageTitle", "Edit Category");
         return modelAndView;
     }
-    @RequestMapping(value = "/get-all-cmspages", method = RequestMethod.GET)
-    public ModelAndView getAllCmsPages(HttpServletRequest request){
-        ModelAndView modelAndView = new ModelAndView("admin/cmsPagesList");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
-        String baseUrl = (String) request.getAttribute("baseURL");
 
-        modelAndView.addObject("cmsPages", adminCmsPageModel.getAll());
-        modelAndView.addObject("adminUser", appCredential);
-        modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "CMS pages");
-        return modelAndView;
-    }
 }

@@ -98,6 +98,9 @@
         <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/cms/page"><i class="fa fa-circle-o"></i>Add page</a></li>
         </ul>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/cms/get-all"><i class="fa fa-circle-o"></i>All pages</a></li>
+        </ul>
       </li>
     </ul>
   </section>
