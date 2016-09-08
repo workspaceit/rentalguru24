@@ -5,10 +5,7 @@ import model.admin.AdminCmsPageModel;
 import model.entity.admin.AdminCmsPage;
 import model.entity.app.AppCredential;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -69,7 +66,128 @@ public class AdminCMSService {
         adminCmsPage.setPageContent(pageContent);
         adminCmsPage.setSortedOrder((lastSortedOrder+1));
         adminCmsPageModel.insert(adminCmsPage);
-        serviceResponse.getResponseStat().setMsg("page add successful");
+        serviceResponse.getResponseStat().setMsg("Page added successful");
+        return serviceResponse;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @RequestMapping(value = "/edit-page/{pageId}", method = RequestMethod.POST)
+    public ServiceResponse setAddPage(HttpServletRequest request,
+                                      @PathVariable int pageId,
+                                      @RequestParam Map<String , String> allRequestParams){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        String pageKey = allRequestParams.get("pageKey");
+        String pageName = allRequestParams.get("pageName");
+        String pageContent = allRequestParams.get("pageContent");
+
+        pageKey = pageKey.trim();
+        pageKey = pageKey.toLowerCase();
+
+        pageName = pageName.trim();
+
+        Pattern pattern = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(pageName);
+        boolean hasSpecialCharacter = matcher.find();
+        if(hasSpecialCharacter){
+            serviceResponse.setRequestError("pageName", "Page name can't have special character");
+            return serviceResponse;
+        }
+        AdminCmsPage adminCmsPage = adminCmsPageModel.getById(pageId);
+
+
+        if(adminCmsPageModel.isPageNameExitButById(adminCmsPage.getId(),pageName)){
+            serviceResponse.setRequestError("pageName", "A page key exist in this name");
+            return serviceResponse;
+        }
+
+        if(adminCmsPageModel.isPageKeyExitButById(adminCmsPage.getId(), pageName)){
+            serviceResponse.setRequestError("pageKey", "A page key exist in this key");
+            return serviceResponse;
+        }
+
+        adminCmsPage.setPageKey(pageKey);
+        adminCmsPage.setPageName(pageName);
+        adminCmsPage.setPageContent(pageContent);
+        adminCmsPageModel.insert(adminCmsPage);
+        serviceResponse.getResponseStat().setMsg("Page updated successful");
         return serviceResponse;
     }
 }
