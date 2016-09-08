@@ -21,8 +21,6 @@
     </div>
 
     <jsp:directive.include file="../layouts/top-footer.jsp" />
-    <!--Rent form Modal -->
-
     <jsp:directive.include file="../layouts/footer.jsp" />
 
   </body>

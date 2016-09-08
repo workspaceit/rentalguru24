@@ -76,21 +76,19 @@ public class ProductController{
 
         if(productCategories!=null){
             if(productCategories.size()>0){
-                List<Category> parentCategories =  categoryModel.getAllParentBySubcategoryId(productCategories.get(0).getId());
-
-                Map<String,String> breadCrumbDetails = new HashMap<>();
-                breadCrumbDetails.put("url", baseUrl + "/home/category/" + productCategories.get(0).getCategory().getId());
-                breadCrumbDetails.put("text", productCategories.get(0).getCategory().getName());
-                breadCrumbStr.add(breadCrumbDetails);
-
-
-                Map<String,String> tempBreadCrumbDetails = new HashMap<>();
-
+                List<Category> parentCategories =  categoryModel.getAllParentBySubcategoryId(productCategories.get(0).getCategory().getId());
+                /* Parent category added first if any */
                 for(Category c : parentCategories) {
+                    Map<String,String> tempBreadCrumbDetails = new HashMap<>();
                     tempBreadCrumbDetails.put("url",baseUrl+"/home/category/"+c.getId());
                     tempBreadCrumbDetails.put("text",c.getName());
                     breadCrumbStr.add(tempBreadCrumbDetails);
                 }
+                /* Category of product */
+                Map<String,String> breadCrumbDetails = new HashMap<>();
+                breadCrumbDetails.put("url", baseUrl + "/home/category/" + productCategories.get(0).getCategory().getId());
+                breadCrumbDetails.put("text", productCategories.get(0).getCategory().getName());
+                breadCrumbStr.add(breadCrumbDetails);
             }
         }
 

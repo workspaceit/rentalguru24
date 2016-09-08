@@ -2,8 +2,10 @@ package controller.web.admin;
 
 import model.AppLoginCredentialModel;
 import model.CategoryModel;
+import model.admin.AdminCmsPageModel;
 import model.admin.AdminPaypalCredentailModel;
 import model.admin.AdminSitesFeesModel;
+import model.entity.admin.AdminCmsPage;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.AppCredential;
@@ -37,6 +39,9 @@ public class AdminDashboardController {
 
     @Autowired
     CategoryModel categoryModel;
+
+    @Autowired
+    AdminCmsPageModel adminCmsPageModel;
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
@@ -203,6 +208,18 @@ public class AdminDashboardController {
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Edit Category");
+        return modelAndView;
+    }
+    @RequestMapping(value = "/get-all-cmspages", method = RequestMethod.GET)
+    public ModelAndView getAllCmsPages(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/cmsPagesList");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        String baseUrl = (String) request.getAttribute("baseURL");
+
+        modelAndView.addObject("cmsPages", adminCmsPageModel.getAll());
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "CMS pages");
         return modelAndView;
     }
 }
