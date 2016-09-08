@@ -81,7 +81,6 @@
         pageContent : pageContent
       },
       success: function(data){
-        console.log(data);
         if(data.responseStat.status == true){
           $('.alert-success').html(data.responseStat.msg);
           $('.alert-success').show().fadeIn(500).delay(2000).fadeOut(500, function () {

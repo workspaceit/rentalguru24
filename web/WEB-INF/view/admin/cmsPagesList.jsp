@@ -46,7 +46,7 @@
                     <a href="${BaseUrl}/static/${cmsPage.pageKey}" target="_blank">click here</a>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-primary">Edit</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='${BaseUrl}/admin/cms/static/${cmsPage.getPageKey()}'">Edit</button>
                     <button type="button" class="btn btn-danger" onclick="deleteCmsPage(${cmsPage.getId()})">Delete</button>
                   </td>
                 </tr>

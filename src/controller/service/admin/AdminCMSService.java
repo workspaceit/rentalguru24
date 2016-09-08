@@ -7,6 +7,7 @@ import model.entity.app.AppCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
@@ -109,7 +110,7 @@ public class AdminCMSService {
 
 
         if(adminCmsPageModel.isPageNameExitButById(adminCmsPage.getId(),pageName)){
-            serviceResponse.setRequestError("pageName", "A page key exist in this name");
+            serviceResponse.setRequestError("pageName", "A page name exist in this name");
             return serviceResponse;
         }
 
