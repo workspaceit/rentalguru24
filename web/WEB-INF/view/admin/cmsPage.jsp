@@ -42,7 +42,8 @@
                   </div>
                   <div class="box-body">
                     <div class="form-group">
-                      <label for="pageKey" >Page Key</label>
+                      <label for="pageKey" >Page url</label>
+                      <p class="info" >Link to : ${BaseUrl}/static/{Page Url}</p>
                       <input name="pageKey" id="pageKey" class="form-control" >
                       <p class="help-block error-form" id="errorMsg_pageKey"></p>
                     </div>
@@ -68,7 +69,7 @@
   function addCMSPage(){
     var pageName = $('#pageName').val();
     var pageKey = $('#pageKey').val();
-    var pageContent = $('#editor1').text();
+    var pageContent = CKEDITOR.instances.editor1.getData();;
     console.log(pageContent);
     return false;
   }
