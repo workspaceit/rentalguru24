@@ -362,11 +362,11 @@
               </property>
               <property name="hibernateProperties">
                      <props>
-                         <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24?useTimezone=true&amp;serverTimezone=UTC</prop>
+                         <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24_develop?useTimezone=true&amp;serverTimezone=UTC</prop>
                              <prop key="hibernate.connection.username">root</prop>
-                             <prop key="hibernate.connection.password" />
+                             <prop key="hibernate.connection.password">wsit97480</prop>
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
-                            <prop key="hibernate.show_sql">true</prop>
+                            <!--<prop key="hibernate.show_sql">true</prop>-->
                             <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                             <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
                      </props>

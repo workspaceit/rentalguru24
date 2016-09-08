@@ -33,6 +33,21 @@ public class AdminCMSService {
         pageKey = pageKey.trim();
         pageKey = pageKey.toLowerCase();
 
+        if(pageName.isEmpty() || pageName == null) {
+            serviceResponse.setRequestError("pageName", "Page name required");
+        }
+
+        if(pageKey.isEmpty() || pageKey == null){
+            serviceResponse.setRequestError("pageKey", "Page url required");
+        }
+
+        if(pageContent.isEmpty() || pageContent == null){
+            serviceResponse.setRequestError("pageContent", "Page content required");
+        }
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
+        }
+
         Pattern pattern = Pattern.compile("[^a-z0-9A-z ]", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(pageName);
         boolean hasSpecialCharacter = matcher.find();
@@ -52,17 +67,7 @@ public class AdminCMSService {
             }
         }
 
-        if(pageName.isEmpty() || pageName == null){
-            serviceResponse.setRequestError("pageName", "Page name required");
-        }
 
-        if(pageKey.isEmpty() || pageKey == null){
-            serviceResponse.setRequestError("pageKey", "Page url required");
-        }
-
-        if(pageContent.isEmpty() || pageContent == null){
-            serviceResponse.setRequestError("pageContent", "Page content required");
-        }
 
         if(serviceResponse.hasErrors()){
             return serviceResponse;
