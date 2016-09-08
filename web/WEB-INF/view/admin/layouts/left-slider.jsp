@@ -91,6 +91,14 @@
           <li><a href="${BaseUrl}/admin/user/add-sub-category"><i class="fa fa-circle-o"></i>Add Subcategory</a></li>
         </ul>
       </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-dashboard"></i> <span>CMS</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/cms/page"><i class="fa fa-circle-o"></i>Add page</a></li>
+        </ul>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->
