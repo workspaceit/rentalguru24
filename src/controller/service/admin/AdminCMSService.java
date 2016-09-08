@@ -57,6 +57,22 @@ public class AdminCMSService {
                 }
             }
         }
+
+        if(pageName.isEmpty() || pageName == null){
+            serviceResponse.setRequestError("pageName", "Page name required");
+            return serviceResponse;
+        }
+
+        if(pageKey.isEmpty() || pageKey == null){
+            serviceResponse.setRequestError("pageKey", "Page key required");
+            return serviceResponse;
+        }
+
+        if(pageContent.isEmpty() || pageContent == null){
+            serviceResponse.setRequestError("pageContent", "Page content required");
+            return serviceResponse;
+        }
+
         Integer lastSortedOrder = adminCmsPageModel.maxSortOrder();
         if(lastSortedOrder == null){
             lastSortedOrder = 0;
