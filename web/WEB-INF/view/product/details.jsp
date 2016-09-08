@@ -32,15 +32,15 @@
         <div class="col-xs-12 col-md-6 col-sm-6">
           <div class="breadcrumb rent_page_bread">
             <ol class="breadcrumb">
-              <d:if test="${rentalProduct.productCategories!=null && rentalProduct.productCategories.size()>0}" >
-                <li><a href="${BaseUrl}/home/category/${rentalProduct.productCategories.get(0).category.id}">${rentalProduct.productCategories.get(0).category.name}</a></li>
-              </d:if>
+              <%--<d:if test="${rentalProduct.productCategories!=null && rentalProduct.productCategories.size()>0}" >--%>
+                <%--<li><a href="${BaseUrl}/home/category/${rentalProduct.productCategories.get(0).category.id}">${rentalProduct.productCategories.get(0).category.name}</a></li>--%>
+              <%--</d:if>--%>
 
-              <%--<ol class="breadcrumb">--%>
-                <%--<d:forEach var="breadCrumb" items="breadCrumbStr">--%>
-                  <%--<li><a href="${breadCrumb}">${breadCrumb}</a></li>--%>
-                <%--</d:forEach>--%>
-              <%--</ol>--%>
+              <ol class="breadcrumb">
+                <d:forEach var="breadCrumb" items="${breadCrumbStr}">
+                  <li><a href="${breadCrumb.url}">${breadCrumb.text}</a></li>
+                </d:forEach>
+              </ol>
             </ol>
           </div>
         </div>

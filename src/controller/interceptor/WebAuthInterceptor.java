@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.ServiceResponse;
 import helper.SessionManagement;
 import model.CategoryModel;
+import model.admin.AdminCmsPageModel;
 import model.entity.app.AppCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -25,6 +26,9 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
     private String baseURL;
     @Autowired
     CategoryModel categoryModel;
+
+    @Autowired
+    AdminCmsPageModel adminCmsPageModel;
     //before the actual handler will be executed
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler)
@@ -44,6 +48,7 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
 
             this.baseURL = this.getURLWithContextPath(request);
 
+            request.setAttribute("cmsPages",adminCmsPageModel.getAll());
             request.setAttribute("category",categoryModel.getAll());
             request.setAttribute("baseURL", this.baseURL);
             return true;

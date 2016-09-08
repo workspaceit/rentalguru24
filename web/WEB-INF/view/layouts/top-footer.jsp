@@ -48,11 +48,13 @@
 <div class="footer">
   <div class="container">
     <div class="row">
-      <d:forEach var="cmsPage" items="${cmsPages}" >
-       <div>
-         <a href="${BaseUrl}/static/${cmsPage.pageKey}">${cmsPage.pageName}</a>
-       </div>
-    </d:forEach>
+
+        <ul class="left bottom-nav">
+          <d:forEach var="cmsPage" items="${cmsPages}" >
+            <li><a href="${BaseUrl}/static/${cmsPage.pageKey}">${cmsPage.pageName}</a></li>
+          </d:forEach>
+        </ul>
+
   </div>
 </div>
 </div>

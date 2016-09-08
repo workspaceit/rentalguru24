@@ -95,8 +95,8 @@ public class ProductController{
         }
 
         Map<String,String> productBreadCrumbDetails = new HashMap<>();
-        productBreadCrumbDetails.put("url", baseUrl + "/product/details/" + rentalProduct.getId());
-        productBreadCrumbDetails.put("text", "Product details");
+        productBreadCrumbDetails.put("url", "javascript:void(0)");
+        productBreadCrumbDetails.put("text", "Details");
         breadCrumbStr.add(productBreadCrumbDetails);
 
         model.addAttribute("breadCrumbStr", breadCrumbStr);
