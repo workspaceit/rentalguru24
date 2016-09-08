@@ -45,6 +45,10 @@
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
               <!-- ******* Public Web page  ************-->
+           <mvc:interceptor>
+               <mvc:mapping path="/static/**" />
+               <bean class="controller.interceptor.WebInterceptor"/>
+           </mvc:interceptor>
               <mvc:interceptor>
                  <mvc:mapping path="/signup" />
                  <mvc:mapping path="/signup/" />
@@ -318,6 +322,8 @@
        </bean>
        <bean id="passwordResetModel" class="model.PasswordResetModel" >
        </bean>
+        <bean id="adminCmsPageModel" class="model.admin.AdminCmsPageModel" >
+        </bean>
 
 
 
@@ -349,9 +355,9 @@
                             <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
                             <value>model.entity.admin.AdminPaypalCredential</value>
                             <value>model.entity.admin.AdminSiteFeesEntity</value>
+                            <value>model.entity.admin.AdminCmsPage</value>
                             <value>model.entity.app.PasswordResetsEntity</value>
                             <value>model.entity.app.DeviceInfoEntity</value>
-                         <value>model.entity.admin.CmsPage</value>
                      </list>
               </property>
               <property name="hibernateProperties">

@@ -7,6 +7,8 @@ package controller.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.ServiceResponse;
 import model.CategoryModel;
+import model.admin.AdminCmsPageModel;
+import model.entity.admin.AdminCmsPage;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class WebInterceptor extends HandlerInterceptorAdapter{
 
     @Autowired
     CategoryModel categoryModel;
+    @Autowired
+    AdminCmsPageModel adminCmsPageModel;
     private String baseURL;
     //before the actual handler will be executed
     public boolean preHandle(HttpServletRequest request,
@@ -44,7 +48,10 @@ public class WebInterceptor extends HandlerInterceptorAdapter{
             appCredential =(AppCredential) httpSession.getAttribute("appCredential");
 
         }
+
+
         request.setAttribute("category",categoryModel.getAll());
+        request.setAttribute("cmsPages",adminCmsPageModel.getAll());
         request.setAttribute("baseURL", this.baseURL);
         request.setAttribute("serviceResponse", serviceResponse);
         request.setAttribute("appCredential", appCredential);

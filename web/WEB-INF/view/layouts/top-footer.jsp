@@ -45,3 +45,14 @@
     <%--</div>--%>
   <%--</div>--%>
 <%--</div>--%>
+<div class="footer">
+  <div class="container">
+    <div class="row">
+      <d:forEach var="cmsPage" items="${cmsPages}" >
+       <div>
+         <a href="${BaseUrl}/static/${cmsPage.pageKey}">${cmsPage.pageName}</a>
+       </div>
+    </d:forEach>
+  </div>
+</div>
+</div>

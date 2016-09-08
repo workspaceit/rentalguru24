@@ -13,6 +13,7 @@ public class AdminCmsPage {
     private String pageKey;
     private String pageName;
     private String pageContent;
+    private int sortedOrder;
     private Timestamp createdDate;
 
     @Id
@@ -53,6 +54,15 @@ public class AdminCmsPage {
 
     public void setPageContent(String pageContent) {
         this.pageContent = pageContent;
+    }
+    @Basic
+    @Column(name = "sorted_order")
+    public int getSortedOrder() {
+        return sortedOrder;
+    }
+
+    public void setSortedOrder(int sortedOrder) {
+        this.sortedOrder = sortedOrder;
     }
 
     @Basic
