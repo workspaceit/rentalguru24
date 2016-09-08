@@ -55,10 +55,10 @@ public class AdminCmsPageModel extends BaseModel {
             session.close();
         }
     }
-    public int maxSortOrder(){
+    public Integer maxSortOrder(){
         Session session = this.sessionFactory.openSession();
         try{
-            return (int) session.createQuery("SELECT MAX(adminCmsPage.sortedOrder) FROM AdminCmsPage adminCmsPage").uniqueResult();
+            return (Integer) session.createQuery("SELECT MAX(adminCmsPage.sortedOrder) FROM AdminCmsPage adminCmsPage").uniqueResult();
         }finally {
             session.close();
         }

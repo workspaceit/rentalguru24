@@ -57,7 +57,10 @@ public class AdminCMSService {
                 }
             }
         }
-        int lastSortedOrder = adminCmsPageModel.maxSortOrder();
+        Integer lastSortedOrder = adminCmsPageModel.maxSortOrder();
+        if(lastSortedOrder == null){
+            lastSortedOrder = 0;
+        }
 
         AdminCmsPage adminCmsPage = new AdminCmsPage();
 

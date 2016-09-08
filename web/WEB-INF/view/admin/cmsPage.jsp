@@ -32,7 +32,7 @@
                 <%--</div><!-- /. tools -->--%>
               </div><!-- /.box-header -->
               <div class="box-body pad">
-                <form>
+                <form onsubmit="return addCMSPage();">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="pageName" >Page Name</label>
@@ -49,7 +49,7 @@
                   </div>
                   <div class="box-body">
                     <label for="editor1" >Page Content</label>
-                  <textarea id="editor1" name="editor1" rows="10" cols="80"></textarea>
+                    <textarea id="editor1" name="editor1" rows="10" cols="80"></textarea>
                     <p class="help-block error-form" id="errorMsg_editor1"></p>
                   </div>
                   <div class="box-footer">
@@ -64,5 +64,14 @@
     </div><!-- /.content-wrapper -->
   <jsp:directive.include file="layouts/footer.jsp" />
 </body>
+<script>
+  function addCMSPage(){
+    var pageName = $('#pageName').val();
+    var pageKey = $('#pageKey').val();
+    var pageContent = $('#editor1').text();
+    console.log(pageContent);
+    return false;
+  }
+</script>
 </html>
 
