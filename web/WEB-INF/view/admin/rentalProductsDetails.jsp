@@ -47,8 +47,6 @@
                                     <th>Current Value</th>
                                     <th>Rent Fee</th>
                                     <th>Status</th>
-
-
                                     <th>Active/Deactive</th>
                                 </tr>
                                 </thead>
@@ -57,7 +55,7 @@
                                     <tr>
                                         <td><img width="100px" height="100px"
                                                  src="${BaseUrl}/images/${product.profileImage.original.path}"></td>
-                                        <td width="200px">${product.name}</td>
+                                        <td width="200px"><a href="${BaseUrl}/product/details/${product.id}" target="_blank">${product.name}</a></td>
                                         <td>${product.owner.userInf.firstName}</td>
                                         <td>${product.currentValue}</td>
                                         <td>${product.rentFee}</td>

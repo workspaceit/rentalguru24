@@ -71,6 +71,40 @@
     <!-- Google fonts end here -->
 </head>
 <body class="ux">
+<div class="container-fluid top_nav">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-5">
+                    <ul class="top_nav_ul">
+                        <%--<li class="dropdown">--%>
+                        <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>--%>
+                        <%--<ul class="dropdown-menu">--%>
+                        <%--<li><a href="#">Action</a></li>--%>
+                        <%--</ul>--%>
+                        <%--</li>--%>
+                        <%--<li class="dropdown">--%>
+                        <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>--%>
+                        <%--<ul class="dropdown-menu">--%>
+                        <%--<li><a href="#">Action</a></li>--%>
+                        <%--</ul>--%>
+                        <%--</li>--%>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-7 ">
+                    <ul class="top_nav_ul right top_nav_ul">
+                        <li class="dropdown">
+                            <a href="${BaseUrl}/signin" class="dropdown-toggle top_nav_a"
+                               aria-expanded="false">
+                                <i class="fa fa-user"></i>Login
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--top Nav Bar-->
 <div class="container-fluid mid_nav">
     <div class="row">
@@ -182,48 +216,48 @@
     </div>
 </div>
 <%------------------------------------------------------------------------------------%>
-<div class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <p class="footer_head">INFORMATION</p>
-                <ul class="footer_ul">
-                    <li>About US</li>
-                    <li>Privacy</li>
-                    <li>Conditions</li>
-                    <li>Online Support</li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <p class="footer_head">MY ACCOUNT</p>
-                <ul class="footer_ul">
-                    <li>Login</li>
-                    <li>My Cart</li>
-                    <li>Wishlist</li>
-                    <li>Checkout</li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <p class="footer_head">INFORMATION</p>
-                <ul class="footer_ul">
-                    <li>Specials</li>
-                    <li>New Products</li>
-                    <li>Best Sellers</li>
-                    <li>Our Stored</li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <p class="footer_head">ORDERS</p>
-                <ul class="footer_ul">
-                    <li>Payment Option</li>
-                    <li>Shipping Delivery</li>
-                    <li>Returns</li>
-                    <li>Shipping</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+<%--<div class="footer">--%>
+    <%--<div class="container">--%>
+        <%--<div class="row">--%>
+            <%--<div class="col-md-3 col-sm-6 col-xs-12">--%>
+                <%--<p class="footer_head">INFORMATION</p>--%>
+                <%--<ul class="footer_ul">--%>
+                    <%--<li>About US</li>--%>
+                    <%--<li>Privacy</li>--%>
+                    <%--<li>Conditions</li>--%>
+                    <%--<li>Online Support</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+            <%--<div class="col-md-3 col-sm-6 col-xs-12">--%>
+                <%--<p class="footer_head">MY ACCOUNT</p>--%>
+                <%--<ul class="footer_ul">--%>
+                    <%--<li>Login</li>--%>
+                    <%--<li>My Cart</li>--%>
+                    <%--<li>Wishlist</li>--%>
+                    <%--<li>Checkout</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+            <%--<div class="col-md-3 col-sm-6 col-xs-12">--%>
+                <%--<p class="footer_head">INFORMATION</p>--%>
+                <%--<ul class="footer_ul">--%>
+                    <%--<li>Specials</li>--%>
+                    <%--<li>New Products</li>--%>
+                    <%--<li>Best Sellers</li>--%>
+                    <%--<li>Our Stored</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+            <%--<div class="col-md-3 col-sm-6 col-xs-12">--%>
+                <%--<p class="footer_head">ORDERS</p>--%>
+                <%--<ul class="footer_ul">--%>
+                    <%--<li>Payment Option</li>--%>
+                    <%--<li>Shipping Delivery</li>--%>
+                    <%--<li>Returns</li>--%>
+                    <%--<li>Shipping</li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
 
 <div class="footer_bottom">
     <div class="container">

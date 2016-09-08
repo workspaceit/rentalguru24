@@ -99,7 +99,7 @@
                                     <th>Last Name</th>
                                     <th>Email Address</th>
 
-                                    <th>Active/Deactive</th>
+                                    <th>Active/Deactivate</th>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -145,7 +145,7 @@
 
         if (status == 'Active') {
             $('#modal-text').text('This Admin is already activated');
-            $('#myModal').modal('show')
+            $('#myModal').modal('show');
         } else {
             $.ajax({
                 type: "POST",
@@ -170,7 +170,7 @@
         var status = $('#' + adminId).html();
 
         if (status == 'Deactivate') {
-            $('#modal-text').text('This Admin is already activated');
+            $('#modal-text').text('This Admin is already deactivated');
             $('#myModal').modal('show')
         } else {
             $.ajax({

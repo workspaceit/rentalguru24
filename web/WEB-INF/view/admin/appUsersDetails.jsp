@@ -125,6 +125,9 @@
             }
             $("#actionButton_"+id).removeAttr("disabled","disabled");
             $("#actionButtonDropdown_"+id).removeAttr("disabled","disabled");
+            setTimeout(function(){
+              window.location = BASEURL+"/admin/user/app-user";
+            },1000);
           }else{
             console.log("fail");
           }

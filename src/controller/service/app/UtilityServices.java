@@ -91,5 +91,12 @@ public class UtilityServices {
         serviceResponse.setResponseData(rentTypeModel.getAll(),"No record found");
         return serviceResponse;
     }
+    @RequestMapping(value = "/get-all-parent-subcategory-id/{id}", method = RequestMethod.GET)
+    public ServiceResponse getRentType(HttpServletRequest request,@PathVariable int id){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+
+        serviceResponse.setResponseData(categoryModel.getAllParentBySubcategoryId(id),"No record found");
+        return serviceResponse;
+    }
 
 }

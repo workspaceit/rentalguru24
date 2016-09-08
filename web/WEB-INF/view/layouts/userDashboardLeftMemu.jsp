@@ -9,8 +9,8 @@
 <div class="col-md-3 user-dash">
   <h3>User Dashboard</h3>
   <ul class="cstm-user-menu">
-    <li><a href="${BaseUrl}/user/dashboard">Financial Transaction</a></li>
-    <li><a href="#">Rent History</a></li>
+    <%--<li><a href="${BaseUrl}/user/dashboard">Financial Transaction</a></li>--%>
+    <%--<li><a href="#">Rent History</a></li>--%>
     <li><a href="${BaseUrl}/user/dashboard/rentrequest">Rent Request</a></li>
     <li><a href="${BaseUrl}/user/dashboard/my-products">My Products</a></li>
     <%--<li><a href="${BaseUrl}/user/dashboard/my-rented-products">My Rented Products</a></li>--%>

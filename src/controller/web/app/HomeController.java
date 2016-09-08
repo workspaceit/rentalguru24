@@ -43,9 +43,11 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<RentalProduct> rentalProducts = productModel.getRentalProduct(8, 0);
-        List<RentalProduct> rentalProductsTop = productModel.getRentalProductOrderByRating(3, 0);
+        List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
+        String topRentalProductHeadTitle = "MOST RATED";
         if(rentalProductsTop==null || rentalProductsTop.size()==0){
             rentalProductsTop = productModel.getRentalProduct(3, 0);
+            topRentalProductHeadTitle = "NEW PRODUCT";
         }
         List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
         RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
@@ -54,7 +56,8 @@ public class HomeController {
         RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
         modelAndView.addObject("category", category);
-        modelAndView.addObject("productListTitle","New product");
+        modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
+        modelAndView.addObject("productListTitle","New products");
         modelAndView.addObject("products", rentalProducts);
         modelAndView.addObject("productsAscending", rentalProductsAscending);
         modelAndView.addObject("IsLogIn", IsLogin);
@@ -85,8 +88,10 @@ public class HomeController {
 
         List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
         if(rentalProducts != null){
-            List<RentalProduct> rentalProductsTop = productModel.getRentalProductOrderByRating(3, 0);
+            List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
+            String topRentalProductHeadTitle = "MOST RATED";
             if(rentalProductsTop==null || rentalProductsTop.size()==0){
+                topRentalProductHeadTitle = "NEW PRODUCT";
                 rentalProductsTop = productModel.getRentalProduct(3, 0);
             }
             List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
@@ -96,6 +101,7 @@ public class HomeController {
             RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
             modelAndView.addObject("category", category);
+            modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
             modelAndView.addObject("products", rentalProducts);
             modelAndView.addObject("productsAscending", rentalProductsAscending);
             modelAndView.addObject("IsLogIn", IsLogin);

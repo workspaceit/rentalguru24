@@ -57,6 +57,18 @@ public class CategoryModel extends BaseModel {
             session.close();
         }
     }
+    public List<Category> getAllParentBySubcategoryId(int subcategoryId){
+        Session session = this.sessionFactory.openSession();
+        try{
+            return session.createQuery("select distinct category FROM Category category " +
+                    " join category.subcategory subcategory " +
+                    " where subcategory.id = :subcategoryId")
+                    .setParameter("subcategoryId",subcategoryId)
+                    .list();
+        }finally{
+            session.close();
+        }
+    }
     public List<Category> getAllCategoryParent(){
         Session session = this.sessionFactory.openSession();
         try{

@@ -45,7 +45,7 @@ public class MailHelper {
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(to));
-            message.setSubject("Activate your account");
+            message.setSubject("Password Reset");
             message.setText("Hi,<br>   Please click this link " + link + " to reset your password",null,"html");
             Transport.send(message);
             String title = "";

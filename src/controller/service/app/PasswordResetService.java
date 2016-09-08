@@ -57,14 +57,14 @@ public class PasswordResetService extends UtilituHelper{
             passwordResetsEntityNew.setToken(token);
             passwordResetsEntityNew.setAuthCredential(authCredential);
             serviceResponse.setResponseData(passwordResetModel.insert(passwordResetsEntityNew));
-            serviceResponse.getResponseStat().setMsg("Password reset successful");
         }else {
             PasswordResetsEntity passwordResetsEntity = new PasswordResetsEntity();
             passwordResetsEntity.setToken(token);
             passwordResetsEntity.setAuthCredential(authCredential);
             serviceResponse.setResponseData(passwordResetModel.insert(passwordResetsEntity));
-            serviceResponse.getResponseStat().setMsg("An email is sent please reset it from that link");
         }
+
+        serviceResponse.getResponseStat().setMsg("An email is sent please reset it from that link");
         MailHelper.sendPasswordRestMail(email.trim(),token,baseUrl+"/reset-password/change-password/");
         return serviceResponse;
     }

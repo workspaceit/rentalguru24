@@ -8,6 +8,7 @@ import model.RentTypeModel;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.RentType;
+import model.entity.app.product.ProductCategory;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by omar on 8/16/16.
@@ -67,7 +71,35 @@ public class ProductController{
         RentalProduct rentalProduct = productModel.getById(productId);
         List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0, productId);
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+        List<ProductCategory> productCategories = rentalProduct.getProductCategories();
+        List<Map<String,String>> breadCrumbStr = new ArrayList<>();
 
+        if(productCategories!=null){
+            if(productCategories.size()>0){
+                List<Category> parentCategories =  categoryModel.getAllParentBySubcategoryId(productCategories.get(0).getId());
+
+                Map<String,String> breadCrumbDetails = new HashMap<>();
+                breadCrumbDetails.put("url", baseUrl + "/home/category/" + productCategories.get(0).getCategory().getId());
+                breadCrumbDetails.put("text", productCategories.get(0).getCategory().getName());
+                breadCrumbStr.add(breadCrumbDetails);
+
+
+                Map<String,String> tempBreadCrumbDetails = new HashMap<>();
+
+                for(Category c : parentCategories) {
+                    tempBreadCrumbDetails.put("url",baseUrl+"/home/category/"+c.getId());
+                    tempBreadCrumbDetails.put("text",c.getName());
+                    breadCrumbStr.add(tempBreadCrumbDetails);
+                }
+            }
+        }
+
+        Map<String,String> productBreadCrumbDetails = new HashMap<>();
+        productBreadCrumbDetails.put("url", baseUrl + "/product/details/" + rentalProduct.getId());
+        productBreadCrumbDetails.put("text", "Product details");
+        breadCrumbStr.add(productBreadCrumbDetails);
+
+        model.addAttribute("breadCrumbStr", breadCrumbStr);
         model.addAttribute("IsLogIn", IsLogin);
         model.addAttribute("rentalProduct", rentalProduct);
         model.addAttribute("newProducts", newProducts);

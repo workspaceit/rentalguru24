@@ -15,7 +15,7 @@
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div id="hot-deals" class="carousel slide left_home_car" data-ride="carousel">
                             <div class="left_slide_head">
-                                MOST RATED
+                                ${topRentalProductHeadTitle}
                                 <!-- Indicators -->
                                 <ol class="carousel-indicators custom_car_ind">
                                     <li data-target="#hot-deals" data-slide-to="0" class="active"></li>
@@ -36,20 +36,20 @@
                                         <label class="title-label productName"><a href="${BaseUrl}/product/details/${topProduct.getId()}">${fn:substring(topProduct.name, 0, 20)}<d:if test="${fn:length(topProduct.name)>20}">....</d:if></a></label>
                                         <d:if test="${topProduct.averageRating != 0}">
                                         <fieldset class="rating ">
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${topProduct.getId()}" name="rating${topProduct.getId()}" value="5" />
-                                            <label class = "full" for="star5_${topProduct.getId()}" title="Awesome - 5 stars"></label>
+                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5__rated${topProduct.getId()}" name="rating_rated${topProduct.getId()}" value="5" />
+                                            <label class = "full" for="star5_rated${topProduct.getId()}" title="Awesome - 5 stars"></label>
 
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${topProduct.getId()}" name="rating${topProduct.getId()}" value="4" />
-                                            <label class = "full" for="star4_${topProduct.getId()}" title="Pretty good - 4 stars"></label>
+                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4__rated${topProduct.getId()}" name="rating_rated${topProduct.getId()}" value="4" />
+                                            <label class = "full" for="star4__rated${topProduct.getId()}" title="Pretty good - 4 stars"></label>
 
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${topProduct.getId()}" name="rating${topProduct.getId()}" value="3" />
-                                            <label  class = "full" for="star3_${topProduct.getId()}" title="Meh - 3 stars"></label>
+                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3__rated${topProduct.getId()}" name="rating_rated${topProduct.getId()}" value="3" />
+                                            <label  class = "full" for="star3__rated${topProduct.getId()}" title="Meh - 3 stars"></label>
 
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${topProduct.getId()}" name="rating${topProduct.getId()}" value="2" />
-                                            <label class = "full" for="star2_${topProduct.getId()}" title="Kinda bad - 2 stars"></label>
+                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2__rated${topProduct.getId()}" name="rating_rated${topProduct.getId()}" value="2" />
+                                            <label class = "full" for="star2__rated${topProduct.getId()}" title="Kinda bad - 2 stars"></label>
 
-                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${topProduct.getId()}" name="rating${topProduct.getId()}" value="1" />
-                                            <label class = "full" for="star1_${topProduct.getId()}" title="Sucks big time - 1 star"></label>
+                                            <input <d:if test="${fn:substringBefore(topProduct.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1__rated${topProduct.getId()}" name="rating_rated${topProduct.getId()}" value="1" />
+                                            <label class = "full" for="star1__rated${topProduct.getId()}" title="Sucks big time - 1 star"></label>
                                         </fieldset>
                                         </d:if>
                                         <d:if test="${topProduct.averageRating == 0}">

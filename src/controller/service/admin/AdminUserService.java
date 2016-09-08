@@ -68,7 +68,7 @@ public class AdminUserService {
         adminUser.setVerified(true);
         appLoginCredentialModel.update(adminUser);
         serviceResponse.getResponseStat().setStatus(true);
-        serviceResponse.getResponseStat().setMsg("Admin activated succesfully");
+        serviceResponse.getResponseStat().setMsg("Admin activated successfully");
         return serviceResponse;
 
     }
@@ -89,7 +89,7 @@ public class AdminUserService {
         adminUser.setVerified(false);
         appLoginCredentialModel.update(adminUser);
         serviceResponse.getResponseStat().setStatus(true);
-        serviceResponse.getResponseStat().setMsg("Admin activated succesfully");
+        serviceResponse.getResponseStat().setMsg("Admin deactivated successfully");
         return serviceResponse;
 
     }

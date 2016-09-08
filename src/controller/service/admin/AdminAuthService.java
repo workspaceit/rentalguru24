@@ -41,11 +41,18 @@ public class AdminAuthService{
             serviceResponse.getResponseStat().setErrorMsg("Invalid email or password");
             return serviceResponse;
         }else{
+            if(!authCredential.isVerified()){
+                serviceResponse.getResponseStat().setErrorMsg("Your account is deactivated");
+                return serviceResponse;
+            }else if(authCredential.isBlocked()){
+                serviceResponse.getResponseStat().setErrorMsg("Your account is blocked");
+                return serviceResponse;
+            }
             serviceResponse.setResponseData(authCredential);
         }
         serviceResponse.getResponseStat().setMsg("Login success");
         SessionManagement.setAdminCredentialInSession(request,serviceResponse,appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
-        
+
         return serviceResponse;
     }
 
