@@ -25,11 +25,6 @@
             <div class="box box-info">
               <div class="box-header">
                 <h3 class="box-title"> CMS Page <small></small></h3>
-                <!-- tools box -->
-                <%--<div class="pull-right box-tools">--%>
-                  <%--<button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>--%>
-                  <%--<button class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>--%>
-                <%--</div><!-- /. tools -->--%>
               </div><!-- /.box-header -->
               <div class="box-body pad">
                 <form onsubmit="return addCMSPage();">
@@ -51,11 +46,12 @@
                   <div class="box-body">
                     <label for="editor1" >Page Content</label>
                     <textarea id="editor1" name="editor1" rows="10" cols="80"></textarea>
-                    <p class="help-block error-form" id="errorMsg_editor1"></p>
+                    <p class="help-block error-form" id="errorMsg_pageContent"></p>
                   </div>
                   <div class="box-footer">
                     <button class="btn btn-primary" >Submit</button>
                   </div>
+                  <div class="alert alert-success" hidden></div>
                 </form>
               </div>
             </div><!-- /.box -->
@@ -70,7 +66,27 @@
     var pageName = $('#pageName').val();
     var pageKey = $('#pageKey').val();
     var pageContent = CKEDITOR.instances.editor1.getData();;
-    console.log(pageContent);
+    $.ajax({
+      url: BASEURL+'/api-admin/cms/add-page',
+      type: 'POST',
+      data:{
+        pageName :pageName,
+        pageKey : pageKey,
+        pageContent : pageContent
+      },
+      success: function(data){
+        console.log(data);
+        if(data.responseStat.status == true){
+          $('.alert-success').html(data.responseStat.msg);
+          $('.alert-success').show().fadeIn(500).delay(2000).fadeOut(500, function () {
+            window.location.href =BASEURL+"/admin/cms/get-all";
+          });
+        }
+        else{
+          BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
+        }
+      }
+    });
     return false;
   }
 </script>
