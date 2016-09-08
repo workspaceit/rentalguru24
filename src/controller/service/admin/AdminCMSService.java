@@ -48,11 +48,19 @@ public class AdminCMSService {
             return serviceResponse;
         }
 
-        Pattern pattern = Pattern.compile("[^a-z0-9A-z ]", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(pageName);
-        boolean hasSpecialCharacter = matcher.find();
-        if(hasSpecialCharacter){
+        Pattern patternPageName = Pattern.compile("[^a-z0-9A-Z ]", Pattern.CASE_INSENSITIVE);
+        Matcher matcherPageName = patternPageName.matcher(pageName);
+        boolean hasSpecialCharacterInPageName = matcherPageName.find();
+        if(hasSpecialCharacterInPageName){
             serviceResponse.setRequestError("pageName", "Page name can't have special character");
+            return serviceResponse;
+        }
+
+        Pattern patternPageKey = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
+        Matcher matcherPageKey = patternPageKey.matcher(pageKey);
+        boolean hasSpecialCharacterInPageKey = matcherPageKey.find();
+        if(hasSpecialCharacterInPageKey){
+            serviceResponse.setRequestError("pageKey", "Page url can't have special character");
             return serviceResponse;
         }
 
