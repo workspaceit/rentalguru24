@@ -34,10 +34,8 @@ public class AdminCmsPageModel extends BaseModel {
     public List<AdminCmsPage> getAll(){
         Session session=this.sessionFactory.openSession();
         try {
-            return session.createQuery("FROM AdminCmsPage where pageKey = :pageKey order by sortedOrder asc ")
+            return session.createQuery("FROM AdminCmsPage order by sortedOrder asc ")
                     .list();
-
-
         }finally {
             session.close();
         }

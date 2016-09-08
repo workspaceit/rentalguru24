@@ -179,12 +179,12 @@
 
 
        <!--Local-->
-       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
-                      cache-period="31556926"/>
-       <mvc:resources mapping="/profile-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/profile/"
-                      cache-period="31556926"/>
-       <mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"
-                      cache-period="31556926"/>
+       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/profile/"-->
+                      <!--cache-period="31556926"/>-->
+       <!--<mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
+                      <!--cache-period="31556926"/>-->
 
 
        <!--Local Live-->
@@ -199,12 +199,12 @@
 
        <!--Live Client Server-->
 
-       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/rentguru24files/"-->
-       <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/profile/"-->
-       <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"-->
-       <!--cache-period="31556926"/>-->
+       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/rentguru24files/"
+       cache-period="31556926"/>
+       <mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/profile/"
+       cache-period="31556926"/>
+       <mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"
+       cache-period="31556926"/>
 
 <!--*******************************************************************************************************-->
 
@@ -362,7 +362,7 @@
               </property>
               <property name="hibernateProperties">
                      <props>
-                            <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>
+                         <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24?useTimezone=true&amp;serverTimezone=UTC</prop>
                              <prop key="hibernate.connection.username">root</prop>
                              <prop key="hibernate.connection.password" />
                             <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
@@ -392,7 +392,7 @@
 </beans>
 
 
-        <!--<prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24</prop>-->
+        <!--<prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/rentguru24?useTimezone=true&amp;serverTimezone=UTC</prop>-->
         <!--<prop key="hibernate.connection.username">root</prop>-->
         <!--<prop key="hibernate.connection.password" />-->
         <!--<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>-->

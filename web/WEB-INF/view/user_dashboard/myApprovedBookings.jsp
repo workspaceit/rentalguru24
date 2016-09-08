@@ -75,6 +75,7 @@
 
 </div>
 <!--Dashboard-->
+<jsp:directive.include file="../layouts/top-footer.jsp" />
 <jsp:directive.include file="../layouts/footer.jsp"/>
 <!-- Javascript framework and plugins end here -->
 </body>
