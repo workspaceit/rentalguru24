@@ -88,4 +88,10 @@ public class AdminCMSService {
         serviceResponse.getResponseStat().setMsg("page add successful");
         return serviceResponse;
     }
+    @RequestMapping(value = "/delete-page", method = RequestMethod.POST)
+    public ServiceResponse deletePage(HttpServletRequest request, @RequestParam int cmsPageId){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        return serviceResponse;
+    }
 }
