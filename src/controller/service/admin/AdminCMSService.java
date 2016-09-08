@@ -33,7 +33,7 @@ public class AdminCMSService {
         pageKey = pageKey.trim();
         pageKey = pageKey.toLowerCase();
 
-        Pattern pattern = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("[^a-z0-9A-z ]", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(pageName);
         boolean hasSpecialCharacter = matcher.find();
         if(hasSpecialCharacter){
@@ -46,26 +46,25 @@ public class AdminCMSService {
             for(AdminCmsPage adminCmsPage: adminCmsPageList){
                 if(adminCmsPage.getPageName().equalsIgnoreCase(pageName)){
                     serviceResponse.setRequestError("pageName", "A page already exist in this name");
-                    return serviceResponse;
                 }else if(adminCmsPage.getPageKey().equalsIgnoreCase(pageKey)){
-                    serviceResponse.setRequestError("pageKey", "A page key exist in this name");
-                    return serviceResponse;
+                    serviceResponse.setRequestError("pageKey", "A page url exist in this name");
                 }
             }
         }
 
         if(pageName.isEmpty() || pageName == null){
             serviceResponse.setRequestError("pageName", "Page name required");
-            return serviceResponse;
         }
 
         if(pageKey.isEmpty() || pageKey == null){
-            serviceResponse.setRequestError("pageKey", "Page key required");
-            return serviceResponse;
+            serviceResponse.setRequestError("pageKey", "Page url required");
         }
 
         if(pageContent.isEmpty() || pageContent == null){
             serviceResponse.setRequestError("pageContent", "Page content required");
+        }
+
+        if(serviceResponse.hasErrors()){
             return serviceResponse;
         }
 
@@ -115,7 +114,7 @@ public class AdminCMSService {
         }
 
         if(adminCmsPageModel.isPageKeyExitButById(adminCmsPage.getId(), pageName)){
-            serviceResponse.setRequestError("pageKey", "A page key exist in this key");
+            serviceResponse.setRequestError("pageKey", "A page url exist in this key");
             return serviceResponse;
         }
 
