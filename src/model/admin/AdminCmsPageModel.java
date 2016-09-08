@@ -95,33 +95,10 @@ public class AdminCmsPageModel extends BaseModel {
             session.close();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public boolean isPageNameExitButById(int id,String pageName){
         Session session = this.sessionFactory.openSession();
         try {
-            AdminCmsPage adminCmsPage =(AdminCmsPage)  session.createQuery("FROM AdminCmsPage where pageName=:pageName and id=:id")
+            AdminCmsPage adminCmsPage =(AdminCmsPage)  session.createQuery("FROM AdminCmsPage where pageName=:pageName and id !=:id")
                     .setParameter("pageName",pageName)
                     .setParameter("id",id)
                     .setMaxResults(1)
@@ -136,7 +113,7 @@ public class AdminCmsPageModel extends BaseModel {
     public boolean isPageKeyExitButById(int id,String pageKey){
         Session session = this.sessionFactory.openSession();
         try {
-            AdminCmsPage adminCmsPage =(AdminCmsPage)  session.createQuery("FROM AdminCmsPage where pageKey=:pageKey and id=:id")
+            AdminCmsPage adminCmsPage =(AdminCmsPage)  session.createQuery("FROM AdminCmsPage where pageKey=:pageKey and id !=:id")
                     .setParameter("pageKey",pageKey)
                     .setParameter("id",id)
                     .setMaxResults(1)
