@@ -178,40 +178,12 @@
                       cache-period="31556926"/>
 
 
-       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/images/**" location="file:/home/omar/IdeaProjects/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
 
-
-       <!--Local-->
-       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/mi/Projects/j2ee/rentguru24files/profile/"-->
-                      <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/images/**" location="file:/home/mi/Projects/j2ee/rentguru24files/"-->
-                      <!--cache-period="31556926"/>-->
-
-
-       <!--Local Live-->
-       <!--<mvc:resources mapping="/identitydoc-file/**" location="file:/home/wsit/rentguru24files/"-->
-       <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/profile-image/**" location="file:/home/wsit/rentguru24files/profile/"-->
-       <!--cache-period="31556926"/>-->
-       <!--<mvc:resources mapping="/images/**" location="file:/home/wsit/rentguru24files/"-->
-       <!--cache-period="31556926"/>-->
-
-
-
-       <!--Live Client Server-->
-
-       <mvc:resources mapping="/identitydoc-file/**" location="file:/home/rentguru24files/"
+       <mvc:resources mapping="/identitydoc-file/**" location="${fileLocation.identitydoc}"
        cache-period="31556926"/>
-       <mvc:resources mapping="/profile-image/**" location="file:/home/rentguru24files/profile/"
+       <mvc:resources mapping="/profile-image/**" location="${fileLocation.profile}"
        cache-period="31556926"/>
-       <mvc:resources mapping="/images/**" location="file:/home/rentguru24files/"
+       <mvc:resources mapping="/images/**" location="${fileLocation.images}"
        cache-period="31556926"/>
 
 <!--*******************************************************************************************************-->
@@ -407,3 +379,16 @@
         <!--<prop key="hibernate.show_sql">true</prop>-->
         <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>-->
         <!--<prop key="hibernate.enable_lazy_load_no_trans">true</prop>-->
+
+
+        <!--<property name="hibernateProperties">-->
+        <!--<props>-->
+            <!--<prop key="hibernate.connection.url">${jdbc.url}</prop>-->
+            <!--<prop key="hibernate.connection.username">${jdbc.username}</prop>-->
+            <!--<prop key="hibernate.connection.password" >${jdbc.password}</prop>-->
+            <!--<prop key="hibernate.connection.driver_class">${jdbc.driverClassName}</prop>-->
+            <!--<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>-->
+            <!--<prop key="hibernate.dialect">${jdbc.dialect}</prop>-->
+            <!--<prop key="hibernate.enable_lazy_load_no_trans">true</prop>-->
+        <!--</props>-->
+        <!--</property>-->
