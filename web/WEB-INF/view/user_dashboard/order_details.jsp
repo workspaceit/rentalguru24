@@ -116,19 +116,20 @@
                         <h5>Remarks: </h5>
                         <p class="justify no-margin p_des">${rentRequest.getRemark()} </p>
                         <ul class="confirmation_link_ul">
-                            <d:if test="${rentRequest.getApprove() == false && rentRequest.getDisapprove() == false}">
-                                <li>
-                                    <BUTTON onclick="requestDisapprove(${rentRequest.getId()})" class="cancel_btn approval_btn">Disapprove
-                                        <span id="disapproveProgressImg" class="inner-load approveGif" hidden></span>
-                                    </BUTTON>
-                                </li>
-                                <li>
-                                    <BUTTON onclick="requestApprove(${rentRequest.getId()})" class="approve_btn approval_btn">Approve
-                                        <span id="approveProgressImg" class="inner-load disapproveGif" hidden></span>
-                                    </BUTTON>
-                                </li>
+                            <d:if test="${rentRequest.getRequestedBy().getId() != appCredential.getId()}">
+                                <d:if test="${rentRequest.getApprove() == false && rentRequest.getDisapprove() == false}">
+                                    <li>
+                                        <BUTTON onclick="requestDisapprove(${rentRequest.getId()})" class="cancel_btn approval_btn">Disapprove
+                                            <span id="disapproveProgressImg" class="inner-load approveGif" hidden></span>
+                                        </BUTTON>
+                                    </li>
+                                    <li>
+                                        <BUTTON onclick="requestApprove(${rentRequest.getId()})" class="approve_btn approval_btn">Approve
+                                            <span id="approveProgressImg" class="inner-load disapproveGif" hidden></span>
+                                        </BUTTON>
+                                    </li>
+                                </d:if>
                             </d:if>
-
                         </ul>
                         <ul class="confirmation_link_ul">
                             <d:if test="${rentRequest.getApprove() == true}">
@@ -161,14 +162,14 @@
                             <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
                                 <li>
                                     <BUTTON id="productReturnRequestBtn" class="cancel_btn approval_btn" style="display: none;" >Request to return
-                                        <span class="inner-load approveGif" hidden></span>
+                                        <span class="inner-load productReturnRequestGif" hidden></span>
                                     </BUTTON>
                                 </li>
                             </d:if>
                             <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
                                 <li>
                                     <BUTTON id="productReturnBtn"  class="cancel_btn approval_btn" style="display: none;" >Return product
-                                        <span class="inner-load approveGif" hidden></span>
+                                        <span class="inner-load productReturnGif" hidden></span>
                                     </BUTTON>
                                 </li>
                             </d:if>
@@ -464,12 +465,14 @@
             /* For Product Owner */
             function requestToReturnProduct(rentalInfId){
                 var remarks = "";
+                $('.productReturnRequestGif').show();
                 $.ajax({
                     type: "POST",
                     url: BASEURL+'/api/auth/return-request/make-request/'+rentalInfId,
                     data:{remarks:remarks},
                     success: function (data) {
                         if(data.responseStat.status == true){
+                            $('.productReturnRequestGif').hide();
                             location.reload();
                         }else{
 
@@ -477,17 +480,20 @@
                     },
                     error: function () {
                         alert('Error occured');
+                        $('.productReturnRequestGif').hide();
                     }
                 });
             }
             function productReceiveConfirm(rentalProductReturnId){
                 var remarks = "";
+                $('#productReceiveConfirmBtnProgressIm').show();
                 $.ajax({
                     type: "POST",
                     url: BASEURL+'/api/auth/receive-product/confirm-receive/'+rentalProductReturnId,
                     data:{remarks:remarks},
                     success: function (data) {
                         if(data.responseStat.status == true){
+                            $('#productReceiveConfirmBtnProgressIm').hide();
                             location.reload();
 
                         }else{
@@ -496,17 +502,20 @@
                     },
                     error: function () {
                         alert('Error occured');
+                        $('#productReceiveConfirmBtnProgressIm').hide();
                     }
                 });
             }
             function productReceiveDispute(rentalProductReturnId){
                 var remarks = "";
+                $('#productReceiveDisputeProgressImg').show();
                 $.ajax({
                     type: "POST",
                     url: BASEURL+'/api/auth/receive-product/dispute-receive/'+rentalProductReturnId,
                     data:{remarks:remarks},
                     success: function (data) {
                         if(data.responseStat.status == true){
+                            $('#productReceiveDisputeProgressImg').hide();
                             location.reload();
                         }else{
 
@@ -514,25 +523,28 @@
                     },
                     error: function () {
                         alert('Error occured');
+                        $('#productReceiveDisputeProgressImg').hide();
                     }
                 });
             }
             function returnProduct(rentalInfId){
                 var remarks = "";
+                $('.productReturnGif').show();
                 $.ajax({
                     type: "POST",
                     url: BASEURL+'/api/auth/return-product/confirm-return/'+rentalInfId,
                     data:{remarks:remarks},
                     success: function (data) {
                         if(data.responseStat.status == true){
+                            $('.productReturnGif').hide();
                             location.reload();
-
                         }else{
 
                         }
                     },
                     error: function () {
                         alert('Error occured');
+                        $('.productReturnGif').hide();
                     }
                 });
             }
