@@ -52,7 +52,7 @@
                                         <input name="password" type="password" class="form-control" id="password" >
                                     </div>
                                     <div class="form-group">
-                                        <label for="confirmPassword">Confrim Password</label>
+                                        <label for="confirmPassword">Confirm Password</label>
                                         <input id="confirmPassword" type="password" class="form-control"  >
                                     </div>
 
@@ -119,7 +119,6 @@
             message="Confirm Password mismatched";
             flag=false;
         }
-
 
         if(flag==false){
             $('#errorMessage').text(message);

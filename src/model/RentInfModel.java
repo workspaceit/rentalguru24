@@ -5,6 +5,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by omar on 8/3/16.
@@ -64,6 +65,17 @@ public class RentInfModel extends BaseModel {
                     .setParameter("startDate", startDate)
                     .setParameter("endsDate", endsDate)
                     .uniqueResult();
+        }finally {
+            session.close();
+        }
+    }
+
+    public List<RentInf> getProductByAppcridentialId(int appcridentialId){
+        Session session = null;
+        try{
+            session = this.sessionFactory.openSession();
+            String hql = "FROM RentInf rentInf WHERE rentInf.rentee.id = :appcridentialId";
+            return session.createQuery(hql).setParameter("appcridentialId", appcridentialId).list();
         }finally {
             session.close();
         }

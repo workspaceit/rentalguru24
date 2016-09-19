@@ -3,11 +3,13 @@ package controller.web.app;
 import helper.ServiceResponse;
 import model.IdentityTypeModel;
 import model.ProductModel;
+import model.RentInfModel;
 import model.RentRequestModel;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.IdentityType;
 import model.entity.app.RentRequest;
+import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.MyRentedProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -38,6 +40,8 @@ public class DashboardController {
     @Autowired
     IdentityTypeModel identityTypeModel;
 
+    @Autowired
+    RentInfModel rentInfModel;
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("user_dashboard/dashboard");
@@ -261,5 +265,24 @@ public class DashboardController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/rent-history", method = RequestMethod.GET)
+    public ModelAndView getRentHistory(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("user_dashboard/rentHistory");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        List<Category> category = (List<Category>) request.getAttribute("category");
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+        List<RentInf> rentInfs = rentInfModel.getProductByAppcridentialId(appCredential.getId());
+
+        modelAndView.addObject("category", category);
+        modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "My Rent History");
+        modelAndView.addObject("appCredential", appCredential);
+        modelAndView.addObject("rentInfs", rentInfs);
+
+        return modelAndView;
+    }
 }
