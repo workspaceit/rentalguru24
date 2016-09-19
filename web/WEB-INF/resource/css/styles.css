@@ -2846,11 +2846,12 @@ span.time_date {
     list-style: none;
     margin-right: 10px;
     display: inline-block;
-    text-align: center;
+    text-align: left;
     margin-bottom: 15px;
 }
 .bottom-nav li a{
     color: #fff;
+    font-size: 20px;
 }
 .min-h{
     min-height: 560px;
