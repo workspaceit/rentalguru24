@@ -30,7 +30,7 @@ public class AdminCMSService {
         String pageName = allRequestParams.get("pageName");
         String pageContent = allRequestParams.get("pageContent");
 
-        pageKey = pageKey.trim();
+        pageKey = (pageKey!=null)?pageKey.trim():"";
         pageKey = pageKey.toLowerCase();
 
         if(pageName.isEmpty() || pageName == null) {
@@ -106,18 +106,42 @@ public class AdminCMSService {
         String pageName = allRequestParams.get("pageName");
         String pageContent = allRequestParams.get("pageContent");
 
-        pageKey = pageKey.trim();
+        pageKey = (pageKey!=null)?pageKey.trim():"";
         pageKey = pageKey.toLowerCase();
+
+        if(pageName.isEmpty() || pageName == null) {
+            serviceResponse.setRequestError("pageName", "Page name required");
+        }
+
+        if(pageKey.isEmpty() || pageKey == null){
+            serviceResponse.setRequestError("pageKey", "Page url required");
+        }
+
+        if(pageContent.isEmpty() || pageContent == null){
+            serviceResponse.setRequestError("pageContent", "Page content required");
+        }
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
+        }
 
         pageName = pageName.trim();
 
-        Pattern pattern = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("[^a-z0-9A-Z ]", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(pageName);
         boolean hasSpecialCharacter = matcher.find();
         if(hasSpecialCharacter){
             serviceResponse.setRequestError("pageName", "Page name can't have special character");
             return serviceResponse;
         }
+
+        Pattern patternPageKey = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
+        Matcher matcherPageKey = patternPageKey.matcher(pageKey);
+        boolean hasSpecialCharacterInPageKey = matcherPageKey.find();
+        if(hasSpecialCharacterInPageKey){
+            serviceResponse.setRequestError("pageKey", "Page url can't have special character");
+            return serviceResponse;
+        }
+
         AdminCmsPage adminCmsPage = adminCmsPageModel.getById(pageId);
 
 
@@ -126,7 +150,7 @@ public class AdminCMSService {
             return serviceResponse;
         }
 
-        if(adminCmsPageModel.isPageKeyExitButById(adminCmsPage.getId(), pageName)){
+        if(adminCmsPageModel.isPageKeyExitButById(adminCmsPage.getId(), pageKey)){
             serviceResponse.setRequestError("pageKey", "A page url exist in this key");
             return serviceResponse;
         }
@@ -134,7 +158,7 @@ public class AdminCMSService {
         adminCmsPage.setPageKey(pageKey);
         adminCmsPage.setPageName(pageName);
         adminCmsPage.setPageContent(pageContent);
-        adminCmsPageModel.insert(adminCmsPage);
+        adminCmsPageModel.update(adminCmsPage);
         serviceResponse.getResponseStat().setMsg("Page updated successful");
         return serviceResponse;
     }

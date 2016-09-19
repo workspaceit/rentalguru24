@@ -157,9 +157,11 @@
     <div class="col-md-5 social-sign">
       <a class="btn btn-block btn-social btn-facebook" onclick="loginWithFacebook()" >
         <i class="fa fa-facebook"></i> Sign in with Facebook
+        <span id="fbLoginProgressImg" class="inner-load signUpGif" style="display:none;"></span>
       </a>
       <a class="btn btn-block btn-social btn-google-plus" id="loginWithGooGleBtn" >
         <i class="fa fa-google-plus"></i> Sign in with Google
+        <span id="googleLoginInProgressImg" class="inner-load signUpGif" style="display:none;"></span>
       </a>
       <%--<a class="btn btn-block btn-social btn-twitter">--%>
         <%--<i class="fa fa-twitter"></i> Sign in with Twitter--%>
@@ -305,7 +307,7 @@
 
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '591163881067974', // Office Live : 591163881067974 , Local : 141550766294824
+      appId      : '48614701501', // Office Live : 591163881067974 , Local : 141550766294824
       cookie     : true,  // enable cookies to allow the server to access
                           // the session
       xfbml      : true,  // parse social plugins on this page
@@ -335,6 +337,8 @@
   }
 
   function loginWithFaceBookAccessToken(accessToken){
+    $("#fbLoginProgressImg").show();
+
       $.ajax({
         url: BASEURL+'/api/social-media/facebook/login/by-facebook-access-token',
         type: 'POST',
@@ -342,7 +346,7 @@
           accessToken:accessToken
         },
         success: function(data){
-          console.log(data);
+          $("#fbLoginProgressImg").hide();
           if(data.responseStat.status == true){
             $("#alertMsg").html("Login success").fadeIn(500).delay(2000).fadeOut(500,function(){
               window.location.href =BASEURL+"/home";
@@ -386,6 +390,8 @@
             });
   }
   function loginWithGoogleAccessToken(accessToken){
+    $("#googleLoginInProgressImg").show();
+
     $.ajax({
       url: BASEURL+'/api/social-media/google/login/by-google-access-token',
       type: 'POST',
@@ -393,7 +399,8 @@
         accessToken:accessToken
       },
       success: function(data){
-        console.log(data);
+        $("#googleLoginInProgressImg").hide();
+
         if(data.responseStat.status == true){
           $("#alertMsg").html("Login success").fadeIn(500).delay(2000).fadeOut(500,function(){
             window.location.href =BASEURL+"/home";
