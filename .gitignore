@@ -3,5 +3,5 @@ out
 *~*
 *.iml
 src/hibernate.cfg.xml
-web/WEB-INF/live.app.properties
-web/WEB-INF/local.app.properties
+web/WEB-INF/localConfig.properties
+web/WEB-INF/liveConfig.properties
