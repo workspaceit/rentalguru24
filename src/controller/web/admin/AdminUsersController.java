@@ -30,6 +30,10 @@ public class AdminUsersController {
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("allUsers", authCredentials);
         modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageHeader", "App User");
+        modelAndView.addObject("mainMenu", "User");
+        modelAndView.addObject("subMenu", "App User");
+        modelAndView.addObject("pageUrl", "app-user");
         modelAndView.addObject("PageTitle", "Admin Users Details");
         return modelAndView;
     }
@@ -44,6 +48,10 @@ public class AdminUsersController {
         modelAndView.addObject("allUsers", authCredentials);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Admin Active Users Details");
+        modelAndView.addObject("pageHeader", "Verified User");
+        modelAndView.addObject("mainMenu", "User");
+        modelAndView.addObject("subMenu", "Verified User");
+        modelAndView.addObject("pageUrl", "app-user/verified");
         return modelAndView;
     }
 
@@ -58,6 +66,10 @@ public class AdminUsersController {
         modelAndView.addObject("allUsers", authCredentials);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Admin Active Users Details");
+        modelAndView.addObject("pageHeader", "Unverified User");
+        modelAndView.addObject("mainMenu", "User");
+        modelAndView.addObject("subMenu", "Unverified User");
+        modelAndView.addObject("pageUrl", "app-user/unverified");
         return modelAndView;
     }
 }

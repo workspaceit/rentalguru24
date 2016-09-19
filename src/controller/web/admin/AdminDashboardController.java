@@ -49,6 +49,9 @@ public class AdminDashboardController {
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Admin Dashboard");
+        modelAndView.addObject("pageHeader", "Dashboard");
+        modelAndView.addObject("mainMenu", "Dashboard");
+        modelAndView.addObject("pageUrl", "dashboard");
         return modelAndView;
     }
 
@@ -60,6 +63,10 @@ public class AdminDashboardController {
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("PageTitle", "Create New Admin");
+        modelAndView.addObject("pageHeader", "Create New Admin");
+        modelAndView.addObject("mainMenu", "User");
+        modelAndView.addObject("subMenu", "Create New Admin");
+        modelAndView.addObject("pageUrl", "create-new-admin");
         return modelAndView;
 
     }
@@ -75,8 +82,10 @@ public class AdminDashboardController {
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("adminUsers", adminUsers);
         modelAndView.addObject("PageTitle", "All Admin");
-
-
+        modelAndView.addObject("pageHeader", "Admin User");
+        modelAndView.addObject("mainMenu", "User");
+        modelAndView.addObject("subMenu", "Admin User");
+        modelAndView.addObject("pageUrl", "get-all-admin");
         return modelAndView;
 
     }
