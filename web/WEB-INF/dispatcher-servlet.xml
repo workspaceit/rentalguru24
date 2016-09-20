@@ -155,6 +155,12 @@
                      <mvc:mapping path="/api/reset-password/**"/>
                      <bean class="controller.interceptor.ServiceInterceptor"/>
               </mvc:interceptor>
+           <mvc:interceptor>
+               <mvc:mapping path="/api/rent-payment/**"/>
+               <bean class="controller.interceptor.ServiceInterceptor"/>
+           </mvc:interceptor>
+
+
 
 
               <!-- ******* Service with Auth check ************-->
@@ -292,7 +298,8 @@
        </bean>
        <bean id="rentalProductReturnedHistoryModel" class="model.RentalProductReturnedHistoryModel" >
        </bean>
-
+        <bean id="rentPaymentModel" class="model.RentPaymentModel" >
+        </bean>
 
        <bean id="adminSitesFeesModel" class="model.admin.AdminSitesFeesModel" >
        </bean>
@@ -338,19 +345,23 @@
                             <value>model.entity.admin.AdminCmsPage</value>
                             <value>model.entity.app.PasswordResetsEntity</value>
                             <value>model.entity.app.DeviceInfoEntity</value>
+                         <value>model.entity.app.payments.RentPayment</value>
+                         <value>model.entity.app.payments.PaymentRefund</value>
+                         <value>model.entity.app.payments.Payout</value>
+                         <value>model.entity.app.payments.Transaction</value>
                      </list>
               </property>
-              <property name="hibernateProperties">
-                     <props>
-                         <prop key="hibernate.connection.url">${jdbc.url}</prop>
-                             <prop key="hibernate.connection.username">${jdbc.username}</prop>
-                             <prop key="hibernate.connection.password" >${jdbc.password}</prop>
-                            <prop key="hibernate.connection.driver_class">${jdbc.driverClassName}</prop>
-                            <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-                            <prop key="hibernate.dialect">${jdbc.dialect}</prop>
-                            <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
-                     </props>
-              </property>
+               <property name="hibernateProperties">
+                   <props>
+                       <prop key="hibernate.connection.url">${jdbc.url}</prop>
+                       <prop key="hibernate.connection.username">${jdbc.username}</prop>
+                       <prop key="hibernate.connection.password" >${jdbc.password}</prop>
+                       <prop key="hibernate.connection.driver_class">${jdbc.driverClassName}</prop>
+                       <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                       <prop key="hibernate.dialect">${jdbc.dialect}</prop>
+                       <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+                   </props>
+               </property>
        </bean>
 
 

@@ -130,4 +130,39 @@ public class UserInf {
     public void setIdentityType(IdentityType identityType) {
         this.identityType = identityType;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserInf userInf = (UserInf) o;
+
+        if (id != userInf.id) return false;
+        if (addressId != null ? !addressId.equals(userInf.addressId) : userInf.addressId != null) return false;
+        if (firstName != null ? !firstName.equals(userInf.firstName) : userInf.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(userInf.lastName) : userInf.lastName != null) return false;
+        if (profilePicture != null ? !profilePicture.equals(userInf.profilePicture) : userInf.profilePicture != null)
+            return false;
+        if (identityDocUrl != null ? !identityDocUrl.equals(userInf.identityDocUrl) : userInf.identityDocUrl != null)
+            return false;
+        if (createdDate != null ? !createdDate.equals(userInf.createdDate) : userInf.createdDate != null) return false;
+        if (userAddress != null ? !userAddress.equals(userInf.userAddress) : userInf.userAddress != null) return false;
+        return !(identityType != null ? !identityType.equals(userInf.identityType) : userInf.identityType != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (addressId != null ? addressId.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (profilePicture != null ? profilePicture.hashCode() : 0);
+        result = 31 * result + (identityDocUrl != null ? identityDocUrl.hashCode() : 0);
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        result = 31 * result + (userAddress != null ? userAddress.hashCode() : 0);
+        result = 31 * result + (identityType != null ? identityType.hashCode() : 0);
+        return result;
+    }
 }

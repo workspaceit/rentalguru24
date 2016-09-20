@@ -24,7 +24,7 @@ public class DateHelper {
 
         return processedTime;
     }
-    public static Timestamp getUtcDateProcessedTimeStamp() {
+    public static Timestamp getCurrentUtcDateTimeStamp() {
         Instant instant = Instant.now();
 
         return new Timestamp(instant.getEpochSecond()*1000);
