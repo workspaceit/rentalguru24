@@ -82,7 +82,7 @@
     <!-- Javascript framework and plugins end here -->
     <script>
         function editProduct(productId, ownerId){
-            location.href = BASEURL+"/user/dashboard/edit-product/"+productId+"/"+ownerId;
+            location.href = BASEURL+"/product/edit/"+productId;
         }
     </script>
     </body>

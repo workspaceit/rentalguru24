@@ -104,6 +104,10 @@
                      <mvc:mapping path="/rent/request/**" />
                      <bean class="controller.interceptor.WebAuthInterceptor"/>
               </mvc:interceptor>
+               <mvc:interceptor>
+                   <mvc:mapping path="/product/edit/**"/>
+                   <bean class="controller.interceptor.WebAuthInterceptor"/>
+               </mvc:interceptor>
 
               <!-- ******* Auth  File Upload [For Profile Edit ]  ************-->
               <mvc:interceptor>
