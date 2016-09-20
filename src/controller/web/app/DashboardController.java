@@ -287,22 +287,4 @@ public class DashboardController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/edit-product/{product_id}/{owner_id}", method = RequestMethod.GET)
-    public ModelAndView getEditProduct(HttpServletRequest request, @PathVariable("product_id") int productId, @PathVariable("owner_id") int ownerId){
-        ModelAndView modelAndView = new ModelAndView("user_dashboard/editProduct");
-        String baseUrl = (String) request.getAttribute("baseURL");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-        List<Category> category = (List<Category>) request.getAttribute("category");
-        RentalProduct rentalProduct = productModel.getMyRentalProductById(productId, ownerId);
-
-        modelAndView.addObject("category", category);
-        modelAndView.addObject("rentalProduct", rentalProduct);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "Edit Product");
-        modelAndView.addObject("appCredential", appCredential);
-        return modelAndView;
-    }
 }
