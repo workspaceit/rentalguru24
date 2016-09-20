@@ -51,7 +51,7 @@ public class AdminDashboardController {
         modelAndView.addObject("PageTitle", "Admin Dashboard");
         modelAndView.addObject("pageHeader", "Dashboard");
         modelAndView.addObject("mainMenu", "Dashboard");
-        modelAndView.addObject("pageUrl", "dashboard");
+        modelAndView.addObject("pageUrl", "admin/user/dashboard");
         return modelAndView;
     }
 
@@ -66,7 +66,7 @@ public class AdminDashboardController {
         modelAndView.addObject("pageHeader", "Create New Admin");
         modelAndView.addObject("mainMenu", "User");
         modelAndView.addObject("subMenu", "Create New Admin");
-        modelAndView.addObject("pageUrl", "create-new-admin");
+        modelAndView.addObject("pageUrl", "admin/user/create-new-admin");
         return modelAndView;
 
     }
@@ -85,7 +85,7 @@ public class AdminDashboardController {
         modelAndView.addObject("pageHeader", "Admin User");
         modelAndView.addObject("mainMenu", "User");
         modelAndView.addObject("subMenu", "Admin User");
-        modelAndView.addObject("pageUrl", "get-all-admin");
+        modelAndView.addObject("pageUrl", "admin/user/get-all-admin");
         return modelAndView;
 
     }
@@ -118,6 +118,9 @@ public class AdminDashboardController {
         modelAndView.addObject("paypalCredientail", adminPaypalCredential);
         modelAndView.addObject("siteFeesCredientail", adminSiteFeesEntity);
         modelAndView.addObject("PageTitle", "Utility");
+        modelAndView.addObject("pageHeader", "Utilit");
+        modelAndView.addObject("mainMenu", "Utilit");
+        modelAndView.addObject("pageUrl", "admin/user/get-utility");
         return modelAndView;
     }
 
@@ -159,6 +162,10 @@ public class AdminDashboardController {
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Add Category");
+        modelAndView.addObject("pageHeader", "Create New Category");
+        modelAndView.addObject("mainMenu", "Category");
+        modelAndView.addObject("subMenu", "Add Category");
+        modelAndView.addObject("pageUrl", "admin/user/add-category");
         return modelAndView;
     }
 
@@ -173,6 +180,10 @@ public class AdminDashboardController {
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Add Subcategory");
+        modelAndView.addObject("pageHeader", "Create New Subcategory");
+        modelAndView.addObject("mainMenu", "Category");
+        modelAndView.addObject("subMenu", "Add Subcategory");
+        modelAndView.addObject("pageUrl", "admin/user/add-sub-category");
         return modelAndView;
     }
 
@@ -187,6 +198,10 @@ public class AdminDashboardController {
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Category List");
+        modelAndView.addObject("pageHeader", "Category Tables");
+        modelAndView.addObject("mainMenu", "Category");
+        modelAndView.addObject("subMenu", "Category And Subcategory List");
+        modelAndView.addObject("pageUrl", "admin/user/category-list");
         return modelAndView;
     }
     @RequestMapping(value = "/edit-category/{category_id}", method = RequestMethod.GET)

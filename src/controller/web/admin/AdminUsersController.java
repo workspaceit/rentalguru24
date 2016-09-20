@@ -33,7 +33,7 @@ public class AdminUsersController {
         modelAndView.addObject("pageHeader", "App User");
         modelAndView.addObject("mainMenu", "User");
         modelAndView.addObject("subMenu", "App User");
-        modelAndView.addObject("pageUrl", "app-user");
+        modelAndView.addObject("pageUrl", "admin/user/app-user");
         modelAndView.addObject("PageTitle", "Admin Users Details");
         return modelAndView;
     }
@@ -51,7 +51,7 @@ public class AdminUsersController {
         modelAndView.addObject("pageHeader", "Verified User");
         modelAndView.addObject("mainMenu", "User");
         modelAndView.addObject("subMenu", "Verified User");
-        modelAndView.addObject("pageUrl", "app-user/verified");
+        modelAndView.addObject("pageUrl", "admin/user/app-user/verified");
         return modelAndView;
     }
 
@@ -69,7 +69,7 @@ public class AdminUsersController {
         modelAndView.addObject("pageHeader", "Unverified User");
         modelAndView.addObject("mainMenu", "User");
         modelAndView.addObject("subMenu", "Unverified User");
-        modelAndView.addObject("pageUrl", "app-user/unverified");
+        modelAndView.addObject("pageUrl", "admin/user/app-user/unverified");
         return modelAndView;
     }
 }

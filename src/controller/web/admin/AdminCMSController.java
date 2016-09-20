@@ -26,6 +26,10 @@ public class AdminCMSController {
         String baseUrl = (String) request.getAttribute("baseURL");
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Admin CMS Page");
+        modelAndView.addObject("pageHeader", "Create New CMS Page");
+        modelAndView.addObject("mainMenu", "CMS");
+        modelAndView.addObject("subMenu", "Add Page");
+        modelAndView.addObject("pageUrl", "admin/cms/page");
         return  modelAndView;
     }
 
@@ -39,6 +43,10 @@ public class AdminCMSController {
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "CMS pages");
+        modelAndView.addObject("pageHeader", "All CMS Page");
+        modelAndView.addObject("mainMenu", "CMS");
+        modelAndView.addObject("subMenu", "All Page");
+        modelAndView.addObject("pageUrl", "admin/cms/get-all");
         return modelAndView;
     }
 
@@ -52,6 +60,10 @@ public class AdminCMSController {
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "CMS Pages Edit");
+        modelAndView.addObject("pageHeader", "Edit CMS Page");
+        modelAndView.addObject("mainMenu", "CMS");
+        modelAndView.addObject("subMenu", "Edit Page");
+        modelAndView.addObject("pageUrl", "admin/cms/static/"+PageKey);
         return modelAndView;
     }
 }

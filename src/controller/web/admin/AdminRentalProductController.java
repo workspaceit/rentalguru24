@@ -41,7 +41,10 @@ public class AdminRentalProductController {
         modelAndView.addObject("rentalProducts", rentalProductEntities);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Rental Product Details");
-
+        modelAndView.addObject("pageHeader", "All Rental Product");
+        modelAndView.addObject("mainMenu", "Product");
+        modelAndView.addObject("subMenu", "All Rental Product");
+        modelAndView.addObject("pageUrl", "admin/product/get-all-rental-product");
         return modelAndView;
 
     }

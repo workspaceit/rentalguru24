@@ -13,7 +13,7 @@
   <ol class="breadcrumb">
     <li>
       <d:if test="${subMenu == null}">
-        <a href="${BaseUrl}/admin/user/${pageUrl}">
+        <a href="${BaseUrl}/${pageUrl}">
           <i class="fa fa-dashboard"></i>
             ${mainMenu}
         </a>
@@ -27,7 +27,7 @@
     </li>
     <d:if test="${subMenu != null}">
       <li>
-        <a href="${BaseUrl}/admin/user/${pageUrl}">
+        <a href="${BaseUrl}/${pageUrl}">
           ${subMenu}
         </a>
       </li>
