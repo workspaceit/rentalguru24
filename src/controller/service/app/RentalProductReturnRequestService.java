@@ -57,7 +57,7 @@ public class RentalProductReturnRequestService {
         rentalProductReturnRequest.setRentInf(rentInf);
         rentalProductReturnRequest.setIsExpired(false);
         rentalProductReturnRequest.setRemarks((remarks == null || remarks.trim().isEmpty()) ? null : remarks);
-        rentalProductReturnRequest.setCreatedDate(DateHelper.getUtcDateProcessedTimeStamp());
+        rentalProductReturnRequest.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
         rentalProductReturnRequestModel.insert(rentalProductReturnRequest);
 
         serviceResponse.setResponseData(rentInfModel.getById(rentalInfId));

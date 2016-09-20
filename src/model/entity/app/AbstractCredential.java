@@ -73,4 +73,43 @@ public class AbstractCredential {
     public void setUserInf(UserInf userInf) {
         this.userInf = userInf;
     }
+
+    @Override
+    public String toString() {
+        return "AbstractCredential{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", role=" + role +
+                ", email='" + email + '\'' +
+                ", createdDate=" + createdDate +
+                ", userInf=" + userInf +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractCredential that = (AbstractCredential) o;
+
+        if (id != that.id) return false;
+        if (userId != that.userId) return false;
+        if (role != that.role) return false;
+        if (!email.equals(that.email)) return false;
+        if (!createdDate.equals(that.createdDate)) return false;
+        return !(userInf != null ? !userInf.equals(that.userInf) : that.userInf != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + userId;
+        result = 31 * result + role;
+        result = 31 * result + email.hashCode();
+        result = 31 * result + createdDate.hashCode();
+        result = 31 * result + (userInf != null ? userInf.hashCode() : 0);
+        return result;
+    }
 }

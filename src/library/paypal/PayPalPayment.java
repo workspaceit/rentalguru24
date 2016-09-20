@@ -1,16 +1,25 @@
-package ConsoleTesting.paypal;
+package library.paypal;
 
 import com.paypal.api.payments.*;
 import com.paypal.api.payments.Currency;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import helper.RentFeesHelper;
+import model.admin.AdminPaypalCredentailModel;
+import model.entity.app.RentRequest;
+import model.entity.app.product.rentable.iface.RentalProduct;
 
 import java.util.*;
 
 public class PayPalPayment {
-    private static final String clientID = "AWQr0Ls0qt0zRtXFvSBZ2k3zNgt-0ME5eI6qC8A9dTh2RHodYtDre5cJT7BNElg9mm3dZw6v9F-G-vyn";
-    private static final String clientSecret = "EAiElxCy_o6-h3VKR_iAGIwUVisEUInSXQwbdgRo-Fd8cKUujB2RH86LTXHwOzgUAAGY6Lbm0Nu3kV9q";
+    private  String clientID;
+    private  String clientSecret;
     private static final String mode = "sandbox";
+
+    public PayPalPayment(String clientID,String clientSecret) {
+        this.clientID = clientID;
+        this.clientSecret = clientSecret;
+    }
 
     public static void main(String args[]){
 //       new PayPalPayment().createPayment();
@@ -18,7 +27,7 @@ public class PayPalPayment {
        // new PayPalPayment().refund("0CR29744U1543724W");
     //    new PayPalPayment().payOut();
 
-        System.out.println(System.getProperty("java.class.path"));
+
 
     }
     public void executePayments(String payId,String payerId){
@@ -45,23 +54,31 @@ public class PayPalPayment {
             }
 
     }
-    public void createPayment(){
+    public Payment createPayment(RentRequest rentRequest, String successRedirect,String cancelRedirect){
         try {
-            com.paypal.api.payments.Payment createdPayment = null;
+            Payment createdPayment = null;
             APIContext apiContext = new APIContext(clientID,clientSecret, mode);
             // ###Details
             // Let's you specify details of a payment amount.
             Details details = new Details();
-            details.setShipping("1");
-            details.setSubtotal("5");
-            details.setTax("1");
+            //details.setShipping("1");
+            //details.setSubtotal("5");
+            //details.setTax("1");
+
+            /* Calculating rent fee */
+//            Double rentCharge = RentFeesHelper.getRentFee( rentRequest.getRentalProduct().getRentType().getId(),
+//                    rentRequest.getRentalProduct().getRentFee(),
+//                    rentRequest.getStartDate(),
+//                    rentRequest.getEndDate());
+            /* Setting current value as rent charge */
+            Double rentCharge = rentRequest.getRentalProduct().getCurrentValue();
 
             // ###Amount
             // Let's you specify a payment amount.
             Amount amount = new Amount();
             amount.setCurrency("USD");
             // Total must be equal to sum of shipping, tax and subtotal.
-            amount.setTotal("7");
+            amount.setTotal(String.format("%.2f", rentCharge));
             amount.setDetails(details);
 
             // ###Transaction
@@ -72,11 +89,15 @@ public class PayPalPayment {
             Transaction transaction = new Transaction();
             transaction.setAmount(amount);
             transaction
-                    .setDescription("This is the payment transaction description.");
+                    .setDescription("Rent request for "+rentRequest.getRentalProduct().getName());
 
             // ### Items
+
             Item item = new Item();
-            item.setName("Ground Coffee 40 oz").setQuantity("1").setCurrency("USD").setPrice("5");
+            item.setName(rentRequest.getRentalProduct().getName())
+                    .setQuantity("1")
+                    .setCurrency("USD")
+                    .setPrice(String.format("%.2f", rentCharge));
             ItemList itemList = new ItemList();
             List<Item> items = new ArrayList<Item>();
             items.add(item);
@@ -109,8 +130,8 @@ public class PayPalPayment {
             // ###Redirect URLs
             RedirectUrls redirectUrls = new RedirectUrls();
             String guid = UUID.randomUUID().toString().replaceAll("-", "");
-            redirectUrls.setCancelUrl("http://localhost:9090/home?r=approve");
-            redirectUrls.setReturnUrl("http://localhost:9090/home?r=cancel");
+            redirectUrls.setCancelUrl(successRedirect);
+            redirectUrls.setReturnUrl(cancelRedirect);
             payment.setRedirectUrls(redirectUrls);
 
             // Create a payment by posting to the APIService
@@ -118,10 +139,6 @@ public class PayPalPayment {
             // The return object contains the status;
             try {
                 createdPayment = payment.create(apiContext);
-                System.out.println("Created payment with id = "
-                        + createdPayment.getId() + " and status = "
-                        + createdPayment.getState());
-                // ###Payment Approval Url
                 Iterator<Links> links = createdPayment.getLinks().iterator();
                 while (links.hasNext()) {
                     Links link = links.next();
@@ -129,6 +146,7 @@ public class PayPalPayment {
                         System.out.println("redirectURL"+ link.getHref());
                     }
                 }
+                return createdPayment;
 
             } catch (PayPalRESTException e) {
                 System.out.println(e.getDetails().getMessage());
@@ -138,6 +156,7 @@ public class PayPalPayment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
     public void refund(String saleId){
         APIContext apiContext = new APIContext(clientID, clientSecret, mode);

@@ -133,8 +133,8 @@ public class ReceiveProductService {
         rentalProductReturnedHistory.setConfirm(rentalProductReturned.isConfirm());
         rentalProductReturnedHistory.setDispute(rentalProductReturned.isDispute());
         rentalProductReturnedHistory.setRentalProductReturned(rentalProductReturned);
-        rentalProductReturnedHistory.setCreatedDate(DateHelper.getUtcDateProcessedTimeStamp());
-        System.out.println("DateHelper.getUtcDateProcessedTimeStamp().getTime() " + DateHelper.getUtcDateProcessedTimeStamp().getTime());
+        rentalProductReturnedHistory.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
+        System.out.println("DateHelper.getCurrentUtcDateTimeStamp().getTime() " + DateHelper.getCurrentUtcDateTimeStamp().getTime());
 
         rentalProductReturnedHistoryModel.insert(rentalProductReturnedHistory);
 

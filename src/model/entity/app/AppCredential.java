@@ -22,4 +22,5 @@ public class AppCredential extends AbstractCredential{
         this.createdDate =null;
         this.userInf = new UserInf();
     }
+
 }
