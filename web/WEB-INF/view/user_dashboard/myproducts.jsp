@@ -57,7 +57,7 @@
                                         </td>
                                         <td>
                                             <div class="actions">
-                                                <button class="btn btn-edit">Edit</button>
+                                                <button class="btn btn-edit" onclick="editProduct(${product.id}, ${appCredential.id})">Edit</button>
                                                 <button class="btn btn-delete">Delete</button>
                                             </div>
                                         </td>
@@ -78,8 +78,13 @@
         </div>
         <!-- Dashboard-->
     <jsp:directive.include file="../layouts/top-footer.jsp" />
-        <jsp:directive.include file="../layouts/footer.jsp" />
-        <!-- Javascript framework and plugins end here -->
+    <jsp:directive.include file="../layouts/footer.jsp" />
+    <!-- Javascript framework and plugins end here -->
+    <script>
+        function editProduct(productId, ownerId){
+            location.href = BASEURL+"/user/dashboard/edit-product/"+productId+"/"+ownerId;
+        }
+    </script>
     </body>
 </html>
 
