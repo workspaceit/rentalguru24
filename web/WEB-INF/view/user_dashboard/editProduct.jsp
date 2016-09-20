@@ -33,7 +33,17 @@
                             <select onchange="fetchSubcategory()" id="category" class="selectpicker" >
                                 <option value="0">PLEASE SELECT A CATEGORY</option>
                                 <d:forEach var="listValue" items="${category}">
-                                    <option value="${listValue.id}" <d:forEach var="category" items="${rentalProduct.getProductCategories()}">${category.getId() == listValue.id ? 'selected' : ''}</d:forEach> >${listValue.name}</option>
+                                    <d:set var="isSelected" value=""></d:set>
+                                    <d:if test="${rentalProduct.productCategories !=null
+                                                  && rentalProduct.productCategories.size()>0
+                                                  && !rentalProduct.productCategories.get(0).category.isSubcategory }" >
+
+                                        <d:if test="${rentalProduct.productCategories.get(0).category.id == listValue.id}" >
+                                            <d:set var="isSelected" value="selected"></d:set>
+                                        </d:if>
+                                    </d:if>
+                                    <option value="${listValue.id}" ${isSelected} >${listValue.name}</option>
+
                                 </d:forEach>
                             </select>
                             <p class="help-block error-form" id="errorMsg_categoryIds"></p>
@@ -43,8 +53,6 @@
                             <%--<select class="selectpicker" id="subCategory">--%>
                             <select id="subCategory" class="selectpicker" disabled="disabled" >
                                 <option value="0">PLEASE SELECT A SUB CATEGORY</option>
-                                <%--<optgroup id="subcategoryParentLabel" label="" disabled>--%>
-                                <%--</optgroup>--%>
                             </select>
                             <p class="help-block error-form" id="errorMsg_rentTypeId"></p>
                         </div>
