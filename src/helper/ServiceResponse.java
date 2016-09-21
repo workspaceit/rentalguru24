@@ -21,10 +21,12 @@ public class ServiceResponse  {
     private ResponseStat responseStat;
     private Object       responseData;
     private HashMap<String,String> parameterAlias;
+    private Object       extras;
     public ServiceResponse() {
        this.responseStat = new ResponseStat();
         this.responseData = new Object();
         parameterAlias = new HashMap<>();
+        this.extras = new Object();
     }
 
     public class ResponseStat {

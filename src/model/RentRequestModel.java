@@ -37,6 +37,13 @@ public class RentRequestModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+    public void delete(RentRequest rentRequest){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(rentRequest);
+        session.getTransaction().commit();
+        session.close();
+    }
     public List<RentRequest> getByProductOwnerAndProductId(int ownerId,int productId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
         if(limit<=0){

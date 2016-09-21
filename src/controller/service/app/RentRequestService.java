@@ -133,6 +133,8 @@ public class RentRequestService{
         rentRequest.setStartDate(new Date(startTimeStamp.getTime()));
         rentRequest.setEndDate(new Date(endTimeStamp.getTime()));
         rentRequest.setRemark(remark);
+        rentRequest.setIsPaymentComplete(false);
+        rentRequest.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
 
         rentRequestModel.insert(rentRequest);
 

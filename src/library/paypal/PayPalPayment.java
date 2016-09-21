@@ -12,26 +12,26 @@ import model.entity.app.product.rentable.iface.RentalProduct;
 import java.util.*;
 
 public class PayPalPayment {
+    private APIContext apiContext;
     private  String clientID;
     private  String clientSecret;
-    private static final String mode = "sandbox";
+    public static final String mode = "sandbox";
 
     public PayPalPayment(String clientID,String clientSecret) {
         this.clientID = clientID;
         this.clientSecret = clientSecret;
+        this.apiContext = new APIContext(this.clientID,this.clientSecret, mode);
     }
-
-    public static void main(String args[]){
-//       new PayPalPayment().createPayment();
-       // new PayPalPayment().executePayments("PAY-1C069959SC325024UK7P3ADI", "TKCD9W66CR9R4");
-       // new PayPalPayment().refund("0CR29744U1543724W");
-    //    new PayPalPayment().payOut();
-
-
-
+    public Payment getDetails(String payId){
+        Payment payment = null;
+        try {
+            payment = Payment.get(this.apiContext,payId);
+        } catch (PayPalRESTException e) {
+            e.printStackTrace();
+        }
+        return payment;
     }
-    public void executePayments(String payId,String payerId){
-        APIContext apiContext = new APIContext(clientID,clientSecret, mode);
+    public Payment executePayments(String payId,String payerId){
 
         // ### Api Context
         // Pass in a `ApiContext` object to authenticate
@@ -46,18 +46,19 @@ public class PayPalPayment {
             paymentExecution.setPayerId(payerId);
             try {
 
-                createdPayment = payment.execute(apiContext, paymentExecution);
+                createdPayment = payment.execute(this.apiContext, paymentExecution);
                 System.out.println(createdPayment.toJSON());
                 System.out.println("Executed The Payment " + com.paypal.api.payments.Payment.getLastRequest() + com.paypal.api.payments.Payment.getLastResponse());
             } catch (PayPalRESTException e) {
                 System.out.println("Executed The Payment " + "Executed The Payment" + com.paypal.api.payments.Payment.getLastRequest() + e.getMessage());
             }
+        return createdPayment;
 
     }
     public Payment createPayment(RentRequest rentRequest, String successRedirect,String cancelRedirect){
         try {
             Payment createdPayment = null;
-            APIContext apiContext = new APIContext(clientID,clientSecret, mode);
+
             // ###Details
             // Let's you specify details of a payment amount.
             Details details = new Details();
@@ -88,8 +89,7 @@ public class PayPalPayment {
             // a `Payee` and `Amount` types
             Transaction transaction = new Transaction();
             transaction.setAmount(amount);
-            transaction
-                    .setDescription("Rent request for "+rentRequest.getRentalProduct().getName());
+            transaction.setDescription("Rent request for " + rentRequest.getRentalProduct().getName());
 
             // ### Items
 
@@ -130,22 +130,15 @@ public class PayPalPayment {
             // ###Redirect URLs
             RedirectUrls redirectUrls = new RedirectUrls();
             String guid = UUID.randomUUID().toString().replaceAll("-", "");
-            redirectUrls.setCancelUrl(successRedirect);
-            redirectUrls.setReturnUrl(cancelRedirect);
+            redirectUrls.setReturnUrl(successRedirect);
+            redirectUrls.setCancelUrl(cancelRedirect);
             payment.setRedirectUrls(redirectUrls);
 
             // Create a payment by posting to the APIService
             // using a valid AccessToken
             // The return object contains the status;
             try {
-                createdPayment = payment.create(apiContext);
-                Iterator<Links> links = createdPayment.getLinks().iterator();
-                while (links.hasNext()) {
-                    Links link = links.next();
-                    if (link.getRel().equalsIgnoreCase("approval_url")) {
-                        System.out.println("redirectURL"+ link.getHref());
-                    }
-                }
+                createdPayment = payment.create(this.apiContext);
                 return createdPayment;
 
             } catch (PayPalRESTException e) {
@@ -159,9 +152,6 @@ public class PayPalPayment {
         return null;
     }
     public void refund(String saleId){
-        APIContext apiContext = new APIContext(clientID, clientSecret, mode);
-
-
         // ###Sale
         // A sale transaction.
         // Create a Sale object with the
@@ -192,7 +182,7 @@ public class PayPalPayment {
 
             // Refund by posting to the APIService
             // using a valid AccessToken
-            sale.refund(apiContext, refund);
+            sale.refund(this.apiContext, refund);
             System.out.println("Sale Refunded "+Sale.getLastRequest()+Sale.getLastResponse());
         } catch (PayPalRESTException e) {
             System.out.println("Sale Refunded"+Sale.getLastRequest()+e.getMessage());
@@ -241,10 +231,8 @@ public class PayPalPayment {
             // the call and to send a unique request id
             // (that ensures idempotency). The SDK generates
             // a request id if you do not pass one explicitly.
-            APIContext apiContext = new APIContext(clientID, clientSecret, mode);
-
             // ###Create Payout Synchronous
-            batch = payout.createSynchronous(apiContext);
+            batch = payout.createSynchronous(this.apiContext);
 
             System.out.println("Payout Batch With ID: "
                     + batch.getBatchHeader().getPayoutBatchId());

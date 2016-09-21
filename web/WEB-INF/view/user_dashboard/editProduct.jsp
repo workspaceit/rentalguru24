@@ -43,7 +43,6 @@
                                         </d:if>
                                     </d:if>
                                     <option value="${listValue.id}" ${isSelected} >${listValue.name}</option>
-
                                 </d:forEach>
                             </select>
                             <p class="help-block error-form" id="errorMsg_categoryIds"></p>
