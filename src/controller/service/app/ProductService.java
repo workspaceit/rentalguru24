@@ -398,7 +398,15 @@ public class ProductService{
         return serviceResponse;
     }
 
-
+    @RequestMapping(value = "/update-Product/{product_id}", method = RequestMethod.POST)
+    public ServiceResponse updateProduct(HttpServletRequest request,
+                                         @PathVariable("product_id") int productId,
+                                         @RequestParam Map<String,String> allRequestParameter
+                                         ){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        return serviceResponse;
+    }
 
 }
 
