@@ -14,8 +14,8 @@ public class ProductEditFrom {
     private String availableFrom;
     private String availableTill;
     private boolean reviewStatus;
-    private String categoryIdArray;
-    private String otherImagesTokenArray;
+    private Integer[] categoryIdArray;
+    private Long[] otherImagesTokenArray;
 
     private String city;
     private String state;
@@ -96,19 +96,19 @@ public class ProductEditFrom {
         this.reviewStatus = reviewStatus;
     }
 
-    public String getCategoryIdArray() {
-        return (categoryIdArray==null)?"":categoryIdArray;
+    public Integer[] getCategoryIdArray() {
+        return (categoryIdArray==null)?null:categoryIdArray;
     }
 
-    public void setCategoryIdArray(String categoryIdArray) {
+    public void setCategoryIdArray(Integer[] categoryIdArray) {
         this.categoryIdArray = categoryIdArray;
     }
 
-    public String getOtherImagesTokenArray() {
-        return (otherImagesTokenArray==null)?"":otherImagesTokenArray;
+    public Long[] getOtherImagesTokenArray() {
+        return (otherImagesTokenArray==null)?null:otherImagesTokenArray;
     }
 
-    public void setOtherImagesTokenArray(String otherImagesTokenArray) {
+    public void setOtherImagesTokenArray(Long[] otherImagesTokenArray) {
         this.otherImagesTokenArray = otherImagesTokenArray;
     }
 
