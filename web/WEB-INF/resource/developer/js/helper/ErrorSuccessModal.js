@@ -1,13 +1,16 @@
 /**
  * Created by mi on 8/23/16.
  */
-function showSuccessAndHide(msg){
+function showSuccessAndHide(msg,delay){
+        if(delay == undefined){
+                delay = 2000;
+        }
         msg = (msg.length>50)?msg.substring(0,50)+"...":msg;
         $("#successMsg").html(msg);
         $("#successModal").modal('show');
         window.setTimeout(function(){
                 $("#successModal").modal('hide');
-        }, 2000);
+        }, delay);
 }
 
 function showErrorAndHide(msg){

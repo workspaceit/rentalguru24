@@ -26,10 +26,21 @@
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
             <property name="location">
-                <value>/WEB-INF/localConfig.properties</value>
-                <!--<value>/WEB-INF/liveConfig.properties</value>-->
+                <!--<value>/WEB-INF/localConfig.properties</value>-->
+                <value>/WEB-INF/liveConfig.properties</value>
             </property>
     </bean>
+    <!-- * ** *** **** Scheduler **** *** ** * -->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="5" />
+        <property name="maxPoolSize" value="10" />
+        <property name="queueCapacity" value="25" />
+    </bean>
+
+    <bean id="taskExecutorExample" class="schedular.TaskExample">
+        <constructor-arg ref="taskExecutor" />
+    </bean>
+
     <!-- * ** *** **** **** *** ** * -->
     <!-- * ** *** **** **** *** ** * -->
        <!-- * ** *** **** Interceptor  **** *** ** * -->
@@ -52,6 +63,7 @@
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
               <!-- ******* Public Web page  ************-->
+
            <mvc:interceptor>
                <mvc:mapping path="/static/**" />
                <bean class="controller.interceptor.WebInterceptor"/>
@@ -90,6 +102,11 @@
 
 
               <!-- ******* Auth  Web page  ************-->
+           <mvc:interceptor>
+               <mvc:mapping path="/paypal/rent-payment/payment-cancel/**" />
+               <mvc:mapping path="/paypal/rent-payment/payment-success/**" />
+               <bean class="controller.interceptor.WebAuthInterceptor"/>
+           </mvc:interceptor>
               <mvc:interceptor>
                      <mvc:mapping path="/user/dashboard/**"/>
                      <bean class="controller.interceptor.WebAuthInterceptor"/>

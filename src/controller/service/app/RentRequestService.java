@@ -1,12 +1,17 @@
 package controller.service.app;
 
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
 import helper.DateHelper;
 import helper.ServiceResponse;
 import helper.SessionManagement;
+import library.paypal.PayPalPayment;
 import model.AppLoginCredentialModel;
 import model.ProductModel;
 import model.RentInfModel;
 import model.RentRequestModel;
+import model.admin.AdminPaypalCredentailModel;
+import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
 import model.entity.app.product.rentable.RentInf;
 import model.entity.app.RentRequest;
@@ -17,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by omar on 8/3/16.
@@ -32,6 +40,8 @@ public class RentRequestService{
     ProductModel productModel;
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
+    @Autowired
+    AdminPaypalCredentailModel adminPaypalCredentailModel;
 
     /* **************************** Rent Request action [Started] ************************** */
 
@@ -40,11 +50,14 @@ public class RentRequestService{
                                            @PathVariable("productId") int productId,
                                            @RequestParam("startDate")String startDate,
                                            @RequestParam("endsDate")String endsDate,
-                                           @RequestParam(value="remark",required=false)String remark
+                                           @RequestParam(value="remark",required=false)String remark,
+                                           @RequestParam(value="createPayment",required=false)Boolean createPayment
     ){
 
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        String baseURL  = (String) request.getAttribute("baseURL");
+        Map<String,String> extraObj = new HashMap<>();
 
         if(!appLoginCredentialModel.isVerified(appCredential.getId())){
             serviceResponse.getResponseStat().setErrorMsg("You account is not verified");
@@ -138,8 +151,50 @@ public class RentRequestService{
 
         rentRequestModel.insert(rentRequest);
 
+
+        /* If */
+        if(createPayment!=null && createPayment.booleanValue()){
+            AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+
+            if(adminPaypalCredential==null){
+                serviceResponse.getResponseStat().setErrorMsg("No payPal App credential found");
+                return serviceResponse;
+            }
+
+            if(rentRequest==null){
+                serviceResponse.getResponseStat().setErrorMsg("No rent request found");
+                return serviceResponse;
+            }
+
+            PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
+            Payment createdPayment = payPalPayment.createPayment(rentRequest,
+                    baseURL + "/paypal/rent-payment/payment-success/"+rentRequest.getId(),
+                    baseURL + "/paypal/rent-payment/payment-cancel/"+rentRequest.getId());
+
+            extraObj.put("payId",createdPayment.getId());
+
+
+            Iterator<Links> links = createdPayment.getLinks().iterator();
+            while (links.hasNext()) {
+                Links link = links.next();
+                if (link.getRel().equalsIgnoreCase("approval_url")) {
+                    String approveUrl = link.getHref();
+                    if(PayPalPayment.mode.equals("sandbox")){
+                        approveUrl =  link.getHref().replaceAll("https://www.paypal.com/", "https://www.sandbox.paypal.com/");
+                    }
+                    extraObj.put("url",approveUrl);
+                    System.out.println("redirectURL" + link.getHref());
+                }
+            }
+
+            System.out.println(createdPayment.toJSON());
+
+        }
+
         serviceResponse.getResponseStat().setMsg("Request successfully sent");
         serviceResponse.setResponseData(rentRequest, "Internal server error");
+        serviceResponse.setExtras(extraObj);
+
 
         return serviceResponse;
 

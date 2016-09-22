@@ -45,10 +45,7 @@ public class PayPalPayment {
             PaymentExecution paymentExecution = new PaymentExecution();
             paymentExecution.setPayerId(payerId);
             try {
-
                 createdPayment = payment.execute(this.apiContext, paymentExecution);
-                System.out.println(createdPayment.toJSON());
-                System.out.println("Executed The Payment " + com.paypal.api.payments.Payment.getLastRequest() + com.paypal.api.payments.Payment.getLastResponse());
             } catch (PayPalRESTException e) {
                 System.out.println("Executed The Payment " + "Executed The Payment" + com.paypal.api.payments.Payment.getLastRequest() + e.getMessage());
             }

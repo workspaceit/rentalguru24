@@ -368,7 +368,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title center">Rent Form</h4>
             </div>
-            <form class="rent_submission_form" action="" method="post" onsubmit="return makeRentRequest()">
+            <form id="makeRentRequestForm" class="rent_submission_form" action="" method="post" onsubmit="return makeRentRequest()">
                 <div class="modal-body">
                     <div class="row clearfix">
                         <div class="col-md-6">
@@ -397,7 +397,7 @@
                 <div class="modal-footer">
                     <p class="help-block error-form" id="errorMsg_productId" ></p>
                     <p class="help-block error-form" id="serviceResponseMsg" ></p>
-                    <button type="submit" class="btn-submit">Submit</button>
+                    <button id="makeRequestBtn" type="submit" class="btn-submit">Submit</button>
                 </div>
             </form>
         </div>
@@ -456,7 +456,9 @@
     }
     function makeRentRequest(){
         UnBindErrors('errorMsg_');
-        $("#serviceResponseMsg").html("");
+        $("#serviceResponseMsg").html("Processing....");
+        var makeRentRequestformElement = $("#makeRentRequestForm").find("input,textarea,button");
+        $(makeRentRequestformElement).attr("disabled","disabled");
 
         var productId = getCurrentSelectedRentalProductId();
 
@@ -477,17 +479,28 @@
             data: {
                    startDate:startDate,
                    endsDate:endsDate,
-                   remark:remark
+                   remark:remark,
+                   createPayment:true
             },
             success: function(data){
                 if(data.responseStat.status == true){
                     /* Hide Rent Request Modal Form */
                     $("#requestRentPopUp").modal("hide");
-                    showSuccessAndHide(data.responseStat.msg);
+                    showSuccessAndHide(data.responseStat.msg,5000);
+                    window.setTimeout(function(){
+                        showSuccessAndHide("Redirecting to paypal ...",3000);
+                    },2000);
+                    window.setTimeout(function(){
+                        window.location = data.extras.url;
+                    },5000);
                 }else{
                     $("#serviceResponseMsg").html(data.responseStat.msg);
                     BindErrorsWithHtml('errorMsg_', data.responseStat.requestErrors);
                 }
+                $(makeRentRequestformElement).removeAttrs("disabled");
+            },
+            error: function(e){
+                $(makeRentRequestformElement).removeAttrs("disabled");
             }
         });
         return false;

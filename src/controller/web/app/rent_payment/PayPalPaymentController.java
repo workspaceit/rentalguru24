@@ -13,12 +13,14 @@ import model.RentRequestModel;
 import model.admin.AdminPaypalCredentailModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
+import model.entity.app.Category;
 import model.entity.app.RentRequest;
 import model.entity.app.payments.RentPayment;
 import model.entity.app.product.rentable.RentInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -41,12 +43,15 @@ public class PayPalPaymentController {
     RentRequestModel rentRequestModel;
 
     @RequestMapping(value = "/payment-success/{rentRequestId}", method = RequestMethod.GET)
-    public String successPayment(HttpServletRequest request,
+    public ModelAndView successPayment(HttpServletRequest request,
                                 @PathVariable int rentRequestId,
                                 @RequestParam Map<String,String> allParam){
-
+        ModelAndView modelAndView = new ModelAndView("payment/payment_success");
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+        modelAndView.addObject("IsLogIn", IsLogin);
 
         String paymentId = allParam.get("paymentId");
         String token = allParam.get("token");
@@ -58,22 +63,23 @@ public class PayPalPaymentController {
         if (payerId==null) {
         }
 
-        RentInf rentinf = rentInfModel.getById(12);
+
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
 
-        if(rentinf==null){
-           // In-case
-        }
+
 
         if(rentRequest==null){
-            // In-case
+            modelAndView.addObject("statusMsg","Invalid rent request");
+            return modelAndView;
         }
-        if(appCredential==null){
-            // What if session expired while checkout through paypal
+        if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
+            modelAndView.addObject("statusMsg","This rent request is not belongs to you");
+            return modelAndView;
         }
         /* **** *** ** * Check the payment is already Execute * ** *** *** */
         if(rentPaymentModel.isPaymentAlreadyExist(paymentId, payerId)){
-            return "Payment Exist";
+            modelAndView.addObject("statusMsg","Payment already recorded");
+            return modelAndView;
         }
 
 
@@ -83,8 +89,8 @@ public class PayPalPaymentController {
                 .executePayments(paymentId, payerId);
 
         if(executedPayment==null){
-            // Transaction in vaild
-            return "Invalid Payment";
+            modelAndView.addObject("statusMsg","Invalid payment id");
+            return modelAndView;
         }
 
         Transaction payPalTransactions = null;
@@ -131,7 +137,6 @@ public class PayPalPaymentController {
 
         RentPayment rentPayment = new RentPayment();
         rentPayment.setRentRequest(rentRequest);
-        rentPayment.setRentInf(rentinf);
         rentPayment.setAppCredential(appCredential);
         rentPayment.setPaypalPayerId(payPalPayerId);
         rentPayment.setPaypalPayId(executedPayment.getId());
@@ -147,19 +152,35 @@ public class PayPalPaymentController {
         rentRequestModel.update(rentRequest);
 
 
-        System.out.println(rentPayment);
+        modelAndView.addObject("statusMsg", "Payment successfully received");
 
-        return "";
+        return modelAndView;
     }
     @RequestMapping(value = "/payment-cancel/{rentRequestId}", method = RequestMethod.GET)
-    public String paymentCancel(HttpServletRequest request,
+    public ModelAndView paymentCancel(HttpServletRequest request,
                                 @PathVariable int rentRequestId,
                                 @RequestParam Map<String,String> allParam){
+        ModelAndView modelAndView = new ModelAndView("payment/payment_cancel");
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+        modelAndView.addObject("IsLogIn", IsLogin);
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
         if(rentRequest==null){
-            // Handle it
+            modelAndView.addObject("statusMsg","Payment already canceled");
+            return modelAndView;
+        }
+        if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
+            modelAndView.addObject("statusMsg","This rent request is not belongs to you");
+            return modelAndView;
+        }
+        if(rentRequest.getIsPaymentComplete()){
+            modelAndView.addObject("statusMsg", "Payment was done before, can't cancel now ");
+            return modelAndView;
         }
         rentRequestModel.delete(rentRequest);
-        return "";
+        modelAndView.addObject("statusMsg", "Payment canceled");
+        return modelAndView;
     }
 }

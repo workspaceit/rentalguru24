@@ -26,7 +26,7 @@ public class ServiceResponse  {
        this.responseStat = new ResponseStat();
         this.responseData = new Object();
         parameterAlias = new HashMap<>();
-        this.extras = new Object();
+        this.extras = null;
     }
 
     public class ResponseStat {
@@ -133,6 +133,14 @@ public class ServiceResponse  {
         return (this.responseData.getClass().getSimpleName().equals("Object"))?null:this.responseData;
 
 
+    }
+
+    public Object getExtras() {
+        return extras;
+    }
+
+    public void setExtras(Object extras) {
+        this.extras = extras;
     }
 
     public void setResponseData(Object responseData) {
