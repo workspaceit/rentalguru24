@@ -1,9 +1,6 @@
 package controller.web.app.rent_payment;
 
-import com.paypal.api.payments.Payer;
-import com.paypal.api.payments.Payment;
-import com.paypal.api.payments.Sale;
-import com.paypal.api.payments.Transaction;
+import com.paypal.api.payments.*;
 import helper.DateHelper;
 import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
@@ -85,31 +82,49 @@ public class PayPalPaymentController {
 
         /* *** ** * Execute Paypal Payment * ** *** */
         AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
-        Payment executedPayment  = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret())
-                .executePayments(paymentId, payerId);
+        PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
+        Payment executedPayment  = payPalPayment.executePayments(paymentId, payerId);
 
         if(executedPayment==null){
             modelAndView.addObject("statusMsg","Invalid payment id");
             return modelAndView;
         }
 
-        Transaction payPalTransactions = null;
+        Transaction payPalTransaction = null;
+        Authorization authorization = null;
         Sale payPalSale = null;
         String payPalSaleId = null;
         String payPalPayerId = null;
         Double transactionFee = 0d;
         Double totalAmount = 0d;
         String currency = "";
+        String authorizationId = null;
         if(executedPayment.getTransactions()!=null && executedPayment.getTransactions().size() > 0){
-            payPalTransactions = executedPayment.getTransactions().get(0);
+            payPalTransaction = executedPayment.getTransactions().get(0);
             // Have to handle the scenario
         }
-        if(payPalTransactions!=null){
-            if( payPalTransactions.getRelatedResources()!=null && payPalTransactions.getRelatedResources().size() > 0){
-                payPalSale = payPalTransactions.getRelatedResources().get(0).getSale();
+        if(payPalTransaction!=null){
+            if( payPalTransaction.getRelatedResources()!=null && payPalTransaction.getRelatedResources().size() > 0){
+                payPalSale = payPalTransaction.getRelatedResources().get(0).getSale();
             }
             // Have to handle the scenario
         }
+        if(payPalTransaction.getRelatedResources() !=null && payPalTransaction.getRelatedResources().size()>0){
+            authorization = payPalTransaction.getRelatedResources().get(0).getAuthorization();
+        }
+        /* If Intent is 'authorize' */
+        if(authorization!=null){
+            authorizationId = authorization.getId();
+            try{
+                transactionFee = Double.parseDouble(authorization.getAmount().getTotal());
+            }catch (NumberFormatException ex){
+                System.out.println(ex.getMessage());
+                transactionFee = 0d;
+            }
+
+            currency = authorization.getAmount().getCurrency();
+        }
+          /* If Intent is 'sale' */
         if(payPalSale!=null){
             payPalSaleId = payPalSale.getId();
             payPalSale.getCreateTime();
@@ -144,6 +159,7 @@ public class PayPalPaymentController {
         rentPayment.setTransactionFee(transactionFee);
         rentPayment.setTotalAmount(totalAmount);
         rentPayment.setCurrency(currency);
+        rentPayment.setAuthorizationId(authorizationId);
        // rentPayment.setPaypalPaymentDate(DateHelper.getCurrentUtcDateTimeStamp());
         rentPaymentModel.insert(rentPayment);
 
@@ -153,7 +169,6 @@ public class PayPalPaymentController {
 
 
         modelAndView.addObject("statusMsg", "Payment successfully received");
-
         return modelAndView;
     }
     @RequestMapping(value = "/payment-cancel/{rentRequestId}", method = RequestMethod.GET)
@@ -180,6 +195,7 @@ public class PayPalPaymentController {
             return modelAndView;
         }
         rentRequestModel.delete(rentRequest);
+
         modelAndView.addObject("statusMsg", "Payment canceled");
         return modelAndView;
     }

@@ -56,8 +56,7 @@ public class PayPalPayment {
         try {
             Payment createdPayment = null;
 
-            // ###Details
-            // Let's you specify details of a payment amount.
+
             Details details = new Details();
             //details.setShipping("1");
             //details.setSubtotal("5");
@@ -79,11 +78,7 @@ public class PayPalPayment {
             amount.setTotal(String.format("%.2f", rentCharge));
             amount.setDetails(details);
 
-            // ###Transaction
-            // A transaction defines the contract of a
-            // payment - what is the payment for and who
-            // is fulfilling it. Transaction is created with
-            // a `Payee` and `Amount` types
+
             Transaction transaction = new Transaction();
             transaction.setAmount(amount);
             transaction.setDescription("Rent request for " + rentRequest.getRentalProduct().getName());
@@ -190,14 +185,7 @@ public class PayPalPayment {
 
         PayoutSenderBatchHeader senderBatchHeader = new PayoutSenderBatchHeader();
 
-        // ### NOTE:
-        // You can prevent duplicate batches from being processed. If you
-        // specify a `sender_batch_id` that was used in the last 30 days, the
-        // batch will not be processed. For items, you can specify a
-        // `sender_item_id`. If the value for the `sender_item_id` is a
-        // duplicate of a payout item that was processed in the last 30 days,
-        // the item will not be processed.
-        // #### Batch Header Instance
+
         Random random = new Random();
         senderBatchHeader.setSenderBatchId(
                 new Double(random.nextDouble()).toString()).setEmailSubject(
@@ -238,6 +226,40 @@ public class PayPalPayment {
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
         }
+    }
+    public Capture capturePayment(Amount amount ,Authorization authorization ){
+        Capture capture = null;
+        try {
+            String captureId = getCaptureId(amount, authorization);
+
+
+            capture = Capture.get(apiContext, captureId);
+
+            System.out.println("Capture id = " + capture.getId()
+                    + " and status = " + capture.getState());
+        } catch (PayPalRESTException e) {
+            System.out.println("Get Capture"+Capture.getLastRequest()+ e.getMessage());
+        }
+        return capture;
+
+    }
+    private String getCaptureId(Amount amount ,Authorization authorization) throws PayPalRESTException{
+        String captureId = null;
+
+
+
+        // ###Capture
+        Capture capture = new Capture();
+        capture.setAmount(amount);
+
+        capture.setIsFinalCapture(true);
+
+        // Capture by POSTing to
+        // URI v1/payments/authorization/{authorization_id}/capture
+        Capture responseCapture = authorization.capture(apiContext, capture);
+        captureId = responseCapture.getId();
+
+        return captureId;
     }
 }
 
