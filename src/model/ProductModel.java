@@ -34,6 +34,14 @@ public class ProductModel extends BaseModel {
         session.close();
     }
 
+    public void delete(RentalProduct rentalProduct){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(rentalProduct);
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public RentalProductEntity getEntityById(int id) {
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();

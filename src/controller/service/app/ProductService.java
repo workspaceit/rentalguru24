@@ -61,6 +61,9 @@ public class ProductService{
     @Autowired
     ProductRatingModel productRatingModel;
 
+    @Autowired
+    RentRequestModel rentRequestModel;
+
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @JsonView(ProductView.RentalProductView.class)
     public ServiceResponse uploadProduct(HttpServletRequest request,
@@ -493,6 +496,45 @@ public class ProductService{
         serviceResponse.setResponseData(productModel.getById(rentalProduct.getId()));
 
         return serviceResponse;
+    }
+
+    @RequestMapping(value = "/delete-Product/{product_id}", method = RequestMethod.POST)
+    public ServiceResponse deleteProduct(HttpServletRequest request,
+                                         @PathVariable("product_id") int productId){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+
+        if(!appLoginCredentialModel.isVerified(appCredential.getId())){
+            serviceResponse.getResponseStat().setErrorMsg("You account is not verified");
+            SessionManagement.destroySession(request);
+            return serviceResponse;
+        }
+
+        if(appLoginCredentialModel.isBlocked(appCredential.getId())){
+            serviceResponse.getResponseStat().setErrorMsg("You account is blocked");
+            SessionManagement.destroySession(request);
+            return serviceResponse;
+        }
+
+        RentalProduct rentalProduct = productModel.getById(productId);
+
+        if(rentalProduct == null){
+            serviceResponse.setRequestError("product", "Product Not found");
+            return serviceResponse;
+        }
+
+        boolean isProductOnRent = rentRequestModel.productOnrent(productId);
+
+        if(isProductOnRent == true){
+            serviceResponse.setRequestError("product", "Can't delete a product on rent");
+            return serviceResponse;
+        }
+        productModel.delete(rentalProduct);
+
+        serviceResponse.getResponseStat().setMsg("product has been deleted");
+        return serviceResponse;
+
     }
 
 }

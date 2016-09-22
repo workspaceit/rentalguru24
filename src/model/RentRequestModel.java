@@ -434,4 +434,16 @@ public class RentRequestModel extends BaseModel {
         session.close();
 
     }
+
+    public boolean productOnrent(int productId){
+        Session session = this.sessionFactory.openSession();
+        RentRequest rentRequest = (RentRequest) session.createQuery("FROM RentRequest returnRequest WHERE " +
+                " returnRequest.rentalProduct.id =:productId")
+                .setParameter("productId", productId)
+                .setMaxResults(1)
+                .uniqueResult();
+        if(rentRequest != null)
+            return  true;
+        return  false;
+    }
 }
