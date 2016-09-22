@@ -105,5 +105,15 @@ public class CategoryModel extends BaseModel {
             session.close();
         }
     }
-
+    public Category getParentCategory(int subCategoryId){
+        Session session = this.sessionFactory.openSession();
+        try{
+            return (Category)session.createQuery("select distinct category FROM Category category INNER JOIN FETCH category.subcategory sc  where sc.id =:subCategoryId")
+                    .setParameter("subCategoryId", subCategoryId)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            session.close();
+        }
+    }
 }

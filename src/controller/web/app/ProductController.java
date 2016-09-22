@@ -117,6 +117,21 @@ public class ProductController{
         List<Category> category = (List<Category>) request.getAttribute("category");
         RentalProduct rentalProduct = productModel.getMyRentalProductById(productId, appCredential.getId());
 
+        /*------------------------------------------*/
+        Category categorySelected = categoryModel.getById(rentalProduct.getProductCategories().get(0).getCategory().getId());
+
+        if(categorySelected.getIsSubcategory() == true){
+            Category categoryParent = categoryModel.getParentCategory(rentalProduct.getProductCategories().get(0).getCategory().getId());
+            modelAndView.addObject("categoryId", categoryParent.getId());
+            modelAndView.addObject("subCategoryId", rentalProduct.getProductCategories().get(0).getCategory().getId());
+//            System.out.println("parent : "+categoryParent.getId());
+//            System.out.println("child : "+rentalProduct.getProductCategories().get(0).getCategory().getId());
+        }else {
+            modelAndView.addObject("categoryId", categorySelected.getId());
+//            System.out.println("parent : "+ categorySelected.getId());
+        }
+        /*------------------------------------------*/
+
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentalProduct", rentalProduct);
         modelAndView.addObject("IsLogIn", IsLogin);
