@@ -58,7 +58,7 @@
                                         <td>
                                             <div class="actions">
                                                 <button class="btn btn-edit" onclick="editProduct(${product.id}, ${appCredential.id})">Edit</button>
-                                                <button class="btn btn-delete">Delete</button>
+                                                <button class="btn btn-delete" onclick="deleteProduct(${product.id})">Delete</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -83,6 +83,10 @@
     <script>
         function editProduct(productId, ownerId){
             location.href = BASEURL+"/product/edit/"+productId;
+        }
+        function deleteProduct(productId){
+            location.href = BASEURL+"/api/auth/product/delete-Product/"+productId;
+
         }
     </script>
     </body>
