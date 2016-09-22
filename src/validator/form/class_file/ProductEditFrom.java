@@ -7,15 +7,13 @@ public class ProductEditFrom {
 
     private String name;
     private String description;
-    private Long profileImageToken;
     private Double currentValue;
     private Double rentFee;
-    private Integer rentTypeId;
     private String availableFrom;
     private String availableTill;
     private boolean reviewStatus;
-    private Integer[] categoryIdArray;
-    private Long[] otherImagesTokenArray;
+    private String categoryIdArray;
+
 
     private String city;
     private String state;
@@ -40,13 +38,8 @@ public class ProductEditFrom {
         this.description = description;
     }
 
-    public Long getProfileImageToken() {
-        return (profileImageToken==null)?-1:profileImageToken;
-    }
 
-    public void setProfileImageToken(Long profileImageToken) {
-        this.profileImageToken = profileImageToken;
-    }
+
 
     public Double getCurrentValue() {
         return (currentValue==null)?-1:currentValue;
@@ -62,14 +55,6 @@ public class ProductEditFrom {
 
     public void setRentFee(Double rentFee) {
         this.rentFee = rentFee;
-    }
-
-    public Integer getRentTypeId() {
-        return (rentTypeId==null)?-1:rentTypeId;
-    }
-
-    public void setRentTypeId(Integer rentTypeId) {
-        this.rentTypeId = rentTypeId;
     }
 
     public String getAvailableFrom() {
@@ -96,20 +81,12 @@ public class ProductEditFrom {
         this.reviewStatus = reviewStatus;
     }
 
-    public Integer[] getCategoryIdArray() {
+    public String getCategoryIdArray() {
         return (categoryIdArray==null)?null:categoryIdArray;
     }
 
-    public void setCategoryIdArray(Integer[] categoryIdArray) {
+    public void setCategoryIdArray(String categoryIdArray) {
         this.categoryIdArray = categoryIdArray;
-    }
-
-    public Long[] getOtherImagesTokenArray() {
-        return (otherImagesTokenArray==null)?null:otherImagesTokenArray;
-    }
-
-    public void setOtherImagesTokenArray(Long[] otherImagesTokenArray) {
-        this.otherImagesTokenArray = otherImagesTokenArray;
     }
 
     public String getCity() {
