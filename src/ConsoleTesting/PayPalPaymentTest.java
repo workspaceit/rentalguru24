@@ -10,7 +10,7 @@ import java.util.*;
 public class PayPalPaymentTest {
     private static final String clientID = "AWQr0Ls0qt0zRtXFvSBZ2k3zNgt-0ME5eI6qC8A9dTh2RHodYtDre5cJT7BNElg9mm3dZw6v9F-G-vyn";
     private static final String clientSecret = "EAiElxCy_o6-h3VKR_iAGIwUVisEUInSXQwbdgRo-Fd8cKUujB2RH86LTXHwOzgUAAGY6Lbm0Nu3kV9q";
-    private static final String mode = "sandbox";
+    public static final String mode = "sandbox";
 
     public static void main(String args[]){
         new PayPalPaymentTest().createPayment();
@@ -121,11 +121,13 @@ public class PayPalPaymentTest {
                 System.out.println("Created payment with id = "
                         + createdPayment.getId() + " and status = "
                         + createdPayment.getState());
+                System.out.println(createdPayment.toJSON());
                 // ###Payment Approval Url
                 Iterator<Links> links = createdPayment.getLinks().iterator();
                 while (links.hasNext()) {
                     Links link = links.next();
                     if (link.getRel().equalsIgnoreCase("approval_url")) {
+                        link.setHref(link.getHref().replaceAll("https://www.paypal.com/","https://www.sandbox.paypal.com/"));
                         System.out.println("redirectURL"+ link.getHref());
                     }
                 }

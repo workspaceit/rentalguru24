@@ -1,6 +1,7 @@
 package model.entity.app.payments;
 
 import model.entity.app.AppCredential;
+import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.RentInf;
 
 import javax.persistence.*;
@@ -14,10 +15,13 @@ import java.sql.Timestamp;
 public class RentPayment {
     private long id;
     private AppCredential appCredential;
+    private RentRequest rentRequest;
     private RentInf rentInf;
     private double rentFee;
     private double refundAmount;
     private double totalAmount;
+    private double transactionFee;
+    private String currency;
     private String paypalPayerId;
     private String paypalPayId;
     private String paypalSaleId;
@@ -62,6 +66,26 @@ public class RentPayment {
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    @Basic
+    @Column(name = "transaction_fee")
+    public double getTransactionFee() {
+        return transactionFee;
+    }
+
+    public void setTransactionFee(double transactionFee) {
+        this.transactionFee = transactionFee;
+    }
+
+    @Basic
+    @Column(name = "currency")
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     @Basic
@@ -133,15 +157,28 @@ public class RentPayment {
         this.rentInf = rentInf;
     }
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "rent_request_id",referencedColumnName = "id")
+    public RentRequest getRentRequest() {
+        return rentRequest;
+    }
+
+    public void setRentRequest(RentRequest rentRequest) {
+        this.rentRequest = rentRequest;
+    }
+
     @Override
     public String toString() {
         return "RentPayment{" +
                 "id=" + id +
                 ", appCredential=" + appCredential +
+                ", rentRequest=" + rentRequest +
                 ", rentInf=" + rentInf +
                 ", rentFee=" + rentFee +
                 ", refundAmount=" + refundAmount +
                 ", totalAmount=" + totalAmount +
+                ", transactionFee=" + transactionFee +
+                ", currency='" + currency + '\'' +
                 ", paypalPayerId='" + paypalPayerId + '\'' +
                 ", paypalPayId='" + paypalPayId + '\'' +
                 ", paypalSaleId='" + paypalSaleId + '\'' +
@@ -161,14 +198,19 @@ public class RentPayment {
         if (Double.compare(that.rentFee, rentFee) != 0) return false;
         if (Double.compare(that.refundAmount, refundAmount) != 0) return false;
         if (Double.compare(that.totalAmount, totalAmount) != 0) return false;
+        if (Double.compare(that.transactionFee, transactionFee) != 0) return false;
         if (appCredential != null ? !appCredential.equals(that.appCredential) : that.appCredential != null)
             return false;
-        if (!rentInf.equals(that.rentInf)) return false;
-        if (!paypalPayerId.equals(that.paypalPayerId)) return false;
-        if (!paypalPayId.equals(that.paypalPayId)) return false;
-        if (!paypalSaleId.equals(that.paypalSaleId)) return false;
-        if (!paypalPaymentDate.equals(that.paypalPaymentDate)) return false;
-        return createdDate.equals(that.createdDate);
+        if (rentRequest != null ? !rentRequest.equals(that.rentRequest) : that.rentRequest != null) return false;
+        if (rentInf != null ? !rentInf.equals(that.rentInf) : that.rentInf != null) return false;
+        if (currency != null ? !currency.equals(that.currency) : that.currency != null) return false;
+        if (paypalPayerId != null ? !paypalPayerId.equals(that.paypalPayerId) : that.paypalPayerId != null)
+            return false;
+        if (paypalPayId != null ? !paypalPayId.equals(that.paypalPayId) : that.paypalPayId != null) return false;
+        if (paypalSaleId != null ? !paypalSaleId.equals(that.paypalSaleId) : that.paypalSaleId != null) return false;
+        if (paypalPaymentDate != null ? !paypalPaymentDate.equals(that.paypalPaymentDate) : that.paypalPaymentDate != null)
+            return false;
+        return !(createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null);
 
     }
 
@@ -178,18 +220,22 @@ public class RentPayment {
         long temp;
         result = (int) (id ^ (id >>> 32));
         result = 31 * result + (appCredential != null ? appCredential.hashCode() : 0);
-        result = 31 * result + rentInf.hashCode();
+        result = 31 * result + (rentRequest != null ? rentRequest.hashCode() : 0);
+        result = 31 * result + (rentInf != null ? rentInf.hashCode() : 0);
         temp = Double.doubleToLongBits(rentFee);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(refundAmount);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(totalAmount);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + paypalPayerId.hashCode();
-        result = 31 * result + paypalPayId.hashCode();
-        result = 31 * result + paypalSaleId.hashCode();
-        result = 31 * result + paypalPaymentDate.hashCode();
-        result = 31 * result + createdDate.hashCode();
+        temp = Double.doubleToLongBits(transactionFee);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (currency != null ? currency.hashCode() : 0);
+        result = 31 * result + (paypalPayerId != null ? paypalPayerId.hashCode() : 0);
+        result = 31 * result + (paypalPayId != null ? paypalPayId.hashCode() : 0);
+        result = 31 * result + (paypalSaleId != null ? paypalSaleId.hashCode() : 0);
+        result = 31 * result + (paypalPaymentDate != null ? paypalPaymentDate.hashCode() : 0);
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
     }
 }

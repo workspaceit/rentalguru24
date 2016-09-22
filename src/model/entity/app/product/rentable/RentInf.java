@@ -205,4 +205,78 @@ public class RentInf {
     public void setRentalProductReturned(RentalProductReturned rentalProductReturned) {
         this.rentalProductReturned = rentalProductReturned;
     }
+
+    @Override
+    public String toString() {
+        return "RentInf{" +
+                "id=" + id +
+                ", rentRequest=" + rentRequest +
+                ", rentalProduct=" + rentalProduct +
+                ", rentee=" + rentee +
+                ", startDate=" + startDate +
+                ", endsDate=" + endsDate +
+                ", expired=" + expired +
+                ", productReturned=" + productReturned +
+                ", productReceived=" + productReceived +
+                ", hasReturnRequest=" + hasReturnRequest +
+                ", hasReceiveConfirmation=" + hasReceiveConfirmation +
+                ", rentalProductReturnRequestList=" + rentalProductReturnRequestList +
+                ", rentalProductReturnedList=" + rentalProductReturnedList +
+                ", rentalProductReturnRequest=" + rentalProductReturnRequest +
+                ", rentalProductReturned=" + rentalProductReturned +
+                ", createdDate=" + createdDate +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RentInf rentInf = (RentInf) o;
+
+        if (id != rentInf.id) return false;
+        if (expired != rentInf.expired) return false;
+        if (productReturned != rentInf.productReturned) return false;
+        if (productReceived != rentInf.productReceived) return false;
+        if (hasReturnRequest != rentInf.hasReturnRequest) return false;
+        if (hasReceiveConfirmation != rentInf.hasReceiveConfirmation) return false;
+        if (rentRequest != null ? !rentRequest.equals(rentInf.rentRequest) : rentInf.rentRequest != null) return false;
+        if (rentalProduct != null ? !rentalProduct.equals(rentInf.rentalProduct) : rentInf.rentalProduct != null)
+            return false;
+        if (rentee != null ? !rentee.equals(rentInf.rentee) : rentInf.rentee != null) return false;
+        if (startDate != null ? !startDate.equals(rentInf.startDate) : rentInf.startDate != null) return false;
+        if (endsDate != null ? !endsDate.equals(rentInf.endsDate) : rentInf.endsDate != null) return false;
+        if (rentalProductReturnRequestList != null ? !rentalProductReturnRequestList.equals(rentInf.rentalProductReturnRequestList) : rentInf.rentalProductReturnRequestList != null)
+            return false;
+        if (rentalProductReturnedList != null ? !rentalProductReturnedList.equals(rentInf.rentalProductReturnedList) : rentInf.rentalProductReturnedList != null)
+            return false;
+        if (rentalProductReturnRequest != null ? !rentalProductReturnRequest.equals(rentInf.rentalProductReturnRequest) : rentInf.rentalProductReturnRequest != null)
+            return false;
+        if (rentalProductReturned != null ? !rentalProductReturned.equals(rentInf.rentalProductReturned) : rentInf.rentalProductReturned != null)
+            return false;
+        return !(createdDate != null ? !createdDate.equals(rentInf.createdDate) : rentInf.createdDate != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (rentRequest != null ? rentRequest.hashCode() : 0);
+        result = 31 * result + (rentalProduct != null ? rentalProduct.hashCode() : 0);
+        result = 31 * result + (rentee != null ? rentee.hashCode() : 0);
+        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
+        result = 31 * result + (endsDate != null ? endsDate.hashCode() : 0);
+        result = 31 * result + (expired ? 1 : 0);
+        result = 31 * result + (productReturned ? 1 : 0);
+        result = 31 * result + (productReceived ? 1 : 0);
+        result = 31 * result + (hasReturnRequest ? 1 : 0);
+        result = 31 * result + (hasReceiveConfirmation ? 1 : 0);
+        result = 31 * result + (rentalProductReturnRequestList != null ? rentalProductReturnRequestList.hashCode() : 0);
+        result = 31 * result + (rentalProductReturnedList != null ? rentalProductReturnedList.hashCode() : 0);
+        result = 31 * result + (rentalProductReturnRequest != null ? rentalProductReturnRequest.hashCode() : 0);
+        result = 31 * result + (rentalProductReturned != null ? rentalProductReturned.hashCode() : 0);
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        return result;
+    }
 }
