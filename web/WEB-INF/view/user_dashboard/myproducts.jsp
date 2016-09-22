@@ -85,8 +85,20 @@
             location.href = BASEURL+"/product/edit/"+productId;
         }
         function deleteProduct(productId){
-            location.href = BASEURL+"/api/auth/product/delete-Product/"+productId;
-
+            $.ajax({
+                type: "POST",
+                url: BASEURL+"/api/auth/product/delete-Product/"+productId,
+                success: function(data){
+                    if(data.responseStat.status==true){
+                        location.reload();
+                    }else{
+                        console.log("ERROR");
+                    }
+                },
+                error: function(){
+                    console.log("ERROR");
+                }
+            });
         }
     </script>
     </body>
