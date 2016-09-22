@@ -1,14 +1,18 @@
 package validator.form;
 
+
 import helper.DateHelper;
-import helper.ImageHelper;
+
 import model.CategoryModel;
 import model.RentTypeModel;
 import model.TempFileModel;
-import model.entity.app.TempFile;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import validator.form.class_file.ProductEditFrom;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 
 /**
@@ -77,45 +81,22 @@ public class ProductEditFromValidator implements Validator {
             errors.rejectValue("rentFee", "Product rent Fee required");
         }
 
-        if(productEditFrom.getProfileImageToken() == null || productEditFrom.getProfileImageToken() == -1){
-            errors.rejectValue("profileImagetoken", "Product profile image required");
-
+        if(productEditFrom.getCategoryIdArray().isEmpty()){
+            errors.rejectValue("categoryIdArray", "Product category required");
+        }else if(this.isJSONValid(productEditFrom.getCategoryIdArray()) == false){
+            errors.rejectValue("categoryIdArray", "Product category required");
         }
 
-        if(productEditFrom.getCategoryIdArray().length>0){
-            try{
-                Integer[] catArray = productEditFrom.getCategoryIdArray();
-                for(int catId : catArray){
-                    if(this.categoryModel.getById(catId)==null){
-                        errors.rejectValue("categoryIdArray","Category not found for id = "+catId);
-                        break;
-                    }
-                }
-            }catch (Exception ex){
-                errors.rejectValue("categoryIdArray","Category not in valid format");
-            }
+    }
 
-        }
-
-        if(productEditFrom.getOtherImagesTokenArray()!=null){
-            for(long otherImageToken : productEditFrom.getOtherImagesTokenArray()){
-                TempFile tempFile = this.tempFileModel.getByToken(otherImageToken);
-                if(tempFile ==null){
-                    errors.rejectValue("otherImagesTokenArray", "Other image token is not valid");
-                    break;
-                }
-
-                if(!ImageHelper.isFileExist(tempFile.getPath())){
-                    errors.rejectValue("otherImagesTokenArray", "No file found associated with the token");
-                    break;
-                }
-            }
-        }
-
-        if(productEditFrom.getRentTypeId()!=null){
-            if(rentTypeModel.getById(productEditFrom.getRentTypeId())==null){
-                errors.rejectValue("rentTypeId", "No rent type found by id  "+productEditFrom.getRentTypeId());
-            }
+    public boolean isJSONValid(String jsonInString ) {
+        try {
+            final ObjectMapper mapper = new ObjectMapper();
+            mapper.readTree(jsonInString);
+            return true;
+        } catch (IOException e) {
+            return false;
         }
     }
+
 }

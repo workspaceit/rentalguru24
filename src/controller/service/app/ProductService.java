@@ -21,13 +21,18 @@ import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import validator.form.ProductEditFromValidator;
 import validator.form.ProductUploadFormValidator;
+import validator.form.class_file.ProductEditFrom;
 import validator.form.class_file.ProductUploadForm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created by mi on 8/8/16.
@@ -401,10 +406,92 @@ public class ProductService{
     @RequestMapping(value = "/update-Product/{product_id}", method = RequestMethod.POST)
     public ServiceResponse updateProduct(HttpServletRequest request,
                                          @PathVariable("product_id") int productId,
-                                         @RequestParam Map<String,String> allRequestParameter
+                                         @RequestParam Map<String,String> allRequestParameter,
+                                         @Valid ProductEditFrom productEditFrom,
+                                         BindingResult result
                                          ){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+
+
+        if(!appLoginCredentialModel.isVerified(appCredential.getId())){
+            serviceResponse.getResponseStat().setErrorMsg("You account is not verified");
+            SessionManagement.destroySession(request);
+            return serviceResponse;
+        }
+
+        if(appLoginCredentialModel.isBlocked(appCredential.getId())){
+            serviceResponse.getResponseStat().setErrorMsg("You account is blocked");
+            SessionManagement.destroySession(request);
+            return serviceResponse;
+        }
+
+        productEditFrom.setName(allRequestParameter.get("name"));
+        productEditFrom.setDescription(allRequestParameter.get("description"));
+        productEditFrom.setAvailableFrom(allRequestParameter.get("availableFrom"));
+        productEditFrom.setAvailableTill(allRequestParameter.get("availableTill"));
+        productEditFrom.setFormattedAddress(allRequestParameter.get("formattedAddress"));
+        productEditFrom.setCity(allRequestParameter.get("city"));
+        productEditFrom.setState(allRequestParameter.get("state"));
+        productEditFrom.setZip(allRequestParameter.get("zip"));
+        productEditFrom.setCurrentValue(Double.parseDouble(allRequestParameter.get("productCurrentPrice")));
+        productEditFrom.setRentFee(Double.parseDouble(allRequestParameter.get("rentPrice")));
+        productEditFrom.setCategoryIdArray(allRequestParameter.get("categoryId"));
+
+        new ProductEditFromValidator(categoryModel,tempFileModel,rentTypeModel).validate(productEditFrom, result);
+
+        serviceResponse.setError(result, true, false);
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
+        }
+
+        RentalProduct rentalProduct = productModel.getById(productId);
+
+        if(rentalProduct == null){
+            serviceResponse.setRequestError("product", "Product Not found");
+            return serviceResponse;
+        }
+
+        List<ProductCategory> productCategories = rentalProduct.getProductCategories();
+        if(productCategories.get(0).getCategory().getId() != Integer.parseInt(allRequestParameter.get("categoryId"))){
+            productCategories.get(0).getCategory().setId(Integer.parseInt(allRequestParameter.get("categoryId")));
+        }
+
+        if(!rentalProduct.getName().equals(allRequestParameter.get("name"))){
+            rentalProduct.setName(allRequestParameter.get("name"));
+        }
+        if(!rentalProduct.getDescription().equals(allRequestParameter.get("description"))){
+            rentalProduct.setDescription(allRequestParameter.get("description"));
+        }
+
+        if(!rentalProduct.getAvailableFrom().equals(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "dd/MM/yyyy"))){
+            rentalProduct.setAvailableFrom(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "dd/MM/yyyy"));
+        }
+
+        if(rentalProduct.getAvailableTill().equals(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "dd/MM/yyyy"))){
+            rentalProduct.setAvailableTill(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "dd/MM/yyyy"));
+        }
+
+        if(!rentalProduct.getProductLocation().getFormattedAddress().equals(allRequestParameter.get("formattedAddress"))){
+            rentalProduct.getProductLocation().setFormattedAddress(allRequestParameter.get("formattedAddress"));
+        }
+        if(!rentalProduct.getProductLocation().getCity().equals(allRequestParameter.get("city"))){
+            rentalProduct.getProductLocation().setCity(allRequestParameter.get("city"));
+        }
+        if(!rentalProduct.getProductLocation().getZip().equals(allRequestParameter.get("zip"))){
+            rentalProduct.getProductLocation().setZip(allRequestParameter.get("zip"));
+        }
+        if(rentalProduct.getCurrentValue() != Double.parseDouble(allRequestParameter.get("productCurrentPrice"))){
+            rentalProduct.setCurrentValue(Double.parseDouble(allRequestParameter.get("productCurrentPrice")));
+        }
+        if(rentalProduct.getRentFee() != Double.parseDouble(allRequestParameter.get("rentPrice"))){
+            rentalProduct.setRentFee(Double.parseDouble(allRequestParameter.get("rentPrice")));
+        }
+
+        productModel.update(rentalProduct);
+        serviceResponse.setResponseData(productModel.getById(rentalProduct.getId()));
+
         return serviceResponse;
     }
 
