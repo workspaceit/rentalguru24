@@ -33,16 +33,7 @@
                             <select onchange="fetchSubcategory()" id="category" class="selectpicker" >
                                 <option value="0">PLEASE SELECT A CATEGORY</option>
                                 <d:forEach var="listValue" items="${category}">
-                                    <d:set var="isSelected" value=""></d:set>
-                                    <d:if test="${rentalProduct.productCategories !=null
-                                                  && rentalProduct.productCategories.size()>0
-                                                  && !rentalProduct.productCategories.get(0).category.isSubcategory }" >
-
-                                        <d:if test="${rentalProduct.productCategories.get(0).category.id == listValue.id}" >
-                                            <d:set var="isSelected" value="selected"></d:set>
-                                        </d:if>
-                                    </d:if>
-                                    <option value="${listValue.id}" ${isSelected} >${listValue.name}</option>
+                                    <option value="${listValue.id}" <d:if test="${listValue.id == categoryId}">selected="selected"</d:if>>${listValue.name}</option>
                                 </d:forEach>
                             </select>
                             <p class="help-block error-form" id="errorMsg_categoryIds"></p>
@@ -275,6 +266,9 @@
                                 var option = document.createElement("option");
                                 option.text = subCategories.name;
                                 option.value = subCategories.id;
+                                if(subCategories.id == ${subCategoryId}){
+                                    option.selected = "selected";
+                                }
                                 subCategorySelectBox.add(option, subCategory[1]);
                             });
                             if(subcategoryArray.length>0){
