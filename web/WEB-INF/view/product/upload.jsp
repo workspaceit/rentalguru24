@@ -441,7 +441,7 @@
     }else{
       categoryArray.push(parseInt(subCategory));
     }
-    console.log(categoryArray);
+
     var fromDate = $('#availableFrom').val();
     var tillDate = $('#availableTill').val();
 
