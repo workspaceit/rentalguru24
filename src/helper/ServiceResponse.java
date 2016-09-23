@@ -43,7 +43,7 @@ public class ServiceResponse  {
             this.requestErrors = new ArrayList<RequestError>();
         }
 
-        public boolean isStatus() {
+        public boolean getStatus() {
             return status;
         }
 

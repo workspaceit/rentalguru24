@@ -205,7 +205,7 @@
 
 
 
-       <mvc:resources mapping="/identitydoc-file/**" location="${fileLocation.identitydoc}"
+       <mvc:resources mapping="/identitydoc-file/**" location=" ${fileLocation.identitydoc}"
        cache-period="31556926"/>
        <mvc:resources mapping="/profile-image/**" location="${fileLocation.profile}"
        cache-period="31556926"/>
@@ -331,7 +331,10 @@
        </bean>
         <bean id="adminCmsPageModel" class="model.admin.AdminCmsPageModel" >
         </bean>
-
+        <bean id="paymentRefundModel" class="model.PaymentRefundModel" >
+        </bean>
+        <bean id="userPaypalCredentialEntityModel" class="model.UserPaypalCredentialEntityModel" >
+        </bean>
 
 
        <!-- ******************** Hibernate Session,Entity, *********************************** -->
@@ -369,6 +372,7 @@
                          <value>model.entity.app.payments.PaymentRefund</value>
                          <value>model.entity.app.payments.Payout</value>
                          <value>model.entity.app.payments.Transaction</value>
+                         <value>model.entity.app.UserPaypalCredential</value>
                      </list>
               </property>
                <property name="hibernateProperties">

@@ -479,8 +479,7 @@
             data: {
                    startDate:startDate,
                    endsDate:endsDate,
-                   remark:remark,
-                   createPayment:true
+                   remark:remark
             },
             success: function(data){
                 if(data.responseStat.status == true){
@@ -488,10 +487,12 @@
                     $("#requestRentPopUp").modal("hide");
                     showSuccessAndHide(data.responseStat.msg,5000);
                     window.setTimeout(function(){
-                        showSuccessAndHide("Redirecting to paypal ...",3000);
+                        showSuccessAndHide("Redirecting to order details ...",3000);
                     },2000);
                     window.setTimeout(function(){
-                        window.location = data.extras.url;
+                        console.log(BASEURL+"/rent/request/"+data.responseData.id);
+                        var locationUrl = BASEURL+"/rent/request/"+data.responseData.id;
+                        window.location = locationUrl;
                     },5000);
                 }else{
                     $("#serviceResponseMsg").html(data.responseStat.msg);

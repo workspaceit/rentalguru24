@@ -16,7 +16,7 @@ public class RentPaymentModel extends BaseModel {
     }
     public boolean isPaymentAlreadyExist(String paymentId,String payerId){
 
-        RentPayment rentPayment = this.getByPayIdAndPayerId(paymentId,payerId);
+        RentPayment rentPayment = this.getByPayIdAndPayerId(paymentId, payerId);
         if(rentPayment==null)
             return false;
         return true;
@@ -25,11 +25,26 @@ public class RentPaymentModel extends BaseModel {
     public RentPayment getByPayIdAndPayerId(String paymentId,String payerId){
         Session session = this.sessionFactory.openSession();
         System.out.println("paypalPayId "+paymentId+" paypalPayerId "+payerId);
-        return  (RentPayment)session.createQuery("from RentPayment where paypalPayerId =:paypalPayerId and paypalPayId=:paypalPayId")
-                .setParameter("paypalPayId", paymentId)
-                .setParameter("paypalPayerId",payerId)
-                .setMaxResults(1)
-                .uniqueResult();
+        try{
+            return  (RentPayment)session.createQuery("from RentPayment where paypalPayerId =:paypalPayerId and paypalPayId=:paypalPayId")
+                    .setParameter("paypalPayId", paymentId)
+                    .setParameter("paypalPayerId", payerId)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            session.close();
+        }
 
+    }
+    public RentPayment getByRentRequestId(int rentRequestId){
+        Session session = this.sessionFactory.openSession();
+        try{
+            return  (RentPayment)session.createQuery("from RentPayment where rentRequest.id =:rentRequestId ")
+                    .setParameter("rentRequestId", rentRequestId)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            session.close();
+        }
     }
 }

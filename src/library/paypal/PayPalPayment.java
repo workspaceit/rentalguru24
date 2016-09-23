@@ -143,7 +143,8 @@ public class PayPalPayment {
         }
         return null;
     }
-    public void refund(String saleId){
+    public Sale refund(String saleId, Double totalAmount) throws PayPalRESTException {
+        String total = String.format("%.2f",totalAmount);
         // ###Sale
         // A sale transaction.
         // Create a Sale object with the
@@ -156,29 +157,15 @@ public class PayPalPayment {
         // Use the amount to create
         // a refund object
         Refund refund = new Refund();
-        // ###Amount
-        // Create an Amount object to
-        // represent the amount to be
-        // refunded. Create the refund object, if the refund is partial
         Amount amount = new Amount();
         amount.setCurrency("USD");
-        amount.setTotal("4.00");
+        amount.setTotal(total);
+
         refund.setAmount(amount);
-        try {
-            // ### Api Context
-            // Pass in a `ApiContext` object to authenticate
-            // the call and to send a unique request id
-            // (that ensures idempotency). The SDK generates
-            // a request id if you do not pass one explicitly.
+        sale.refund(this.apiContext, refund);
+        System.out.println("Sale Refunded " + Sale.getLastRequest() + Sale.getLastResponse());
 
-
-            // Refund by posting to the APIService
-            // using a valid AccessToken
-            sale.refund(this.apiContext, refund);
-            System.out.println("Sale Refunded "+Sale.getLastRequest()+Sale.getLastResponse());
-        } catch (PayPalRESTException e) {
-            System.out.println("Sale Refunded"+Sale.getLastRequest()+e.getMessage());
-        }
+        return sale;
     }
     public void payOut(){
         Payout payout = new Payout();

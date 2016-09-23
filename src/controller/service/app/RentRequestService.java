@@ -1,18 +1,21 @@
 package controller.service.app;
 
+import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.Sale;
+import com.paypal.base.rest.PayPalRESTException;
 import helper.DateHelper;
+import helper.RentFeesHelper;
 import helper.ServiceResponse;
 import helper.SessionManagement;
 import library.paypal.PayPalPayment;
-import model.AppLoginCredentialModel;
-import model.ProductModel;
-import model.RentInfModel;
-import model.RentRequestModel;
+import model.*;
 import model.admin.AdminPaypalCredentailModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
+import model.entity.app.payments.PaymentRefund;
+import model.entity.app.payments.RentPayment;
 import model.entity.app.product.rentable.RentInf;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -24,6 +27,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +46,10 @@ public class RentRequestService{
     AppLoginCredentialModel appLoginCredentialModel;
     @Autowired
     AdminPaypalCredentailModel adminPaypalCredentailModel;
+    @Autowired
+    RentPaymentModel rentPaymentModel;
+    @Autowired
+    PaymentRefundModel paymentRefundModel;
 
     /* **************************** Rent Request action [Started] ************************** */
 
@@ -130,13 +138,15 @@ public class RentRequestService{
 
 
         if(rentRequestModel.isAlreadyRequested(appCredential.getId(),productId,startTimeStamp,endTimeStamp)){
-            serviceResponse.getResponseStat().setErrorMsg("You are already requested for this product in between those date");
+            serviceResponse.getResponseStat().setErrorMsg("You have already requested for this product in between those date");
             return serviceResponse;
         }
+
 
         RentRequest rentRequest = new RentRequest();
 
         rentRequest.setIsExpired(false);
+        rentRequest.setAdvanceAmount(rentalProduct.getCurrentValue());
         rentRequest.setIsExtension(false);
         rentRequest.setRequestCancel(false);
         rentRequest.setDisapprove(false);
@@ -148,6 +158,9 @@ public class RentRequestService{
         rentRequest.setRemark(remark);
         rentRequest.setIsPaymentComplete(false);
         rentRequest.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
+
+        Double rentFee = RentFeesHelper.getRentFee(rentalProduct.getRentType().getId(),rentalProduct.getRentFee(),rentRequest.getStartDate(),rentRequest.getEndDate());
+        rentRequest.setRentFee(rentFee);
 
         rentRequestModel.insert(rentRequest);
 
@@ -214,6 +227,10 @@ public class RentRequestService{
             return serviceResponse;
         }
 
+        if(!rentRequest.getIsPaymentComplete()){
+            serviceResponse.setRequestError("requestId","Payment is not completed yet");
+            return serviceResponse;
+        }
         if(rentRequest.getRentalProduct().getOwner().getId() != appCredential.getId()){
             serviceResponse.setRequestError("requestId","You are not allowed to perform action for this rent request");
             return serviceResponse;
@@ -236,6 +253,13 @@ public class RentRequestService{
             return serviceResponse;
         }
 
+        /* ~~~~~~~~~~~~~  Expire Request in Between date [Start]~~~~~~~~~~~~~~~~*/
+        serviceResponse = this.refundOtherRentRequestList(serviceResponse,rentRequest);
+        if(!serviceResponse.getResponseStat().getStatus()){
+            return serviceResponse;
+        }
+        /* ~~~~~~~~~~~~~  Expire Request in Between date [ends]~~~~~~~~~~~~~~~~*/
+
 
         rentRequest.setApprove(true);
         rentRequest.setDisapprove(false);
@@ -255,13 +279,11 @@ public class RentRequestService{
 
         rentInfModel.insert(rentInf);
 
-        /* ~~~~~~~~~~~~~  Expire Request in Between date ~~~~~~~~~~~~~~~~*/
 
 
-        rentRequestModel.expireByDateBetween(rentRequest.getId(),rentRequest.getRentalProduct().getId(),
-                DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
-                DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
-        );
+
+
+        /* ~~~~~~~~~~~~~  Expire Request in Between date [Ends]~~~~~~~~~~~~~~~~*/
 
         serviceResponse.setResponseData(rentRequest, "Internal server error");
         return serviceResponse;
@@ -277,6 +299,11 @@ public class RentRequestService{
         RentRequest rentRequest = rentRequestModel.getById(requestId);
         if(rentRequest==null){
             serviceResponse.setRequestError("requestId","No request exist by this id ");
+            return serviceResponse;
+        }
+
+        if(!rentRequest.getIsPaymentComplete()){
+            serviceResponse.setRequestError("requestId","Payment is not completed yet");
             return serviceResponse;
         }
 
@@ -308,6 +335,11 @@ public class RentRequestService{
 
         rentRequest.setDisapprove(true);
 
+
+
+        /* Refund to user ( Requested By ) account */
+        serviceResponse = this.refundOtherRentRequest(serviceResponse,rentRequest);
+        /* Update Rent request*/
         rentRequestModel.update(rentRequest);
         serviceResponse.setResponseData(rentRequest,"No record found");
         return serviceResponse;
@@ -530,6 +562,83 @@ public class RentRequestService{
         return serviceResponse;
     }
 
+    private ServiceResponse refundOtherRentRequestList(ServiceResponse serviceResponse,RentRequest rentRequest){
+
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
+
+        Sale sale = null;
+
+        List<RentRequest> rentRequests = rentRequestModel.getAllByDateBetweenAndProductId(rentRequest.getRentalProduct().getId(),
+                DateHelper.getSQLDateToTimeStamp(rentRequest.getStartDate()),
+                DateHelper.getSQLDateToTimeStamp(rentRequest.getEndDate())
+        );
+        for(RentRequest otherRentRequest:rentRequests){
+
+            if(otherRentRequest.getId() == rentRequest.getId()) continue;
+
+            RentPayment rentPayment = rentPaymentModel.getByRentRequestId(otherRentRequest.getId());
+
+            /* Refund to user ( Requested By ) account */
+            try {
+                sale = payPalPayment.refund(rentPayment.getPaypalSaleId(),rentPayment.getTotalAmount());
+                System.out.print(sale.toJSON());
+            } catch (PayPalRESTException e) {
+                serviceResponse.getResponseStat().setErrorMsg("Sale Refunded" + Sale.getLastRequest() + e.getMessage());
+                return serviceResponse;
+            }
+
+
+            //     refund(String saleId, Amount amount);
+            PaymentRefund paymentRefund = new PaymentRefund();
+            paymentRefund.setAppCredential(rentRequest.getRequestedBy());
+            paymentRefund.setPaymentByRentPaymentId(rentPayment);
+            paymentRefund.setPaypalPayerId(rentPayment.getPaypalPayerId());
+            paymentRefund.setPaypalPayId(rentPayment.getPaypalPayId());
+            paymentRefund.setPaypalTransection("");
+            paymentRefund.setTotalAmount(rentPayment.getTotalAmount());
+            paymentRefundModel.insert(paymentRefund);
+
+            rentRequestModel.expireByDateBetween(otherRentRequest);
+
+        }
+
+
+
+
+
+        return serviceResponse;
+
+    }
+    private ServiceResponse refundOtherRentRequest(ServiceResponse serviceResponse,RentRequest rentRequest){
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
+        RentPayment rentPayment = rentPaymentModel.getByRentRequestId(rentRequest.getId());
+        Sale sale = null;
+
+        try {
+            sale = payPalPayment.refund(rentPayment.getPaypalSaleId(),rentPayment.getTotalAmount());
+            System.out.print(sale.toJSON());
+        } catch (PayPalRESTException e) {
+            serviceResponse.getResponseStat().setErrorMsg("Sale Refunded" + Sale.getLastRequest() + e.getMessage());
+            return serviceResponse;
+        }
+
+
+
+//     refund(String saleId, Amount amount);
+        PaymentRefund paymentRefund = new PaymentRefund();
+        paymentRefund.setAppCredential(rentRequest.getRequestedBy());
+        paymentRefund.setPaymentByRentPaymentId(rentPayment);
+        paymentRefund.setPaypalPayerId(rentPayment.getPaypalPayerId());
+        paymentRefund.setPaypalPayId(rentPayment.getPaypalPayId());
+        paymentRefund.setPaypalTransection("");
+        paymentRefund.setTotalAmount(rentPayment.getTotalAmount());
+        paymentRefundModel.insert(paymentRefund);
+
+        return serviceResponse;
+
+    }
 
 
 }

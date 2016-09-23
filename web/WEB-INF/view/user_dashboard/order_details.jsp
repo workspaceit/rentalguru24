@@ -88,11 +88,11 @@
                                         <td></td>
                                         <td><fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.getEndDate()}"/></td>
                                     </tr>
-                                    <tr>
-                                        <td>Number of Days</td>
-                                        <td></td>
-                                        <td>15 days</td>
-                                    </tr>
+                                    <%--<tr>--%>
+                                        <%--<td>Number of Days</td>--%>
+                                        <%--<td></td>--%>
+                                        <%--<td>15 days</td>--%>
+                                    <%--</tr>--%>
                                     <tr>
                                         <td>Rent/${rentRequest.getRentalProduct().getRentType().getName()}</td>
                                         <td></td>
@@ -101,14 +101,19 @@
                                     <tr>
                                         <td>Total Rent</td>
                                         <td></td>
-                                        <td>$1200</td>                                        
+                                        <td>$${rentRequest.rentFee}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Deposite amount</td>
+                                        <td></td>
+                                        <td>$${rentRequest.advanceAmount}</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th><strong>Total</strong></th>
                                         <th></th>
-                                        <th><strong>$1700</strong></th>  
+                                        <th><strong>$${rentRequest.advanceAmount}</strong></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -116,18 +121,21 @@
                         <h5>Remarks: </h5>
                         <p class="justify no-margin p_des">${rentRequest.getRemark()} </p>
                         <ul class="confirmation_link_ul">
-                            <d:if test="${rentRequest.getRequestedBy().getId() != appCredential.getId()}">
+                            <d:if test="${rentRequest.rentalProduct.id == appCredential.id}">
                                 <d:if test="${rentRequest.getApprove() == false && rentRequest.getDisapprove() == false}">
-                                    <li>
-                                        <BUTTON onclick="requestDisapprove(${rentRequest.getId()})" class="cancel_btn approval_btn">Disapprove
-                                            <span id="disapproveProgressImg" class="inner-load approveGif" hidden></span>
-                                        </BUTTON>
-                                    </li>
-                                    <li>
-                                        <BUTTON onclick="requestApprove(${rentRequest.getId()})" class="approve_btn approval_btn">Approve
-                                            <span id="approveProgressImg" class="inner-load disapproveGif" hidden></span>
-                                        </BUTTON>
-                                    </li>
+                                    <d:if test="${rentRequest.isExpired==false && rentRequest.requestCancel==false}">
+
+                                        <li>
+                                            <BUTTON onclick="requestDisapprove(${rentRequest.getId()})" class="cancel_btn approval_btn">Disapprove
+                                                <span id="disapproveProgressImg" class="inner-load approveGif" hidden></span>
+                                            </BUTTON>
+                                        </li>
+                                        <li>
+                                            <BUTTON onclick="requestApprove(${rentRequest.getId()})" class="approve_btn approval_btn">Approve
+                                                <span id="approveProgressImg" class="inner-load disapproveGif" hidden></span>
+                                            </BUTTON>
+                                        </li>
+                                    </d:if>
                                 </d:if>
                             </d:if>
                         </ul>
@@ -143,8 +151,43 @@
                                 </div>
                             </d:if>
                         </ul>
+                        <ul>
+                            <d:set var="statusMsg" value="" ></d:set>
+                            <d:if test="${rentRequest.requestCancel}">
+                                <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
+                                    <d:set var="statusMsg" value="You have canceled the rent request" ></d:set>
+                                </d:if>
+
+                                <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
+                                    <d:set var="statusMsg" value="Rent request is canceled" ></d:set>
+                                </d:if>
+                            </d:if>
+                            <d:if test="${rentRequest.isExpired}">
+                                <d:set var="statusMsg" value="Rent request is expired" ></d:set>
+                            </d:if>
+                            <d:if test="${statusMsg!=''}">
+                                <li>
+                                    <div class="alert alert-danger">
+                                        <strong>${statusMsg}</strong>
+                                    </div>
+                                </li>
+                            </d:if>
+
+                        </ul>
+                        <ul class="confirmation_link_ul">
+                            <d:if test="${rentRequest.requestedBy.id == appCredential.id && !rentRequest.isPaymentComplete}">
+                                <d:if test="${rentRequest.isExpired==false && rentRequest.requestCancel==false}">
+                                    <li>
+                                        <BUTTON id="proceedToPaymentBtn" class="approve_btn approval_btn" onclick="proceedToPayment(${rentRequest.id})" >Proceed to payment
+                                            <span id="proceedToPaymentProgressIm" class="inner-load approveGif" hidden></span>
+                                        </BUTTON>
+                                    </li>
+                                </d:if>
+                            </d:if>
+                        </ul>
 
                         <ul id="productReceiveConfirmationUl" style="display: none;" class="confirmation_link_ul">
+
                             <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
                                 <li>
                                     <p>Have you receive the product ?</p>
@@ -548,6 +591,29 @@
                     }
                 });
             }
+            function proceedToPayment(rentRequestId){
+                var remarks = "";
+                $('#proceedToPaymentBtn').attr("disabled","disabled");
+                $('#proceedToPaymentProgressIm').show();
+                $.ajax({
+                    type: "GET",
+                    url: BASEURL+'/api/auth/rent-payment/create-payment/'+rentRequestId,
+                    success: function (data) {
+                        if(data.responseStat.status == true){
+
+                            window.location = data.responseData.url;
+                        }
+                        $('#proceedToPaymentBtn').removeAttrs("disabled");
+                        $('#proceedToPaymentProgressIm').hide();
+                    },
+                    error: function () {
+                        alert('Error occured');
+                        $('#proceedToPaymentBtn').removeAttrs("disabled");
+                        $('.productReturnGif').hide();
+                    }
+                });
+            }
+
         </script>
     </body>
 </html>

@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 21, 2016 at 05:31 PM
--- Server version: 5.6.31-0ubuntu0.14.04.2
+-- Generation Time: Sep 23, 2016 at 06:26 PM
+-- Server version: 5.6.33-0ubuntu0.14.04.1
 -- PHP Version: 5.6.23-1+deprecated+dontuse+deb.sury.org~trusty+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `rent_payment` (
   `total_amount` double(9,5) NOT NULL,
   `transaction_fee` double(6,2) NOT NULL,
   `currency` varchar(5) DEFAULT NULL,
+  `authorization_id` varchar(200) DEFAULT NULL,
   `paypal_payer_id` varchar(200) DEFAULT NULL,
   `paypal_pay_id` varchar(200) DEFAULT NULL,
   `paypal_sale_id` varchar(200) DEFAULT NULL,
@@ -45,12 +46,7 @@ CREATE TABLE IF NOT EXISTS `rent_payment` (
   KEY `app_credential_id` (`app_credential_id`),
   KEY `rent_inf_id` (`rent_inf_id`),
   KEY `rent_request_id` (`rent_request_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
-
---
--- Dumping data for table `rent_payment`
---
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
 -- Constraints for dumped tables

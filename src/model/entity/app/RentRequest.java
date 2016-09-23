@@ -23,6 +23,8 @@ public class RentRequest {
     private RentalProduct rentalProduct;
     private AppCredential requestedBy;
     private List<RentRequest> requestExtension;
+    private Double rentFee;
+    private Double advanceAmount;
     private boolean requestCancel;
     private Date startDate;
     private Date endDate;
@@ -80,6 +82,27 @@ public class RentRequest {
 
     public void setRequestExtension(List<RentRequest> requestExtension) {
         this.requestExtension = requestExtension;
+    }
+
+    @JsonIgnore
+    @Basic
+    @Column(name = "rent_fee")
+    public Double getRentFee() {
+        return rentFee;
+    }
+
+    public void setRentFee(Double rentFee) {
+        this.rentFee = rentFee;
+    }
+    @JsonIgnore
+    @Basic
+    @Column(name = "advance_amount")
+    public Double getAdvanceAmount() {
+        return advanceAmount;
+    }
+
+    public void setAdvanceAmount(Double advanceAmount) {
+        this.advanceAmount = advanceAmount;
     }
 
     @Basic

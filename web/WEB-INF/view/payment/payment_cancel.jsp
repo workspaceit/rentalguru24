@@ -18,7 +18,7 @@
 <jsp:directive.include file="../layouts/main-nav.jsp" />
 <!--body content-->
 <p>
-  ${statusMsg}
+  ${payPalStatusMsg}
 </p>
 <!--footer top---->
 <jsp:directive.include file="../layouts/top-footer.jsp" />

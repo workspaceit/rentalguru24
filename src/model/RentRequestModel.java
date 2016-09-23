@@ -23,6 +23,21 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
+    public RentRequest getValidRentRequestById(int id){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        try{
+            return(RentRequest)session.createQuery("from RentRequest where id=:id " +
+                                                    " and requestCancel = false " +
+                                                   " and isExpired = false ")
+                                                    .setParameter("id",id)
+                                                .setMaxResults(1).uniqueResult();
+        }finally {
+            session.close();
+        }
+    }
+
+
     public void insert(RentRequest rentRequest){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
@@ -217,6 +232,7 @@ public class RentRequestModel extends BaseModel {
                                         " and rentRequest.approve = false " +
                                         " and rentRequest.requestCancel = false " +
                                         " and rentRequest.isExpired = false " +
+                                        " and rentRequest.isPaymentComplete = true " +
                                         " ORDER BY rentRequest.id desc ")
                     .setParameter("ownerId",ownerId)
                     .setFirstResult(offset * limit)
@@ -237,8 +253,9 @@ public class RentRequestModel extends BaseModel {
                     " and rentRequest.disapprove = false" +
                     " and rentRequest.requestCancel = false" +
                     " and rentRequest.isExpired = false " +
+                    " and rentRequest.isPaymentComplete = true " +
                     " and rentRequest.approve = false ORDER BY rentRequest.id desc ")
-                    .setParameter("ownerId",ownerId)
+                    .setParameter("ownerId", ownerId)
                     .list();
         }
         finally {
@@ -329,7 +346,7 @@ public class RentRequestModel extends BaseModel {
                     " and rentRequest.requestCancel = false" +
 //                    " and rentRequest.isExpired = false" +
                     " and rentRequest.approve = false ORDER BY rentRequest.id desc ")
-                    .setParameter("requestedById",requestedById)
+                    .setParameter("requestedById", requestedById)
                     .list();
         }finally {
             session.close();
@@ -419,7 +436,7 @@ public class RentRequestModel extends BaseModel {
         }
     }
     public void expireByDateBetween(int rentId,int productId,Timestamp startDate,Timestamp endsDate){
-        List<RentRequest>  rentRequests = this.getAllByDateBetweenAndProductId(productId,startDate,endsDate);
+        List<RentRequest>  rentRequests = this.getAllByDateBetweenAndProductId(productId, startDate, endsDate);
 
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
@@ -430,6 +447,31 @@ public class RentRequestModel extends BaseModel {
             rentRequest.setIsExpired(true);
             session.update(rentRequest);
         }
+        session.getTransaction().commit();
+        session.close();
+
+    }
+    public void expireByDateBetween(int rentId,List<RentRequest>  rentRequests){
+
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        for(RentRequest rentRequest : rentRequests){
+            /****** Update All in the list except the Approved one *********/
+            if(rentRequest.getId() == rentId) continue;
+
+            rentRequest.setIsExpired(true);
+            session.update(rentRequest);
+        }
+        session.getTransaction().commit();
+        session.close();
+
+    }
+    public void expireByDateBetween(RentRequest  rentRequest){
+
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        rentRequest.setIsExpired(true);
+        session.update(rentRequest);
         session.getTransaction().commit();
         session.close();
 

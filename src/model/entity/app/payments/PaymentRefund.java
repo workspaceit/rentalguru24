@@ -1,5 +1,7 @@
 package model.entity.app.payments;
 
+import model.entity.app.AppCredential;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -10,6 +12,7 @@ import java.sql.Timestamp;
 @Table(name = "payment_refund")
 public class PaymentRefund {
     private long id;
+    private AppCredential appCredential;
     private double totalAmount;
     private String paypalPayerId;
     private String paypalPayId;
@@ -88,41 +91,6 @@ public class PaymentRefund {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PaymentRefund that = (PaymentRefund) o;
-
-        if (id != that.id) return false;
-        if (Double.compare(that.totalAmount, totalAmount) != 0) return false;
-        if (paypalPayerId != null ? !paypalPayerId.equals(that.paypalPayerId) : that.paypalPayerId != null)
-            return false;
-        if (paypalPayId != null ? !paypalPayId.equals(that.paypalPayId) : that.paypalPayId != null) return false;
-        if (paypalTransection != null ? !paypalTransection.equals(that.paypalTransection) : that.paypalTransection != null)
-            return false;
-        if (paypalPaymentDate != null ? !paypalPaymentDate.equals(that.paypalPaymentDate) : that.paypalPaymentDate != null)
-            return false;
-        if (createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = (int) (id ^ (id >>> 32));
-        temp = Double.doubleToLongBits(totalAmount);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (paypalPayerId != null ? paypalPayerId.hashCode() : 0);
-        result = 31 * result + (paypalPayId != null ? paypalPayId.hashCode() : 0);
-        result = 31 * result + (paypalTransection != null ? paypalTransection.hashCode() : 0);
-        result = 31 * result + (paypalPaymentDate != null ? paypalPaymentDate.hashCode() : 0);
-        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
-        return result;
-    }
 
     @ManyToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = false)
@@ -132,5 +100,14 @@ public class PaymentRefund {
 
     public void setPaymentByRentPaymentId(RentPayment paymentByRentPaymentId) {
         this.paymentByRentPaymentId = paymentByRentPaymentId;
+    }
+    @ManyToOne
+    @JoinColumn(name = "app_credential_id", referencedColumnName = "id", nullable = false)
+    public AppCredential getAppCredential() {
+        return appCredential;
+    }
+
+    public void setAppCredential(AppCredential appCredential) {
+        this.appCredential = appCredential;
     }
 }

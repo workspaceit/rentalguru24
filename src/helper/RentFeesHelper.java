@@ -38,6 +38,12 @@ public class RentFeesHelper {
         int day = daysBetween(startDate,endsDate);
         System.out.println("Days= "+day);
         double fee = day*getPerDayRentFee(rentTypeId,rentFee);
+        /* For 2 decimal */
+//        try{
+//            fee = Double.parseDouble(String.format("%.2f", fee));
+//        }catch (NumberFormatException ex){
+//
+//        }
 
         return fee;
     }

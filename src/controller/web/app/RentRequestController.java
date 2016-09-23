@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/rent")
-public class RequestApprovalController {
+public class RentRequestController {
     @Autowired
     RentRequestModel rentRequestModel;
     @RequestMapping(value = "/request/{rent_request_id}",method = RequestMethod.GET)

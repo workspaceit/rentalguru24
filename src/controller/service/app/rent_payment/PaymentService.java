@@ -29,7 +29,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/api/rent-payment")
+@RequestMapping("/api/auth/rent-payment")
 public class PaymentService {
     @Autowired
     RentRequestModel rentRequestModel;
@@ -52,13 +52,13 @@ public class PaymentService {
             return serviceResponse;
         }
 
-        RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
+        RentRequest rentRequest = rentRequestModel.getValidRentRequestById(rentRequestId);
 
         if(rentRequest==null){
-            serviceResponse.getResponseStat().setErrorMsg("No rent request found");
+            serviceResponse.getResponseStat().setErrorMsg("No valid rent request found");
             return serviceResponse;
         }
-
+        System.out.println(rentRequest.toString());
         PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
         Payment createdPayment = payPalPayment.createPayment(rentRequest,
                                                             baseURL + "/paypal/rent-payment/payment-success/"+rentRequest.getId(),

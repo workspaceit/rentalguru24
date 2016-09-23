@@ -63,19 +63,19 @@ public class PayPalPaymentController {
 
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
 
-
-
+        modelAndView.addObject("rentRequest",rentRequest);
         if(rentRequest==null){
-            modelAndView.addObject("statusMsg","Invalid rent request");
+            modelAndView.addObject("payPalStatusMsg","Invalid rent request");
             return modelAndView;
         }
+
         if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
-            modelAndView.addObject("statusMsg","This rent request is not belongs to you");
+            modelAndView.addObject("payPalStatusMsg","This rent request is not belongs to you");
             return modelAndView;
         }
         /* **** *** ** * Check the payment is already Execute * ** *** *** */
         if(rentPaymentModel.isPaymentAlreadyExist(paymentId, payerId)){
-            modelAndView.addObject("statusMsg","Payment already recorded");
+            modelAndView.addObject("payPalStatusMsg","Payment already recorded");
             return modelAndView;
         }
 
@@ -86,7 +86,7 @@ public class PayPalPaymentController {
         Payment executedPayment  = payPalPayment.executePayments(paymentId, payerId);
 
         if(executedPayment==null){
-            modelAndView.addObject("statusMsg","Invalid payment id");
+            modelAndView.addObject("payPalStatusMsg","Invalid payment id");
             return modelAndView;
         }
 
@@ -167,8 +167,8 @@ public class PayPalPaymentController {
         rentRequest.setIsPaymentComplete(true);
         rentRequestModel.update(rentRequest);
 
-
-        modelAndView.addObject("statusMsg", "Payment successfully received");
+        modelAndView.addObject("rentRequest", rentRequest);
+        modelAndView.addObject("payPalStatusMsg", "Payment successfully received");
         return modelAndView;
     }
     @RequestMapping(value = "/payment-cancel/{rentRequestId}", method = RequestMethod.GET)
@@ -182,21 +182,22 @@ public class PayPalPaymentController {
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         modelAndView.addObject("IsLogIn", IsLogin);
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
+        modelAndView.addObject("rentRequest",rentRequest);
         if(rentRequest==null){
-            modelAndView.addObject("statusMsg","Payment already canceled");
+            modelAndView.addObject("payPalStatusMsg","Payment already canceled");
             return modelAndView;
         }
         if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
-            modelAndView.addObject("statusMsg","This rent request is not belongs to you");
+            modelAndView.addObject("payPalStatusMsg","This rent request is not belongs to you");
             return modelAndView;
         }
         if(rentRequest.getIsPaymentComplete()){
-            modelAndView.addObject("statusMsg", "Payment was done before, can't cancel now ");
+            modelAndView.addObject("payPalStatusMsg", "Payment was done before, can't cancel now ");
             return modelAndView;
         }
         rentRequestModel.delete(rentRequest);
 
-        modelAndView.addObject("statusMsg", "Payment canceled");
+        modelAndView.addObject("payPalStatusMsg", "Payment canceled");
         return modelAndView;
     }
 }
