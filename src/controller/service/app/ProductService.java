@@ -416,14 +416,6 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-
-
-        if(!appLoginCredentialModel.isVerified(appCredential.getId())){
-            serviceResponse.getResponseStat().setErrorMsg("You account is not verified");
-            SessionManagement.destroySession(request);
-            return serviceResponse;
-        }
-
         if(appLoginCredentialModel.isBlocked(appCredential.getId())){
             serviceResponse.getResponseStat().setErrorMsg("You account is blocked");
             SessionManagement.destroySession(request);
@@ -438,8 +430,8 @@ public class ProductService{
         productEditFrom.setCity(allRequestParameter.get("city"));
         productEditFrom.setState(allRequestParameter.get("state"));
         productEditFrom.setZip(allRequestParameter.get("zip"));
-        productEditFrom.setCurrentValue(Double.parseDouble(allRequestParameter.get("productCurrentPrice")));
-        productEditFrom.setRentFee(Double.parseDouble(allRequestParameter.get("rentPrice")));
+        productEditFrom.setCurrentValue(Double.parseDouble(allRequestParameter.get("productCurrentPrice").trim()));
+        productEditFrom.setRentFee(Double.parseDouble(allRequestParameter.get("rentPrice").trim()));
         productEditFrom.setCategoryIdArray(allRequestParameter.get("categoryId"));
 
         new ProductEditFromValidator(categoryModel,tempFileModel,rentTypeModel).validate(productEditFrom, result);
@@ -505,17 +497,6 @@ public class ProductService{
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
 
-        if(!appLoginCredentialModel.isVerified(appCredential.getId())){
-            serviceResponse.getResponseStat().setErrorMsg("You account is not verified");
-            SessionManagement.destroySession(request);
-            return serviceResponse;
-        }
-
-        if(appLoginCredentialModel.isBlocked(appCredential.getId())){
-            serviceResponse.getResponseStat().setErrorMsg("You account is blocked");
-            SessionManagement.destroySession(request);
-            return serviceResponse;
-        }
 
         RentalProduct rentalProduct = productModel.getById(productId);
 
