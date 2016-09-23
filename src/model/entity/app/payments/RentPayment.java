@@ -25,8 +25,10 @@ public class RentPayment {
     private String paypalPayerId;
     private String paypalPayId;
     private String paypalSaleId;
+    private String authorizationId;
     private Timestamp paypalPaymentDate;
     private Timestamp createdDate;
+
 
     @Id
     @Column(name = "id")
@@ -126,6 +128,16 @@ public class RentPayment {
 
     public void setPaypalPaymentDate(Timestamp paypalPaymentDate) {
         this.paypalPaymentDate = paypalPaymentDate;
+    }
+
+    @Basic
+    @Column(name = "authorization_id")
+    public String getAuthorizationId() {
+        return authorizationId;
+    }
+
+    public void setAuthorizationId(String authorizationId) {
+        this.authorizationId = authorizationId;
     }
 
     @Basic
