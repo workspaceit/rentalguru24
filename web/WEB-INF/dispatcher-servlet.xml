@@ -333,8 +333,10 @@
         </bean>
         <bean id="paymentRefundModel" class="model.PaymentRefundModel" >
         </bean>
-        <bean id="userPaypalCredentialEntityModel" class="model.UserPaypalCredentialEntityModel" >
+        <bean id="userPaypalCredentialEntityModel" class="model.UserPaypalCredentialModel" >
         </bean>
+
+
 
 
        <!-- ******************** Hibernate Session,Entity, *********************************** -->

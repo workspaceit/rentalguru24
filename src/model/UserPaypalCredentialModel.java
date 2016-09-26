@@ -6,7 +6,7 @@ import org.hibernate.Session;
 /**
  * Created by mi on 9/23/16.
  */
-public class UserPaypalCredentialEntityModel extends BaseModel {
+public class UserPaypalCredentialModel extends BaseModel {
     public void insert(UserPaypalCredential userPaypalCredential){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();

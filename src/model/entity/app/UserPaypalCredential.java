@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * Created by mi on 9/23/16.
  */
 @Entity
-@Table(name = "user_paypal_credential")
+@Table(name = "user_paypal_credential", schema = "", catalog = "rentguru24")
 public class UserPaypalCredential {
     private int id;
     private AppCredential appCredential;
