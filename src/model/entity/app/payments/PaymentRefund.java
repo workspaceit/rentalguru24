@@ -9,17 +9,17 @@ import java.sql.Timestamp;
  * Created by mi on 9/20/16.
  */
 @Entity
-@Table(name = "payment_refund")
+@Table(name = "payment_refund", schema = "", catalog = "rentguru24")
 public class PaymentRefund {
     private long id;
     private AppCredential appCredential;
     private double totalAmount;
-    private String paypalPayerId;
-    private String paypalPayId;
-    private String paypalTransection;
     private Timestamp paypalPaymentDate;
     private Timestamp createdDate;
-    private RentPayment paymentByRentPaymentId;
+    private RentPayment rentPayment;
+    private String parentPayId;
+    private String paypalSaleId;
+    private String paypalRefundId;
 
     @Id
     @Column(name = "id")
@@ -42,36 +42,6 @@ public class PaymentRefund {
     }
 
     @Basic
-    @Column(name = "paypal_payer_id")
-    public String getPaypalPayerId() {
-        return paypalPayerId;
-    }
-
-    public void setPaypalPayerId(String paypalPayerId) {
-        this.paypalPayerId = paypalPayerId;
-    }
-
-    @Basic
-    @Column(name = "paypal_pay_id")
-    public String getPaypalPayId() {
-        return paypalPayId;
-    }
-
-    public void setPaypalPayId(String paypalPayId) {
-        this.paypalPayId = paypalPayId;
-    }
-
-    @Basic
-    @Column(name = "paypal_transection")
-    public String getPaypalTransection() {
-        return paypalTransection;
-    }
-
-    public void setPaypalTransection(String paypalTransection) {
-        this.paypalTransection = paypalTransection;
-    }
-
-    @Basic
     @Column(name = "paypal_payment_date")
     public Timestamp getPaypalPaymentDate() {
         return paypalPaymentDate;
@@ -91,16 +61,16 @@ public class PaymentRefund {
         this.createdDate = createdDate;
     }
 
-
     @ManyToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id", nullable = false)
-    public RentPayment getPaymentByRentPaymentId() {
-        return paymentByRentPaymentId;
+    public RentPayment getRentPayment() {
+        return rentPayment;
     }
 
-    public void setPaymentByRentPaymentId(RentPayment paymentByRentPaymentId) {
-        this.paymentByRentPaymentId = paymentByRentPaymentId;
+    public void setRentPayment(RentPayment paymentByRentPaymentId) {
+        this.rentPayment = paymentByRentPaymentId;
     }
+
     @ManyToOne
     @JoinColumn(name = "app_credential_id", referencedColumnName = "id", nullable = false)
     public AppCredential getAppCredential() {
@@ -110,4 +80,36 @@ public class PaymentRefund {
     public void setAppCredential(AppCredential appCredential) {
         this.appCredential = appCredential;
     }
+
+    @Basic
+    @Column(name = "parent_pay_id")
+    public String getParentPayId() {
+        return parentPayId;
+    }
+
+    public void setParentPayId(String parentPayId) {
+        this.parentPayId = parentPayId;
+    }
+
+    @Basic
+    @Column(name = "paypal_sale_id")
+    public String getPaypalSaleId() {
+        return paypalSaleId;
+    }
+
+    public void setPaypalSaleId(String paypalSaleId) {
+        this.paypalSaleId = paypalSaleId;
+    }
+
+    @Basic
+    @Column(name = "paypal_refund_id")
+    public String getPaypalRefundId() {
+        return paypalRefundId;
+    }
+
+    public void setPaypalRefundId(String paypalRefundId) {
+        this.paypalRefundId = paypalRefundId;
+    }
+
+
 }

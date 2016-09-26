@@ -44,6 +44,7 @@ public class PayPalPaymentController {
                                 @PathVariable int rentRequestId,
                                 @RequestParam Map<String,String> allParam){
         ModelAndView modelAndView = new ModelAndView("payment/payment_success");
+
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
@@ -54,6 +55,8 @@ public class PayPalPaymentController {
         String token = allParam.get("token");
         String payerId = allParam.get("PayerID");
         if (paymentId==null) {
+            modelAndView.addObject("payPalStatusMsg","No pay id found");
+            return modelAndView;
         }
         if (token==null) {
         }
@@ -89,6 +92,10 @@ public class PayPalPaymentController {
             modelAndView.addObject("payPalStatusMsg","Invalid payment id");
             return modelAndView;
         }
+        if(!executedPayment.getState().equals("approved")){
+            modelAndView.addObject("payPalStatusMsg", "Your Payment is not 'approved' yet, current state is '" + executedPayment.getState() + "'");
+            return modelAndView;
+        }
 
         Transaction payPalTransaction = null;
         Authorization authorization = null;
@@ -103,6 +110,8 @@ public class PayPalPaymentController {
             payPalTransaction = executedPayment.getTransactions().get(0);
             // Have to handle the scenario
         }
+
+
         if(payPalTransaction!=null){
             if( payPalTransaction.getRelatedResources()!=null && payPalTransaction.getRelatedResources().size() > 0){
                 payPalSale = payPalTransaction.getRelatedResources().get(0).getSale();
@@ -160,6 +169,7 @@ public class PayPalPaymentController {
         rentPayment.setTotalAmount(totalAmount);
         rentPayment.setCurrency(currency);
         rentPayment.setAuthorizationId(authorizationId);
+        rentPayment.setRentFee(rentRequest.getRentFee());
        // rentPayment.setPaypalPaymentDate(DateHelper.getCurrentUtcDateTimeStamp());
         rentPaymentModel.insert(rentPayment);
 

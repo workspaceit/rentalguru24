@@ -121,7 +121,7 @@
                         <h5>Remarks: </h5>
                         <p class="justify no-margin p_des">${rentRequest.getRemark()} </p>
                         <ul class="confirmation_link_ul">
-                            <d:if test="${rentRequest.rentalProduct.id == appCredential.id}">
+                            <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
                                 <d:if test="${rentRequest.getApprove() == false && rentRequest.getDisapprove() == false}">
                                     <d:if test="${rentRequest.isExpired==false && rentRequest.requestCancel==false}">
 
@@ -184,13 +184,25 @@
                                     </li>
                                 </d:if>
                             </d:if>
+                            <d:if test="${rentRequest.requestedBy.id == appCredential.id && rentRequest.isPaymentComplete}">
+                                <d:if test="${rentRequest.approve==false && rentRequest.disapprove==false}">
+                                    <li>
+                                        <div>
+                                            <div  class="alert alert-danger">
+                                                <strong id="productReceiveConfirmStrong" >Confirmation pending</strong>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </d:if>
+
+                            </d:if>
                         </ul>
 
                         <ul id="productReceiveConfirmationUl" style="display: none;" class="confirmation_link_ul">
 
                             <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
                                 <li>
-                                    <p>Have you receive the product ?</p>
+                                    <p>Have you received the product ?</p>
                                     <BUTTON id="productReceiveConfirmBtn" class="cancel_btn approval_btn"  >Confirm
                                         <span id="productReceiveConfirmBtnProgressIm" class="inner-load approveGif" hidden></span>
                                     </BUTTON>
@@ -484,17 +496,19 @@
 
                                 }
                             }
-                            if(rentInf.rentalProductReturned == undefined && rentInf.rentalProductReturnRequest == undefined){
+
+                            if(rentInf.rentalProductReturnRequest != undefined){
+                                var createdDate =  dateFormat(new Date(rentInf.rentalProductReturnRequest.createdDate), "dddd, mmm dS, yyyy, h:MM:ss TT");
+                                $("#productReturnRequestParentDiv").fadeIn();
+                                $("#productReturnRequestString").append(" On "+createdDate).fadeIn();
+                            }
+                            if(rentInf.rentalProductReturned == undefined ){
                                 $("#productReturnRequestBtn").fadeIn().addClass('bound').bind("click",function(){
                                     requestToReturnProduct(rentInf.id);
                                 });
                                 $("#productReturnBtn").fadeIn().addClass('bound').bind("click",function(){
                                     returnProduct(rentInf.id);
                                 });
-                            }else if(rentInf.rentalProductReturnRequest != undefined){
-                                var createdDate =  dateFormat(new Date(rentInf.rentalProductReturnRequest.createdDate), "dddd, mmm dS, yyyy, h:MM:ss TT");
-                                $("#productReturnRequestParentDiv").fadeIn();
-                                $("#productReturnRequestString").append(" On "+createdDate).fadeIn();
                             }
                         }else{
 

@@ -14,6 +14,13 @@ public class RentPaymentModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+    public void update(RentPayment rentPayment){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(rentPayment);
+        session.getTransaction().commit();
+        session.close();
+    }
     public boolean isPaymentAlreadyExist(String paymentId,String payerId){
 
         RentPayment rentPayment = this.getByPayIdAndPayerId(paymentId, payerId);
@@ -41,6 +48,17 @@ public class RentPaymentModel extends BaseModel {
         try{
             return  (RentPayment)session.createQuery("from RentPayment where rentRequest.id =:rentRequestId ")
                     .setParameter("rentRequestId", rentRequestId)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            session.close();
+        }
+    }
+    public RentPayment getByRentRentInfId(int rentInfId){
+        Session session = this.sessionFactory.openSession();
+        try{
+            return  (RentPayment)session.createQuery("from RentPayment where rentInf.id =:rentInfId ")
+                    .setParameter("rentInfId", rentInfId)
                     .setMaxResults(1)
                     .uniqueResult();
         }finally {

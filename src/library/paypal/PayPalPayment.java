@@ -143,7 +143,7 @@ public class PayPalPayment {
         }
         return null;
     }
-    public Sale refund(String saleId, Double totalAmount) throws PayPalRESTException {
+    public Refund refund(String saleId, Double totalAmount) throws PayPalRESTException {
         String total = String.format("%.2f",totalAmount);
         // ###Sale
         // A sale transaction.
@@ -162,12 +162,12 @@ public class PayPalPayment {
         amount.setTotal(total);
 
         refund.setAmount(amount);
-        sale.refund(this.apiContext, refund);
-        System.out.println("Sale Refunded " + Sale.getLastRequest() + Sale.getLastResponse());
+        System.out.println(refund.toJSON());
+        System.out.println(sale.toJSON()    );
 
-        return sale;
+        return  sale.refund(this.apiContext, refund);
     }
-    public void payOut(){
+    public PayoutBatch payOut(String receiverEmail,String payOutamount,String note,String emailSubject) throws PayPalRESTException {
         Payout payout = new Payout();
 
         PayoutSenderBatchHeader senderBatchHeader = new PayoutSenderBatchHeader();
@@ -175,20 +175,19 @@ public class PayPalPayment {
 
         Random random = new Random();
         senderBatchHeader.setSenderBatchId(
-                new Double(random.nextDouble()).toString()).setEmailSubject(
-                "You have a Payout!");
+                new Double(random.nextDouble()).toString()).setEmailSubject(emailSubject);
 
         // ### Currency
         Currency amount = new Currency();
-        amount.setValue("1.00").setCurrency("USD");
+        amount.setValue(payOutamount).setCurrency("USD");
 
         // #### Sender Item
         // Please note that if you are using single payout with sync mode, you
         // can only pass one Item in the request
         PayoutItem senderItem = new PayoutItem();
         senderItem.setRecipientType("Email")
-                .setNote("Thanks for your patronage")
-                .setReceiver("tahsin_1356501324_per@gmail.com1").setAmount(amount);
+                .setNote(note)
+                .setReceiver(receiverEmail).setAmount(amount);
 
         List<PayoutItem> items = new ArrayList<PayoutItem>();
         items.add(senderItem);
@@ -196,23 +195,9 @@ public class PayPalPayment {
         payout.setSenderBatchHeader(senderBatchHeader).setItems(items);
 
         PayoutBatch batch = null;
-        try {
 
-            // ### Api Context
-            // Pass in a `ApiContext` object to authenticate
-            // the call and to send a unique request id
-            // (that ensures idempotency). The SDK generates
-            // a request id if you do not pass one explicitly.
-            // ###Create Payout Synchronous
-            batch = payout.createSynchronous(this.apiContext);
-
-            System.out.println("Payout Batch With ID: "
-                    + batch.getBatchHeader().getPayoutBatchId());
-            System.out.println("Created Single Synchronous Payout"+
-                    Payout.getLastRequest()+ Payout.getLastResponse());
-        } catch (PayPalRESTException e) {
-            System.out.println(e.getMessage());
-        }
+        batch = payout.createSynchronous(this.apiContext);
+        return batch;
     }
     public Capture capturePayment(Amount amount ,Authorization authorization ){
         Capture capture = null;

@@ -58,7 +58,6 @@ public class PaymentService {
             serviceResponse.getResponseStat().setErrorMsg("No valid rent request found");
             return serviceResponse;
         }
-        System.out.println(rentRequest.toString());
         PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
         Payment createdPayment = payPalPayment.createPayment(rentRequest,
                                                             baseURL + "/paypal/rent-payment/payment-success/"+rentRequest.getId(),
@@ -85,7 +84,7 @@ public class PaymentService {
 
         return serviceResponse;
     }
-    @RequestMapping(value = "/verify-payment/{rentRequestId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/verify-payment/{rentRequestId}", method = RequestMethod.POST)
     public ServiceResponse verifyPayment(HttpServletRequest request,
                                          @PathVariable int rentRequestId,
                                          @RequestParam String paymentId){
@@ -99,41 +98,41 @@ public class PaymentService {
 
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
 
-//        if(rentRequest.getRequestedBy().getId() == appCredential.getId()){
-//            serviceResponse.getResponseStat().setErrorMsg("This request is not belongs to you. Suck a lemon !! ");
-//            return serviceResponse;
-//        }
+        if(rentRequest==null){
+            serviceResponse.setRequestError("rentRequest", "No rent request found");
+            return serviceResponse;
+        }
+        if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("rentRequestId", "This request is not belongs to you. Suck a lemon !! ");
+            return serviceResponse;
+        }
 
         if(adminPaypalCredential==null){
             serviceResponse.getResponseStat().setErrorMsg("No payPal App credential found");
             return serviceResponse;
         }
 
-        if(rentRequest==null){
-            serviceResponse.getResponseStat().setErrorMsg("No rent request information found");
-            return serviceResponse;
-        }
-
         Payment payment = payPalPayment.getDetails(paymentId);
 
         if(payment==null){
-            serviceResponse.getResponseStat().setErrorMsg("No payment information found");
+            serviceResponse.setRequestError("paymentId", "No payment information found");
             return serviceResponse;
         }
-
+        if(!payment.getState().equals("approved")){
+            serviceResponse.setRequestError("paymentId", "Your Payment is not 'approved' yet , current state is '" + payment.getState() + "'");
+            return serviceResponse;
+        }
+        System.out.println(payment.toJSON());
 
         /* **** *** ** * Check the payment is already exist in database * ** *** *** */
 
         if(rentPaymentModel.isPaymentAlreadyExist(paymentId, payment.getPayer().getPayerInfo().getPayerId())){
-            serviceResponse.getResponseStat().setErrorMsg("Payment has been already recorded by payment id : "+paymentId);
-            return serviceResponse;
-        }
-        if(payment.getState().equals("approved")){
-            serviceResponse.getResponseStat().setErrorMsg("You payment state is '"+payment.getState()+" but not 'approve' yet");
+            serviceResponse.setRequestError("paymentId", "Payment has been already recorded by payment id : "+paymentId);
             return serviceResponse;
         }
 
-        /* *** ** * Execute Paypal Payment * ** *** */
+
+
 
         Transaction payPalTransactions = null;
         Sale payPalSale = null;
@@ -200,4 +199,158 @@ public class PaymentService {
         serviceResponse.setResponseData(rentPayment);
         return serviceResponse;
     }
+//    private void test(){
+//        {
+//
+//            ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+//            AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+//            String baseURL  = (String) request.getAttribute("baseURL");
+//            Map<String,String> extraObj = new HashMap<>();
+//
+//            if(!appLoginCredentialModel.isVerified(appCredential.getId())){
+//                serviceResponse.getResponseStat().setErrorMsg("You account is not verified");
+//                SessionManagement.destroySession(request);
+//                return serviceResponse;
+//            }
+//            RentalProduct rentalProduct = productModel.getEntityById(productId);
+//
+//
+//            if(rentalProduct == null){
+//                serviceResponse.setRequestError("productId","Product does not exist by this id");
+//                return serviceResponse;
+//            }
+//
+//            if(rentalProduct.getOwner().getId() == appCredential.getId()){
+//                serviceResponse.setRequestError("productId","You can not rent your own product");
+//                return serviceResponse;
+//            }
+//
+//
+//            if(startDate==null || startDate.isEmpty()){
+//                serviceResponse.setRequestError("startDate","Start date is required");
+//            }
+//            if(endsDate==null || endsDate.isEmpty()){
+//                serviceResponse.setRequestError("endsDate","End date is required");
+//            }
+//
+//            if(serviceResponse.hasErrors()){
+//                return serviceResponse;
+//            }
+//
+//
+//            if(!DateHelper.isDateValid(startDate, "dd-MM-yyyy")){
+//                serviceResponse.setRequestError("startDate","Start date format miss matched");
+//            }
+//            if(!DateHelper.isDateValid(endsDate, "dd-MM-yyyy")){
+//                serviceResponse.setRequestError("endsDate","Ends date format miss matched");
+//            }
+//
+//            if(serviceResponse.hasErrors()){
+//                return serviceResponse;
+//            }
+//
+//
+//            Timestamp startTimeStamp = DateHelper.getStringToTimeStamp(startDate, "dd-MM-yyyy");
+//            Timestamp endTimeStamp = DateHelper.getStringToTimeStamp(endsDate, "dd-MM-yyyy");
+//
+//
+//            if(rentInfModel.isProductInRent(productId, startTimeStamp, endTimeStamp)){
+//                serviceResponse.setRequestError("productId","Product is already in rent on given date");
+//                return serviceResponse;
+//            }
+//
+//
+//
+//            if(startTimeStamp.before(rentalProduct.getAvailableFrom()) || startTimeStamp.after(rentalProduct.getAvailableTill())){
+//                serviceResponse.setRequestError("startDate","Product is not available for rent on given date");
+//            }
+//
+//            if(endTimeStamp.before(rentalProduct.getAvailableFrom()) || endTimeStamp.after(rentalProduct.getAvailableTill())){
+//                serviceResponse.setRequestError("endsDate","Product is not available for rent on given date");
+//            }
+//
+//
+//
+//            if(serviceResponse.hasErrors()){
+//                return serviceResponse;
+//            }
+//
+//
+//
+//            if(rentRequestModel.isAlreadyRequested(appCredential.getId(),productId,startTimeStamp,endTimeStamp)){
+//                serviceResponse.getResponseStat().setErrorMsg("You have already requested for this product in between those date");
+//                return serviceResponse;
+//            }
+//
+//
+//            RentRequest rentRequest = new RentRequest();
+//
+//            rentRequest.setIsExpired(false);
+//            rentRequest.setAdvanceAmount(rentalProduct.getCurrentValue());
+//            rentRequest.setIsExtension(false);
+//            rentRequest.setRequestCancel(false);
+//            rentRequest.setDisapprove(false);
+//            rentRequest.setApprove(false);
+//            rentRequest.setRequestedBy(appCredential);
+//            rentRequest.setRentalProduct(rentalProduct);
+//            rentRequest.setStartDate(new Date(startTimeStamp.getTime()));
+//            rentRequest.setEndDate(new Date(endTimeStamp.getTime()));
+//            rentRequest.setRemark(remark);
+//            rentRequest.setIsPaymentComplete(false);
+//            rentRequest.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
+//
+//            Double rentFee = RentFeesHelper.getRentFee(rentalProduct.getRentType().getId(),rentalProduct.getRentFee(),rentRequest.getStartDate(),rentRequest.getEndDate());
+//            rentRequest.setRentFee(rentFee);
+//
+//            rentRequestModel.insert(rentRequest);
+//
+//
+//        /* If */
+//            if(createPayment!=null && createPayment.booleanValue()){
+//                AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+//
+//                if(adminPaypalCredential==null){
+//                    serviceResponse.getResponseStat().setErrorMsg("No payPal App credential found");
+//                    return serviceResponse;
+//                }
+//
+//                if(rentRequest==null){
+//                    serviceResponse.getResponseStat().setErrorMsg("No rent request found");
+//                    return serviceResponse;
+//                }
+//
+//                PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
+//                Payment createdPayment = payPalPayment.createPayment(rentRequest,
+//                        baseURL + "/paypal/rent-payment/payment-success/"+rentRequest.getId(),
+//                        baseURL + "/paypal/rent-payment/payment-cancel/"+rentRequest.getId());
+//
+//                extraObj.put("payId",createdPayment.getId());
+//
+//
+//                Iterator<Links> links = createdPayment.getLinks().iterator();
+//                while (links.hasNext()) {
+//                    Links link = links.next();
+//                    if (link.getRel().equalsIgnoreCase("approval_url")) {
+//                        String approveUrl = link.getHref();
+//                        if(PayPalPayment.mode.equals("sandbox")){
+//                            approveUrl =  link.getHref().replaceAll("https://www.paypal.com/", "https://www.sandbox.paypal.com/");
+//                        }
+//                        extraObj.put("url",approveUrl);
+//                        System.out.println("redirectURL" + link.getHref());
+//                    }
+//                }
+//
+//                System.out.println(createdPayment.toJSON());
+//
+//            }
+//
+//            serviceResponse.getResponseStat().setMsg("Request successfully sent");
+//            serviceResponse.setResponseData(rentRequest, "Internal server error");
+//            serviceResponse.setExtras(extraObj);
+//
+//
+//            return serviceResponse;
+//
+//        }
+//    }
 }

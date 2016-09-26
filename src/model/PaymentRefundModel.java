@@ -15,5 +15,22 @@ public class PaymentRefundModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
-
+    public PaymentRefund getByRentPaymentId(long rentPaymentId){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        try{
+            return (PaymentRefund)session.createQuery("from PaymentRefund where rentPayment.id = :rentPaymentId ")
+                    .setParameter("rentPaymentId", rentPaymentId)
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }finally {
+            session.close();
+        }
+    }
+    public boolean alreadyRefundedByRentPaymentId(long rentPaymentId){
+        PaymentRefund paymentRefund = this.getByRentPaymentId(rentPaymentId);
+        if(paymentRefund!=null)
+            return true;
+        return false;
+    }
 }

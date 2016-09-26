@@ -4,6 +4,7 @@ import com.paypal.api.payments.*;
 import com.paypal.api.payments.Currency;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import library.paypal.PayPalPayment;
 
 import java.util.*;
 
@@ -13,9 +14,9 @@ public class PayPalPaymentTest {
     public static final String mode = "sandbox";
 
     public static void main(String args[]){
-        new PayPalPaymentTest().createPayment();
-        // new PayPalPayment().executePayments("PAY-1C069959SC325024UK7P3ADI", "TKCD9W66CR9R4");
-        // new PayPalPayment().refund("0CR29744U1543724W");
+       // new PayPalPaymentTest().createPayment();
+        // new PayPalPayment(clientID,clientSecret).executePayments("PAY-1C069959SC325024UK7P3ADI", "TKCD9W66CR9R4");
+        new PayPalPaymentTest().refund("5UJ30339X6775371C");
         //    new PayPalPayment().payOut();
 
      //   new PayPalPaymentTest().capturePayment();

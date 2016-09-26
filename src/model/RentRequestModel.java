@@ -105,7 +105,7 @@ public class RentRequestModel extends BaseModel {
                                                             " ( :endsDate  BETWEEN rentRequest.endDate and rentRequest.endDate ) ) " +
                                                             " and rentRequest.requestedBy.id =:requestedBy " +
                                                             " and rentRequest.rentalProduct.id =:productId " +
-                                                            " and rentRequest.requestCancel = false "
+                                                            " and rentRequest.isExpired = false "
                                                         )
                                                         .setParameter("productId", productId)
                                                         .setParameter("requestedBy", requestedBy)
@@ -126,7 +126,8 @@ public class RentRequestModel extends BaseModel {
                     "FROM RentRequest rentRequest " +
                             " where ( ( rentRequest.startDate BETWEEN :startDate and :endsDate ) or " +
                             " ( rentRequest.endDate BETWEEN :startDate and :endsDate ) ) " +
-                            "and rentRequest.rentalProduct.id =:productId "
+                            " and rentRequest.rentalProduct.id =:productId " +
+                            " and rentRequest.isExpired = false "
             )
                                                 .setParameter("productId", productId)
                                                 .setParameter("startDate", startDate)

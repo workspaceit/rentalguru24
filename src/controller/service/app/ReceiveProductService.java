@@ -1,12 +1,20 @@
 package controller.service.app;
 
+import com.paypal.api.payments.PayoutBatch;
+import com.paypal.api.payments.Refund;
+import com.paypal.api.payments.Sale;
+import com.paypal.base.rest.PayPalRESTException;
 import helper.DateHelper;
 import helper.ServiceResponse;
-import model.ProductModel;
-import model.RentInfModel;
-import model.RentalProductReturnedHistoryModel;
-import model.RentalProductReturnedModel;
+import library.paypal.PayPalPayment;
+import model.*;
+import model.admin.AdminPaypalCredentailModel;
+import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
+import model.entity.app.UserPaypalCredential;
+import model.entity.app.payments.PaymentRefund;
+import model.entity.app.payments.Payout;
+import model.entity.app.payments.RentPayment;
 import model.entity.app.product.rentable.RentalProductReturned;
 import model.entity.app.product.rentable.RentalProductReturnedHistory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +36,17 @@ public class ReceiveProductService {
     RentInfModel rentInfModel;
     @Autowired
     ProductModel productModel;
+    @Autowired
+    RentPaymentModel rentPaymentModel;
+    @Autowired
+    AdminPaypalCredentailModel adminPaypalCredentailModel;
+    @Autowired
+    UserPaypalCredentialModel userPaypalCredentialModel;
+    @Autowired
+    PayoutModel payoutModel;
+    @Autowired
+    PaymentRefundModel paymentRefundModel;
+
 
     @RequestMapping(value = "/confirm-receive/{rentalProductReturnId}", method = RequestMethod.POST)
     public ServiceResponse renturnProduct(HttpServletRequest request,
@@ -65,6 +84,91 @@ public class ReceiveProductService {
             return serviceResponse;
         }
 
+
+        RentPayment rentPayment = rentPaymentModel.getByRentRentInfId(rentalProductReturned.getRentInf().getId());
+
+
+
+
+        UserPaypalCredential payoutUserPaypalCredential = userPaypalCredentialModel.getByAppCredentialId(rentalProductReturned.getRentInf().getRentalProduct().getOwner().getId());
+
+
+        /*~~~~~~~~~~ Paypal initiation ~~~~~~~~~~~~~~~~~*/
+
+        AdminPaypalCredential adminPaypalCredentail = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredentail.getApiKey(),adminPaypalCredentail.getApiSecret());
+
+         /*~~~~~~~~ Refund to rentee initiating~~~~~~~~~~~~*/
+
+        Double refundAmount = rentPayment.getTotalAmount() - ( rentPayment.getRentFee() + rentPayment.getSiteFee() );
+        Refund refund = null;
+
+        try {
+            refund = payPalPayment.refund(rentPayment.getPaypalSaleId(),refundAmount);
+        } catch (PayPalRESTException e) {
+            e.printStackTrace();
+        }
+
+        if(refund==null){
+            serviceResponse.getResponseStat().setErrorMsg("Paypal server error try again later");
+            return serviceResponse;
+        }
+        PaymentRefund paymentRefund = new PaymentRefund();
+        paymentRefund.setAppCredential(rentalProductReturned.getRentInf().getRentRequest().getRequestedBy());
+        paymentRefund.setParentPayId(refund.getParentPayment());
+        paymentRefund.setPaypalSaleId(refund.getSaleId());
+        try{
+            paymentRefund.setTotalAmount(Double.parseDouble(refund.getAmount().getTotal()));
+        }catch (NumberFormatException ex){
+            System.out.println(ex.getMessage());
+        }
+        paymentRefund.setRentPayment(rentPayment);
+
+        paymentRefundModel.insert(paymentRefund);
+
+
+       /*~~~~~~~~ Payout initiating~~~~~~~~~~~~*/
+
+        Payout payout = new Payout();
+        Double payOutAmount = rentPayment.getRentFee();
+        String payOutAmountStr = String.format("%.2f",payOutAmount);
+        String payoutState = "pending";
+        if(payoutUserPaypalCredential!=null && !payoutUserPaypalCredential.getEmail().isEmpty()){
+
+            PayoutBatch payoutBatch = null;
+            try {
+                payoutBatch = payPalPayment.payOut(payoutUserPaypalCredential.getEmail(), payOutAmountStr, "You have a payout", "Payout released");
+                System.out.println(payoutBatch.toJSON());
+            } catch (PayPalRESTException e) {
+                e.printStackTrace();
+                serviceResponse.getResponseStat().setErrorMsg("Paypal server error try again later");
+                return serviceResponse;
+            }
+            if(payoutBatch==null){
+
+                serviceResponse.getResponseStat().setErrorMsg("Paypal server error try again later");
+                return serviceResponse;
+            }
+            payoutState = "completed";
+            if(payoutBatch.getItems()!=null && payoutBatch.getItems().size()>0){
+
+                payout.setTransactionId(payoutBatch.getItems().get(0).getTransactionId());
+                payout.setTransactionStatus(payoutBatch.getItems().get(0).getTransactionStatus());
+                payout.setPayoutBatchId(payoutBatch.getItems().get(0).getPayoutBatchId());
+            }
+        }else{
+
+        }
+
+        /*~~~~~~~~~~~~~ Payout entity ~~~~~~~~~~~~~~~~~~*/
+
+        payout.setAppCredential(rentalProductReturned.getRentInf().getRentalProduct().getOwner());
+        payout.setTotalAmount(payOutAmount);
+        payout.setRentInf(rentalProductReturned.getRentInf());
+        payout.setState(payoutState);
+
+        payoutModel.insert(payout);
+        /*~~~~~~~~~~~~~~Payout Entity [Ends]~~~~~~~~~~~~~~~*/
 
         this.processProductReturnConfirmDispute(serviceResponse,rentalProductReturned,remarks,true,false);
 

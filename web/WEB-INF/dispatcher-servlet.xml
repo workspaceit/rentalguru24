@@ -124,6 +124,10 @@
                    <mvc:mapping path="/product/edit/**"/>
                    <bean class="controller.interceptor.WebAuthInterceptor"/>
                </mvc:interceptor>
+               <mvc:interceptor>
+                   <mvc:mapping path="/product/other-image/partial-load/**"/>
+                   <bean class="controller.interceptor.WebAuthInterceptor"/>
+               </mvc:interceptor>
 
               <!-- ******* Auth  File Upload [For Profile Edit ]  ************-->
               <mvc:interceptor>
@@ -335,6 +339,9 @@
         </bean>
         <bean id="userPaypalCredentialEntityModel" class="model.UserPaypalCredentialModel" >
         </bean>
+        <bean id="payoutModel" class="model.PayoutModel" >
+        </bean>
+
 
 
 
@@ -343,38 +350,38 @@
        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
               <property name="annotatedClasses">
                      <list>
-                            <value>model.entity.app.AppCredential</value>
-                            <value>model.entity.app.AuthCredential</value>
-                            <value>model.entity.app.UserAddress</value>
-                            <value>model.entity.app.UserInf</value>
-                            <value>model.entity.app.AttributeValues</value>
-                            <value>model.entity.app.Attributes</value>
-                            <value>model.entity.app.Category</value>
-                            <value>model.entity.app.product.rentable.RentalProductEntity</value>
-                            <value>model.entity.app.product.rentable.ProductAttribute</value>
-                            <value>model.entity.app.product.ProductCategory</value>
-                            <value>model.entity.app.product.rentable.RentInf</value>
-                            <value>model.entity.app.RentRequest</value>
-                            <value>model.entity.app.TempFile</value>
-                            <value>model.entity.app.IdentityType</value>
-                            <value>model.entity.app.product.rentable.ProductAvailability</value>
-                            <value>model.entity.app.product.rentable.ProductLocation</value>
-                            <value>model.entity.app.RentType</value>
-                            <value>model.entity.app.ProductRating</value>
-                            <value>model.entity.app.product.ProductLiked</value>
-                            <value>model.entity.app.product.rentable.RentalProductReturnRequest</value>
-                            <value>model.entity.app.product.rentable.RentalProductReturned</value>
-                            <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
-                            <value>model.entity.admin.AdminPaypalCredential</value>
-                            <value>model.entity.admin.AdminSiteFeesEntity</value>
-                            <value>model.entity.admin.AdminCmsPage</value>
-                            <value>model.entity.app.PasswordResetsEntity</value>
-                            <value>model.entity.app.DeviceInfoEntity</value>
+                        <value>model.entity.app.AppCredential</value>
+                        <value>model.entity.app.AuthCredential</value>
+                        <value>model.entity.app.UserAddress</value>
+                        <value>model.entity.app.UserInf</value>
+                        <value>model.entity.app.AttributeValues</value>
+                        <value>model.entity.app.Attributes</value>
+                        <value>model.entity.app.Category</value>
+                        <value>model.entity.app.product.rentable.RentalProductEntity</value>
+                        <value>model.entity.app.product.rentable.ProductAttribute</value>
+                        <value>model.entity.app.product.ProductCategory</value>
+                        <value>model.entity.app.product.rentable.RentInf</value>
+                        <value>model.entity.app.RentRequest</value>
+                        <value>model.entity.app.TempFile</value>
+                        <value>model.entity.app.IdentityType</value>
+                        <value>model.entity.app.product.rentable.ProductAvailability</value>
+                        <value>model.entity.app.product.rentable.ProductLocation</value>
+                        <value>model.entity.app.RentType</value>
+                        <value>model.entity.app.ProductRating</value>
+                        <value>model.entity.app.product.ProductLiked</value>
+                        <value>model.entity.app.product.rentable.RentalProductReturnRequest</value>
+                        <value>model.entity.app.product.rentable.RentalProductReturned</value>
+                        <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
+                        <value>model.entity.admin.AdminPaypalCredential</value>
+                        <value>model.entity.admin.AdminSiteFeesEntity</value>
+                        <value>model.entity.admin.AdminCmsPage</value>
+                        <value>model.entity.app.PasswordResetsEntity</value>
+                        <value>model.entity.app.DeviceInfoEntity</value>
                          <value>model.entity.app.payments.RentPayment</value>
-                         <value>model.entity.app.payments.PaymentRefund</value>
-                         <value>model.entity.app.payments.Payout</value>
-                         <value>model.entity.app.payments.Transaction</value>
-                         <value>model.entity.app.UserPaypalCredential</value>
+                             <value>model.entity.app.payments.PaymentRefund</value>
+                             <value>model.entity.app.payments.Payout</value>
+                             <value>model.entity.app.payments.Transaction</value>
+                             <value>model.entity.app.UserPaypalCredential</value>
                      </list>
               </property>
                <property name="hibernateProperties">

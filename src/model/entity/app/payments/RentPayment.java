@@ -17,6 +17,7 @@ public class RentPayment {
     private AppCredential appCredential;
     private RentRequest rentRequest;
     private RentInf rentInf;
+    private double siteFee;
     private double rentFee;
     private double refundAmount;
     private double totalAmount;
@@ -49,6 +50,18 @@ public class RentPayment {
     public void setRentFee(double rentFee) {
         this.rentFee = rentFee;
     }
+
+
+    @Basic
+    @Column(name = "site_fee")
+    public double getSiteFee() {
+        return siteFee;
+    }
+
+    public void setSiteFee(double siteFee) {
+        this.siteFee = siteFee;
+    }
+
 
     @Basic
     @Column(name = "refund_amount")
@@ -180,26 +193,6 @@ public class RentPayment {
     }
 
     @Override
-    public String toString() {
-        return "RentPayment{" +
-                "id=" + id +
-                ", appCredential=" + appCredential +
-                ", rentRequest=" + rentRequest +
-                ", rentInf=" + rentInf +
-                ", rentFee=" + rentFee +
-                ", refundAmount=" + refundAmount +
-                ", totalAmount=" + totalAmount +
-                ", transactionFee=" + transactionFee +
-                ", currency='" + currency + '\'' +
-                ", paypalPayerId='" + paypalPayerId + '\'' +
-                ", paypalPayId='" + paypalPayId + '\'' +
-                ", paypalSaleId='" + paypalSaleId + '\'' +
-                ", paypalPaymentDate=" + paypalPaymentDate +
-                ", createdDate=" + createdDate +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -207,6 +200,7 @@ public class RentPayment {
         RentPayment that = (RentPayment) o;
 
         if (id != that.id) return false;
+        if (Double.compare(that.siteFee, siteFee) != 0) return false;
         if (Double.compare(that.rentFee, rentFee) != 0) return false;
         if (Double.compare(that.refundAmount, refundAmount) != 0) return false;
         if (Double.compare(that.totalAmount, totalAmount) != 0) return false;
@@ -220,6 +214,8 @@ public class RentPayment {
             return false;
         if (paypalPayId != null ? !paypalPayId.equals(that.paypalPayId) : that.paypalPayId != null) return false;
         if (paypalSaleId != null ? !paypalSaleId.equals(that.paypalSaleId) : that.paypalSaleId != null) return false;
+        if (authorizationId != null ? !authorizationId.equals(that.authorizationId) : that.authorizationId != null)
+            return false;
         if (paypalPaymentDate != null ? !paypalPaymentDate.equals(that.paypalPaymentDate) : that.paypalPaymentDate != null)
             return false;
         return !(createdDate != null ? !createdDate.equals(that.createdDate) : that.createdDate != null);
@@ -234,6 +230,8 @@ public class RentPayment {
         result = 31 * result + (appCredential != null ? appCredential.hashCode() : 0);
         result = 31 * result + (rentRequest != null ? rentRequest.hashCode() : 0);
         result = 31 * result + (rentInf != null ? rentInf.hashCode() : 0);
+        temp = Double.doubleToLongBits(siteFee);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(rentFee);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(refundAmount);
@@ -246,8 +244,31 @@ public class RentPayment {
         result = 31 * result + (paypalPayerId != null ? paypalPayerId.hashCode() : 0);
         result = 31 * result + (paypalPayId != null ? paypalPayId.hashCode() : 0);
         result = 31 * result + (paypalSaleId != null ? paypalSaleId.hashCode() : 0);
+        result = 31 * result + (authorizationId != null ? authorizationId.hashCode() : 0);
         result = 31 * result + (paypalPaymentDate != null ? paypalPaymentDate.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "RentPayment{" +
+                "id=" + id +
+                ", appCredential=" + appCredential +
+                ", rentRequest=" + rentRequest +
+                ", rentInf=" + rentInf +
+                ", siteFee=" + siteFee +
+                ", rentFee=" + rentFee +
+                ", refundAmount=" + refundAmount +
+                ", totalAmount=" + totalAmount +
+                ", transactionFee=" + transactionFee +
+                ", currency='" + currency + '\'' +
+                ", paypalPayerId='" + paypalPayerId + '\'' +
+                ", paypalPayId='" + paypalPayId + '\'' +
+                ", paypalSaleId='" + paypalSaleId + '\'' +
+                ", authorizationId='" + authorizationId + '\'' +
+                ", paypalPaymentDate=" + paypalPaymentDate +
+                ", createdDate=" + createdDate +
+                '}';
     }
 }
