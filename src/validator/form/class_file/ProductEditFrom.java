@@ -24,15 +24,6 @@ public class ProductEditFrom {
 
 
 
-    private String profileImageToken;
-
-    public String getProfileImageToken() {
-        return (profileImageToken==null)?"":profileImageToken.trim();
-    }
-
-    public void setProfileImageToken(String profileImageToken) {
-        this.profileImageToken = profileImageToken;
-    }
 
     public String getName() {
         return (name==null)?"":name.trim();

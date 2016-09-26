@@ -123,11 +123,11 @@
                 <div class="form-group clearfix clearfix">
                     <label for="fallbackOther">Product other images</label>
                     <div class="profile-pic small-img-block clearfix">
-                        <div class="main-review small-other clearfix">
+                        <div class="main-review small-other clearfix" id="productOtherimage">
                             <d:forEach items="${rentalProduct.getOtherImages()}" var="otherimages">
                                 <div class="col-md-3 pos-relative">
                                     <img src="${BaseUrl}/images/${otherimages.getOriginal().getPath()}" alt="...">
-                                    <span class="img-cross" onclick="deleteOtherImage()">X</span>
+                                    <span class="img-cross" onclick="deleteOtherImage(${rentalProduct.getId()},'${otherimages.getOriginal().getPath()}')">X</span>
                                 </div>
                             </d:forEach>
                         </div>
@@ -152,6 +152,9 @@
             </button>
         </div>
     </div>
+    <div class="alert alert-success" id="productEditSuccess" hidden>
+        Product Edit Success
+    </div>
 </div>
 <%-------------------------------------------------------------------%>
 <div class="table table-striped" class="files" id="previews">
@@ -175,7 +178,7 @@
 <%-------------------------------------------------------------------%>
 <input hidden value="${rentalProduct.getProductCategories()}">
 <input hidden value="${subCategoryId}" id="selectedSubCategory">
-<input hidden value="${rentalProduct.getOtherImages()}" id="selectedProductOtherImage">
+<input hidden value="${rentalProduct.getOtherImages().size()}" id="selectedProductOtherImage">
 <input type="hidden" value="" id="profileImageToken" name="profileImageToken">
 <input type="hidden" value="" id="otherImagesToken" name="otherImagesToken">
 <!-- Contact end here -->
@@ -194,6 +197,19 @@
     previewNode.parentNode.removeChild(previewNode);
     previewSmall.parentNode.removeChild(previewSmall);
     var otherImagesTokenArray = [];
+
+    var maxFiles;
+    var selectedProductOtherImage = $("#selectedProductOtherImage").val();
+    if(selectedProductOtherImage == "0"){
+        maxFiles = 3;
+    }else if(selectedProductOtherImage == "1"){
+        maxFiles = 2;
+    }else if(selectedProductOtherImage == "2"){
+        maxFiles = 1;
+    }else{
+        maxFiles = 0;
+    }
+
     $(function() {
         var productImageFile = $("div#fallback").dropzone(
                 {
@@ -245,7 +261,7 @@
                     previewTemplate: previewTemplateSmall,
                     thumbnailWidth: 200,
                     thumbnailHeight: 200,
-                    maxFiles: 3,
+                    maxFiles: maxFiles,
                     acceptedFiles: "image/jpeg,image/png,image/jpg",
                     previewsContainer: ".small-other",
                     maxfilesexceeded: function(file) {
@@ -338,7 +354,8 @@
         var city = $("#city").val();
         var productCurrentPrice = $("#currentValue").val();
         var rentPrice = $("#rentFee").val();
-
+        var profileImageToken = $("#profileImageToken").val();
+        var otherImagesToken = $("#otherImagesToken").val();
         $.ajax({
             type: "POST",
             url: BASEURL+"/api/auth/product/update-Product/"+${rentalProduct.getId()},
@@ -353,24 +370,65 @@
                 zip : zip,
                 city : city,
                 productCurrentPrice : productCurrentPrice,
-                rentPrice : rentPrice
+                rentPrice : rentPrice,
+                profileImageToken : profileImageToken,
+                otherImagesToken : otherImagesToken
             },
             success: function(data){
                 if(data.responseStat.status != false){
-                    console.log(data);
+                    $('#productEditSuccess').show().delay(1500).fadeOut(500,function(){
+                        window.location.href = BASEURL+"/user/dashboard/my-products";
+                    });
                 }else{
                     console.log(data);
+                    BindErrorsWithHtml('errorMsg_', data.responseStat.requestErrors);
                 }
             },
             error: function(data){
-                console.log(data);
             }
         });
     }
 </script>
 <script>
-    function deleteOtherImage(){
+    function deleteOtherImage(product_id, path){
+        decreaseVal($('#selectedProductOtherImage'));
+        $.ajax({
+            type: "POST",
+            url: BASEURL+"/api/auth/product/delete-product/other-image",
+            data:{
+                productId : product_id,
+                path : path
+            },
+            success: function(data){
+                if(data.responseStat.status == true){
+                    $.ajax({
+                        type: "GET",
+                        url: BASEURL+"/product/other-image/partial-load/"+product_id,
+                        success: function(data){
+                            $("#productOtherimage").html(data);
+                        },
+                        error: function(){
+                            console.log("ERROR");
+                        }
+                    });
+                    $("#otherImageSuccess").show().delay(1000).fadeOut(500,function(){
 
+                    });
+                }else{
+                    console.log("ERROR");
+                }
+            },
+            error: function(){
+                console.log("ERROR");
+            }
+        });
+    }
+</script>
+<script>
+    function decreaseVal(selector) {
+        var $item = selector;
+        var $curVal = $item.attr("value");
+        $item.attr("value", parseInt($curVal) - 1 );
     }
 </script>
 </body>

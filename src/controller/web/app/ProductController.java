@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -138,6 +139,15 @@ public class ProductController{
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageTitle", "Edit Product");
         modelAndView.addObject("appCredential", appCredential);
+        return modelAndView;
+    }
+    @RequestMapping(value = "/other-image/partial-load/{product_id}", method = RequestMethod.GET)
+    public ModelAndView getproductOtherImagePartialLoad(HttpServletRequest request, @PathVariable("product_id") int productId){
+        ModelAndView modelAndView = new ModelAndView("user_dashboard/productOtherImagePartialLoad");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        RentalProduct rentalProduct = productModel.getMyRentalProductById(productId, appCredential.getId());
+        modelAndView.addObject("rentalProduct", rentalProduct);
         return modelAndView;
     }
 }

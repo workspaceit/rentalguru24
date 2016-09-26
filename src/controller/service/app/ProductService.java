@@ -1,7 +1,9 @@
 package controller.service.app;
 
+import antlr.collections.*;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
 import helper.DateHelper;
 import helper.ImageHelper;
 import helper.ServiceResponse;
@@ -30,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by mi on 8/8/16.
@@ -244,7 +247,7 @@ public class ProductService{
                 otherImages.add(picture);
             } catch (Exception e) {
                 //e.printStackTrace();
-                serviceResponse.setRequestError("profileImageToken", "Unable to save profile image");
+                serviceResponse.setRequestError("otherImagesToken", "Unable to save profile image");
                 return serviceResponse;
             }
         }
@@ -430,7 +433,6 @@ public class ProductService{
         productEditFrom.setCurrentValue(Double.parseDouble(allRequestParameter.get("productCurrentPrice").trim()));
         productEditFrom.setRentFee(Double.parseDouble(allRequestParameter.get("rentPrice").trim()));
         productEditFrom.setCategoryIdArray(allRequestParameter.get("categoryId"));
-        productEditFrom.setProfileImageToken(allRequestParameter.get("profileImageToken"));
 
         new ProductEditFromValidator(categoryModel,tempFileModel,rentTypeModel).validate(productEditFrom, result);
 
@@ -482,6 +484,67 @@ public class ProductService{
             rentalProduct.setRentFee(Double.parseDouble(allRequestParameter.get("rentPrice")));
         }
 
+        if(allRequestParameter.get("profileImageToken")!=null && !allRequestParameter.get("profileImageToken").isEmpty()){
+
+            TempFile tempFile = this.tempFileModel.getByToken(Long.parseLong(allRequestParameter.get("profileImageToken")));
+            if(tempFile ==null){
+                serviceResponse.setRequestError("profileImageToken", "Profile Image token is not valid");
+                return serviceResponse;
+            }
+
+            if(!ImageHelper.isFileExist(tempFile.getPath())){
+                serviceResponse.setRequestError("profileImageToken", "No file found associated with the token");
+                return serviceResponse;
+            }
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            Picture profileImage = new Picture();
+            try {
+                profileImage = ImageHelper.moveProductImage(rentalProduct.getOwner().getId(), tempFile.getPath());
+            } catch (Exception e) {
+                //e.printStackTrace();
+                serviceResponse.setRequestError("profileImageToken", "Unable to save profile image");
+                return serviceResponse;
+            }
+
+            rentalProduct.setProfileImage(profileImage);
+
+        }
+
+        if(allRequestParameter.get("otherImagesToken")!=null && !allRequestParameter.get("otherImagesToken").isEmpty()){
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            Long[] otherImagesToken = new Long[0];
+
+            try{
+                otherImagesToken = objectMapper.readValue(allRequestParameter.get("otherImagesToken"), Long[].class);
+            }catch(Exception ex){
+                serviceResponse.setRequestError("otherImagesToken","Other images token is not in valid format");
+
+            }
+
+            List<Picture> otherImages = rentalProduct.getOtherImages();
+
+            for(long otherImageToken : otherImagesToken){
+                TempFile tempOtherFile = this.tempFileModel.getByToken(otherImageToken);
+                Picture picture = new Picture();
+                try {
+                    picture = ImageHelper.moveProductImage(rentalProduct.getOwner().getId(), tempOtherFile.getPath());
+
+                    if(picture.getOriginal().getPath().isEmpty()) continue;
+
+                    otherImages.add(picture);
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                    serviceResponse.setRequestError("otherImagesToken", "Unable to save profile image");
+                    return serviceResponse;
+                }
+            }
+
+            rentalProduct.setOtherImages(otherImages);
+        }
+
+
         productModel.update(rentalProduct);
         serviceResponse.setResponseData(productModel.getById(rentalProduct.getId()));
 
@@ -517,10 +580,12 @@ public class ProductService{
     }
 
     @RequestMapping(value = "/delete-product/other-image", method = RequestMethod.POST)
-    public ServiceResponse deleteOtherProductImages(HttpServletRequest request,@PathVariable("product_id") int productId ){
+    public ServiceResponse deleteOtherProductImages(HttpServletRequest request, @RequestParam Map<String, String> allRequestParameter){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        Integer productId = Integer.parseInt(allRequestParameter.get("productId"));
+        String path = allRequestParameter.get("path");
         RentalProduct rentalProduct = productModel.getById(productId);
 
         if(rentalProduct == null){
@@ -533,6 +598,21 @@ public class ProductService{
             return  serviceResponse;
         }
 
+        List<Picture> pictureList = rentalProduct.getOtherImages();
+        for(int i= 0; i<pictureList.size(); i++){
+            if(pictureList.get(i).getOriginal().getPath().equals(path)){
+                pictureList.remove(i);
+                break;
+            }
+        }
+
+        rentalProduct.setOtherImages(pictureList);
+
+        productModel.update(rentalProduct);
+
+        serviceResponse.setResponseData(rentalProduct.getOtherImages());
+
+        serviceResponse.getResponseStat().setMsg("Picture Delete Successful");
         return serviceResponse;
 
     }

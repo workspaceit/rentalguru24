@@ -39,10 +39,6 @@ public class ProductEditFromValidator implements Validator {
     public void validate(Object object, Errors errors){
         ProductEditFrom productEditFrom = (ProductEditFrom)object;
 
-        if(productEditFrom.getProfileImageToken().isEmpty()){
-            errors.rejectValue("profileImage", "Product profile Image required");
-        }
-
         if(productEditFrom.getName().isEmpty()){
             errors.rejectValue("name", "Product title required");
         }
