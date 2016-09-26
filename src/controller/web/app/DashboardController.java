@@ -1,14 +1,8 @@
 package controller.web.app;
 
 import helper.ServiceResponse;
-import model.IdentityTypeModel;
-import model.ProductModel;
-import model.RentInfModel;
-import model.RentRequestModel;
-import model.entity.app.AppCredential;
-import model.entity.app.Category;
-import model.entity.app.IdentityType;
-import model.entity.app.RentRequest;
+import model.*;
+import model.entity.app.*;
 import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
 import model.entity.app.product.rentable.iface.MyRentedProduct;
@@ -43,6 +37,10 @@ public class DashboardController {
 
     @Autowired
     RentInfModel rentInfModel;
+
+    @Autowired
+    UserPaypalCredentialModel userPaypalCredentialModel;
+
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("user_dashboard/dashboard");
@@ -287,4 +285,20 @@ public class DashboardController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/my-paypal-account-email", method = RequestMethod.GET)
+    public ModelAndView getMyPaypallAccountEmail(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("user_dashboard/paypalAccountEmail");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        UserPaypalCredential userPaypalCredential = userPaypalCredentialModel.getByAppCredentialId(appCredential.getId());
+
+        modelAndView.addObject("userPaypalCredential", userPaypalCredential);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageTitle", "My Paypal Account Email");
+        modelAndView.addObject("IsLogIn", IsLogin);
+        return modelAndView;
+    }
 }

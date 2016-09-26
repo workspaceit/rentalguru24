@@ -25,4 +25,11 @@ public class UserPaypalCredentialModel extends BaseModel {
             session.close();
         }
     }
+    public void update(UserPaypalCredential userPaypalCredential){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(userPaypalCredential);
+        session.getTransaction().commit();
+        session.close();
+    }
 }
