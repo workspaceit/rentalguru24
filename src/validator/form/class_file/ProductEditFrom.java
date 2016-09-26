@@ -22,6 +22,18 @@ public class ProductEditFrom {
     private Float lat;
     private Float lng;
 
+
+
+    private String profileImageToken;
+
+    public String getProfileImageToken() {
+        return (profileImageToken==null)?"":profileImageToken.trim();
+    }
+
+    public void setProfileImageToken(String profileImageToken) {
+        this.profileImageToken = profileImageToken;
+    }
+
     public String getName() {
         return (name==null)?"":name.trim();
     }
@@ -37,9 +49,6 @@ public class ProductEditFrom {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
-
 
     public Double getCurrentValue() {
         return (currentValue==null)?-1:currentValue;

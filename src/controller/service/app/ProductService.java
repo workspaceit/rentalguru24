@@ -29,10 +29,7 @@ import validator.form.class_file.ProductUploadForm;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 /**
  * Created by mi on 8/8/16.
@@ -433,6 +430,7 @@ public class ProductService{
         productEditFrom.setCurrentValue(Double.parseDouble(allRequestParameter.get("productCurrentPrice").trim()));
         productEditFrom.setRentFee(Double.parseDouble(allRequestParameter.get("rentPrice").trim()));
         productEditFrom.setCategoryIdArray(allRequestParameter.get("categoryId"));
+        productEditFrom.setProfileImageToken(allRequestParameter.get("profileImageToken"));
 
         new ProductEditFromValidator(categoryModel,tempFileModel,rentTypeModel).validate(productEditFrom, result);
 
@@ -514,6 +512,27 @@ public class ProductService{
         productModel.delete(rentalProduct);
 
         serviceResponse.getResponseStat().setMsg("product has been deleted");
+        return serviceResponse;
+
+    }
+
+    @RequestMapping(value = "/delete-product/other-image", method = RequestMethod.POST)
+    public ServiceResponse deleteOtherProductImages(HttpServletRequest request,@PathVariable("product_id") int productId ){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        RentalProduct rentalProduct = productModel.getById(productId);
+
+        if(rentalProduct == null){
+            serviceResponse.setRequestError("product", "Product Not found");
+            return serviceResponse;
+        }
+
+        if(rentalProduct.getOtherImages() == null){
+            serviceResponse.setRequestError("product", "product has no other images");
+            return  serviceResponse;
+        }
+
         return serviceResponse;
 
     }
