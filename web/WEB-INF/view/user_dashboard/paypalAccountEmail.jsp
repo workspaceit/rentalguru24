@@ -31,7 +31,7 @@
 
         </div>
         <div class="col-md-12 text-right">
-          <button class="btn-cstm-sign  pos-relative" style="margin-right:0px;" id="editProfileButton" >
+          <button class="btn-cstm-sign  pos-relative" style="margin-right:0px;" id="paypalEmailButton" >
             Save
             <span class="inner-load" hidden id="saveGif"></span>
           </button>
@@ -51,6 +51,7 @@
   function setPaypalEmail(){
     var email = $("#email").val();
     $("#email").attr("disabled","disabled");
+    $("#paypalEmailButton").attr("disabled","disabled");
     $("#saveGif").show();
     $.ajax({
       type: "POST",
@@ -62,6 +63,7 @@
         if(data.responseStat.status == true){
           $("#email").removeAttr("disabled","disabled");
           $("#saveGif").hide();
+          $("#paypalEmailButton").removeAttr("disabled","disabled");
           $('.alert-success').show().delay(1500).fadeOut(500,function(){
             window.location.href = BASEURL+"/user/dashboard/my-paypal-account-email";
           });
@@ -69,6 +71,7 @@
         else{
           BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
           $("#email").removeAttr("disabled","disabled");
+          $("#paypalEmailButton").removeAttr("disabled","disabled");
           $("#saveGif").hide();
         }
       },
@@ -76,6 +79,7 @@
         console.log("ERROR");
         $("#saveGif").hide();
         $("#email").removeAttr("disabled","disabled");
+        $("#paypalEmailButton").removeAttr("disabled","disabled");
       }
     });
 
