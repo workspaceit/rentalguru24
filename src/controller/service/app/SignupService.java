@@ -158,4 +158,14 @@ public class SignupService{
         return serviceResponse;
     }
 
+    @RequestMapping(value = "/email-check", method = RequestMethod.POST)
+    public ServiceResponse isEmailAlreadyExist(HttpServletRequest request, @RequestParam("email") String email){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        Boolean isEmailExist = appLoginCredentialModel.isEmailExist(email);
+        if(isEmailExist == true){
+            serviceResponse.setRequestError("email", "email already taken");
+        }
+        serviceResponse.setResponseData(isEmailExist);
+        return  serviceResponse;
+    }
 }

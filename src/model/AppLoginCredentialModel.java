@@ -226,5 +226,4 @@ public class AppLoginCredentialModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
-
 }

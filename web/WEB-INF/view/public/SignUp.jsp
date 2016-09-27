@@ -151,7 +151,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email" >
+                <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email" onblur="isEmailExist()">
                 <p class="help-block error-form" id="errorMsg_email" for="email" custom-validation="required" ></p>
             </div>
 
@@ -431,6 +431,25 @@
         );
 
     });
+</script>
+<script>
+    function isEmailExist(){
+        var email = $("#email").val();
+        $.ajax({
+            type: "POST",
+            url: BASEURL+"/api/signup/email-check",
+            data: {
+                email : email
+            },
+            success : function(data){
+                if(data.responseData == true){
+                    BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
+                }else{
+                    document.getElementById("errorMsg_email").style.display = "none";
+                }
+            }
+        });
+    }
 </script>
 
 </body>
