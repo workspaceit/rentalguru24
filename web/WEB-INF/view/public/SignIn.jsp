@@ -286,7 +286,7 @@
           $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(2000).fadeOut(500,function(){
             var url =BASEURL+"/home";
             var prevUrl = "";
-            prevUrl = location.search.split('r=')[1]
+            prevUrl = location.search.split('r=')[1];
             url=(prevUrl!=undefined)? decodeURIComponent( prevUrl):url;
             window.location.href = url;
           });

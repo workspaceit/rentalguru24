@@ -182,6 +182,12 @@
                                             <span id="proceedToPaymentProgressIm" class="inner-load approveGif" hidden></span>
                                         </BUTTON>
                                     </li>
+                                    <li>
+                                        <p id="paymentCreateResponsePar" style="display:none;">
+                                            <span id="paymentCreateResponseMsg"></span>&nbsp;
+                                            <span><a href="${BaseUrl}/user/dashboard/my-paypal-account-email?r=${BaseUrl}/rent/request/${rentRequest.id}">Click here</a> to add paypal account</span>
+                                        </p>
+                                    </li>
                                 </d:if>
                             </d:if>
                             <d:if test="${rentRequest.requestedBy.id == appCredential.id && rentRequest.isPaymentComplete}">
@@ -209,6 +215,12 @@
                                     <BUTTON id="productReceiveDisputeBtn" class="approve_btn approval_btn"  >Dispute
                                         <span id="productReceiveDisputeProgressImg" class="inner-load disapproveGif" hidden></span>
                                     </BUTTON>
+                                </li>
+                                <li>
+                                    <p id="productReceiveConfirmationPar" style="display:none;">
+                                        <span id="errorMsg_paypalCredential"></span>&nbsp;
+                                        <span><a href="${BaseUrl}/user/dashboard/my-paypal-account-email?r=${BaseUrl}/rent/request/${rentRequest.id}">Click here</a> to add paypal account</span>
+                                    </p>
                                 </li>
 
                             </d:if>
@@ -542,6 +554,7 @@
                 });
             }
             function productReceiveConfirm(rentalProductReturnId){
+                $("#productReceiveConfirmationPar").hide();
                 var remarks = "";
                 $('#productReceiveConfirmBtnProgressIm').show();
                 $.ajax({
@@ -549,12 +562,15 @@
                     url: BASEURL+'/api/auth/receive-product/confirm-receive/'+rentalProductReturnId,
                     data:{remarks:remarks},
                     success: function (data) {
+                        $('#productReceiveConfirmBtnProgressIm').hide();
                         if(data.responseStat.status == true){
-                            $('#productReceiveConfirmBtnProgressIm').hide();
                             location.reload();
 
                         }else{
-
+                            BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
+                            if($("#errorMsg_paypalCredential").text()!=""){
+                              $("#productReceiveConfirmationPar").show();
+                            }
                         }
                     },
                     error: function () {
@@ -616,6 +632,9 @@
                         if(data.responseStat.status == true){
 
                             window.location = data.responseData.url;
+                        }else{
+                            $("#paymentCreateResponseMsg").text(data.responseStat.msg);
+                            $("#paymentCreateResponsePar").show();
                         }
                         $('#proceedToPaymentBtn').removeAttrs("disabled");
                         $('#proceedToPaymentProgressIm').hide();

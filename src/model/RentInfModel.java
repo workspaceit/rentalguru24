@@ -36,7 +36,14 @@ public class RentInfModel extends BaseModel {
     }
     public boolean isProductInRent(int productId,Timestamp startDate,Timestamp endsDate){
         RentInf rentInf = this.getProductInRent(productId, startDate, endsDate);
-        return ( rentInf != null  );
+
+        if(rentInf==null){
+            return false;
+        }else if(rentInf.getIsRentComplete()){
+            return false;
+        }else{
+            return true;
+        }
     }
     public RentInf getByRentRequestId(int requestId){
         Session session = null;

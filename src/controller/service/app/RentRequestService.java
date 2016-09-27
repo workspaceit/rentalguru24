@@ -360,7 +360,7 @@ public class RentRequestService{
 
         RentRequest rentRequest = rentRequestModel.getById(requestId);
         if(rentRequest==null){
-            serviceResponse.setRequestError("requestId","No request exist by this id ");
+            serviceResponse.setRequestError("requestId","No request exist by this id");
             return serviceResponse;
         }
 
@@ -376,7 +376,8 @@ public class RentRequestService{
 
         rentRequest.setRequestCancel(true);
         rentRequest.setIsExpired(true);
-
+        /* Refund to user ( Requested By ) account */
+        serviceResponse = this.refundOtherRentRequest(serviceResponse,rentRequest);
         rentRequestModel.update(rentRequest);
         serviceResponse.setResponseData(rentRequest,"No record found");
         return serviceResponse;
@@ -597,7 +598,9 @@ public class RentRequestService{
                 }
             }
 
-
+            if(refund==null){
+                continue;
+            }
 
 
             //     refund(String saleId, Amount amount);

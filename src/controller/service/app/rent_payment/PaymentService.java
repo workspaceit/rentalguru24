@@ -10,10 +10,12 @@ import library.paypal.PayPalPayment;
 import model.RentInfModel;
 import model.RentPaymentModel;
 import model.RentRequestModel;
+import model.UserPaypalCredentialModel;
 import model.admin.AdminPaypalCredentailModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
+import model.entity.app.UserPaypalCredential;
 import model.entity.app.payments.RentPayment;
 import model.entity.app.product.rentable.RentInf;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,8 @@ public class PaymentService {
     RentPaymentModel rentPaymentModel;
     @Autowired
     AdminPaypalCredentailModel adminPaypalCredentailModel;
+    @Autowired
+    UserPaypalCredentialModel userPaypalCredentialModel;
 
     @RequestMapping(value = "/create-payment/{rentRequestId}", method = RequestMethod.GET)
     public ServiceResponse createPayment(HttpServletRequest request,@PathVariable int rentRequestId){
@@ -44,6 +48,14 @@ public class PaymentService {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseURL  = (String) request.getAttribute("baseURL");
+
+        UserPaypalCredential userPaypalCredential = userPaypalCredentialModel.getByAppCredentialId(appCredential.getId());
+
+        if(userPaypalCredential==null){
+            serviceResponse.getResponseStat().setErrorMsg("You have not add paypal account yet.");
+            return serviceResponse;
+        }
+
         Map<String,String> responseObj = new HashMap<>();
         AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
 

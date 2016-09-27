@@ -64,8 +64,13 @@
           $("#email").removeAttr("disabled","disabled");
           $("#saveGif").hide();
           $("#paypalEmailButton").removeAttr("disabled","disabled");
+          var url =BASEURL+"/user/dashboard/my-paypal-account-email";
+          var prevUrl = "";
+          prevUrl = location.search.split('r=')[1];
+          url=(prevUrl!=undefined)? decodeURIComponent( prevUrl):url;
+
           $('.alert-success').show().delay(1500).fadeOut(500,function(){
-            window.location.href = BASEURL+"/user/dashboard/my-paypal-account-email";
+            window.location.href = url;
           });
         }
         else{

@@ -32,6 +32,7 @@ public class RentInf {
     private AppCredential rentee;
     private Date startDate;
     private Date endsDate;
+    private boolean isRentComplete;
     private boolean expired;
     private boolean productReturned;
     private boolean productReceived;
@@ -146,7 +147,7 @@ public class RentInf {
     }
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "rent_request_id", referencedColumnName = "id", nullable = false)
     public RentRequest getRentRequest() {
         return rentRequest;
@@ -205,6 +206,16 @@ public class RentInf {
     public void setRentalProductReturned(RentalProductReturned rentalProductReturned) {
         this.rentalProductReturned = rentalProductReturned;
     }
+    @JsonIgnore
+    @Basic
+    @Column(name = "rent_complete")
+    public boolean getIsRentComplete() {
+        return isRentComplete;
+    }
+
+    public void setIsRentComplete(boolean isRentComplete) {
+        this.isRentComplete = isRentComplete;
+    }
 
     @Override
     public String toString() {
@@ -215,6 +226,7 @@ public class RentInf {
                 ", rentee=" + rentee +
                 ", startDate=" + startDate +
                 ", endsDate=" + endsDate +
+                ", isRentComplete=" + isRentComplete +
                 ", expired=" + expired +
                 ", productReturned=" + productReturned +
                 ", productReceived=" + productReceived +
@@ -236,6 +248,7 @@ public class RentInf {
         RentInf rentInf = (RentInf) o;
 
         if (id != rentInf.id) return false;
+        if (isRentComplete != rentInf.isRentComplete) return false;
         if (expired != rentInf.expired) return false;
         if (productReturned != rentInf.productReturned) return false;
         if (productReceived != rentInf.productReceived) return false;
@@ -267,6 +280,7 @@ public class RentInf {
         result = 31 * result + (rentee != null ? rentee.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endsDate != null ? endsDate.hashCode() : 0);
+        result = 31 * result + (isRentComplete ? 1 : 0);
         result = 31 * result + (expired ? 1 : 0);
         result = 31 * result + (productReturned ? 1 : 0);
         result = 31 * result + (productReceived ? 1 : 0);

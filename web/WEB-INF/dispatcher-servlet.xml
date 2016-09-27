@@ -382,6 +382,7 @@
                              <value>model.entity.app.payments.Payout</value>
                              <value>model.entity.app.payments.Transaction</value>
                              <value>model.entity.app.UserPaypalCredential</value>
+                         <value>model.entity.developer.DeveloperExceptionLog</value>
                      </list>
               </property>
                <property name="hibernateProperties">

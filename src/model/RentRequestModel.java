@@ -1,6 +1,7 @@
 package model;
 
 import model.entity.app.RentRequest;
+import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.RentalProductEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -95,11 +96,11 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
-    public RentRequest getAlreadyRentRequested(int requestedBy,int productId,Timestamp startDate,Timestamp endsDate){
+    public List<RentRequest> getAlreadyRentRequested(int requestedBy,int productId,Timestamp startDate,Timestamp endsDate){
         Session session = this.sessionFactory.openSession();
         try{
-             RentRequest rentRequest =(RentRequest)
-                                    session.createQuery(
+
+            List<RentRequest> rentRequest = session.createQuery(
                                                             "FROM RentRequest rentRequest " +
                                                             " where ( ( :startDate BETWEEN rentRequest.startDate and rentRequest.endDate ) or " +
                                                             " ( :endsDate  BETWEEN rentRequest.endDate and rentRequest.endDate ) ) " +
@@ -111,8 +112,7 @@ public class RentRequestModel extends BaseModel {
                                                         .setParameter("requestedBy", requestedBy)
                                                         .setParameter("startDate", startDate)
                                                         .setParameter("endsDate", endsDate)
-                                                        .setMaxResults(1)
-                                                        .uniqueResult();
+                                                        .list();
             return rentRequest;
         }finally {
             session.close();
@@ -127,8 +127,9 @@ public class RentRequestModel extends BaseModel {
                             " where ( ( rentRequest.startDate BETWEEN :startDate and :endsDate ) or " +
                             " ( rentRequest.endDate BETWEEN :startDate and :endsDate ) ) " +
                             " and rentRequest.rentalProduct.id =:productId " +
-                            " and rentRequest.isExpired = false "
-            )
+                            " and rentRequest.isExpired = false " +
+                            " and rentRequest.isRentComplete = false " +
+                            " and rentRequest.isPaymentComplete = true ")
                                                 .setParameter("productId", productId)
                                                 .setParameter("startDate", startDate)
                                                 .setParameter("endsDate", endsDate)
@@ -139,8 +140,37 @@ public class RentRequestModel extends BaseModel {
         }
     }
     public boolean isAlreadyRequested(int requestedBy,int productId,Timestamp startDate,Timestamp endsDate){
-        RentRequest rentRequest = this.getAlreadyRentRequested(requestedBy, productId, startDate, endsDate);
-        return (rentRequest!=null)?true:false;
+        List<RentRequest> rentRequestList = this.getAlreadyRentRequested(requestedBy, productId, startDate, endsDate);
+
+        if(rentRequestList==null || rentRequestList.size()==0){
+            return false;
+        }
+        for(RentRequest rentRequest:rentRequestList){
+            // Have to take care of Request extension check
+            if(!rentRequest.getIsExpired() && !rentRequest.getIsRentComplete()){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean doRequestHasValidOrInCompleteRentInf(int rentRequestId){
+        Session session = this.sessionFactory.openSession();
+        try{
+
+            RentInf rentInf = (RentInf)session.createQuery("FROM RentInf  where rentRequest.id =:rentRequestId" +
+                                                            " and expired =  false " +
+                                                            " and isRentComplete = false")
+                    .setParameter("rentRequestId",rentRequestId)
+                    .setMaxResults(1)
+                    .uniqueResult();
+            if(rentInf!=null)
+                return true;
+            return false;
+
+        }finally {
+            session.close();
+        }
+
     }
     public List<RentRequest> getByProductOwner(int ownerId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
@@ -345,7 +375,6 @@ public class RentRequestModel extends BaseModel {
                     " where rentRequest.requestedBy.id =:requestedById" +
                     " and rentRequest.disapprove = false" +
                     " and rentRequest.requestCancel = false" +
-//                    " and rentRequest.isExpired = false" +
                     " and rentRequest.approve = false ORDER BY rentRequest.id desc ")
                     .setParameter("requestedById", requestedById)
                     .list();

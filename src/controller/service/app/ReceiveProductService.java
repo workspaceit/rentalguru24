@@ -15,6 +15,7 @@ import model.entity.app.UserPaypalCredential;
 import model.entity.app.payments.PaymentRefund;
 import model.entity.app.payments.Payout;
 import model.entity.app.payments.RentPayment;
+import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.RentalProductReturned;
 import model.entity.app.product.rentable.RentalProductReturnedHistory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,12 +86,18 @@ public class ReceiveProductService {
         }
 
 
+        UserPaypalCredential payoutUserPaypalCredential = userPaypalCredentialModel.getByAppCredentialId(rentalProductReturned.getRentInf().getRentalProduct().getOwner().getId());
+        if(payoutUserPaypalCredential==null){
+
+            serviceResponse.setRequestError("paypalCredential","You have not add paypal account yet");
+            return serviceResponse;
+        }
+
         RentPayment rentPayment = rentPaymentModel.getByRentRentInfId(rentalProductReturned.getRentInf().getId());
 
 
 
 
-        UserPaypalCredential payoutUserPaypalCredential = userPaypalCredentialModel.getByAppCredentialId(rentalProductReturned.getRentInf().getRentalProduct().getOwner().getId());
 
 
         /*~~~~~~~~~~ Paypal initiation ~~~~~~~~~~~~~~~~~*/
@@ -168,6 +175,13 @@ public class ReceiveProductService {
         payout.setState(payoutState);
 
         payoutModel.insert(payout);
+        /*~~~~~~~~~~~~~~~~~~Change rent inf complete ~~~~~~~~~~~~~~~`*/
+        RentInf rentInf = rentalProductReturned.getRentInf();
+        rentInf.setIsRentComplete(true);
+        if(rentInf.getRentRequest()!=null){
+            rentInf.getRentRequest().setIsRentComplete(true);
+        }
+        rentInfModel.update(rentInf);
         /*~~~~~~~~~~~~~~Payout Entity [Ends]~~~~~~~~~~~~~~~*/
 
         this.processProductReturnConfirmDispute(serviceResponse,rentalProductReturned,remarks,true,false);
