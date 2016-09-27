@@ -59,14 +59,14 @@
             </thead>
             <tbody>
             <d:forEach var="myRentRequest" items="${myRentRequests}">
-            <tr id="${myRentRequest.id}">
+            <tr id="product${myRentRequest.id}">
               <td width="300px">${myRentRequest.rentalProduct.name}<br><br><a href="${BaseUrl}/rent/request/${myRentRequest.getId()}" target="_blank">Order Details</a></td>
               <td>${myRentRequest.requestedBy.userInf.firstName}</td>
               <td><fmt:formatDate value="${myRentRequest.startDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
               <td><fmt:formatDate value="${myRentRequest.endDate}" pattern="MMM d,yyyy"></fmt:formatDate></td>
               <td width="100px">
                 <div class="actions">
-                  <button class="btn btn-delete" onclick="cancelRequest(${myRentRequest.id})">Cancel</button>
+                  <button class="btn btn-delete" onclick="cancelRequest(${myRentRequest.id})"><span class="inner-load orderCancelgif" hidden></span>Cancel</button>
                 </div>
               </td>
 
@@ -104,19 +104,26 @@
 <!-- Javascript framework and plugins end here -->
 <script>
   function cancelRequest(requestId){
+    $(".orderCancelgif").show();
     $.ajax({
       type: "GET",
       url: '${BaseUrl}/api/auth/rent/cancel-request/'+requestId,
       success: function(data) {
+        console.log(data);
         if(data.responseStat.status==true){
-          $('#' + requestId).fadeOut(300);
+          $(".orderCancelgif").hide();
+          $("#product"+requestId).fadeOut(300);
+          location.reload();
         }else{
+          $(".orderCancelgif").hide();
           $('#modal-text').text(data.responseStat.msg)
           $('#myModal').modal('show')
+          location.reload();
         }
       },
       error: function() {
         alert('Error occured');
+        location.reload();
       }
     });
   }
