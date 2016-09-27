@@ -68,7 +68,17 @@ public class DateHelper {
         return null;
 
     }
+    public static Date getStringToDate(String strDate,String format){
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        try {
+            Date date = dateFormat.parse(strDate);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
 
+    }
     public static Timestamp getSQLDateToTimeStamp(Date date){
         return new java.sql.Timestamp(date.getTime());
 

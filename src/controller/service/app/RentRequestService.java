@@ -120,7 +120,6 @@ public class RentRequestService{
         }
 
 
-
         if(startTimeStamp.before(rentalProduct.getAvailableFrom()) || startTimeStamp.after(rentalProduct.getAvailableTill())){
             serviceResponse.setRequestError("startDate","Product is not available for rent on given date");
         }
@@ -129,7 +128,14 @@ public class RentRequestService{
             serviceResponse.setRequestError("endsDate","Product is not available for rent on given date");
         }
 
-
+        Double calculatedRentFee = RentFeesHelper.getRentFee(rentalProduct.getRentType().getId(),
+                                                    rentalProduct.getRentFee(),
+                                                    DateHelper.getStringToDate(startDate, "dd-MM-yyyy"),
+                                                    DateHelper.getStringToDate(endsDate, "dd-MM-yyyy"));
+        if(calculatedRentFee>rentalProduct.getCurrentValue()){
+            serviceResponse.getResponseStat().setErrorMsg("Rent fee exceeds product price, try again for less days");
+            return serviceResponse;
+        }
 
         if(serviceResponse.hasErrors()){
             return serviceResponse;

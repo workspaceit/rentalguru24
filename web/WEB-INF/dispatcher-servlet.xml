@@ -26,8 +26,8 @@
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
             <property name="location">
-                <!--<value>/WEB-INF/localConfig.properties</value>-->
-                <value>/WEB-INF/liveConfig.properties</value>
+                <value>/WEB-INF/localConfig.properties</value>
+                <!--<value>/WEB-INF/liveConfig.properties</value>-->
             </property>
     </bean>
     <!-- * ** *** **** Scheduler **** *** ** * -->

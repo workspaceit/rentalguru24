@@ -71,6 +71,7 @@ public class RentInfModel extends BaseModel {
             return  (RentInf) session.createQuery(hql).setParameter("productId", productId)
                     .setParameter("startDate", startDate)
                     .setParameter("endsDate", endsDate)
+                    .setMaxResults(1)
                     .uniqueResult();
         }finally {
             session.close();
