@@ -202,7 +202,7 @@
           <!-- Nav tabs -->
           <div class="col-md-6 col-sm-12 col-xs-12 no-padding">
             <ul class="nav nav-tabs" role="tablist">
-              <%--<li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a></li>--%>
+              <li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a></li>
               <li role="presentation" class="active"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Reviews</a></li>
               <%--<li role="presentation"><a href="#specification" aria-controls="specification" role="tab" data-toggle="tab">Specification</a></li>--%>
               <%--<li role="presentation"><a href="#custom" aria-controls="custom" role="tab" data-toggle="tab">Custom tab</a></li>--%>
@@ -212,7 +212,7 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-          <%--<div role="tabpanel" class="tab-pane " id="description">1</div>--%>
+          <div role="tabpanel" class="tab-pane " id="description">${rentalProduct.getDescription()}</div>
           <div role="tabpanel" class="tab-pane active" id="reviews">
             <p class="no-review">There are no reviews for this product</p>
             <p  class="no-review"><strong>Add Review</strong></p>
