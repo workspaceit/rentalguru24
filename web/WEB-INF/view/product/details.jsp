@@ -135,7 +135,7 @@
             <div class="buying_option">
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                  <a class="rent_now_btn" href=""><i class="fa fa-shopping-basket"></i>Rent Now</a>
+                  <a class="rent_now_btn" href="javascript:void(0)" onclick="showRentRequestPopUp(${rentalProduct.getId()})"><i class="fa fa-shopping-basket"></i>Rent Now</a>
                   <a class="ehe_btn" href=""><i class="fa fa-eye"></i></a>
                   <a class="ehe_btn" href=""><i class="fa fa-heart"></i></a>
                   <a class="ehe_btn" href=""><i class="fa  fa-exchange"></i></a>
@@ -327,9 +327,15 @@
     </div>
   </div>
 </div>
+<!--Rent request form Modal -->
+<jsp:directive.include file="../modals/rent_request_modal.jsp" />
+
 <jsp:directive.include file="../layouts/newsletter.jsp" />
 <jsp:directive.include file="../layouts/top-footer.jsp" />
 <jsp:directive.include file="../layouts/footer.jsp" />
+
+<%--Rent request JS--%>
+<script type="text/javascript" src="<c:url value="/resources/developer/js/rent/rent_request.js" />" ></script>
 
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">

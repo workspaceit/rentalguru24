@@ -109,7 +109,7 @@
                     <label for="fallback">Product main image</label>
                     <div class="profile-pic main-img clearfix">
                         <div class="main-review text-center">
-                            <img id="profileImage" src="${BaseUrl}/images/${rentalProduct.getProfileImage().getOriginal().getPath()}" alt="...">
+                            <img id="profileImage" src="${BaseUrl}/profile-image/${rentalProduct.getProfileImage().getOriginal().getPath()}" alt="...">
                         </div>
                         <div class="" style="margin-bottom:0px;">
                             <div id="fallback" class="fallback pos-relative fall-small" >
