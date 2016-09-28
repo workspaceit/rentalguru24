@@ -383,7 +383,9 @@ public class RentRequestService{
         rentRequest.setRequestCancel(true);
         rentRequest.setIsExpired(true);
         /* Refund to user ( Requested By ) account */
-        serviceResponse = this.refundOtherRentRequest(serviceResponse,rentRequest);
+        if(rentRequest.getIsPaymentComplete()){
+            serviceResponse = this.refundOtherRentRequest(serviceResponse,rentRequest);
+        }
         rentRequestModel.update(rentRequest);
         serviceResponse.setResponseData(rentRequest,"No record found");
         return serviceResponse;

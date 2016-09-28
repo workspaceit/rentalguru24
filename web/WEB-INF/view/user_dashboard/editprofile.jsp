@@ -17,7 +17,7 @@
                     <h3>Edit profile</h3>
                     <div class="col-md-3 profile-pic">
                         <div class="profile-pic-review">
-                            <img id="profileImage" src="${BaseUrl}/images/${appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}" style="height: 178px; width: 200px;">
+                            <img id="profileImage" src="${BaseUrl}/profile-image/${appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}" style="height: 178px; width: 200px;">
                         </div>
                         <div class="form-group" style="margin-bottom:0px;">
                             <label for="fallback">Upload photo</label>

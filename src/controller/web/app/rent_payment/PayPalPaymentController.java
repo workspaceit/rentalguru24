@@ -185,29 +185,23 @@ public class PayPalPaymentController {
     public ModelAndView paymentCancel(HttpServletRequest request,
                                 @PathVariable int rentRequestId,
                                 @RequestParam Map<String,String> allParam){
-        ModelAndView modelAndView = new ModelAndView("payment/payment_cancel");
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-        modelAndView.addObject("IsLogIn", IsLogin);
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
-        modelAndView.addObject("rentRequest",rentRequest);
         if(rentRequest==null){
-            modelAndView.addObject("payPalStatusMsg","Payment already canceled");
-            return modelAndView;
+            return new ModelAndView("redirect:/home");
         }
         if(rentRequest.getRequestedBy().getId() != appCredential.getId()){
-            modelAndView.addObject("payPalStatusMsg","This rent request is not belongs to you");
-            return modelAndView;
+            return new ModelAndView("redirect:/home");
         }
         if(rentRequest.getIsPaymentComplete()){
-            modelAndView.addObject("payPalStatusMsg", "Payment was done before, can't cancel now ");
-            return modelAndView;
+            return new ModelAndView("redirect:/home");
         }
         rentRequestModel.delete(rentRequest);
 
-        modelAndView.addObject("payPalStatusMsg", "Payment canceled");
-        return modelAndView;
+        return new ModelAndView("redirect:/home");
+
     }
 }

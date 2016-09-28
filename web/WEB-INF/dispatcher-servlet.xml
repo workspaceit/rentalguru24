@@ -26,8 +26,8 @@
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
             <property name="location">
-                <value>/WEB-INF/localConfig.properties</value>
-                <!--<value>/WEB-INF/liveConfig.properties</value>-->
+                <!--<value>/WEB-INF/localConfig.properties</value>-->
+                <value>/WEB-INF/liveConfig.properties</value>
             </property>
     </bean>
     <!-- * ** *** **** Scheduler **** *** ** * -->
@@ -377,6 +377,7 @@
                          <value>model.entity.developer.DeveloperExceptionLog</value>
                          <value>model.entity.admin.AdminGlobalNotification</value>
                          <value>model.entity.admin.AdminGlobalNotificationTemplate</value>
+                         <value>model.entity.admin.AdminUnreadAlertCount</value>
                      </list>
               </property>
                <property name="hibernateProperties">

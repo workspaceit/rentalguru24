@@ -53,6 +53,9 @@ ALTER TABLE `admin_global_notification`
   ADD CONSTRAINT `admin_global_notification_read_by` FOREIGN KEY (`read_by`) REFERENCES `app_login_credential` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `admin_global_notification_rent_inf_id` FOREIGN KEY (`rent_inf_id`) REFERENCES `rent_inf` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
+
+ ALTER TABLE `admin_global_notification` CHANGE `read_by` `read_by` INT(11) NULL DEFAULT NULL;
+ALTER TABLE `admin_global_notification` CHANGE `read_by` `read_by` INT(11) NULL DEFAULT NULL;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
