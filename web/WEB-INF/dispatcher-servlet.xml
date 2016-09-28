@@ -209,7 +209,7 @@
 
 
 
-       <mvc:resources mapping="/identitydoc-file/**" location=" ${fileLocation.identitydoc}"
+       <mvc:resources mapping="/identitydoc-file/**" location="${fileLocation.identitydoc}"
        cache-period="31556926"/>
        <mvc:resources mapping="/profile-image/**" location="${fileLocation.profile}"
        cache-period="31556926"/>
@@ -279,14 +279,6 @@
                      </props>
               </property>
        </bean>
-
-
-       <bean id="preConfiguredMessage" class="org.springframework.mail.SimpleMailMessage">
-              <property name="to" value="rafi101010@gmail.com"></property>
-              <property name="from" value="rafi101010@gmail.com"></property>
-              <property name="subject" value="FATAL - Application crash. Save your job !!"/>
-       </bean>
-
 
        <!-- ******************** Model Class, *********************************** -->
        <bean id="baseModel" class="model.BaseModel">
@@ -383,6 +375,8 @@
                              <value>model.entity.app.payments.Transaction</value>
                              <value>model.entity.app.UserPaypalCredential</value>
                          <value>model.entity.developer.DeveloperExceptionLog</value>
+                         <value>model.entity.admin.AdminGlobalNotification</value>
+                         <value>model.entity.admin.AdminGlobalNotificationTemplate</value>
                      </list>
               </property>
                <property name="hibernateProperties">
