@@ -242,6 +242,8 @@ public class AdminDashboardController {
         ModelAndView modelAndView = new ModelAndView("admin/notificationPartialRendering");
         List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getAllUnreadNotification();
         modelAndView.addObject("adminGlobalNotifications", adminGlobalNotifications);
+        String baseUrl = (String) request.getAttribute("baseURL");
+        modelAndView.addObject("BaseUrl", baseUrl);
         return modelAndView;
     }
 
@@ -250,7 +252,9 @@ public class AdminDashboardController {
         ModelAndView modelAndView = new ModelAndView("admin/globalNotificationList");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
+        List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getAllUnreadNotification();
 
+        modelAndView.addObject("adminGlobalNotifications", adminGlobalNotifications);
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Global Notification List");

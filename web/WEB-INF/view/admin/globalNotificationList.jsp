@@ -29,25 +29,25 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>..</th>
-                  <th>..</th>
-                  <th>..</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                  <th>Created Date</th>
                 </tr>
                 </thead>
                 <tbody>
-                <%--<d:forEach var="" items="">--%>
+                <d:forEach var="notification" items="${adminGlobalNotifications}">
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${notification.getType()}</td>
+                    <td>${notification.getDetails()}</td>
+                    <td>${notification.getCreatedDate()}</td>
                   </tr>
-                <%--</d:forEach>--%>
+                </d:forEach>
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>..</th>
-                  <th>..</th>
-                  <th>..</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                  <th>Created Date</th>
                 </tr>
                 </tfoot>
               </table>

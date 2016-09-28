@@ -26,5 +26,5 @@
       </d:forEach>
     </ul>
   </li>
-  <li class="footer"><a href="#">View all</a></li>
+  <li class="footer"><a href="${baseURL}/admin/user/test/test">View all</a></li>
 </ul>
