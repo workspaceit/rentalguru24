@@ -23,7 +23,9 @@ public class AdminCMSController {
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public ModelAndView getCmsPage(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("admin/cmsPage");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
+        modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("PageTitle", "Admin CMS Page");
         modelAndView.addObject("pageHeader", "Create New CMS Page");

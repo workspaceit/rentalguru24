@@ -1,11 +1,13 @@
 package controller.web.admin;
 
+import model.AdminGlobalNotificationModel;
 import model.AppLoginCredentialModel;
 import model.CategoryModel;
 import model.admin.AdminCmsPageModel;
 import model.admin.AdminPaypalCredentailModel;
 import model.admin.AdminSitesFeesModel;
 import model.entity.admin.AdminCmsPage;
+import model.entity.admin.AdminGlobalNotification;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.AppCredential;
@@ -39,6 +41,9 @@ public class AdminDashboardController {
 
     @Autowired
     CategoryModel categoryModel;
+
+    @Autowired
+    AdminGlobalNotificationModel adminGlobalNotificationModel;
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
@@ -231,6 +236,15 @@ public class AdminDashboardController {
         modelAndView.addObject("PageTitle", "Edit Category");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/get-unread-notification-partial-render", method = RequestMethod.GET)
+    public ModelAndView getNotificationPartialRender(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/notificationPartialRendering");
+        List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getAllUnreadNotification();
+        modelAndView.addObject("adminGlobalNotifications", adminGlobalNotifications);
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/test/test", method = RequestMethod.GET)
     public ModelAndView getGlobalNotificationList(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("admin/globalNotificationList");

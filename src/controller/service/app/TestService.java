@@ -2,9 +2,12 @@ package controller.service.app;
 
 
 import controller.service.BaseService;
+import helper.ServiceResponse;
 import library.RentGuruMail;
 import model.*;
 
+import model.entity.admin.AdminGlobalNotification;
+import model.entity.admin.AdminGlobalNotificationTemplate;
 import model.entity.app.*;
 import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.*;
 
@@ -45,6 +49,12 @@ public class TestService extends BaseService{
 
     @Autowired
     ProductModel productModel;
+
+    @Autowired
+    AdminGlobalNotificationModel adminGlobalNotificationModel;
+
+    @Autowired
+    AdminGlobalNotificationTemplateModel adminGlobalNotificationTemplateModel;
 
     @RequestMapping(value = "/test/att", method = RequestMethod.POST)
     public void postAttribute(@RequestParam Map<String, String> allRequestParams){
@@ -195,5 +205,47 @@ public class TestService extends BaseService{
 //        objects.add(rentInf);
 //        return objects;
 //    }
+//    @RequestMapping(value = "/global-notification-add", method = RequestMethod.POST)
+//    public ServiceResponse postglobalNotification(HttpServletRequest request, @RequestParam Map<String, String> allRequestParams){
+//        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+//        String details = allRequestParams.get("details");
+//        String type = allRequestParams.get("type");
+//        Integer notificationTemplateId = Integer.parseInt(allRequestParams.get("templateId"));
+//
+//        if(details.isEmpty() && details == null){
+//            serviceResponse.setRequestError("details", "Details field required");
+//            return serviceResponse;
+//        }
+//        if(type.isEmpty() && type == null){
+//            serviceResponse.setRequestError("type", "Type field required");
+//            return serviceResponse;
+//        }
+//
+//        if(notificationTemplateId == null && notificationTemplateId < 0){
+//            serviceResponse.setRequestError("notificationTemplateId", "notification template field required");
+//            return serviceResponse;
+//        }
+//
+//        AdminGlobalNotificationTemplate adminGlobalNotificationTemplate = adminGlobalNotificationTemplateModel.getById(notificationTemplateId);
+//
+//        if(adminGlobalNotificationTemplate == null){
+//            serviceResponse.setRequestError("notificationTemplateId", "No template found");
+//            return serviceResponse;
+//        }
+//
+//        AdminGlobalNotification adminGlobalNotification =  new AdminGlobalNotification();
+//
+//        adminGlobalNotification.setDetails(details);
+//        adminGlobalNotification.setType(type);
+//        adminGlobalNotification.setNotificationTemplate(adminGlobalNotificationTemplate);
+//        serviceResponse.getResponseStat().setMsg("Notification send successfully");
+//        return serviceResponse;
+//    }
+//
+//    @RequestMapping(value = "/global-notification/template-add", method = RequestMethod.POST)
+//    public ServiceResponse potGlobalNotificationtemplate(HttpServletRequest request){
+//
+//    }
+
 
 }
