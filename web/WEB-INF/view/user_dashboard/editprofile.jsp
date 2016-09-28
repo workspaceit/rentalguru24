@@ -17,7 +17,7 @@
                     <h3>Edit profile</h3>
                     <div class="col-md-3 profile-pic">
                         <div class="profile-pic-review">
-
+                            <img id="profileImage" src="${BaseUrl}/images/${appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}" style="height: 178px; width: 200px;">
                         </div>
                         <div class="form-group" style="margin-bottom:0px;">
                             <label for="fallback">Upload photo</label>
@@ -55,15 +55,6 @@
                                 <input type="password" class="form-control" placeholder="ex.password" id="newPassword" name="newPassword">
                                 <p class="help-block error-form" id="errorMsg_newPassword"></p>
                             </div>
-                            <%--<div class="form-group">--%>
-                                <%--<label>Identity Type</label>--%>
-                                <%--<select class="selectpicker">--%>
-                                    <%--<option value="0">Please select a identity type</option>--%>
-                                    <%--<d:forEach var="identity" items="${identityTypes}">--%>
-                                    <%--<option value="${identity.id}">${identity.name}</option>--%>
-                                    <%--</d:forEach>--%>
-                                <%--</select>--%>
-                            <%--</div>--%>
                         </div>
                         <div class="col-md-12 text-right">
                             <button class="btn-cstm-sign  pos-relative" style="margin-right:0px;" id="editProfileButton" >
@@ -84,17 +75,11 @@
             <div id="template" class="file-row">
                 <!-- This is used as the file preview template -->
                 <div>
-                    <span class="preview"><img data-dz-thumbnail /></span>
+                    <span class="preview"><img data-dz-thumbnail style="height: 178px; width: 200px;"/></span>
                 </div>
                 <div>
                     <strong class="error text-danger" data-dz-errormessage></strong>
                 </div>
-                <%--<div>--%>
-                <%--<p class="size" data-dz-size></p>--%>
-                <%--<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">--%>
-                <%--<div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>--%>
-                <%--</div>--%>
-                <%--</div>--%>
             </div>
         </div>
         <%------------------------------------------------------------------------------------%>
@@ -130,6 +115,7 @@
                             },
                             success:function(file, response){
                                 if(response.responseStat.status == true) {
+                                    $('#profileImage').remove();
                                     $('#editProfilePicUploadLoader').hide();
                                     $('#editProfileButton').removeAttr("disabled","disabled");
                                     $('#editProfileLoder').hide();
