@@ -333,6 +333,10 @@
         </bean>
         <bean id="payoutModel" class="model.PayoutModel" >
         </bean>
+        <bean id="adminGlobalNotificationTemplateModel" class="model.AdminGlobalNotificationTemplateModel" >
+        </bean>
+        <bean id="adminGlobalNotificationModel" class="model.AdminGlobalNotificationModel" >
+        </bean>
 
 
 
