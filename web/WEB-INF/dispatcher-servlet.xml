@@ -284,58 +284,58 @@
        <bean id="baseModel" class="model.BaseModel">
               <property name="sessionFactory" ref="sessionFactory"/>
        </bean>
-       <bean id="rentTypeModel" class="model.RentTypeModel" >
+       <bean id="rentTypeModel" class="model.RentTypeModel" parent="baseModel"   >
        </bean>
-       <bean id="appLoginCredentialModel" class="model.AppLoginCredentialModel">
+       <bean id="appLoginCredentialModel" class="model.AppLoginCredentialModel" parent="baseModel"   >
        </bean>
-       <bean id="attributesModel" class="model.AttributesModel" >
+       <bean id="attributesModel" class="model.AttributesModel" parent="baseModel"   >
        </bean>
-       <bean id="categoryModel" class="model.CategoryModel" >
+       <bean id="categoryModel" class="model.CategoryModel" parent="baseModel"   >
        </bean>
-       <bean id="identityDocModel" class="model.TempFileModel" >
+       <bean id="identityDocModel" class="model.TempFileModel" parent="baseModel"   >
        </bean>
-       <bean id="identityTypeModel" class="model.IdentityTypeModel" >
+       <bean id="identityTypeModel" class="model.IdentityTypeModel" parent="baseModel"   >
        </bean>
-       <bean id="rentRequestModel" class="model.RentRequestModel" >
+       <bean id="rentRequestModel" class="model.RentRequestModel" parent="baseModel"   >
        </bean>
-       <bean id="rentProductModel" class="model.RentInfModel" >
+       <bean id="rentProductModel" class="model.RentInfModel" parent="baseModel"   >
        </bean>
-       <bean id="productModel" class="model.ProductModel" >
+       <bean id="productModel" class="model.ProductModel" parent="baseModel"  >
        </bean>
-       <bean id="productLocationModel" class="model.ProductLocationModel" >
+       <bean id="productLocationModel" class="model.ProductLocationModel" parent="baseModel"   >
        </bean>
-       <bean id="productRatingModel" class="model.ProductRatingModel" >
+       <bean id="productRatingModel" class="model.ProductRatingModel" parent="baseModel"   >
        </bean>
-       <bean id="productLikedModel" class="model.ProductLikedModel" >
+       <bean id="productLikedModel" class="model.ProductLikedModel" parent="baseModel"   >
        </bean>
-       <bean id="requestProductReturnModel" class="model.RentalProductReturnRequestModel" >
+       <bean id="requestProductReturnModel" class="model.RentalProductReturnRequestModel" parent="baseModel"   >
        </bean>
-       <bean id="rentalProductReturnedModel" class="model.RentalProductReturnedModel" >
+       <bean id="rentalProductReturnedModel" class="model.RentalProductReturnedModel" parent="baseModel"   >
        </bean>
-       <bean id="rentalProductReturnedHistoryModel" class="model.RentalProductReturnedHistoryModel" >
+       <bean id="rentalProductReturnedHistoryModel" class="model.RentalProductReturnedHistoryModel" parent="baseModel"   >
        </bean>
-        <bean id="rentPaymentModel" class="model.RentPaymentModel" >
+        <bean id="rentPaymentModel" class="model.RentPaymentModel" parent="baseModel"   >
         </bean>
 
-       <bean id="adminSitesFeesModel" class="model.admin.AdminSitesFeesModel" >
+       <bean id="adminSitesFeesModel" class="model.admin.AdminSitesFeesModel" parent="baseModel"   >
        </bean>
-       <bean id="adminPaypalCredentailModel" class="model.admin.AdminPaypalCredentailModel" >
+       <bean id="adminPaypalCredentailModel" class="model.admin.AdminPaypalCredentailModel" parent="baseModel"   >
        </bean>
-       <bean id="deviceInfoModel" class="model.DeviceInfoModel" >
+       <bean id="deviceInfoModel" class="model.DeviceInfoModel" parent="baseModel"   >
        </bean>
-       <bean id="passwordResetModel" class="model.PasswordResetModel" >
+       <bean id="passwordResetModel" class="model.PasswordResetModel" parent="baseModel"   >
        </bean>
-        <bean id="adminCmsPageModel" class="model.admin.AdminCmsPageModel" >
+        <bean id="adminCmsPageModel" class="model.admin.AdminCmsPageModel" parent="baseModel"   >
         </bean>
-        <bean id="paymentRefundModel" class="model.PaymentRefundModel" >
+        <bean id="paymentRefundModel" class="model.PaymentRefundModel" parent="baseModel"   >
         </bean>
-        <bean id="userPaypalCredentialEntityModel" class="model.UserPaypalCredentialModel" >
+        <bean id="userPaypalCredentialEntityModel" class="model.UserPaypalCredentialModel" parent="baseModel"   >
         </bean>
-        <bean id="payoutModel" class="model.PayoutModel" >
+        <bean id="payoutModel" class="model.PayoutModel" parent="baseModel"   >
         </bean>
-        <bean id="adminGlobalNotificationTemplateModel" class="model.AdminGlobalNotificationTemplateModel" >
+        <bean id="adminGlobalNotificationTemplateModel" class="model.AdminGlobalNotificationTemplateModel" parent="baseModel"   >
         </bean>
-        <bean id="adminGlobalNotificationModel" class="model.AdminGlobalNotificationModel" >
+        <bean id="adminGlobalNotificationModel" class="model.AdminGlobalNotificationModel" parent="baseModel"   >
         </bean>
 
 
