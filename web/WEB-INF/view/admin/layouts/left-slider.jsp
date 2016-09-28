@@ -102,6 +102,14 @@
           <li><a href="${BaseUrl}/admin/cms/get-all"><i class="fa fa-circle-o"></i>All pages</a></li>
         </ul>
       </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-dashboard"></i> <span>Notification</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/user/test/test"><i class="fa fa-circle-o"></i>Global Notification List</a></li>
+        </ul>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->

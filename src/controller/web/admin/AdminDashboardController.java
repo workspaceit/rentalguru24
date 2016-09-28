@@ -172,7 +172,7 @@ public class AdminDashboardController {
     @RequestMapping(value = "/add-sub-category", method = RequestMethod.GET)
     public ModelAndView getAddSubCategory(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("admin/addSubCategory");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
         List<Category> category = categoryModel.getAll();
 
@@ -190,7 +190,7 @@ public class AdminDashboardController {
     @RequestMapping(value = "/category-list", method = RequestMethod.GET)
     public ModelAndView getCategoryList(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("admin/categoryList");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
         List<Category> category = categoryModel.getAll();
 
@@ -207,7 +207,7 @@ public class AdminDashboardController {
     @RequestMapping(value = "/edit-category/{category_id}", method = RequestMethod.GET)
     public ModelAndView editCategory(HttpServletRequest request, @PathVariable("category_id") int categoryId){
         ModelAndView modelAndView = new ModelAndView("admin/editCategory");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
         Category category = categoryModel.getById(categoryId);
 
@@ -221,7 +221,7 @@ public class AdminDashboardController {
     @RequestMapping(value = "/edit-sub-category/{sub_category_id}", method = RequestMethod.GET)
     public ModelAndView editSubcategory(HttpServletRequest request,@PathVariable("sub_category_id") int subCategoryId){
         ModelAndView modelAndView = new ModelAndView("admin/editSubCategory");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
         Category subCategory = categoryModel.getById(subCategoryId);
 
@@ -231,5 +231,19 @@ public class AdminDashboardController {
         modelAndView.addObject("PageTitle", "Edit Category");
         return modelAndView;
     }
+    @RequestMapping(value = "/test/test", method = RequestMethod.GET)
+    public ModelAndView getGlobalNotificationList(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/globalNotificationList");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        String baseUrl = (String) request.getAttribute("baseURL");
 
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Global Notification List");
+        modelAndView.addObject("pageHeader", "Global Notification List Tables");
+        modelAndView.addObject("mainMenu", "Notification");
+        modelAndView.addObject("subMenu", "Global Notification List");
+        modelAndView.addObject("pageUrl", "admin/user/test/test");
+        return modelAndView;
+    }
 }

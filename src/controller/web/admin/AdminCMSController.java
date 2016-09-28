@@ -36,7 +36,7 @@ public class AdminCMSController {
     @RequestMapping(value = "/get-all", method = RequestMethod.GET)
     public ModelAndView getAllCmsPages(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("admin/cmsPagesList");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
 
         modelAndView.addObject("cmsPages", adminCmsPageModel.getAll());
@@ -53,7 +53,7 @@ public class AdminCMSController {
     @RequestMapping(value = "/static/{PageKey}", method = RequestMethod.GET)
     public ModelAndView getCmsEditPage(HttpServletRequest request, @PathVariable("PageKey") String PageKey){
         ModelAndView modelAndView = new ModelAndView("admin/cmsEditPage");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appcrediential");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
 
         modelAndView.addObject("cmsPages", adminCmsPageModel.getByPageKey(PageKey));
