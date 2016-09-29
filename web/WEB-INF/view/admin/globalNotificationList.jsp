@@ -31,7 +31,7 @@
                 <tr>
                   <th>Type</th>
                   <th>Description</th>
-                  <th>Created Date</th>
+                  <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,12 @@
                   <tr>
                     <td>${notification.getType()}</td>
                     <td>${notification.getDetails()}</td>
-                    <td>${notification.getCreatedDate()}</td>
+                    <d:if test="${notification.getIsRead() == true}">
+                      <td>Read</td>
+                    </d:if>
+                    <d:if test="${notification.getIsRead() == false}">
+                      <td>Unread</td>
+                    </d:if>
                   </tr>
                 </d:forEach>
                 </tbody>
@@ -47,7 +52,7 @@
                 <tr>
                   <th>Type</th>
                   <th>Description</th>
-                  <th>Created Date</th>
+                  <th>Status</th>
                 </tr>
                 </tfoot>
               </table>

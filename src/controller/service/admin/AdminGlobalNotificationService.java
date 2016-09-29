@@ -2,13 +2,12 @@ package controller.service.admin;
 
 import helper.ServiceResponse;
 import model.AdminGlobalNotificationModel;
+import model.AdminUnreadAlertCounterModel;
 import model.entity.admin.AdminGlobalNotification;
+import model.entity.admin.AdminUnreadAlertCount;
 import model.entity.app.AppCredential;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -23,6 +22,9 @@ public class AdminGlobalNotificationService {
 
     @Autowired
     AdminGlobalNotificationModel adminGlobalNotificationModel;
+
+    @Autowired
+    AdminUnreadAlertCounterModel adminUnreadAlertCounterModel;
 
     @RequestMapping(value = "/get-all-unread-notification", method = RequestMethod.GET)
     public ServiceResponse getAllNotification(HttpServletRequest request){
@@ -48,6 +50,45 @@ public class AdminGlobalNotificationService {
         }
         List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getUnreadNotification(limit, offset);
         serviceResponse.setResponseData(adminGlobalNotifications);
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/get-notification-count", method = RequestMethod.GET)
+    public ServiceResponse getNotificationCount(HttpServletRequest request){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AdminUnreadAlertCount adminUnreadAlertCount = adminUnreadAlertCounterModel.getAllUnreadAlertCount();
+        serviceResponse.setResponseData(adminUnreadAlertCount);
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/notification-read/{notification_id}", method = RequestMethod.POST)
+    public ServiceResponse notificationRead(HttpServletRequest request, @PathVariable("notification_id") int notificationId){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AdminGlobalNotification adminGlobalNotification = adminGlobalNotificationModel.getById(notificationId);
+        if(adminGlobalNotification == null){
+            serviceResponse.setRequestError("notification", "No notification found");
+            return serviceResponse;
+        }
+        if(adminGlobalNotification.getIsRead() == true){
+            serviceResponse.setRequestError("notification", "Notification already read");
+            return serviceResponse;
+        }
+        AdminUnreadAlertCount adminUnreadAlertCount = adminUnreadAlertCounterModel.getAllUnreadAlertCount();
+        int unreadMessage = adminUnreadAlertCount.getGlobalNotification();
+        if(unreadMessage < 0){
+            serviceResponse.setRequestError("notification", "No notification found");
+            return serviceResponse;
+        }
+        unreadMessage = (unreadMessage - 1);
+
+        adminUnreadAlertCount.setGlobalNotification(unreadMessage);
+        adminUnreadAlertCounterModel.update(adminUnreadAlertCount);
+
+        adminGlobalNotification.setIsRead(true);
+        adminGlobalNotificationModel.update(adminGlobalNotification);
+
+        serviceResponse.getResponseStat().setMsg("Message Read !!!");
+
         return serviceResponse;
     }
 }

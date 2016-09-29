@@ -26,24 +26,17 @@
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
         <li class="dropdown notifications-menu">
-          <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--%>
-            <%--<i class="fa fa-bell-o"></i>--%>
-            <%--<span class="label label-warning">10</span>--%>
-          <%--</a>--%>
-          <%--<ul class="dropdown-menu">--%>
-            <%--<li class="header">You have 10 notifications</li>--%>
-            <%--<li>--%>
-              <%--<!-- inner menu: contains the actual data -->--%>
-              <%--<ul class="menu">--%>
-                <%--<li>--%>
-                  <%--<a href="#">--%>
-                    <%--.............--%>
-                  <%--</a>--%>
-                <%--</li>--%>
-              <%--</ul>--%>
-            <%--</li>--%>
-            <%--<li class="footer"><a href="#">View all</a></li>--%>
-          <%--</ul>--%>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-bell-o"></i>
+            <span class="label label-warning" id="unreadMessageCount"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="header" id="unreadMessageCountText"></li>
+            <li id="notificationInnerMenu">
+
+            </li>
+            <li class="footer"><a href="${baseURL}/admin/user/test/test">View all</a></li>
+          </ul>
         </li>
         <!-- Notifications: style can be found in dropdown.less -->
         <!-- Tasks: style can be found in dropdown.less -->
@@ -96,9 +89,27 @@
   window.onload = function(){
     $.ajax({
       type: "GET",
-      url: BASEURL+"/admin/user/get-unread-notification-partial-render",
+      url: BASEURL+"/api-admin/get-notification-count",
       success: function(data){
-          $(".notifications-menu").html(data);
+        if(data.responseStat.status == true){
+          $("#unreadMessageCount").html(data.responseData.globalNotification);
+          $("#unreadMessageCountText").html("You have "+data.responseData.globalNotification+" notifications");
+        }
+      },
+      error: function(data){
+        console.log(data);
+      }
+    });
+
+    $.ajax({
+      type: "GET",
+      url: BASEURL+"/admin/user/get-unread-notification-partial-render",
+      data: {
+        limit : 4,
+        offset : 0
+      },
+      success: function(data){
+          $("#notificationInnerMenu").html(data);
       },
       error: function(data){
         console.log(data);

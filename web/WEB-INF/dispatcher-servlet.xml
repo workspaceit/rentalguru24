@@ -337,6 +337,8 @@
         </bean>
         <bean id="adminGlobalNotificationModel" class="model.AdminGlobalNotificationModel" parent="baseModel"   >
         </bean>
+    <bean id="adminUnreadAlertCounterModel" class="model.AdminUnreadAlertCounterModel" parent="baseModel"   >
+    </bean>
 
 
 

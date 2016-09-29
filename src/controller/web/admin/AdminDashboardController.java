@@ -1,15 +1,14 @@
 package controller.web.admin;
 
+import helper.ServiceResponse;
 import model.AdminGlobalNotificationModel;
+import model.AdminUnreadAlertCounterModel;
 import model.AppLoginCredentialModel;
 import model.CategoryModel;
 import model.admin.AdminCmsPageModel;
 import model.admin.AdminPaypalCredentailModel;
 import model.admin.AdminSitesFeesModel;
-import model.entity.admin.AdminCmsPage;
-import model.entity.admin.AdminGlobalNotification;
-import model.entity.admin.AdminPaypalCredential;
-import model.entity.admin.AdminSiteFeesEntity;
+import model.entity.admin.*;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import model.entity.app.Category;
@@ -18,11 +17,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.HttpRetryException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by omar on 8/24/16.
@@ -44,6 +45,9 @@ public class AdminDashboardController {
 
     @Autowired
     AdminGlobalNotificationModel adminGlobalNotificationModel;
+
+    @Autowired
+    AdminUnreadAlertCounterModel adminUnreadAlertCounterModel;
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
@@ -238,9 +242,12 @@ public class AdminDashboardController {
     }
 
     @RequestMapping(value = "/get-unread-notification-partial-render", method = RequestMethod.GET)
-    public ModelAndView getNotificationPartialRender(HttpServletRequest request){
+    public ModelAndView getNotificationPartialRender(HttpServletRequest request, @RequestParam Map<String, String> allRequestParameter) {
         ModelAndView modelAndView = new ModelAndView("admin/notificationPartialRendering");
-        List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getAllUnreadNotification();
+        int limit = Integer.parseInt(allRequestParameter.get("limit"));
+        int offset = Integer.parseInt(allRequestParameter.get("offset"));
+        List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getUnreadNotification(limit, offset);
+
         modelAndView.addObject("adminGlobalNotifications", adminGlobalNotifications);
         String baseUrl = (String) request.getAttribute("baseURL");
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -252,7 +259,7 @@ public class AdminDashboardController {
         ModelAndView modelAndView = new ModelAndView("admin/globalNotificationList");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
-        List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getAllUnreadNotification();
+        List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getAllNotification();
 
         modelAndView.addObject("adminGlobalNotifications", adminGlobalNotifications);
         modelAndView.addObject("adminUser", appCredential);
@@ -262,6 +269,28 @@ public class AdminDashboardController {
         modelAndView.addObject("mainMenu", "Notification");
         modelAndView.addObject("subMenu", "Global Notification List");
         modelAndView.addObject("pageUrl", "admin/user/test/test");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/notification-details/{notification_id}", method = RequestMethod.GET)
+    public ModelAndView getNotificationDetails(HttpServletRequest request, @PathVariable("notification_id") int notificationId){
+        ModelAndView modelAndView = new ModelAndView("admin/notificationDetails");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        AdminGlobalNotification adminGlobalNotification = adminGlobalNotificationModel.getById(notificationId);
+
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("adminGlobalNotification", adminGlobalNotification);
+        modelAndView.addObject("PageTitle", "Notification Details");
+        modelAndView.addObject("pageHeader", "Notification Details");
+        modelAndView.addObject("mainMenu", "Notification");
+        modelAndView.addObject("subMenu", "Notification Details");
+        modelAndView.addObject("pageUrl", "admin/user/notification-details");
         return modelAndView;
     }
 }
