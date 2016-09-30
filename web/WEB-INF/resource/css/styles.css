@@ -2908,6 +2908,12 @@ span.time_date {
 .payment-block{
     
 }
+.other_image_rqst_product .owl-controls{
+    overflow: hidden !important;
+    width: 100%!important;
+    display: block!important;
+    height: 25px!important;
+}
 /*Edit product*/
 
 
