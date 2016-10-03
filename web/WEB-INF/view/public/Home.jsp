@@ -77,7 +77,7 @@
                     <div class="col-md-8 col-sm-8 col-xs-12">
                         <div id="main-product" class="carousel slide main_product_slider" data-ride="carousel">
                             <!-- Wrapper for slides -->
-                            <div class="carousel-inner clearfix" role="listbox">
+                            <div  class="carousel-inner clearfix" role="listbox">
                                 <d:set var="topProductImageActive" value="active" />
                                 <d:forEach var="topProduct" items="${rentalProductsTop}">
                                     <div class="item ${topProductImageActive}">
@@ -185,7 +185,7 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <div class="row clearfix">
+                        <div id="productListDiv"  class="row clearfix">
                             <d:forEach var="product" items="${products}">
                             <div class="col-md-3 col-sm-6 col-xs-12 single-item">
                                 <div class="panel panel-default">
@@ -238,7 +238,7 @@
             </div>
         </div>
         <div class="col-md-12 text-center">
-            <button class="btn-cstm-sign pos-relative" id="loadMoreButton" >Load More
+            <button class="btn-cstm-sign pos-relative" id="loadMoreButton" onclick="loadMoreProduct()" >Load More
                 <span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>
             </button>
         </div>

@@ -191,16 +191,20 @@ public class HomeController {
             modelAndView.addObject("productListTitle","");
 
         if(categoryId>0){
-            if(title!=null || title!=""){
+            if(title!=null && title!=""){
                 rentalProduct = productModel.getProductByCategoryIdTitle(categoryId, title, limit, offset);
+                System.out.println("title "+rentalProduct.size());
             }else{
-                rentalProduct = productModel.getProductByCategoryId(categoryId,limit,offset);
+                rentalProduct = productModel.getProductByCategoryId(categoryId, limit, offset);
+                System.out.println("rentalProduct "+rentalProduct.size());
             }
         }else{
-            if(title!=null || title!="") {
+            if(title!=null && title!="") {
                 rentalProduct = productModel.getProductByTitle(title, limit, offset);
+                System.out.println(" only title "+rentalProduct.size());
             }else {
-                productModel.getRentalProduct(limit, offset);
+                rentalProduct = productModel.getRentalProduct(limit, offset);
+                System.out.println(" None "+rentalProduct.size());
             }
         }
 

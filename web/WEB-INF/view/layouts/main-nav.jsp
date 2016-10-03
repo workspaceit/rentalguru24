@@ -24,7 +24,7 @@
           </ul>
         </li>
         <form class="navbar-form navbar-left no-padding main_search_form" role="search" onsubmit="return false;" >
-          <input class="form-control" placeholder="Search" name="searchTxtBox" id="searchTxtBox" type="text">
+          <input class="form-control" placeholder="Search" name="searchTxtBox" id="searchTxtBox" type="text" onkeypress="doSearch(event)">
           <%--<div class="input-group-btn search_button">--%>
             <%--<button class="btn btn-default search_btn" type="submit" style="padding:6px;"><i class="fa fa-search"></i></button>--%>
           <%--</div>--%>

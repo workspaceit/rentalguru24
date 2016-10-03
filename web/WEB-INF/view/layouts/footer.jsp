@@ -72,12 +72,22 @@
 <%--Auto Complete [Ends]--%>
 <style>
   .eac-square input {
-    background-image: url("<c:url value="/resources/imgicon_search.png" />");
+    background-image: url("<c:url value="/resources/img/icon_search.png" />");
     background-repeat: no-repeat;
     background-position: right 10px center;
   }
 </style>
 <script>
+  function doSearch(event){
+    var char = event.which || event.keyCode;
+    console.log(char);
+    var productStr = $("#searchTxtBox").val();
+    console.log(productStr);
+    if(char==13 && productStr!=null && productStr != ""){
+      console.log("TIME TO GO");
+      window.location = BASEURL+"/home?r="+productStr;
+    }
+  }
   var options = {
 
     url: function(phrase){
@@ -128,13 +138,15 @@
       sort: {
         enabled: true
       },
-      onChooseEvent: function(elem) {
+      onChooseEvent: function() {
+        console.log("sd");
         var product = $("#searchTxtBox").getSelectedItemData();
         console.log(product);
         if(product!=null && typeof product.id != undefined){
           window.location = BASEURL+"/product/details/"+product.id;
         }
-      }
+      },
+
     },
 
     theme: "square"
@@ -291,30 +303,31 @@
     $("#dropdownCategorySelect").attr("data-category-id",categoryId);
     $("#dropdownCategorySelect").html('<i class="fa fa-bars"></i>'+categoryName+'<span class="caret"></span>');
   }
-  function loadMoreProduct(categoryId,productTitle){
+  function loadMoreProduct(){
     var cid=0;
     var title= "";
-    if(categoryId!=undefined){
-      cid = categoryId;
-    }
-    if(productTitle!=undefined){
-      title = productTitle;
-    }
+//    if(categoryId!=undefined){
+//      cid = categoryId;
+//    }
+//    if(productTitle!=undefined){
+//      title = productTitle;
+//    }
     var loadMoreObj = getLoadMoreObj();
     loadMoreObj.limit= 10;
+
+//    +"&categoryId="+cid
+//    +"&title="+title,
     $.ajax({
       url:  BASEURL+loadMoreObj.url
                     +"?limit="+ loadMoreObj.limit
-                    +"&offset="+loadMoreObj.offset
-                    +"&categoryId="+cid
-                    +"&title="+title,
+                    +"&offset="+loadMoreObj.offset,
       type: "GET",
       success: function(data){
         //history.pushState({}, null, newUrl);
         if(loadMoreObj.offset==0){
-          $("#newProductPartialRender").html(data);
+          $("#productListDiv").html(data);
         }else{
-          $("#newProductPartialRender").find(".clearfix").append(data);
+          $("#productListDiv").append(data);
         }
         loadMoreObj.offset++;
         setLoadMoreObj(loadMoreObj);
