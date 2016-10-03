@@ -16,7 +16,7 @@
   </div>
 </div>
 <%--Hiden fields for load more--%>
-<input id="loadMoreObj" type="hidden" value='{"url":"/home/partial-rendering/load/more/rental-product","limit":0,"offset":0}' />
+<input id="loadMoreObj" type="hidden" value='{"url":"${loadMoreProductUrl}","limit":0,"offset":1}' />
 <script>
   var BASEURL = "${BaseUrl}";
 </script>
@@ -67,7 +67,7 @@
 
 <%--Auto Complete [Starts]--%>
 <script src="<c:url value="/resources/auto_complete/jquery.easy-autocomplete.min.js" />" ></script>
-<%--<link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.themes.min.css" />">--%>
+<link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.themes.min.css" />">
 <link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.min.css" />">
 <%--Auto Complete [Ends]--%>
 <style>
@@ -85,7 +85,7 @@
     console.log(productStr);
     if(char==13 && productStr!=null && productStr != ""){
       console.log("TIME TO GO");
-      window.location = BASEURL+"/home?r="+productStr;
+      window.location = BASEURL+"/home?title="+productStr;
     }
   }
   var options = {
@@ -289,6 +289,18 @@
           scrollDownWithAnimation(elem);
           hideInfo();
         }
+
+        if($("#productListDiv").children().length>0){
+          $("#loadMoreButtonParent").show();
+        }else{
+          $("#loadMoreButtonParent").hide();
+        }
+
+        var loadMoreObj = getLoadMoreObj();
+        loadMoreObj.url= "/home/partial-rendering/load/more/rental-product?categoryId="+categoryId;
+        loadMoreObj.offset=1;
+        loadMoreObj.limit=8;
+        setLoadMoreObj(loadMoreObj);
       }
     });
   }
@@ -304,25 +316,22 @@
     $("#dropdownCategorySelect").html('<i class="fa fa-bars"></i>'+categoryName+'<span class="caret"></span>');
   }
   function loadMoreProduct(){
+    $("#loadMoreButtonLoader").show();
     var cid=0;
     var title= "";
-//    if(categoryId!=undefined){
-//      cid = categoryId;
-//    }
-//    if(productTitle!=undefined){
-//      title = productTitle;
-//    }
+
     var loadMoreObj = getLoadMoreObj();
-    loadMoreObj.limit= 10;
+    loadMoreObj.limit= 8;
 
 //    +"&categoryId="+cid
 //    +"&title="+title,
     $.ajax({
       url:  BASEURL+loadMoreObj.url
-                    +"?limit="+ loadMoreObj.limit
+                    +"&limit="+ loadMoreObj.limit
                     +"&offset="+loadMoreObj.offset,
       type: "GET",
       success: function(data){
+        $("#loadMoreButtonLoader").hide();
         //history.pushState({}, null, newUrl);
         if(loadMoreObj.offset==0){
           $("#productListDiv").html(data);
@@ -336,6 +345,9 @@
 //          scrollDownWithAnimation(elem);
 //          hideInfo();
 //        }
+      },
+      error:function(e){
+        $("#loadMoreButtonLoader").hide();
       }
     });
   }

@@ -35,7 +35,7 @@ public class HomeController {
     @Autowired
     ProductModel productModel;
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView index(HttpServletRequest request) {
+    public ModelAndView index(HttpServletRequest request,@RequestParam(value = "title",required = false)String title) {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
@@ -44,7 +44,8 @@ public class HomeController {
 
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-        List<RentalProduct> rentalProducts = productModel.getRentalProduct(8, 0);
+        List<RentalProduct> rentalProducts = new ArrayList<>();
+        rentalProducts = (title!=null&&title!="")?productModel.getProductByTitle(title,8,0):productModel.getRentalProduct(8, 0);
         List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
         String topRentalProductHeadTitle = "MOST RATED";
         if(rentalProductsTop==null || rentalProductsTop.size()==0){
@@ -57,6 +58,10 @@ public class HomeController {
         RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
         RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
+        String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?";
+        loadMoreProductUrl = (title!=null&&title!="")?loadMoreProductUrl+"title="+title:loadMoreProductUrl;
+
+        modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
         modelAndView.addObject("category", category);
         modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
         modelAndView.addObject("productListTitle","New products");
@@ -74,7 +79,10 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
-    public ModelAndView getProductByCategoryId(HttpServletRequest request, @PathVariable("categoryId") int categoryId, @RequestParam(value = "r", required = false) final String r){
+    public ModelAndView getProductByCategoryId(HttpServletRequest request,
+                                               @PathVariable("categoryId") int categoryId,
+                                               @RequestParam(value = "title", required = false)
+                                                   final String title){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
@@ -83,17 +91,25 @@ public class HomeController {
 
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Category categorySelected = categoryModel.getById(categoryId);
+        String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?categoryId="+categoryId;
+
         if(categorySelected!=null)
             modelAndView.addObject("productListTitle",categorySelected.getName());
         else
             modelAndView.addObject("productListTitle","");
 
+
+        if(categorySelected!=null){
+            modelAndView.addObject("productListTitle",categorySelected.getName());
+        }
+
         List<RentalProduct> rentalProducts;
 
-        if(r == null || r.isEmpty()){
+        if(title == null || title.isEmpty()){
             rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
         }else {
-            rentalProducts = productModel.getProductByCategoryIdTitle(categoryId,r,8,0);
+            rentalProducts = productModel.getProductByCategoryIdTitle(categoryId,title,8,0);
+            loadMoreProductUrl +="&title="+title;
         }
 
         if(rentalProducts != null){
@@ -109,6 +125,8 @@ public class HomeController {
             RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
             RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
+
+            modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
             modelAndView.addObject("category", category);
             modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
             modelAndView.addObject("products", rentalProducts);

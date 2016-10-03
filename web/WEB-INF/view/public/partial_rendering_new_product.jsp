@@ -21,7 +21,7 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-      <div class="row clearfix">
+      <div id="productListDiv" class="row clearfix">
         <d:forEach var="product" items="${products}">
           <div class="col-md-3 single-item">
             <div class="panel panel-default">

@@ -14,7 +14,7 @@
       <ul class="nav navbar-nav">
         <li class="dropdown catagory_drop"  >
           <a data-category-id="" id="dropdownCategorySelect" class="dropdown-toggle catagory_drop_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-bars"></i>Select a category
+            <i class="fa fa-bars"></i>All category
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">

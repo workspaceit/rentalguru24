@@ -231,17 +231,33 @@
                                     </div>
                                 </div>
                             </div>
+
                             </d:forEach>
+                            <d:if test="${products.size()==0}">
+                                <div class="col-md-12 text-center">
+                                    <p>No Product found</p>
+                                </div>
+                            </d:if>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12 text-center">
+        <d:set var="loadMoreProductCssStr" value=""></d:set>
+        <d:if test="${products.size()==0}">
+            <d:set var="loadMoreProductCssStr" value="none"></d:set>
+        </d:if>
+        <div id="loadMoreButtonParent" class="col-md-12 text-center" style="display: ${loadMoreProductCssStr};">
             <button class="btn-cstm-sign pos-relative" id="loadMoreButton" onclick="loadMoreProduct()" >Load More
                 <span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>
             </button>
         </div>
+
+        <%--<div class="col-md-12 text-center">--%>
+            <%--<button class="btn-cstm-sign pos-relative" id="loadMoreButton" onclick="loadMoreProduct()" >Load More--%>
+                <%--<span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>--%>
+            <%--</button>--%>
+        <%--</div>--%>
 
         <br>
         <%--<div class="img-single">--%>
