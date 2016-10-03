@@ -458,12 +458,16 @@ public class ProductService{
             rentalProduct.setDescription(allRequestParameter.get("description"));
         }
 
-        if(!rentalProduct.getAvailableFrom().equals(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "dd/MM/yyyy"))){
-            rentalProduct.setAvailableFrom(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "dd/MM/yyyy"));
+        if(!rentalProduct.getAvailableFrom().equals(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "MM/dd/yyyy"))){
+            System.out.println("av from now ="+rentalProduct.getAvailableFrom());
+            System.out.println("av from edit ="+DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "MM/dd/yyyy"));
+            rentalProduct.setAvailableFrom(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "MM/dd/yyyy"));
         }
 
-        if(rentalProduct.getAvailableTill().equals(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "dd/MM/yyyy"))){
-            rentalProduct.setAvailableTill(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "dd/MM/yyyy"));
+        if(!rentalProduct.getAvailableTill().equals(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "MM/dd/yyyy"))){
+            System.out.println("till from now ="+rentalProduct.getAvailableTill());
+            System.out.println("till from edit ="+DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "MM/dd/yyyy"));
+            rentalProduct.setAvailableTill(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "MM/dd/yyyy"));
         }
 
         if(!rentalProduct.getProductLocation().getFormattedAddress().equals(allRequestParameter.get("formattedAddress"))){

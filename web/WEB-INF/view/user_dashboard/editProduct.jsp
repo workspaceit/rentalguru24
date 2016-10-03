@@ -109,7 +109,7 @@
                     <label for="fallback">Product main image</label>
                     <div class="profile-pic main-img clearfix">
                         <div class="main-review text-center">
-                            <img id="profileImage" src="${BaseUrl}/profile-image/${rentalProduct.getProfileImage().getOriginal().getPath()}" alt="...">
+                            <img id="profileImage" src="${BaseUrl}/images/${rentalProduct.getProfileImage().getOriginal().getPath()}" alt="...">
                         </div>
                         <div class="" style="margin-bottom:0px;">
                             <div id="fallback" class="fallback pos-relative fall-small" >
@@ -171,7 +171,7 @@
     <div id="templateSmall" class="file-row">
         <div class="col-md-3 pos-relative">
             <img data-dz-thumbnail />
-            <span class="img-cross">X</span>
+            <span class="img-cross" onclick="deleteEditedOtherImage()">X</span>
         </div>
     </div>
 </div>
@@ -422,6 +422,10 @@
                 console.log("ERROR");
             }
         });
+    }
+    function deleteEditedOtherImage(){
+        var otherImageTokenArray = JSON.parse($("#otherImagesToken").val());
+        console.log(otherImageTokenArray);
     }
 </script>
 <script>
