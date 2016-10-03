@@ -28,6 +28,7 @@ import validator.form.ProductUploadFormValidator;
 import validator.form.class_file.ProductEditFrom;
 import validator.form.class_file.ProductUploadForm;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.*;
@@ -364,9 +365,6 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        System.out.println(limit);
-        System.out.println(offset);
-
         serviceResponse.setResponseData(productModel.getMyRentalProductList(appCredential.getId(), limit, offset), "No record found");
         return serviceResponse;
     }
@@ -616,6 +614,79 @@ public class ProductService{
         return serviceResponse;
 
     }
+    @RequestMapping(value = "/fiend-product-with-category-title", method = RequestMethod.GET)
+    public ServiceResponse fiendProductWithCategoryTitle(HttpServletRequest request, @RequestParam Map<String, String> allRequestParameter){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        if(allRequestParameter.get("categoryId").trim().isEmpty()){
+            serviceResponse.setRequestError("category","Category require");
+            return serviceResponse;
+        }
+        if(allRequestParameter.get("limit").trim().isEmpty()){
+            serviceResponse.setRequestError("limit","Limit require");
+            return serviceResponse;
+        }
+
+        if(allRequestParameter.get("offset").trim().isEmpty()){
+            serviceResponse.setRequestError("offset","Offset require");
+            return serviceResponse;
+        }
+
+        if(allRequestParameter.get("title").trim().isEmpty()){
+            serviceResponse.setRequestError("title","Title require");
+            return serviceResponse;
+        }
+
+        int categoryId = Integer.parseInt(allRequestParameter.get("categoryId").trim());
+        int limit = Integer.parseInt(allRequestParameter.get("limit").trim());
+        int offset = Integer.parseInt(allRequestParameter.get("offset").trim());
+        String title = allRequestParameter.get("title").trim();
+
+        List<RentalProduct> rentalProduct = productModel.getProductByCategoryIdTitle(categoryId, title, limit, offset);
+
+        if(rentalProduct == null || rentalProduct.isEmpty()){
+            serviceResponse.setRequestError("product","No product found by this name");
+            return serviceResponse;
+        }
+
+        serviceResponse.setResponseData(rentalProduct);
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/fiend-product-with-title", method = RequestMethod.GET)
+    public ServiceResponse fiendProductWithTitle(HttpServletRequest request, @RequestParam Map<String, String> allRequestParameter){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        if(allRequestParameter.get("title").trim().isEmpty()){
+            serviceResponse.setRequestError("title","Title require");
+            return serviceResponse;
+        }
+
+        if(allRequestParameter.get("limit").trim().isEmpty()){
+            serviceResponse.setRequestError("limit","Limit require");
+            return serviceResponse;
+        }
+
+        if(allRequestParameter.get("offset").trim().isEmpty()){
+            serviceResponse.setRequestError("offset","Offset require");
+            return serviceResponse;
+        }
+
+        String title = allRequestParameter.get("title").trim();
+        int limit = Integer.parseInt(allRequestParameter.get("limit").trim());
+        int offset = Integer.parseInt(allRequestParameter.get("offset").trim());
+
+        List<RentalProduct> rentalProduct = productModel.getProductByTitle(title, limit, offset);
+
+        if(rentalProduct == null || rentalProduct.isEmpty()){
+            serviceResponse.setRequestError("product","No product found by this name");
+            return serviceResponse;
+        }
+
+        serviceResponse.setResponseData(rentalProduct);
+        return serviceResponse;
+    }
 }
 

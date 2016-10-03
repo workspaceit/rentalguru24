@@ -340,6 +340,43 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
+    public List<RentalProduct> getProductByTitle(String title ,int limit, int offset){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity rentalProduct " +
+                "  WHERE  rentalProduct.reviewStatus = true" +
+                " AND rentalProduct.name LIKE :title" +
+                " order by rentalProduct.id desc ";
+        try{
+            return session.createQuery(hql)
+                    .setParameter("title", "%" +title+ "%")
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit)
+                    .list();
+        } finally {
+
+            session.close();
+        }
+    }
+    public List<RentalProduct> getProductByCategoryIdTitle(int categoryId, String title ,int limit, int offset){
+        Session session = this.sessionFactory.openSession();
+        String hql = "FROM RentalProductEntity rentalProduct " +
+                " LEFT JOIN FETCH rentalProduct.productCategories productCategory " +
+                "  WHERE productCategory.category.id=:categoryId"+
+                "  and rentalProduct.reviewStatus = true" +
+                " AND rentalProduct.name LIKE :title" +
+                " order by rentalProduct.id desc ";
+        try{
+            return session.createQuery(hql)
+                    .setParameter("categoryId", categoryId)
+                    .setParameter("title", "%" +title+ "%")
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit)
+                    .list();
+        } finally {
+
+            session.close();
+        }
+    }
     public List<MyRentedProduct> getMyCurrentRentedProduct(int renteeId, int limit, int offset) {
         Session session = this.sessionFactory.openSession();
         String hql = "FROM RentalProductEntity myRentedProduct LEFT JOIN  FETCH myRentedProduct.rentInf reninf " +
