@@ -140,9 +140,9 @@
                             <%--</div>--%>
                         <%--</div>--%>
                     <%--</div>--%>
-                </div>
-            </div>
-        </div>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
         <%--<div class="offer">--%>
             <%--<div class="container">--%>
                 <%--<div class="row">--%>
@@ -237,6 +237,12 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12 text-center">
+            <button class="btn-cstm-sign pos-relative" id="loadMoreButton" >Load More
+                <span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>
+            </button>
+        </div>
+
         <br>
         <%--<div class="img-single">--%>
             <%--<div class="container">--%>
