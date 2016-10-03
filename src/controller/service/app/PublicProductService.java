@@ -100,21 +100,21 @@ public class PublicProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        if(allRequestParameter.get("categoryId").trim().isEmpty()){
+        if(allRequestParameter.get("categoryId") == null || allRequestParameter.get("categoryId").isEmpty()){
             serviceResponse.setRequestError("category","Category require");
             return serviceResponse;
         }
-        if(allRequestParameter.get("limit").trim().isEmpty()){
+        if(allRequestParameter.get("limit") == null || allRequestParameter.get("limit").isEmpty()){
             serviceResponse.setRequestError("limit","Limit require");
             return serviceResponse;
         }
 
-        if(allRequestParameter.get("offset").trim().isEmpty()){
+        if(allRequestParameter.get("offset") == null || allRequestParameter.get("offset").isEmpty()){
             serviceResponse.setRequestError("offset","Offset require");
             return serviceResponse;
         }
 
-        if(allRequestParameter.get("title").trim().isEmpty()){
+        if(allRequestParameter.get("title") == null || allRequestParameter.get("title").isEmpty()){
             serviceResponse.setRequestError("title","Title require");
             return serviceResponse;
         }
@@ -140,17 +140,17 @@ public class PublicProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        if(allRequestParameter.get("title").trim().isEmpty()){
+        if(allRequestParameter.get("title") == null || allRequestParameter.get("title").isEmpty()){
             serviceResponse.setRequestError("title","Title require");
             return serviceResponse;
         }
 
-        if(allRequestParameter.get("limit").trim().isEmpty()){
+        if(allRequestParameter.get("limit") == null || allRequestParameter.get("limit").isEmpty()){
             serviceResponse.setRequestError("limit","Limit require");
             return serviceResponse;
         }
 
-        if(allRequestParameter.get("offset").trim().isEmpty()){
+        if(allRequestParameter.get("offset") == null || allRequestParameter.get("offset").isEmpty()){
             serviceResponse.setRequestError("offset","Offset require");
             return serviceResponse;
         }
