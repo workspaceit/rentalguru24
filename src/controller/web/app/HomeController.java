@@ -87,7 +87,14 @@ public class HomeController {
         else
             modelAndView.addObject("productListTitle","");
 
-        List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
+        List<RentalProduct> rentalProducts;
+
+        if(r == null || r.isEmpty()){
+            rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
+        }else {
+            rentalProducts = productModel.getProductByCategoryIdTitle(categoryId,r,8,0);
+        }
+
         if(rentalProducts != null){
             List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
             String topRentalProductHeadTitle = "MOST RATED";
