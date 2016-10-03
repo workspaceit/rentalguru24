@@ -16,7 +16,7 @@ import java.util.Random;
 public class ImageHelper {
     //server settings for pictures and images
       /* ------------------- Live server of client ----------------------------- */
-    private static String GLOBAL_PATH = "/home/rentguru24files/";
+//    private static String GLOBAL_PATH = "/home/rentguru24files/";
     /* ------------------- Develop ----------------------------- */
   //  private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
 
@@ -26,7 +26,7 @@ public class ImageHelper {
         /*------------------Local---------------------*/
   //  private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
 
-   // private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
+    private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
 
     private static String DOC_FOLDER= "identityDoc/";
     private static String DOC_PATH= GLOBAL_PATH+DOC_FOLDER;

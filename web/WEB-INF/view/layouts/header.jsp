@@ -14,7 +14,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>${pageTitle}</title>
+  <title>RentGuru24</title>
   <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css"/>"/>
   <link rel="stylesheet" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
   <style>
