@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -73,7 +72,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
-    public ModelAndView getProductByCategoryId(HttpServletRequest request, @PathVariable("categoryId") int categoryId, @RequestParam String r){
+    public ModelAndView getProductByCategoryId(HttpServletRequest request, @PathVariable("categoryId") int categoryId){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
@@ -87,71 +86,36 @@ public class HomeController {
         else
             modelAndView.addObject("productListTitle","");
 
-        if(r==null || r.isEmpty()){
-            List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
-            if(rentalProducts != null){
-                List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
-                String topRentalProductHeadTitle = "MOST RATED";
-                if(rentalProductsTop==null || rentalProductsTop.size()==0){
-                    topRentalProductHeadTitle = "NEW PRODUCT";
-                    rentalProductsTop = productModel.getRentalProduct(3, 0);
-                }
-                List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
-                RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
-                RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
-                RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
-                RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
-
-                modelAndView.addObject("category", category);
-                modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
-                modelAndView.addObject("products", rentalProducts);
-                modelAndView.addObject("productsAscending", rentalProductsAscending);
-                modelAndView.addObject("IsLogIn", IsLogin);
-                modelAndView.addObject("BaseUrl",baseUrl);
-                modelAndView.addObject("rentalProductsTop",rentalProductsTop);
-                modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
-                modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
-                modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
-                modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
-                modelAndView.addObject("pageTitle", "RentGuru");
-                return modelAndView;
-            }else{
-                return new ModelAndView("redirect:/home");
+        List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
+        if(rentalProducts != null){
+            List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
+            String topRentalProductHeadTitle = "MOST RATED";
+            if(rentalProductsTop==null || rentalProductsTop.size()==0){
+                topRentalProductHeadTitle = "NEW PRODUCT";
+                rentalProductsTop = productModel.getRentalProduct(3, 0);
             }
-        }else {
-            List<RentalProduct> rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
-            if(rentalProducts != null){
-                List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
-                String topRentalProductHeadTitle = "MOST RATED";
-                if(rentalProductsTop==null || rentalProductsTop.size()==0){
-                    topRentalProductHeadTitle = "NEW PRODUCT";
-                    rentalProductsTop = productModel.getRentalProduct(3, 0);
-                }
-                List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
-                RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
-                RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
-                RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
-                RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
+            List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
+            RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
+            RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
+            RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
+            RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
-                modelAndView.addObject("category", category);
-                modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
-                modelAndView.addObject("products", rentalProducts);
-                modelAndView.addObject("productsAscending", rentalProductsAscending);
-                modelAndView.addObject("IsLogIn", IsLogin);
-                modelAndView.addObject("BaseUrl",baseUrl);
-                modelAndView.addObject("rentalProductsTop",rentalProductsTop);
-                modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
-                modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
-                modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
-                modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
-                modelAndView.addObject("pageTitle", "RentGuru");
-                return modelAndView;
-            }else{
-                return new ModelAndView("redirect:/home");
-            }
+            modelAndView.addObject("category", category);
+            modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
+            modelAndView.addObject("products", rentalProducts);
+            modelAndView.addObject("productsAscending", rentalProductsAscending);
+            modelAndView.addObject("IsLogIn", IsLogin);
+            modelAndView.addObject("BaseUrl",baseUrl);
+            modelAndView.addObject("rentalProductsTop",rentalProductsTop);
+            modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
+            modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
+            modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
+            modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
+            modelAndView.addObject("pageTitle", "RentGuru");
+            return modelAndView;
+        }else{
+            return new ModelAndView("redirect:/home");
         }
-
-
     }
 
     @RequestMapping(value = "/partial-rendering/category/{categoryId}", method = RequestMethod.GET)
