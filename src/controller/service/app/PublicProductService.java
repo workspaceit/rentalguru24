@@ -3,6 +3,7 @@ package controller.service.app;
 import com.fasterxml.jackson.annotation.JsonView;
 import helper.ServiceResponse;
 import model.*;
+import model.entity.app.AppCredential;
 import model.entity.app.product.view.ProductView;
 import model.entity.app.product.rentable.SearchedProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mi on 8/8/16.
@@ -93,5 +95,79 @@ public class PublicProductService{
 
     }
 
+    @RequestMapping(value = "/get-product-with-category-title", method = RequestMethod.GET)
+    public ServiceResponse getProductWithCategoryTitle(HttpServletRequest request, @RequestParam Map<String, String> allRequestParameter){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        if(allRequestParameter.get("categoryId").trim().isEmpty()){
+            serviceResponse.setRequestError("category","Category require");
+            return serviceResponse;
+        }
+        if(allRequestParameter.get("limit").trim().isEmpty()){
+            serviceResponse.setRequestError("limit","Limit require");
+            return serviceResponse;
+        }
+
+        if(allRequestParameter.get("offset").trim().isEmpty()){
+            serviceResponse.setRequestError("offset","Offset require");
+            return serviceResponse;
+        }
+
+        if(allRequestParameter.get("title").trim().isEmpty()){
+            serviceResponse.setRequestError("title","Title require");
+            return serviceResponse;
+        }
+
+        int categoryId = Integer.parseInt(allRequestParameter.get("categoryId").trim());
+        int limit = Integer.parseInt(allRequestParameter.get("limit").trim());
+        int offset = Integer.parseInt(allRequestParameter.get("offset").trim());
+        String title = allRequestParameter.get("title").trim();
+
+        List<RentalProduct> rentalProduct = productModel.getProductByCategoryIdTitle(categoryId, title, limit, offset);
+
+        if(rentalProduct == null || rentalProduct.isEmpty()){
+            serviceResponse.setRequestError("product","No product found by this name");
+            return serviceResponse;
+        }
+
+        serviceResponse.setResponseData(rentalProduct);
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/get-product-with-title", method = RequestMethod.GET)
+    public ServiceResponse getProductWithTitle(HttpServletRequest request, @RequestParam Map<String, String> allRequestParameter){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        if(allRequestParameter.get("title").trim().isEmpty()){
+            serviceResponse.setRequestError("title","Title require");
+            return serviceResponse;
+        }
+
+        if(allRequestParameter.get("limit").trim().isEmpty()){
+            serviceResponse.setRequestError("limit","Limit require");
+            return serviceResponse;
+        }
+
+        if(allRequestParameter.get("offset").trim().isEmpty()){
+            serviceResponse.setRequestError("offset","Offset require");
+            return serviceResponse;
+        }
+
+        String title = allRequestParameter.get("title").trim();
+        int limit = Integer.parseInt(allRequestParameter.get("limit").trim());
+        int offset = Integer.parseInt(allRequestParameter.get("offset").trim());
+
+        List<RentalProduct> rentalProduct = productModel.getProductByTitle(title, limit, offset);
+
+        if(rentalProduct == null || rentalProduct.isEmpty()){
+            serviceResponse.setRequestError("product","No product found by this name");
+            return serviceResponse;
+        }
+
+        serviceResponse.setResponseData(rentalProduct);
+        return serviceResponse;
+    }
 }
 
