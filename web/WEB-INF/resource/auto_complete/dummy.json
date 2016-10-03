@@ -1,0 +1,12 @@
+{
+  "marvel": [
+    {"character": "Superman", "realName": "Clark Kent"},
+    {"character": "Batman", "realName": "Bruce Wayne"},
+    {"character": "Wonder Woman", "realName": "Diana Prince"}
+  ],
+  "dc-comics": [
+    {"character": "Daredevil", "realName": "Matt Murdock"},
+    {"character": "Captain America", "realName": "Steven Rogers"},
+    {"character": "Spider-Man", "realName": "Peter Parker"}
+  ]
+}

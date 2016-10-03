@@ -15,6 +15,8 @@
     </div>
   </div>
 </div>
+<%--Hiden fields for load more--%>
+<input id="loadMoreObj" type="hidden" value='{"url":"/home/partial-rendering/load/more/rental-product","limit":0,"offset":0}' />
 <script>
   var BASEURL = "${BaseUrl}";
 </script>
@@ -61,7 +63,88 @@
 <%--Doc http://blog.stevenlevithan.com/archives/date-time-format--%>
 <script src="<c:url value="/resources/developer/third_party/date.format.js" />" ></script>
 <!-- Javascript framework and plugins end here -->
+
+
+<%--Auto Complete [Starts]--%>
+<script src="<c:url value="/resources/auto_complete/jquery.easy-autocomplete.min.js" />" ></script>
+<%--<link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.themes.min.css" />">--%>
+<link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.min.css" />">
+<%--Auto Complete [Ends]--%>
+<style>
+  .eac-square input {
+    background-image: url("<c:url value="/resources/imgicon_search.png" />");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+</style>
 <script>
+  var options = {
+
+    url: function(phrase){
+      console.log(phrase);
+      var categoryId = $("#dropdownCategorySelect").attr("data-category-id");
+      var title = encodeURIComponent(phrase);
+      var url = BASEURL+"/api/product/get-product-with-title?limit=8&offset=0&title="+title;
+      if(categoryId!=""){
+        url = BASEURL+"/api/product/get-product-with-category-title?limit=8&offset=0&categoryId="+categoryId+"&title="+title;
+      }
+      return url;
+    },
+//    url: "http://localhost:9090/resources/auto_complete/dummy.json",
+
+    categories: [{
+      listLocation: "responseData",
+      maxNumberOfElements: 4,
+    }],
+
+    getValue: function(element) {
+
+      element.description = element.description.substring(0,10);
+      element.name = element.name.substring(0,10);
+
+      if(element.description.length==10){
+        element.description+="...";
+      }
+      if(element.name.length==10){
+        element.name+="...";
+      }
+
+
+      return element.name;
+    },
+
+    template: {
+      type: "description",
+      fields: {
+        description: "description"
+      }
+    },
+
+    list: {
+      maxNumberOfElements: 4,
+      match: {
+        enabled: true
+      },
+      sort: {
+        enabled: true
+      },
+      onChooseEvent: function(elem) {
+        var product = $("#searchTxtBox").getSelectedItemData();
+        console.log(product);
+        if(product!=null && typeof product.id != undefined){
+          window.location = BASEURL+"/product/details/"+product.id;
+        }
+      }
+    },
+
+    theme: "square"
+  };
+
+
+  $("#searchTxtBox").easyAutocomplete(options);
+
+
+
   var nowTemp = new Date();
   var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
@@ -71,7 +154,7 @@
     }
   }).on('changeDate', function (ev) {
     if (ev.date.valueOf() > checkout.date.valueOf()) {
-      var newDate = new Date(ev.date)
+      var newDate = new Date(ev.date);
       newDate.setDate(newDate.getDate() + 1);
       checkout.setValue(newDate);
     }
@@ -208,7 +291,47 @@
     $("#dropdownCategorySelect").attr("data-category-id",categoryId);
     $("#dropdownCategorySelect").html('<i class="fa fa-bars"></i>'+categoryName+'<span class="caret"></span>');
   }
-
+  function loadMoreProduct(categoryId,productTitle){
+    var cid=0;
+    var title= "";
+    if(categoryId!=undefined){
+      cid = categoryId;
+    }
+    if(productTitle!=undefined){
+      title = productTitle;
+    }
+    var loadMoreObj = getLoadMoreObj();
+    loadMoreObj.limit= 10;
+    $.ajax({
+      url:  BASEURL+loadMoreObj.url
+                    +"?limit="+ loadMoreObj.limit
+                    +"&offset="+loadMoreObj.offset
+                    +"&categoryId="+cid
+                    +"&title="+title,
+      type: "GET",
+      success: function(data){
+        //history.pushState({}, null, newUrl);
+        if(loadMoreObj.offset==0){
+          $("#newProductPartialRender").html(data);
+        }else{
+          $("#newProductPartialRender").find(".clearfix").append(data);
+        }
+        loadMoreObj.offset++;
+        setLoadMoreObj(loadMoreObj);
+        /*Scrolling down*/
+//        if(elem != undefined && elem!=null){
+//          scrollDownWithAnimation(elem);
+//          hideInfo();
+//        }
+      }
+    });
+  }
+  function setLoadMoreObj(obj){
+    $("#loadMoreObj").val(JSON.stringify(obj))
+  }
+  function getLoadMoreObj(){
+    return JSON.parse($("#loadMoreObj").val());
+  }
 
 </script>
 <script>

@@ -183,7 +183,7 @@ span.conatct_number {
     position: relative;
     position: absolute;
     width: 100%;
-    z-index: 2;
+    z-index: 1;
     left: 0px;
     top: 0px;
     font-size: 18px;
@@ -214,6 +214,7 @@ span.conatct_number {
     background: rgba(0, 0, 0, 0.76);
     bottom: 120px;
     border: 2px solid #1d1d1d;
+    z-index: 1;
 }
 ul.cap_ul {
     padding: 0px;

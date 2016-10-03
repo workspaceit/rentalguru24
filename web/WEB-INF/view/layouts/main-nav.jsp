@@ -12,7 +12,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse no-padding " id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="dropdown catagory_drop"  style="display: none;" >
+        <li class="dropdown catagory_drop"  >
           <a data-category-id="" id="dropdownCategorySelect" class="dropdown-toggle catagory_drop_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-bars"></i>Select a category
             <span class="caret"></span>
@@ -23,11 +23,11 @@
             </d:forEach>
           </ul>
         </li>
-        <form class="navbar-form navbar-left no-padding main_search_form" role="search" style="display: none;">
-          <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
-          <div class="input-group-btn search_button">
-            <button class="btn btn-default search_btn" type="submit" style="padding:6px;"><i class="fa fa-search"></i></button>
-          </div>
+        <form class="navbar-form navbar-left no-padding main_search_form" role="search" onsubmit="return false;" >
+          <input class="form-control" placeholder="Search" name="searchTxtBox" id="searchTxtBox" type="text">
+          <%--<div class="input-group-btn search_button">--%>
+            <%--<button class="btn btn-default search_btn" type="submit" style="padding:6px;"><i class="fa fa-search"></i></button>--%>
+          <%--</div>--%>
         </form>
       </ul>
       <ul id="categoryPageLinkUl" class="nav navbar-nav navbar-right main_navigation">

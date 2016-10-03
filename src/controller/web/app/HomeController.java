@@ -14,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -129,9 +131,84 @@ public class HomeController {
         else
             modelAndView.addObject("productListTitle","");
 
-        List rentalProduct = productModel.getProductByCategoryId(categoryId,8,0);
+        List rentalProduct = productModel.getProductByCategoryId(categoryId, 8, 0);
         modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("products",rentalProduct);
         return modelAndView;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @RequestMapping(value = "/partial-rendering/load/more/rental-product", method = RequestMethod.GET)
+    public ModelAndView getMoreRentalProduct(HttpServletRequest request,
+                                             @RequestParam(value = "categoryId",required = false,defaultValue = "0") int categoryId,
+                                             @RequestParam(value = "title",required = false) String title,
+                                             @RequestParam int limit,
+                                             @RequestParam int offset){
+        System.out.println("categoryId "+categoryId);
+        Category categorySelected = categoryModel.getById(categoryId);
+        List rentalProduct = new ArrayList<>();
+
+
+        String baseUrl = (String) request.getAttribute("baseURL");
+        ModelAndView modelAndView = new ModelAndView("public/partial/load_more_product");
+        if(categorySelected!=null)
+            modelAndView.addObject("productListTitle",categorySelected.getName());
+        else
+            modelAndView.addObject("productListTitle","");
+
+        if(categoryId>0){
+            if(title!=null || title!=""){
+                rentalProduct = productModel.getProductByCategoryIdTitle(categoryId, title, limit, offset);
+            }else{
+                rentalProduct = productModel.getProductByCategoryId(categoryId,limit,offset);
+            }
+        }else{
+            if(title!=null || title!="") {
+                rentalProduct = productModel.getProductByTitle(title, limit, offset);
+            }else {
+                productModel.getRentalProduct(limit, offset);
+            }
+        }
+
+
+        modelAndView.addObject("BaseUrl",baseUrl);
+        modelAndView.addObject("products",rentalProduct);
+        return modelAndView;
+    }
+
+
 }
