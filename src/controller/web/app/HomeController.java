@@ -74,7 +74,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
-    public ModelAndView getProductByCategoryId(HttpServletRequest request, @PathVariable("categoryId") int categoryId){
+    public ModelAndView getProductByCategoryId(HttpServletRequest request, @PathVariable("categoryId") int categoryId, @RequestParam(value = "r", required = false) final String r){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");

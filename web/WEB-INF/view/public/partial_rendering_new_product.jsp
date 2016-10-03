@@ -72,6 +72,4 @@
     </div>
   </div>
 </div>
-<button class="btn-cstm-sign pos-relative" id="loadMoreButton" >Load More
-  <span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>
-</button>
+
