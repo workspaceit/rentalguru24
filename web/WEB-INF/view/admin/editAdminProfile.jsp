@@ -17,13 +17,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Create New Admin
-
-      </h1>
-    </section>
-
+    <jsp:directive.include file="layouts/pageHeader.jsp" />
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -52,7 +46,7 @@
                     <input name="password" type="password" class="form-control" id="password" >
                   </div>
                   <div class="form-group">
-                    <label for="confirmPassword">Confrim Password</label>
+                    <label for="confirmPassword">Confirm Password</label>
                     <input id="confirmPassword" type="password" class="form-control"  >
                   </div>
 

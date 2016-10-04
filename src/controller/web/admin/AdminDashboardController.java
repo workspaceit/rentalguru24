@@ -102,13 +102,17 @@ public class AdminDashboardController {
     @RequestMapping(value = "/get-admin-edit-page/{admin_id}", method = RequestMethod.GET)
     public ModelAndView editAdminPage(HttpServletRequest request, @PathVariable("admin_id") int appUserId) {
         ModelAndView modelAndView = new ModelAndView("admin/editAdminProfile");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
         AuthCredential admin = appLoginCredentialModel.getById(appUserId);
 
-
+        modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("adminUser", admin);
         modelAndView.addObject("PageTitle", "Admin Edit");
+        modelAndView.addObject("pageHeader", "Edit Admin");
+        modelAndView.addObject("mainMenu", "Edit Admin");
+        modelAndView.addObject("pageUrl", "admin/user/get-admin-edit-page/"+appUserId);
 
         return modelAndView;
 
@@ -127,8 +131,8 @@ public class AdminDashboardController {
         modelAndView.addObject("paypalCredientail", adminPaypalCredential);
         modelAndView.addObject("siteFeesCredientail", adminSiteFeesEntity);
         modelAndView.addObject("PageTitle", "Utility");
-        modelAndView.addObject("pageHeader", "Utilit");
-        modelAndView.addObject("mainMenu", "Utilit");
+        modelAndView.addObject("pageHeader", "Utility");
+        modelAndView.addObject("mainMenu", "Utility");
         modelAndView.addObject("pageUrl", "admin/user/get-utility");
         return modelAndView;
     }
