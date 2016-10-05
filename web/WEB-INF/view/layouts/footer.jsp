@@ -67,16 +67,10 @@
 
 <%--Auto Complete [Starts]--%>
 <script src="<c:url value="/resources/auto_complete/jquery.easy-autocomplete.min.js" />" ></script>
-<link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.themes.min.css" />">
+<%--<link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.themes.min.css" />">--%>
 <link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.min.css" />">
 <%--Auto Complete [Ends]--%>
-<style>
-  .eac-square input {
-    background-image: url("<c:url value="/resources/img/icon_search.png" />");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-  }
-</style>
+
 <script>
   function doSearch(event){
     var char = event.which || event.keyCode;
@@ -109,13 +103,13 @@
 
     getValue: function(element) {
 
-      element.description = element.description.substring(0,10);
-      element.name = element.name.substring(0,10);
+      element.description = element.description.substring(0,20);
+      element.name = element.name.substring(0,20);
 
-      if(element.description.length==10){
+      if(element.description.length=20){
         element.description+="...";
       }
-      if(element.name.length==10){
+      if(element.name.length==20){
         element.name+="...";
       }
 

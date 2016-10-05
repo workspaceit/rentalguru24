@@ -12,24 +12,37 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse no-padding " id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="dropdown catagory_drop"  >
-          <a data-category-id="" id="dropdownCategorySelect" class="dropdown-toggle catagory_drop_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-bars"></i>All category
-            <span class="caret"></span>
+        <li class="dropdown catagory_drop">
+          <a data-category-id="" id="dropdownCategorySelect"  class="dropdown-toggle catagory_drop_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-bars"></i>Select a category <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+            <li>
+              <a tabindex="-1" onclick="selectedCategory(0)" id="selected0" data-category-name="All Category">All Category</a>
+            </li>
             <d:forEach var="listValue" items="${category}">
-              <li><a onclick="selectedCategory(${listValue.id})" id="selected${listValue.id}" data-category-name="${listValue.name}">${listValue.name}</a></li>
+              <d:set value="" var="dropdownSubCls" ></d:set>
+              <d:if test="${listValue.subcategory.size()>0}">
+                <d:set value="dropdown-submenu" var="dropdownSubCls" ></d:set>
+              </d:if>
+
+              <li class="${dropdownSubCls}" >
+                <a tabindex="-1" onclick="selectedCategory(${listValue.id})" id="selected${listValue.id}" data-category-name="${listValue.name}">${listValue.name}</a>
+                <d:if test="${listValue.subcategory.size()>0}">
+                  <ul class="dropdown-menu">
+                    <d:forEach var="subcategory" items="${listValue.subcategory}">
+                      <li><a  onclick="selectedCategory(${subcategory.id})" id="selected${subcategory.id}" data-category-name="${subcategory.name}">${subcategory.name}</a></li>
+                    </d:forEach>
+                  </ul>
+                </d:if>
+
+              </li>
             </d:forEach>
+
           </ul>
         </li>
-        <form class="navbar-form navbar-left no-padding main_search_form" role="search" onsubmit="return false;" >
-          <input class="form-control" placeholder="Search" name="searchTxtBox" id="searchTxtBox" type="text" onkeypress="doSearch(event)">
-          <%--<div class="input-group-btn search_button">--%>
-            <%--<button class="btn btn-default search_btn" type="submit" style="padding:6px;"><i class="fa fa-search"></i></button>--%>
-          <%--</div>--%>
-        </form>
       </ul>
+
       <ul id="categoryPageLinkUl" class="nav navbar-nav navbar-right main_navigation">
         <d:forEach var="listValueMenue" items="${category}">
           <li><a id="categoryAnchor_${listValueMenue.id}" categoryId="${listValueMenue.id}" href="#newProductPartialRender" class="scrollToSection" >${listValueMenue.name}</a></li>
