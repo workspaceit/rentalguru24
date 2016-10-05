@@ -129,9 +129,6 @@
       match: {
         enabled: true
       },
-      sort: {
-        enabled: true
-      },
       onChooseEvent: function() {
         console.log("sd");
         var product = $("#searchTxtBox").getSelectedItemData();
