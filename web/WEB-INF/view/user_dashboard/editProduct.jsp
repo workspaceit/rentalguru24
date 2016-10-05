@@ -140,9 +140,6 @@
                     </div>
                     <p class="help-block error-form" id="errorMsg_"></p>
                 </div>
-                <div class="alert alert-warning" id="otherImageWarning" hidden>
-                    You can only upload 3 picture
-                </div>
             </div>
         </div>
         <div class="col-md-12 text-right" style="padding:0px 100px 20px 0px;">
@@ -171,14 +168,13 @@
     <div id="templateSmall" class="file-row">
         <div class="col-md-3 pos-relative">
             <img data-dz-thumbnail />
-            <span class="img-cross" onclick="deleteEditedOtherImage()">X</span>
+            <span class="img-cross" data-dz-remove>X</span>
         </div>
     </div>
 </div>
 <%-------------------------------------------------------------------%>
 <input hidden value="${rentalProduct.getProductCategories()}">
 <input hidden value="${subCategoryId}" id="selectedSubCategory">
-<input hidden value="${rentalProduct.getOtherImages().size()}" id="selectedProductOtherImage">
 <input type="hidden" value="" id="profileImageToken" name="profileImageToken">
 <input type="hidden" value="" id="otherImagesToken" name="otherImagesToken">
 <!-- Contact end here -->
@@ -198,17 +194,6 @@
     previewSmall.parentNode.removeChild(previewSmall);
     var otherImagesTokenArray = [];
 
-    var maxFiles;
-    var selectedProductOtherImage = $("#selectedProductOtherImage").val();
-    if(selectedProductOtherImage == "0"){
-        maxFiles = 3;
-    }else if(selectedProductOtherImage == "1"){
-        maxFiles = 2;
-    }else if(selectedProductOtherImage == "2"){
-        maxFiles = 1;
-    }else{
-        maxFiles = 0;
-    }
 
     $(function() {
         var productImageFile = $("div#fallback").dropzone(
@@ -227,15 +212,9 @@
                         this.addFile(file);
                     },
                     uploadprogress:function(file, progress){
-//                                $('#postProduct').attr("disabled", "disabled");
-//                                $('.postProductGif').show();
-//                                $('.fileUploadGif').show();
                     },
                     success:function(file, response){
                         if(response.responseStat.status == true) {
-//                                    $('.fileUploadGif').hide();
-//                                    $('#postProduct').removeAttrs("disabled","disabled");
-//                                    $('.postProductGif').hide();
                             $('#profileImageToken').val(response.responseData);
                             $('#profileImage').remove();
                         }
@@ -244,9 +223,6 @@
                         }
                     },
                     error:function(file, errorMessage, xhr){
-//                                $('.fileUploadGif').hide();
-//                                $('#postProduct').removeAttrs("disabled","disabled");
-//                                $('.postProductGif').hide();
                     }
                 }
         );
@@ -261,24 +237,23 @@
                     previewTemplate: previewTemplateSmall,
                     thumbnailWidth: 200,
                     thumbnailHeight: 200,
-                    maxFiles: maxFiles,
                     acceptedFiles: "image/jpeg,image/png,image/jpg",
                     previewsContainer: ".small-other",
-                    maxfilesexceeded: function(file) {
-                        this.removeFile(file);
-                        $('#otherImageWarning').show().delay(2000).fadeOut(300, function(){
-                        });
+                    removedfile:function(file){
+                        $(file.previewElement).hide();
+                        var responce = JSON.parse(file.xhr.response);
+                        var otherImageTokenArray = JSON.parse($("#otherImagesToken").val());
+                        var removeItem = otherImageTokenArray.indexOf(responce.responseData);
+                        if(removeItem != -1) {
+                            otherImageTokenArray.splice(removeItem, 1);
+                        }
+                        var otherImagesToken = JSON.stringify(otherImageTokenArray);
+                        $('#otherImagesToken').val(otherImagesToken);
                     },
                     uploadprogress:function(file, progress){
-//                                $('#postProduct').attr("disabled", "disabled");
-//                                $('.postProductGif').show();
-//                                $('.otherFileUploadGif').show();
                     },
                     success:function(file, response){
                         if(response.responseStat.status == true) {
-//                                    $('.otherFileUploadGif').hide();
-//                                    $('#postProduct').removeAttrs("disabled","disabled");
-//                                    $('.postProductGif').hide();
                             otherImagesTokenArray.push(response.responseData);
                             var otherImagesToken = JSON.stringify(otherImagesTokenArray);
                             $('#otherImagesToken').val(otherImagesToken);
@@ -288,9 +263,6 @@
                         }
                     },
                     error:function(file, errorMessage, xhr){
-//                                $('.fileUploadGif').hide();
-//                                $('#postProduct').removeAttrs("disabled","disabled");
-//                                $('.postProductGif').hide();
                     }
                 }
         );
@@ -423,9 +395,17 @@
             }
         });
     }
-    function deleteEditedOtherImage(){
-        var otherImageTokenArray = JSON.parse($("#otherImagesToken").val());
-        console.log(otherImageTokenArray);
+    function deleteEditedOtherImage(elem){
+//        var otherImageTokenArray = JSON.parse($("#otherImagesToken").val());
+        var index = 0;
+       $(elem).parents("#productOtherimage").first().children().each(function(){
+            if($(this) === elem){
+                console.log(index);
+           }
+           index++;
+        });
+        console.log(index);
+//        console.log(otherImageTokenArray);
     }
 </script>
 <script>
