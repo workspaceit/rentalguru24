@@ -89,9 +89,9 @@
       var categoryId = $("#dropdownCategorySelect").attr("data-category-id");
       var title = encodeURIComponent(phrase);
       var url = BASEURL+"/api/product/get-product-with-title?limit=8&offset=0&title="+title;
-      if(categoryId!=""){
-        url = BASEURL+"/api/product/get-product-with-category-title?limit=8&offset=0&categoryId="+categoryId+"&title="+title;
-      }
+//      if(categoryId!=""){
+//        url = BASEURL+"/api/product/get-product-with-category-title?limit=8&offset=0&categoryId="+categoryId+"&title="+title;
+//      }
       return url;
     },
 //    url: "http://localhost:9090/resources/auto_complete/dummy.json",
@@ -249,7 +249,7 @@
     });
   }
   /*****************  Fetch product by category ***********/
-  $("#categoryPageLinkUl").find("li>a").click(function(event){
+  $("#categoryPageLinkUl").find(".developerCategoryAnchore").click(function(event){
     var categoryId = $(this).attr("categoryId");
     $(this).bind('click', fetchProductByCategoryAndScrollDown(categoryId,this,event));
   });
@@ -281,10 +281,10 @@
           hideInfo();
         }
 
-        if($("#productListDiv").children().length>0){
-          $("#loadMoreButtonParent").show();
-        }else{
+        if(haveNoProduct()){
           $("#loadMoreButtonParent").hide();
+        }else{
+          $("#loadMoreButtonParent").show();
         }
 
         var loadMoreObj = getLoadMoreObj();
@@ -302,7 +302,7 @@
     $('html, body').animate({ scrollTop: target.offset().top }, 700);
   }
   function selectedCategory(categoryId){
-    var categoryName=$("#selected"+categoryId).data("category-name");
+    var categoryName=$("#categoryAnchor_"+categoryId).data("category-name");
     $("#dropdownCategorySelect").attr("data-category-id",categoryId);
     $("#dropdownCategorySelect").html('<i class="fa fa-bars"></i>'+categoryName+'<span class="caret"></span>');
   }
@@ -331,6 +331,11 @@
         }
         loadMoreObj.offset++;
         setLoadMoreObj(loadMoreObj);
+
+
+        if(haveNoProduct()){
+          $("#loadMoreButtonParent").hide();
+        }
         /*Scrolling down*/
 //        if(elem != undefined && elem!=null){
 //          scrollDownWithAnimation(elem);
@@ -347,6 +352,10 @@
   }
   function getLoadMoreObj(){
     return JSON.parse($("#loadMoreObj").val());
+  }
+  function haveNoProduct(){
+    var l = $("#productListDiv").find(".developer-no-product-found").length;
+    return (l>=1)?true:false;
   }
 
 </script>

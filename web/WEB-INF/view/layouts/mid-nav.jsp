@@ -12,7 +12,7 @@
         <%--Search Box--%>
         <div class="col-md-6 col-sm-6 col-xs-6">
           <div class="search-top">
-            <input placeholder="Search Heroes" name="searchTxtBox" id="searchTxtBox" type="text" onkeypress="doSearch(event)" />
+            <input placeholder="Search" name="searchTxtBox" id="searchTxtBox" type="text" onkeypress="doSearch(event)" />
             <span><i class="fa fa-search"></i></span>
           </div>
         </div>

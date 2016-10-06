@@ -45,12 +45,20 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<RentalProduct> rentalProducts = new ArrayList<>();
+        boolean isSearchedProductList = (title!=null&&title!="")?true:false;
+
         rentalProducts = (title!=null&&title!="")?productModel.getProductByTitle(title,8,0):productModel.getRentalProduct(8, 0);
         List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
         String topRentalProductHeadTitle = "MOST RATED";
         if(rentalProductsTop==null || rentalProductsTop.size()==0){
             rentalProductsTop = productModel.getRentalProduct(3, 0);
             topRentalProductHeadTitle = "NEW PRODUCT";
+        }
+
+        String productListTitle = "NEW PRODUCT";
+        if(isSearchedProductList){
+            productListTitle = "Search result";
+
         }
         List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
         RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
@@ -60,12 +68,14 @@ public class HomeController {
 
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?";
         loadMoreProductUrl = (title!=null&&title!="")?loadMoreProductUrl+"title="+title:loadMoreProductUrl;
-
+        String preSelectedCategoryName = "Select Category";
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
+        modelAndView.addObject("isSearchedProductList", isSearchedProductList);
         modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
         modelAndView.addObject("category", category);
         modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
-        modelAndView.addObject("productListTitle","New products");
-        modelAndView.addObject("products", rentalProducts);
+        modelAndView.addObject("productListTitle",productListTitle);
+        modelAndView.addObject("rentalProducts", rentalProducts);
         modelAndView.addObject("productsAscending", rentalProductsAscending);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl",baseUrl);
@@ -92,16 +102,14 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Category categorySelected = categoryModel.getById(categoryId);
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?categoryId="+categoryId;
-
-        if(categorySelected!=null)
-            modelAndView.addObject("productListTitle",categorySelected.getName());
-        else
-            modelAndView.addObject("productListTitle","");
-
-
+        String preSelectedcategoryName = "Select a category";
+        String selectedCategoryName = "";
         if(categorySelected!=null){
-            modelAndView.addObject("productListTitle",categorySelected.getName());
+            preSelectedcategoryName = categorySelected.getName();
+            selectedCategoryName = categorySelected.getName();
         }
+
+
 
         List<RentalProduct> rentalProducts;
 
@@ -126,10 +134,12 @@ public class HomeController {
             RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
 
+            modelAndView.addObject("productListTitle",selectedCategoryName);
+            modelAndView.addObject("preSelectedCategoryName",preSelectedcategoryName );
             modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
             modelAndView.addObject("category", category);
             modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
-            modelAndView.addObject("products", rentalProducts);
+            modelAndView.addObject("rentalProducts", rentalProducts);
             modelAndView.addObject("productsAscending", rentalProductsAscending);
             modelAndView.addObject("IsLogIn", IsLogin);
             modelAndView.addObject("BaseUrl",baseUrl);
@@ -150,7 +160,7 @@ public class HomeController {
         Category categorySelected = categoryModel.getById(categoryId);
 
         String baseUrl = (String) request.getAttribute("baseURL");
-        ModelAndView modelAndView = new ModelAndView("public/partial_rendering_new_product");
+        ModelAndView modelAndView = new ModelAndView("public/partial/partial_rendering_new_product");
         if(categorySelected!=null)
             modelAndView.addObject("productListTitle",categorySelected.getName());
         else
@@ -158,44 +168,9 @@ public class HomeController {
 
         List rentalProduct = productModel.getProductByCategoryId(categoryId, 8, 0);
         modelAndView.addObject("BaseUrl",baseUrl);
-        modelAndView.addObject("products",rentalProduct);
+        modelAndView.addObject("rentalProducts",rentalProduct);
         return modelAndView;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @RequestMapping(value = "/partial-rendering/load/more/rental-product", method = RequestMethod.GET)
     public ModelAndView getMoreRentalProduct(HttpServletRequest request,
@@ -235,7 +210,7 @@ public class HomeController {
 
 
         modelAndView.addObject("BaseUrl",baseUrl);
-        modelAndView.addObject("products",rentalProduct);
+        modelAndView.addObject("rentalProducts",rentalProduct);
         return modelAndView;
     }
 
