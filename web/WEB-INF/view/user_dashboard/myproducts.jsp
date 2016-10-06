@@ -78,6 +78,9 @@
                     </div>
                 </div>
             </div>
+            <div class="alert alert-danger" hidden>
+                Can't delete a product on rent
+            </div>
             <div class="modal-footer"></div>
         </div>
     </div>
@@ -99,18 +102,17 @@
                 if(data.responseStat.status==true){
                     location.reload();
                 }else{
-                    console.log("ERROR");
+                    $(".alert-danger").show().fadeIn(500).delay(2000).fadeOut(500,function(){
+                        location.reload();
+                    });
                 }
             },
-            error: function(){
-                console.log("ERROR");
-            }
         });
     }
 </script>
 <script>
     function showModal(productId){
-        $('#deleteProductId').val(productId);
+        $("#deleteProductId").val(productId);
         $('#confirmationModal').modal('show');
     }
 </script>
