@@ -25,8 +25,8 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
-        <li class="dropdown notifications-menu" style="display: none;">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <li class="dropdown notifications-menu">
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" onclick="getNotification();">
             <i class="fa fa-bell-o"></i>
             <span class="label label-warning" id="unreadMessageCount"></span>
           </a>
@@ -100,7 +100,8 @@
         console.log(data);
       }
     });
-
+  };
+  function getNotification(){
     $.ajax({
       type: "GET",
       url: BASEURL+"/admin/user/get-unread-notification-partial-render",
@@ -109,11 +110,11 @@
         offset : 0
       },
       success: function(data){
-          $("#notificationInnerMenu").html(data);
+        $("#notificationInnerMenu").html(data);
       },
       error: function(data){
         console.log(data);
       }
     });
-  };
+  }
 </script>
