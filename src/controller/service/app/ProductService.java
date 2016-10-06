@@ -425,6 +425,7 @@ public class ProductService{
         productEditFrom.setAvailableFrom(allRequestParameter.get("availableFrom"));
         productEditFrom.setAvailableTill(allRequestParameter.get("availableTill"));
         productEditFrom.setFormattedAddress(allRequestParameter.get("formattedAddress"));
+        productEditFrom.setRentTypeId(Integer.parseInt(allRequestParameter.get("rentTypeId")));
         productEditFrom.setCity(allRequestParameter.get("city"));
         productEditFrom.setState(allRequestParameter.get("state"));
         productEditFrom.setZip(allRequestParameter.get("zip"));
@@ -473,6 +474,12 @@ public class ProductService{
         if(!rentalProduct.getProductLocation().getFormattedAddress().equals(allRequestParameter.get("formattedAddress"))){
             rentalProduct.getProductLocation().setFormattedAddress(allRequestParameter.get("formattedAddress"));
         }
+
+        if(rentalProduct.getRentType().getId() != Integer.parseInt(allRequestParameter.get("rentTypeId"))){
+            RentType rentType = rentTypeModel.getById(Integer.parseInt(allRequestParameter.get("rentTypeId")));
+            rentalProduct.setRentType(rentType);
+        }
+
         if(!rentalProduct.getProductLocation().getCity().equals(allRequestParameter.get("city"))){
             rentalProduct.getProductLocation().setCity(allRequestParameter.get("city"));
         }

@@ -117,6 +117,7 @@ public class ProductController{
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<Category> category = (List<Category>) request.getAttribute("category");
         RentalProduct rentalProduct = productModel.getMyRentalProductById(productId, appCredential.getId());
+        List<RentType> rentTypes = rentTypeModel.getAll();
 
         /*------------------------------------------*/
         Category categorySelected = categoryModel.getById(rentalProduct.getProductCategories().get(0).getCategory().getId());
@@ -125,14 +126,19 @@ public class ProductController{
             Category categoryParent = categoryModel.getParentCategory(rentalProduct.getProductCategories().get(0).getCategory().getId());
             modelAndView.addObject("categoryId", categoryParent.getId());
             modelAndView.addObject("subCategoryId", rentalProduct.getProductCategories().get(0).getCategory().getId());
-//            System.out.println("parent : "+categoryParent.getId());
-//            System.out.println("child : "+rentalProduct.getProductCategories().get(0).getCategory().getId());
         }else {
             modelAndView.addObject("categoryId", categorySelected.getId());
-//            System.out.println("parent : "+ categorySelected.getId());
         }
         /*------------------------------------------*/
+        /*------------------------------------------*/
+        RentType rentTypeSelected = rentTypeModel.getById(rentalProduct.getRentType().getId());
+        if(rentTypeSelected != null){
+            modelAndView.addObject("rentTypeSelectedId", rentTypeSelected.getId());
+        }
 
+        /*------------------------------------------*/
+
+        modelAndView.addObject("rentTypes", rentTypes);
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentalProduct", rentalProduct);
         modelAndView.addObject("IsLogIn", IsLogin);

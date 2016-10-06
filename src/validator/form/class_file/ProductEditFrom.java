@@ -13,7 +13,7 @@ public class ProductEditFrom {
     private String availableTill;
     private boolean reviewStatus;
     private String categoryIdArray;
-
+    private Integer rentTypeId;
 
     private String city;
     private String state;
@@ -87,6 +87,14 @@ public class ProductEditFrom {
 
     public void setCategoryIdArray(String categoryIdArray) {
         this.categoryIdArray = categoryIdArray;
+    }
+
+    public Integer getRentTypeId() {
+        return (rentTypeId==null)?-1:rentTypeId;
+    }
+
+    public void setRentTypeId(Integer rentTypeId) {
+        this.rentTypeId = rentTypeId;
     }
 
     public String getCity() {

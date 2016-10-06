@@ -64,6 +64,9 @@ public class ProductEditFromValidator implements Validator {
             errors.rejectValue("fromattedAddress", "Product location required");
         }
 
+        if(productEditFrom.getRentTypeId() == null || productEditFrom.getRentTypeId() == -1){
+            errors.rejectValue("rentTypeId", "Rent Type  required");
+        }
         if(productEditFrom.getZip().isEmpty()){
             errors.rejectValue("zip", "Product zip code required");
         }

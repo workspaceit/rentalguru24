@@ -44,6 +44,16 @@
                     <select id="subCategory" class="selectpicker" disabled="disabled" >
                         <option value="0">PLEASE SELECT A SUB CATEGORY</option>
                     </select>
+                    <p class="help-block error-form" id="errorMsg_subCategoryIds"></p>
+                </div>
+                <div class="form-group">
+                    <label>Choose Rent Type</label>
+                    <select  id="rentTypeId" class="selectpicker" >
+                        <option value="0">PLEASE SELECT A RENT TYPE</option>
+                        <d:forEach var="listValue" items="${rentTypes}">
+                            <option value="${listValue.id}" <d:if test="${listValue.id == rentTypeSelectedId}">selected="selected"</d:if>>${listValue.name}</option>
+                        </d:forEach>
+                    </select>
                     <p class="help-block error-form" id="errorMsg_rentTypeId"></p>
                 </div>
                 <div class="form-group">
@@ -309,6 +319,7 @@
     function postEditProduct(){
         var category = $("#category option:selected").val();
         var subCategory = $("#subCategory option:selected").val();
+        var rentTypeId = $("#rentTypeId option:selected").val();
 
         var categorySelected;
         if(subCategory == "0"){
@@ -339,6 +350,7 @@
                 availableFrom : availableFrom,
                 availableTill : availableTill,
                 formattedAddress : formattedAddress,
+                rentTypeId: rentTypeId,
                 zip : zip,
                 city : city,
                 productCurrentPrice : productCurrentPrice,
