@@ -29,17 +29,17 @@
                 <div class="box-body">
                   <div class="form-group">
                     <label  >First Name</label>
-                    <input value="${adminUser.userInf.firstName}" name="firstName"  class="form-control" id="fname" >
+                    <input value="${admin.userInf.firstName}" name="firstName"  class="form-control" id="fname" >
                   </div>
 
                   <div class="form-group">
                     <label >Last Name</label>
-                    <input value="${adminUser.userInf.lastName}" name="lastName"  class="form-control" id="lname" >
+                    <input value="${admin.userInf.lastName}" name="lastName"  class="form-control" id="lname" >
                   </div>
 
                   <div class="form-group">
                     <label for="email">Email address</label>
-                    <input value="${adminUser.email}" type="email"  class="form-control" id="email">
+                    <input value="${admin.email}" type="email"  class="form-control" id="email">
                   </div>
                   <div class="form-group">
                     <label for="password">Password</label>
@@ -118,7 +118,7 @@
         type: "POST",
         url: '${BaseUrl}/api-admin/admin/update-admin/',
         data: {
-          id:${adminUser.id},
+          id:${admin.id},
           firstName: fname,
           lastName: lname,
           email: email,

@@ -107,8 +107,8 @@ public class AdminDashboardController {
         AuthCredential admin = appLoginCredentialModel.getById(appUserId);
 
         modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("admin", admin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("adminUser", admin);
         modelAndView.addObject("PageTitle", "Admin Edit");
         modelAndView.addObject("pageHeader", "Edit Admin");
         modelAndView.addObject("mainMenu", "Edit Admin");
