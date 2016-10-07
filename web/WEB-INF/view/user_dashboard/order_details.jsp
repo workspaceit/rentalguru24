@@ -212,7 +212,7 @@
                                     <BUTTON id="productReceiveConfirmBtn" class="cancel_btn approval_btn"  >Confirm
                                         <span id="productReceiveConfirmBtnProgressIm" class="inner-load approveGif" hidden></span>
                                     </BUTTON>
-                                    <BUTTON id="productReceiveDisputeBtn" class="approve_btn approval_btn"  >Dispute
+                                    <BUTTON id="productReceiveDisputeBtn" class="approve_btn approval_btn" onclick="disputeNotification()">Dispute
                                         <span id="productReceiveDisputeProgressImg" class="inner-load disapproveGif" hidden></span>
                                     </BUTTON>
                                 </li>
@@ -647,6 +647,11 @@
                 });
             }
 
+        </script>
+        <script>
+            function disputeNotification(){
+
+            }
         </script>
     </body>
 </html>

@@ -9,6 +9,8 @@ import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
 import model.*;
 import model.admin.AdminPaypalCredentailModel;
+import model.entity.admin.AdminGlobalNotification;
+import model.entity.admin.AdminGlobalNotificationTemplate;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
 import model.entity.app.UserPaypalCredential;
@@ -47,7 +49,10 @@ public class ReceiveProductService {
     PayoutModel payoutModel;
     @Autowired
     PaymentRefundModel paymentRefundModel;
-
+    @Autowired
+    AdminGlobalNotificationTemplateModel adminGlobalNotificationTemplateModel;
+    @Autowired
+    AdminGlobalNotificationModel adminGlobalNotificationModel;
 
     @RequestMapping(value = "/confirm-receive/{rentalProductReturnId}", method = RequestMethod.POST)
     public ServiceResponse renturnProduct(HttpServletRequest request,
@@ -260,6 +265,17 @@ public class ReceiveProductService {
         rentalProductReturned.getRentInf().getRentalProduct().setCurrentlyAvailable(true);
 
         productModel.update(rentalProductReturned.getRentInf().getRentalProduct());
+
+        AdminGlobalNotificationTemplate adminGlobalNotificationTemplate = adminGlobalNotificationTemplateModel.getByType("dispute");
+
+        AdminGlobalNotification adminGlobalNotification = new AdminGlobalNotification();
+
+        adminGlobalNotification.setType("dispute");
+        adminGlobalNotification.setNotificationTemplate(adminGlobalNotificationTemplate);
+        adminGlobalNotification.setRentInf(rentalProductReturned.getRentInf());
+
+        adminGlobalNotificationModel.insert(adminGlobalNotification);
+
         serviceResponse.setResponseData(rentalProductReturned);
 
         return serviceResponse;

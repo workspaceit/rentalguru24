@@ -23,4 +23,15 @@ public class AdminGlobalNotificationTemplateModel extends BaseModel {
             session.close();
         }
     }
+
+    public AdminGlobalNotificationTemplate getByType(String notificationType){
+        Session session = this.sessionFactory.openSession();
+        try {
+            return (AdminGlobalNotificationTemplate) session.createQuery("FROM AdminGlobalNotificationTemplate aN WHERE aN.type = :notificationType")
+                    .setParameter("notificationType", notificationType)
+                    .uniqueResult();
+        }finally {
+            session.close();
+        }
+    }
 }

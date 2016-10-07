@@ -1,5 +1,7 @@
 package model.entity.admin;
 
+import model.entity.app.product.rentable.RentInf;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -15,6 +17,7 @@ public class AdminGlobalNotification {
     private boolean isRead;
     private Timestamp createdDate;
     private AdminGlobalNotificationTemplate NotificationTemplate;
+    private RentInf RentInf;
 
     @Id
     @Column(name = "id")
@@ -76,5 +79,13 @@ public class AdminGlobalNotification {
 
     public void setNotificationTemplate(AdminGlobalNotificationTemplate notificationTemplate) {
         NotificationTemplate = notificationTemplate;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "rent_inf_id", referencedColumnName = "id")
+    public RentInf getRentInf(){return  RentInf;}
+
+    public void setRentInf(RentInf rentInf){
+        RentInf = rentInf;
     }
 }
