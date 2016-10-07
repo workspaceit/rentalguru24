@@ -3,8 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd">
 
        <mvc:annotation-driven>
               <mvc:message-converters>
@@ -20,7 +26,7 @@
               </mvc:message-converters>
        </mvc:annotation-driven>
 
-    <context:component-scan base-package="controller"   />
+    <context:component-scan base-package="controller,helper,library,scheduler"   />
 
     <context:property-placeholder properties-ref="configProperties" />
 
@@ -31,16 +37,12 @@
             </property>
     </bean>
     <!-- * ** *** **** Scheduler **** *** ** * -->
-    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-        <property name="corePoolSize" value="5" />
-        <property name="maxPoolSize" value="10" />
-        <property name="queueCapacity" value="25" />
-    </bean>
 
-    <bean id="taskExecutorExample" class="schedular.TaskExample">
-        <constructor-arg ref="taskExecutor" />
+    <bean id="taskExecutorExample" class="scheduler.Scheduler">
     </bean>
-
+    <task:scheduled-tasks>
+        <task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="*/5 * * * * *"/>
+    </task:scheduled-tasks>
     <!-- * ** *** **** **** *** ** * -->
     <!-- * ** *** **** **** *** ** * -->
        <!-- * ** *** **** Interceptor  **** *** ** * -->
@@ -280,7 +282,15 @@
               </property>
        </bean>
 
-       <!-- ******************** Model Class, *********************************** -->
+    <!--******************** Library Bean Class, *********************************** -->
+    <bean id="payPalPayment" class="library.paypal.PayPalPayment">
+        <property name="adminPaypalCredentialModel" ref="adminPaypalCredentialModel"/>
+        <property name="paymentRefundModel" ref="paymentRefundModel" />
+        <property name="rentPaymentModel" ref="rentPaymentModel"/>
+    </bean>
+
+    <!-- -->
+       <!-- ******************** Model Bean Class, *********************************** -->
        <bean id="baseModel" class="model.BaseModel">
               <property name="sessionFactory" ref="sessionFactory"/>
        </bean>
@@ -319,7 +329,7 @@
 
        <bean id="adminSitesFeesModel" class="model.admin.AdminSitesFeesModel" parent="baseModel"   >
        </bean>
-       <bean id="adminPaypalCredentailModel" class="model.admin.AdminPaypalCredentailModel" parent="baseModel"   >
+       <bean id="adminPaypalCredentialModel" class="model.admin.AdminPaypalCredentialModel" parent="baseModel"   >
        </bean>
        <bean id="deviceInfoModel" class="model.DeviceInfoModel" parent="baseModel"   >
        </bean>

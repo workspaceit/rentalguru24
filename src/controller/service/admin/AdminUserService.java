@@ -3,17 +3,14 @@ package controller.service.admin;
 
 import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
-import model.IdentityTypeModel;
-import model.admin.AdminPaypalCredentailModel;
+import model.admin.AdminPaypalCredentialModel;
 import model.admin.AdminSitesFeesModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.admin.AdminSiteFeesEntity;
-import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import model.entity.app.IdentityType;
 import model.entity.app.UserInf;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +29,7 @@ public class AdminUserService {
     AppLoginCredentialModel appLoginCredentialModel;
 
     @Autowired
-    AdminPaypalCredentailModel adminPaypalCredentailModel;
+    AdminPaypalCredentialModel adminPaypalCredentialModel;
 
     @Autowired
     AdminSitesFeesModel adminSitesFeesModel;
@@ -201,7 +198,7 @@ public class AdminUserService {
         String apiKey = allRequestParams.get("api_key");
         String apiSecret = allRequestParams.get("api_secret");
 
-        AdminPaypalCredential adminPaypalCredential=adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredential= adminPaypalCredentialModel.getAdminPaypalCredentail();
 
         if (!apiKey.equals("")){
             adminPaypalCredential.setApiKey(apiKey);
@@ -211,7 +208,7 @@ public class AdminUserService {
             adminPaypalCredential.setApiSecret(apiSecret);
         }
 
-        adminPaypalCredentailModel.UpdateAdminPaypalCredientail(adminPaypalCredential);
+        adminPaypalCredentialModel.UpdateAdminPaypalCredientail(adminPaypalCredential);
 
         serviceResponse.getResponseStat().setMsg("Paypal Configuration Changed Succesfully");
         serviceResponse.getResponseStat().setStatus(true);

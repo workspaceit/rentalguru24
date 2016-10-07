@@ -11,7 +11,7 @@ import helper.ServiceResponse;
 import helper.SessionManagement;
 import library.paypal.PayPalPayment;
 import model.*;
-import model.admin.AdminPaypalCredentailModel;
+import model.admin.AdminPaypalCredentialModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
 import model.entity.app.payments.PaymentRefund;
@@ -45,7 +45,7 @@ public class RentRequestService{
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
     @Autowired
-    AdminPaypalCredentailModel adminPaypalCredentailModel;
+    AdminPaypalCredentialModel adminPaypalCredentialModel;
     @Autowired
     RentPaymentModel rentPaymentModel;
     @Autowired
@@ -173,7 +173,7 @@ public class RentRequestService{
 
         /* If */
         if(createPayment!=null && createPayment.booleanValue()){
-            AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+            AdminPaypalCredential adminPaypalCredential = adminPaypalCredentialModel.getAdminPaypalCredentail();
 
             if(adminPaypalCredential==null){
                 serviceResponse.getResponseStat().setErrorMsg("No payPal App credential found");
@@ -580,7 +580,7 @@ public class RentRequestService{
 
     private ServiceResponse refundOtherRentRequestList(ServiceResponse serviceResponse,RentRequest rentRequest){
 
-        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentialModel.getAdminPaypalCredentail();
         PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
 
         Refund refund = null;
@@ -632,7 +632,7 @@ public class RentRequestService{
 
     }
     private ServiceResponse refundOtherRentRequest(ServiceResponse serviceResponse,RentRequest rentRequest){
-        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentialModel.getAdminPaypalCredentail();
         PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
         RentPayment rentPayment = rentPaymentModel.getByRentRequestId(rentRequest.getId());
         Refund refund = null;

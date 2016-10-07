@@ -5,8 +5,7 @@ import model.AdminGlobalNotificationModel;
 import model.AdminUnreadAlertCounterModel;
 import model.AppLoginCredentialModel;
 import model.CategoryModel;
-import model.admin.AdminCmsPageModel;
-import model.admin.AdminPaypalCredentailModel;
+import model.admin.AdminPaypalCredentialModel;
 import model.admin.AdminSitesFeesModel;
 import model.entity.admin.*;
 import model.entity.app.AppCredential;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.HttpRetryException;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +33,7 @@ public class AdminDashboardController {
     AppLoginCredentialModel appLoginCredentialModel;
 
     @Autowired
-    AdminPaypalCredentailModel adminPaypalCredentailModel;
+    AdminPaypalCredentialModel adminPaypalCredentialModel;
 
     @Autowired
     AdminSitesFeesModel adminSitesFeesModel;
@@ -122,7 +120,7 @@ public class AdminDashboardController {
     public ModelAndView getUtilitypage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("admin/Utility");
         String baseUrl = (String) request.getAttribute("baseURL");
-        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentialModel.getAdminPaypalCredentail();
         AdminSiteFeesEntity adminSiteFeesEntity = adminSitesFeesModel.getAdminSiteFees();
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
@@ -141,7 +139,7 @@ public class AdminDashboardController {
     public ModelAndView getPaypalEditPage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("admin/editPaypalConfiguration");
         String baseUrl = (String) request.getAttribute("baseURL");
-        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentialModel.getAdminPaypalCredentail();
         modelAndView.addObject("paypalCredientail", adminPaypalCredential);
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 

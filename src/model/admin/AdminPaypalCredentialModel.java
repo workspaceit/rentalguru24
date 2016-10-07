@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Tomal on 8/30/2016.
  */
-public class AdminPaypalCredentailModel extends BaseModel {
+public class AdminPaypalCredentialModel extends BaseModel {
 
     public AdminPaypalCredential getAdminPaypalCredentail(){
         AdminPaypalCredential adminPaypalCredential=null;

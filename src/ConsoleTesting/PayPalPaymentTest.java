@@ -15,8 +15,8 @@ public class PayPalPaymentTest {
 
     public static void main(String args[]){
        // new PayPalPaymentTest().createPayment();
-        // new PayPalPayment(clientID,clientSecret).executePayments("PAY-1C069959SC325024UK7P3ADI", "TKCD9W66CR9R4");
-        new PayPalPaymentTest().refund("5UJ30339X6775371C");
+         new PayPalPayment(clientID,clientSecret).executePayments("PAY-5894578783901581BK73Y75I", "TKCD9W66CR9R4");
+        //new PayPalPaymentTest().refund("5UJ30339X6775371C");
         //    new PayPalPayment().payOut();
 
      //   new PayPalPaymentTest().capturePayment();

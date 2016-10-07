@@ -1255,21 +1255,28 @@ body {
 .product-btn-grp{
     width: 100%;
     position: absolute;
-    bottom: 0px;
+    bottom: -4px;
 }
 .product-btn-grp .gbtn{
-    font-size: 13px;
-    background: #333;
+    font-size: 12px;
+    background: #8D8D8D;
     color: #fff;
-    padding: 7px;
+    padding: 5px 10px;
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;
     -ms-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+.product-btn-grp .gbtn:active{
+    background: #19858D;
+    color: #fff;
+    text-decoration: none;
 }
 .product-btn-grp .gbtn:hover{
-    background: #DB8C31;
+    background: #19858D;
     color: #fff;
     text-decoration: none;
 }
@@ -1306,11 +1313,14 @@ body {
     overflow: hidden;
 }
 .block-action .btn-fav{
-    border: 1px solid #a4a4a4;
+    /*border: 1px solid #a4a4a4;*/
+    border:0px;
+    border-radius: 4px;
     padding: 5px;
     width: 40px;
     height: 40px;
-    background: #fff;
+    background: #e7e7e7;
+    color: #777;
     margin-right: 10px;
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;
@@ -1319,12 +1329,13 @@ body {
     transition: all 0.4s ease-in-out;
 }
 .block-action .btn-compare{
-    border: 1px solid #a4a4a4;
+    border: 0;
+    border-radius: 4px;
     padding: 5px;
     width: 40px;
     height: 40px;
-    background: #fff;
-    color: #a4a4a4;
+    background: #e7e7e7;
+    color: #777;
     -webkit-transition: all 0.4s ease-in-out;
     -moz-transition: all 0.4s ease-in-out;
     -ms-transition: all 0.4s ease-in-out;
@@ -1333,17 +1344,18 @@ body {
 }
 
 .btn-compare:hover, .btn-fav:hover{
-    background: #333;
+    background: #777;
     color: #fff;
 }
 .block-action .price-tag{
     padding: 5px;
-    background:#2B2B2B;
+    background:#e7e7e7;
+    letter-spacing: 1px;
     height: 40px;
     min-width: 100px;
     width: auto;
     float: right;
-    color: #fff;
+    color: #000;
     text-align: center;
     font-size:12px;
     font-weight: bold;
@@ -1353,12 +1365,14 @@ body {
     -ms-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
+    border-radius: 4px;
 }
 .single-item:hover .block-desc .title-label{
     color: #DB8C31;
 }
 .single-item:hover .price-tag{
-    background: #DB8C31;
+    /*background: #777;
+    color: #fff;*/
 }
 
 .blog-single{

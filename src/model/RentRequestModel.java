@@ -518,4 +518,20 @@ public class RentRequestModel extends BaseModel {
             return  true;
         return  false;
     }
+    public List<RentRequest> getAllPendingRequest(int maxId){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            List<RentRequest>  rentRequestList = session.createQuery(
+                    "FROM RentRequest rentRequest where " +
+                            " rentRequest.approve = false " +
+                            " and rentRequest.disapprove = false " +
+                            " and id>:maxId order by id asc")
+                    .setParameter("maxId",maxId)
+                    .list();
+            return rentRequestList;
+        }finally {
+            session.close();
+        }
+    }
 }

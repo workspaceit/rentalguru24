@@ -1,6 +1,7 @@
 package helper;
 
 import model.nonentity.photo.Picture;
+import org.springframework.beans.factory.annotation.Value;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -16,7 +17,8 @@ import java.util.Random;
 public class ImageHelper {
     //server settings for pictures and images
       /* ------------------- Live server of client ----------------------------- */
-    private static String GLOBAL_PATH = "/home/rentguru24files/";
+    @Value("${fileLocation.uploaded}")
+    private static String GLOBAL_PATH;
     /* ------------------- Develop ----------------------------- */
   //  private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
 

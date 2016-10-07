@@ -2,13 +2,12 @@ package controller.service.app;
 
 import com.paypal.api.payments.PayoutBatch;
 import com.paypal.api.payments.Refund;
-import com.paypal.api.payments.Sale;
 import com.paypal.base.rest.PayPalRESTException;
 import helper.DateHelper;
 import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
 import model.*;
-import model.admin.AdminPaypalCredentailModel;
+import model.admin.AdminPaypalCredentialModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
 import model.entity.app.UserPaypalCredential;
@@ -40,7 +39,7 @@ public class ReceiveProductService {
     @Autowired
     RentPaymentModel rentPaymentModel;
     @Autowired
-    AdminPaypalCredentailModel adminPaypalCredentailModel;
+    AdminPaypalCredentialModel adminPaypalCredentialModel;
     @Autowired
     UserPaypalCredentialModel userPaypalCredentialModel;
     @Autowired
@@ -102,7 +101,7 @@ public class ReceiveProductService {
 
         /*~~~~~~~~~~ Paypal initiation ~~~~~~~~~~~~~~~~~*/
 
-        AdminPaypalCredential adminPaypalCredentail = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredentail = adminPaypalCredentialModel.getAdminPaypalCredentail();
         PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredentail.getApiKey(),adminPaypalCredentail.getApiSecret());
 
          /*~~~~~~~~ Refund to rentee initiating~~~~~~~~~~~~*/
