@@ -567,7 +567,6 @@ public class ProductService{
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
 
-
         RentalProduct rentalProduct = productModel.getById(productId);
 
         if(rentalProduct == null){
@@ -580,6 +579,13 @@ public class ProductService{
         if(isProductOnRent == true){
             serviceResponse.setRequestError("product", "Can't delete a product on rent");
             return serviceResponse;
+        }
+
+        List<ProductRating> productRatings = productRatingModel.getByProductId(productId);
+        if(productRatings != null || !productRatings.isEmpty()){
+            for(int i = 0; i<productRatings.size(); i++){
+                productRatingModel.delete(productRatings.get(i));
+            }
         }
         productModel.delete(rentalProduct);
 

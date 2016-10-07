@@ -1,9 +1,11 @@
 package model;
 
 import model.entity.app.ProductRating;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,5 +48,26 @@ public class ProductRatingModel extends BaseModel {
         }finally {
             session.close();
         }
+    }
+
+    public List<ProductRating> getByProductId(int productId) {
+        Session session = null;
+        try {
+            session = this.sessionFactory.openSession();
+            return  session.createQuery("FROM ProductRating pR WHERE pR.product.id = :productId").setParameter("productId", productId).list();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return new ArrayList<>();
+        } finally {
+            if (session != null)
+                session.close();
+        }
+    }
+    public void delete(ProductRating productRating){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(productRating);
+        session.getTransaction().commit();
+        session.close();
     }
 }

@@ -56,6 +56,9 @@ public class TestService extends BaseService{
     @Autowired
     AdminGlobalNotificationTemplateModel adminGlobalNotificationTemplateModel;
 
+    @Autowired
+    ProductRatingModel productRatingModel;
+
     @RequestMapping(value = "/test/att", method = RequestMethod.POST)
     public void postAttribute(@RequestParam Map<String, String> allRequestParams){
 
@@ -246,6 +249,12 @@ public class TestService extends BaseService{
 //    public ServiceResponse potGlobalNotificationtemplate(HttpServletRequest request){
 //
 //    }
-
+//    @RequestMapping(value = "/fiend-product-rating", method = RequestMethod.POST)
+//    public ServiceResponse getProductRating(HttpServletRequest request, @RequestParam int productId){
+//        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+//        List<ProductRating> productRatings = productRatingModel.getByProductId(productId);
+//        serviceResponse.setResponseData(productRatings);
+//        return serviceResponse;
+//    }
 
 }
