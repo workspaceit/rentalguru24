@@ -38,11 +38,11 @@
     </bean>
     <!-- * ** *** **** Scheduler **** *** ** * -->
 
-    <bean id="taskExecutorExample" class="scheduler.Scheduler">
-    </bean>
-    <task:scheduled-tasks>
-        <task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="*/5 * * * * *"/>
-    </task:scheduled-tasks>
+    <!--<bean id="taskExecutorExample" class="scheduler.Scheduler">-->
+    <!--</bean>-->
+    <!--<task:scheduled-tasks>-->
+        <!--<task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="*/5 * * * * *"/>-->
+    <!--</task:scheduled-tasks>-->
     <!-- * ** *** **** **** *** ** * -->
     <!-- * ** *** **** **** *** ** * -->
        <!-- * ** *** **** Interceptor  **** *** ** * -->
@@ -216,7 +216,9 @@
        <mvc:resources mapping="/profile-image/**" location="${fileLocation.profile}"
        cache-period="31556926"/>
        <mvc:resources mapping="/images/**" location="${fileLocation.images}"
-       cache-period="31556926"/>
+        cache-period="31556926"/>
+        <mvc:resources mapping="/category-images/**" location="${fileLocation.category}"
+                       cache-period="31556926"/>
 
 <!--*******************************************************************************************************-->
 

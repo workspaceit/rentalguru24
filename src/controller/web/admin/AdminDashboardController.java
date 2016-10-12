@@ -166,7 +166,7 @@ public class AdminDashboardController {
     }
     @RequestMapping(value = "/add-category", method = RequestMethod.GET)
     public ModelAndView getAddCategory(HttpServletRequest request){
-        ModelAndView modelAndView = new ModelAndView("admin/addCategory");
+        ModelAndView modelAndView = new ModelAndView("admin/category/addCategory");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
 
@@ -217,7 +217,7 @@ public class AdminDashboardController {
     }
     @RequestMapping(value = "/edit-category/{category_id}", method = RequestMethod.GET)
     public ModelAndView editCategory(HttpServletRequest request, @PathVariable("category_id") int categoryId){
-        ModelAndView modelAndView = new ModelAndView("admin/editCategory");
+        ModelAndView modelAndView = new ModelAndView("admin/category/editCategory");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
         Category category = categoryModel.getById(categoryId);

@@ -26,6 +26,7 @@ public class FileController {
     private List<String> documentContentTypeList;
     private List<String> productImgContentTypeList;
     private List<String> profileImgContentTypeList;
+    private List<String> categoryImgContentTypeList;
     @Autowired
     TempFileModel tempFileModel;
     public FileController(){
@@ -49,6 +50,15 @@ public class FileController {
             }
         };
         profileImgContentTypeList = new ArrayList<String>(){
+            {
+                add("image/jpeg");
+                add("image/pjpeg");
+                add("image/jpeg");
+                add("image/png");
+
+            }
+        };
+        categoryImgContentTypeList = new ArrayList<String>(){
             {
                 add("image/jpeg");
                 add("image/pjpeg");
@@ -164,6 +174,50 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
             serviceResponse.setRequestError("profileImage", "No file attached");
+        }
+
+
+        Random rnd = new Random();
+        long n = 1000000000 + rnd.nextInt(900000);
+
+        tempFile.setToken(n);
+
+
+        this.tempFileModel.insert(tempFile);
+        serviceResponse.setResponseData(tempFile.getToken());
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/category-image", headers = "Content-Type=multipart/form-data",method = RequestMethod.POST)
+    public ServiceResponse uploadCategoryImage(HttpServletRequest request,@RequestParam("categoryImage") MultipartFile file){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        model.entity.app.TempFile tempFile = new model.entity.app.TempFile();
+
+
+
+        /*---------Content type validation -----------------*/
+        if(!productImgContentTypeList.contains(file.getContentType())){
+            serviceResponse.setRequestError("categoryImage", file.getContentType()+" not allowed");
+            return serviceResponse;
+        }
+
+
+        long fileSizeLimit = 2 *1024 *1024; // 2 MB
+        if(file.getSize() > fileSizeLimit){
+            serviceResponse.setRequestError("categoryImage", "Max file size 2 MB");
+            return serviceResponse;
+        }
+        try {
+            byte[] fileByte = file.getBytes();
+            System.out.println("Byte Received " +fileByte.length);
+            if(fileByte.length==0){
+                serviceResponse.setRequestError("categoryImage", "No file attached");
+                return serviceResponse;
+            }
+            String filePath = ImageHelper.saveFile(fileByte, file.getOriginalFilename());
+            tempFile.setPath(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            serviceResponse.setRequestError("categoryImage", "No file attached");
         }
 
 
