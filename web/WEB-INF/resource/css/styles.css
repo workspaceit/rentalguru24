@@ -1,4 +1,4 @@
-/*font awesome*/
+
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 
@@ -198,16 +198,27 @@ span.conatct_number {
     list-style: none !important;
 }
 .dropdown.catagory_drop{
-    padding-top: 8px;
+    padding-top: 0px;
+    height: 100%;
+    background: transparent;
+}
+.dropdown.catagory_drop a{
+    height: 100%;
+    background: transparent;
+    color: #000;
+    line-height: 37px;
 }
 .dropdown.catagory_drop a:hover{
     cursor: pointer;
 }
 .dropdown.catagory_drop .catagory_drop_a{
     padding: 6px;
-    border: 1px solid #dedede;
+    border: 1px solid #d8d8d8;
+    border-top: 0px;
+    border-bottom: 0px;
     border-radius: 0px;
-    background: #fff;
+    background: transparent;
+    color: #000;
 }
 
 .catagory_drop .dropdown-menu > li{
@@ -3014,10 +3025,107 @@ span.time_date {
 }
 /*Edit product*/
 
+.nav-cat{
+    height: 52px;
+}
+.nav-cat .category_drop{
+    padding-top: 0px !important;
+    height: 100% !important;
+}
+.category_drop{
+    position: relative;
+}
+/*.category_drop:hover .drop-div{
+    display: block;
+}*/
+.drop-div{
+    position: absolute;
+    left: 0px;
+    top: 100%;
+    width: 600px;
+    background:#fff;
+    z-index: 999;
+    border: 1px solid #d8d8d8;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    display: none;
+}
+.catagory_drop:hover .drop-div{
+    display: block;
+}
+/*.catagory_drop:hover .drop-div .sub-list{
+    display: none;
+}*/
+/*.drop-div .mega-list{
+    height: 100%;
+}
+.drop-div .sub-list{
+    height: 100%;
+}*/
 
-
-
-
+.mega-list{
+    margin: 0px;
+    padding: 0px;
+    min-height: 300px;
+    width: 30%;
+    background: #f5f5f5;
+    float: left;
+    padding: 5px;
+    border-right: 1px solid #d8d8d8;
+    border-bottom-left-radius: 15px;
+}
+.mega-list li{
+    list-style: none;
+    margin-bottom: 0px;
+    display: block;
+    float: none !important;
+    position: relative;
+}
+.mega-list li:before{
+    content: "\f054";
+    position: absolute;
+    font: normal normal normal 14px/1 FontAwesome;
+    right: 5px;
+    top: 10px;
+    color: #000;
+    font-size: 11px;
+}
+.mega-list li a{
+    color: #000;
+    padding: 5px;
+    line-height: 30px !important;
+}
+.sub-list{
+    padding: 5px;
+    width: 70%;
+    float: left;
+    min-height:300px;
+    background-position: bottom right !important;
+    background-size: 290px auto !important;
+    border-bottom-right-radius: 15px;
+    display: none;
+}
+.sub-list h3{
+    margin-top: 0px;
+    font-size: 18px;
+    margin-bottom: 3px;
+    font-weight: normal;
+    margin-left: 4px;
+}
+.sub-list li{
+    list-style: none;
+    margin-bottom: 0px;
+    display: block;
+    float: none !important;
+}
+.sub-list li a{
+    color: #000;
+    padding: 5px;
+    line-height: 30px !important;
+}
+.drop-div .mega-list li:hover .sub-list{
+    display: block;
+}
 /*Media queries*/
 
 /*For mobile*/
@@ -3103,4 +3211,4 @@ span.time_date {
 
 }
 
-/*Media queries*/
+/*Media queries
