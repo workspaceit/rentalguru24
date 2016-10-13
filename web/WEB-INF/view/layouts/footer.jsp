@@ -38,6 +38,7 @@
 <!-- Contact end here -->
 <!-- Main container start here -->
 <!-- Javascript framework and plugins start here -->
+
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js"  />" ></script>
 <script src="<c:url value="/resources/js/jquery.validate.min.js"  />" ></script>
 <script src="<c:url value="/resources/js/modernizr.js"  />" ></script>
@@ -62,14 +63,14 @@
 <%--Developer 3rd party Lib--%>
 <%--Doc http://blog.stevenlevithan.com/archives/date-time-format--%>
 <script src="<c:url value="/resources/developer/third_party/date.format.js" />" ></script>
-<!-- Javascript framework and plugins end here -->
 
-
-<%--Auto Complete [Starts]--%>
+<%--Auto Complete --%>
 <script src="<c:url value="/resources/auto_complete/jquery.easy-autocomplete.min.js" />" ></script>
 <%--<link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.themes.min.css" />">--%>
 <link rel="stylesheet" href="<c:url value="/resources/auto_complete/easy-autocomplete.min.css" />">
-<%--Auto Complete [Ends]--%>
+
+<%--Category Navigation Script--%>
+<script type="text/javascript" src="<c:url value="/resources/developer/js/nav/categoryNav.js"  />" ></script>
 
 <script>
   function doSearch(event){
@@ -248,64 +249,7 @@
       }
     });
   }
-  /*****************  Fetch product by category ***********/
-  $("#categoryPageLinkUl").find(".developerCategoryAnchore").click(function(event){
-    var categoryId = $(this).attr("categoryId");
-    $(this).bind('click', fetchProductByCategoryAndScrollDown(categoryId,this,event));
-  });
-  function fetchProductByCategoryAndScrollDown(categoryId,elem,event){
-    event.preventDefault();
-    $("#productBlockHead").html($("#categoryAnchor_"+categoryId).html());
-    if($("#newProductPartialRender").length==0){
-      window.location.href =BASEURL+"/home/category/"+categoryId;
-      return;
-    }
-    getProductByCategory(categoryId,elem);
-    return false;
-  }
-  function getProductByCategory(categoryId,elem){
-    if(showInfo != undefined){
-      showInfo("Loading...")
-    }
-    var newUrl = BASEURL+"/home/category/"+categoryId;
-    $.ajax({
-      url: BASEURL+"/home/partial-rendering/category/"+categoryId,
-      type: "GET",
-      success: function(data){
-        history.pushState({}, null, newUrl);
-        $("#newProductPartialRender").html(data);
 
-        /*Scrolling down*/
-        if(elem != undefined && elem!=null){
-          scrollDownWithAnimation(elem);
-          hideInfo();
-        }
-
-        if(haveNoProduct()){
-          $("#loadMoreButtonParent").hide();
-        }else{
-          $("#loadMoreButtonParent").show();
-        }
-
-        var loadMoreObj = getLoadMoreObj();
-        loadMoreObj.url= "/home/partial-rendering/load/more/rental-product?categoryId="+categoryId;
-        loadMoreObj.offset=1;
-        loadMoreObj.limit=8;
-        setLoadMoreObj(loadMoreObj);
-      }
-    });
-  }
-  function scrollDownWithAnimation(elem){
-    var target = $(elem.hash);
-    if (target.length == 0) target = $('a[name="' + elem.hash.substr(1) + '"]');
-    if (target.length == 0) target = $('html');
-    $('html, body').animate({ scrollTop: target.offset().top }, 700);
-  }
-  function selectedCategory(categoryId){
-    var categoryName=$("#categoryAnchor_"+categoryId).data("category-name");
-    $("#dropdownCategorySelect").attr("data-category-id",categoryId);
-    $("#dropdownCategorySelect").html('<i class="fa fa-bars"></i>'+categoryName+'<span class="caret"></span>');
-  }
   function loadMoreProduct(){
     $("#loadMoreButtonLoader").show();
     var cid=0;
