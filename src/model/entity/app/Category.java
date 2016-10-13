@@ -3,6 +3,8 @@ package model.entity.app;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import model.convert.PictureConverter;
+import model.nonentity.photo.Picture;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -21,6 +23,7 @@ public class Category {
     private String name;
     private Integer parentId;
     private int sortedOrder;
+    private Picture picture;
     private int createdBy;
     private boolean isSubcategory;
     private Timestamp createdDate;
@@ -66,6 +69,17 @@ public class Category {
 
     public void setSortedOrder(int sortedOrder) {
         this.sortedOrder = sortedOrder;
+    }
+
+    @Basic
+    @Column(name = "picture")
+    @Convert(converter = PictureConverter.class)
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
     }
 
     @Basic

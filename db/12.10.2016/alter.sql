@@ -1,0 +1,1 @@
+ALTER TABLE `category` ADD `picture` TEXT NULL AFTER `sorted_order`;

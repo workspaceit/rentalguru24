@@ -1,11 +1,15 @@
 package controller.service.admin;
 
+import helper.ImageHelper;
 import helper.ServiceResponse;
 import model.CategoryModel;
 import model.ProductModel;
+import model.TempFileModel;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
+import model.entity.app.TempFile;
 import model.entity.app.product.rentable.iface.RentalProduct;
+import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,8 +30,14 @@ public class AdminCategoryService {
 
     @Autowired
     ProductModel productModel;
+
+    @Autowired
+    TempFileModel tempFileModel;
+
     @RequestMapping(value = "/add-category", method = RequestMethod.POST)
-    private ServiceResponse setCategory(HttpServletRequest request, @RequestParam String categoryName){
+    private ServiceResponse setCategory(HttpServletRequest request,
+                                        @RequestParam String categoryName,
+                                        @RequestParam(required = false) Long categoryImgToken){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         categoryName = categoryName.trim();
@@ -44,13 +54,33 @@ public class AdminCategoryService {
             serviceResponse.setRequestError("categoryName", "Category name Required");
             return serviceResponse;
         }
+
+        Category category = new Category();
+
+        if(categoryImgToken!=null){
+            Picture picture = null;
+            TempFile tempOtherFile = this.tempFileModel.getByToken(categoryImgToken);
+            try {
+                picture = ImageHelper.moveCategoryImage( tempOtherFile.getPath());
+
+                if(picture.getOriginal().getPath().isEmpty()) {
+                    serviceResponse.setRequestError("categoryImgToken", "Unable to save profile image");
+                }
+                category.setPicture(picture);
+
+            } catch (Exception e) {
+                //e.printStackTrace();
+                serviceResponse.setRequestError("categoryImgToken", "Unable to save image.."+e.getMessage());
+                return serviceResponse;
+            }
+        }
         categoryName = categoryName.trim();
         if(categoryName.isEmpty()){
             serviceResponse.setRequestError("categoryName", "Category name Required");
             return serviceResponse;
         }
         int lastSortedOrder = categoryModel.maxSortOrder();
-        Category category = new Category();
+
         category.setName(categoryName);
         category.setCreatedBy(appCredential.getId());
         category.setSortedOrder((lastSortedOrder+1));
@@ -114,7 +144,9 @@ public class AdminCategoryService {
         return serviceResponse;
     }
     @RequestMapping(value = "/edit-category", method = RequestMethod.POST)
-    public ServiceResponse editCategory(HttpServletRequest request, @RequestParam int categoryId, @RequestParam String categoryName){
+    public ServiceResponse editCategory(HttpServletRequest request, @RequestParam int categoryId,
+                                        @RequestParam String categoryName,
+                                        @RequestParam(required = false) Long categoryImgToken){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         if(categoryId < 0){
             serviceResponse.setRequestError("category", "can't fiend category by this name");
@@ -131,6 +163,27 @@ public class AdminCategoryService {
         }
 
         Category category = categoryModel.getById(categoryId);
+
+        if(categoryImgToken!=null){
+            Picture picture = null;
+            TempFile tempOtherFile = this.tempFileModel.getByToken(categoryImgToken);
+            try {
+                picture = ImageHelper.moveCategoryImage( tempOtherFile.getPath());
+
+                if(picture.getOriginal().getPath().isEmpty()) {
+                    serviceResponse.setRequestError("categoryImgToken", "Unable to save profile image");
+                    return serviceResponse;
+                }
+                category.setPicture(picture);
+
+            } catch (Exception e) {
+                //e.printStackTrace();
+                serviceResponse.setRequestError("categoryImgToken", "Unable to save image.."+e.getMessage());
+                return serviceResponse;
+            }
+        }
+
+
         category.setName(categoryName);
         categoryModel.insert(category);
         serviceResponse.getResponseStat().setMsg("Category successfully updated");

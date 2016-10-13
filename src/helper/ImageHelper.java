@@ -1,6 +1,7 @@
 package helper;
 
 import model.nonentity.photo.Picture;
+import org.springframework.beans.factory.annotation.Value;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -16,7 +17,9 @@ import java.util.Random;
 public class ImageHelper {
     //server settings for pictures and images
       /* ------------------- Live server of client ----------------------------- */
-    private static String GLOBAL_PATH = "/home/rentguru24files/";
+    //@Value("${fileLocation.uploaded}")
+
+    private static String GLOBAL_PATH ="/home/rentguru24files/";
     /* ------------------- Develop ----------------------------- */
   //  private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
 
@@ -34,6 +37,8 @@ public class ImageHelper {
     private static String PRODUCT_PATH= GLOBAL_PATH+PRODUCT_FOLDER;
     private static String PROFILE_FOLDER= "profile/";
     private static String PROFILE_PATH= GLOBAL_PATH+PROFILE_FOLDER;
+    private static String CATEGORY_FOLDER= "category/";
+    private static String CATEGORY_PATH= GLOBAL_PATH+CATEGORY_FOLDER;
     private static String TEMP_FOLDER= "temp/";
     private static String TEMP_FILE_PATH= GLOBAL_PATH+TEMP_FOLDER;
 
@@ -133,7 +138,36 @@ public class ImageHelper {
 
         return picture;
     }
+    public static Picture moveCategoryImage(String oldPath){
+        String fileName = System.nanoTime()+"."+getExtension(oldPath);
+        String filePath = CATEGORY_PATH+fileName;
+        Picture picture = new Picture();
+        try{
 
+            File docFile =new File(GLOBAL_PATH+oldPath);
+
+            createDirIfNotExist(CATEGORY_PATH);
+
+            if(docFile.renameTo(new File(filePath))){
+                BufferedImage in = ImageIO.read(new File(filePath));
+
+                picture.getOriginal().setPath(fileName);
+                picture.getOriginal().getSize().setHeight(in.getHeight());
+                picture.getOriginal().getSize().setWidth(in.getWidth());
+                in.flush();
+
+            }else{
+                System.out.println("File is failed to move!"+filePath);
+            }
+            System.out.println(GLOBAL_PATH+oldPath);
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return picture;
+    }
     public static void createDirIfNotExist(String path) {
         File theDir = new File(path);
 
@@ -172,6 +206,7 @@ public class ImageHelper {
     }
     public static String saveFile(byte[] pdfByte, String originalFileName) {
         String fileName = getRandomNumber() + "."+getExtension(originalFileName);
+        System.out.println(GLOBAL_PATH);
         try {
             File someFile = new File(TEMP_FILE_PATH+ "/" +fileName);
             FileOutputStream fos;

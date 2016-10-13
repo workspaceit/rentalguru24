@@ -1,27 +1,22 @@
 package controller.web.app.rent_payment;
 
 import com.paypal.api.payments.*;
-import helper.DateHelper;
 import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
 import model.RentInfModel;
 import model.RentPaymentModel;
 import model.RentRequestModel;
-import model.admin.AdminPaypalCredentailModel;
+import model.admin.AdminPaypalCredentialModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
-import model.entity.app.Category;
 import model.entity.app.RentRequest;
 import model.entity.app.payments.RentPayment;
-import model.entity.app.product.rentable.RentInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,7 +26,7 @@ import java.util.Map;
 @RequestMapping("/paypal/rent-payment")
 public class PayPalPaymentController {
     @Autowired
-    AdminPaypalCredentailModel adminPaypalCredentailModel;
+    AdminPaypalCredentialModel adminPaypalCredentialModel;
     @Autowired
     RentInfModel rentInfModel;
     @Autowired
@@ -84,7 +79,7 @@ public class PayPalPaymentController {
 
 
         /* *** ** * Execute Paypal Payment * ** *** */
-        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentialModel.getAdminPaypalCredentail();
         PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
         Payment executedPayment  = payPalPayment.executePayments(paymentId, payerId);
 

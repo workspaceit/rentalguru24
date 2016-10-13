@@ -4,20 +4,17 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.Sale;
 import com.paypal.api.payments.Transaction;
-import helper.DateHelper;
 import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
-import model.RentInfModel;
 import model.RentPaymentModel;
 import model.RentRequestModel;
 import model.UserPaypalCredentialModel;
-import model.admin.AdminPaypalCredentailModel;
+import model.admin.AdminPaypalCredentialModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
 import model.entity.app.UserPaypalCredential;
 import model.entity.app.payments.RentPayment;
-import model.entity.app.product.rentable.RentInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +35,7 @@ public class PaymentService {
     @Autowired
     RentPaymentModel rentPaymentModel;
     @Autowired
-    AdminPaypalCredentailModel adminPaypalCredentailModel;
+    AdminPaypalCredentialModel adminPaypalCredentialModel;
     @Autowired
     UserPaypalCredentialModel userPaypalCredentialModel;
 
@@ -57,7 +54,7 @@ public class PaymentService {
         }
 
         Map<String,String> responseObj = new HashMap<>();
-        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentialModel.getAdminPaypalCredentail();
 
         if(adminPaypalCredential==null){
             serviceResponse.getResponseStat().setErrorMsg("No payPal App credential found");
@@ -102,7 +99,7 @@ public class PaymentService {
                                          @RequestParam String paymentId){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        AdminPaypalCredential adminPaypalCredential =  adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredential =  adminPaypalCredentialModel.getAdminPaypalCredentail();
         PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
 
 

@@ -2,15 +2,12 @@ package controller.service.app;
 
 import com.paypal.api.payments.PayoutBatch;
 import com.paypal.api.payments.Refund;
-import com.paypal.api.payments.Sale;
 import com.paypal.base.rest.PayPalRESTException;
 import helper.DateHelper;
 import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
 import model.*;
-import model.admin.AdminPaypalCredentailModel;
-import model.entity.admin.AdminGlobalNotification;
-import model.entity.admin.AdminGlobalNotificationTemplate;
+import model.admin.AdminPaypalCredentialModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.AppCredential;
 import model.entity.app.UserPaypalCredential;
@@ -42,22 +39,19 @@ public class ReceiveProductService {
     @Autowired
     RentPaymentModel rentPaymentModel;
     @Autowired
-    AdminPaypalCredentailModel adminPaypalCredentailModel;
+    AdminPaypalCredentialModel adminPaypalCredentialModel;
     @Autowired
     UserPaypalCredentialModel userPaypalCredentialModel;
     @Autowired
     PayoutModel payoutModel;
     @Autowired
     PaymentRefundModel paymentRefundModel;
-    @Autowired
-    AdminGlobalNotificationTemplateModel adminGlobalNotificationTemplateModel;
-    @Autowired
-    AdminGlobalNotificationModel adminGlobalNotificationModel;
+
 
     @RequestMapping(value = "/confirm-receive/{rentalProductReturnId}", method = RequestMethod.POST)
     public ServiceResponse renturnProduct(HttpServletRequest request,
-                                      @PathVariable("rentalProductReturnId") int rentalProductReturnId,
-                                        @RequestParam(value = "remarks",required = false) String remarks){
+                                          @PathVariable("rentalProductReturnId") int rentalProductReturnId,
+                                          @RequestParam(value = "remarks",required = false) String remarks){
 
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
@@ -107,7 +101,7 @@ public class ReceiveProductService {
 
         /*~~~~~~~~~~ Paypal initiation ~~~~~~~~~~~~~~~~~*/
 
-        AdminPaypalCredential adminPaypalCredentail = adminPaypalCredentailModel.getAdminPaypalCredentail();
+        AdminPaypalCredential adminPaypalCredentail = adminPaypalCredentialModel.getAdminPaypalCredentail();
         PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredentail.getApiKey(),adminPaypalCredentail.getApiSecret());
 
          /*~~~~~~~~ Refund to rentee initiating~~~~~~~~~~~~*/
@@ -195,8 +189,8 @@ public class ReceiveProductService {
     }
     @RequestMapping(value = "/dispute-receive/{rentalProductReturnId}", method = RequestMethod.POST)
     public ServiceResponse disputeReturnProduct(HttpServletRequest request,
-                                          @PathVariable("rentalProductReturnId") int rentalProductReturnId,
-                                          @RequestParam(value = "remarks",required = false) String remarks){
+                                                @PathVariable("rentalProductReturnId") int rentalProductReturnId,
+                                                @RequestParam(value = "remarks",required = false) String remarks){
 
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
@@ -265,21 +259,10 @@ public class ReceiveProductService {
         rentalProductReturned.getRentInf().getRentalProduct().setCurrentlyAvailable(true);
 
         productModel.update(rentalProductReturned.getRentInf().getRentalProduct());
-
-        AdminGlobalNotificationTemplate adminGlobalNotificationTemplate = adminGlobalNotificationTemplateModel.getByType("dispute");
-
-        AdminGlobalNotification adminGlobalNotification = new AdminGlobalNotification();
-
-        adminGlobalNotification.setType("dispute");
-        adminGlobalNotification.setNotificationTemplate(adminGlobalNotificationTemplate);
-        adminGlobalNotification.setRentInf(rentalProductReturned.getRentInf());
-
-        adminGlobalNotificationModel.insert(adminGlobalNotification);
-
         serviceResponse.setResponseData(rentalProductReturned);
 
         return serviceResponse;
     }
-   
+
 
 }

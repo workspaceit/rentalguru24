@@ -4,10 +4,14 @@ import com.paypal.api.payments.*;
 import com.paypal.api.payments.Currency;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
-import helper.RentFeesHelper;
-import model.admin.AdminPaypalCredentailModel;
+import model.PaymentRefundModel;
+import model.RentPaymentModel;
+import model.admin.AdminPaypalCredentialModel;
+import model.entity.admin.AdminPaypalCredential;
 import model.entity.app.RentRequest;
-import model.entity.app.product.rentable.iface.RentalProduct;
+import model.entity.app.payments.PaymentRefund;
+import model.entity.app.payments.RentPayment;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
@@ -15,17 +19,54 @@ public class PayPalPayment {
     private APIContext apiContext;
     private  String clientID;
     private  String clientSecret;
+
+    private PaymentRefundModel paymentRefundModel;
+    private AdminPaypalCredentialModel adminPaypalCredentialModel;
+    private RentPaymentModel rentPaymentModel;
     public static final String mode = "sandbox";
 
+    public PayPalPayment() {
+
+    }
     public PayPalPayment(String clientID,String clientSecret) {
         this.clientID = clientID;
         this.clientSecret = clientSecret;
         this.apiContext = new APIContext(this.clientID,this.clientSecret, mode);
     }
+
+    public PaymentRefundModel getPaymentRefundModel() {
+        return paymentRefundModel;
+    }
+
+    public void setPaymentRefundModel(PaymentRefundModel paymentRefundModel) {
+        this.paymentRefundModel = paymentRefundModel;
+    }
+
+    public RentPaymentModel getRentPaymentModel() {
+        return rentPaymentModel;
+    }
+
+    public void setRentPaymentModel(RentPaymentModel rentPaymentModel) {
+        this.rentPaymentModel = rentPaymentModel;
+    }
+
+    public AdminPaypalCredentialModel getAdminPaypalCredentialModel() {
+        return adminPaypalCredentialModel;
+    }
+
+    public void setAdminPaypalCredentialModel(AdminPaypalCredentialModel adminPaypalCredentialModel) {
+        this.adminPaypalCredentialModel = adminPaypalCredentialModel;
+
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentialModel.getAdminPaypalCredentail();
+        this.clientID = adminPaypalCredential.getApiKey();
+        this.clientSecret = adminPaypalCredential.getApiSecret();
+        this.apiContext = new APIContext(this.clientID,this.clientSecret, mode);
+    }
+
     public Payment getDetails(String payId){
         Payment payment = null;
         try {
-            payment = Payment.get(this.apiContext,payId);
+            payment = Payment.get(this.apiContext, payId);
         } catch (PayPalRESTException e) {
             e.printStackTrace();
         }
@@ -167,6 +208,7 @@ public class PayPalPayment {
 
         return  sale.refund(this.apiContext, refund);
     }
+
     public PayoutBatch payOut(String receiverEmail,String payOutamount,String note,String emailSubject) throws PayPalRESTException {
         Payout payout = new Payout();
 
@@ -233,5 +275,34 @@ public class PayPalPayment {
 
         return captureId;
     }
+    public void refundOtherRentRequest(RentRequest rentRequest){
+        AdminPaypalCredential adminPaypalCredential = adminPaypalCredentialModel.getAdminPaypalCredentail();
+        PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
+        RentPayment rentPayment = rentPaymentModel.getByRentRequestId(rentRequest.getId());
+        Refund refund = null;
+
+        try {
+            refund = payPalPayment.refund(rentPayment.getPaypalSaleId(),rentPayment.getTotalAmount());
+            System.out.print(refund.toJSON());
+        } catch (PayPalRESTException e) {
+            System.out.println(Sale.getLastRequest() + e.getMessage());
+
+        }
+
+
+
+//     refund(String saleId, Amount amount);
+        PaymentRefund paymentRefund = new PaymentRefund();
+        paymentRefund.setAppCredential(rentRequest.getRequestedBy());
+        paymentRefund.setRentPayment(rentPayment);
+        paymentRefund.setParentPayId(refund.getParentPayment());
+        paymentRefund.setPaypalSaleId(refund.getSaleId());
+        paymentRefund.setTotalAmount(Double.parseDouble(refund.getAmount().getTotal()));
+        paymentRefundModel.insert(paymentRefund);
+
+    }
+
+
+
 }
 
