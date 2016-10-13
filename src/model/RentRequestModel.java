@@ -526,6 +526,7 @@ public class RentRequestModel extends BaseModel {
                     "FROM RentRequest rentRequest where " +
                             " rentRequest.approve = false " +
                             " and rentRequest.disapprove = false " +
+                            " and rentRequest.isExpired = false " +
                             " and id>:maxId order by id asc")
                     .setParameter("maxId",maxId)
                     .list();

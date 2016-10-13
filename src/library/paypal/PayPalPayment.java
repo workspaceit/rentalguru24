@@ -281,6 +281,9 @@ public class PayPalPayment {
         RentPayment rentPayment = rentPaymentModel.getByRentRequestId(rentRequest.getId());
         Refund refund = null;
 
+        if(rentPayment==null){
+            return;
+        }
         try {
             refund = payPalPayment.refund(rentPayment.getPaypalSaleId(),rentPayment.getTotalAmount());
             System.out.print(refund.toJSON());

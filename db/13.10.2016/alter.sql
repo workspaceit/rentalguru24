@@ -1,0 +1,1 @@
+ALTER TABLE  `rent_request` CHANGE  `created_date`  `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ;
