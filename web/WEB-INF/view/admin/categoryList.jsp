@@ -129,11 +129,11 @@
         categoryId:categoryId
       },
       success: function(data){
-        console.log(data);
         if(data.responseStat.status == true){
           $('.success').html(data.responseStat.msg);
           $('.modal-success').show().fadeIn(500).delay(2000).fadeOut(500, function (){
               $('.modal-success').modal('hide');
+              window.location.href =BASEURL+"/admin/user/category-list";
           });
 
         }else{
@@ -153,7 +153,6 @@
         subCategoryid:subCategoryid
       },
       success: function(data){
-        console.log(data);
         if(data.responseStat.status == true){
           $('.success').html(data.responseStat.msg);
           $('.modal-success').show().fadeIn(500).delay(2000).fadeOut(500, function (){
