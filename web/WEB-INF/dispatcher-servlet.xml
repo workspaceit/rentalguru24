@@ -38,11 +38,11 @@
     </bean>
     <!-- * ** *** **** Scheduler **** *** ** * -->
 
-    <!--<bean id="taskExecutorExample" class="scheduler.Scheduler">-->
-    <!--</bean>-->
-    <!--<task:scheduled-tasks>-->
-        <!--<task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="*/5 * * * * *"/>-->
-    <!--</task:scheduled-tasks>-->
+    <bean id="taskExecutorExample" class="scheduler.Scheduler">
+    </bean>
+    <task:scheduled-tasks>
+        <task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="* */30 * * * *"/>
+    </task:scheduled-tasks>
     <!-- * ** *** **** **** *** ** * -->
     <!-- * ** *** **** **** *** ** * -->
        <!-- * ** *** **** Interceptor  **** *** ** * -->
@@ -349,8 +349,15 @@
         </bean>
         <bean id="adminGlobalNotificationModel" class="model.AdminGlobalNotificationModel" parent="baseModel"   >
         </bean>
-    <bean id="adminUnreadAlertCounterModel" class="model.AdminUnreadAlertCounterModel" parent="baseModel"   >
-    </bean>
+        <bean id="adminUnreadAlertCounterModel" class="model.AdminUnreadAlertCounterModel" parent="baseModel"   >
+        </bean>
+        <bean id="cronLogModel" class="model.CronLogModel" parent="baseModel"   >
+        </bean>
+        <bean id="cronLastExecutedModel" class="model.CronLastExecutedModel" parent="baseModel"   >
+        </bean>
+
+
+
 
 
 
@@ -358,57 +365,59 @@
 
        <!-- ******************** Hibernate Session,Entity, *********************************** -->
        <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-              <property name="annotatedClasses">
-                     <list>
-                        <value>model.entity.app.AppCredential</value>
-                        <value>model.entity.app.AuthCredential</value>
-                        <value>model.entity.app.UserAddress</value>
-                        <value>model.entity.app.UserInf</value>
-                        <value>model.entity.app.AttributeValues</value>
-                        <value>model.entity.app.Attributes</value>
-                        <value>model.entity.app.Category</value>
-                        <value>model.entity.app.product.rentable.RentalProductEntity</value>
-                        <value>model.entity.app.product.rentable.ProductAttribute</value>
-                        <value>model.entity.app.product.ProductCategory</value>
-                        <value>model.entity.app.product.rentable.RentInf</value>
-                        <value>model.entity.app.RentRequest</value>
-                        <value>model.entity.app.TempFile</value>
-                        <value>model.entity.app.IdentityType</value>
-                        <value>model.entity.app.product.rentable.ProductAvailability</value>
-                        <value>model.entity.app.product.rentable.ProductLocation</value>
-                        <value>model.entity.app.RentType</value>
-                        <value>model.entity.app.ProductRating</value>
-                        <value>model.entity.app.product.ProductLiked</value>
-                        <value>model.entity.app.product.rentable.RentalProductReturnRequest</value>
-                        <value>model.entity.app.product.rentable.RentalProductReturned</value>
-                        <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
-                        <value>model.entity.admin.AdminPaypalCredential</value>
-                        <value>model.entity.admin.AdminSiteFeesEntity</value>
-                        <value>model.entity.admin.AdminCmsPage</value>
-                        <value>model.entity.app.PasswordResetsEntity</value>
-                        <value>model.entity.app.DeviceInfoEntity</value>
-                         <value>model.entity.app.payments.RentPayment</value>
-                             <value>model.entity.app.payments.PaymentRefund</value>
-                             <value>model.entity.app.payments.Payout</value>
-                             <value>model.entity.app.payments.Transaction</value>
-                             <value>model.entity.app.UserPaypalCredential</value>
-                         <value>model.entity.developer.DeveloperExceptionLog</value>
-                         <value>model.entity.admin.AdminGlobalNotification</value>
-                         <value>model.entity.admin.AdminGlobalNotificationTemplate</value>
-                         <value>model.entity.admin.AdminUnreadAlertCount</value>
-                     </list>
-              </property>
-               <property name="hibernateProperties">
-                   <props>
-                       <prop key="hibernate.connection.url">${jdbc.url}</prop>
-                       <prop key="hibernate.connection.username">${jdbc.username}</prop>
-                       <prop key="hibernate.connection.password" >${jdbc.password}</prop>
-                       <prop key="hibernate.connection.driver_class">${jdbc.driverClassName}</prop>
-                       <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-                       <prop key="hibernate.dialect">${jdbc.dialect}</prop>
-                       <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
-                   </props>
-               </property>
+            <property name="annotatedClasses">
+                <list>
+                    <value>model.entity.app.AppCredential</value>
+                    <value>model.entity.app.AuthCredential</value>
+                    <value>model.entity.app.UserAddress</value>
+                    <value>model.entity.app.UserInf</value>
+                    <value>model.entity.app.AttributeValues</value>
+                    <value>model.entity.app.Attributes</value>
+                    <value>model.entity.app.Category</value>
+                    <value>model.entity.app.product.rentable.RentalProductEntity</value>
+                    <value>model.entity.app.product.rentable.ProductAttribute</value>
+                    <value>model.entity.app.product.ProductCategory</value>
+                    <value>model.entity.app.product.rentable.RentInf</value>
+                    <value>model.entity.app.RentRequest</value>
+                    <value>model.entity.app.TempFile</value>
+                    <value>model.entity.app.IdentityType</value>
+                    <value>model.entity.app.product.rentable.ProductAvailability</value>
+                    <value>model.entity.app.product.rentable.ProductLocation</value>
+                    <value>model.entity.app.RentType</value>
+                    <value>model.entity.app.ProductRating</value>
+                    <value>model.entity.app.product.ProductLiked</value>
+                    <value>model.entity.app.product.rentable.RentalProductReturnRequest</value>
+                    <value>model.entity.app.product.rentable.RentalProductReturned</value>
+                    <value>model.entity.app.product.rentable.RentalProductReturnedHistory</value>
+                    <value>model.entity.admin.AdminPaypalCredential</value>
+                    <value>model.entity.admin.AdminSiteFeesEntity</value>
+                    <value>model.entity.admin.AdminCmsPage</value>
+                    <value>model.entity.app.PasswordResetsEntity</value>
+                    <value>model.entity.app.DeviceInfoEntity</value>
+                    <value>model.entity.app.payments.RentPayment</value>
+                    <value>model.entity.app.payments.PaymentRefund</value>
+                    <value>model.entity.app.payments.Payout</value>
+                    <value>model.entity.app.payments.Transaction</value>
+                    <value>model.entity.app.UserPaypalCredential</value>
+                    <value>model.entity.developer.DeveloperExceptionLog</value>
+                    <value>model.entity.admin.AdminGlobalNotification</value>
+                    <value>model.entity.admin.AdminGlobalNotificationTemplate</value>
+                    <value>model.entity.admin.AdminUnreadAlertCount</value>
+                    <value>model.entity.developer.cron.CronLastExecuted</value>
+                    <value>model.entity.developer.cron.CronLog</value>
+                </list>
+            </property>
+            <property name="hibernateProperties">
+                <props>
+                    <prop key="hibernate.connection.url">${jdbc.url}</prop>
+                    <prop key="hibernate.connection.username">${jdbc.username}</prop>
+                    <prop key="hibernate.connection.password" >${jdbc.password}</prop>
+                    <prop key="hibernate.connection.driver_class">${jdbc.driverClassName}</prop>
+                    <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                    <prop key="hibernate.dialect">${jdbc.dialect}</prop>
+                    <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+                </props>
+            </property>
        </bean>
 
 

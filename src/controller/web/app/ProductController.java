@@ -94,10 +94,13 @@ public class ProductController{
         }
 
         Map<String,String> productBreadCrumbDetails = new HashMap<>();
+
         productBreadCrumbDetails.put("url", "javascript:void(0)");
         productBreadCrumbDetails.put("text", "Details");
         breadCrumbStr.add(productBreadCrumbDetails);
 
+        String preSelectedCategoryName = "Select Category";
+        model.addAttribute("preSelectedCategoryName", preSelectedCategoryName);
         model.addAttribute("breadCrumbStr", breadCrumbStr);
         model.addAttribute("IsLogIn", IsLogin);
         model.addAttribute("rentalProduct", rentalProduct);
