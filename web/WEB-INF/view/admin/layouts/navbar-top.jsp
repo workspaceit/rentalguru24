@@ -93,7 +93,10 @@
       success: function(data){
         if(data.responseStat.status == true){
           $("#unreadMessageCount").html(data.responseData.globalNotification);
-          $("#unreadMessageCountText").html("You have "+data.responseData.globalNotification+" notifications");
+          $("#unreadMessageCountText").html("You have "+data.responseData.globalNotification+" unread notifications");
+        }else{
+          $("#unreadMessageCount").html(0);
+          $("#unreadMessageCountText").html("You have 0 unread notifications");
         }
       },
       error: function(data){

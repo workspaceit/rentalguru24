@@ -57,6 +57,10 @@ public class AdminGlobalNotificationService {
     public ServiceResponse getNotificationCount(HttpServletRequest request){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AdminUnreadAlertCount adminUnreadAlertCount = adminUnreadAlertCounterModel.getAllUnreadAlertCount();
+        if(adminUnreadAlertCount == null){
+            serviceResponse.setRequestError("notification", "No notification found");
+            return serviceResponse;
+        }
         serviceResponse.setResponseData(adminUnreadAlertCount);
         return serviceResponse;
     }
