@@ -62,12 +62,6 @@ public class Scheduler {
 
         if(pendingRentRequestList.size()>0){
 
-            /*~~~~~~~~~~ Cron Log ~~~~~~~~~~~~~~~~~~ */
-            CronLog cronLog = new CronLog();
-            cronLog.setDescription("RENT REQUEST ID : "+requestIds);
-            cronLog.setCreatedDate(currentSystemUtcTime);
-            cronLogModel.insert(cronLog);
-
             /*~~~~~~~~~~ Max Id Storing ~~~~~~~~~~~~~~~~~~ */
 
             RentRequest rentRequest = pendingRentRequestList.get(pendingRentRequestList.size() - 1);
@@ -76,5 +70,10 @@ public class Scheduler {
 
             cronLastExecutedModel.saveOrUpdateMaxRentRequestId(cronLastExecuted);
         }
+          /*~~~~~~~~~~ Cron Log ~~~~~~~~~~~~~~~~~~ */
+        CronLog cronLog = new CronLog();
+        cronLog.setDescription("RENT REQUEST ID : "+requestIds);
+        cronLog.setCreatedDate(currentSystemUtcTime);
+        cronLogModel.insert(cronLog);
     }
 }
