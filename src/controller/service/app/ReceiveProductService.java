@@ -234,6 +234,34 @@ public class ReceiveProductService {
 
         this.processProductReturnConfirmDispute(serviceResponse,rentalProductReturned,remarks,false,true);
 
+        /*Product dispute notification*/
+
+        AdminUnreadAlertCount adminUnreadAlertCount = adminUnreadAlertCounterModel.getAllUnreadAlertCount();
+
+        if(adminUnreadAlertCount != null){
+            int globalNotification = adminUnreadAlertCount.getGlobalNotification();
+            int globalNotificationUpdate= globalNotification + 1;
+            adminUnreadAlertCount.setGlobalNotification(globalNotificationUpdate);
+            adminUnreadAlertCounterModel.update(adminUnreadAlertCount);
+        }else {
+            AdminUnreadAlertCount adminUnreadAlertCountNew = new AdminUnreadAlertCount();
+            adminUnreadAlertCountNew.setGlobalNotification(1);
+            adminUnreadAlertCounterModel.insert(adminUnreadAlertCountNew);
+        }
+
+        AdminGlobalNotificationTemplate adminGlobalNotificationTemplate = adminGlobalNotificationTemplateModel.getByType("dispute");
+
+        AdminGlobalNotification adminGlobalNotification = new AdminGlobalNotification();
+
+        adminGlobalNotification.setNotificationTemplate(adminGlobalNotificationTemplate);
+        adminGlobalNotification.setType("dispute");
+        adminGlobalNotification.setRentInf(rentalProductReturned.getRentInf());
+        adminGlobalNotification.setDetails("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
+
+        adminGlobalNotificationModel.insert(adminGlobalNotification);
+
+        /*----------------------------*/
+
         return serviceResponse;
     }
     private ServiceResponse processProductReturnConfirmDispute(ServiceResponse serviceResponse,
@@ -268,33 +296,6 @@ public class ReceiveProductService {
 
         productModel.update(rentalProductReturned.getRentInf().getRentalProduct());
         serviceResponse.setResponseData(rentalProductReturned);
-        /*Product dispute notification*/
-
-        AdminUnreadAlertCount adminUnreadAlertCount = adminUnreadAlertCounterModel.getAllUnreadAlertCount();
-
-        if(adminUnreadAlertCount != null){
-            int globalNotification = adminUnreadAlertCount.getGlobalNotification();
-            int globalNotificationUpdate= globalNotification + 1;
-            adminUnreadAlertCount.setGlobalNotification(globalNotificationUpdate);
-            adminUnreadAlertCounterModel.update(adminUnreadAlertCount);
-        }else {
-            AdminUnreadAlertCount adminUnreadAlertCountNew = new AdminUnreadAlertCount();
-            adminUnreadAlertCountNew.setGlobalNotification(1);
-            adminUnreadAlertCounterModel.insert(adminUnreadAlertCount);
-        }
-
-        AdminGlobalNotificationTemplate adminGlobalNotificationTemplate = adminGlobalNotificationTemplateModel.getByType("dispute");
-
-        AdminGlobalNotification adminGlobalNotification = new AdminGlobalNotification();
-
-        adminGlobalNotification.setNotificationTemplate(adminGlobalNotificationTemplate);
-        adminGlobalNotification.setType("dispute");
-        adminGlobalNotification.setRentInf(rentalProductReturned.getRentInf());
-        adminGlobalNotification.setDetails("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
-
-        adminGlobalNotificationModel.insert(adminGlobalNotification);
-
-        /*----------------------------*/
         return serviceResponse;
     }
 
