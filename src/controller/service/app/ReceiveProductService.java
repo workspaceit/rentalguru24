@@ -256,7 +256,7 @@ public class ReceiveProductService {
         adminGlobalNotification.setNotificationTemplate(adminGlobalNotificationTemplate);
         adminGlobalNotification.setType("dispute");
         adminGlobalNotification.setRentInf(rentalProductReturned.getRentInf());
-        adminGlobalNotification.setDetails("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
+        adminGlobalNotification.setDetails("The product has been reported receive dispute");
 
         adminGlobalNotificationModel.insert(adminGlobalNotification);
 

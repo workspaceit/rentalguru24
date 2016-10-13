@@ -61,7 +61,7 @@
                   </div><!-- /.user-block -->
                   <div class='row margin-bottom'>
                     <div class='col-sm-6'>
-                      <img class='img-responsive' src='${BaseUrl}/images/product/${rentInf.getRentalProduct().getProfileImage().getOriginal().getPath()}' alt='Photo'>
+                      <img class='img-responsive' src='${BaseUrl}/images/${rentInf.getRentalProduct().getProfileImage().getOriginal().getPath()}' alt='Photo'>
                     </div><!-- /.col -->
                     <div class='col-sm-6'>
                       <div class='row'>
