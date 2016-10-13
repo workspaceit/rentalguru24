@@ -25,19 +25,19 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!-- Messages: style can be found in dropdown.less-->
-        <%--<li class="dropdown notifications-menu">--%>
-          <%--<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" onclick="getNotification();">--%>
-            <%--<i class="fa fa-bell-o"></i>--%>
-            <%--<span class="label label-warning" id="unreadMessageCount"></span>--%>
-          <%--</a>--%>
-          <%--<ul class="dropdown-menu">--%>
-            <%--<li class="header" id="unreadMessageCountText"></li>--%>
-            <%--<li id="notificationInnerMenu">--%>
+        <li class="dropdown notifications-menu">
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" onclick="getNotification();">
+            <i class="fa fa-bell-o"></i>
+            <span class="label label-warning" id="unreadMessageCount"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="header" id="unreadMessageCountText"></li>
+            <li id="notificationInnerMenu">
 
-            <%--</li>--%>
-            <%--<li class="footer"><a href="${baseURL}/admin/user/test/test">View all</a></li>--%>
-          <%--</ul>--%>
-        <%--</li>--%>
+            </li>
+            <li class="footer"><a href="${baseURL}/admin/user/test/test">View all</a></li>
+          </ul>
+        </li>
         <!-- Notifications: style can be found in dropdown.less -->
         <!-- Tasks: style can be found in dropdown.less -->
         <!-- User Account: style can be found in dropdown.less -->

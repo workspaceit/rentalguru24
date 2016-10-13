@@ -8,7 +8,10 @@ import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
 import model.*;
 import model.admin.AdminPaypalCredentialModel;
+import model.entity.admin.AdminGlobalNotification;
+import model.entity.admin.AdminGlobalNotificationTemplate;
 import model.entity.admin.AdminPaypalCredential;
+import model.entity.admin.AdminUnreadAlertCount;
 import model.entity.app.AppCredential;
 import model.entity.app.UserPaypalCredential;
 import model.entity.app.payments.PaymentRefund;
@@ -46,7 +49,12 @@ public class ReceiveProductService {
     PayoutModel payoutModel;
     @Autowired
     PaymentRefundModel paymentRefundModel;
-
+    @Autowired
+    AdminUnreadAlertCounterModel adminUnreadAlertCounterModel;
+    @Autowired
+    AdminGlobalNotificationModel adminGlobalNotificationModel;
+    @Autowired
+    AdminGlobalNotificationTemplateModel adminGlobalNotificationTemplateModel;
 
     @RequestMapping(value = "/confirm-receive/{rentalProductReturnId}", method = RequestMethod.POST)
     public ServiceResponse renturnProduct(HttpServletRequest request,
@@ -260,7 +268,33 @@ public class ReceiveProductService {
 
         productModel.update(rentalProductReturned.getRentInf().getRentalProduct());
         serviceResponse.setResponseData(rentalProductReturned);
+        /*Product dispute notification*/
 
+        AdminUnreadAlertCount adminUnreadAlertCount = adminUnreadAlertCounterModel.getAllUnreadAlertCount();
+
+        if(adminUnreadAlertCount != null){
+            int globalNotification = adminUnreadAlertCount.getGlobalNotification();
+            int globalNotificationUpdate= globalNotification + 1;
+            adminUnreadAlertCount.setGlobalNotification(globalNotificationUpdate);
+            adminUnreadAlertCounterModel.update(adminUnreadAlertCount);
+        }else {
+            AdminUnreadAlertCount adminUnreadAlertCountNew = new AdminUnreadAlertCount();
+            adminUnreadAlertCountNew.setGlobalNotification(1);
+            adminUnreadAlertCounterModel.insert(adminUnreadAlertCount);
+        }
+
+        AdminGlobalNotificationTemplate adminGlobalNotificationTemplate = adminGlobalNotificationTemplateModel.getByType("dispute");
+
+        AdminGlobalNotification adminGlobalNotification = new AdminGlobalNotification();
+
+        adminGlobalNotification.setNotificationTemplate(adminGlobalNotificationTemplate);
+        adminGlobalNotification.setType("dispute");
+        adminGlobalNotification.setRentInf(rentalProductReturned.getRentInf());
+        adminGlobalNotification.setDetails("Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
+
+        adminGlobalNotificationModel.insert(adminGlobalNotification);
+
+        /*----------------------------*/
         return serviceResponse;
     }
 

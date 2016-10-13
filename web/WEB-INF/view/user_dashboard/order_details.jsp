@@ -212,7 +212,7 @@
                                     <BUTTON id="productReceiveConfirmBtn" class="cancel_btn approval_btn"  >Confirm
                                         <span id="productReceiveConfirmBtnProgressIm" class="inner-load approveGif" hidden></span>
                                     </BUTTON>
-                                    <BUTTON id="productReceiveDisputeBtn" class="approve_btn approval_btn" onclick="disputeNotification()">Dispute
+                                    <BUTTON id="productReceiveDisputeBtn" class="approve_btn approval_btn">Dispute
                                         <span id="productReceiveDisputeProgressImg" class="inner-load disapproveGif" hidden></span>
                                     </BUTTON>
                                 </li>
@@ -444,7 +444,6 @@
                     url: '${BaseUrl}/api/auth/rent/disapprove-request/'+requestId,
 
                     success: function (data) {
-                        console.log(data);
                         if(data.responseStat.status==true){
                             $('.cancel_btn').removeAttrs("disabled", "disabled");
                             $('#disapproveProgressImg').hide();
@@ -475,7 +474,6 @@
                     url: '${BaseUrl}/api/auth/rent-inf/get-by-rent-request-id/'+requestId,
 
                     success: function (data) {
-                        console.log(data);
                         if(data.responseStat.status==true){
                             var rentInf = data.responseData;
 
@@ -647,11 +645,6 @@
                 });
             }
 
-        </script>
-        <script>
-            function disputeNotification(){
-
-            }
         </script>
     </body>
 </html>

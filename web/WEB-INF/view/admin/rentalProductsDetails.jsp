@@ -131,7 +131,7 @@
 <script>
 
     $(document).ready(function () {
-        $('#myModal').modal('hide')
+        $('#myModal').modal('hide');
     });
     function approve(prdocutId) {
         var status = $('#' + prdocutId).html();

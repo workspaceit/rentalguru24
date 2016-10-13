@@ -1,16 +1,15 @@
 package controller.web.admin;
 
 import helper.ServiceResponse;
-import model.AdminGlobalNotificationModel;
-import model.AdminUnreadAlertCounterModel;
-import model.AppLoginCredentialModel;
-import model.CategoryModel;
+import model.*;
 import model.admin.AdminPaypalCredentialModel;
 import model.admin.AdminSitesFeesModel;
 import model.entity.admin.*;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import model.entity.app.Category;
+import model.entity.app.product.rentable.RentInf;
+import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +45,9 @@ public class AdminDashboardController {
 
     @Autowired
     AdminUnreadAlertCounterModel adminUnreadAlertCounterModel;
+
+    @Autowired
+    RentInfModel rentInfModel;
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
@@ -293,6 +295,26 @@ public class AdminDashboardController {
         modelAndView.addObject("mainMenu", "Notification");
         modelAndView.addObject("subMenu", "Notification Details");
         modelAndView.addObject("pageUrl", "admin/user/notification-details");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/order-details/{rentinf_id}", method = RequestMethod.GET)
+    public ModelAndView getOrderDetails(HttpServletRequest request, @PathVariable("rentinf_id") int rentinfId){
+        ModelAndView modelAndView = new ModelAndView("admin/orderDetails");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        RentInf rentInf = rentInfModel.getById(rentinfId);
+
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("rentInf", rentInf);
+        modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Order Details");
+        modelAndView.addObject("pageHeader", "Order Details");
+        modelAndView.addObject("pageUrl", "admin/user/order-details/"+rentinfId);
         return modelAndView;
     }
 }
