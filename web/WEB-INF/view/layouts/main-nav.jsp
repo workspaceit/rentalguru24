@@ -93,16 +93,14 @@
                           <h3>${listValue.name}</h3>
                           <ul>
                           <d:forEach var="subcategory" items="${listValue.subcategory}">
-                            <d:forEach var="subcategory" items="${listValue.subcategory}">
-                              <li><a
-                                      href="#newProductPartialRender"
-                                      categoryId="${subcategory.id}"
-                                      onclick="selectedCategory(${subcategory.id})"
-                                      id="categoryAnchor_${subcategory.id}"
-                                      data-category-name="${subcategory.name}" class="scrollToSection developerCategoryAnchore">${subcategory.name}</a>
+                            <li><a
+                                    href="#newProductPartialRender"
+                                    categoryId="${subcategory.id}"
+                                    onclick="selectedCategory(${subcategory.id})"
+                                    id="categoryAnchor_${subcategory.id}"
+                                    data-category-name="${subcategory.name}" class="scrollToSection developerCategoryAnchore">${subcategory.name}</a>
 
-                              </li>
-                            </d:forEach>
+                            </li>
                           </d:forEach>
                           </ul>
                         </div>
