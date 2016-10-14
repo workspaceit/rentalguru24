@@ -297,7 +297,7 @@
 <!--Rent request form Modal -->
 <jsp:directive.include file="../modals/rent_request_modal.jsp" />
 
-<jsp:directive.include file="../layouts/newsletter.jsp" />
+<%--<jsp:directive.include file="../layouts/newsletter.jsp" />--%>
 <jsp:directive.include file="../layouts/top-footer.jsp" />
 <jsp:directive.include file="../layouts/footer.jsp" />
 
