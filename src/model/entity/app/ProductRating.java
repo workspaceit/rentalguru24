@@ -18,6 +18,7 @@ public class ProductRating {
     private Timestamp createdDate;
     private AppCredential appCredential;
     private RentalProductEntity product;
+    private String reviewText;
 
     @Id
     @Column(name = "id")
@@ -30,6 +31,14 @@ public class ProductRating {
         this.id = id;
     }
 
+    @Column(name = "review_text")
+    public String getReviewText() {
+        return reviewText;
+    }
+
+    public void setReviewText(String reviewText) {
+        this.reviewText = reviewText;
+    }
 //    @Basic
 //    @Column(name = "product_id")
 //    public int getProductId() {
