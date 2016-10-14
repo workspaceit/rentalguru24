@@ -200,69 +200,36 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="row">
           <!-- Nav tabs -->
-          <div class="col-md-6 col-sm-12 col-xs-12 no-padding">
+          <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a></li>
-              <li role="presentation" class="active"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Reviews</a></li>
-              <%--<li role="presentation"><a href="#specification" aria-controls="specification" role="tab" data-toggle="tab">Specification</a></li>--%>
-              <%--<li role="presentation"><a href="#custom" aria-controls="custom" role="tab" data-toggle="tab">Custom tab</a></li>--%>
+              <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Description</a></li>
+              <li role="presentation" ><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab" onclick="getProductReview(${rentalProduct.getId()})">Reviews</a></li>
             </ul>
           </div>
         </div>
 
         <!-- Tab panes -->
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane " id="description">${rentalProduct.getDescription()}</div>
-          <div role="tabpanel" class="tab-pane active" id="reviews">
-            <p class="no-review">There are no reviews for this product</p>
-            <p  class="no-review"><strong>Add Review</strong></p>
-            <p  class="no-review">Your Rating</p>
+          <div role="tabpanel" class="tab-pane active" id="description">${rentalProduct.getDescription()}</div>
+          <div role="tabpanel" class="tab-pane" id="reviews">
             <form class="review-form" action="" role="form">
               <div class="row">
-                <div class="col-md-1 col-sm-4 col-xs-4">
-                  <p  class="review_cond">Bad</p>
+                <div class="col-md-8 comment-review" id="productReviewTab">
+                  <%------------------------------------------%>
                 </div>
-                <div class="col-md-2 col-sm-4 col-xs-4">
-                  <fieldset class="rating rent_rating">
-                    <input type="radio"  id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                    <input type="radio"  id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                    <input type="radio"  id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                    <input type="radio"  id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                    <input type="radio"  id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-
-                  </fieldset>
-                </div>
-                <div class="col-md-1 col-sm-4 col-xs-4">
-                  <p  class="review_cond">Good</p>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="review">Your Review:</label>
-                <textarea type="text" class="form-control review_form_element" id="review" ></textarea>
-              </div>
-              <div class="row">
-                <div class="col-md-5 col-sm-5 col-xs-12">
-                  <div class="form-group">
-                    <input type="text" class="form-control review_form_element" placeholeder="Your Name" id="mail">
-                  </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <div class="form-group">
-                    <input type="email" class="form-control review_form_element" placeholeder="Email" id="name">
-                  </div>
-                </div>
-                <div class="col-md-1 col-sm-1 col-xs-12 center">
-                  <button type="submit" class="review_submit">Continue</button>
-                </div>
+                <!-- <div class="col-md-4 col-sm-4 col-xs-4 text-left">
+                    <fieldset class="rating rent_rating">
+                        <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                        <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                        <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                        <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                    </fieldset>
+                    <span class="text-left">Very good</span>
+                </div> -->
               </div>
             </form>
-
-
-
           </div>
-          <%--<div role="tabpanel" class="tab-pane" id="specification">3</div>--%>
-          <%--<div role="tabpanel" class="tab-pane" id="custom">4</div>--%>
         </div>
       </div>
     </div>
@@ -357,6 +324,17 @@
     range: true,
     values: [17, 67]
   });
+</script>
+<script>
+  function getProductReview(productId){
+    $.ajax({
+      url: BASEURL+"/product/review/partial-load/"+productId,
+      type: "GET",
+      success: function(data){
+        $("#productReviewTab").html(data);
+      }
+    });
+  }
 </script>
 
 </body>

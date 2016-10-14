@@ -4,9 +4,11 @@ import controller.BaseHttp;
 import helper.ServiceResponse;
 import model.CategoryModel;
 import model.ProductModel;
+import model.ProductRatingModel;
 import model.RentTypeModel;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
+import model.entity.app.ProductRating;
 import model.entity.app.RentType;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -42,6 +44,9 @@ public class ProductController{
     @Autowired
     RentTypeModel rentTypeModel;
 
+    @Autowired
+    ProductRatingModel productRatingModel;
+
     @RequestMapping(value="/upload",method = RequestMethod.GET)
     public ModelAndView upload(HttpServletRequest request){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
@@ -68,7 +73,6 @@ public class ProductController{
         List<Category> category = (List<Category>) request.getAttribute("category");
 
         String baseUrl = (String) request.getAttribute("baseURL");
-        System.out.println("baseUrl "+baseUrl);
         RentalProduct rentalProduct = productModel.getById(productId);
         List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0, productId);
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
@@ -157,6 +161,18 @@ public class ProductController{
 
         RentalProduct rentalProduct = productModel.getMyRentalProductById(productId, appCredential.getId());
         modelAndView.addObject("rentalProduct", rentalProduct);
+        return modelAndView;
+    }
+    @RequestMapping(value = "/review/partial-load/{product_id}", method = RequestMethod.GET)
+    public ModelAndView getProductReviewPartialLoad(HttpServletRequest request, @PathVariable("product_id") int productId){
+        ModelAndView modelAndView = new ModelAndView("public/partial/productReviewPartialLoad");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        List<ProductRating> productRatingList = productRatingModel.getByProductId(productId);
+//        if(productRatingList == null||productRatingList.isEmpty()){
+//            return modelAndView;
+//        }
+        modelAndView.addObject("productRatingList", productRatingList);
+        modelAndView.addObject("BaseUrl", baseUrl);
         return modelAndView;
     }
 }

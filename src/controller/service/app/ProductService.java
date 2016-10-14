@@ -65,6 +65,9 @@ public class ProductService{
     @Autowired
     RentRequestModel rentRequestModel;
 
+    @Autowired
+    ProductRatingModel getProductRatingModel;
+
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @JsonView(ProductView.RentalProductView.class)
     public ServiceResponse uploadProduct(HttpServletRequest request,
@@ -630,6 +633,18 @@ public class ProductService{
         serviceResponse.getResponseStat().setMsg("Picture Delete Successful");
         return serviceResponse;
 
+    }
+
+    @RequestMapping(value = "/product/review/{product_id}", method = RequestMethod.GET)
+    public ServiceResponse getProductReview(HttpServletRequest request, @PathVariable("product_id") int productId){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        List<ProductRating> productRatingList = productRatingModel.getByProductId(productId);
+        if(productRatingList == null ||productRatingList.isEmpty()){
+            serviceResponse.setRequestError("rating", "Not rated yet");
+            return serviceResponse;
+        }
+        serviceResponse.setResponseData(productRatingList);
+        return serviceResponse;
     }
 }
 
