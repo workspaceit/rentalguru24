@@ -88,4 +88,24 @@ public class AdminGlobalNotificationModel extends BaseModel {
 
         return adminGlobalNotification;
     }
+
+    public List<AdminGlobalNotification> getAllNotification(int limit, int offset){
+        Session session = null;
+        List adminGlobalNotification = null;
+        try {
+            session = this.sessionFactory.openSession();
+            adminGlobalNotification = session.createQuery("FROM AdminGlobalNotification adminGlobalNotification " +
+                    "ORDER BY adminGlobalNotification.id DESC")
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit)
+                    .list();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (session != null)
+                session.close();
+        }
+
+        return adminGlobalNotification;
+    }
 }

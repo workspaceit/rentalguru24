@@ -250,7 +250,7 @@ public class AdminDashboardController {
         ModelAndView modelAndView = new ModelAndView("admin/notificationPartialRendering");
         int limit = Integer.parseInt(allRequestParameter.get("limit"));
         int offset = Integer.parseInt(allRequestParameter.get("offset"));
-        List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getUnreadNotification(limit, offset);
+        List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getAllNotification(limit, offset);
 
         modelAndView.addObject("adminGlobalNotifications", adminGlobalNotifications);
         String baseUrl = (String) request.getAttribute("baseURL");
@@ -258,7 +258,7 @@ public class AdminDashboardController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/test/test", method = RequestMethod.GET)
+    @RequestMapping(value = "/notification/global", method = RequestMethod.GET)
     public ModelAndView getGlobalNotificationList(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("admin/globalNotificationList");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
@@ -276,7 +276,7 @@ public class AdminDashboardController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/notification-details/{notification_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/notification/global/{notification_id}", method = RequestMethod.GET)
     public ModelAndView getNotificationDetails(HttpServletRequest request, @PathVariable("notification_id") int notificationId){
         ModelAndView modelAndView = new ModelAndView("admin/notificationDetails");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");

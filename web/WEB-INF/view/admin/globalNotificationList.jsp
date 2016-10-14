@@ -32,6 +32,7 @@
                   <th>Type</th>
                   <th>Description</th>
                   <th>Status</th>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@
                     <d:if test="${notification.getIsRead() == false}">
                       <td>Unread</td>
                     </d:if>
+                    <td><a class="btn btn-block btn-success" href="${BaseUrl}/admin/user/notification/global/${notification.getId()}">Details</a></td>
                   </tr>
                 </d:forEach>
                 </tbody>
@@ -53,6 +55,7 @@
                   <th>Type</th>
                   <th>Description</th>
                   <th>Status</th>
+                  <th></th>
                 </tr>
                 </tfoot>
               </table>

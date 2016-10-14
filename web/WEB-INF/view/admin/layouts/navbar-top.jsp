@@ -35,7 +35,7 @@
             <li id="notificationInnerMenu">
 
             </li>
-            <li class="footer"><a href="${baseURL}/admin/user/test/test">View all</a></li>
+            <li class="footer"><a href="${baseURL}/admin/user/notification/global">View all</a></li>
           </ul>
         </li>
         <!-- Notifications: style can be found in dropdown.less -->

@@ -134,7 +134,10 @@ public class AdminCategoryService {
         subCategory.setCreatedBy(appCredential.getId());
         subCategory.setSortedOrder((lastSortedOrder + 1));
 
-        Set<Category> subCategoryArray = new HashSet<Category>();
+        List<Category> subCategoryArray = category.getSubcategory();
+        if(subCategoryArray == null || subCategoryArray.size() == 0){
+            subCategoryArray = new ArrayList<>();
+        }
         subCategoryArray.add(subCategory);
 
         category.setSubcategory(subCategoryArray);

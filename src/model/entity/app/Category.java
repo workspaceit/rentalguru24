@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +28,7 @@ public class Category {
     private int createdBy;
     private boolean isSubcategory;
     private Timestamp createdDate;
-    private Collection<Category> subcategory;
+    private List<Category> subcategory;
 
     @Id
     @Column(name = "id")
@@ -102,11 +103,11 @@ public class Category {
 
     @OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
     @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = true)
-    public Collection<Category> getSubcategory() {
+    public List<Category> getSubcategory() {
         return subcategory;
     }
 
-    public void setSubcategory(Collection<Category> subcategory) {
+    public void setSubcategory(List<Category> subcategory) {
         this.subcategory = subcategory;
     }
 

@@ -24,7 +24,7 @@
       url: BASEURL+"/api-admin/notification-read/"+notificationId,
       success: function(data){
         if(data.responseStat.status == true){
-          window.location = BASEURL+"/admin/user/notification-details/"+notificationId;
+          window.location = BASEURL+"/admin/user/notification/global/"+notificationId;
         }
       }
     });
