@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Reneguru</title>
   <!-- Favicons -->
-  <!--    <link rel="shortcut icon" href="favicon.ico">-->
+  <link rel="shortcut icon" href="<c:url value="/resources/img/favicon.ico" />">
   <!-- Mobile -->
   <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css" />" />
   <meta name="google-signin-client_id" content="109533534799-85f6m6k04935qsuc6on9ubqe7e8rtndj.apps.googleusercontent.com">

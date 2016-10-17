@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Reneguru</title>
     <!-- Favicons -->
-    <!--    <link rel="shortcut icon" href="favicon.ico">-->
+    <link rel="shortcut icon" href="<c:url value="/resources/img/favicon.ico" />">
 
     <!-- Mobile -->
     <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css" />" />
