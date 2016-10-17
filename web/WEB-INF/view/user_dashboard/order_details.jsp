@@ -321,42 +321,39 @@
                 </div>
             </div>
 
+            <div role="tabpanel" class="tab-pane active" id="reviews">
+                <h3 class="aproval_container_title">Add Review</h3>
+                <p  class="no-review">Your Rating</p>
+                <form class="review-form" action="" role="form" onsubmit="return setProductRating();">
+                    <div class="row">
+                        <div class="col-md-1 col-sm-4 col-xs-4">
+                            <p class="review_cond">Bad</p>
+                        </div>
+                        <div class="col-md-2 col-sm-4 col-xs-4">
+                            <fieldset class="rating rent_rating">
+                                <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                                <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-1 col-sm-4 col-xs-4">
+                            <p  class="review_cond">Good</p>
+                        </div>
+                    </div>
 
-
-
-            <%--<div role="tabpanel" class="tab-pane active" id="reviews">--%>
-                <%--<h3 class="aproval_container_title">Add Review</h3>--%>
-                <%--<p  class="no-review">Your Rating</p>--%>
-                <%--<form class="review-form" action="" role="form">--%>
-                    <%--<div class="row">--%>
-                        <%--<div class="col-md-1 col-sm-4 col-xs-4">--%>
-                            <%--<p class="review_cond">Bad</p>--%>
-                        <%--</div>--%>
-                        <%--<div class="col-md-2 col-sm-4 col-xs-4">--%>
-                            <%--<fieldset class="rating rent_rating">--%>
-                                <%--<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>--%>
-                                <%--<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>--%>
-                                <%--<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>--%>
-                                <%--<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>--%>
-                                <%--<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>--%>
-                            <%--</fieldset>--%>
-                        <%--</div>--%>
-                        <%--<div class="col-md-1 col-sm-4 col-xs-4">--%>
-                            <%--<p  class="review_cond">Good</p>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-
-                    <%--<div class="form-group">--%>
-                        <%--<label for="review">Your Review:</label>--%>
-                        <%--<textarea type="text" class="form-control review_form_element" id="review" ></textarea>--%>
-                    <%--</div>--%>
-                    <%--<div class="row">--%>
-                        <%--<div class="col-md-1 col-sm-1 col-xs-12 center">--%>
-                            <%--<button type="submit" class="review_submit">Continue</button>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</form>--%>
-            <%--</div>--%>
+                    <div class="form-group">
+                        <label for="review">Your Review:</label>
+                        <textarea type="text" class="form-control review_form_element" id="review" ></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 col-sm-1 col-xs-12 center">
+                            <button type="submit" class="review_submit">Continue</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
         <jsp:directive.include file="../layouts/top-footer.jsp" />
         <jsp:directive.include file="../layouts/footer.jsp" />
@@ -608,6 +605,11 @@
                 });
             }
 
+        </script>
+        <script>
+            function setProductRating(){
+
+            }
         </script>
     </body>
 </html>
