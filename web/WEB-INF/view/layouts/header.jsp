@@ -45,6 +45,8 @@
   <script type="text/javascript" src="<c:url value="/resources/js/jquery.js"/>"></script>
   <script src="<c:url value="/resources/js/jquery.zoom.js"/>"></script>
   <script src="<c:url value="/resources/js/jquery1.9.1.min.js"  />" ></script>
+  <script src="<c:url value="/resources/js/jquery.elevatezoom.js"/>"></script>
+  <script src="http://www.elevateweb.co.uk/wp-content/themes/radial/jquery.fancybox.pack.js" type="text/javascript"></script>
   <script src="<c:url value="/resources/js/lightslider.js" />" > </script>
   <script>
     $(document).ready(function () {
@@ -82,6 +84,7 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/datepicker.css"/> " />
   <link rel="stylesheet" href="<c:url value="/resources/css/zoom.css"/>" />
   <script src="<c:url value="/resources/js/dropzone.js"/>"></script>
+  <link rel="stylesheet" href="http://www.elevateweb.co.uk/wp-content/themes/radial/jquery.fancybox.css" />
   <!-- Theme CSS -->
   <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
