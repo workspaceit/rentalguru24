@@ -41,7 +41,10 @@ public class AuthService  {
         if(authCredential==null){
             serviceResponse.getResponseStat().setErrorMsg("Invalid access token !! Ha ha ha ....");
             return serviceResponse;
-        }else if(authCredential.isBlocked()){
+        }else if(!authCredential.isVerified()){
+            serviceResponse.getResponseStat().setErrorMsg("This account is not verified by system admin");
+            return serviceResponse;
+        } else if(authCredential.isBlocked()){
             serviceResponse.getResponseStat().setErrorMsg("This account is blocked by system admin");
             return serviceResponse;
         }else{
@@ -69,6 +72,9 @@ public class AuthService  {
 
         if(authCredential==null){
             serviceResponse.getResponseStat().setErrorMsg("Invalid email or password");
+            return serviceResponse;
+        }else if(!authCredential.isVerified()){
+            serviceResponse.getResponseStat().setErrorMsg("This account is not verified by system admin");
             return serviceResponse;
         }else if(authCredential.isBlocked()){
             serviceResponse.getResponseStat().setErrorMsg("This account is blocked by system admin");

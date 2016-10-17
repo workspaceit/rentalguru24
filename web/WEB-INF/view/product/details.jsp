@@ -53,14 +53,35 @@
         <div class="row">
           <div class="col-md-6 col-sm-6 col-xs-12">
             <div>
+              <style>
+                #easy_zoom{
+                  width:600px;
+                  height:400px;
+                  border:5px solid #eee;
+                  background:#fff;
+                  color:#333;
+                  position:absolute;
+                  top:60px;
+                  left:400px;
+                  overflow:hidden;
+                  -moz-box-shadow:0 0 10px #777;
+                  -webkit-box-shadow:0 0 10px #777;
+                  box-shadow:0 0 10px #777;
+                  /* vertical and horizontal alignment used for preloader text */
+                  line-height:400px;
+                  text-align:center;
+                }
+
+              </style>
               <div id="slider" class="flexslider">
                 <ul class="slides">
                   <li>
-                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
+                    <img id="zoom_01" src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />"  data-zoom-image="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />"/>
+                    <%--<a class="zoom" href="javascript:void(0);"><img  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />"></a>--%>
                   </li>
                   <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
                     <li>
-                      <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${productOtherImages.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
+                      <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
                     </li>
                   </d:forEach>
                   <!-- items mirrored twice, total of 12 -->
@@ -307,6 +328,12 @@
 <!-- Javascript framework and plugins end here -->
 <script type="text/javascript">
   CloudZoom.quickStart();
+</script>
+<script type="text/javascript" src="<c:url value="/resources/js/jquery.elevatezoom.js" />"></script>
+<script type="javascript">
+  (function ($) {
+  $("#zoom_01").elevateZoom();
+  })(jQuery);
 </script>
 
 <script>

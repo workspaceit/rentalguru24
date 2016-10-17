@@ -646,5 +646,47 @@ public class ProductService{
         serviceResponse.setResponseData(productRatingList);
         return serviceResponse;
     }
+
+    @RequestMapping(value = "/product/review", method = RequestMethod.POST)
+    public ServiceResponse setProductReview(HttpServletRequest request, @RequestParam Map<String , String> allRequestParam){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        int productId = Integer.parseInt(allRequestParam.get("productId").trim());
+        int rateValue = Integer.parseInt(allRequestParam.get("rateValue").trim());
+        String reviewText = allRequestParam.get("reviewText");
+
+        if(productId <= 0){
+            serviceResponse.setRequestError("productId", "Product id required");
+        }
+
+        if(rateValue <= 0){
+            serviceResponse.setRequestError("rateValue", "Product rating required");
+        }
+        if(reviewText == null || reviewText.isEmpty()){
+            serviceResponse.setRequestError("reviewText", "Product review text required");
+        }
+
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
+        }
+
+        RentalProductEntity rentalProductEntity = productModel.getEntityById(productId);
+
+        if(rentalProductEntity == null){
+            serviceResponse.setRequestError("product", "Product not found");
+            return serviceResponse;
+        }
+
+        ProductRating productRating = new ProductRating();
+        productRating.setProduct(rentalProductEntity);
+        productRating.setAppCredential(appCredential);
+        productRating.setRateValue(rateValue);
+        productRating.setReviewText(reviewText);
+
+        productRatingModel.insert(productRating);
+        serviceResponse.getResponseStat().setMsg("Product rated successful");
+        return serviceResponse;
+    }
 }
 
