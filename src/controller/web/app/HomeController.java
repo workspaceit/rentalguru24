@@ -45,7 +45,7 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<RentalProduct> rentalProducts = new ArrayList<>();
-        boolean isSearchedProductList = (title!=null&&title!="")?true:false;
+        boolean showTopGallery = (title!=null&&title!="")?true:false;
 
         rentalProducts = (title!=null&&title!="")?productModel.getProductByTitle(title,8,0):productModel.getRentalProduct(8, 0);
         List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
@@ -56,7 +56,7 @@ public class HomeController {
         }
 
         String productListTitle = "NEW PRODUCT";
-        if(isSearchedProductList){
+        if(showTopGallery){
             productListTitle = "Search result";
 
         }
@@ -70,7 +70,7 @@ public class HomeController {
         loadMoreProductUrl = (title!=null&&title!="")?loadMoreProductUrl+"title="+title:loadMoreProductUrl;
         String preSelectedCategoryName = "Select Category";
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
-        modelAndView.addObject("isSearchedProductList", isSearchedProductList);
+        modelAndView.addObject("showTopGallery", showTopGallery);
         modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
         modelAndView.addObject("category", category);
         modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
@@ -98,6 +98,9 @@ public class HomeController {
         List<Category> category = (List<Category>) request.getAttribute("category");
         String baseUrl = (String) request.getAttribute("baseURL");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        boolean showTopGallery = true;
+        boolean clientFeedback = true;
 
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Category categorySelected = categoryModel.getById(categoryId);
@@ -133,7 +136,8 @@ public class HomeController {
             RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
             RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
-
+            modelAndView.addObject("showTopGallery", showTopGallery);
+            modelAndView.addObject("clientFeedback", clientFeedback);
             modelAndView.addObject("productListTitle",selectedCategoryName);
             modelAndView.addObject("preSelectedCategoryName",preSelectedcategoryName );
             modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
