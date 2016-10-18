@@ -40,8 +40,9 @@
 
     <bean id="taskExecutorExample" class="scheduler.Scheduler">
     </bean>
+    <!-- Cron expressin validation http://www.cronmaker.com/-->
     <task:scheduled-tasks>
-        <task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="* */30 * * * *"/>
+        <task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="0 0/30 * * * ?"/>
     </task:scheduled-tasks>
     <!-- * ** *** **** **** *** ** * -->
     <!-- * ** *** **** **** *** ** * -->

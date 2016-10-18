@@ -324,7 +324,8 @@
             <div role="tabpanel" class="tab-pane active" id="reviews">
                 <h3 class="aproval_container_title">Add Review</h3>
                 <p  class="no-review">Your Rating</p>
-                <form class="review-form" action="" role="form" onsubmit="return setProductRating();">
+                <div class="alert alert-success rateSuccess" hidden>Product rated successful</div>
+                <form class="review-form" action="" role="form" onsubmit="return setProductRating(${rentRequest.getRentalProduct().getId()});">
                     <div class="row">
                         <div class="col-md-1 col-sm-4 col-xs-4">
                             <p class="review_cond">Bad</p>
@@ -337,6 +338,7 @@
                                 <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
                                 <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
                             </fieldset>
+                            <p class="help-block error-form" id="errorMsg_rateValue"></p>
                         </div>
                         <div class="col-md-1 col-sm-4 col-xs-4">
                             <p  class="review_cond">Good</p>
@@ -344,8 +346,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="review">Your Review:</label>
-                        <textarea type="text" class="form-control review_form_element" id="review" ></textarea>
+                        <label for="reviewText">Your Review:</label>
+                        <textarea type="text" class="form-control review_form_element" id="reviewText" ></textarea>
+                        <p class="help-block error-form" id="errorMsg_reviewText"></p>
                     </div>
                     <div class="row">
                         <div class="col-md-1 col-sm-1 col-xs-12 center">
@@ -607,8 +610,33 @@
 
         </script>
         <script>
-            function setProductRating(){
+            function setProductRating(productId){
+                var productId = productId;
+                var rateValue = $('input[name=rating]:checked').val();
+                var reviewText = $("#reviewText").val();
 
+                $.ajax({
+                    type: "POST",
+                    url: BASEURL+"/api/auth/product/product/review",
+                    data: {
+                        productId: productId,
+                        rateValue: rateValue,
+                        reviewText: reviewText
+                    },
+                    success: function(data){
+                        console.log(data);
+                        if(data.responseStat.status == true){
+                            $(".rateSuccess").show().delay(1500).fadeOut(500,function() {
+                                location.reload();
+                            });
+                        }else{
+                            BindErrorsWithHtml('errorMsg_', data.responseStat.requestErrors);
+                        }
+                    }
+
+                });
+
+                return false;
             }
         </script>
     </body>

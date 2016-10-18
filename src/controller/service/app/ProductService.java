@@ -652,24 +652,26 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        int productId = Integer.parseInt(allRequestParam.get("productId").trim());
-        int rateValue = Integer.parseInt(allRequestParam.get("rateValue").trim());
-        String reviewText = allRequestParam.get("reviewText");
 
-        if(productId <= 0){
+
+        if(allRequestParam.get("productId") == null ||allRequestParam.get("productId").isEmpty()){
             serviceResponse.setRequestError("productId", "Product id required");
         }
 
-        if(rateValue <= 0){
+        if(allRequestParam.get("rateValue") == null || allRequestParam.get("rateValue").isEmpty()){
             serviceResponse.setRequestError("rateValue", "Product rating required");
         }
-        if(reviewText == null || reviewText.isEmpty()){
+        if(allRequestParam.get("reviewText") == null || allRequestParam.get("reviewText").isEmpty()){
             serviceResponse.setRequestError("reviewText", "Product review text required");
         }
 
         if(serviceResponse.hasErrors()){
             return serviceResponse;
         }
+
+        int productId = Integer.parseInt(allRequestParam.get("productId").trim());
+        int rateValue = Integer.parseInt(allRequestParam.get("rateValue").trim());
+        String reviewText = allRequestParam.get("reviewText");
 
         RentalProductEntity rentalProductEntity = productModel.getEntityById(productId);
 

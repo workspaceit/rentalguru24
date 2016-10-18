@@ -19,7 +19,8 @@ $(function() {
 /*****************  Fetch product by category ***********/
 $("#categoryPageLinkUl,.sub-list").find(".developerCategoryAnchore").click(function(event){
     var categoryId = $(this).attr("categoryId");
-    $(this).bind('click', fetchProductByCategoryAndScrollDown(categoryId,this,event));
+    //$(this).bind('click', fetchProductByCategoryAndScrollDown(categoryId,this,event));
+    $(this).bind('click', redirectTocategoryPage(categoryId));
 });
 function fetchProductByCategoryAndScrollDown(categoryId,elem,event){
     event.preventDefault();
@@ -30,6 +31,9 @@ function fetchProductByCategoryAndScrollDown(categoryId,elem,event){
     }
     getProductByCategory(categoryId,elem);
     return false;
+}
+function redirectTocategoryPage(categoryId){
+    window.location.href =BASEURL+"/home/category/"+categoryId;
 }
 function getProductByCategory(categoryId,elem){
     if(showInfo != undefined){

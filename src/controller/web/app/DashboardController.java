@@ -54,7 +54,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "User Dashboard");
+//        modelAndView.addObject("pageTitle", "User Dashboard");
         modelAndView.addObject("appCredential", appCredential);
         return modelAndView;
     }
@@ -73,7 +73,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Product");
+//        modelAndView.addObject("pageTitle", "My Product");
         modelAndView.addObject("myRentalProduct", rentalProducts);
         modelAndView.addObject("appCredential", appCredential);
         return modelAndView;
@@ -93,7 +93,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "Rent Request");
+//        modelAndView.addObject("pageTitle", "Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential", appCredential);
         return modelAndView;
@@ -113,7 +113,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Rent Request");
+//        modelAndView.addObject("pageTitle", "My Rent Request");
         modelAndView.addObject("myRentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
@@ -133,7 +133,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Approved Booking Request");
+//        modelAndView.addObject("pageTitle", "My Approved Booking Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
@@ -153,7 +153,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Profile Edit");
+//        modelAndView.addObject("pageTitle", "My Profile Edit");
         modelAndView.addObject("appCredential", appCredential );
         modelAndView.addObject("identityTypes", identityTypes );
         return modelAndView;
@@ -172,7 +172,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Disapproved Booking Request");
+//        modelAndView.addObject("pageTitle", "My Disapproved Booking Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
@@ -192,7 +192,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Approved Rent Request");
+//        modelAndView.addObject("pageTitle", "My Approved Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
@@ -212,7 +212,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Disapproved Rent Request");
+//        modelAndView.addObject("pageTitle", "My Disapproved Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
         return modelAndView;
@@ -233,7 +233,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Rented Product");
+//        modelAndView.addObject("pageTitle", "My Rented Product");
         modelAndView.addObject("myRentedProduct", rentalProducts);
         modelAndView.addObject("appCredential", appCredential);
         System.out.println("rentalProducts " + rentalProducts.size());
@@ -256,7 +256,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Rented Product");
+//        modelAndView.addObject("pageTitle", "My Rented Product");
         modelAndView.addObject("myProductOnRent", rentalProducts);
         modelAndView.addObject("appCredential", appCredential);
 
@@ -278,7 +278,7 @@ public class DashboardController {
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Rent History");
+//        modelAndView.addObject("pageTitle", "My Rent History");
         modelAndView.addObject("appCredential", appCredential);
         modelAndView.addObject("rentInfs", rentInfs);
 
@@ -297,7 +297,7 @@ public class DashboardController {
 
         modelAndView.addObject("userPaypalCredential", userPaypalCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "My Paypal Account Email");
+//        modelAndView.addObject("pageTitle", "My Paypal Account Email");
         modelAndView.addObject("IsLogIn", IsLogin);
         return modelAndView;
     }

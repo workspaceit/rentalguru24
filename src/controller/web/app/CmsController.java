@@ -44,8 +44,6 @@ public class CmsController {
         if(adminCmsPage==null){
             return new ModelAndView("redirect:/home");
         }
-
-        modelAndView.addObject("pageTitle", "Reneguru");
         modelAndView.addObject("adminCmsPage", adminCmsPage);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl",baseUrl);

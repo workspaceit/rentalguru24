@@ -11,7 +11,7 @@
         <!--body content-->
 
 
-        <d:if test="${!isSearchedProductList}">
+        <d:if test="${!showTopGallery}">
             <div class="home_slider">
                 <div class="container">
                     <div class="row">
@@ -136,39 +136,44 @@
 
         <br>
 
-        <div class="testimonial">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12 sponser_slider">
-                        <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
-                            <!-- Indicators -->
-                            <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol>
-                            <h2 class="block-head">CLIENT FEEDBACK</h2>
-                            <div class="carousel-inner" role="listbox">
-                                <div class="item active">
-                                    <p class="feedback_icon"><i class="fa fa-quote-right fa-2x"></i></p>
-                                    <p class="feedback_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at magna elementum, consectetur purus a, euismod odio. Duis mattis libero metus, id eleifend nisl gravida non. Pellentesque felis nibh, fringilla a nibh et, pulvinar blandit nibh. </p>
+            <div class="testimonial">
 
-                                    <div class="client_details">
-                                        <div class="client_img">
-                                            <img src="<c:url value="/resources/img/20.jpg" />" >
-                                        </div>
-                                        <div class="client_info">
-                                            <p class="client_name no-margin"><strong>John Doe</strong></p>
-                                            <p class="client_type no-margin">Furniture Client</p>
+                <div class="container">
+                    <d:if test="${!clientFeedback}">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 sponser_slider">
+                            <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
+                                <!-- Indicators -->
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                                </ol>
+                                <h2 class="block-head">CLIENT FEEDBACK</h2>
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="item active">
+                                        <p class="feedback_icon"><i class="fa fa-quote-right fa-2x"></i></p>
+                                        <p class="feedback_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at magna elementum, consectetur purus a, euismod odio. Duis mattis libero metus, id eleifend nisl gravida non. Pellentesque felis nibh, fringilla a nibh et, pulvinar blandit nibh. </p>
+
+                                        <div class="client_details">
+                                            <div class="client_img">
+                                                <img src="<c:url value="/resources/img/20.jpg" />" >
+                                            </div>
+                                            <div class="client_info">
+                                                <p class="client_name no-margin"><strong>John Doe</strong></p>
+                                                <p class="client_type no-margin">Furniture Client</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </d:if>
                 </div>
+
             </div>
-        </div>
+
         <jsp:directive.include file="../layouts/top-footer.jsp" />
 <!--Rent request form Modal -->
 <jsp:directive.include file="../modals/rent_request_modal.jsp" />
