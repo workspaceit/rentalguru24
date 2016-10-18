@@ -364,7 +364,6 @@
                         window.location.href = BASEURL+"/user/dashboard/my-products";
                     });
                 }else{
-                    console.log(data);
                     BindErrorsWithHtml('errorMsg_', data.responseStat.requestErrors);
                 }
             },
