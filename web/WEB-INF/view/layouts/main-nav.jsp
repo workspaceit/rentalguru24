@@ -76,10 +76,11 @@
             <div class="mega-list">
               <ul  id="categoryPageLinkUl" >
                 <d:forEach var="listValue" items="${category}">
-
+                  <%--href="#newProductPartialRender"--%>
                   <li class="${dropdownSubCls}" >
                     <a
-                       href="#newProductPartialRender"
+
+                       href="javascript:void(0)"
                        categoryId="${listValue.id}"
                        onclick="selectedCategory(${listValue.id})"
                        id="categoryAnchor_${listValue.id}"
@@ -93,8 +94,10 @@
                           <h3>${listValue.name}</h3>
                           <ul>
                           <d:forEach var="subcategory" items="${listValue.subcategory}">
-                            <li><a
-                                    href="#newProductPartialRender"
+                            <li>
+                              <%--href="#newProductPartialRender"--%>
+                              <a
+                                    href="javascript:void(0)"
                                     categoryId="${subcategory.id}"
                                     onclick="selectedCategory(${subcategory.id})"
                                     id="categoryAnchor_${subcategory.id}"
