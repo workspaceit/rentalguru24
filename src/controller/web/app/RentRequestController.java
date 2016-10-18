@@ -48,7 +48,6 @@ public class RentRequestController {
         } else{
             return new ModelAndView("redirect:/home");
         }
-        modelAndView.addObject("pageTitle", "Request Approval");
         return modelAndView;
     }
 }

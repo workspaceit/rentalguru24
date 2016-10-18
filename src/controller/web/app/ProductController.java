@@ -62,7 +62,6 @@ public class ProductController{
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentTypes", rentTypes);
         modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("pageTitle", "Product Upload");
         return modelAndView;
     }
 
@@ -111,7 +110,7 @@ public class ProductController{
         model.addAttribute("newProducts", newProducts);
         model.addAttribute("BaseUrl",baseUrl);
         model.addAttribute("category", category);
-        model.addAttribute("pageTitle", "Product Details");
+        model.addAttribute("pageTitle", rentalProduct.getName());
         return "product/details";
     }
 
@@ -150,7 +149,6 @@ public class ProductController{
         modelAndView.addObject("rentalProduct", rentalProduct);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageTitle", "Edit Product");
         modelAndView.addObject("appCredential", appCredential);
         return modelAndView;
     }

@@ -84,7 +84,6 @@ public class HomeController {
         modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
         modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
         modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
-        modelAndView.addObject("pageTitle", "Reneguru");
         return modelAndView;
     }
 
@@ -152,7 +151,6 @@ public class HomeController {
             modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
             modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
             modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
-            modelAndView.addObject("pageTitle", "RentGuru");
             return modelAndView;
         }else{
             return new ModelAndView("redirect:/home");
