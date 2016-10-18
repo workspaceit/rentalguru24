@@ -178,16 +178,16 @@
             </div>
             <div class="scl_share">
               <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <ul class="scl_share_ul">
-                    <li class="facebook"><a href=""><i class="fa fa-facebook"></i><span class="scl_share_label">Share</span></a></li>
-                    <li class="google"><a href=""><i class="fa fa-google-plus google"></i><span class="scl_share_label">Google+</span></a></li>
-                    <li class="twitter"><a href=""><i class="fa fa-twitter twitter"></i><span class="scl_share_label">Twitter</span></a></li>
-                    <li class="pinterest"><a href=""><i class="fa fa-pinterest pinterest"></i><span class="scl_share_label">Pinterest</span></a></li>
-                    <li class="linkedin"><a href=""><i class="fa fa-linkedin linkedin"></i><span class="scl_share_label">Linkedin</span></a></li>
-                  </ul>
+                <%--<div class="col-md-12 col-sm-12 col-xs-12">--%>
+                  <%--<ul class="scl_share_ul">--%>
+                    <%--<li class="facebook"><a href=""><i class="fa fa-facebook"></i><span class="scl_share_label">Share</span></a></li>--%>
+                    <%--<li class="google"><a href=""><i class="fa fa-google-plus google"></i><span class="scl_share_label">Google+</span></a></li>--%>
+                    <%--<li class="twitter"><a href=""><i class="fa fa-twitter twitter"></i><span class="scl_share_label">Twitter</span></a></li>--%>
+                    <%--<li class="pinterest"><a href=""><i class="fa fa-pinterest pinterest"></i><span class="scl_share_label">Pinterest</span></a></li>--%>
+                    <%--<li class="linkedin"><a href=""><i class="fa fa-linkedin linkedin"></i><span class="scl_share_label">Linkedin</span></a></li>--%>
+                  <%--</ul>--%>
 
-                </div>
+                <%--</div>--%>
               </div>
             </div>
           </div>
