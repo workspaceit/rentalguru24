@@ -120,7 +120,7 @@
 
         <option class="category" value="" disabled selected>Choose Category</option>
         <d:forEach var="listValue" items="${category}" >
-        <option categoryId="${listValue.id}" class="category developerCategoryAnchore" id="subCategoryOf_${listValue.id}">${listValue.name}</option>
+          <option categoryId="${listValue.id}" value="${listValue.id}" class="category developerCategoryAnchore" id="subCategoryOf_${listValue.id}">${listValue.name}</option>
           <d:forEach var="subcategory" items="${listValue.subcategory}">
             <option class="item" value="${subcategory.id}">${subcategory.name}</option>
           </d:forEach>
