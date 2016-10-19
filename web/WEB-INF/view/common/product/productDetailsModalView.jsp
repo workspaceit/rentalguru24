@@ -20,22 +20,22 @@
           <div class="col-md-6 col-sm-6 col-xs-12">
             <!-- Zoom plugin -->
             <div class="easyzoom easyzoom--adjacent easyzoom--with-thumbnails">
-              <a href="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
+              <%--<a href="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">--%>
                 <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" alt="" class="main_img" />
-              </a>
+              <%--</a>--%>
             </div>
 
             <ul class="thumbnails">
               <li>
-                <a href="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" data-standard="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
+                <%--<a href="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" data-standard="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">--%>
                   <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" alt=""  />
-                </a>
+                <%--</a>--%>
               </li>
               <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
                 <li>
-                  <a href="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />" data-standard="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">
+                  <%--<a href="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />" data-standard="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">--%>
                     <img src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />" alt=""  />
-                  </a>
+                  <%--</a>--%>
                 </li>
               </d:forEach>
             </ul>
@@ -110,6 +110,12 @@
 
                 </div>
               </div>
+            </div>
+            <div class="block-inline">
+              <ul class="prod-meta">
+                <li class="pull-left"> <a href="${BaseUrl}/product/details/${rentalProduct.getId()}" class="theme-btn btn-black pull-left">View Details </a> </li>
+                <li class="pull-right"> <a href="javascript:void(0)" onclick="showRentRequestPopUp(${rentalProduct.getId()})" class="theme-btn btn-black pull-right"> Rent Now </a> </li>
+              </ul>
             </div>
           </div>
         </div>
