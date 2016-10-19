@@ -105,12 +105,33 @@
 
                             </li>
                           </d:forEach>
+
                           </ul>
                         </div>
             </d:forEach>
           </div>
         </li>
       </ul>
+      <select id="dark-select" class="chzn-select mob-select visible-xs"
+              id="ailment_id" name="ailment_id"
+              style="width: 350px">
+
+        <option class="category" value="" disabled selected>Choose Category</option>
+        <d:forEach var="listValue" items="${category}">
+        <option class="category" id="subCategoryOf_${listValue.id}">${listValue.name}</option>
+          <d:forEach var="subcategory" items="${listValue.subcategory}">
+            <option class="item">
+              <a
+                      href="javascript:void(0)"
+                      categoryId="${subcategory.id}"
+                      onclick="selectedCategory(${subcategory.id})"
+                      id="categoryAnchor_${subcategory.id}"
+                      data-category-name="${subcategory.name}" class="scrollToSection developerCategoryAnchore">${subcategory.name}</a>
+            </option>
+          </d:forEach>
+        </d:forEach>
+
+      </select>
       <ul class="nav navbar-nav navbar-right main_navigation">
         <d:forEach var="cmsPage" items="${cmsPages}" >
           <li><a href="${BaseUrl}/static/${cmsPage.pageKey}">${cmsPage.pageName}</a></li>

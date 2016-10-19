@@ -52,34 +52,56 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="row">
           <div class="col-md-6 col-sm-6 col-xs-12">
-            <div>
-              <div id="slider" class="flexslider">
-                <ul class="slides">
-                  <li>
-                    <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
-                  </li>
-                  <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
-                    <li>
-                      <img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${productOtherImages.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
-                    </li>
-                  </d:forEach>
-                  <!-- items mirrored twice, total of 12 -->
-                </ul>
-              </div>
-              <div id="carousel" class="flexslider">
-                <ul class="slides">
-                  <li>
-                    <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}" />">
-                  </li>
-                  <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
-                    <li>
-                      <img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">
-                    </li>
-                  </d:forEach>
-                  <!-- items mirrored twice, total of 12 -->
-                </ul>
-              </div>
+            <!-- Zoom plugin -->
+            <div class="easyzoom easyzoom--adjacent easyzoom--with-thumbnails">
+              <a href="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
+                <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" alt="" class="main_img" />
+              </a>
             </div>
+
+            <ul class="thumbnails">
+              <li>
+                <a href="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" data-standard="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
+                  <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" alt=""  />
+                </a>
+              </li>
+              <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
+                <li>
+                  <a href="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />" data-standard="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">
+                    <img src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />" alt=""  />
+                  </a>
+                </li>
+              </d:forEach>
+            </ul>
+            <!-- Zoom plugin -->
+            <%--<div>--%>
+              <%--<div id="slider" class="flexslider">--%>
+                <%--<ul class="slides">--%>
+                  <%--<li>--%>
+                    <%--<img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">--%>
+                  <%--</li>--%>
+                  <%--<d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">--%>
+                    <%--<li>--%>
+                      <%--<img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${productOtherImages.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">--%>
+                    <%--</li>--%>
+                  <%--</d:forEach>--%>
+                  <%--<!-- items mirrored twice, total of 12 -->--%>
+                <%--</ul>--%>
+              <%--</div>--%>
+              <%--<div id="carousel" class="flexslider">--%>
+                <%--<ul class="slides">--%>
+                  <%--<li>--%>
+                    <%--<img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}" />">--%>
+                  <%--</li>--%>
+                  <%--<d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">--%>
+                    <%--<li>--%>
+                      <%--<img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">--%>
+                    <%--</li>--%>
+                  <%--</d:forEach>--%>
+                  <%--<!-- items mirrored twice, total of 12 -->--%>
+                <%--</ul>--%>
+              <%--</div>--%>
+            <%--</div>--%>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-12 ">
             <div class="rent_product_info">
@@ -305,8 +327,17 @@
 <script type="text/javascript" src="<c:url value="/resources/developer/js/rent/rent_request.js" />" ></script>
 
 <!-- Javascript framework and plugins end here -->
-<script type="text/javascript">
-  CloudZoom.quickStart();
+<script>
+  // Instantiate EasyZoom instances
+  var $easyzoom = $('.easyzoom').easyZoom();
+  // Setup thumbnails example
+  var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
+  $('.thumbnails').on('click', 'a', function(e) {
+    var $this = $(this);
+    e.preventDefault();
+    // Use EasyZoom's `swap` method
+    api1.swap($this.data('standard'), $this.attr('href'));
+  });
 </script>
 
 <script>
