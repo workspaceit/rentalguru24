@@ -1,0 +1,2 @@
+ALTER TABLE  `app_login_credential` ADD  `email_confirmed` TINYINT( 1 ) NOT NULL AFTER  `varified` ;
+ALTER TABLE  `app_login_credential` CHANGE  `email_confirmed`  `email_confirmed` TINYINT( 1 ) NOT NULL DEFAULT  '1';

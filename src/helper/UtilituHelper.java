@@ -1,5 +1,7 @@
 package helper;
 
+import org.springframework.util.DigestUtils;
+
 import java.util.Random;
 
 /**
@@ -10,5 +12,21 @@ public class UtilituHelper {
         Random rnd = new Random();
         int n = 1000 + rnd.nextInt(900000);
         return Integer.toString(n);
+    }
+    public static String getRandomNumber(int n){
+        if(n>100){
+            return null;
+        }
+        String randomText = "";
+        Random rnd = new Random();
+        int i=0;
+        while(i<n){
+            randomText +=Integer.toString(rnd.nextInt(9));
+            i++;
+        }
+        return randomText;
+    }
+    public static String getMD5Text(String txt){
+        return DigestUtils.md5DigestAsHex(txt.getBytes());
     }
 }

@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/reset-password")
-public class PasswordResetService extends UtilituHelper{
+public class PasswordResetService{
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
 
@@ -49,7 +49,7 @@ public class PasswordResetService extends UtilituHelper{
         }
 
         Boolean isExist = passwordResetModel.isExist(appCredential.getId());
-        String token = appLoginCredentialModel.getPasswordAsMd5DigestAsHex(email + getRandomNumber());
+        String token = appLoginCredentialModel.getPasswordAsMd5DigestAsHex(email + UtilituHelper.getRandomNumber());
         if(isExist){
             PasswordResetsEntity passwordResetsEntity = passwordResetModel.getByAppCredentialId(appCredential.getId());
             passwordResetModel.delete(passwordResetsEntity);

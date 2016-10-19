@@ -17,6 +17,7 @@ public class AuthCredential extends AbstractCredential {
     private String accesstoken;
     private boolean verified;
     private boolean blocked;
+    private boolean emailConfirmed;
 
     @JsonIgnore
     @Basic
@@ -59,5 +60,15 @@ public class AuthCredential extends AbstractCredential {
 
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
+    }
+
+    @Basic
+    @Column(name = "email_confirmed")
+    public boolean getEmailConfirmed() {
+        return emailConfirmed;
+    }
+
+    public void setEmailConfirmed(boolean emailConfirmed) {
+        this.emailConfirmed = emailConfirmed;
     }
 }

@@ -374,7 +374,18 @@ public class RentRequestService{
             serviceResponse.setRequestError("requestId","You are not allowed to perform action for this rent request");
             return serviceResponse;
         }
-
+        if(rentRequest.getApprove()){
+            serviceResponse.getResponseStat().setErrorMsg("Can not cancel already approved by product owner");
+            return serviceResponse;
+        }
+        if(rentRequest.getDisapprove()){
+            serviceResponse.getResponseStat().setErrorMsg("Can not cancel already disapproved by product owner");
+            return serviceResponse;
+        }
+        if(rentRequest.getIsExpired()){
+            serviceResponse.getResponseStat().setErrorMsg("Request already expired");
+            return serviceResponse;
+        }
         if(rentRequest.getRequestCancel()){
             serviceResponse.getResponseStat().setErrorMsg("Request already canceled");
             return serviceResponse;

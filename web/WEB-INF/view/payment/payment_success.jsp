@@ -88,17 +88,22 @@
             <tr>
               <td>Start Date</td>
               <td></td>
-              <td><fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.getStartDate()}"/></td>
+              <td><fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.startDate}"/></td>
             </tr>
             <tr>
               <td>End Date</td>
               <td></td>
-              <td><fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.getEndDate()}"/></td>
+              <td><fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.endDate}"/></td>
             </tr>
             <tr>
-              <td>Rent/${rentRequest.getRentalProduct().getRentType().getName()}</td>
+              <td>Rent/${rentRequest.rentalProduct.rentType.name}</td>
               <td></td>
-              <td>$${rentRequest.getRentalProduct().getRentFee()}</td>
+              <td>$${rentRequest.rentalProduct.rentFee}</td>
+            </tr>
+            <tr>
+              <td>Product current price</td>
+              <td></td>
+              <td>$${rentRequest.rentalProduct.currentValue}</td>
             </tr>
             <tr>
               <td>Total Rent</td>

@@ -41,6 +41,8 @@ public class DashboardController {
     @Autowired
     UserPaypalCredentialModel userPaypalCredentialModel;
 
+    private final static String preSelectedCategoryName = "Select Category";
+
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("user_dashboard/dashboard");
@@ -51,6 +53,7 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -70,6 +73,7 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -90,6 +94,7 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -110,6 +115,8 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -130,6 +137,8 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -150,6 +159,8 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -169,6 +180,9 @@ public class DashboardController {
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
         ModelAndView modelAndView=new ModelAndView("user_dashboard/myDisapprovedBookings");
+
+
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -189,6 +203,8 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -209,6 +225,8 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -230,6 +248,8 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -253,6 +273,8 @@ public class DashboardController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -275,6 +297,8 @@ public class DashboardController {
 
         List<RentInf> rentInfs = rentInfModel.getProductByAppcridentialId(appCredential.getId());
 
+
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -295,6 +319,7 @@ public class DashboardController {
 
         UserPaypalCredential userPaypalCredential = userPaypalCredentialModel.getByAppCredentialId(appCredential.getId());
 
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("userPaypalCredential", userPaypalCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
 //        modelAndView.addObject("pageTitle", "My Paypal Account Email");
