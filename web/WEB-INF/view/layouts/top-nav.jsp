@@ -37,9 +37,9 @@
             </d:if>
             <d:if test="${IsLogIn != false}">
               <li class="dropdown">
-                <a href="${BaseUrl}/user/dashboard" class="dropdown-toggle top_nav_a"
+                <a href="${BaseUrl}/user/dashboard/my-profile-edit" class="dropdown-toggle top_nav_a"
                    aria-expanded="false">
-                  <i class="fa fa-user"></i>${appCredential.getUserInf().getFirstName()}
+                  <i class="fa fa-user"></i>${appCredential.getUserInf().getFirstName()} (Dashboard)
                 </a>
               </li>
               <li class="dropdown">

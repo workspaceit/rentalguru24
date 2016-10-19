@@ -14,7 +14,7 @@
     <div class="row">
         <jsp:directive.include file="../layouts/userDashboardLeftMemu.jsp" />
         <div class="col-md-9 side-container">
-            <h3>My Products <button  onclick="location.href='${BaseUrl}/product/upload'" class="btn-filter user_dboard_btn">Add New Product</button></h3>
+            <h3>My Products <%--<button  onclick="location.href='${BaseUrl}/product/upload'" class="btn-filter user_dboard_btn">Add New Product</button>--%></h3>
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <table id="example1" class="table table-bordered table-striped user_dashboard_table">
