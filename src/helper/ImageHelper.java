@@ -19,7 +19,7 @@ public class ImageHelper {
       /* ------------------- Live server of client ----------------------------- */
     //@Value("${fileLocation.uploaded}")
 
- //   private static String GLOBAL_PATH ="/home/rentguru24files/";
+    private static String GLOBAL_PATH ="/home/rentguru24files/";
     /* ------------------- Develop ----------------------------- */
   //  private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
 
@@ -27,7 +27,7 @@ public class ImageHelper {
 //    private static String GLOBAL_PATH = "/home/wsit/rentguru24files_beta/";
 
         /*------------------Local---------------------*/
-    private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
+//    private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
 
 //    private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
 
