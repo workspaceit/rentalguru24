@@ -5,14 +5,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import helper.ImageHelper;
+import helper.MailHelper;
 import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
+import model.EmailConfirmationModel;
 import model.IdentityTypeModel;
 import model.TempFileModel;
 import model.entity.app.*;
 import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,7 +38,8 @@ public class SignupService{
     TempFileModel tempFileModel;
     @Autowired
     IdentityTypeModel identityTypeModel;
-
+    @Autowired
+    EmailConfirmationModel emailConfirmationModel;
 
     @RequestMapping(value="/user",method = RequestMethod.POST)
     public ServiceResponse userSignup(HttpServletRequest request,
@@ -45,7 +49,7 @@ public class SignupService{
 
 
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-
+        String baseUrl = (String) request.getAttribute("baseURL");
         /*------------ Parameter Alias---------------*/
         serviceResponse.setParameterAlias("id","identityTypeId");
 
@@ -133,6 +137,7 @@ public class SignupService{
         }
 
         authCredential.setVerified(true);
+        authCredential.setEmailConfirmed(true); // Need to be set false before lunch
         authCredential.setBlocked(false);
         authCredential.getUserInf().setIdentityDocUrl(tempFile.getPath());
 
@@ -152,6 +157,31 @@ public class SignupService{
         this.tempFileModel.delete(tempFile);
 
         authCredential = appLoginCredentialModel.getById(authCredential.getId());
+        AppCredential appCredential = appLoginCredentialModel.getAppCredentialById(authCredential.getId());
+        /*~~~~ Send  Email confirmation mail*/
+
+        EmailConfirmation emailConfirmation = new EmailConfirmation();
+        emailConfirmation.setAppCredential(appCredential);
+        emailConfirmation.setAlreadyUsed(false);
+        emailConfirmationModel.insert(emailConfirmation);
+        System.out.println("Before async ");
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.print("Email sending init");
+                MailHelper.signUpConfirmationMail(emailConfirmation.getAppCredential().getEmail(),
+                        emailConfirmation.getToken(),
+                        baseUrl + "/email-confirmation/confirm/",
+                        baseUrl + "/email-confirmation/deny/");
+                System.out.print("Email sent");
+            }
+        }).start();
+
+
+
+        System.out.println("After async ");
 
         serviceResponse.getResponseStat().setMsg("Signup successful");
         serviceResponse.setResponseData(authCredential);
@@ -168,4 +198,5 @@ public class SignupService{
         serviceResponse.setResponseData(isEmailExist);
         return  serviceResponse;
     }
+
 }

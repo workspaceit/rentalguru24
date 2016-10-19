@@ -26,6 +26,7 @@
               </mvc:message-converters>
        </mvc:annotation-driven>
 
+
     <context:component-scan base-package="controller,helper,library,scheduler"   />
 
     <context:property-placeholder properties-ref="configProperties" />
@@ -356,6 +357,9 @@
         </bean>
         <bean id="cronLastExecutedModel" class="model.CronLastExecutedModel" parent="baseModel"   >
         </bean>
+        <bean id="emailConfirmationModel" class="model.EmailConfirmationModel" parent="baseModel"   >
+        </bean>
+
 
 
 
@@ -406,6 +410,7 @@
                     <value>model.entity.admin.AdminUnreadAlertCount</value>
                     <value>model.entity.developer.cron.CronLastExecuted</value>
                     <value>model.entity.developer.cron.CronLog</value>
+                    <value>model.entity.app.EmailConfirmation</value>
                 </list>
             </property>
             <property name="hibernateProperties">

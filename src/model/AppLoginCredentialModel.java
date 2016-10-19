@@ -156,6 +156,13 @@ public class AppLoginCredentialModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+    public void delete(AuthCredential authCredential){
+        Session session = this.sessionFactory.openSession();
+        session.beginTransaction();
+        session.delete(authCredential);
+        session.getTransaction().commit();
+        session.close();
+    }
     /* For Profile Edit */
     public void updateWithNewPassword(AuthCredential authCredential){
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
