@@ -32,9 +32,9 @@
                                         <div class="item ${topProductActive}">
                                             <d:set var="topProductActive" value="" />
                                             <a href="${BaseUrl}/product/details/${topProduct.getId()}"><img src="<c:url value="${BaseUrl}/images/${topProduct.profileImage.original.path}" />" /></a>
-                                            <div class="carousel-caption cap1">
+                                            <a href="javascript:void(0);"><div class="carousel-caption cap1">
                                                 <p onclick="showRentRequestPopUp(${topProduct.getId()})"><i class="fa fa-shopping-basket"></i> Rent Now </p>
-                                            </div>
+                                            </div></a>
                                             <div class="custom_cap cap3">
                                                 <label class="title-label productName"><a href="${BaseUrl}/product/details/${topProduct.getId()}">${fn:substring(topProduct.name, 0, 20)}<d:if test="${fn:length(topProduct.name)>20}">....</d:if></a></label>
                                                 <d:if test="${topProduct.averageRating != 0}">

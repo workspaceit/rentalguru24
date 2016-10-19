@@ -19,7 +19,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <h3 class="aproval_container_title">Order Information</h3>
                     </div>
-                    <div class="col-md-7 col-sm-7 col-xs-12">
+                    <div class="col-md-5 col-sm-5 col-xs-12">
                         <div class="row">
                             <div class="col-md-3 col-xs-3 col-xs-12">
                                 <div class="product_img_container">
@@ -66,7 +66,7 @@
                             
                         </div>
                     </div>
-                    <div class="col-md-5 col-sm-5 col-xs-12">
+                    <div class="col-md-7 col-sm-7 col-xs-12">
                         <h5 class="color invoice_head">Transection Details</h5>
                         <div class="table-responsive">
                             <table class="table table-striped">

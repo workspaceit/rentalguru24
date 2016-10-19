@@ -121,7 +121,7 @@
         </div>
         <%--Dropzone for product profile image--%>
         <div class="form-group">
-          <label for="fallback">Add product images</label>
+          <label for="fallback">Add product banner images</label>
           <div id="fallback" class="fallback pos-relative">
             Drop files here or click to upload.
             <span class="inner-load fileUploadGif" hidden></span>

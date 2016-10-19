@@ -14,6 +14,7 @@
     <li><a href="${BaseUrl}/user/dashboard/rentrequest">Rent Request</a></li>
     <li><a href="${BaseUrl}/user/dashboard/rent-history">Rent History</a></li>
     <li><a href="${BaseUrl}/user/dashboard/my-products">My Products</a></li>
+    <li><a href="${BaseUrl}/product/upload">Add New Product</a></li>
     <%--<li><a href="${BaseUrl}/user/dashboard/my-rented-products">My Rented Products</a></li>--%>
     <%--<li><a href="${BaseUrl}/user/dashboard/my-products-on-rent">My Product On Rent</a></li>--%>
     <li><a href="${BaseUrl}/user/dashboard/my-booking">My Bookings</a></li>

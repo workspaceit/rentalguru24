@@ -17,11 +17,16 @@ $(function() {
 
 
 /*****************  Fetch product by category ***********/
-$("#categoryPageLinkUl,.sub-list").find(".developerCategoryAnchore").click(function(event){
+$("#categoryPageLinkUl,.sub-list,#categoryMobileSelectBox").find(".developerCategoryAnchore").click(function(event){
     var categoryId = $(this).attr("categoryId");
     //$(this).bind('click', fetchProductByCategoryAndScrollDown(categoryId,this,event));
     $(this).bind('click', redirectTocategoryPage(categoryId));
 });
+$("#categoryMobileSelectBox").change(function(event){
+    var categoryId = $(this).val();
+    redirectTocategoryPage(categoryId);
+});
+
 function fetchProductByCategoryAndScrollDown(categoryId,elem,event){
     event.preventDefault();
     $("#productBlockHead").html($("#categoryAnchor_"+categoryId).html());

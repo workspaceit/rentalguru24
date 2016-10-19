@@ -22,6 +22,8 @@
   </d:if>
   <link rel="shortcut icon" href="<c:url value="/resources/img/favicon.ico" />">
   <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css"/>"/>
+  <link rel="stylesheet" href="<c:url value="/resources/css/easyzoom.css"/>" />
+  <link rel="stylesheet" href="<c:url value="/resources/css/chosen.css"/>" />
   <link rel="stylesheet" href="http://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
   <style>
     ul{
@@ -51,8 +53,8 @@
   <script type="text/javascript" src="<c:url value="/resources/js/jquery.js"/>"></script>
   <script src="<c:url value="/resources/js/jquery.zoom.js"/>"></script>
   <script src="<c:url value="/resources/js/jquery1.9.1.min.js"  />" ></script>
-  <script src="<c:url value="/resources/js/jquery.elevatezoom.js"/>"></script>
-  <script src="http://www.elevateweb.co.uk/wp-content/themes/radial/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <script src="<c:url value="/resources/js/chosen.jquery.min.js"  />" ></script>
+
   <script src="<c:url value="/resources/js/lightslider.js" />" > </script>
   <script>
     $(document).ready(function () {

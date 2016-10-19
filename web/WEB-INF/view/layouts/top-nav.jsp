@@ -2,7 +2,7 @@
   <div class="row">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-5">
+        <div class="col-md-6 col-sm-6 col-xs-0">
           <%--<ul class="top_nav_ul">--%>
             <%--<li class="dropdown">--%>
               <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>--%>
@@ -19,7 +19,7 @@
           <%--</ul>--%>
         </div>
 
-        <div class="col-md-6 col-sm-6 col-xs-7 ">
+        <div class="col-md-6 col-sm-6 col-xs-12 ">
           <ul class="top_nav_ul right top_nav_ul">
             <d:if test="${IsLogIn != true}">
               <li class="dropdown">
@@ -37,9 +37,9 @@
             </d:if>
             <d:if test="${IsLogIn != false}">
               <li class="dropdown">
-                <a href="${BaseUrl}/user/dashboard" class="dropdown-toggle top_nav_a"
+                <a href="${BaseUrl}/user/dashboard/my-profile-edit" class="dropdown-toggle top_nav_a"
                    aria-expanded="false">
-                  <i class="fa fa-user"></i>${appCredential.getUserInf().getFirstName()}
+                  <i class="fa fa-user"></i>${appCredential.getUserInf().getFirstName()} (Dashboard)
                 </a>
               </li>
               <li class="dropdown">
