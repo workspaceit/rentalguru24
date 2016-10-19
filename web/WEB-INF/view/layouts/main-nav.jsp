@@ -112,22 +112,17 @@
           </div>
         </li>
       </ul>
-      <select id="dark-select" class="chzn-select mob-select visible-xs"
-              id="ailment_id" name="ailment_id"
+      <%--id="dark-select"--%>
+      <%--id="ailment_id"--%>
+      <select id="categoryMobileSelectBox" class="chzn-select mob-select visible-xs"
+              name="ailment_id"
               style="width: 350px">
 
         <option class="category" value="" disabled selected>Choose Category</option>
-        <d:forEach var="listValue" items="${category}">
-        <option class="category" id="subCategoryOf_${listValue.id}">${listValue.name}</option>
+        <d:forEach var="listValue" items="${category}" >
+        <option categoryId="${listValue.id}" class="category developerCategoryAnchore" id="subCategoryOf_${listValue.id}">${listValue.name}</option>
           <d:forEach var="subcategory" items="${listValue.subcategory}">
-            <option class="item">
-              <a
-                      href="javascript:void(0)"
-                      categoryId="${subcategory.id}"
-                      onclick="selectedCategory(${subcategory.id})"
-                      id="categoryAnchor_${subcategory.id}"
-                      data-category-name="${subcategory.name}" class="scrollToSection developerCategoryAnchore">${subcategory.name}</a>
-            </option>
+            <option class="item" value="${subcategory.id}">${subcategory.name}</option>
           </d:forEach>
         </d:forEach>
 
