@@ -99,6 +99,11 @@
                                         <td>$${rentRequest.getRentalProduct().getRentFee()}</td>
                                     </tr>
                                     <tr>
+                                        <td>Product current price</td>
+                                        <td></td>
+                                        <td>$${rentRequest.rentalProduct.currentValue}</td>
+                                    </tr>
+                                    <tr>
                                         <td>Total Rent</td>
                                         <td></td>
                                         <td>$${rentRequest.rentFee}</td>
@@ -321,7 +326,7 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane active" id="reviews">
+            <div role="tabpanel" class="tab-pane active" id="reviews" style="display: none;">
                 <h3 class="aproval_container_title">Add Review</h3>
                 <p  class="no-review">Your Rating</p>
                 <div class="alert alert-success rateSuccess" hidden>Product rated successful</div>
@@ -361,6 +366,7 @@
         <jsp:directive.include file="../layouts/top-footer.jsp" />
         <jsp:directive.include file="../layouts/footer.jsp" />
         <input type="hidden" value="${rentRequest.getId()}" id="rentRequestId" />
+        <input type="hidden" value="0" id="rentInfId" />
         <script>
             $(document).ready(function(){
                 fetchRentInfByRentRequestId($("#rentRequestId").val());
@@ -458,6 +464,8 @@
 
                                     $("#productReceiveConfirmStrong").append(" on "+createdDate);
                                     $("#productReceiveConfirmParentDiv").fadeIn();
+                                    $("#rentInfId").val(rentInf.id);
+                                    $("#reviews").show();
 
                                 }else if(rentInf.rentalProductReturned.dispute){
                                     var rentalProductReturnedHistories = rentInf.rentalProductReturned.rentalProductReturnedHistories;
@@ -614,6 +622,7 @@
                 var productId = productId;
                 var rateValue = $('input[name=rating]:checked').val();
                 var reviewText = $("#reviewText").val();
+                var rentInfId =  $("#rentInfId").val();
 
                 $.ajax({
                     type: "POST",
