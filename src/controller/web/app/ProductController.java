@@ -173,9 +173,9 @@ public class ProductController{
         modelAndView.addObject("BaseUrl", baseUrl);
         return modelAndView;
     }
-    @RequestMapping(value = "/product-details/partial-load-modal/{product_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/product-details/partial-load/{product_id}", method = RequestMethod.GET)
     public ModelAndView getProductDetailsPartialLoadModel(HttpServletRequest request, @PathVariable("product_id") int productId){
-        ModelAndView modelAndView = new ModelAndView("common/product/productDetailsModalView");
+        ModelAndView modelAndView = new ModelAndView("public/partial/productDetailsModalView");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
 

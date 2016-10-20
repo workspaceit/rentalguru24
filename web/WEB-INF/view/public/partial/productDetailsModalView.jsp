@@ -13,7 +13,8 @@
 
 <!--maincontainer-->
 <%--<div class="contentwrap">--%>
-  <div class="container">
+  <%--Removed  class="container" Recommended By Arnob --%>
+  <div>
     <div class="row product_div_row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="row">

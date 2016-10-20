@@ -251,6 +251,7 @@
   }
 
   function loadMoreProduct(){
+    $("#loadMoreButton").attr("disabled","disabled");
     $("#loadMoreButtonLoader").show();
     var cid=0;
     var title= "";
@@ -267,6 +268,7 @@
       type: "GET",
       success: function(data){
         $("#loadMoreButtonLoader").hide();
+        $("#loadMoreButton").removeAttrs("disabled");
         //history.pushState({}, null, newUrl);
         if(loadMoreObj.offset==0){
           $("#productListDiv").html(data);
@@ -288,6 +290,7 @@
       },
       error:function(e){
         $("#loadMoreButtonLoader").hide();
+        $("#loadMoreButton").removeAttrs("disabled");
       }
     });
   }
