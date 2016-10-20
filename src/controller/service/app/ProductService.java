@@ -330,7 +330,7 @@ public class ProductService{
 
 
         productRating.setAppCredential(appCredential);
-        productRating.setProduct(product);
+        productRating.setProductId(product.getId());
         productRating.setRateValue(ratingValue);
 
         productRatingModel.insert(productRating);
@@ -665,13 +665,30 @@ public class ProductService{
             serviceResponse.setRequestError("reviewText", "Product review text required");
         }
 
+        if(allRequestParam.get("rentInfId") == null || allRequestParam.get("rentInfId").isEmpty()){
+            serviceResponse.setRequestError("rentInfId", "RentInf Id  required");
+        }
+
+        if(allRequestParam.get("rentRequestId") == null || allRequestParam.get("rentRequestId").isEmpty()){
+            serviceResponse.setRequestError("rentRequestId", "Rent Request Id  required");
+        }
+
         if(serviceResponse.hasErrors()){
             return serviceResponse;
         }
 
         int productId = Integer.parseInt(allRequestParam.get("productId").trim());
         int rateValue = Integer.parseInt(allRequestParam.get("rateValue").trim());
+        int rentInfId = Integer.parseInt(allRequestParam.get("rentInfId").trim());
+        int rentRequestId = Integer.parseInt(allRequestParam.get("rentRequestId").trim());
         String reviewText = allRequestParam.get("reviewText");
+
+        boolean isAlreadyRatedByUser = productRatingModel.isAlreadyRatedByUser(productId, rentInfId, rentRequestId, appCredential.getId());
+
+        if(isAlreadyRatedByUser){
+            serviceResponse.getResponseStat().setMsg("You have already review this product");
+            return serviceResponse;
+        }
 
         RentalProductEntity rentalProductEntity = productModel.getEntityById(productId);
 
@@ -680,13 +697,23 @@ public class ProductService{
             return serviceResponse;
         }
 
+        System.out.println(rentalProductEntity.getId() + " " + rentInfId + " " + rentRequestId);
+
         ProductRating productRating = new ProductRating();
-        productRating.setProduct(rentalProductEntity);
+        productRating.setProductId(rentalProductEntity.getId());
+        productRating.setRentInfId(rentInfId);
+        productRating.setRentRequestId(rentRequestId);
         productRating.setAppCredential(appCredential);
         productRating.setRateValue(rateValue);
         productRating.setReviewText(reviewText);
+        productRating.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
 
         productRatingModel.insert(productRating);
+
+        double averageRate = productRatingModel.averageRating(productId);
+        rentalProductEntity.setAverageRating((float)averageRate);
+        productModel.update(rentalProductEntity);
+
         serviceResponse.getResponseStat().setMsg("Product rated successful");
         return serviceResponse;
     }

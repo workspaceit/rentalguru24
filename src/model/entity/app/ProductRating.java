@@ -12,8 +12,9 @@ import java.sql.Timestamp;
 @Table(name = "product_rating", schema = "")
 public class ProductRating {
     private int id;
-//    private int productId;
-//    private int appCredentialId;
+    private int productId;
+    private int rentInfId;
+    private int rentRequestId;
     private int rateValue;
     private Timestamp createdDate;
     private AppCredential appCredential;
@@ -39,25 +40,6 @@ public class ProductRating {
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
     }
-//    @Basic
-//    @Column(name = "product_id")
-//    public int getProductId() {
-//        return productId;
-//    }
-
-//    public void setProductId(int productId) {
-//        this.productId = productId;
-//    }
-
-//    @Basic
-//    @Column(name = "app_credential_id")
-//    public int getAppCredentialId() {
-//        return appCredentialId;
-//    }
-//
-//    public void setAppCredentialId(int appCredentialId) {
-//        this.appCredentialId = appCredentialId;
-//    }
 
     @Basic
     @Column(name = "rate_value")
@@ -77,6 +59,36 @@ public class ProductRating {
 
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
+    }
+
+    @Basic
+    @Column(name = "product_id")
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    @Basic
+    @Column(name = "rent_inf_id")
+    public int getRentInfId() {
+        return rentInfId;
+    }
+
+    public void setRentInfId(int rentInfId) {
+        this.rentInfId = rentInfId;
+    }
+
+    @Basic
+    @Column(name = "rent_request_id")
+    public int getRentRequestId() {
+        return rentRequestId;
+    }
+
+    public void setRentRequestId(int rentRequestId) {
+        this.rentRequestId = rentRequestId;
     }
 
     @Override
@@ -111,9 +123,9 @@ public class ProductRating {
 
     public void setAppCredential(AppCredential appCredential){this.appCredential = appCredential;}
 
-    @OneToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    public RentalProductEntity getProduct(){return  product;}
-
-    public void setProduct(RentalProductEntity product){this.product = product;}
+//    @OneToOne
+//    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
+//    public RentalProductEntity getProduct(){return  product;}
+//
+//    public void setProduct(RentalProductEntity product){this.product = product;}
 }

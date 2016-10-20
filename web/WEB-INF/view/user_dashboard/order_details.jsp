@@ -631,7 +631,9 @@
                     data: {
                         productId: productId,
                         rateValue: rateValue,
-                        reviewText: reviewText
+                        reviewText: reviewText,
+                        rentInfId : rentInfId,
+                        rentRequestId : rentRequestId
                     },
                     success: function(data){
                         console.log(data);
