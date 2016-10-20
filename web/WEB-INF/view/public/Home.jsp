@@ -134,6 +134,7 @@
         </div>
 
 
+
         <br>
 
             <div class="testimonial">
@@ -175,6 +176,39 @@
             </div>
 
         <jsp:directive.include file="../layouts/top-footer.jsp" />
+
+        <!--Quick view  Modal -->
+        <div class="modal fade quickview-modal" id="quickview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <%--<div class="modal-header">--%>
+                    <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>--%>
+                    <%--<h4 class="modal-title" id="myModalLabel">Modal title</h4>--%>
+                    <%--</div>--%>
+                    <div class="modal-body" id="developerPartialRenderView">
+                    </div>
+                    <%--<div class="modal-footer">--%>
+                    <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
+                    <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
+                    <%--</div>--%>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function viewProductDetails(productId){
+                $("#developerPartialRenderView").html("<h1>Loading.....</h1>");
+                $.ajax({
+                    type: "GET",
+                    url: BASEURL+"/product/product-details/partial-load-modal/"+productId,
+                    success: function(data){
+                        $("#developerPartialRenderView").html(data);
+                    }
+                });
+            }
+        </script>
+        <!--Quick view  Modal end-->
 <!--Rent request form Modal -->
 <jsp:directive.include file="../modals/rent_request_modal.jsp" />
 

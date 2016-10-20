@@ -114,15 +114,16 @@ public class PublicProductService{
             return serviceResponse;
         }
 
-        if(allRequestParameter.get("title") == null || allRequestParameter.get("title").isEmpty()){
-            serviceResponse.setRequestError("title","Title require");
-            return serviceResponse;
-        }
+
 
         int categoryId = Integer.parseInt(allRequestParameter.get("categoryId").trim());
         int limit = Integer.parseInt(allRequestParameter.get("limit").trim());
         int offset = Integer.parseInt(allRequestParameter.get("offset").trim());
-        String title = allRequestParameter.get("title").trim();
+        String title = allRequestParameter.get("title");
+
+        if(title != null && !title.isEmpty()){
+            title = title.trim();
+        }
 
         List<RentalProduct> rentalProduct = productModel.getProductByCategoryIdTitle(categoryId, title, limit, offset);
 

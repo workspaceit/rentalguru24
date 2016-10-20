@@ -29,10 +29,10 @@
                             <tr>
                                 <td>
                                     <div class="table-img">
-                                        <img class="img-responsive" src="<c:url value="${BaseUrl}/images/${product.getProfileImage().getOriginal().getPath()}" />" />
+                                        <a href="${BaseUrl}/product/details/${product.getId()}"><img class="img-responsive" src="<c:url value="${BaseUrl}/images/${product.getProfileImage().getOriginal().getPath()}" />" /></a>
                                     </div>
                                     <div class="table-desc">
-                                        <h5>${product.getName()}</h5>
+                                        <a href="${BaseUrl}/product/details/${product.getId()}"><h5>${product.getName()}</h5></a>
                                         <p>${product.getDescription()}</p>
                                         <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableFrom()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableTill()}"/></span></p>
                                     </div>

@@ -358,6 +358,9 @@ public class ProductModel extends BaseModel {
         }
     }
     public List<RentalProduct> getProductByCategoryIdTitle(int categoryId, String title ,int limit, int offset){
+        if(title == null || title.isEmpty()){
+            return this.getProductByCategoryId(categoryId, limit, offset);
+        }
         Session session = this.sessionFactory.openSession();
         String hql = "FROM RentalProductEntity rentalProduct " +
                 " LEFT JOIN FETCH rentalProduct.productCategories productCategory " +

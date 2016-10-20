@@ -647,7 +647,7 @@ public class ProductService{
         return serviceResponse;
     }
 
-    @RequestMapping(value = "/product/review", method = RequestMethod.POST)
+    @RequestMapping(value = "/review", method = RequestMethod.POST)
     public ServiceResponse setProductReview(HttpServletRequest request, @RequestParam Map<String , String> allRequestParam){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");

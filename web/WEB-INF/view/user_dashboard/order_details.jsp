@@ -623,10 +623,11 @@
                 var rateValue = $('input[name=rating]:checked').val();
                 var reviewText = $("#reviewText").val();
                 var rentInfId =  $("#rentInfId").val();
+                var rentRequestId = $("#rentRequestId").val();
 
                 $.ajax({
                     type: "POST",
-                    url: BASEURL+"/api/auth/product/product/review",
+                    url: BASEURL+"/api/auth/product/review",
                     data: {
                         productId: productId,
                         rateValue: rateValue,
