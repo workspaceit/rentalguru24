@@ -14,8 +14,8 @@
           <div class="search-top">
             <input placeholder="Search" class="search-per" name="searchTxtBox" id="searchTxtBox" type="text" onkeypress="doSearch(event)" />
             <span><i class="fa fa-search"></i></span>
-            <select class="drop-cat-main">
-              <option>All</option>
+            <select class="drop-cat-main" id="categorySelectedInSearch">
+              <option value="0">All</option>
               <d:forEach var="listValue" items="${category}" >
                 <option categoryId="${listValue.id}" value="${listValue.id}" class="category developerCategoryAnchore" id="subCategoryOf_${listValue.id}">${listValue.name}</option>
                 <d:forEach var="subcategory" items="${listValue.subcategory}">
