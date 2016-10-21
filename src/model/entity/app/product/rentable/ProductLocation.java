@@ -20,8 +20,8 @@ public class ProductLocation {
     private String state;
     private String formattedAddress;
     private String zip;
-    private Float lat = null;
-    private Float lng = null;
+    private Double lat = null;
+    private Double lng = null;
     private Timestamp createdDate;
 
     private RentalProduct rentalProduct;
@@ -83,20 +83,20 @@ public class ProductLocation {
     }
     @Basic
     @Column(name = "lat")
-    public Float getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(Float lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
     @Basic
     @Column(name = "lng")
-    public Float getLng() {
+    public Double getLng() {
         return lng;
     }
 
-    public void setLng(Float lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 

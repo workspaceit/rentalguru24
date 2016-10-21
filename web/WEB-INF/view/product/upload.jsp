@@ -426,11 +426,28 @@
 
 </script>
 <script>
+  var latitude = null;
+  var longitude = null;
+  $(document).ready(function(){
+    var x = document.getElementById("demo");
+    /* Get User current location */
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        latitude  = position.coords.latitude;
+        longitude  = position.coords.longitude;
+        console.log(position)
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+
+  });
   function postProduct(){
     if(!isUserVerified){
       showUserVerificationAlert();
       return;
     }
+    $('#postProduct').attr("disabled", "disabled");
     $('.postProductGif').show();
     var categoryId = $('#category option:selected').val();
     var subCategory = $('#subCategory option:selected').val();
@@ -478,10 +495,13 @@
         formattedAddress:formattedAddress,
         rentTypeId:rentTypeId,
         zip:zip,
-        city:city
+        city:city,
+        lat:latitude ,
+        lng:longitude
       },
       success: function(data){
         console.log(data);
+        $('#postProduct').removeAttrs("disabled");
         if(!data.responseStat.isLogin){
           $('.alert-danger').show().delay(2000).fadeOut(300, function(){
             window.location.href= BASEURL+"/signin";
@@ -495,6 +515,8 @@
           });
         }
         $('.postProductGif').hide().delay(1998).fadeOut();
+      },error:function(){
+        alert("Internal server error!! Please try again later.")
       }
     });
   }
@@ -502,6 +524,7 @@
 
   $(document).ready(function(){
     setAliasMessage("categoryIds","Category not in valid format","Please select category");
+    setAliasMessage("categoryIds","Category not in valid format","Category not found for id = 0");
     setAliasMessage("currentValue","typeMismatch","Current value required");
     setAliasMessage("categoryIds", "Category not found for id = 0", "Please select category");
     setAliasMessage("rentTypeId", "No rent type found by id  0", "Please select rent type");

@@ -1,5 +1,9 @@
 package validator.form.class_file;
 
+import helper.UtilituHelper;
+
+import java.util.Arrays;
+
 /**
  * Created by mi on 8/8/16.
  */
@@ -24,8 +28,8 @@ public class ProductUploadForm {
     private String state;
     private String formattedAddress;
     private String zip;
-    private float lat;
-    private float lng;
+    private Double lat;
+    private Double lng;
 
     public String getName() {
         return name;
@@ -161,19 +165,19 @@ public class ProductUploadForm {
         this.zip = zip;
     }
 
-    public float getLat() {
-        return lat;
+    public Double getLat() {
+        return (lat!=null)?UtilituHelper.round(lat,13):null;
     }
 
-    public void setLat(float lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public float getLng() {
-        return lng;
+    public Double getLng() {
+        return (lng!=null)?UtilituHelper.round(lng,13):null;
     }
 
-    public void setLng(float lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 
@@ -183,5 +187,31 @@ public class ProductUploadForm {
 
     public void setOtherImagesTokenArray(Long[] otherImagesTokenArray) {
         this.otherImagesTokenArray = otherImagesTokenArray;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ProductUploadForm{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", profileImageToken=" + profileImageToken +
+                ", currentValue=" + currentValue +
+                ", rentFee=" + rentFee +
+                ", rentTypeId=" + rentTypeId +
+                ", active=" + active +
+                ", currentlyAvailable=" + currentlyAvailable +
+                ", availableFrom='" + availableFrom + '\'' +
+                ", availableTill='" + availableTill + '\'' +
+                ", reviewStatus=" + reviewStatus +
+                ", categoryIdArray=" + Arrays.toString(categoryIdArray) +
+                ", otherImagesTokenArray=" + Arrays.toString(otherImagesTokenArray) +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", formattedAddress='" + formattedAddress + '\'' +
+                ", zip='" + zip + '\'' +
+                ", lat=" + getLat() +
+                ", lng=" + getLng() +
+                '}';
     }
 }

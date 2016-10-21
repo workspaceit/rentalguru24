@@ -8,6 +8,8 @@ import helper.DateHelper;
 import helper.ImageHelper;
 import helper.ServiceResponse;
 import helper.SessionManagement;
+import library.ipGeoTracker.GeoIpManager;
+import library.ipGeoTracker.dataModel.GeoIp;
 import model.*;
 import model.entity.app.AppCredential;
 import model.entity.app.ProductRating;
@@ -89,7 +91,7 @@ public class ProductService{
             return serviceResponse;
         }
         serviceResponse.setParameterAlias("otherImagesTokenArray", "otherImageTokens");
-
+        serviceResponse.setParameterAlias("categoryIdArray", "categoryIds");
 
         RentalProduct rentalProduct = new RentalProductEntity();
 
@@ -140,22 +142,6 @@ public class ProductService{
         }
 
         try{
-            if(allRequestParameter.get("lat")!=null){
-                productUploadForm.setLat(Float.parseFloat(allRequestParameter.get("lat")));
-            }
-        }catch(Exception ex){
-            serviceResponse.setRequestError("lat","Latitude is not valid format, float  required");
-        }
-
-        try{
-            if(allRequestParameter.get("lng")!=null) {
-                productUploadForm.setLng(Float.parseFloat(allRequestParameter.get("lng")));
-            }
-        }catch(Exception ex){
-            serviceResponse.setRequestError("lng","Longitude is not valid format, float  required");
-        }
-
-        try{
             productUploadForm.setRentFee(Double.parseDouble(allRequestParameter.get("rentFee")));
         }catch(Exception ex){
             serviceResponse.setRequestError("rentFee","Rent fee integer required");
@@ -187,6 +173,15 @@ public class ProductService{
         serviceResponse.setError(result, true, false);
         if(serviceResponse.hasErrors()){
             return serviceResponse;
+        }
+        System.out.println("request.getRemoteAddr() " +request.getRemoteAddr());
+        if(productUploadForm.getLat()==null && productUploadForm.getLng()==null){
+                GeoIpManager geoIpManager = new GeoIpManager();
+                GeoIp geoIp = geoIpManager.getGeoIp(request.getRemoteAddr());
+                if(geoIpManager.isSuccess()){
+                    productUploadForm.setLat(geoIp.getLatitude());
+                    productUploadForm.setLng(geoIp.getLongitude());
+                }
         }
 
         Timestamp availableFromDate = DateHelper.getStringToTimeStamp(productUploadForm.getAvailableFrom(), "dd-MM-yyyy") ;
