@@ -2,6 +2,7 @@ package controller.web.app;
 
 
 import helper.ServiceResponse;
+import library.ipGeoTracker.GeoIpManager;
 import model.CategoryModel;
 import model.ProductModel;
 import model.entity.app.AppCredential;
@@ -54,7 +55,7 @@ public class HomeController {
             rentalProductsTop = productModel.getRentalProduct(3, 0);
             topRentalProductHeadTitle = "NEW PRODUCT";
         }
-
+        System.out.println("GeoIpManager "+GeoIpManager.getRemoteAddress(request));
         String productListTitle = "NEW PRODUCT";
         if(showTopGallery){
             productListTitle = "Search result";

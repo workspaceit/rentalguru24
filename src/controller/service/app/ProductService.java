@@ -174,10 +174,11 @@ public class ProductService{
         if(serviceResponse.hasErrors()){
             return serviceResponse;
         }
-        System.out.println("request.getRemoteAddr() " +request.getRemoteAddr());
+         String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        System.out.println("request.getRemoteAddr() " +ipAddress);
         if(productUploadForm.getLat()==null && productUploadForm.getLng()==null){
                 GeoIpManager geoIpManager = new GeoIpManager();
-                GeoIp geoIp = geoIpManager.getGeoIp(request.getRemoteAddr());
+                GeoIp geoIp = geoIpManager.getGeoIp(request);
                 if(geoIpManager.isSuccess()){
                     productUploadForm.setLat(geoIp.getLatitude());
                     productUploadForm.setLng(geoIp.getLongitude());

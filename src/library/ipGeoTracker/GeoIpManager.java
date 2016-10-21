@@ -50,7 +50,20 @@ public class GeoIpManager{
             return null;
         }
     }
-    public static String getClientIpAddr(HttpServletRequest request) {
+    public GeoIp getGeoIp(HttpServletRequest request){
+        return getGeoIp(GeoIpManager.getRemoteAddress(request));
+    }
+    public static String getRemoteAddress(HttpServletRequest req) {
+        String ipAddress = req.getHeader("X-FORWARDED-FOR");
+        if (ipAddress != null) {
+            ipAddress = ipAddress.replaceFirst(",.*", "");  // cares only about the first IP if there is a list
+        } else {
+            ipAddress = req.getRemoteAddr();
+        }
+        return ipAddress;
+    }
+    // Does not works on ajax
+    public static String getClientIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
