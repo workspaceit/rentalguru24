@@ -3291,6 +3291,37 @@ span.time_date {
 .chzn-container{
     display: none;
 }
+
+.drop-cat-main{
+    width: 15%;
+    float: right;
+    /* background: #fff; */
+    height: 32px;
+    border: 1px solid #ccc;
+    border-right: 0px;
+    border-radius: 5px;
+    background: #fff;
+    margin-right: -4px;
+}
+.search-per{
+    /*float: left;*/
+    width: 85%;
+}
+
+
+:hov
+
+.cls
+
+element.style {
+}
+.easy-autocomplete input:hover, .easy-autocomplete input:focus {
+    box-shadow: none;
+}
+.easy-autocomplete input {
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
 /*Media queries*/
 
 /*For mobile*/
@@ -3316,6 +3347,25 @@ span.time_date {
         border-bottom: 0px;
         display: block;
     }
+
+    .drop-cat-main {
+        width: 20%;
+        float: right;
+        /* background: #fff; */
+        height: 32px;
+        border: 1px solid #ccc;
+        /* border-right: 0px; */
+         border-radius: 0px !important;
+        background: #fff;
+        /* margin-right: -4px; */
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    .easy-autocomplete input{
+        padding-left: 70px !important;
+    }
+
     .catagory_drop .caret{
         float: right;
         margin-top: 8px;
@@ -3399,6 +3449,48 @@ span.time_date {
         float: none !important;
         text-align: left;
     }
+    .main_product_slider {
+        height: 225px;
+        overflow: hidden;
+        position: relative;
+    }
+    .main_product_slider .carousel-inner {
+        height: 195px;
+    }
+    .main_product_slider .item {
+        height: 197px;
+    }
+    .main_product_slider .item img {
+        height: 200px !important;
+        width: 100%;
+    }
+    .main_product_slider .right{
+        top: 177px;
+    }
+    .main_product_slider .left{
+        top: 177px;
+    }
+    .product_carousel{
+        padding-top: 10px;
+    }
+    .img-single{
+        height: 160px;
+    }
+    .no-rating-label{
+        margin-bottom: 0px;
+    }
+    .block-action .price-tag {
+        padding: 3px;
+        height: 28px;
+        line-height: 17px;
+    }
+    .single-item .panel{
+        min-height: 120px;
+        margin-bottom: 0px;
+    }
+    .single-item .panel-body {
+        min-height: 315px;
+    }
     /*.chzn-container{*/
         /*display: block;*/
     /*}*/
@@ -3467,8 +3559,10 @@ span.time_date {
 
     .search-top {
         width: 100%;
-        margin-top: 20px;
+        margin-top: 0px;
+        margin-bottom: 10px;
         position: relative;
+        overflow: hidden;
     }
     .search-top .easy-autocomplete {
         width: 100% !important;
