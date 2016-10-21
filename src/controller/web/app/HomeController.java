@@ -136,6 +136,7 @@ public class HomeController {
             RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
             modelAndView.addObject("showTopGallery", showTopGallery);
+            modelAndView.addObject("selectedCategoryId", categoryId);
             modelAndView.addObject("clientFeedback", clientFeedback);
             modelAndView.addObject("productListTitle",selectedCategoryName);
             modelAndView.addObject("preSelectedCategoryName",preSelectedcategoryName );

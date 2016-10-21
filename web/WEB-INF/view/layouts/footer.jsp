@@ -82,7 +82,7 @@
 //    console.log(categorySelectedInSearch);
     if(char==13 && productStr!=null && productStr != ""){
       console.log("TIME TO GO");
-      if(categorySelectedInSearch != 0){
+      if(categorySelectedInSearch != ""){
        window.location = BASEURL+"/home/category/"+categorySelectedInSearch+"?title="+productStr;
       }else{
         window.location = BASEURL+"/home?title="+productStr;
@@ -96,7 +96,7 @@
       var categoryId = $("#categorySelectedInSearch option:selected").val();
       var title = encodeURIComponent(phrase);
       var url = BASEURL+"/api/product/get-product-with-title?limit=8&offset=0&title="+title;
-      if(categoryId!=0){
+      if(categoryId!=""){
         url = BASEURL+"/api/product/get-product-with-category-title?limit=8&offset=0&categoryId="+categoryId+"&title="+title;
       }
       return url;
