@@ -88,7 +88,7 @@
         </div>
         <div class="form-group">
           <label>Product Location</label>
-          <input type="text" class="form-control" placeholder="" id="formattedAddress" name="formattedAddress">
+          <input type="text" class="form-control" placeholder="" id="formattedAddress" name="formattedAddress" onfocus="getGeoLocation()" latLngUsed="0">
           <p class="help-block error-form" id="errorMsg_formattedAddress"></p>
         </div>
         <div class="row clearfix">
@@ -428,20 +428,44 @@
 <script>
   var latitude = null;
   var longitude = null;
-  $(document).ready(function(){
+  function getGeoLocation(){
     var x = document.getElementById("demo");
     /* Get User current location */
+    var latLngAskedBefore = parseInt($("#formattedAddress").attr("latLngUsed"));
+    if(latLngAskedBefore>0){
+      return;
+    }
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         latitude  = position.coords.latitude;
         longitude  = position.coords.longitude;
-        console.log(position)
+        console.log(position);
+        $("#formattedAddress").attr("latLngUsed",1);
+        $("#formattedAddress").attr("disabled","disabled");
+                $.ajax({
+                  url: "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude,
+                  type: 'GET',
+                  success: function(data){
+                    console.log(data.results);
+                    for(var key in data.results){
+                      console.log( key);
+                      console.log( data.results[key]);
+                      $("#formattedAddress").val( data.results[key].formatted_address);
+                      $("#formattedAddress").removeAttrs("disabled","disabled");
+                      return;
+                    }
+                    console.log(data);
+                  },error:function(){
+                    $("#formattedAddress").removeAttrs("disabled","disabled");
+                    alert("Internal server error!! Please try again later.")
+                  }
+                });
       });
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
 
-  });
+  }
   function postProduct(){
     if(!isUserVerified){
       showUserVerificationAlert();

@@ -290,8 +290,8 @@ public class ProductService{
         ProductLocation productLocation = new ProductLocation();
         productLocation.setCity(productUploadForm.getCity());
         productLocation.setState(productUploadForm.getState());
-        productLocation.setLat(productUploadForm.getLat());
-        productLocation.setLng(productUploadForm.getLng());
+      //  productLocation.setLat(productUploadForm.getLat());
+      //  productLocation.setLng(productUploadForm.getLng());
         productLocation.setZip(productUploadForm.getZip());
         productLocation.setFormattedAddress(productUploadForm.getFormattedAddress());
 

@@ -3,6 +3,7 @@ package model.entity.app.product.rentable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import model.entity.app.product.rentable.iface.RentalProduct;
+import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,7 +13,9 @@ import java.sql.Timestamp;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "product_location", schema = "" ) // catalog = "rentguru24"
+@Table(name = "product_location" ) // catalog = "rentguru24"
+@Indexed
+@Spatial(name ="home")
 public class ProductLocation {
     private int id;
     private int productId;
@@ -20,8 +23,8 @@ public class ProductLocation {
     private String state;
     private String formattedAddress;
     private String zip;
-    private Double lat = null;
-    private Double lng = null;
+    private Double latitude = null;
+    private Double longitude = null;
     private Timestamp createdDate;
 
     private RentalProduct rentalProduct;
@@ -83,21 +86,24 @@ public class ProductLocation {
     }
     @Basic
     @Column(name = "lat")
-    public Double getLat() {
-        return lat;
+    @Latitude(of="home")
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setLat(Double lat) {
-        this.lat = lat;
+    public void setLatitude(Double lat) {
+        this.latitude = lat;
     }
+
     @Basic
     @Column(name = "lng")
-    public Double getLng() {
-        return lng;
+    @Longitude(of="home")
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setLng(Double lng) {
-        this.lng = lng;
+    public void setLongitude(Double lng) {
+        this.longitude = lng;
     }
 
     @JsonIgnore

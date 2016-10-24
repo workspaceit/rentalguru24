@@ -359,7 +359,8 @@
         </bean>
         <bean id="emailConfirmationModel" class="model.EmailConfirmationModel" parent="baseModel"   >
         </bean>
-
+        <bean id="bannerImageModel" class="model.BannerImageModel" parent="baseModel"   >
+        </bean>
 
 
 
@@ -411,6 +412,7 @@
                     <value>model.entity.developer.cron.CronLastExecuted</value>
                     <value>model.entity.developer.cron.CronLog</value>
                     <value>model.entity.app.EmailConfirmation</value>
+                    <value>model.entity.admin.BannerImage</value>
                 </list>
             </property>
             <property name="hibernateProperties">
@@ -422,6 +424,8 @@
                     <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
                     <prop key="hibernate.dialect">${jdbc.dialect}</prop>
                     <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+                    <prop key="hibernate.search.default.directory_provider">filesystem</prop>
+                    <prop key="hibernate.search.default.indexBase">/var/lucene/index</prop> <!--Must create dir var/lucene-->
                 </props>
             </property>
        </bean>
@@ -463,5 +467,7 @@
             <!--<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>-->
             <!--<prop key="hibernate.dialect">${jdbc.dialect}</prop>-->
             <!--<prop key="hibernate.enable_lazy_load_no_trans">true</prop>-->
+<!--<prop key="hibernate.search.default.directory_provider">filesystem</prop>-->
+<!--<prop key="hibernate.search.default.indexBase">/var/lucene/index</prop>-->
         <!--</props>-->
         <!--</property>-->

@@ -1,6 +1,9 @@
 package model;
 
 
+
+import model.entity.app.product.iface.Product;
+import model.entity.app.product.rentable.ProductLocation;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.SearchedProduct;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
@@ -9,6 +12,13 @@ import org.hibernate.*;
 
 import model.entity.app.product.rentable.iface.RentalProduct;
 
+
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
+import org.hibernate.search.query.dsl.Unit;
+import org.hibernate.search.spatial.Coordinates;
+import org.hibernate.search.spatial.impl.Point;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -447,6 +457,24 @@ public class ProductModel extends BaseModel {
 
             session.close();
         }
+    }
+    public List<ProductLocation> getRentalProductByDistance(double centerLatitude,double centerLongitude,float radius,int offset,int limit){
+        Session session = this.sessionFactory.openSession();
+        FullTextSession fullTextSession =  Search.getFullTextSession(session);
+        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+offset+" "+limit);
+        QueryBuilder builder = fullTextSession.getSearchFactory()
+                .buildQueryBuilder().forEntity(ProductLocation.class).get();
+        org.apache.lucene.search.Query luceneQuery = builder.spatial().onField("home")
+                .within(radius, Unit.KM)
+                .ofLatitude(centerLatitude)
+                .andLongitude(centerLongitude).createQuery();
+        System.out.println(luceneQuery.toString());
+        org.hibernate.Query hibQuery = fullTextSession
+                .createFullTextQuery(luceneQuery, ProductLocation.class);
+        List<ProductLocation> results = hibQuery.list();
+        System.out.println(hibQuery.getQueryString());
+        System.out.println(hibQuery.list().size());
+        return results;//fullTextSession.createFullTextQuery(luceneQuery, ProductLocation.class).list(); //.setFirstResult(offset).setMaxResults(limit)
     }
 
 }

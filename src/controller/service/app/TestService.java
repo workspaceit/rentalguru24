@@ -9,6 +9,8 @@ import model.*;
 import model.entity.admin.AdminGlobalNotification;
 import model.entity.admin.AdminGlobalNotificationTemplate;
 import model.entity.app.*;
+import model.entity.app.product.iface.Product;
+import model.entity.app.product.rentable.ProductLocation;
 import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,14 @@ public class TestService extends BaseService{
 
     @Autowired
     ProductRatingModel productRatingModel;
-
+    @RequestMapping(value = "/test/radius", method = RequestMethod.POST)
+    public List<ProductLocation> getByRadius( @RequestParam double centralLatitude,
+                                              @RequestParam double centralLongitude,
+                                              @RequestParam float radius,
+                                              @RequestParam int limit,
+                                              @RequestParam int offset){
+        return productModel.getRentalProductByDistance(centralLatitude,centralLongitude,radius,offset,limit);
+    }
     @RequestMapping(value = "/test/att", method = RequestMethod.POST)
     public void postAttribute(@RequestParam Map<String, String> allRequestParams){
 
