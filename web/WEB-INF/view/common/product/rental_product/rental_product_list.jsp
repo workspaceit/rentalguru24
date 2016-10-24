@@ -1,14 +1,3 @@
-<div class="container">
-    <div class="col-md-4">
-        <p>
-            <label for="amount">Radious range:</label>
-            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-        </p>
-        <div id="slider-range"></div>
-        <p class="help">Please Choose a radius</p>
-    </div>
-    <br><br><br>
-</div>
 <d:forEach var="rentalProduct" items="${rentalProducts}">
 <div class="col-md-3 single-item">
     <div class="panel panel-default">

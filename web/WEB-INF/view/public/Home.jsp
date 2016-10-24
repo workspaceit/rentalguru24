@@ -131,8 +131,18 @@
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
                         <div id="productListDiv"  class="row clearfix">
+                            <div class="container">
+                                <div class="col-md-4">
+                                    <p>
+                                        <label for="amount">Radious range:</label>
+                                        <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                    </p>
+                                    <div id="slider-range"></div>
+                                    <p class="help">Please Choose a radius</p>
+                                </div>
+                                <br><br><br>
+                            </div>
                             <jsp:directive.include file="../common/product/rental_product/rental_product_list.jsp" />
-
                         </div>
                     </div>
                 </div>
