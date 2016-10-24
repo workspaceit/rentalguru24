@@ -458,23 +458,62 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
-    public List<ProductLocation> getRentalProductByDistance(double centerLatitude,double centerLongitude,float radius,int offset,int limit){
+    public List<RentalProduct> getRentalProductByDistance(double centerLatitude,double centerLongitude,float radius,int limit,int offset){
         Session session = this.sessionFactory.openSession();
-        FullTextSession fullTextSession =  Search.getFullTextSession(session);
-        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+offset+" "+limit);
-        QueryBuilder builder = fullTextSession.getSearchFactory()
-                .buildQueryBuilder().forEntity(ProductLocation.class).get();
-        org.apache.lucene.search.Query luceneQuery = builder.spatial().onField("home")
-                .within(radius, Unit.KM)
-                .ofLatitude(centerLatitude)
-                .andLongitude(centerLongitude).createQuery();
-        System.out.println(luceneQuery.toString());
-        org.hibernate.Query hibQuery = fullTextSession
-                .createFullTextQuery(luceneQuery, ProductLocation.class);
-        List<ProductLocation> results = hibQuery.list();
-        System.out.println(hibQuery.getQueryString());
-        System.out.println(hibQuery.list().size());
-        return results;//fullTextSession.createFullTextQuery(luceneQuery, ProductLocation.class).list(); //.setFirstResult(offset).setMaxResults(limit)
+
+        List<Integer> locationIds =  this.getLocationByDistance(centerLatitude, centerLongitude, radius,limit, offset);
+        if(locationIds!=null && locationIds.size()==0){
+            return new ArrayList<>();
+        }
+        try{
+            return session.createQuery("FROM RentalProductEntity where productLocation.id in (:porducatLocationIds)")
+                    .setParameterList("porducatLocationIds", locationIds)
+                    .list();
+        }finally {
+            session.close();
+        }
+
     }
 
+/*
+    Here's the SQL statement that will find the closest 20 locations that are within a radius of 25 miles to the 37, -122 coordinate.
+    It calculates the distance based on the latitude/longitude of that row
+    and the target latitude/longitude, and then asks for only rows where the distance value is less than 25, orders the whole query by distance,
+    and limits it to 20 results. To search by kilometers instead of miles, replace 3959 with 6371.
+ */
+    private   List<Integer> getLocationByDistance(double centerLatitude,double centerLongitude,float radius,int limit,int offset){
+        Session session = this.sessionFactory.openSession();
+        List<Integer> ids = session.createSQLQuery("SELECT  id " +
+                "FROM product_location " +
+                "where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
+                "sin(radians(lat))))  <=:radius ) " +
+                " LIMIT :offset , :limit ")
+                .setParameter("centerLatitude", centerLatitude)
+                .setParameter("centerLongitude",centerLongitude)
+                .setParameter("radius", radius)
+                .setParameter("offset",offset)
+                .setParameter("limit",limit)
+                .list();
+
+
+        return ids;
+    }
+//    private List<ProductLocation> getLocationByDistance(double centerLatitude,double centerLongitude,float radius,int offset,int limit){
+//        Session session = this.sessionFactory.openSession();
+//        FullTextSession fullTextSession =  Search.getFullTextSession(session);
+//        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+offset+" "+limit);
+//        QueryBuilder builder = fullTextSession.getSearchFactory()
+//                .buildQueryBuilder().forEntity(ProductLocation.class).get();
+//        org.apache.lucene.search.Query luceneQuery = builder.spatial().onField("home")
+//                .within(radius, Unit.KM)
+//                .ofLatitude(centerLatitude)
+//                .andLongitude(centerLongitude).createQuery();
+//        System.out.println(luceneQuery.toString());
+//        org.hibernate.Query hibQuery = fullTextSession
+//                .createFullTextQuery(luceneQuery, ProductLocation.class);
+//        List<ProductLocation> results = hibQuery.list();
+//        System.out.println(hibQuery.getQueryString());
+//        System.out.println(hibQuery.list().size());
+//        return results;//fullTextSession.createFullTextQuery(luceneQuery, ProductLocation.class).list(); //.setFirstResult(offset).setMaxResults(limit)
+//    }
 }

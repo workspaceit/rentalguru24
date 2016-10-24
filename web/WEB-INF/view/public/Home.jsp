@@ -119,7 +119,8 @@
         </div>
     </div>
 </d:if>
-<div class="container product_carousel" id="newProductPartialRender">
+
+    <div class="container product_carousel" id="newProductPartialRender">
     <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -132,23 +133,26 @@
         <div class="carousel-inner" role="listbox">
             <div class="item active">
                 <div id="productListDiv"  class="row clearfix">
-                    <div class="container">
-                        <div class="col-md-4">
-                            <p>
-                                <label for="amount">Radious range:</label>
-                                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                            </p>
-                            <div id="slider-range"></div>
-                            <p class="help">Please Choose a radius</p>
+                    <d:if test="${showTopGallery}">
+                        <div class="container">
+                            <div class="col-md-4">
+                                <p>
+                                    <label for="radiusDistance">Radious range:</label>
+                                    <input type="text" id="radiusDistance" readonly style="border:0; color:#f6931f; font-weight:bold;"  > KM
+                                </p>
+                                <div id="slider-range"></div>
+                                <p class="help">Please Choose a radius</p>
+                            </div>
+                            <br><br><br>
                         </div>
-                        <br><br><br>
-                    </div>
+                    </d:if>
                     <jsp:directive.include file="../common/product/rental_product/rental_product_list.jsp" />
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <d:set var="loadMoreProductCssStr" value=""></d:set>
 <d:if test="${rentalProducts.size()==0}">
     <d:set var="loadMoreProductCssStr" value="none"></d:set>
