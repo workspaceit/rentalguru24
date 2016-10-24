@@ -31,7 +31,14 @@
                                     <d:forEach var="topProduct" items="${rentalProductsTop}">
                                         <div class="item ${topProductActive}">
                                             <d:set var="topProductActive" value="" />
-                                            <a href="${BaseUrl}/product/details/${topProduct.getId()}"><img src="<c:url value="${BaseUrl}/images/${topProduct.profileImage.original.path}" />" /></a>
+                                            <a href="${BaseUrl}/product/details/${topProduct.getId()}">
+                                                <d:if test="${topProduct.profileImage.original.path != null}">
+                                                    <img src="<c:url value="${BaseUrl}/images/${topProduct.profileImage.original.path}" />" />
+                                                </d:if>
+                                                <d:if test="${topProduct.profileImage.original.path == null}">
+                                                    <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" />
+                                                </d:if>
+                                            </a>
                                             <a href="javascript:void(0);"><div class="carousel-caption cap1">
                                                 <p onclick="showRentRequestPopUp(${topProduct.getId()})"><i class="fa fa-shopping-basket"></i> Rent Now </p>
                                             </div></a>
@@ -85,7 +92,14 @@
                                     <d:forEach var="topProduct" items="${rentalProductsTop}">
                                         <div class="item ${topProductImageActive}">
                                             <d:set var="topProductImageActive" value="" />
-                                            <a href="${BaseUrl}/product/details/${topProduct.getId()}"><img src="<c:url value="${BaseUrl}/images/${topProduct.profileImage.original.path}" />" /></a>
+                                            <a href="${BaseUrl}/product/details/${topProduct.getId()}">
+                                                <d:if test="${topProduct.profileImage.original.path != null}">
+                                                    <img src="<c:url value="${BaseUrl}/images/${topProduct.profileImage.original.path}" />" />
+                                                </d:if>
+                                                <d:if test="${topProduct.profileImage.original.path == null}">
+                                                    <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" />
+                                                </d:if>
+                                            </a>
                                         </div>
                                     </d:forEach>
                                 </div>

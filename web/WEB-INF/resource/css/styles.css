@@ -1563,13 +1563,14 @@ body {
 .theme-btn:hover{
     color: #fff;
     text-decoration: none;
+    border-color:#f7941e;
 }
 .theme-btn:hover::after {
     height: 230%;
     opacity: 1;
 }
 .btn-black::after {
-    background: #000;
+    background: #f7941e;
 }
 .theme-btn::after {
     content: '';
@@ -3098,7 +3099,8 @@ span.time_date {
 /*Social icon sign in*/
 
 .no-rating-label{
-    margin-bottom: 20px;
+    margin-bottom:0px;
+    line-height: 37px;
 }
 .single-item .panel-body{
     min-height: 388px;
@@ -3490,6 +3492,13 @@ element.style {
     }
     .single-item .panel-body {
         min-height: 315px;
+    }
+    .form-signup {
+        padding: 41px 5px;
+    }
+    .btn-cstm-sign{
+        width: 100%;
+        margin: 16px 0px;
     }
     /*.chzn-container{*/
         /*display: block;*/

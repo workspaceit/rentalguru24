@@ -1,9 +1,25 @@
+<div class="container">
+    <div class="col-md-4">
+        <p>
+            <label for="amount">Radious range:</label>
+            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        </p>
+        <div id="slider-range"></div>
+        <p class="help">Please Choose a radius</p>
+    </div>
+    <br><br><br>
+</div>
 <d:forEach var="rentalProduct" items="${rentalProducts}">
 <div class="col-md-3 single-item">
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="img-single prod-img">
-                <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" />
+                <d:if test="${rentalProduct.profileImage.original.path != null}">
+                    <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" />
+                </d:if>
+                <d:if test="${rentalProduct.profileImage.original.path == null}">
+                    <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" />
+                </d:if>
                 <a class="caption-link meta-icon" data-toggle="modal" data-target=".quickview-modal" href="javascript:void(0);" onclick="viewProductDetails(${rentalProduct.getId()})"> <span class="fa fa-eye"> </span> </a>
             </div>
             <div class="block-desc">
