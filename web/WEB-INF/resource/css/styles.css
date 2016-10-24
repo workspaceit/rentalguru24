@@ -1563,13 +1563,14 @@ body {
 .theme-btn:hover{
     color: #fff;
     text-decoration: none;
+    border-color:#f7941e;
 }
 .theme-btn:hover::after {
     height: 230%;
     opacity: 1;
 }
 .btn-black::after {
-    background: #000;
+    background: #f7941e;
 }
 .theme-btn::after {
     content: '';
@@ -3098,7 +3099,8 @@ span.time_date {
 /*Social icon sign in*/
 
 .no-rating-label{
-    margin-bottom: 20px;
+    margin-bottom:0px;
+    line-height: 37px;
 }
 .single-item .panel-body{
     min-height: 388px;
@@ -3307,14 +3309,53 @@ span.time_date {
     /*float: left;*/
     width: 85%;
 }
+.add-product{
+    position: fixed;
+    top:55px;
+    right: 9px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+    background: #e6a148;
+    font-weight: bold;
+    color: #fff;
+    z-index: 99;
+}
+.add-product:hover{
+    text-decoration: none;
+    color: #fff;
+}
+.add-product:before{
+    content: "Add Product";
+    font-size: 11px;
+    text-transform: uppercase;
+    position: absolute;
+    color: #fff;
+    width: 100%;
+    left: 0px;
+    top: 11px;
+}
+.add-product:hover{
+    background:#f3951b;
+}
+.add-product:active{
+    color: #fff;
+    outline: none;
+}
+.add-product:focus{
+    color: #fff;
+    outline: none;
+}
 
 
-:hov
+/*:hov
 
 .cls
 
 element.style {
-}
+}*/
 .easy-autocomplete input:hover, .easy-autocomplete input:focus {
     box-shadow: none;
 }
@@ -3363,7 +3404,7 @@ element.style {
         left: 0px;
     }
     .easy-autocomplete input{
-        padding-left: 70px !important;
+        padding-left: 80px !important;
     }
 
     .catagory_drop .caret{
@@ -3491,9 +3532,31 @@ element.style {
     .single-item .panel-body {
         min-height: 315px;
     }
+    .form-signup {
+        padding: 41px 5px;
+    }
+    .btn-cstm-sign{
+        width: 100%;
+        margin: 16px 0px;
+    }
     /*.chzn-container{*/
         /*display: block;*/
     /*}*/
+    .add-product{
+        top: auto;
+        bottom: 80px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        box-shadow:1px 1px 2px #6B6B6B;
+    }
+    .add-product i{
+        font-size: 22px;
+        line-height: 40px;
+    }
+    .add-product:before{
+        display: none;
+    }
 
 
 }

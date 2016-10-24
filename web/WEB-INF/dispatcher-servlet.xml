@@ -359,11 +359,11 @@
         </bean>
         <bean id="emailConfirmationModel" class="model.EmailConfirmationModel" parent="baseModel"   >
         </bean>
+
         <bean id="bannerImageModel" class="model.BannerImageModel" parent="baseModel"   >
         </bean>
-
-
-
+        <bean id="userAddressModel" class="model.UserAddressModel" parent="baseModel"   >
+        </bean>
 
 
 

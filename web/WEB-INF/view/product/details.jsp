@@ -32,10 +32,6 @@
         <div class="col-xs-12 col-md-6 col-sm-6">
           <div class="breadcrumb rent_page_bread">
             <ol class="breadcrumb">
-              <%--<d:if test="${rentalProduct.productCategories!=null && rentalProduct.productCategories.size()>0}" >--%>
-              <%--<li><a href="${BaseUrl}/home/category/${rentalProduct.productCategories.get(0).category.id}">${rentalProduct.productCategories.get(0).category.name}</a></li>--%>
-              <%--</d:if>--%>
-
               <ol class="breadcrumb">
                 <d:forEach var="breadCrumb" items="${breadCrumbStr}">
                   <li><a href="${breadCrumb.url}">${breadCrumb.text}</a></li>
@@ -54,54 +50,41 @@
           <div class="col-md-6 col-sm-6 col-xs-12">
             <!-- Zoom plugin -->
             <div class="easyzoom easyzoom--adjacent easyzoom--with-thumbnails">
+              <d:if test="${rentalProduct.profileImage.original.path != null}">
               <a href="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
                 <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" alt="" class="main_img" />
               </a>
+              </d:if>
+              <d:if test="${rentalProduct.profileImage.original.path == null}">
+              <a href="<c:url value="${BaseUrl}/resources/img/no_image.png" />">
+                <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" alt="" class="main_img" />
+              </a>
+              </d:if>
             </div>
 
             <ul class="thumbnails">
               <li>
+                <d:if test="${rentalProduct.profileImage.original.path != null}">
                 <a href="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" data-standard="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">
                   <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" alt=""  />
                 </a>
+                </d:if>
+                <d:if test="${rentalProduct.profileImage.original.path != null}">
+                <a href="<c:url value="${BaseUrl}/resources/img/no_image.png" />" data-standard="<c:url value="${BaseUrl}/images/no_image.png" />">
+                  <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" alt=""  />
+                </a>
+                </d:if>
               </li>
-              <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
-                <li>
-                  <a href="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />" data-standard="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">
-                    <img src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />" alt=""  />
-                  </a>
-                </li>
-              </d:forEach>
+              <d:if test="${rentalProduct.getOtherImages() != null}">
+                <d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">
+                  <li>
+                    <a href="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />" data-standard="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">
+                      <img src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />" alt=""  />
+                    </a>
+                  </li>
+                </d:forEach>
+              </d:if>
             </ul>
-            <!-- Zoom plugin -->
-            <%--<div>--%>
-              <%--<div id="slider" class="flexslider">--%>
-                <%--<ul class="slides">--%>
-                  <%--<li>--%>
-                    <%--<img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">--%>
-                  <%--</li>--%>
-                  <%--<d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">--%>
-                    <%--<li>--%>
-                      <%--<img class="cloudzoom" data-cloudzoom = "zoomImage: '${BaseUrl}/images/${productOtherImages.original.path}'"  src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />">--%>
-                    <%--</li>--%>
-                  <%--</d:forEach>--%>
-                  <%--<!-- items mirrored twice, total of 12 -->--%>
-                <%--</ul>--%>
-              <%--</div>--%>
-              <%--<div id="carousel" class="flexslider">--%>
-                <%--<ul class="slides">--%>
-                  <%--<li>--%>
-                    <%--<img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${rentalProduct.getProfileImage().original.path}" />">--%>
-                  <%--</li>--%>
-                  <%--<d:forEach var="productOtherImages" items="${rentalProduct.getOtherImages()}">--%>
-                    <%--<li>--%>
-                      <%--<img class="thumb_flex" src="<c:url value="${BaseUrl}/images/${productOtherImages.original.path}" />">--%>
-                    <%--</li>--%>
-                  <%--</d:forEach>--%>
-                  <%--<!-- items mirrored twice, total of 12 -->--%>
-                <%--</ul>--%>
-              <%--</div>--%>
-            <%--</div>--%>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-12 ">
             <div class="rent_product_info">
@@ -260,38 +243,42 @@
                 <div class="col-md-3 single-item">
                   <div class="panel panel-default">
                     <div class="panel-body">
-                      <div class="img-single">
-                        <a href="${BaseUrl}/product/details/${product.getId()}"><img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" /></a>
-                        <div class="product-btn-grp">
-                          <a href="#" class="gbtn left">Quick view</a>
-                          <a href="#" class="gbtn right">Rent Now</a>
-                        </div>
+                      <div class="img-single prod-img">
+                        <img src="<c:url value="${BaseUrl}/images/${product.profileImage.original.path}" />" />
+                        <a class="caption-link meta-icon" data-toggle="modal" data-target=".quickview-modal" href="javascript:void(0);" onclick="viewProductDetails(${product.getId()})"> <span class="fa fa-eye"> </span> </a>
                       </div>
                       <div class="block-desc">
                         <label class="title-label productName"><a href="${BaseUrl}/product/details/${product.getId()}">${fn:substring(product.name, 0, 20)}<d:if test="${fn:length(product.name)>20}">....</d:if></a></label>
-                        <br>
-                        <fieldset class="rating">
-                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${product.getId()}" name="rating${product.getId()}" value="5" />
-                          <label class = "full" for="star5_${product.getId()}" title="Awesome - 5 stars"></label>
-
-                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${product.getId()}" name="rating${product.getId()}" value="4" />
-                          <label class = "full" for="star4_${product.getId()}" title="Pretty good - 4 stars"></label>
-
-                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${product.getId()}" name="rating${product.getId()}" value="3" />
-                          <label  class = "full" for="star3_${product.getId()}" title="Meh - 3 stars"></label>
-
-                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${product.getId()}" name="rating${product.getId()}" value="2" />
-                          <label class = "full" for="star2_${product.getId()}" title="Kinda bad - 2 stars"></label>
-
-                          <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${product.getId()}" name="rating${product.getId()}" value="1" />
-                          <label class = "full" for="star1_${product.getId()}" title="Sucks big time - 1 star"></label>
-                        </fieldset>
-
                       </div>
                       <div class="block-action">
-                        <button class="btn-fav pull-left"><i class="fa fa-heart-o"></i></button>
-                        <button class="btn-compare pull-left"><i class="fa  fa-exchange"></i></button>
-                        <div class="price-tag">$${product.rentFee}</div>
+                        <d:if test="${product.averageRating != 0}">
+                          <fieldset class="rating ">
+                            <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '5'}">checked</d:if> type="radio" id="star5_${product.getId()}" name="rating${product.getId()}" value="5" />
+                            <label class = "full" for="star5_${product.getId()}" title="Awesome - 5 stars"></label>
+
+                            <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '4'}">checked</d:if> type="radio" id="star4_${product.getId()}" name="rating${product.getId()}" value="4" />
+                            <label class = "full" for="star4_${product.getId()}" title="Pretty good - 4 stars"></label>
+
+                            <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '3'}">checked</d:if> type="radio" id="star3_${product.getId()}" name="rating${product.getId()}" value="3" />
+                            <label  class = "full" for="star3_${product.getId()}" title="Meh - 3 stars"></label>
+
+                            <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '2'}">checked</d:if> type="radio" id="star2_${product.getId()}" name="rating${product.getId()}" value="2" />
+                            <label class = "full" for="star2_${product.getId()}" title="Kinda bad - 2 stars"></label>
+
+                            <input <d:if test="${fn:substringBefore(product.averageRating,'.') == '1'}">checked</d:if> type="radio" id="star1_${product.getId()}" name="rating${product.getId()}" value="1" />
+                            <label class = "full" for="star1_${product.getId()}" title="Sucks big time - 1 star"></label>
+                          </fieldset>
+                        </d:if>
+                        <d:if test="${product.averageRating == 0}">
+                          <label class="no-rating-label">Not rated yet</label>
+                        </d:if>
+                        <div class="price-tag">$${product.rentFee}/${product.rentType.name}</div>
+                      </div>
+                      <div class="block-inline">
+                        <ul class="prod-meta">
+                          <li class="pull-left"> <a href="${BaseUrl}/product/details/${product.getId()}" class="theme-btn btn-black pull-left">View Details </a> </li>
+                          <li class="pull-right"> <a href="javascript:void(0)" onclick="showRentRequestPopUp(${product.getId()})" class="theme-btn btn-black pull-right"> Rent Now </a> </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -304,6 +291,11 @@
     </div>
   </div>
 </div>
+
+<!--Quick view  Modal -->
+<jsp:directive.include file="../common/product/rental_product/quickView.jsp" />
+<!--Quick view  Modal end-->
+
 <!--Rent request form Modal -->
 <jsp:directive.include file="../modals/rent_request_modal.jsp" />
 

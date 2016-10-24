@@ -3,7 +3,12 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="img-single prod-img">
-                <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" />
+                <d:if test="${rentalProduct.profileImage.original.path != null}">
+                    <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" />
+                </d:if>
+                <d:if test="${rentalProduct.profileImage.original.path == null}">
+                    <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" />
+                </d:if>
                 <a class="caption-link meta-icon" data-toggle="modal" data-target=".quickview-modal" href="javascript:void(0);" onclick="viewProductDetails(${rentalProduct.getId()})"> <span class="fa fa-eye"> </span> </a>
             </div>
             <div class="block-desc">
