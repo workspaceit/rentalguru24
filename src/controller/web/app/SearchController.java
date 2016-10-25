@@ -84,7 +84,12 @@ public class SearchController {
 //        Category selectedCategory = (tempCat!=null)?tempCat.get():null;
 
             /* Getting from Database Fix the above code */
-        Category selectedCategory = categoryModel.getById(categoryId);
+
+        Category selectedCategory = null;
+
+        if(categoryId!=null){
+             selectedCategory = categoryModel.getById(categoryId);
+        }
         if(selectedCategory!=null){
             preSelectedCategoryName = selectedCategory.getName();
         }

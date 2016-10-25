@@ -123,10 +123,10 @@ public class HomeController {
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("rentalProductsTop",rentalProductsTop);
-        modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
-        modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
-        modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
-        modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
+//        modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
+//        modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
+//        modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
+//        modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
         return modelAndView;
     }
 
