@@ -100,11 +100,11 @@ public class HomeController {
             productListTitle = "Search result";
 
         }
-        List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
-        RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
-        RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
-        RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
-        RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
+//        List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
+//        RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
+//        RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
+//        RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
+//        RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
         List<BannerImage> bannerImageList = bannerImageModel.getAll();
 
@@ -119,7 +119,7 @@ public class HomeController {
         modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
         modelAndView.addObject("productListTitle",productListTitle);
         modelAndView.addObject("rentalProducts", rentalProducts);
-        modelAndView.addObject("productsAscending", rentalProductsAscending);
+     //   modelAndView.addObject("productsAscending", rentalProductsAscending);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("rentalProductsTop",rentalProductsTop);
