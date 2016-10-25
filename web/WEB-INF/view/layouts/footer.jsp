@@ -59,7 +59,7 @@
 <%--Developer Helpers --%>
 <script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
-
+<script src="<c:url value="/resources/developer/js/helper/UrlHelper.js" />" ></script>
 <%--Developer 3rd party Lib--%>
 <%--Doc http://blog.stevenlevithan.com/archives/date-time-format--%>
 <script src="<c:url value="/resources/developer/third_party/date.format.js" />" ></script>
@@ -415,10 +415,23 @@
    * https://jqueryui.com/slider/
   * */
   $( function() {
+    try{
+      var distanceStr =  getUrlParamsVal("distance");
+      var distance =  (distanceStr!="")?parseInt( distanceStr ):0;
+      distance = (distance>1200)?1200:distance;
+    }catch(ex){
+      console.log(ex.message)
+    }
+
     $( "#slider-range" ).slider({
       range: "min",
       min: 0,
       max: 1200,
+      value:distance,
+      create: function( event, ui ) {
+        console.log( $( "#radiusDistance" ));
+        $( "#radiusDistance" ).val(distance);
+      },
       slide: function( event, ui ) {
 
         $( "#radiusDistance" ).val(ui.value);
@@ -429,6 +442,6 @@
         searchByRange(ui.value);
       }
     });
-    $( "#radiusDistance" ).val(0 );
+
   } );
 </script>

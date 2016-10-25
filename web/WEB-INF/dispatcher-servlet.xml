@@ -104,9 +104,9 @@
                  <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
 
-           <!-- ********** Public search Rental product ************* -->
+           <!-- **********  Public search Rental product ************* -->
            <mvc:interceptor>
-               <mvc:mapping path="/api/search/**"/>
+               <mvc:mapping path="/search/**"/>
                <bean class="controller.interceptor.WebInterceptor"/>
            </mvc:interceptor>
 
@@ -192,7 +192,10 @@
                <mvc:mapping path="/api/rent-payment/**"/>
                <bean class="controller.interceptor.ServiceInterceptor"/>
            </mvc:interceptor>
-
+           <mvc:interceptor>
+               <mvc:mapping path="/api/search/**"/>
+               <bean class="controller.interceptor.ServiceInterceptor"/>
+           </mvc:interceptor>
 
 
 

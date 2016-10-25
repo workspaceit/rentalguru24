@@ -90,7 +90,15 @@ public class SearchService {
         } catch (UnsupportedEncodingException e) {
             serviceResponse.setRequestError("title","title is not in valid format");
         }
-
+        if(radius!=null){
+            if(lat==null || lng==null){
+                GeoIp geoIp = new GeoIpManager().getGeoIp(request);
+                if(geoIp!=null){
+                    lat = geoIp.getLatitude();
+                    lng = geoIp.getLongitude();
+                }
+            }
+        }
         limit=(limit > 10)?10:limit;
         List<RentalProduct> rentalProduct = productModel.getRentalProductForSearch(categoryId,title,lat,lng,radius,limit,offset);
         serviceResponse.setResponseData(rentalProduct,"No product found");

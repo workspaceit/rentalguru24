@@ -4,23 +4,18 @@ package controller.web.app;
 import helper.ServiceResponse;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
-import model.BannerImageModel;
 import model.CategoryModel;
 import model.ProductModel;
-import model.entity.BannerImage;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -31,17 +26,13 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping("/search")
+public class SearchController {
     @Autowired
     CategoryModel categoryModel;
 
     @Autowired
     ProductModel productModel;
-
-    @Autowired
-    BannerImageModel bannerImageModel;
-
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
                               @RequestParam(value = "title",required = false)String title,
@@ -54,7 +45,7 @@ public class HomeController {
 
         String baseUrl = (String) request.getAttribute("baseURL");
 
-        ModelAndView modelAndView = new ModelAndView("public/Home");
+        ModelAndView modelAndView = new ModelAndView("public/Search");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<RentalProduct> rentalProducts = new ArrayList<>();
         boolean showTopGallery = (title!=null&&title!="")?true:false;
@@ -80,7 +71,7 @@ public class HomeController {
                 }
 
             }else{
-                 rentalProducts = productModel.getRentalProductByTitle(title,8, 0);
+                 rentalProducts = productModel.getRentalProductByTitle(title, 8, 0);
                 System.out.println("geoIp is null");
              }
          }else{
@@ -106,13 +97,10 @@ public class HomeController {
         RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
         RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
-        List<BannerImage> bannerImageList = bannerImageModel.getAll();
-
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?";
         loadMoreProductUrl = (title!=null&&!title.equals(""))?loadMoreProductUrl+"title="+title:loadMoreProductUrl;
         String preSelectedCategoryName = "Select Category";
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
-        modelAndView.addObject("bannerImageList", bannerImageList);
         modelAndView.addObject("showTopGallery", showTopGallery);
         modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
         modelAndView.addObject("category", category);
@@ -146,7 +134,7 @@ public class HomeController {
         boolean showTopGallery = true;
         boolean clientFeedback = true;
 
-        ModelAndView modelAndView = new ModelAndView("public/Home");
+        ModelAndView modelAndView = new ModelAndView("public/Search");
         Category categorySelected = categoryModel.getById(categoryId);
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?categoryId="+categoryId;
         String preSelectedcategoryName = "Select a category";
