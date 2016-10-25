@@ -24,6 +24,9 @@
           <div class="col-xs-12">
             <div class="box">
               <div class="box-body">
+                <div class="alert alert-success bannerImageSuccess" hidden>
+                    Banner image uploaded successfully
+                </div>
                 <form role="form" onsubmit="return addBannerImage();">
                   <div class="form-group">
                     <label for="fallback">Add Banner Image</label>
@@ -31,10 +34,12 @@
                       Drop files here or click to upload.
                     </div>
                     <input id="bannerImageToken" hidden>
+                    <p class="help-block error-form" id="errorMsg_bannerImageToken"  ></p>
                   </div>
                   <div class="form-group">
                     <label for="url">Url</label>
                     <input name="url"  class="form-control" id="url" >
+                    <p class="help-block error-form" id="errorMsg_url"></p>
                   </div>
                   <div class="box-footer">
                     <button class="btn btn-primary" id="bannerImageButton">Upload</button>
@@ -67,14 +72,14 @@
       var previewTemplate = previewNode.parentNode.innerHTML;
       previewNode.parentNode.removeChild(previewNode);
       var bannerImage = $("div#fallback").dropzone(
-              { url: BASEURL+"/fileupload/upload/document-identity",
-                paramName: "documentIdentity",
+              { url: BASEURL+"/fileupload/upload/banner-image",
+                paramName: "bannerImage",
                 maxFilesize: 1,
                 previewTemplate: previewTemplate,
                 thumbnailWidth: 200,
                 thumbnailHeight: 200,
                 maxFiles: 1,
-                acceptedFiles: "image/jpeg,image/png",
+                acceptedFiles: "image/jpeg,image/png,image/jpg",
                 maxfilesexceeded: function(file) {
                   this.removeAllFiles();
                   this.addFile(file);
@@ -90,9 +95,28 @@
     <script>
 
       function addBannerImage(){
+        $("#bannerImageButton").attr("disabled","disabled");
         var bannerImageToken = $("#bannerImageToken").val();
         var url = $("#url").val();
-        console.log(bannerImageToken+"---"+url);
+        $.ajax({
+          type : "post",
+          url : BASEURL+"/admin-signin/banner-image/add-image",
+          data: {
+            bannerImageToken : bannerImageToken,
+            url : url
+          },
+          success: function(data){
+            if(data.responseStat.status == true){
+              $(".bannerImageSuccess").show().delay(5000).fadeOut(500,function(){
+                $("#bannerImageButton").removeAttr("disabled","disabled");
+                window.location.href = BASEURL+"/admin/user/add-banner-image";
+              });
+            }else{
+              BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
+              $("#bannerImageButton").removeAttr("disabled","disabled");
+            }
+          }
+        });
         return false;
       }
     </script>

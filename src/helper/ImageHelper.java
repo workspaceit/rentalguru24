@@ -19,7 +19,7 @@ public class ImageHelper {
       /* ------------------- Live server of client ----------------------------- */
     //@Value("${fileLocation.uploaded}")
 
-    private static String GLOBAL_PATH ="/home/rentguru24files/";
+//    private static String GLOBAL_PATH ="/home/rentguru24files/";
     /* ------------------- Develop ----------------------------- */
   //  private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
 
@@ -29,7 +29,7 @@ public class ImageHelper {
         /*------------------Local---------------------*/
    // private static String GLOBAL_PATH= "/home/mi/Projects/j2ee/rentguru24files/";
 
-   // private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
+    private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
 
     private static String DOC_FOLDER= "identityDoc/";
     private static String DOC_PATH= GLOBAL_PATH+DOC_FOLDER;
@@ -41,6 +41,8 @@ public class ImageHelper {
     private static String CATEGORY_PATH= GLOBAL_PATH+CATEGORY_FOLDER;
     private static String TEMP_FOLDER= "temp/";
     private static String TEMP_FILE_PATH= GLOBAL_PATH+TEMP_FOLDER;
+    private static String BANNER_IMAGE_FOLDER = "bannerImage/";
+    private static String BANNER_IMAGE_PATH= GLOBAL_PATH+BANNER_IMAGE_FOLDER;
 
 
 
@@ -147,6 +149,36 @@ public class ImageHelper {
             File docFile =new File(GLOBAL_PATH+oldPath);
 
             createDirIfNotExist(CATEGORY_PATH);
+
+            if(docFile.renameTo(new File(filePath))){
+                BufferedImage in = ImageIO.read(new File(filePath));
+
+                picture.getOriginal().setPath(fileName);
+                picture.getOriginal().getSize().setHeight(in.getHeight());
+                picture.getOriginal().getSize().setWidth(in.getWidth());
+                in.flush();
+
+            }else{
+                System.out.println("File is failed to move!"+filePath);
+            }
+            System.out.println(GLOBAL_PATH+oldPath);
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return picture;
+    }
+    public static Picture moveBannerImage(String oldPath){
+        String fileName = System.nanoTime()+"."+getExtension(oldPath);
+        String filePath = BANNER_IMAGE_PATH+fileName;
+        Picture picture = new Picture();
+        try{
+
+            File docFile =new File(GLOBAL_PATH+oldPath);
+
+            createDirIfNotExist(BANNER_IMAGE_PATH);
 
             if(docFile.renameTo(new File(filePath))){
                 BufferedImage in = ImageIO.read(new File(filePath));
