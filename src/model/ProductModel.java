@@ -451,29 +451,32 @@ public class ProductModel extends BaseModel {
         }
     }
     public List<RentalProduct> getRentalProductByDistance(String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
-        Session session = this.sessionFactory.openSession();
-
         List<Integer> locationIds =  this.getProductLocationByDistance(centerLatitude, centerLongitude, radius, limit, offset);
-        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+" TITLE : "+title);
+
+
+        Session session = this.sessionFactory.openSession();
+        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+" TITLE : "+title+" "+locationIds);
         if(locationIds==null || locationIds.size()==0){
             return new ArrayList<>();
         }
         try{
-            return session.createQuery("FROM RentalProductEntity rpe " +
-                    " where rpe.productLocation.id in (:productLocationIds) " +
-                    " AND rpe.name LIKE :title ")
+
+            return session.createQuery("FROM RentalProductEntity rpe  " +
+                    " where (  rpe.productLocation.id in (:productLocationIds) " +
+                    " AND lower(rpe.name) LIKE lower(:title) ) ")
                     .setParameterList("productLocationIds", locationIds)
-                    .setParameter("title", title)
+                    .setParameter("title", title+"%")
                     .list();
+
         }finally {
             session.close();
         }
 
     }
     public List<RentalProduct> getRentalProductByDistance(Integer categoryId,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
-        Session session = this.sessionFactory.openSession();
 
         List<Integer> locationIds =  this.getProductLocationByDistance(centerLatitude, centerLongitude, radius, limit, offset);
+        Session session = this.sessionFactory.openSession();
         System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+"  CAT: ");
         if(locationIds==null || locationIds.size()==0){
             return new ArrayList<>();
@@ -491,9 +494,9 @@ public class ProductModel extends BaseModel {
 
     }
     public List<RentalProduct> getRentalProductByDistance(Integer categoryId,String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
-        Session session = this.sessionFactory.openSession();
 
         List<Integer> locationIds =  this.getProductLocationByDistance(centerLatitude, centerLongitude, radius, limit, offset);
+        Session session = this.sessionFactory.openSession();
         System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+" TITLE AND CAT: "+title);
         if(locationIds==null || locationIds.size()==0){
             return new ArrayList<>();
@@ -505,7 +508,7 @@ public class ProductModel extends BaseModel {
                     " AND rpe.name LIKE :title ")
                     .setParameterList("productLocationIds", locationIds)
                     .setParameter("categoryId", categoryId)
-                    .setParameter("title", title)
+                    .setParameter("title", title+"%")
                     .list();
         }finally {
             session.close();
@@ -513,9 +516,10 @@ public class ProductModel extends BaseModel {
 
     }
     public List<RentalProduct> getRentalProductByDistance(double centerLatitude,double centerLongitude,float radius,int limit,int offset){
-        Session session = this.sessionFactory.openSession();
 
         List<Integer> locationIds =  this.getProductLocationByDistance(centerLatitude, centerLongitude, radius, limit, offset);
+
+        Session session = this.sessionFactory.openSession();
         if(locationIds==null || locationIds.size()==0){
             return new ArrayList<>();
         }
@@ -530,27 +534,35 @@ public class ProductModel extends BaseModel {
     }
 
 /*
+
     Here's the SQL statement that will find the closest 20 locations that are within a radius of 25 miles to the 37, -122 coordinate.
     It calculates the distance based on the latitude/longitude of that row
     and the target latitude/longitude, and then asks for only rows where the distance value is less than 25, orders the whole query by distance,
     and limits it to 20 results. To search by kilometers instead of miles, replace 3959 with 6371.
  */
+//    Hibernate search is not working thats'y below function is written
     private   List<Integer> getProductLocationByDistance(double centerLatitude, double centerLongitude, float radius, int limit, int offset){
         Session session = this.sessionFactory.openSession();
-        List<Integer> ids = session.createSQLQuery("SELECT  id " +
-                "FROM product_location " +
-                "where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
-                "sin(radians(lat))))  <=:radius ) " +
-                " LIMIT :offset , :limit ")
-                .setParameter("centerLatitude", centerLatitude)
-                .setParameter("centerLongitude",centerLongitude)
-                .setParameter("radius", radius)
-                .setParameter("offset",offset)
-                .setParameter("limit",limit)
-                .list();
+        try{
+            List<Integer> ids = session.createSQLQuery("SELECT  id " +
+                    "FROM product_location " +
+                    "where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
+                    "sin(radians(lat))))  <=:radius ) " +
+                    " LIMIT :offset , :limit ")
+                    .setParameter("centerLatitude", centerLatitude)
+                    .setParameter("centerLongitude",centerLongitude)
+                    .setParameter("radius", radius)
+                    .setParameter("offset",offset)
+                    .setParameter("limit",limit)
+                    .list();
+            return ids;
+        }finally {
+            session.close();
+        }
 
 
-        return ids;
+
+
     }
     public  List<RentalProduct> getRentalProductForSearch(Integer categoryId,String title,Double centerLatitude,Double centerLongitude,Float radius,int limit,int offset){
 
@@ -582,6 +594,11 @@ public class ProductModel extends BaseModel {
         }
         return this.getRentalProduct(limit, offset);
     }
+
+
+    //    Hibernate search spatial is not working
+
+
 //    private List<ProductLocation> getProductLocationByDistance(double centerLatitude,double centerLongitude,float radius,int offset,int limit){
 //        Session session = this.sessionFactory.openSession();
 //        FullTextSession fullTextSession =  Search.getFullTextSession(session);
