@@ -39,6 +39,7 @@ public class Scheduler {
         System.out.println("Size of Rent request "+pendingRentRequestList.size()+" MAX ID : "+maxRentRequestId);
 
         String requestIds = "";
+        int maxId =-1;
         for(RentRequest rentRequest : pendingRentRequestList){
             long h24 =  ((24 * 60) * 1000); // 24 Hours in nano sec
             Timestamp requestCreatedDate = rentRequest.getCreatedDate();
@@ -57,18 +58,26 @@ public class Scheduler {
 
                   /* For Cron Log */
                 requestIds+=" "+rentRequest.getId();
+                maxId = rentRequest.getId();
             }
         }
 
         if(pendingRentRequestList.size()>0){
 
             /*~~~~~~~~~~ Max Id Storing ~~~~~~~~~~~~~~~~~~ */
+            try{
+                if(maxId>0){
+                    RentRequest rentRequest = pendingRentRequestList.get(maxId);
+                    CronLastExecuted cronLastExecuted = new CronLastExecuted();
+                    cronLastExecuted.setRentRequestId(rentRequest.getId());
 
-            RentRequest rentRequest = pendingRentRequestList.get(pendingRentRequestList.size() - 1);
-            CronLastExecuted cronLastExecuted = new CronLastExecuted();
-            cronLastExecuted.setRentRequestId(rentRequest.getId());
+                    cronLastExecutedModel.saveOrUpdateMaxRentRequestId(cronLastExecuted);
+                }
+            }catch (Exception ex){
+                System.out.println("Exception caused by Max Id :"+maxId);
+            }
 
-            cronLastExecutedModel.saveOrUpdateMaxRentRequestId(cronLastExecuted);
+
         }
           /*~~~~~~~~~~ Cron Log ~~~~~~~~~~~~~~~~~~ */
         CronLog cronLog = new CronLog();

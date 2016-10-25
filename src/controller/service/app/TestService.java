@@ -61,7 +61,7 @@ public class TestService extends BaseService{
     @Autowired
     ProductRatingModel productRatingModel;
     @RequestMapping(value = "/test/radius", method = RequestMethod.POST)
-    public List<ProductLocation> getByRadius( @RequestParam double centralLatitude,
+    public List<RentalProduct> getByRadius( @RequestParam double centralLatitude,
                                               @RequestParam double centralLongitude,
                                               @RequestParam float radius,
                                               @RequestParam int limit,

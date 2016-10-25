@@ -73,13 +73,51 @@
 <script type="text/javascript" src="<c:url value="/resources/developer/js/nav/categoryNav.js"  />" ></script>
 
 <script>
+  function searchByRange(radiusDistance){
+    var latitude = null;
+    var longitude = null;
+
+    var x = document.getElementById("demo");
+    /* Get User current location */
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        latitude  = position.coords.latitude;
+        longitude  = position.coords.longitude;
+
+        searchByLatLng(radiusDistance,latitude,longitude);
+        console.log(position);
+      },function (error) {
+                if (error.code == error.PERMISSION_DENIED){
+                  searchByLatLng(radiusDistance,latitude,longitude);
+                }
+       }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+
+  }
+  function searchByLatLng(radiusDistance,latitude,longitude){
+    var productStr = $("#searchTxtBox").val();
+    var categorySelectedInSearch = $("#categorySelectedInSearch option:selected").val();
+    var url= "";
+    if(categorySelectedInSearch != ""){
+      url = BASEURL+"/home/category/"+categorySelectedInSearch+"?title="+productStr+"&distance="+radiusDistance;
+    }else{
+      url = BASEURL+"/home?title="+productStr+"&distance="+radiusDistance;
+    }
+    if(latitude!==null && longitude!==null){
+      url += "&lat="+latitude+"&lng="+longitude;
+    }
+    window.location = url;
+
+
+  }
   function doSearch(event){
     var char = event.which || event.keyCode;
-//    console.log(char);
     var productStr = $("#searchTxtBox").val();
-//    console.log(productStr);
     var categorySelectedInSearch = $("#categorySelectedInSearch option:selected").val();
-//    console.log(categorySelectedInSearch);
+
     if(char==13 && productStr!=null && productStr != ""){
       console.log("TIME TO GO");
       if(categorySelectedInSearch != ""){
@@ -380,10 +418,11 @@
       max: 1200,
       values: [ 0, 300 ],
       slide: function( event, ui ) {
-        $( "#amount" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        $( "#radiusDistance" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        searchByRange(ui.values[ 1 ]);
       }
     });
-    $( "#amount" ).val(  $( "#slider-range" ).slider( "values", 0 ) +
+    $( "#radiusDistance" ).val(  $( "#slider-range" ).slider( "values", 0 ) +
             " - " + $( "#slider-range" ).slider( "values", 1 ) );
   } );
 </script>

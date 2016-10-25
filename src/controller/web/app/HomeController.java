@@ -3,6 +3,7 @@ package controller.web.app;
 
 import helper.ServiceResponse;
 import library.ipGeoTracker.GeoIpManager;
+import library.ipGeoTracker.dataModel.GeoIp;
 import model.CategoryModel;
 import model.ProductModel;
 import model.entity.app.AppCredential;
@@ -36,7 +37,11 @@ public class HomeController {
     @Autowired
     ProductModel productModel;
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView index(HttpServletRequest request,@RequestParam(value = "title",required = false)String title) {
+    public ModelAndView index(HttpServletRequest request,
+                              @RequestParam(value = "title",required = false)String title,
+                              @RequestParam(value = "distance",required = false)Integer distance,
+                              @RequestParam(value = "lat",required = false)Double centralLatitude,
+                              @RequestParam(value = "lng",required = false)Double centralLongitude) {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
@@ -48,7 +53,35 @@ public class HomeController {
         List<RentalProduct> rentalProducts = new ArrayList<>();
         boolean showTopGallery = (title!=null&&title!="")?true:false;
 
-        rentalProducts = (title!=null&&title!="")?productModel.getProductByTitle(title,8,0):productModel.getRentalProduct(8, 0);
+         if(title!=null&&title!=""){
+            if(distance!=null&&distance>0){
+                GeoIp geoIp = new GeoIp();
+                if(centralLatitude==null || centralLongitude ==null ){
+                    GeoIpManager geoIpManager = new GeoIpManager();
+                    geoIp =geoIpManager.getGeoIp(request);
+
+                    centralLatitude = geoIp.getLatitude();
+                    centralLongitude = geoIp.getLongitude();
+
+                    System.out.println("From geoIp ");
+                }
+
+                if(geoIp!=null){
+                    rentalProducts = productModel.getRentalProductByDistance(centralLatitude,centralLongitude,distance,8,0);
+                }else{
+                    rentalProducts = productModel.getRentalProduct( 8, 0);
+                    System.out.println(geoIp);
+                }
+
+            }else{
+                 rentalProducts = productModel.getRentalProduct(8, 0);
+                System.out.println("geoIp is null");
+             }
+         }else{
+             rentalProducts = productModel.getRentalProduct(8, 0);
+         }
+
+
         List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
         String topRentalProductHeadTitle = "MOST RATED";
         if(rentalProductsTop==null || rentalProductsTop.size()==0){
@@ -91,8 +124,10 @@ public class HomeController {
     @RequestMapping(value = "/category/{categoryId}", method = RequestMethod.GET)
     public ModelAndView getProductByCategoryId(HttpServletRequest request,
                                                @PathVariable("categoryId") int categoryId,
-                                               @RequestParam(value = "title", required = false)
-                                                   final String title){
+                                               @RequestParam(value = "title", required = false)final String title,
+                                               @RequestParam(value = "distance",required = false)Integer distance,
+                                               @RequestParam(value = "lat",required = false)Double centralLatitude,
+                                               @RequestParam(value = "lng",required = false)Double centralLongitude){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
@@ -119,7 +154,30 @@ public class HomeController {
         if(title == null || title.isEmpty()){
             rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
         }else {
-            rentalProducts = productModel.getProductByCategoryIdTitle(categoryId,title,8,0);
+            if(distance!=null&&distance>0){
+                GeoIp geoIp = new GeoIp();
+                if(centralLatitude==null || centralLongitude ==null ){
+                    GeoIpManager geoIpManager = new GeoIpManager();
+                    geoIp =geoIpManager.getGeoIp(request);
+
+                    centralLatitude = geoIp.getLatitude();
+                    centralLongitude = geoIp.getLongitude();
+
+                    System.out.println("From geoIp ");
+                }
+
+                if(geoIp!=null){
+                    rentalProducts = productModel.getRentalProductByDistance(centralLatitude,centralLongitude,distance,8,0);
+                }else{
+                    rentalProducts = productModel.getRentalProduct( 8, 0);
+                    System.out.println(geoIp);
+                }
+
+            }else{
+                rentalProducts = productModel.getProductByCategoryIdTitle(categoryId,title,8,0);
+                System.out.println("geoIp is null");
+            }
+
             loadMoreProductUrl +="&title="+title;
         }
 
