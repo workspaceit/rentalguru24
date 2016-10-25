@@ -66,14 +66,8 @@
                                         </d:if>
                                         <div class="divider"></div>
                                         <div class="row option_but">
-                                            <div class="col-md-5 col-sm-5 col-xs-12">
-                                                    <%--<div class="option">--%>
-                                                    <%--<a href=""><i class="fa fa-heart"></i></a>--%>
-                                                            <%--<a href=""><i class="fa  fa-exchange"></i></a>--%>
-                                                            <%--</div>--%>
-                                            </div>
+                                            <div class="col-md-5 col-sm-5 col-xs-12"></div>
                                             <div class="col-md-7 col-sm-7 col-xs-12">
-                                                    <%--<label class="prev_price">$350</label>--%>
                                                 <div class="price-tag">$ ${topProduct.rentFee}/${topProduct.rentType.name}</div>
                                             </div>
                                         </div>
@@ -87,20 +81,20 @@
                     <div id="main-product" class="carousel slide main_product_slider" data-ride="carousel">
                         <!-- Wrapper for slides -->
                         <div  class="carousel-inner clearfix" role="listbox">
-                            <d:set var="topProductImageActive" value="active" />
-                            <d:forEach var="topProduct" items="${rentalProductsTop}">
-                                <div class="item ${topProductImageActive}">
-                                    <d:set var="topProductImageActive" value="" />
-                                    <a href="${BaseUrl}/product/details/${topProduct.getId()}">
-                                        <d:if test="${topProduct.profileImage.original.path != null}">
-                                            <img src="<c:url value="${BaseUrl}/images/${topProduct.profileImage.original.path}" />" />
-                                        </d:if>
-                                        <d:if test="${topProduct.profileImage.original.path == null}">
-                                            <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" />
-                                        </d:if>
-                                    </a>
-                                </div>
-                            </d:forEach>
+                            <d:if test="${bannerImageList != null}">
+                                <d:set var="bannerImageActive" value="active" />
+                                <d:forEach var="topProduct" items="${bannerImageList}">
+                                    <div class="item ${bannerImageActive}">
+                                        <d:set var="bannerImageActive" value="" />
+                                        <a href="<c:url value="${topProduct.getUrl()}"/>" target = "_blank">
+                                            <img src="<c:url value="${BaseUrl}/images/bannerImage/${topProduct.getImagePath()}" />" />
+                                        </a>
+                                    </div>
+                                </d:forEach>
+                            </d:if>
+                            <d:if test="${bannerImageList == null}">
+                                <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" />
+                            </d:if>
                         </div>
                         <!-- Controls -->
                         <a class="left carousel-control" href="#main-product" role="button" data-slide="prev">
@@ -117,6 +111,13 @@
         </div>
     </div>
 </d:if>
+
+<div class="container-fluid h-w-container">
+    <div class="container">
+        <h2 class="how_works_head">How it works</h2>
+        <img src="<c:url value="${BaseUrl}/resources/img/imgpsh_fullsize.png"  />" class="img-responsive" />
+    </div>
+</div>
 
     <div class="container product_carousel" id="newProductPartialRender">
     <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>

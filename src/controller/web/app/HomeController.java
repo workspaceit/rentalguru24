@@ -4,8 +4,10 @@ package controller.web.app;
 import helper.ServiceResponse;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
+import model.BannerImageModel;
 import model.CategoryModel;
 import model.ProductModel;
+import model.entity.BannerImage;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -36,6 +38,10 @@ public class HomeController {
 
     @Autowired
     ProductModel productModel;
+
+    @Autowired
+    BannerImageModel bannerImageModel;
+
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
                               @RequestParam(value = "title",required = false)String title,
@@ -100,10 +106,13 @@ public class HomeController {
         RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
         RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
+        List<BannerImage> bannerImageList = bannerImageModel.getAll();
+
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?";
         loadMoreProductUrl = (title!=null&&title!="")?loadMoreProductUrl+"title="+title:loadMoreProductUrl;
         String preSelectedCategoryName = "Select Category";
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
+        modelAndView.addObject("bannerImageList", bannerImageList);
         modelAndView.addObject("showTopGallery", showTopGallery);
         modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
         modelAndView.addObject("category", category);
