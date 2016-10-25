@@ -10,15 +10,12 @@ import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -29,8 +26,8 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("/home")
-public class HomeController {
+@RequestMapping("/search")
+public class SearchController {
     @Autowired
     CategoryModel categoryModel;
 
@@ -48,7 +45,7 @@ public class HomeController {
 
         String baseUrl = (String) request.getAttribute("baseURL");
 
-        ModelAndView modelAndView = new ModelAndView("public/Home");
+        ModelAndView modelAndView = new ModelAndView("public/Search");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<RentalProduct> rentalProducts = new ArrayList<>();
         boolean showTopGallery = (title!=null&&title!="")?true:false;
@@ -74,7 +71,7 @@ public class HomeController {
                 }
 
             }else{
-                 rentalProducts = productModel.getRentalProductByTitle(title,8, 0);
+                 rentalProducts = productModel.getRentalProductByTitle(title, 8, 0);
                 System.out.println("geoIp is null");
              }
          }else{
@@ -137,7 +134,7 @@ public class HomeController {
         boolean showTopGallery = true;
         boolean clientFeedback = true;
 
-        ModelAndView modelAndView = new ModelAndView("public/Home");
+        ModelAndView modelAndView = new ModelAndView("public/Search");
         Category categorySelected = categoryModel.getById(categoryId);
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?categoryId="+categoryId;
         String preSelectedcategoryName = "Select a category";
