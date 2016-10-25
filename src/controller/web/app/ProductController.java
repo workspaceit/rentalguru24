@@ -58,6 +58,8 @@ public class ProductController{
         ModelAndView modelAndView = new ModelAndView("/product/upload");
         List<RentType> rentTypes = rentTypeModel.getAll();
 
+        String preSelectedCategoryName = "Select Category";
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentTypes", rentTypes);
@@ -143,7 +145,8 @@ public class ProductController{
         }
 
         /*------------------------------------------*/
-
+        String preSelectedCategoryName = "Select Category";
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("rentTypes", rentTypes);
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentalProduct", rentalProduct);

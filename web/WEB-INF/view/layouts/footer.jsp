@@ -411,18 +411,24 @@
   });
 </script>
 <script>
+  /**
+   * https://jqueryui.com/slider/
+  * */
   $( function() {
     $( "#slider-range" ).slider({
-      range: true,
+      range: "min",
       min: 0,
       max: 1200,
-      values: [ 0, 300 ],
       slide: function( event, ui ) {
-        $( "#radiusDistance" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-        searchByRange(ui.values[ 1 ]);
+
+        $( "#radiusDistance" ).val(ui.value);
+
+      },
+      stop: function( event, ui ) {
+        $(this).slider( "disable" );
+        searchByRange(ui.value);
       }
     });
-    $( "#radiusDistance" ).val(  $( "#slider-range" ).slider( "values", 0 ) +
-            " - " + $( "#slider-range" ).slider( "values", 1 ) );
+    $( "#radiusDistance" ).val(0 );
   } );
 </script>

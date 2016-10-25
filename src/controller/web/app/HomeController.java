@@ -152,7 +152,7 @@ public class HomeController {
         List<RentalProduct> rentalProducts;
 
         if(title == null || title.isEmpty()){
-            rentalProducts = productModel.getProductByCategoryId(categoryId,8,0);
+            rentalProducts = productModel.getRentalProductByCategoryId(categoryId, 8, 0);
         }else {
             if(distance!=null&&distance>0){
                 GeoIp geoIp = new GeoIp();
@@ -174,7 +174,7 @@ public class HomeController {
                 }
 
             }else{
-                rentalProducts = productModel.getProductByCategoryIdTitle(categoryId,title,8,0);
+                rentalProducts = productModel.getRentalProductByCategoryIdTitle(categoryId, title, 8, 0);
                 System.out.println("geoIp is null");
             }
 
@@ -228,7 +228,7 @@ public class HomeController {
         else
             modelAndView.addObject("productListTitle","");
 
-        List rentalProduct = productModel.getProductByCategoryId(categoryId, 8, 0);
+        List rentalProduct = productModel.getRentalProductByCategoryId(categoryId, 8, 0);
         modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("rentalProducts",rentalProduct);
         return modelAndView;
@@ -254,15 +254,15 @@ public class HomeController {
 
         if(categoryId>0){
             if(title!=null && title!=""){
-                rentalProduct = productModel.getProductByCategoryIdTitle(categoryId, title, limit, offset);
+                rentalProduct = productModel.getRentalProductByCategoryIdTitle(categoryId, title, limit, offset);
                 System.out.println("title "+rentalProduct.size());
             }else{
-                rentalProduct = productModel.getProductByCategoryId(categoryId, limit, offset);
+                rentalProduct = productModel.getRentalProductByCategoryId(categoryId, limit, offset);
                 System.out.println("rentalProduct "+rentalProduct.size());
             }
         }else{
             if(title!=null && title!="") {
-                rentalProduct = productModel.getProductByTitle(title, limit, offset);
+                rentalProduct = productModel.getRentalProductByTitle(title, limit, offset);
                 System.out.println(" only title "+rentalProduct.size());
             }else {
                 rentalProduct = productModel.getRentalProduct(limit, offset);

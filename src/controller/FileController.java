@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.FileNameMap;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -74,8 +77,20 @@ public class FileController {
 
         model.entity.app.TempFile tempFile = new model.entity.app.TempFile();
         /*---------Content type validation -----------------*/
-        if(!documentContentTypeList.contains(file.getContentType())){
-            serviceResponse.setRequestError("documentIdentity", file.getContentType()+" not allowed");
+        String mimeType = file.getContentType();
+        if(mimeType==null || mimeType.equals("")){
+            mimeType =  URLConnection.guessContentTypeFromName(file.getOriginalFilename());
+            System.out.println("File Inf 02 " +file.getOriginalFilename()+" "+file.getSize()+" "+mimeType);
+        }
+        if(mimeType==null || mimeType.equals("")){
+            FileNameMap fileNameMap = URLConnection.getFileNameMap();
+            mimeType = fileNameMap.getContentTypeFor(file.getOriginalFilename());
+            System.out.println("File Inf 03 " +file.getOriginalFilename()+" "+file.getSize()+" "+mimeType);
+        }
+
+
+        if(!documentContentTypeList.contains(mimeType)){
+            serviceResponse.setRequestError("productImage"," Mime Type "+ mimeType+" not allowed");
             return serviceResponse;
         }
 
@@ -114,13 +129,31 @@ public class FileController {
 
 
         /*---------Content type validation -----------------*/
-        if(!productImgContentTypeList.contains(file.getContentType())){
-            serviceResponse.setRequestError("productImage", file.getContentType()+" not allowed");
+
+        String mimeType = file.getContentType();
+        if(mimeType==null || mimeType.equals("")){
+            mimeType =  URLConnection.guessContentTypeFromName(file.getOriginalFilename());
+            System.out.println("File Inf 02 " +file.getOriginalFilename()+" "+file.getSize()+" "+mimeType);
+        }
+        if(mimeType==null || mimeType.equals("")){
+            FileNameMap fileNameMap = URLConnection.getFileNameMap();
+            mimeType = fileNameMap.getContentTypeFor(file.getOriginalFilename());
+            System.out.println("File Inf 03 " +file.getOriginalFilename()+" "+file.getSize()+" "+mimeType);
+        }
+
+
+        if(!productImgContentTypeList.contains(mimeType)){
+            serviceResponse.setRequestError("productImage"," Mime Type "+ mimeType+" not allowed");
             return serviceResponse;
         }
 
 
+
+
+
+
         long fileSizeLimit = 2 *1024 *1024; // 2 MB
+
         if(file.getSize() > fileSizeLimit){
             serviceResponse.setRequestError("productImage", "Max file size 2 MB");
             return serviceResponse;
@@ -158,10 +191,23 @@ public class FileController {
 
 
         /*---------Only Doc type validation -----------------*/
-        if(!profileImgContentTypeList.contains(file.getContentType())){
-            serviceResponse.setRequestError("productImage", file.getContentType()+" not allowed");
+        String mimeType = file.getContentType();
+        if(mimeType==null || mimeType.equals("")){
+            mimeType =  URLConnection.guessContentTypeFromName(file.getOriginalFilename());
+            System.out.println("File Inf 02 " +file.getOriginalFilename()+" "+file.getSize()+" "+mimeType);
+        }
+        if(mimeType==null || mimeType.equals("")){
+            FileNameMap fileNameMap = URLConnection.getFileNameMap();
+            mimeType = fileNameMap.getContentTypeFor(file.getOriginalFilename());
+            System.out.println("File Inf 03 " + file.getOriginalFilename() + " " + file.getSize() + " " + mimeType);
+        }
+
+
+        if(!profileImgContentTypeList.contains(mimeType)){
+            serviceResponse.setRequestError("productImage"," Mime Type "+ mimeType+" not allowed");
             return serviceResponse;
         }
+
         try {
             byte[] fileByte = file.getBytes();
             System.out.println("Byte Received " +fileByte.length);
@@ -195,10 +241,23 @@ public class FileController {
 
 
         /*---------Content type validation -----------------*/
-        if(!productImgContentTypeList.contains(file.getContentType())){
-            serviceResponse.setRequestError("categoryImage", file.getContentType()+" not allowed");
+        String mimeType = file.getContentType();
+        if(mimeType==null || mimeType.equals("")){
+            mimeType =  URLConnection.guessContentTypeFromName(file.getOriginalFilename());
+            System.out.println("File Inf 02 " +file.getOriginalFilename()+" "+file.getSize()+" "+mimeType);
+        }
+        if(mimeType==null || mimeType.equals("")){
+            FileNameMap fileNameMap = URLConnection.getFileNameMap();
+            mimeType = fileNameMap.getContentTypeFor(file.getOriginalFilename());
+            System.out.println("File Inf 03 " + file.getOriginalFilename() + " " + file.getSize() + " " + mimeType);
+        }
+
+
+        if(!categoryImgContentTypeList.contains(mimeType)){
+            serviceResponse.setRequestError("productImage"," Mime Type "+ mimeType+" not allowed");
             return serviceResponse;
         }
+
 
 
         long fileSizeLimit = 2 *1024 *1024; // 2 MB

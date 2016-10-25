@@ -125,7 +125,7 @@ public class PublicProductService{
             title = title.trim();
         }
 
-        List<RentalProduct> rentalProduct = productModel.getProductByCategoryIdTitle(categoryId, title, limit, offset);
+        List<RentalProduct> rentalProduct = productModel.getRentalProductByCategoryIdTitle(categoryId, title, limit, offset);
 
         if(rentalProduct == null || rentalProduct.isEmpty()){
             serviceResponse.setRequestError("product","No product found by this name");
@@ -160,7 +160,7 @@ public class PublicProductService{
         int limit = Integer.parseInt(allRequestParameter.get("limit").trim());
         int offset = Integer.parseInt(allRequestParameter.get("offset").trim());
 
-        List<RentalProduct> rentalProduct = productModel.getProductByTitle(title, limit, offset);
+        List<RentalProduct> rentalProduct = productModel.getRentalProductByTitle(title, limit, offset);
 
         if(rentalProduct == null || rentalProduct.isEmpty()){
             serviceResponse.setRequestError("product","No product found by this name");
