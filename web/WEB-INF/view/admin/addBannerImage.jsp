@@ -109,7 +109,7 @@
             if(data.responseStat.status == true){
               $(".bannerImageSuccess").show().delay(5000).fadeOut(500,function(){
                 $("#bannerImageButton").removeAttr("disabled","disabled");
-                window.location.href = BASEURL+"/admin/user/add-banner-image";
+                window.location.href = BASEURL+"/admin/user/banner-image-list";
               });
             }else{
               BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
