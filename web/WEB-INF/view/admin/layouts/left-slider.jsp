@@ -110,6 +110,14 @@
           <li><a href="${BaseUrl}/admin/user/notification/global"><i class="fa fa-circle-o"></i>Global Notification List</a></li>
         </ul>
       </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-dashboard"></i> <span>Banner Image</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/user/add-banner-image"><i class="fa fa-circle-o"></i>Add Banner Image</a></li>
+        </ul>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->

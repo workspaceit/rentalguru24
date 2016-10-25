@@ -69,7 +69,7 @@
                   <img src="<c:url value="${BaseUrl}/images/${rentalProduct.profileImage.original.path}" />" alt=""  />
                 </a>
                 </d:if>
-                <d:if test="${rentalProduct.profileImage.original.path != null}">
+                <d:if test="${rentalProduct.profileImage.original.path == null}">
                 <a href="<c:url value="${BaseUrl}/resources/img/no_image.png" />" data-standard="<c:url value="${BaseUrl}/images/no_image.png" />">
                   <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" alt=""  />
                 </a>

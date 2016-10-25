@@ -17,7 +17,12 @@
                     <h3>Edit profile</h3>
                     <div class="col-md-3 profile-pic">
                         <div class="profile-pic-review">
-                            <img id="profileImage" src="${BaseUrl}/profile-image/${appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}" style="height: 178px; width: 200px;">
+                            <d:if test="${appCredential.getUserInf().getProfilePicture().getOriginal().getPath() != null}">
+                                <img id="profileImage" src="${BaseUrl}/profile-image/${appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}" style="height: 178px; width: 200px;">
+                            </d:if>
+                            <d:if test="${appCredential.getUserInf().getProfilePicture().getOriginal().getPath() == null}">
+                                <img src="${BaseUrl}/resources/img/no_image.png" alt=""  />
+                            </d:if>
                         </div>
                         <div class="form-group" style="margin-bottom:0px;">
                             <label for="fallback">Upload photo</label>

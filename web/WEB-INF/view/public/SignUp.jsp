@@ -208,12 +208,7 @@
         <div>
             <strong class="error text-danger" data-dz-errormessage></strong>
         </div>
-        <%--<div>--%>
-            <%--<p class="size" data-dz-size></p>--%>
-            <%--<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">--%>
-                <%--<div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
+
     </div>
 </div>
 <jsp:directive.include file="../layouts/top-footer.jsp" />

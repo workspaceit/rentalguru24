@@ -183,6 +183,7 @@ immediately after the control sidebar -->
 
 <!-- jQuery 2.1.4 -->
 <script src="<c:url value="/admin-resources/plugins/jQuery/jQuery-2.1.4.min.js" />"></script>
+<script src="<c:url value="/resources/js/dropzone.js" />" ></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="<c:url value="/admin-resources/bootstrap/js/bootstrap.min.js"/>"></script>
 <!-- DataTables -->
@@ -197,6 +198,7 @@ immediately after the control sidebar -->
 <!-- AdminLTE for demo purposes -->
 <script src="<c:url value="/admin-resources/dist/js/demo.js"/>"></script>
 <!-- page script -->
+
 <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
 <script src="<c:url value="/admin-resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"/>"></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
