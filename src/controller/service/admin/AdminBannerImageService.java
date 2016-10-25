@@ -5,14 +5,10 @@ import helper.ServiceResponse;
 import model.BannerImageModel;
 import model.TempFileModel;
 import model.entity.BannerImage;
-import model.entity.app.AppCredential;
 import model.entity.app.TempFile;
 import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -73,6 +69,24 @@ public class AdminBannerImageService {
 
         bannerImageModel.insert(bannerImage);
         serviceResponse.getResponseStat().setMsg("Banner image upload success");
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/delete-banner-image/{banner_image_id}", method = RequestMethod.POST)
+    public ServiceResponse deleteBannerImage(HttpServletRequest request, @PathVariable("banner_image_id") int bannerImageId){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        if(bannerImageId <= 0){
+            serviceResponse.setRequestError("bannerImageId", "Banner Image not found");
+            return serviceResponse;
+        }
+        BannerImage bannerImage = bannerImageModel.getById(bannerImageId);
+        if(bannerImage == null){
+            serviceResponse.setRequestError("banner", "Banner Image not found");
+            return serviceResponse;
+        }
+
+        bannerImageModel.delete(bannerImage);
+        serviceResponse.getResponseStat().setMsg("Banner delete successfully");
         return serviceResponse;
     }
 }

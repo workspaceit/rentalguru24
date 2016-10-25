@@ -4,6 +4,7 @@ import helper.ServiceResponse;
 import model.*;
 import model.admin.AdminPaypalCredentialModel;
 import model.admin.AdminSitesFeesModel;
+import model.entity.BannerImage;
 import model.entity.admin.*;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
@@ -48,6 +49,9 @@ public class AdminDashboardController {
 
     @Autowired
     RentInfModel rentInfModel;
+
+    @Autowired
+    BannerImageModel bannerImageModel;
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
@@ -334,6 +338,28 @@ public class AdminDashboardController {
         modelAndView.addObject("mainMenu", "Banner Image");
         modelAndView.addObject("subMenu", "Add Banner Image");
         modelAndView.addObject("pageUrl", "admin/user/add-banner-image");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/banner-image-list", method = RequestMethod.GET)
+    public ModelAndView getBannerImageList(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/bannerList");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        List<BannerImage> bannerImageList = bannerImageModel.getAll();
+
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("bannerImageList", bannerImageList);
+        modelAndView.addObject("PageTitle", "Banner Image List");
+        modelAndView.addObject("pageHeader", "Banner Image List");
+        modelAndView.addObject("mainMenu", "Banner Image");
+        modelAndView.addObject("subMenu", "Banner Image List");
+        modelAndView.addObject("pageUrl", "admin/user/banner-image-list");
         return modelAndView;
     }
 }

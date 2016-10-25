@@ -117,6 +117,9 @@
         <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/add-banner-image"><i class="fa fa-circle-o"></i>Add Banner Image</a></li>
         </ul>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/user/banner-image-list"><i class="fa fa-circle-o"></i>Banner Image List</a></li>
+        </ul>
       </li>
     </ul>
   </section>
