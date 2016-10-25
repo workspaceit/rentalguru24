@@ -2,6 +2,9 @@ package ConsoleTesting;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static java.lang.System.out;
 
 /**
@@ -9,15 +12,16 @@ import static java.lang.System.out;
  */
 public class Test {
     public static void main(String args[]){
-
+        HashMap<String,Object> params = new HashMap<>();
+        String prevClause = " where ";
+        params.put("title","assd");
+        params.put("categoryId",11D);
+        for(Map.Entry<String,Object> entry:params.entrySet()){
+            System.out.println( entry.getKey()+" "+entry.getValue());
+        }
 
     }
-    double CoordDistance(double latitude1, double longitude1, double latitude2, double longitude2)
-    {
-        return 6371 * Math.acos(
-                Math.sin(latitude1) * Math.sin(latitude2)
-                        + Math.cos(latitude1) * Math.cos(latitude2) * Math.cos(longitude2 - longitude1));
-    }
+
 }
 
 

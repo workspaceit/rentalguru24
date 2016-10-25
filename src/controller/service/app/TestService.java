@@ -2,22 +2,16 @@ package controller.service.app;
 
 
 import controller.service.BaseService;
-import helper.ServiceResponse;
 import library.RentGuruMail;
 import model.*;
 
-import model.entity.admin.AdminGlobalNotification;
-import model.entity.admin.AdminGlobalNotificationTemplate;
 import model.entity.app.*;
-import model.entity.app.product.iface.Product;
-import model.entity.app.product.rentable.ProductLocation;
 import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.*;
 
@@ -203,7 +197,7 @@ public class TestService extends BaseService{
 
     @RequestMapping(value = "/partial-rendering/category/{category_id}", method = RequestMethod.GET)
     public List<RentalProduct> getCategory(@PathVariable("category_id") int category_id){
-        List rentalProduct = productModel.getProductByCategoryId(category_id);
+        List rentalProduct = productModel.getRentalProductByCategoryId(category_id);
 
         return rentalProduct;
     }

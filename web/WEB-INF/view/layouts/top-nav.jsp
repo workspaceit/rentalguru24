@@ -1,3 +1,6 @@
+<d:if test="${IsLogIn != false}">
+  <a href="${BaseUrl}/product/upload" class="add-product "><i class="fa fa-plus visible-xs"></i></a>
+</d:if>
 <div class="container-fluid top_nav">
   <div class="row">
     <div class="container">

@@ -2,9 +2,7 @@
 <html lang="en">
 <jsp:directive.include file="../layouts/header.jsp" />
 <body class="ux">
-<d:if test="${IsLogIn != false}">
-    <a href="${BaseUrl}/product/upload" class="add-product "><i class="fa fa-plus visible-xs"></i></a>
-</d:if>
+
 <!--top Nav Bar-->
 <jsp:directive.include file="../layouts/top-nav.jsp" />
 <!--mid navbar-->
@@ -137,7 +135,7 @@
                         <div class="container">
                             <div class="col-md-4">
                                 <p>
-                                    <label for="radiusDistance">Radious range:</label>
+                                    <label for="radiusDistance">Radius range:</label>
                                     <input type="text" id="radiusDistance" readonly style="border:0; color:#f6931f; font-weight:bold;"  > KM
                                 </p>
                                 <div id="slider-range"></div>

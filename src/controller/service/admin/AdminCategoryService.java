@@ -197,13 +197,13 @@ public class AdminCategoryService {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         List<Category> categoryList = categoryModel.getByParentId(categoryId);
         for(Category category : categoryList){
-            List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(category.getId(),1,0);
+            List<RentalProduct> rentalProduct = productModel.getRentalProductByCategoryId(category.getId(), 1, 0);
             if(rentalProduct!=null && rentalProduct.size() > 0){
                 serviceResponse.setRequestError("categoryId", "Can not delete category, there is category \'"+category.getName()+"\' which has product");
                 return serviceResponse;
             }
             for(Category subCategory : category.getSubcategory()){
-                List<RentalProduct> rentalProductSub = productModel.getProductByCategoryId(subCategory.getId(),1,0);
+                List<RentalProduct> rentalProductSub = productModel.getRentalProductByCategoryId(subCategory.getId(), 1, 0);
                 if(rentalProductSub!=null && rentalProductSub.size() > 0){
                     serviceResponse.setRequestError("categoryId", "Can not delete category, there is subcategory \'"+subCategory.getName()+"\' which has product");
                     return serviceResponse;
@@ -216,7 +216,7 @@ public class AdminCategoryService {
                 serviceResponse.setRequestError("categoryId", "Category not found");
                 return serviceResponse;
             }
-            List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(category.getId(),1,0);
+            List<RentalProduct> rentalProduct = productModel.getRentalProductByCategoryId(category.getId(), 1, 0);
             if(rentalProduct!=null && rentalProduct.size() > 0){
                 serviceResponse.setRequestError("categoryId", "Can not delete category, there is category \'"+category.getName()+"\' which has product");
                 return serviceResponse;
@@ -237,7 +237,7 @@ public class AdminCategoryService {
             serviceResponse.setRequestError("subCategoryid", "Subcategory not found");
             return serviceResponse;
         }
-        List<RentalProduct> rentalProduct = productModel.getProductByCategoryId(subCategory.getId(),1,0);
+        List<RentalProduct> rentalProduct = productModel.getRentalProductByCategoryId(subCategory.getId(), 1, 0);
         if(rentalProduct!=null && rentalProduct.size() > 0){
             serviceResponse.setRequestError("subCategoryid", "Can not delete subcategory, there is subcategory \'"+subCategory.getName()+"\' which has product");
             return serviceResponse;

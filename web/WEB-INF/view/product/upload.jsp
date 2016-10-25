@@ -14,8 +14,12 @@
 <jsp:directive.include file="../layouts/header.jsp" />
 <body class="ux">
 <!--top Nav Bar-->
+<!--top Nav Bar-->
 <jsp:directive.include file="../layouts/top-nav.jsp" />
+<!--mid navbar-->
 <jsp:directive.include file="../layouts/mid-nav.jsp" />
+<!--main navbar-->
+<jsp:directive.include file="../layouts/main-nav.jsp" />
 
 <div class="parallax-window bg2" data-enllax-ratio="0.7">
   <div class="container title-block">

@@ -104,6 +104,11 @@
                  <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
 
+           <!-- ********** Public search Rental product ************* -->
+           <mvc:interceptor>
+               <mvc:mapping path="/api/search/**"/>
+               <bean class="controller.interceptor.WebInterceptor"/>
+           </mvc:interceptor>
 
               <!-- ******* Auth  Web page  ************-->
            <mvc:interceptor>
