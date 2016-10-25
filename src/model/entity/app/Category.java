@@ -115,4 +115,52 @@ public class Category {
         this.createdDate = createdDate;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parentId=" + parentId +
+                ", sortedOrder=" + sortedOrder +
+                ", picture=" + picture +
+                ", createdBy=" + createdBy +
+                ", isSubcategory=" + isSubcategory +
+                ", createdDate=" + createdDate +
+                ", subcategory=" + subcategory +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        if (id != category.id) return false;
+        if (sortedOrder != category.sortedOrder) return false;
+        if (createdBy != category.createdBy) return false;
+        if (isSubcategory != category.isSubcategory) return false;
+        if (name != null ? !name.equals(category.name) : category.name != null) return false;
+        if (parentId != null ? !parentId.equals(category.parentId) : category.parentId != null) return false;
+        if (picture != null ? !picture.equals(category.picture) : category.picture != null) return false;
+        if (createdDate != null ? !createdDate.equals(category.createdDate) : category.createdDate != null)
+            return false;
+        return !(subcategory != null ? !subcategory.equals(category.subcategory) : category.subcategory != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
+        result = 31 * result + sortedOrder;
+        result = 31 * result + (picture != null ? picture.hashCode() : 0);
+        result = 31 * result + createdBy;
+        result = 31 * result + (isSubcategory ? 1 : 0);
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        result = 31 * result + (subcategory != null ? subcategory.hashCode() : 0);
+        return result;
+    }
 }

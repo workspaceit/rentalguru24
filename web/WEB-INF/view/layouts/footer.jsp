@@ -102,9 +102,9 @@
     var categorySelectedInSearch = $("#categorySelectedInSearch option:selected").val();
     var url= "";
     if(categorySelectedInSearch != ""){
-      url = BASEURL+"/home/category/"+categorySelectedInSearch+"?title="+productStr+"&distance="+radiusDistance;
+      url = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr+"&distance="+radiusDistance;
     }else{
-      url = BASEURL+"/home?title="+productStr+"&distance="+radiusDistance;
+      url = BASEURL+"/search?title="+productStr+"&distance="+radiusDistance;
     }
     if(latitude!==null && longitude!==null){
       url += "&lat="+latitude+"&lng="+longitude;
@@ -121,9 +121,9 @@
     if(char==13 && productStr!=null && productStr != ""){
       console.log("TIME TO GO");
       if(categorySelectedInSearch != ""){
-       window.location = BASEURL+"/home/category/"+categorySelectedInSearch+"?title="+productStr;
+       window.location = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr;
       }else{
-        window.location = BASEURL+"/home?title="+productStr;
+        window.location = BASEURL+"/search?title="+productStr;
       }
     }
   }

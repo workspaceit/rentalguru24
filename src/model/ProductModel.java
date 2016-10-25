@@ -520,6 +520,7 @@ public class ProductModel extends BaseModel {
         List<Integer> locationIds =  this.getProductLocationByDistance(centerLatitude, centerLongitude, radius, limit, offset);
 
         Session session = this.sessionFactory.openSession();
+        System.out.println("locationIds "+locationIds);
         if(locationIds==null || locationIds.size()==0){
             return new ArrayList<>();
         }
@@ -573,12 +574,12 @@ public class ProductModel extends BaseModel {
 
             if(haveCategory && haveTitle ){
                 return this.getRentalProductByDistance(categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
-            }
-            if(haveCategory){
+            }else if(haveCategory){
                 return this.getRentalProductByDistance(categoryId,centerLatitude, centerLongitude, radius, limit, offset);
-            }
-            if(haveTitle) {
+            }else if(haveTitle) {
                 return this.getRentalProductByDistance(title, centerLatitude, centerLongitude, radius, limit, offset);
+            }else{
+                return this.getRentalProductByDistance(centerLatitude, centerLongitude, radius, limit, offset);
             }
 
         }
@@ -592,7 +593,7 @@ public class ProductModel extends BaseModel {
         if(haveTitle){
             return this.getRentalProductByTitle(title, limit, offset);
         }
-        return this.getRentalProduct(limit, offset);
+        return new ArrayList<>();
     }
 
 
