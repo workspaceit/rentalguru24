@@ -1,4 +1,4 @@
-package model.entity.admin;
+package model.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

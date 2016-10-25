@@ -317,4 +317,23 @@ public class AdminDashboardController {
         modelAndView.addObject("pageUrl", "admin/user/order-details/"+rentinfId);
         return modelAndView;
     }
+
+    @RequestMapping(value = "/add-banner-image", method = RequestMethod.GET)
+    public ModelAndView getAddBannerImage(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/addBannerImage");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("PageTitle", "Add Banner Image");
+        modelAndView.addObject("pageHeader", "Add Banner Image");
+        modelAndView.addObject("mainMenu", "Banner Image");
+        modelAndView.addObject("subMenu", "Add Banner Image");
+        modelAndView.addObject("pageUrl", "admin/user/add-banner-image");
+        return modelAndView;
+    }
 }
