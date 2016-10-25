@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * Created by mi on 10/24/16.
  */
 @Entity
-@Table(name = "banner_image", schema = "", catalog = "rentguru24")
+@Table(name = "banner_image", schema = "", catalog = "")
 public class BannerImage {
     private int id;
     private String imagePath;
