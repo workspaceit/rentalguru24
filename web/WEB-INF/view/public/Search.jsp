@@ -30,11 +30,9 @@
             <li data-target="#carousel-example-generic" data-slide-to="2"></li>
         </ol>
         <d:if test="${rentalProducts.size()!=0}">
-        <h2 class="search-head">${productListTitle}</h2>
+            <h2 class="search-head">${productListTitle}</h2>
         </d:if>
-        <d:if test="${rentalProducts.size()==0}">
-        <h2 class="search-head">No Product found</h2>
-        </d:if>
+
         <%--<h2 class="block-head">${productListTitle}</h2>--%>
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">

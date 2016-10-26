@@ -473,19 +473,16 @@ public class ProductModel extends BaseModel {
     }
     public List<RentalProduct> getRentalProductByDistance(Integer categoryId,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
 
-        List<Integer> locationIds =  this.getProductLocationByDistance(centerLatitude, centerLongitude, radius, limit, offset);
+        List<Integer> rentalProductIds =  this.getRentalProductIdByDistance(categoryId,centerLatitude, centerLongitude, radius, limit, offset);
         Session session = this.sessionFactory.openSession();
-        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+"  CAT: ");
-        if(locationIds==null || locationIds.size()==0){
+        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+"  CAT: "+rentalProductIds);
+        if(rentalProductIds==null || rentalProductIds.size()==0){
             return new ArrayList<>();
         }
         try{
             return session.createQuery("FROM RentalProductEntity rpe JOIN fetch rpe.productCategories productCategories " +
-                    " where rpe.productLocation.id in (:productLocationIds) " +
-                    " AND productCategories.category.id=:categoryId " +
-                    " AND rpe.reviewStatus = true ")
-                    .setParameterList("productLocationIds", locationIds)
-                    .setParameter("categoryId", categoryId)
+                    " where rpe.id in (:rentalProductIds) ")
+                    .setParameterList("rentalProductIds", rentalProductIds)
                     .list();
         }finally {
             session.close();
@@ -494,21 +491,16 @@ public class ProductModel extends BaseModel {
     }
     public List<RentalProduct> getRentalProductByDistance(Integer categoryId,String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
 
-        List<Integer> locationIds =  this.getRentalProductIdByDistance(categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
+        List<Integer> rentalProductIds =  this.getRentalProductIdByDistance(categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
         Session session = this.sessionFactory.openSession();
-        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+" TITLE AND CAT: "+title);
-        if(locationIds==null || locationIds.size()==0){
+        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+" TITLE AND CAT: "+title+rentalProductIds);
+        if(rentalProductIds==null || rentalProductIds.size()==0){
             return new ArrayList<>();
         }
         try{
-            return session.createQuery("FROM RentalProductEntity rpe JOIN fetch rpe.productCategories productCategories " +
-                    " where rpe.productLocation.id in (:productLocationIds) " +
-                    " AND productCategories.category.id=:categoryId " +
-                    " AND rpe.name LIKE :title " +
-                    " AND rpe.reviewStatus = true ")
-                    .setParameterList("productLocationIds", locationIds)
-                    .setParameter("categoryId", categoryId)
-                    .setParameter("title", title + "%")
+            return session.createQuery("FROM RentalProductEntity " +
+                    " where id in (:rentalProductIds) ")
+                    .setParameterList("rentalProductIds", rentalProductIds)
                     .list();
         }finally {
             session.close();
@@ -525,7 +517,8 @@ public class ProductModel extends BaseModel {
             return new ArrayList<>();
         }
         try{
-            return session.createQuery("FROM RentalProductEntity where productLocation.id in (:productLocationIds) " +
+            return session.createQuery("FROM RentalProductEntity " +
+                    " where productLocation.id in (:productLocationIds) " +
                     " AND reviewStatus = true ")
                     .setParameterList("productLocationIds", locationIds)
                     .list();
@@ -569,7 +562,8 @@ public class ProductModel extends BaseModel {
                     "FROM product_location " +
                     " JOIN product on  product_location.product_id = product.id " +
                     " where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
-                    " sin(radians(lat))))  <=:radius ) and review_status = 1 and product.name like :title "+
+                    " sin(radians(lat))))  <=:radius ) " +
+                    " and product.review_status = 1 and product.name like :title "+
                     " LIMIT :offset , :limit ")
                     .setParameter("title", "%" + title+"%")
                     .setParameter("centerLatitude", centerLatitude)
@@ -589,12 +583,12 @@ public class ProductModel extends BaseModel {
             List<Integer> ids = session.createSQLQuery("SELECT  product.id " +
                     "FROM product_location " +
                     " JOIN product on  product_location.product_id = product.id " +
-                    " JOIN product_category on product_location.product_id = product_category.product_id " +
+                    " JOIN product_category on product.id = product_category.product_id " +
                     " where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
                     " sin(radians(lat))))  <=:radius ) " +
-                    " and review_status = 1 " +
+                    " and product.review_status = 1 " +
+                    " and product_category.category_id = :categoryId" +
                     " and product.name like :title " +
-                    " and product_category.id=:categoryId" +
                     " LIMIT :offset , :limit ")
                     .setParameter("title", "%"+title+"%")
                     .setParameter("centerLatitude", centerLatitude)
@@ -614,11 +608,12 @@ public class ProductModel extends BaseModel {
         try{
             List<Integer> ids = session.createSQLQuery("SELECT  product.id " +
                     "FROM product_location " +
-                    " JOIN product_category on product_location.product_id = product_category.product_id " +
+                    " JOIN product on  product_location.product_id = product.id " +
+                    " JOIN product_category on product.id = product_category.product_id " +
                     " where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
                     " sin(radians(lat))))  <=:radius ) " +
-                    " and review_status = 1 " +
-                    " and product_category.id=:categoryId"+
+                    " and product.review_status = 1 " +
+                    " and product_category.category_id=:categoryId"+
                     " LIMIT :offset , :limit ")
                     .setParameter("centerLatitude", centerLatitude)
                     .setParameter("centerLongitude",centerLongitude)
