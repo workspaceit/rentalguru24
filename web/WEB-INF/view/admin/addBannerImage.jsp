@@ -38,7 +38,7 @@
                   </div>
                   <div class="form-group">
                     <label for="url">Url</label>
-                    <input name="url"  class="form-control" id="url" >
+                    <input name="url"  class="form-control" id="url" value="http://">
                     <p class="help-block error-form" id="errorMsg_url"></p>
                   </div>
                   <div class="box-footer">
