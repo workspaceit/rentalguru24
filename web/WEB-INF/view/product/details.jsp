@@ -124,8 +124,8 @@
                   </div>
                 </div>
                 <div class="col-md-4 col-xs-4 col-sm-4 text-right right">
-                  <button class="prev_next_rent_btn prev"><i class="fa fa-chevron-left"></i></button>
-                  <button class="prev_next_rent_btn next"><i class="fa fa-chevron-right"></i></button>
+                  <%--<button class="prev_next_rent_btn prev"><i class="fa fa-chevron-left"></i></button>--%>
+                  <%--<button class="prev_next_rent_btn next"><i class="fa fa-chevron-right"></i></button>--%>
                 </div>
               </div>
             </div>

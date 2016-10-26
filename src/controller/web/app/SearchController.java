@@ -2,6 +2,7 @@ package controller.web.app;
 
 
 import helper.ServiceResponse;
+import helper.UrlHelper;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.CategoryModel;
@@ -94,8 +95,7 @@ public class SearchController {
             preSelectedCategoryName = selectedCategory.getName();
         }
 
-        String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?";
-        loadMoreProductUrl = (title!=null&&!title.equals(""))?loadMoreProductUrl+"title="+title:loadMoreProductUrl;
+        String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product"+ UrlHelper.getLoadMoreUrlParams(title,categoryId,lat,lng,radius);
 
         modelAndView.addObject("selectedCategoryId", categoryId);
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);

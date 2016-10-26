@@ -101,11 +101,13 @@
     var productStr = $("#searchTxtBox").val();
     var categorySelectedInSearch = $("#categorySelectedInSearch option:selected").val();
     var url= "";
+
     if(categorySelectedInSearch != ""){
-      url = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr+"&distance="+radiusDistance;
+      url = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr+"&radius="+radiusDistance;
     }else{
-      url = BASEURL+"/search?title="+productStr+"&distance="+radiusDistance;
+      url = BASEURL+"/search?title="+productStr+"&radius="+radiusDistance;
     }
+
     if(latitude!==null && longitude!==null){
       url += "&lat="+latitude+"&lng="+longitude;
     }
@@ -415,12 +417,15 @@
    * https://jqueryui.com/slider/
   * */
   $( function() {
+    var distance = 0;
     try{
-      var distanceStr =  getUrlParamsVal("distance");
-      var distance =  (distanceStr!="")?parseInt( distanceStr ):0;
+      var distanceStr =  getUrlParamsVal("radius");
+      distance =  (distanceStr!="")?parseInt( distanceStr ):0;
+      distance = (isNaN(distance))?0:distance;
       distance = (distance>1200)?1200:distance;
     }catch(ex){
       console.log(ex.message)
+      distance = 0;
     }
 
     $( "#slider-range" ).slider({

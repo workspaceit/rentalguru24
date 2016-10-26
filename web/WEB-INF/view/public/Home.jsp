@@ -10,7 +10,7 @@
 <!--main navbar-->
 <jsp:directive.include file="../layouts/main-nav.jsp" />
 <!--body content-->
-<d:if test="${!showTopGallery}">
+
     <div class="home_slider">
         <div class="container">
             <div class="row">
@@ -110,7 +110,7 @@
             </div>
         </div>
     </div>
-</d:if>
+
 
 <div class="container-fluid h-w-container">
     <div class="container">

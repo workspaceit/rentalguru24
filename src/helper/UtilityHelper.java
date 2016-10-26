@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * Created by omar on 9/3/16.
  */
-public class UtilituHelper {
+public class UtilityHelper {
     public static String getRandomNumber(){
         Random rnd = new Random();
         int n = 1000 + rnd.nextInt(900000);
@@ -37,5 +37,6 @@ public class UtilituHelper {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
+
 
 }

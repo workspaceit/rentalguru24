@@ -1,6 +1,6 @@
 package validator.form.class_file;
 
-import helper.UtilituHelper;
+import helper.UtilityHelper;
 
 import java.util.Arrays;
 
@@ -166,7 +166,7 @@ public class ProductUploadForm {
     }
 
     public Double getLat() {
-        return (lat!=null)?UtilituHelper.round(lat,13):null;
+        return (lat!=null)? UtilityHelper.round(lat, 13):null;
     }
 
     public void setLat(Double lat) {
@@ -174,7 +174,7 @@ public class ProductUploadForm {
     }
 
     public Double getLng() {
-        return (lng!=null)?UtilituHelper.round(lng,13):null;
+        return (lng!=null)? UtilityHelper.round(lng, 13):null;
     }
 
     public void setLng(Double lng) {

@@ -1,9 +1,7 @@
 package model;
 
-import helper.UtilituHelper;
-import model.entity.app.AppCredential;
+import helper.UtilityHelper;
 import model.entity.app.EmailConfirmation;
-import model.entity.app.IdentityType;
 import org.hibernate.Session;
 
 /**
@@ -21,10 +19,10 @@ public class EmailConfirmationModel extends BaseModel {
         session.beginTransaction();
 
         String email = emailConfirmation.getAppCredential().getEmail();
-        String randomText = UtilituHelper.getRandomNumber(6);
+        String randomText = UtilityHelper.getRandomNumber(6);
 
 
-        emailConfirmation.setToken(UtilituHelper.getMD5Text(email+randomText));
+        emailConfirmation.setToken(UtilityHelper.getMD5Text(email + randomText));
 
         session.save(emailConfirmation);
         session.getTransaction().commit();

@@ -3,7 +3,7 @@ package controller.service.app;
 
 import helper.MailHelper;
 import helper.ServiceResponse;
-import helper.UtilituHelper;
+import helper.UtilityHelper;
 import model.AppLoginCredentialModel;
 import model.PasswordResetModel;
 import model.entity.app.AppCredential;
@@ -49,7 +49,7 @@ public class PasswordResetService{
         }
 
         Boolean isExist = passwordResetModel.isExist(appCredential.getId());
-        String token = appLoginCredentialModel.getPasswordAsMd5DigestAsHex(email + UtilituHelper.getRandomNumber());
+        String token = appLoginCredentialModel.getPasswordAsMd5DigestAsHex(email + UtilityHelper.getRandomNumber());
         if(isExist){
             PasswordResetsEntity passwordResetsEntity = passwordResetModel.getByAppCredentialId(appCredential.getId());
             passwordResetModel.delete(passwordResetsEntity);
