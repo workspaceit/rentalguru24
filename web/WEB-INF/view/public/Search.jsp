@@ -11,8 +11,17 @@
 <jsp:directive.include file="../layouts/main-nav.jsp" />
 <!--body content-->
 
+    <div class="container">
+        <div class="col-md-6 center-block-slider">
+            <p class="radius-block">
+                <input type="text" class="range-number" id="radiusDistance" readonly  style="border:0; color:#f6931f; font-weight:bold;"> KM
+            </p>
+            <div id="slider-range"></div>
+            <p class="help">**Please Choose a radius for finding the nearest available products</p>
+        </div>
+    </div>
 
-    <div class="container product_carousel" id="newProductPartialRender">
+    <div class="container product_carousel search-carousel" id="newProductPartialRender">
     <div id="carousel-example-generic" class="carousel slide carousel-cstm" data-ride="carousel" data-interval='false'>
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -20,22 +29,31 @@
             <li data-target="#carousel-example-generic" data-slide-to="1"></li>
             <li data-target="#carousel-example-generic" data-slide-to="2"></li>
         </ol>
-        <h2 class="block-head">${productListTitle}</h2>
+        <d:if test="${rentalProducts.size()!=0}">
+        <h2 class="search-head">${productListTitle}</h2>
+        </d:if>
+        <d:if test="${rentalProducts.size()==0}">
+        <h2 class="search-head">No Product found</h2>
+        </d:if>
+        <%--<h2 class="block-head">${productListTitle}</h2>--%>
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
                 <div id="productListDiv"  class="row clearfix">
-                    <div class="container">
-                        <div class="col-md-4">
-                            <p>
-                                <label for="radiusDistance">Radius range:</label>
-                                <input type="text" id="radiusDistance" readonly style="border:0; color:#f6931f; font-weight:bold;"  > KM
-                            </p>
-                            <div id="slider-range"></div>
-                            <p class="help">Please Choose a radius</p>
-                        </div>
-                        <br><br><br>
-                    </div>
+                    <%--<div class="container">--%>
+                        <%--<div class="col-md-4">--%>
+                            <%--<p>--%>
+                                <%--<label for="radiusDistance">Radius range:</label>--%>
+                                <%--<input type="text" id="radiusDistance" readonly style="border:0; color:#f6931f; font-weight:bold;"  > KM--%>
+                            <%--</p>--%>
+                            <%--<div id="slider-range"></div>--%>
+                            <%--<p class="help">Please Choose a radius</p>--%>
+                        <%--</div>--%>
+                        <%--<br><br><br>--%>
+                    <%--</div>--%>
+
+
+
                     <jsp:directive.include file="../common/product/rental_product/rental_product_list.jsp" />
                 </div>
             </div>

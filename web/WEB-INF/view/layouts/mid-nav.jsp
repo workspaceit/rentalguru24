@@ -2,19 +2,16 @@
   <div class="row">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-6">
+        <div class="col-md-4 col-sm-6 col-xs-6">
           <ul class="mid_nav_logo_ul no-margin">
             <li class="logo_li">
               <a href="${BaseUrl}/home"><img src="<c:url value="/resources/img/logo.gif" />" ></a>
             </li>
           </ul>
         </div>
-        <%--Search Box--%>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-          <div class="search-top">
-            <input placeholder="Search" class="search-per" name="searchTxtBox" id="searchTxtBox" type="text" onkeypress="doSearch(event)" <d:if test="${param.title != null}">value="${param.title}"</d:if>/>
-            <span><i class="fa fa-search"></i></span>
-            <select class="drop-cat-main" id="categorySelectedInSearch">
+        <div class="col-md-8 col-sm-8 col-xs-12 top-seach-bar">
+          <div class="search-category col-md-4 col-md-offset-2">
+            <select class="form-control" id="categorySelectedInSearch">
               <option class="category" value="">All</option>
               <d:forEach var="listValue" items="${category}" >
                 <option categoryId="${listValue.id}" value="${listValue.id}" <d:if test="${selectedCategoryId == listValue.id}">selected</d:if> class="category developerCategoryAnchore" id="subCategoryOf_${listValue.id}">${listValue.name}</option>
@@ -23,14 +20,10 @@
                 </d:forEach>
               </d:forEach>
             </select>
-
-            <%--<option class="category" value="" disabled selected>Choose Category</option>--%>
-            <%--<d:forEach var="listValue" items="${category}" >--%>
-              <%--<option categoryId="${listValue.id}" value="${listValue.id}" class="category developerCategoryAnchore" id="subCategoryOf_${listValue.id}">${listValue.name}</option>--%>
-              <%--<d:forEach var="subcategory" items="${listValue.subcategory}">--%>
-                <%--<option class="item" value="${subcategory.id}">${subcategory.name}</option>--%>
-              <%--</d:forEach>--%>
-            <%--</d:forEach>--%>
+          </div>
+          <div class="search-top col-md-6">
+            <input placeholder="Search" class="search-per" name="searchTxtBox" id="searchTxtBox" type="text" onkeypress="doSearch(event)" <d:if test="${param.title != null}">value="${param.title}"</d:if>/>
+            <span><i class="fa fa-search"></i></span>
           </div>
         </div>
       </div>

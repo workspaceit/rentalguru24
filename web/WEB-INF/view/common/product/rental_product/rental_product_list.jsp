@@ -48,10 +48,10 @@
     </div>
 </div>
 </d:forEach>
-<d:if test="${rentalProducts.size()==0}">
-    <div class="col-md-12 text-center developer-no-product-found">
-        <p>No Product found</p>
-    </div>
-</d:if>
+<%--<d:if test="${rentalProducts.size()==0}">--%>
+    <%--<div class="col-md-12 text-center developer-no-product-found">--%>
+        <%--<p>No Product found</p>--%>
+    <%--</div>--%>
+<%--</d:if>--%>
 
 
