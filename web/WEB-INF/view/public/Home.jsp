@@ -87,7 +87,7 @@
                                     <div class="item ${bannerImageActive}">
                                         <d:set var="bannerImageActive" value="" />
                                         <a href="<c:url value="${topProduct.getUrl()}"/>" target = "_blank">
-                                            <img src="<c:url value="${BaseUrl}/images/bannerImage/${topProduct.getImagePath()}" />" />
+                                            <img src="<c:url value="${BaseUrl}/images-banner/${topProduct.getImagePath()}" />" />
                                         </a>
                                     </div>
                                 </d:forEach>

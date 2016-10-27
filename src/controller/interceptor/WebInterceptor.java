@@ -48,11 +48,12 @@ public class WebInterceptor extends HandlerInterceptorAdapter{
             appCredential =(AppCredential) httpSession.getAttribute("appCredential");
 
         }
-
-
-        request.setAttribute("category",categoryModel.getAll());
+        Boolean isLogin = serviceResponse.getResponseStat().getIsLogin();
+        request.setAttribute("isLogin",isLogin);
+        request.setAttribute("preSelectedCategoryName","Select a category");
+        request.setAttribute("category", categoryModel.getAll());
         request.setAttribute("cmsPages",adminCmsPageModel.getAll());
-        request.setAttribute("baseURL", this.baseURL);
+        request.setAttribute("BaseUrl", this.baseURL);
         request.setAttribute("serviceResponse", serviceResponse);
         request.setAttribute("appCredential", appCredential);
         return true;

@@ -19,10 +19,8 @@ public class PasswordResetController {
     public ModelAndView getPasswordReset(HttpServletRequest request){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-        if(IsLogin != true){
+        if(!IsLogin){
             ModelAndView modelAndView = new ModelAndView("public/password-reset");
-            String baseUrl = (String) request.getAttribute("baseURL");
-            modelAndView.addObject("BaseUrl",baseUrl);
             return modelAndView;
         }else{
             return new ModelAndView("redirect:/home");
@@ -33,11 +31,9 @@ public class PasswordResetController {
     public ModelAndView getChangePassword(HttpServletRequest request, @PathVariable("token") String token){
         ServiceResponse serviceResponse = (ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-        if(IsLogin != true){
-            ModelAndView modelAndView = new ModelAndView("public/changePassword");
-            String baseUrl = (String) request.getAttribute("baseURL");
+        if(!IsLogin){
+            ModelAndView modelAndView = new ModelAndView("public/change-password");
             modelAndView.addObject("token", token);
-            modelAndView.addObject("BaseUrl",baseUrl);
             return modelAndView;
         }else{
             return new ModelAndView("redirect:/home");

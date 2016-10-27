@@ -49,7 +49,7 @@ public class MailHelper {
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(to));
             message.setSubject("Password Reset");
-            message.setText("Hi,<br>   Please click this link " + link + " to reset your password",null,"html");
+            message.setText("Hi,<br>   Please click this link " + link + " to reset your password <br> For app user use this token :<b>"+activationCode+"<b>",null,"html");
             Transport.send(message);
             String title = "";
             String body = "";

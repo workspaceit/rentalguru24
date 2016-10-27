@@ -55,8 +55,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "User Dashboard");
         modelAndView.addObject("appCredential", appCredential);
         return modelAndView;
@@ -75,8 +75,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Product");
         modelAndView.addObject("myRentalProduct", rentalProducts);
         modelAndView.addObject("appCredential", appCredential);
@@ -86,7 +86,7 @@ public class DashboardController {
     @RequestMapping(value = "/rentrequest",method = RequestMethod.GET)
     public ModelAndView getAllRentRequest(HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView("user_dashboard/rentRequest");
-        String baseUrl=(String)request.getAttribute("baseURL");
+
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
@@ -96,8 +96,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential", appCredential);
@@ -107,7 +107,7 @@ public class DashboardController {
     @RequestMapping(value = "/my-booking",method = RequestMethod.GET)
     public ModelAndView getMyRentRequest(HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView("user_dashboard/myrentRequest");
-        String baseUrl=(String)request.getAttribute("baseURL");
+
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
@@ -118,8 +118,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Rent Request");
         modelAndView.addObject("myRentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
@@ -129,7 +129,7 @@ public class DashboardController {
     @RequestMapping(value = "/my-approved-bookings",method = RequestMethod.GET)
     public ModelAndView getAllMyApprovedBookings(HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView("user_dashboard/myApprovedBookings");
-        String baseUrl=(String)request.getAttribute("baseURL");
+
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
@@ -140,8 +140,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Approved Booking Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
@@ -151,7 +151,7 @@ public class DashboardController {
     @RequestMapping(value = "/my-profile-edit", method = RequestMethod.GET)
     public ModelAndView getMyprofileEdit(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("user_dashboard/editprofile");
-        String baseUrl=(String)request.getAttribute("baseURL");
+
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
@@ -162,8 +162,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Profile Edit");
         modelAndView.addObject("appCredential", appCredential );
         modelAndView.addObject("identityTypes", identityTypes );
@@ -172,7 +172,7 @@ public class DashboardController {
 
     @RequestMapping(value = "/my-dispproved-bookings",method = RequestMethod.GET)
     public ModelAndView getAllMyDisapprovedBookings(HttpServletRequest request){
-        String baseUrl=(String)request.getAttribute("baseURL");
+
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
         List<RentRequest> rentRequests=rentRequestModel.getAllDisapproveRequestByRequestedBy(appCredential.getId());
@@ -184,8 +184,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Disapproved Booking Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
@@ -195,7 +195,7 @@ public class DashboardController {
     @RequestMapping(value = "/my-approved-rentrequest",method = RequestMethod.GET)
     public ModelAndView getAllMyApprovedRentRequest(HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView("user_dashboard/myApprovedRentRequest");
-        String baseUrl=(String)request.getAttribute("baseURL");
+
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
@@ -206,8 +206,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Approved Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
@@ -217,7 +217,7 @@ public class DashboardController {
     @RequestMapping(value = "/my-disapproved-rentrequest",method = RequestMethod.GET)
     public ModelAndView getAllMyDisApprovedRentRequest(HttpServletRequest request){
         ModelAndView modelAndView=new ModelAndView("user_dashboard/myDisapprovedRentrequest");
-        String baseUrl=(String)request.getAttribute("baseURL");
+
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
@@ -228,8 +228,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Disapproved Rent Request");
         modelAndView.addObject("rentRequests", rentRequests );
         modelAndView.addObject("appCredential",appCredential);
@@ -251,8 +251,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Rented Product");
         modelAndView.addObject("myRentedProduct", rentalProducts);
         modelAndView.addObject("appCredential", appCredential);
@@ -276,8 +276,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Rented Product");
         modelAndView.addObject("myProductOnRent", rentalProducts);
         modelAndView.addObject("appCredential", appCredential);
@@ -300,8 +300,8 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
+
 //        modelAndView.addObject("pageTitle", "My Rent History");
         modelAndView.addObject("appCredential", appCredential);
         modelAndView.addObject("rentInfs", rentInfs);
@@ -321,9 +321,9 @@ public class DashboardController {
 
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("userPaypalCredential", userPaypalCredential);
-        modelAndView.addObject("BaseUrl", baseUrl);
+
 //        modelAndView.addObject("pageTitle", "My Paypal Account Email");
-        modelAndView.addObject("IsLogIn", IsLogin);
+
         return modelAndView;
     }
 }

@@ -75,13 +75,13 @@
               <mvc:interceptor>
                  <mvc:mapping path="/signup" />
                  <mvc:mapping path="/signup/" />
-                 <bean class="controller.interceptor.WebInterceptor"/>
+                 <bean class="controller.interceptor.WebNonAuthInterceptor"/>
               </mvc:interceptor>
 
               <mvc:interceptor>
                  <mvc:mapping path="/signin"/>
                  <mvc:mapping path="/signin/"/>
-                 <bean class="controller.interceptor.WebInterceptor"/>
+                 <bean class="controller.interceptor.WebNonAuthInterceptor"/>
               </mvc:interceptor>
 
               <mvc:interceptor>
@@ -101,7 +101,7 @@
               </mvc:interceptor>
               <mvc:interceptor>
                  <mvc:mapping path="/reset-password/**"/>
-                 <bean class="controller.interceptor.WebInterceptor"/>
+                 <bean class="controller.interceptor.WebNonAuthInterceptor"/>
               </mvc:interceptor>
 
            <!-- **********  Public search Rental product ************* -->
@@ -196,7 +196,10 @@
                <mvc:mapping path="/api/search/**"/>
                <bean class="controller.interceptor.ServiceInterceptor"/>
            </mvc:interceptor>
-
+           <mvc:interceptor>
+               <mvc:mapping path="/api/banner-image/**"/>
+               <bean class="controller.interceptor.ServiceInterceptor"/>
+           </mvc:interceptor>
 
 
               <!-- ******* Service with Auth check ************-->
@@ -227,6 +230,8 @@
        cache-period="31556926"/>
        <mvc:resources mapping="/images/**" location="${fileLocation.images}"
         cache-period="31556926"/>
+        <mvc:resources mapping="/images-banner/**" location="${fileLocation.banner}"
+                   cache-period="31556926"/>
         <mvc:resources mapping="/category-images/**" location="${fileLocation.category}"
                        cache-period="31556926"/>
 

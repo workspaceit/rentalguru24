@@ -48,8 +48,6 @@ public class SearchController {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
-        String baseUrl = (String) request.getAttribute("baseURL");
-
         ModelAndView modelAndView = new ModelAndView("public/Search");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<RentalProduct> rentalProducts = new ArrayList<>();
@@ -104,7 +102,6 @@ public class SearchController {
         modelAndView.addObject("productListTitle",productListTitle);
         modelAndView.addObject("rentalProducts", rentalProducts);
         modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl",baseUrl);
         return modelAndView;
     }
 

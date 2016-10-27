@@ -25,11 +25,7 @@ public class Page404Controller {
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView("public/404");
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-//        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-        List<Category> category = categoryModel.getAll();
-//        modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("pageTitle", "404 Page Not Found");
-        modelAndView.addObject("category", category);
         return modelAndView;
     }
 }

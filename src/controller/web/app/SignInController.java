@@ -22,15 +22,6 @@ public class SignInController{
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        String baseUrl = (String) request.getAttribute("baseURL");
-
-
-        ModelAndView modelAndView = new ModelAndView("public/SignIn");
-        modelAndView.addObject("BaseUrl",baseUrl);
-        return modelAndView;
-
-
+        return new ModelAndView("public/SignIn");
     }
 }

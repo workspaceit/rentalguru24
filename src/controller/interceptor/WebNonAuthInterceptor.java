@@ -4,11 +4,6 @@ package controller.interceptor;
  * Created by mi on 8/16/16.
  */
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.ServiceResponse;
 import helper.SessionManagement;
 import model.CategoryModel;
@@ -20,9 +15,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import java.io.PrintWriter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class WebAuthInterceptor extends HandlerInterceptorAdapter{
+public class WebNonAuthInterceptor extends HandlerInterceptorAdapter{
     private String baseURL;
     @Autowired
     CategoryModel categoryModel;
@@ -41,10 +38,11 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
 
 
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
+            response.sendRedirect(this.getURLWithContextPath(request) + "/home");
+            return false;
+        }else{
             request.setAttribute("serviceResponse", serviceResponse);
             request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
-            request.setAttribute("appUserVerification", (Boolean) SessionManagement.getAppUserVerification(request));
-            serviceResponse.getResponseStat().setIsLogin(true);
 
             this.baseURL = this.getURLWithContextPath(request);
 
@@ -55,9 +53,6 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
             request.setAttribute("category",categoryModel.getAll());
             request.setAttribute("BaseUrl", this.baseURL);
             return true;
-        }else{
-            response.sendRedirect(this.getURLWithContextPath(request) + "/signin?r=" + java.net.URLEncoder.encode(this.getURL(request), "UTF-8"));
-            return false;
         }
     }
 

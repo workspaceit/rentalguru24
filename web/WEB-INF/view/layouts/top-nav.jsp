@@ -1,4 +1,4 @@
-<d:if test="${IsLogIn != false}">
+<d:if test="${isLogin != false}">
   <a href="${BaseUrl}/product/upload" class="add-product "><i class="fa fa-plus visible-xs"></i></a>
 </d:if>
 <div class="container-fluid top_nav">
@@ -24,7 +24,7 @@
 
         <div class="col-md-6 col-sm-6 col-xs-12 ">
           <ul class="top_nav_ul right top_nav_ul">
-            <d:if test="${IsLogIn != true}">
+            <d:if test="${isLogin==false}">
               <li class="dropdown">
                 <a href="${BaseUrl}/signin" class="dropdown-toggle top_nav_a"
                    aria-expanded="false">
@@ -38,7 +38,7 @@
                 </a>
               </li>
             </d:if>
-            <d:if test="${IsLogIn != false}">
+            <d:if test="${isLogin==true}">
               <li class="dropdown">
                 <a href="${BaseUrl}/user/dashboard/my-profile-edit" class="dropdown-toggle top_nav_a"
                    aria-expanded="false">

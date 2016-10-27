@@ -36,17 +36,12 @@ public class CmsController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
-        String baseUrl = (String) request.getAttribute("baseURL");
-        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-
         ModelAndView modelAndView = new ModelAndView("cms/cmsPages");
         AdminCmsPage adminCmsPage = adminCmsPageModel.getByPageKey(pageKey);
         if(adminCmsPage==null){
             return new ModelAndView("redirect:/home");
         }
         modelAndView.addObject("adminCmsPage", adminCmsPage);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl",baseUrl);
 
         return modelAndView;
     }

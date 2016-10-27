@@ -51,10 +51,6 @@ public class HomeController {
                               @RequestParam(value = "lat",required = false)Double centralLatitude,
                               @RequestParam(value = "lng",required = false)Double centralLongitude) {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        List<Category> category = (List<Category>) request.getAttribute("category");
-
-        String baseUrl = (String) request.getAttribute("baseURL");
 
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
@@ -80,12 +76,10 @@ public class HomeController {
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("bannerImageList", bannerImageList);
         modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
-        modelAndView.addObject("category", category);
         modelAndView.addObject("topRentalProductHeadTitle", topRentalProductHeadTitle);
         modelAndView.addObject("productListTitle",productListTitle);
         modelAndView.addObject("rentalProducts", rentalProducts);
         modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("rentalProductsTop",rentalProductsTop);
         return modelAndView;
     }
@@ -98,9 +92,7 @@ public class HomeController {
                                                @RequestParam(value = "lat",required = false)Double centralLatitude,
                                                @RequestParam(value = "lng",required = false)Double centralLongitude){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
-        String baseUrl = (String) request.getAttribute("baseURL");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
 
@@ -132,8 +124,6 @@ public class HomeController {
             modelAndView.addObject("category", category);
             modelAndView.addObject("rentalProducts", rentalProducts);
             modelAndView.addObject("productsAscending", rentalProductsAscending);
-            modelAndView.addObject("IsLogIn", IsLogin);
-            modelAndView.addObject("BaseUrl",baseUrl);
             modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
             modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
             modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
@@ -148,7 +138,6 @@ public class HomeController {
     public ModelAndView getCategory(HttpServletRequest request,@PathVariable("categoryId") int categoryId){
         Category categorySelected = categoryModel.getById(categoryId);
 
-        String baseUrl = (String) request.getAttribute("baseURL");
         ModelAndView modelAndView = new ModelAndView("public/partial/partial_rendering_new_product");
         if(categorySelected!=null)
             modelAndView.addObject("productListTitle",categorySelected.getName());
@@ -156,7 +145,6 @@ public class HomeController {
             modelAndView.addObject("productListTitle","");
 
         List rentalProduct = productModel.getRentalProductByCategoryId(categoryId, 8, 0);
-        modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("rentalProducts",rentalProduct);
         return modelAndView;
     }
@@ -175,7 +163,6 @@ public class HomeController {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
-        String baseUrl = (String) request.getAttribute("baseURL");
 
         ModelAndView modelAndView = new ModelAndView("public/partial/load_more_product");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
@@ -203,8 +190,6 @@ public class HomeController {
             rentalProducts = productModel.getRentalProductForSearch(categoryId,title,lat,lng,radius,limit,offset);
         }
 
-
-        modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("rentalProducts",rentalProducts);
         return modelAndView;
     }

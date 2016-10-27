@@ -22,7 +22,7 @@
 </script>
 <script>
 
-  var isLoggedin =${IsLogIn};
+  var isLoggedin =${isLogin};
   var isUserVerified = "${appUserVerification}";
   if(isUserVerified!=""){
     try{

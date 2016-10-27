@@ -53,14 +53,12 @@ public class ProductController{
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
-        String baseUrl = (String) request.getAttribute("baseURL");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         ModelAndView modelAndView = new ModelAndView("/product/upload");
         List<RentType> rentTypes = rentTypeModel.getAll();
 
         String preSelectedCategoryName = "Select Category";
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
-        modelAndView.addObject("BaseUrl",baseUrl);
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentTypes", rentTypes);
         modelAndView.addObject("IsLogIn", IsLogin);
@@ -73,7 +71,7 @@ public class ProductController{
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
 
-        String baseUrl = (String) request.getAttribute("baseURL");
+        String baseUrl = (String) request.getAttribute("BaseUrl");
         RentalProduct rentalProduct = productModel.getById(productId);
         List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0, productId);
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
@@ -110,7 +108,6 @@ public class ProductController{
         model.addAttribute("IsLogIn", IsLogin);
         model.addAttribute("rentalProduct", rentalProduct);
         model.addAttribute("newProducts", newProducts);
-        model.addAttribute("BaseUrl",baseUrl);
         model.addAttribute("category", category);
         model.addAttribute("pageTitle", rentalProduct.getName());
         return "product/details";
@@ -119,7 +116,6 @@ public class ProductController{
     @RequestMapping(value = "/edit/{product_id}", method = RequestMethod.GET)
     public ModelAndView getEditProduct(HttpServletRequest request, @PathVariable("product_id") int productId){
         ModelAndView modelAndView = new ModelAndView("user_dashboard/editProduct");
-        String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
@@ -151,7 +147,6 @@ public class ProductController{
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentalProduct", rentalProduct);
         modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("appCredential", appCredential);
         return modelAndView;
     }
@@ -167,26 +162,21 @@ public class ProductController{
     @RequestMapping(value = "/review/partial-load/{product_id}", method = RequestMethod.GET)
     public ModelAndView getProductReviewPartialLoad(HttpServletRequest request, @PathVariable("product_id") int productId){
         ModelAndView modelAndView = new ModelAndView("public/partial/productReviewPartialLoad");
-        String baseUrl = (String) request.getAttribute("baseURL");
         List<ProductRating> productRatingList = productRatingModel.getByProductId(productId);
 //        if(productRatingList == null||productRatingList.isEmpty()){
 //            return modelAndView;
 //        }
         modelAndView.addObject("productRatingList", productRatingList);
-        modelAndView.addObject("BaseUrl", baseUrl);
         return modelAndView;
     }
     @RequestMapping(value = "/product-details/partial-load/{product_id}", method = RequestMethod.GET)
     public ModelAndView getProductDetailsPartialLoadModel(HttpServletRequest request, @PathVariable("product_id") int productId){
         ModelAndView modelAndView = new ModelAndView("public/partial/productDetailsModalView");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        String baseUrl = (String) request.getAttribute("baseURL");
 
         RentalProduct rentalProduct = productModel.getById(productId);
 
         modelAndView.addObject("rentalProduct", rentalProduct);
-        modelAndView.addObject("BaseUrl",baseUrl);
-
         return modelAndView;
     }
 }

@@ -31,7 +31,6 @@ public class RentRequestController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
-        String baseUrl = (String) request.getAttribute("baseURL");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         if(rentRequest != null){
             if(rentRequest.getRequestedBy().getId() == appCredential.getId()
@@ -41,7 +40,6 @@ public class RentRequestController {
                 modelAndView.addObject("IsLogIn", IsLogin);
                 modelAndView.addObject("appCredential", appCredential);
                 modelAndView.addObject("rentRequest", rentRequest);
-                modelAndView.addObject("BaseUrl",baseUrl);
             }else{
                 return new ModelAndView("redirect:/home");
             }

@@ -1,5 +1,7 @@
 package model.entity.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -11,7 +13,7 @@ import java.sql.Timestamp;
 public class PasswordResetsEntity {
     private int id;
     private String token;
-    private Timestamp createdAt;
+    private Timestamp createdDate;
 //    private AppCredential appCredential;
     private AuthCredential authCredential;
 
@@ -37,18 +39,19 @@ public class PasswordResetsEntity {
     }
 
     @Basic
-    @Column(name = "created_at")
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    @Column(name = "created_date")
+    public Timestamp getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public void setCreatedDate(Timestamp createdAt) {
+        this.createdDate = createdAt;
     }
 
     @OneToOne
     @JoinColumn(name = "app_credential_id", referencedColumnName = "id", nullable = false)
 //    public AppCredential getAppCredential(){return appCredential;}
+    @JsonIgnore
     public AuthCredential getAuthCredential(){return authCredential;}
 
 //    public void setAppCredential(AppCredential appCredential){this.appCredential = appCredential;}

@@ -23,13 +23,6 @@ import java.io.IOException;
 public class SignUpController{
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        String baseUrl = (String) request.getAttribute("baseURL");
-
-        ModelAndView modelAndView = new ModelAndView("public/SignUp");
-        modelAndView.addObject("BaseUrl",baseUrl);
-        System.out.print("Request attribute :"+((ServiceResponse)request.getAttribute("serviceResponse")).getResponseStat().getIsLogin());
-        return modelAndView;
+        return  new ModelAndView("public/SignUp");
     }
 }

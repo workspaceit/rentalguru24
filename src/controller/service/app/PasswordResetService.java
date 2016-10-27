@@ -36,7 +36,7 @@ public class PasswordResetService{
         AuthCredential authCredential = appLoginCredentialModel.getByEmail(email);
         String baseUrl = (String) request.getAttribute("baseURL");
 
-        if(email==null || email==""){
+        if(email==null || email.equals("")){
             serviceResponse.setRequestError("email","Email required");
             return serviceResponse;
         }
@@ -56,16 +56,23 @@ public class PasswordResetService{
             PasswordResetsEntity passwordResetsEntityNew = new PasswordResetsEntity();
             passwordResetsEntityNew.setToken(token);
             passwordResetsEntityNew.setAuthCredential(authCredential);
-            serviceResponse.setResponseData(passwordResetModel.insert(passwordResetsEntityNew));
+            passwordResetModel.insert(passwordResetsEntityNew);
         }else {
             PasswordResetsEntity passwordResetsEntity = new PasswordResetsEntity();
             passwordResetsEntity.setToken(token);
             passwordResetsEntity.setAuthCredential(authCredential);
-            serviceResponse.setResponseData(passwordResetModel.insert(passwordResetsEntity));
+            passwordResetModel.insert(passwordResetsEntity);
         }
 
         serviceResponse.getResponseStat().setMsg("An email is sent please reset it from that link");
-        MailHelper.sendPasswordRestMail(email.trim(),token,baseUrl+"/reset-password/change-password/");
+        final String emailTo = email;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MailHelper.sendPasswordRestMail(emailTo, token, baseUrl + "/reset-password/change-password/");
+            }
+        }).start();
+
         return serviceResponse;
     }
 
@@ -89,26 +96,29 @@ public class PasswordResetService{
             serviceResponse.setRequestError("token","Token is not valid");
             return serviceResponse;
         }
+
         String validToken = passwordResetsEntity.getToken();
-        if(token.equals(validToken)){
-            if(password.equals(conPassword)){
-                if(password.length() >= 6){
-                    AuthCredential authCredential = appLoginCredentialModel.getByEmail(email);
-                    authCredential.setPassword(password);
-                    appLoginCredentialModel.updateWithNewPassword(authCredential);
-                    serviceResponse.getResponseStat().setMsg("Password reset successful");
-                }else{
-                    serviceResponse.setRequestError("password","Password can't be less then 6 character");
-                    return serviceResponse;
-                }
-            }else {
-                serviceResponse.setRequestError("conPassword","Password mismatch");
-                return serviceResponse;
-            }
-        }else {
+        if(!token.equals(validToken)){
             serviceResponse.setRequestError("token","Password reset token mismatch ");
             return serviceResponse;
         }
+
+        if(!password.equals(conPassword)){
+            serviceResponse.setRequestError("conPassword","Password mismatch");
+            return serviceResponse;
+        }
+
+        if(password.length() < 6){
+            serviceResponse.setRequestError("password","Password can't be less then 6 character");
+            return serviceResponse;
+        }
+
+        AuthCredential authCredential = appLoginCredentialModel.getByEmail(email);
+        authCredential.setPassword(password);
+        appLoginCredentialModel.updateWithNewPassword(authCredential);
+        serviceResponse.setResponseData(authCredential);
+        serviceResponse.getResponseStat().setMsg("Password reset successful");
+
         return serviceResponse;
     }
 }
