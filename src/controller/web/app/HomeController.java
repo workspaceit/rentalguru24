@@ -129,6 +129,7 @@ public class HomeController {
             modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
             modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
             return modelAndView;
+
         }else{
             return new ModelAndView("redirect:/home");
         }

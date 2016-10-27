@@ -233,6 +233,9 @@ public class ProductService{
             return serviceResponse;
         }
 
+
+        /*~~~~~~~~~~~~~ Removing token after moving ~~~~~~*/
+        this.tempFileModel.delete(tempFile);
         /*----- Move Product other images form temp to original ---- */
 
         List<Picture> otherImages = new ArrayList<>();
@@ -250,6 +253,9 @@ public class ProductService{
                 serviceResponse.setRequestError("otherImagesToken", "Unable to save profile image");
                 return serviceResponse;
             }
+
+            /*~~~~~~~~~~~~~ Removing token after moving ~~~~~~~~~~*/
+            this.tempFileModel.delete(tempOtherFile);
         }
 
         RentType rentType = rentTypeModel.getById(productUploadForm.getRentTypeId());

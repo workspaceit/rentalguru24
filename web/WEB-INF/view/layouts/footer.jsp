@@ -115,10 +115,23 @@
 
 
   }
+  function doSearchByClick(){
+    var productStr = $("#searchTxtBox").val();
+    var categorySelectedInSearch = $("#categorySelectedInSearch").val();
+
+    if(productStr!=null && productStr != ""){
+      console.log("TIME TO GO");
+      if(categorySelectedInSearch != ""){
+        window.location = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr;
+      }else{
+        window.location = BASEURL+"/search?title="+productStr;
+      }
+    }
+  }
   function doSearch(event){
     var char = event.which || event.keyCode;
     var productStr = $("#searchTxtBox").val();
-    var categorySelectedInSearch = $("#categorySelectedInSearch option:selected").val();
+    var categorySelectedInSearch = $("#categorySelectedInSearch").val();
 
     if(char==13 && productStr!=null && productStr != ""){
       console.log("TIME TO GO");
@@ -133,7 +146,7 @@
 
     url: function(phrase){
       console.log(phrase);
-      var categoryId = $("#categorySelectedInSearch option:selected").val();
+      var categoryId = $("#categorySelectedInSearch").val();
       var title = encodeURIComponent(phrase);
       var url = BASEURL+"/api/product/get-product-with-title?limit=8&offset=0&title="+title;
       if(categoryId!=""){
@@ -449,4 +462,36 @@
     });
 
   } );
+
+
+
+</script>
+<script type="text/javascript">
+  $(document).ready(function(e){
+    $('.search-panel .dropdown-menu').find('a').click(function(e) {
+      e.preventDefault();
+      var param = $(this).attr("href").replace("#","");
+      $("#categorySelectedInSearch").val($(this).attr("categoryId"));
+
+      var concept = $(this).text();
+      $('.search-panel span#search_concept').text(concept);
+      $('.input-group #search_param').val(param);
+
+    });
+    $('.search-panel .dropdown-menu').find('a').each(function() {
+      var selected = $(this).attr("selected");
+      if(selected!== undefined){
+        $("#categorySelectedInSearch").val($(this).attr("categoryId"));
+        var concept = $(this).text();
+        $('.search-panel span#search_concept').text(concept);
+        return;
+      }
+
+
+    });
+    if($('.search-panel span#search_concept').text()==""){
+      $('.search-panel span#search_concept').text("Filter by")
+    }
+
+  });
 </script>

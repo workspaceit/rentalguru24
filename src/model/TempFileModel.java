@@ -8,6 +8,7 @@ import org.hibernate.Session;
  * Created by omar on 8/2/16.
  */
 public class TempFileModel extends BaseModel {
+
     public void insert(TempFile tempFile){
         Session session = this.sessionFactory.openSession();
         session.beginTransaction();
@@ -15,6 +16,7 @@ public class TempFileModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+
     public model.entity.app.TempFile getByToken(long token){
         Session session = this.sessionFactory.openSession();
 

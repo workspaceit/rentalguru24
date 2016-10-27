@@ -10,9 +10,7 @@
   <%--<div class="container">--%>
     <%--<div class="row">--%>
         <%--<ul class="left bottom-nav">--%>
-          <%--<d:forEach var="cmsPage" items="${cmsPages}" >--%>
-            <%--<li><a href="${BaseUrl}/static/${cmsPage.pageKey}">${cmsPage.pageName}</a></li>--%>
-          <%--</d:forEach>--%>
+          <%----%>
         <%--</ul>--%>
     <%--</div>--%>
   <%--</div>--%>
@@ -24,10 +22,13 @@
         <div class="col-md-3 col-sm-6 col-xs-12">
           <p class="footer_head">INFORMATION</p>
           <ul class="footer_ul">
-            <li><a href="#">About US</a></li>
-            <li><a href="#">Privacy</a></li>
-            <li><a href="#">Conditions</a></li>
-            <li><a href="#">Online Support</a></li>
+            <d:forEach var="cmsPage" items="${cmsPages}" >
+              <li><a href="${BaseUrl}/static/${cmsPage.pageKey}">${cmsPage.pageName}</a></li>
+            </d:forEach>
+            <%--<li><a href="#">About US</a></li>--%>
+            <%--<li><a href="#">Privacy</a></li>--%>
+            <%--<li><a href="#">Conditions</a></li>--%>
+            <%--<li><a href="#">Online Support</a></li>--%>
           </ul>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
