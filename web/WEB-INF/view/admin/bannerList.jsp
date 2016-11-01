@@ -40,7 +40,7 @@
                 <tbody>
                 <d:forEach var="bannerImage" items="${bannerImageList}">
                   <tr>
-                    <td><img src="${BaseUrl}/images/bannerImage/${bannerImage.getImagePath()}"></td>
+                    <td><img src="${BaseUrl}/images/bannerImage/${bannerImage.getImagePath()}" style="width: 80%; float: left"></td>
                     <td>${bannerImage.getUrl()}</td>
                     <td><button type="button" class="btn btn-block btn-danger" onclick="deleteBannerImage(${bannerImage.getId()})">Delete</button></td>
                   </tr>
