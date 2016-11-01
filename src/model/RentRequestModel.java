@@ -375,6 +375,7 @@ public class RentRequestModel extends BaseModel {
                     " where rentRequest.requestedBy.id =:requestedById" +
                     " and rentRequest.disapprove = false" +
                     " and rentRequest.requestCancel = false" +
+                    " and rentRequest.isExpired = false" +
                     " and rentRequest.approve = false ORDER BY rentRequest.id desc ")
                     .setParameter("requestedById", requestedById)
                     .list();

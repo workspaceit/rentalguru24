@@ -32,10 +32,10 @@ public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
 
 
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
+            serviceResponse.getResponseStat().setIsLogin(true);
             request.setAttribute("serviceResponse", serviceResponse);
             request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
             request.setAttribute("baseURL", this.getURLWithContextPath(request));
-            serviceResponse.getResponseStat().setIsLogin(true);
             return true;
         }else{
             serviceResponse.getResponseStat().setErrorMsg("Please login first !!");
