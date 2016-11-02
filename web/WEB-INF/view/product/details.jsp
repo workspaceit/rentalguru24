@@ -218,8 +218,8 @@
           <div role="tabpanel" class="tab-pane active" id="description">${rentalProduct.getDescription()}</div>
           <div role="tabpanel" class="tab-pane" id="reviews">
             <form class="review-form" action="" role="form">
+              <span id="reviewRatingInnerLoader" class="inner-load" ></span>
               <div class="row" id="productReviewTab">
-
               </div>
             </form>
           </div>
@@ -338,11 +338,13 @@
 </script>
 <script>
   function getProductReview(productId){
+    $("#reviewRatingInnerLoader").show();
       if($(".comment-review").length == 0){
         $.ajax({
           url: BASEURL+"/product/review/partial-load/"+productId,
           type: "GET",
           success: function(data){
+            $("#reviewRatingInnerLoader").hide();
             $("#productReviewTab").html(data);
           }
         });
