@@ -1,1 +1,0 @@
-ALTER TABLE  `rent_payment` ADD  `site_fee` DOUBLE NOT NULL DEFAULT  '0' AFTER  `rent_inf_id` ;

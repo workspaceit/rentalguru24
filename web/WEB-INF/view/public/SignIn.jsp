@@ -417,6 +417,9 @@
   }
 
   loginWithGoogle();
+  $(document).ready(function(){
+    $("#email").focus();
+  });
 </script>
 
 

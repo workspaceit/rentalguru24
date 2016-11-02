@@ -55,7 +55,7 @@
     $("#saveGif").show();
     $.ajax({
       type: "POST",
-      url: BASEURL+"/api/auth/paypal/paypal-email-account",
+      url: BASEURL+"/api/auth/paypal/add-update/my-paypal-account-email",
       data:{
         email: email
       },

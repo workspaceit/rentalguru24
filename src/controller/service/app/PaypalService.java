@@ -6,6 +6,7 @@ import model.entity.app.AppCredential;
 import model.entity.app.UserPaypalCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,7 +19,7 @@ public class PaypalService {
     @Autowired
     UserPaypalCredentialModel userPaypalCredentialModel;
 
-    @RequestMapping(value = "/paypal-email-account", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-update/my-paypal-account-email", method = RequestMethod.POST)
     public ServiceResponse getMyPaypalAccountEmail(HttpServletRequest request, @RequestParam String email){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
@@ -49,5 +50,16 @@ public class PaypalService {
             serviceResponse.getResponseStat().setMsg("Email Successfully Save");
             return serviceResponse;
         }
+    }
+    @RequestMapping(value = "/get/my-paypal-account-email", method = RequestMethod.GET)
+    public ServiceResponse getMyPaypallAccountEmail(HttpServletRequest request){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+
+        UserPaypalCredential userPaypalCredential = userPaypalCredentialModel.getByAppCredentialId(appCredential.getId());
+        serviceResponse.setResponseData(userPaypalCredential,"No paypal account email found");
+
+        return serviceResponse;
     }
 }
