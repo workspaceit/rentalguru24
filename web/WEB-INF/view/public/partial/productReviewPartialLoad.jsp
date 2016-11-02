@@ -8,7 +8,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <d:if test="${productRatingList.size() == 0}">
-  <p class="no-review">There are no reviews for this product</p>
+  <div class="col-md-8 comment-review">
+    <p class="no-review">There are no reviews for this product</p>
+  </div>
 </d:if>
 <d:if test="${productRatingList.size() != 0}">
   <d:forEach items="${productRatingList}" var="reviewList">

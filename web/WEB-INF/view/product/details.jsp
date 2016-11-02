@@ -338,13 +338,15 @@
 </script>
 <script>
   function getProductReview(productId){
-    $.ajax({
-      url: BASEURL+"/product/review/partial-load/"+productId,
-      type: "GET",
-      success: function(data){
-        $("#productReviewTab").html(data);
+      if($(".comment-review").length == 0){
+        $.ajax({
+          url: BASEURL+"/product/review/partial-load/"+productId,
+          type: "GET",
+          success: function(data){
+            $("#productReviewTab").html(data);
+          }
+        });
       }
-    });
   }
 </script>
 

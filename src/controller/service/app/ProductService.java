@@ -688,7 +688,7 @@ public class ProductService{
         boolean isAlreadyRatedByUser = productRatingModel.isAlreadyRatedByUser(productId, rentInfId, rentRequestId, appCredential.getId());
 
         if(isAlreadyRatedByUser){
-            serviceResponse.getResponseStat().setMsg("You have already review this product");
+            serviceResponse.setRequestError("alreadyRated", "You have already review this product");
             return serviceResponse;
         }
 

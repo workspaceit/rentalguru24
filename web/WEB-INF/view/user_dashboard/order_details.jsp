@@ -330,6 +330,7 @@
                 <h3 class="aproval_container_title">Add Review</h3>
                 <p  class="no-review">Your Rating</p>
                 <div class="alert alert-success rateSuccess" hidden>Product rated successful</div>
+                <p class="help-block error-form" id="errorMsg_alreadyRated"></p>
                 <form class="review-form" action="" role="form" onsubmit="return setProductRating(${rentRequest.getRentalProduct().getId()});">
                     <div class="row">
                         <div class="col-md-1 col-sm-4 col-xs-4">
@@ -639,7 +640,7 @@
                         console.log(data);
                         if(data.responseStat.status == true){
                             $(".rateSuccess").show().delay(1500).fadeOut(500,function() {
-                                location.reload();
+//                                location.reload();
                             });
                         }else{
                             BindErrorsWithHtml('errorMsg_', data.responseStat.requestErrors);
