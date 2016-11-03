@@ -15,6 +15,7 @@
     </div>
   </div>
 </div>
+<a href="#" class="scrollToTop"><i class="fa fa-angle-up fa-2x"></i></a>
 <%--Hiden fields for load more--%>
 <input id="loadMoreObj" type="hidden" value='{"url":"${loadMoreProductUrl}","limit":0,"offset":1}' />
 <script>
@@ -493,5 +494,25 @@
       $('.search-panel span#search_concept').text("Filter by")
     }
 
+  });
+</script>
+
+<script>
+  $(document).ready(function(){
+
+    //Check to see if the window is top if not then display button
+    $(window).scroll(function(){
+      if ($(this).scrollTop() > 100) {
+        $('.scrollToTop').fadeIn();
+      } else {
+        $('.scrollToTop').fadeOut();
+      }
+    });
+
+    //Click event to scroll to top
+    $('.scrollToTop').click(function(){
+      $('html, body').animate({scrollTop : 0},800);
+      return false;
+    });
   });
 </script>

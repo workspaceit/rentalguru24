@@ -7315,7 +7315,7 @@ element.style {
     border-bottom-left-radius: 0px !important;
 }
 .scrollToTop{
-	width: 61px;
+        width: 61px;
         height: 57px;
         padding: 10px;
         text-align: center;
@@ -7324,10 +7324,11 @@ element.style {
         color: #FFF;
         text-decoration: none;
         position: fixed;
-        top: 170px;
+        top:300px;
         right: 8px;
         display: none;
         background: #484848;
+        border: 1px solid #d4931e;
 }
 .scrollToTop:hover{
 	text-decoration:none;
@@ -7341,6 +7342,25 @@ element.style {
 /*For mobile*/
 
 @media only screen and (max-width: 667px) {
+
+    .scrollToTop {
+        width: 50px;
+        height: 53px;
+        padding: 10px;
+        text-align: center;
+        background: whiteSmoke;
+        font-weight: bold;
+        color: #FFF;
+        text-decoration: none;
+        position: fixed;
+        top: 300px;
+        right: 8px;
+        display: none;
+        background: #484848;
+        opacity: 0.7;
+        border: 1px solid #d4931e;
+        border: 1px solid #d4931e;
+    }
     .navbar-default .navbar-collapse{
         padding: 0px 10px !important;
     }
