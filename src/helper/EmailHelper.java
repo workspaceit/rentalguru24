@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Created by mi on 9/7/16.
  */
-public class MailHelper {
+public class EmailHelper {
     private final static String from="developer_beta@workspaceit.com";
     private final static String username="developer_beta@workspaceit.com";
     private final static String password="wsit_cabguard1";
