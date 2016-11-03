@@ -1,6 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700,900');
-@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
+@import url('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css');
 
 /*font awesome*/
 
@@ -3807,7 +3807,7 @@ element.style {
     z-index: 999999999;
 }
 
-@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
+@import url('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css');
 /*font awesome*/
 
 @font-face {
@@ -6521,7 +6521,12 @@ span.tag_span:hover {
     border-color:#777;
     color: #fff;
 }
-
+.support-a {
+    color: #fff !important;
+    display: block;
+    padding: 13px 0px;
+    font-size: 12px;
+}
 /*========User Dashboard, Author: Arnab========*/
 #example1_wrapper {
     padding: 30px 0px;
@@ -7551,6 +7556,29 @@ element.style {
     }
     .center-block-slider .ui-slider{
         height: 30px;
+    }
+    .post-heading{
+        width: 95%;
+    }
+    .post-product {
+        padding: 40px 15px 10px 15px;
+    }
+    .post-btn-fix{
+        padding: 10px !important;
+    }
+    .support-div{
+        text-align: center;
+    }
+    .side-top-mobile{
+        text-align: center;
+    }
+    .side-top-mobile .top_nav_ul{
+        float: none !important;
+    }
+    .side-top-mobile .top_nav_ul li {
+        display: inline-block;
+        text-align: center;
+        float: none;
     }
 }
 

@@ -40,7 +40,7 @@
     <input type="text" class="form-control" name="x" placeholder="Search " id="searchTxtBox" type="text" onkeypress="doSearch(event)" <d:if test="${param.title != null}">value="${param.title}"</d:if> >
 
     <span class="input-group-btn">
-        <button class="btn btn-default" type="button" onclick="doSearchByClick()"><span class="fa fa-search"></span></button>
+        <button class="btn btn-default" type="button" onclick="doSearchByClick()"><i class="fa fa-search"></i></button>
     </span>
     <input type="hidden" id="categorySelectedInSearch" value="" />
   </div>

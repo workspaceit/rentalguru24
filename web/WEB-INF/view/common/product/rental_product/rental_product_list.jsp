@@ -9,7 +9,7 @@
                 <d:if test="${rentalProduct.profileImage.original.path == null}">
                     <img src="<c:url value="${BaseUrl}/resources/img/no_image.png" />" />
                 </d:if>
-                <a class="caption-link meta-icon" data-toggle="modal" data-target=".quickview-modal" href="javascript:void(0);" onclick="viewProductDetails(${rentalProduct.getId()})"> <span class="fa fa-eye"> </span> </a>
+                <a class="caption-link meta-icon" data-toggle="modal" data-target=".quickview-modal" href="javascript:void(0);" onclick="viewProductDetails(${rentalProduct.getId()})"> <i class="fa fa-eye"> </i> </a>
             </div>
             <div class="block-desc">
                 <label class="title-label productName"><a href="${BaseUrl}/product/details/${rentalProduct.getId()}">${fn:substring(rentalProduct.name, 0, 20)}<d:if test="${fn:length(rentalProduct.name)>20}">....</d:if></a></label>

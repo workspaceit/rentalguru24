@@ -163,7 +163,7 @@
         <%--</div>--%>
       </div>
     </div>
-    <div class="col-md-12 text-right" style="padding:0px 100px 20px 0px;">
+    <div class="col-md-12 text-right post-btn-fix" style="padding:0px 100px 20px 0px;">
       <button class="btn-cstm-sign  pos-relative" id="postProductBtn" onclick="postProduct()">
         Post Product
         <span class="inner-load postProductGif" hidden></span>
