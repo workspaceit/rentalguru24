@@ -2,75 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Reneguru</title>
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="<c:url value="/resources/img/favicon.ico" />">
-
-    <!-- Mobile -->
-    <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css" />" />
-    <style>
-        ul{
-            list-style: none outside none;
-            padding-left: 0;
-            margin: 0;
-        }
-        .demo .item{
-            margin-bottom: 60px;
-        }
-        .content-slider li{
-            background-color: #ed3020;
-            text-align: center;
-            color: #FFF;
-        }
-        .content-slider h3 {
-            margin: 0;
-            padding: 70px 0;
-        }
-        .demo{
-            width: 800px;
-        }
-    </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="<c:url value="/resources/js/lightslider.js" />"></script>
-    <script>
-        $(document).ready(function() {
-            $("#content-slider").lightSlider({
-                loop:true,
-                keyPress:true
-            });
-            $('#image-gallery').lightSlider({
-                gallery:true,
-                item:1,
-                thumbItem:9,
-                slideMargin: 0,
-                speed:500,
-                auto:true,
-                loop:true,
-                onSliderLoad: function() {
-                    $('#image-gallery').removeClass('cS-hidden');
-                }
-            });
-        });
-    </script>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-
-    <!-- CSS start here -->
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />" media="screen">
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/styles.css" />" />
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/font-awesome/css/font-awesome.min.css" />" />
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/animate.css" />" />
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/owl.carousel.css" />" />
-    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap-select.min.css"/>" />
-    <!-- Theme CSS -->
-    <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
-
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-    <!-- Google fonts end here -->
-</head>
+<jsp:directive.include file="../layouts/header.jsp" />
 <body class="ux">
 <div class="container-fluid top_nav">
     <div class="row">
@@ -162,27 +94,32 @@
                 <input type="password" class="form-control" placeholder="ex.password" id="password" name="password" >
                 <p class="help-block error-form" id="errorMsg_password" for="password" custom-validation="required" ></p>
             </div>
-            <div class="form-group ">
-                <label for="identityTypeId">Identity Type</label>
-                <%--<input type="text" class="form-control" placeholder="Identity Type" id="" name="">--%>
-                <select id="identityTypeId" name="identityTypeId" class="selectpicker">
-                    <option value="">Please select a identity type</option>
-                </select>
-                <p class="help-block error-form" id="errorMsg_identityTypeId" for="identityTypeId" custom-validation="required" errorMsg="Please select identity type" ></p>
-            </div>
             <div class="form-group">
-                <label for="fallback">Identity Document</label>
-                <div id="fallback"  class="fallback pos-relative" >
-                    Drop files here or click to upload.
-                    <span class="inner-load fileUploadGif" hidden></span>
-                </div>
-
-                <%--<input type="file" name="documentIdentity">--%>
-                <p class="help-info" id="nameFileAttached"></p>
-                <p class="help-block error-form" id="errorMsg_identityDocToken"></p>
-                <p class="help-block error-form" id="errorMsg_documentIdentity" for="identityDocToken" custom-validation="required" errorMsg="Please upload identity document" ></p>
-
+                <label for="conPassword">Confirm password</label>
+                <input type="password" class="form-control" placeholder="ex.password" id="conPassword" name="conPassword" >
+                <p class="help-block error-form" id="errorMsg_confirmPassword" for="conPassword" custom-validation="required" ></p>
             </div>
+            <%--<div class="form-group ">--%>
+                <%--<label for="identityTypeId">Identity Type</label>--%>
+                <%--&lt;%&ndash;<input type="text" class="form-control" placeholder="Identity Type" id="" name="">&ndash;%&gt;--%>
+                <%--<select id="identityTypeId" name="identityTypeId" class="selectpicker">--%>
+                    <%--<option value="">Please select a identity type</option>--%>
+                <%--</select>--%>
+                <%--<p class="help-block error-form" id="errorMsg_identityTypeId" for="identityTypeId" custom-validation="required" errorMsg="Please select identity type" ></p>--%>
+            <%--</div>--%>
+            <%--<div class="form-group">--%>
+                <%--<label for="fallback">Identity Document</label>--%>
+                <%--<div id="fallback"  class="fallback pos-relative" >--%>
+                    <%--Drop files here or click to upload.--%>
+                    <%--<span class="inner-load fileUploadGif" hidden></span>--%>
+                <%--</div>--%>
+
+                <%--&lt;%&ndash;<input type="file" name="documentIdentity">&ndash;%&gt;--%>
+                <%--<p class="help-info" id="nameFileAttached"></p>--%>
+                <%--<p class="help-block error-form" id="errorMsg_identityDocToken"></p>--%>
+                <%--<p class="help-block error-form" id="errorMsg_documentIdentity" for="identityDocToken" custom-validation="required" errorMsg="Please upload identity document" ></p>--%>
+
+            <%--</div>--%>
         </div>
         <div class="col-md-12 text-center">
             <button class="btn-cstm-sign pos-relative" id="signUpButton">
@@ -299,26 +236,27 @@
 <script>
     $(document).ready(function(){
         setAliasMessage("identityDocToken","Identity doc token required","Identity document required");
-        fetchIdentity();
+        /*Removed By client*/
+        //fetchIdentity();
     });
-
-    function fetchIdentity(){
-        $.ajax({
-            url: BASEURL+'/api/utility/get-identity',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data){
-                $.each(data.responseData, function(index, identity) {
-                    var select = document.getElementById("identityTypeId");
-                    var option = document.createElement("option");
-                    option.value = identity.id;
-                    option.text = identity.name;
-                    select.add(option);
-                });
-                $('#identityTypeId').selectpicker('refresh');
-            }
-        });
-    }
+    /*Removed By client*/
+//    function fetchIdentity(){
+//        $.ajax({
+//            url: BASEURL+'/api/utility/get-identity',
+//            type: 'GET',
+//            dataType: 'json',
+//            success: function(data){
+//                $.each(data.responseData, function(index, identity) {
+//                    var select = document.getElementById("identityTypeId");
+//                    var option = document.createElement("option");
+//                    option.value = identity.id;
+//                    option.text = identity.name;
+//                    select.add(option);
+//                });
+//                $('#identityTypeId').selectpicker('refresh');
+//            }
+//        });
+//    }
 </script>
 <script>
     function submitSignUpData(){
@@ -326,13 +264,26 @@
         if(!requiredValidation("errorMsg_")){
             return false;
         }
-        $('.signUpGif').show();
+
+
+
         var firstName = $("#firstName").val();
         var lastName = $("#lastName").val();
         var email = $("#email").val();
         var password = $("#password").val();
-        var identityTypeId = $("#identityTypeId option:selected").val();
-        var identityDocToken = $("#identityDocToken").val();
+        var conPassword = $("#conPassword").val();
+
+        if(conPassword !== password){
+            $("#errorMsg_confirmPassword").html("Password miss matched");
+            $("#errorMsg_confirmPassword").show();
+            $("#conPassword").focus();
+            return false;
+        }
+
+        $('#signUpButton').attr("disabled","disabled");
+        $('.signUpGif').show();
+       // var identityTypeId = $("#identityTypeId option:selected").val();
+     //   var identityDocToken = $("#identityDocToken").val();
 //        console.log(firstName, lastName, email, password, identityTypeId, identityDocToken);
         $.ajax({
             url: BASEURL+'/api/signup/user',
@@ -342,11 +293,11 @@
                 lastName:lastName,
                 email:email,
                 password:password,
-                identityTypeId:identityTypeId,
-                identityDocToken:identityDocToken
+              //  identityTypeId:identityTypeId,
+              //  identityDocToken:identityDocToken
             },
             success: function(data){
-                console.log(data);
+                $('#signUpButton').removeAttrs("disabled");
                 if(data.responseStat.status == false){
                     BindErrorsWithHtml("errorMsg_", data.responseStat.requestErrors);
                 }else{
@@ -356,6 +307,10 @@
                     });
                 }
                 $('.signUpGif').hide().delay(4998).fadeOut();
+            },error:function(er){
+                $('#signUpButton').removeAttrs("disabled");
+                alert("Something went wrong. Try again later");
+
             }
         });
         return false;

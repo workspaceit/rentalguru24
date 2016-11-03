@@ -1,5 +1,5 @@
 
-
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700,900');
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 
 /*font awesome*/
@@ -9,7 +9,10 @@
     src: url(../fonts/LaoUI.ttf);
 }
 body{
-    font-family:Lato-Reg !important;
+    font-family: 'Lato',"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+p,label,button,a,ul,span,div{
+    font-family: 'Lato',"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 .top_nav .navbar-nav  li a.top_nav_a {
     padding: 15px 10px 15px 0px ;
@@ -270,7 +273,7 @@ span.conatct_number {
     color: #222222 !important;
     font-size: 12px;
     font-weight: 500;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 .main_navigation li{
     border-top: 2px solid transparent;
@@ -1291,14 +1294,14 @@ body {
     transform-origin: center;
 }
 .single-item .panel::before {
-    border-top: 2px solid #777;
-    border-bottom: 2px solid #777;
+    border-top: 2px solid #e6a148;
+    border-bottom: 2px solid #e6a148;
     -webkit-transform: scale3d(0, 1, 1);
     transform: scale3d(0, 1, 1);
 }
 .single-item .panel::after {
-    border-left: 2px solid #777;
-    border-right: 2px solid #777;
+    border-left: 2px solid #e6a148;
+    border-right: 2px solid #e6a148;
     -webkit-transform: scale3d(1, 0, 1);
     transform: scale3d(1, 0, 1);
 }
@@ -3805,7 +3808,6 @@ element.style {
 }
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
-
 /*font awesome*/
 
 @font-face {
@@ -4078,7 +4080,7 @@ span.conatct_number {
     color: #222222 !important;
     font-size: 12px;
     font-weight: 500;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 .main_navigation li{
     border-top: 2px solid transparent;
@@ -5099,14 +5101,14 @@ body {
     transform-origin: center;
 }
 .single-item .panel::before {
-    border-top: 2px solid #777;
-    border-bottom: 2px solid #777;
+    border-top: 2px solid #e6a148;
+    border-bottom: 2px solid #e6a148;
     -webkit-transform: scale3d(0, 1, 1);
     transform: scale3d(0, 1, 1);
 }
 .single-item .panel::after {
-    border-left: 2px solid #777;
-    border-right: 2px solid #777;
+    border-left: 2px solid #e6a148;
+    border-right: 2px solid #e6a148;
     -webkit-transform: scale3d(1, 0, 1);
     transform: scale3d(1, 0, 1);
 }
@@ -5137,6 +5139,7 @@ body {
     -ms-transition: all 0.4s ease-in-out;
     -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
+    width: 100%;
 }
 .meta-icon{
     border: 2px solid #000000;
@@ -5949,7 +5952,7 @@ span.avail_span {
 
 }
 .review_tabs .nav li{
-    width: 25%;
+    width: 30%;
     text-align: center;
     background:#e6e6e6;
     margin-right: 5px;
@@ -7264,8 +7267,8 @@ span.time_date {
     border:0px;
 }
 .center-block-slider .ui-slider-handle{
-    height: 24px;
-    width: 24px;
+    height: 24px !important;
+    width: 24px !important;
     border-color:  #f6931f !important;
 }
 .center-block-slider .ui-slider-handle:active{
@@ -7306,6 +7309,28 @@ element.style {
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
 }
+.scrollToTop{
+	width: 61px;
+        height: 57px;
+        padding: 10px;
+        text-align: center;
+        background: whiteSmoke;
+        font-weight: bold;
+        color: #FFF;
+        text-decoration: none;
+        position: fixed;
+        top: 170px;
+        right: 8px;
+        display: none;
+        background: #484848;
+}
+.scrollToTop:hover{
+	text-decoration:none;
+        color: #DB8C31;
+        background: #000;
+}
+
+
 /*Media queries*/
 
 /*For mobile*/
@@ -7520,7 +7545,13 @@ element.style {
     .top-seach-bar .input-group{
         margin-bottom: 5px;
     }
-
+    .img-single{
+        display: table;
+        margin: 0px auto;
+    }
+    .center-block-slider .ui-slider{
+        height: 30px;
+    }
 }
 
 .zoom-section{clear:both;margin-top:20px;}
@@ -7579,6 +7610,7 @@ element.style {
     .top_nav_ul li{
         display: inline-block;
     }
+    
 }
 @media only screen and (max-width: 667px) {
 

@@ -99,7 +99,7 @@
   }
   function searchByLatLng(radiusDistance,latitude,longitude){
     var productStr = $("#searchTxtBox").val();
-    var categorySelectedInSearch = $("#categorySelectedInSearch option:selected").val();
+    var categorySelectedInSearch = $("#categorySelectedInSearch").val();
     var url= "";
 
     if(categorySelectedInSearch != ""){

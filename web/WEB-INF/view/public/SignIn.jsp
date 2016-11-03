@@ -2,72 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Reneguru</title>
-  <!-- Favicons -->
-  <link rel="shortcut icon" href="<c:url value="/resources/img/favicon.ico" />">
-  <!-- Mobile -->
-  <link rel="stylesheet"  href="<c:url value="/resources/css/lightslider.css" />" />
-  <meta name="google-signin-client_id" content="109533534799-85f6m6k04935qsuc6on9ubqe7e8rtndj.apps.googleusercontent.com">
+<jsp:directive.include file="../layouts/header.jsp" />
 
-  <style>
-    ul{
-      list-style: none outside none;
-      padding-left: 0;
-      margin: 0;
-    }
-    .demo .item{
-      margin-bottom: 60px;
-    }
-    .content-slider li{
-      background-color: #ed3020;
-      text-align: center;
-      color: #FFF;
-    }
-    .content-slider h3 {
-      margin: 0;
-      padding: 70px 0;
-    }
-    .demo{
-      width: 800px;
-    }
-  </style>
-  <script src="<c:url value="/resources/js/jquery1.9.1.min.js"  />" ></script>
-  <script src="<c:url value="/resources/js/lightslider.js" />" ></script>
-  <script>
-    $(document).ready(function() {
-      $("#content-slider").lightSlider({
-        loop:true,
-        keyPress:true
-      });
-      $('#image-gallery').lightSlider({
-        gallery:true,
-        item:1,
-        thumbItem:9,
-        slideMargin: 0,
-        speed:500,
-        auto:true,
-        loop:true,
-        onSliderLoad: function() {
-          $('#image-gallery').removeClass('cS-hidden');
-        }
-      });
-    });
-  </script>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-  <!-- CSS start here -->
-  <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />" media="screen">
-  <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/styles.css" />" />
-  <link rel="stylesheet" type="text/css" href="<c:url value="/resources/font-awesome/css/font-awesome.min.css"  />" >
-  <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/animate.css"  />" />
-  <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/owl.carousel.css"  />" />
-  <!-- Theme CSS -->
-  <!-- <link href="css/clean-blog.css" rel="stylesheet"> -->
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-  <!-- Google fonts end here -->
-</head>
 <body class="ux">
 <div class="container-fluid top_nav">
   <div class="row">
@@ -75,18 +11,7 @@
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-5">
           <ul class="top_nav_ul">
-            <%--<li class="dropdown">--%>
-              <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>--%>
-              <%--<ul class="dropdown-menu">--%>
-                <%--<li><a href="#">Action</a></li>--%>
-              <%--</ul>--%>
-            <%--</li>--%>
-            <%--<li class="dropdown">--%>
-              <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>--%>
-              <%--<ul class="dropdown-menu">--%>
-                <%--<li><a href="#">Action</a></li>--%>
-              <%--</ul>--%>
-            <%--</li>--%>
+
           </ul>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-7 ">

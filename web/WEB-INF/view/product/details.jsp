@@ -177,7 +177,9 @@
                     <p class="no-margin"><strong>Avaialability:</strong><span class="avail_span">Unavailable</span></p>
                   </d:if>
                   <p class="no-margin"><strong>Category:</strong><span class="avail_span">${rentalProduct.getProductCategories().get(0).getCategory().getName()}</span></p>
-
+                  <d:if test="${rentalProduct.productLocation!=null}" >
+                    <p class="no-margin"><strong>Pickup/Product location:</strong><span class="avail_span">${rentalProduct.productLocation.formattedAddress}</span></p>
+                  </d:if>
                 </div>
               </div>
             </div>

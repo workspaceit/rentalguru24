@@ -38,12 +38,12 @@ public class UserValidator implements Validator {
 //            errors.popNestedPath();
 //        }
 
-        try {
-            errors.pushNestedPath("identityType");
-            ValidationUtils.invokeValidator(this.identityTypeValidator, userInf.getIdentityType(), errors);
-        }finally {
-            errors.popNestedPath();
-        }
+//        try {
+//            errors.pushNestedPath("identityType");
+//            ValidationUtils.invokeValidator(this.identityTypeValidator, userInf.getIdentityType(), errors);
+//        }finally {
+//            errors.popNestedPath();
+//        }
         if(errors.hasErrors()){
             return;
         }
