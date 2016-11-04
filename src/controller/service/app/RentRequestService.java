@@ -5,10 +5,7 @@ import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.Refund;
 import com.paypal.api.payments.Sale;
 import com.paypal.base.rest.PayPalRESTException;
-import helper.DateHelper;
-import helper.RentFeesHelper;
-import helper.ServiceResponse;
-import helper.SessionManagement;
+import helper.*;
 import library.paypal.PayPalPayment;
 import model.*;
 import model.admin.AdminPaypalCredentialModel;
@@ -298,6 +295,18 @@ public class RentRequestService{
         rentPayment.setRentInf(rentInf);
         rentPaymentModel.update(rentPayment);
         serviceResponse.setResponseData(rentRequest, "Internal server error");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Inside Email sending");
+
+                EmailHelper.rentalRequestApprovalEmail(rentRequest, true);
+                System.out.println("Inside Email sent");
+            }
+        }).start();
+
+
         return serviceResponse;
     }
 

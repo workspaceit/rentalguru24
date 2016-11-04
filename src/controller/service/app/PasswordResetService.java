@@ -1,7 +1,7 @@
 package controller.service.app;
 
 
-import helper.MailHelper;
+import helper.EmailHelper;
 import helper.ServiceResponse;
 import helper.UtilityHelper;
 import model.AppLoginCredentialModel;
@@ -69,7 +69,7 @@ public class PasswordResetService{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MailHelper.sendPasswordRestMail(emailTo, token, baseUrl + "/reset-password/change-password/");
+                EmailHelper.sendPasswordRestMail(emailTo, token, baseUrl + "/reset-password/change-password/");
             }
         }).start();
 

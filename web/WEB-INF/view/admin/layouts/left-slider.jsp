@@ -42,19 +42,9 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/app-user"><i class="fa fa-circle-o"></i> App User</a></li>
-        </ul>
-        <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/app-user/verified"><i class="fa fa-circle-o"></i>Verified Users</a></li>
-        </ul>
-        <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/app-user/unverified"><i class="fa fa-circle-o"></i>Un-verified Users</a></li>
-        </ul>
-
-        <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/get-all-admin"><i class="fa fa-circle-o"></i>Admin User</a></li>
-        </ul>
-
-        <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/create-new-admin"><i class="fa fa-circle-o"></i>Create New Admin</a></li>
         </ul>
       </li>
@@ -64,8 +54,6 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/product/get-all-rental-product"><i class="fa fa-circle-o"></i>All Rental Products</a></li>
-        </ul>
-        <ul class="treeview-menu">
           <li><a href="#"><i class="fa fa-circle-o"></i>Other Products</a></li>
         </ul>
       </li>
@@ -82,12 +70,7 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/category-list"><i class="fa fa-circle-o"></i>Category and subcategory List</a></li>
-        </ul>
-        <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/add-category"><i class="fa fa-circle-o"></i>Add Category</a></li>
-        </ul>
-
-        <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/add-sub-category"><i class="fa fa-circle-o"></i>Add Subcategory</a></li>
         </ul>
       </li>
@@ -97,8 +80,6 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/cms/page"><i class="fa fa-circle-o"></i>Add page</a></li>
-        </ul>
-        <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/cms/get-all"><i class="fa fa-circle-o"></i>All pages</a></li>
         </ul>
       </li>
@@ -116,9 +97,18 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/add-banner-image"><i class="fa fa-circle-o"></i>Add Banner Image</a></li>
-        </ul>
-        <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/banner-image-list"><i class="fa fa-circle-o"></i>Banner Image List</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-dashboard"></i> <span>Rent request</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/rent-request/all"><i class="fa fa-circle-o"></i>All</a></li>
+          <li><a href="${BaseUrl}/admin/rent-request/pending"><i class="fa fa-circle-o"></i>Pending</a></li>
+          <li><a href="${BaseUrl}/admin/rent-request/on-progress"><i class="fa fa-circle-o"></i>On progress</a></li>
         </ul>
       </li>
     </ul>

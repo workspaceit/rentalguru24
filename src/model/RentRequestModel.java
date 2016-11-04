@@ -60,6 +60,58 @@ public class RentRequestModel extends BaseModel {
         session.getTransaction().commit();
         session.close();
     }
+    public List<RentRequest> getAll(){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery(" SELECT rentRequest FROM RentRequest rentRequest "+
+                    " where rentRequest.isExpired = false ORDER BY rentRequest.id desc  ")
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
+    public List<RentRequest> getAllPending(){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery(" SELECT rentRequest FROM RentRequest rentRequest " +
+                    " where rentRequest.isExpired = false " +
+                    " AND rentRequest.approve = false" +
+                    " AND rentRequest.disapprove = false " +
+                    " ORDER BY rentRequest.id desc  ")
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
+    public List<RentRequest> getAllInProgress(){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery(" SELECT rentRequest FROM RentRequest rentRequest " +
+                    " where rentRequest.isExpired = false " +
+                    " AND rentRequest.approve = false" +
+                    " AND rentRequest.isRentComplete = false " +
+                    " ORDER BY rentRequest.id desc  ")
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
+    public List<RentRequest> getAllCompelte(){
+        Session session = this.sessionFactory.openSession();
+
+        try{
+            return session.createQuery(" SELECT rentRequest FROM RentRequest rentRequest " +
+                    " where rentRequest.isExpired = false " +
+                    " AND rentRequest.isRentComplete = true " +
+                    " ORDER BY rentRequest.id desc  ")
+                    .list();
+        }finally {
+            session.close();
+        }
+    }
     public List<RentRequest> getByProductOwnerAndProductId(int ownerId,int productId,int limit,int offset){
         Session session = this.sessionFactory.openSession();
         if(limit<=0){

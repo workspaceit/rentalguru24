@@ -4,7 +4,7 @@ package controller.service.app;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import helper.MailHelper;
+import helper.EmailHelper;
 import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import model.EmailConfirmationModel;
@@ -147,7 +147,7 @@ public class SignupService{
             @Override
             public void run() {
                 System.out.print("Email sending init");
-                MailHelper.signUpConfirmationMail(emailConfirmation.getAppCredential().getEmail(),
+                EmailHelper.signUpConfirmationMail(emailConfirmation.getAppCredential().getEmail(),
                         emailConfirmation.getToken(),
                         baseUrl + "/email-confirmation/confirm/",
                         baseUrl + "/email-confirmation/deny/");
