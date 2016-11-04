@@ -70,7 +70,7 @@
 
 <div class="container center-bg">
     <form class="form-signup clearfix" onsubmit="return submitSignUpData();" >
-        <div class="col-md-6">
+        <div class="col-md-8 col-md-offset-2">
             <div class="form-group">
                 <label for="firstname">First name</label>
                 <input type="text" class="form-control" placeholder="ex.John" id="firstName" name="firstName">
@@ -87,8 +87,6 @@
                 <p class="help-block error-form" id="errorMsg_email" for="email" custom-validation="required" ></p>
             </div>
 
-        </div>
-        <div class="col-md-6">
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" placeholder="ex.password" id="password" name="password" >
@@ -126,7 +124,7 @@
                 Sign up
                 <span class="inner-load signUpGif" hidden></span>
             </button>
-            <a href="${BaseUrl}/signin">Already have an account?</a>
+            <p style="margin: 10px 0"><a href="${BaseUrl}/signin">Already have an account?</a></p>
             <div class="alert alert-success text-center" role="alert" hidden>
                 Sign up completed Successfully
             </div>
