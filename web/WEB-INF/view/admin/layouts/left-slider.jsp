@@ -109,6 +109,7 @@
           <li><a href="${BaseUrl}/admin/rent-request/all"><i class="fa fa-circle-o"></i>All</a></li>
           <li><a href="${BaseUrl}/admin/rent-request/pending"><i class="fa fa-circle-o"></i>Pending</a></li>
           <li><a href="${BaseUrl}/admin/rent-request/on-progress"><i class="fa fa-circle-o"></i>On progress</a></li>
+          <li><a href="${BaseUrl}/admin/rent-request/complete"><i class="fa fa-circle-o"></i>Complete</a></li>
         </ul>
       </li>
     </ul>

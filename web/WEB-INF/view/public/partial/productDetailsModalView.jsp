@@ -102,13 +102,13 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <d:if test="${rentalProduct.isCurrentlyAvailable() == true}">
-                    <p class="no-margin"><strong>Avaialability:</strong><span class="avail_span">Available</span></p>
+                    <p class="no-margin"><strong>Availability:</strong><span class="avail_span">Available</span></p>
                   </d:if>
                   <d:if test="${rentalProduct.isCurrentlyAvailable() == false}">
-                    <p class="no-margin"><strong>Avaialability:</strong><span class="avail_span">Unavailable</span></p>
+                    <p class="no-margin"><strong>Availability</strong><span class="avail_span">Unavailable</span></p>
                   </d:if>
                   <p class="no-margin"><strong>Category:</strong><span class="avail_span">${rentalProduct.getProductCategories().get(0).getCategory().getName()}</span></p>
-
+                  <p class="no-margin"><strong>Pickup/Product location : </strong><span class="avail_span">${rentalProduct.productLocation.formattedAddress}</span></p>
                 </div>
               </div>
             </div>

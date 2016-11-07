@@ -91,7 +91,8 @@ public class RentRequestModel extends BaseModel {
         try{
             return session.createQuery(" SELECT rentRequest FROM RentRequest rentRequest " +
                     " where rentRequest.isExpired = false " +
-                    " AND rentRequest.approve = false" +
+                    " AND ( rentRequest.approve = true" +
+                    " or rentRequest.isRentComplete = true ) " +
                     " AND rentRequest.isRentComplete = false " +
                     " ORDER BY rentRequest.id desc  ")
                     .list();
