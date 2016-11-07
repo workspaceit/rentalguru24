@@ -35,29 +35,32 @@ public class AdminRentRequestController {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
         List<RentRequest> rentRequests = new ArrayList<>();
+        String tableTitle = "";
         switch (type){
             case "all":
                 rentRequests = rentRequestModel.getAll();
+                tableTitle = "All Rent Request";
                 break;
            case "pending":
                 rentRequests = rentRequestModel.getAllPending();
+                tableTitle = "Pending Rent Request";
                 break;
             case  "on-progress":
                 rentRequests = rentRequestModel.getAllInProgress();
+                tableTitle = "Rent in Progress";
                 break;
             case  "complete":
                 rentRequests = rentRequestModel.getAllCompelte();
+                tableTitle = "Completed Rent Request";
                 break;
         }
-
-
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("rentRequests", rentRequests);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageHeader", "App User");
+        modelAndView.addObject("pageHeader", tableTitle);
         modelAndView.addObject("mainMenu", "Rent request");
 //        modelAndView.addObject("subMenu", "App User");
-//        modelAndView.addObject("pageUrl", "admin/user/app-user");
+        modelAndView.addObject("pageUrl", "admin/rent-request/all");
         modelAndView.addObject("PageTitle", "Admin Users Details");
         return modelAndView;
     }

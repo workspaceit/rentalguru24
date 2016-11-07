@@ -33,7 +33,8 @@
                   <th>Product title</th>
                   <th>Requested By</th>
                   <th>Product Owner</th>
-                  <th>Date</th>
+                  <th>Request Date</th>
+                  <th>Duration</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -45,7 +46,12 @@
                   <td>${rentRequest.rentalProduct.name}</td>
                   <td>${rentRequest.requestedBy.userInf.firstName}&nbsp;${rentRequest.requestedBy.userInf.lastName}</td>
                   <td>${rentRequest.rentalProduct.owner.userInf.firstName}&nbsp;${rentRequest.rentalProduct.owner.userInf.lastName}</td>
-                  <td>${rentRequest.createdDate}</td>
+                  <td><fmt:formatDate pattern="MMM d, yyyy h:mm a" value="${rentRequest.createdDate}" /></td>
+                  <td>
+                    <fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.startDate}" />
+                    &nbsp; to &nbsp;
+                    <fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.startDate}" />
+                  </td>
                   <td>
                     <d:choose>
                       <d:when test="${!rentRequest.approve && !rentRequest.disapprove && !rentRequest.isRentComplete}">Pending</d:when>
@@ -53,7 +59,9 @@
                       <d:when test="${rentRequest.isRentComplete}">Complete</d:when>
                     </d:choose>
                   </td>
-                  <td><a href="${BaseUrl}/admin/rent-request/details/${rentRequest.id}" class="btn btn-default btn-lg active" role="button">Details</a></td>
+                  <td>
+                    <a href="${BaseUrl}/admin/rent-request/details/${rentRequest.id}" class="btn btn-default btn-lg active" role="button">Details</a>
+                  </td>
                 </tr>
                 </d:forEach>
                 </tbody>
@@ -62,7 +70,7 @@
                   <th>Product title</th>
                   <th>Requested By</th>
                   <th>Product Owner</th>
-                  <th>Date</th>
+                  <th>Request Date</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>

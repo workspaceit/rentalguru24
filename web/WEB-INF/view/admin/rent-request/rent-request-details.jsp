@@ -69,7 +69,18 @@
                           ${rentRequest.rentalProduct.description}
                         </p>
                         <br>
-                        <p><span>Date: <fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.createdDate}" /> </span>
+                        <p>
+                          <span><b>Requested Date:</b> <fmt:formatDate pattern="MMM d, yyyy h:mm a" value="${rentRequest.createdDate}" /> </span>
+                        </p>
+                        <p>
+                          <span>
+                            <b>Duration :</b>
+                            <fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.startDate}" />
+                            &nbsp; to &nbsp;
+                            <fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.startDate}" />
+                          </span>
+                        </p>
+
                       </div><!-- /.row -->
                     </div><!-- /.col -->
                   </div><!-- /.row -->
