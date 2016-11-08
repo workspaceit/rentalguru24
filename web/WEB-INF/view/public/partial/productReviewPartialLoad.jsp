@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <d:if test="${productRatingList.size() == 0}">
   <div class="col-md-8 comment-review">
@@ -22,7 +23,7 @@
           </a>
         </div>
         <div class="media-body">
-          <h4 class="media-heading">${reviewList.getAppCredential().getUserInf().getFirstName()} ${reviewList.getAppCredential().getUserInf().getLastName()}</h4> ${reviewList.getReviewText()}
+          <h4 class="media-heading">${fn:escapeXml(reviewList.getAppCredential().getUserInf().getFirstName())} ${fn:escapeXml(reviewList.getAppCredential().getUserInf().getLastName())}</h4> ${fn:escapeXml(reviewList.getReviewText())}
         </div>
       </div>
     </div>

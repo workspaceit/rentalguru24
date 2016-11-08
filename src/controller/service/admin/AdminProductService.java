@@ -36,7 +36,7 @@ public class AdminProductService {
         }
 
         serviceResponse.getResponseStat().setStatus(true);
-        serviceResponse.getResponseStat().setMsg("Review Status was changed Successfully");
+        serviceResponse.getResponseStat().setMsg("Product Status was changed Successfully");
         new Thread(new Runnable() {
             @Override
             public void run() {

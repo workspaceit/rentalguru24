@@ -1,5 +1,6 @@
 package helper;
 
+import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
 
@@ -59,6 +60,8 @@ public class EmailHelper {
         String activationUrl =url+activationCode;
 
         String link = "<a href='"+activationUrl+"'>Click here</a>";
+        String emailHtmlBody = "Hi,<br>   Please click this link " + link + " to reset your password <br> For app user use this token :<b>"+activationCode+"<b>";
+        emailHtmlBody = templateTop+emailHtmlBody+templateBottom;
         try{
 
             MimeMessage message = new MimeMessage(session);
@@ -68,7 +71,8 @@ public class EmailHelper {
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(to));
             message.setSubject("Password Reset");
-            message.setText("Hi,<br>   Please click this link " + link + " to reset your password <br> For app user use this token :<b>"+activationCode+"<b>",null,"html");
+
+            message.setText(emailHtmlBody,null,"html");
             Transport.send(message);
             String title = "";
             String body = "";
@@ -101,6 +105,8 @@ public class EmailHelper {
         String ownerLastName = rentalProduct.getOwner().getUserInf().getLastName();
         String ownerFullName = ownerFirstName+" "+ownerLastName;
         String emailHtmlBody = "Dear "+ownerFullName+" "+"<br> Your product "+productDetailsUrl+" has been "+statusText+".<br> Thank you for using <a href='http://rentguru24.com'>rentguru24.com</a> ";
+        emailHtmlBody = templateTop+emailHtmlBody+templateBottom;
+
         try{
 
             MimeMessage message = new MimeMessage(session);
@@ -134,12 +140,14 @@ public class EmailHelper {
                         username, password);// Specify the Username and the PassWord
             }
         });
-        String statusText = (approve)?"approve":"disapprove";
+        String statusText = (approve)?"approved":"disapproved";
         String rentRequestDetails = "<a href='"+BASEURL+"/rent/request/"+rentRequest.getId()+"'>click here</a>";
         String ownerFirstName = rentRequest.getRequestedBy().getUserInf().getFirstName();
         String ownerLastName = rentRequest.getRequestedBy().getUserInf().getLastName();
         String ownerFullName = ownerFirstName+" "+ownerLastName;
         String emailHtmlBody = "Dear "+ownerFullName+" "+"<br> Your rent request has been approved. Please check your order  "+rentRequestDetails+". <br>Thank you for using <a href='http://rentguru24.com'>rentguru24.com</a> ";
+        emailHtmlBody = templateTop+emailHtmlBody+templateBottom;
+
         try{
 
             MimeMessage message = new MimeMessage(session);
@@ -148,7 +156,47 @@ public class EmailHelper {
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(to));
-            message.setSubject("RentGuru24 : Your rent request has been approved " + statusText);
+            message.setSubject("RentGuru24 : Your rent request has been  " + statusText);
+            message.setText(emailHtmlBody, null,"html");
+            Transport.send(message);
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+
+
+        return true;
+    }
+    public static boolean accountApprovalEmail(AppCredential appCredential){
+
+
+
+        String to = appCredential.getEmail();
+        Properties properties = getProperties();
+
+        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(
+                        username, password);// Specify the Username and the PassWord
+            }
+        });
+
+        String ownerFirstName = appCredential.getUserInf().getFirstName();
+        String ownerLastName = appCredential.getUserInf().getLastName();
+        String ownerFullName = ownerFirstName+" "+ownerLastName;
+        String emailHtmlBody = "Dear "+ownerFullName+" "+"<br> Your account has been verified";
+        emailHtmlBody = templateTop+emailHtmlBody+templateSignInBottom;
+
+        try{
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+            message.setSubject("RentGuru24 : Your account has been approved ");
             message.setText(emailHtmlBody, null,"html");
             Transport.send(message);
 
@@ -194,6 +242,8 @@ public class EmailHelper {
         String confirmLinkHtml = "<a href='"+activationUrl+"'>Click here</a>";
         String disapproveLinkHtml = "<a href='"+diapproveUrl+"'>Click here</a>";
         String emailHtmlBody = "Hi,<br>   Please click this link " + confirmLinkHtml + " to confirm , or to deny "+disapproveLinkHtml;
+        emailHtmlBody = templateTop+emailHtmlBody+templateBottom;
+
         try{
 
             MimeMessage message = new MimeMessage(session);
@@ -217,4 +267,59 @@ public class EmailHelper {
 
         return true;
     }
+
+    static String templateTop = "<html>\n" +
+            "\t<title>Email template</title>\n" +
+            "\t<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet'> \n" +
+            "\t<style type='text/css'>\n" +
+            "\t\tbody{\n" +
+            "\t\t\tfont-family: 'Lato', sans-serif;\n" +
+            "\t\t\tfont-size:14px;\n" +
+            "\t\t}\n" +
+            "\t</style>\n" +
+            "\t<body>\n" +
+            "\t\t<div style='width:600px;margin:10px auto;overflow:hidden;min-height:20px;position:relative;background:#f8f8f8;'>\n" +
+            "\t\t\t<table style='width:100%;text-align:center;padding:10px 0px;border-bottom:3px solid #F19329;'>\n" +
+            "\t\t\t\t<thead>\n" +
+            "\t\t\t\t\t<tr>\n" +
+            "\t\t\t\t\t\t<th><img src='"+BASEURL+"/resources/img/email-logo.png'></th>\n" +
+            "\t\t\t\t\t</tr>\n" +
+            "\t\t\t\t</thead>\n" +
+            "\t\t\t</table>\n" +
+            "\t\t\t<div style='overflow:hidden;min-height:150px;padding:20px;background:#f0f0f0;margin:0px;display:block;font-size:15px;color:#424242;'>\n" +
+            "\t\t\t\t<p style='margin:0px;line-height:24px;'>";
+    static String templateBottom = "</p>\n" +
+            "\t\t\t</div>\n" +
+            "\t\t\t<div style='display:block;text-align:center;padding:25px 15px 25px 15px;'>\n" +
+            "\t\t\t\t<a href='"+BASEURL+"' style='padding:10px 20px;background:#F19329;color:#fff;border:0px;text-decoration:none;text-transform:uppercase;font-weight:bold;'>\n" +
+            "\t\t\t\t\tClick here to go rentguru24\n" +
+            "\t\t\t\t</a>\n" +
+            "\t\t\t</div>\n" +
+            "\t\t\t<table style='width:100%;text-align:center;padding:10px 0px;background:#3490a7;color:#fff;'>\n" +
+            "\t\t\t\t<thead>\n" +
+            "\t\t\t\t\t<tr>\n" +
+            "\t\t\t\t\t\t<th>Copyright. Rentguru24.com</th>\n" +
+            "\t\t\t\t\t</tr>\n" +
+            "\t\t\t\t</thead>\n" +
+            "\t\t\t</table>\n" +
+            "\t\t</div>\n" +
+            "\t</body>\n" +
+            "</html>" ;
+    static String templateSignInBottom = "</p>\n" +
+            "\t\t\t</div>\n" +
+            "\t\t\t<div style='display:block;text-align:center;padding:25px 15px 25px 15px;'>\n" +
+            "\t\t\t\t<a href='"+BASEURL+"/signin' style='padding:10px 20px;background:#F19329;color:#fff;border:0px;text-decoration:none;text-transform:uppercase;font-weight:bold;'>\n" +
+            "\t\t\t\t\tClick here to sing-in rentguru24\n" +
+            "\t\t\t\t</a>\n" +
+            "\t\t\t</div>\n" +
+            "\t\t\t<table style='width:100%;text-align:center;padding:10px 0px;background:#3490a7;color:#fff;'>\n" +
+            "\t\t\t\t<thead>\n" +
+            "\t\t\t\t\t<tr>\n" +
+            "\t\t\t\t\t\t<th>Copyright. Rentguru24.com</th>\n" +
+            "\t\t\t\t\t</tr>\n" +
+            "\t\t\t\t</thead>\n" +
+            "\t\t\t</table>\n" +
+            "\t\t</div>\n" +
+            "\t</body>\n" +
+            "</html>" ;
 }

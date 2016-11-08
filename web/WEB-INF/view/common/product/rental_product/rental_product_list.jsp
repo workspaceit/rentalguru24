@@ -12,7 +12,7 @@
                 <a class="caption-link meta-icon" data-toggle="modal" data-target=".quickview-modal" href="javascript:void(0);" onclick="viewProductDetails(${rentalProduct.getId()})"> <i class="fa fa-eye"> </i> </a>
             </div>
             <div class="block-desc">
-                <label class="title-label productName"><a href="${BaseUrl}/product/details/${rentalProduct.getId()}">${fn:substring(rentalProduct.name, 0, 20)}<d:if test="${fn:length(rentalProduct.name)>20}">....</d:if></a></label>
+                <label class="title-label productName"><a href="${BaseUrl}/product/details/${rentalProduct.getId()}">${fn:substring(fn:escapeXml(rentalProduct.name), 0, 20)}<d:if test="${fn:length(rentalProduct.name)>20}">....</d:if></a></label>
             </div>
             <div class="block-action">
                 <d:if test="${rentalProduct.averageRating != 0}">

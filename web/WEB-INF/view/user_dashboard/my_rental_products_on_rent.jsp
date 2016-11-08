@@ -50,14 +50,14 @@
                                                 <img class="img-responsive" src="<c:url value="${BaseUrl}/images/${product.getProfileImage().getOriginal().getPath()}" />" />
                                             </div>
                                             <div class="table-desc">
-                                                <h5>${product.getName()}</h5>
-                                                <p>${product.getDescription()}</p>
+                                                <h5>${fn:escapeXml(product.getName())}</h5>
+                                                <p>${fn:escapeXml(product.getDescription())}</p>
                                                 <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableFrom()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${product.getAvailableTill()}"/></span></p>
                                                 <h5>Rented By</h5>
                                                 <d:set var="locaIsProductRenturned" value="${false}" ></d:set>
                                                 <d:forEach var="rentInf" items="${product.getRentInf()}">
                                                     <d:set var="productRenturned" value="${tyre}" ></d:set>
-                                                    <p>${rentInf.getRentee().getUserInf().getFirstName()} ${rentInf.getRentee().getUserInf().getLastName()}</p>
+                                                    <p>${fn:escapeXml(rentInf.getRentee().getUserInf().getFirstName())} ${fn:escapeXml(rentInf.getRentee().getUserInf().getLastName())}</p>
                                                     <p><span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getStartDate()}"/> </span> to <span><fmt:formatDate pattern="MMM d,yyyy" value="${rentInf.getEndsDate()}"/></span></p>
                                                     <d:if test="${rentInf.rentalProductReturned != null}">
                                                         <d:if test="${rentInf.rentalProductReturned != null}">

@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.DigestUtils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,10 +19,25 @@ import java.util.List;
  * Created by mi on 7/20/16.
  */
 public class AppLoginCredentialModel extends BaseModel {
-    private  BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public String getPasswordAsMd5DigestAsHex(String password){
         return DigestUtils.md5DigestAsHex(password.getBytes());
+    }
+    public static String SHA2HASH(String password,String salt) {
+        try {
+            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+
+            String passWithSalt = password + salt;
+            byte[] passBytes = passWithSalt.getBytes();
+            byte[] passHash = sha256.digest(passBytes);
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< passHash.length ;i++) {
+                sb.append(Integer.toString((passHash[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            String generatedPassword = sb.toString();
+            return generatedPassword;
+        } catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
+        return null;
     }
     public AppCredential getAppCredentialById(int id){
         Session session = this.sessionFactory.openSession();
@@ -65,24 +82,32 @@ public class AppLoginCredentialModel extends BaseModel {
         return authCredential.isBlocked();
     }
     public AuthCredential authenticationByEmailPassword(String email,String password){
-        bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         Session session = this.sessionFactory.openSession();
-        String hql = "from AuthCredential where email = :email and password = :password";
+        String hql = "from AuthCredential where email = :email ";
         Query query = session.createQuery(hql);
         query.setParameter("email", email);
-        query.setParameter("password", this.getPasswordAsMd5DigestAsHex(password));
-        return (AuthCredential)query.uniqueResult();
+        AuthCredential authCredential = (AuthCredential)query.uniqueResult();
+        if(bCryptPasswordEncoder.matches(password,authCredential.getPassword())) {
+            return authCredential;
+        }else {
+            return null;
+        }
     }
     public AuthCredential adminAuthenticationByEmailPassword(String email,String password){
-        bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
         Session session = this.sessionFactory.openSession();
-        String hql = "from AuthCredential where email = :email and password = :password and role = 1";
+        String hql = "from AuthCredential where email = :email and role = 1";
         Query query = session.createQuery(hql);
         query.setParameter("email", email);
-        query.setParameter("password", this.getPasswordAsMd5DigestAsHex(password));
-        return (AuthCredential)query.uniqueResult();
+        AuthCredential authCredential = (AuthCredential)query.uniqueResult();
+        if(bCryptPasswordEncoder.matches(password,authCredential.getPassword())) {
+            return authCredential;
+        }else {
+            return null;
+        }
     }
     public AuthCredential authenticationByAccessToken(String accessToken){
         Session session = this.sessionFactory.openSession();
@@ -125,10 +150,15 @@ public class AppLoginCredentialModel extends BaseModel {
         return true;
     }
     public void insert(AuthCredential authCredential){
-        bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        authCredential.setPassword(this.getPasswordAsMd5DigestAsHex(authCredential.getPassword()));
-        authCredential.setAccesstoken(this.getPasswordAsMd5DigestAsHex((authCredential.getEmail() + authCredential.getPassword())));
+        String tmpAccessToken = this.SHA2HASH(authCredential.getPassword(),authCredential.getEmail());
+        tmpAccessToken = (tmpAccessToken==null)
+                        ?this.getPasswordAsMd5DigestAsHex(authCredential.getEmail() + authCredential.getPassword())
+                        :tmpAccessToken;
+
+        authCredential.setPassword(bCryptPasswordEncoder.encode(authCredential.getPassword()));
+        authCredential.setAccesstoken(tmpAccessToken);
 
 
         Session session = this.sessionFactory.openSession();
@@ -136,7 +166,13 @@ public class AppLoginCredentialModel extends BaseModel {
 
         session.saveOrUpdate(authCredential);
         session.getTransaction().commit();
+
         session.close();
+        // Adding Primary key which is unique
+        // ( MD5 Collision vulnerabilities https://en.wikipedia.org/wiki/MD5#Collision_vulnerabilities )
+
+        authCredential.setAccesstoken(authCredential.getAccesstoken() + authCredential.getId());
+        this.update(authCredential);
 
     }
 
@@ -165,10 +201,13 @@ public class AppLoginCredentialModel extends BaseModel {
     }
     /* For Profile Edit */
     public void updateWithNewPassword(AuthCredential authCredential){
-        bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
-        authCredential.setPassword(this.getPasswordAsMd5DigestAsHex(authCredential.getPassword()));
-        authCredential.setAccesstoken(this.getPasswordAsMd5DigestAsHex((authCredential.getEmail() + authCredential.getPassword())));
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String tmpAccessToken = this.SHA2HASH(authCredential.getPassword(),authCredential.getEmail());
+        tmpAccessToken = (tmpAccessToken==null)
+                ?this.getPasswordAsMd5DigestAsHex(authCredential.getEmail() + authCredential.getPassword())
+                :tmpAccessToken;
+        authCredential.setPassword(bCryptPasswordEncoder.encode(authCredential.getPassword()));
+        authCredential.setAccesstoken(tmpAccessToken+authCredential.getId());
 
 
         Session session = this.sessionFactory.openSession();

@@ -1,15 +1,18 @@
 package controller.service.admin;
 
 
+import helper.EmailHelper;
 import helper.ServiceResponse;
 import model.AppLoginCredentialModel;
 import model.admin.AdminPaypalCredentialModel;
 import model.admin.AdminSitesFeesModel;
 import model.entity.admin.AdminPaypalCredential;
 import model.entity.admin.AdminSiteFeesEntity;
+import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import model.entity.app.IdentityType;
 import model.entity.app.UserInf;
+import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +47,27 @@ public class AdminUserService {
         if (serviceResponse.hasErrors()) {
             return serviceResponse;
         }
+        AppCredential appCredential = appLoginCredentialModel.getAppCredentialById(appUserId);
+
+        if(appCredential==null){
+            serviceResponse.getResponseStat().setStatus(false);
+            serviceResponse.getResponseStat().setMsg("App user not found by id "+appUserId);
+            return serviceResponse;
+        }
         appLoginCredentialModel.appUserStatusUpdate(appUserId, varified);
+        if(varified==1){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("Inside Email sending");
+
+                    EmailHelper.accountApprovalEmail(appCredential);
+                    System.out.println("Inside Email sent");
+                }
+            }).start();
+
+        }
+
         return serviceResponse;
     }
 

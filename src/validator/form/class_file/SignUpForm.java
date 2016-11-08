@@ -1,5 +1,7 @@
 package validator.form.class_file;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 /**
  * Created by mi on 11/3/16.
  */
@@ -12,7 +14,8 @@ public class SignUpForm {
     private Long identityDocToken;
 
     public String getFirstName() {
-        return firstName;
+
+        return StringEscapeUtils.escapeHtml3(firstName);
     }
 
     public void setFirstName(String firstName) {
@@ -20,7 +23,8 @@ public class SignUpForm {
     }
 
     public String getLastName() {
-        return lastName;
+
+        return StringEscapeUtils.escapeHtml3(lastName);
     }
 
     public void setLastName(String lastName) {

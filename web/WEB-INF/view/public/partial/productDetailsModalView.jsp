@@ -45,7 +45,7 @@
             <div class="rent_product_info">
               <div class="row">
                 <div class="col-md-8 col-xs-8 col-sm-8">
-                  <h4 class="no-margin"><strong>${rentalProduct.getName()}</strong></h4>
+                  <h4 class="no-margin"><strong>${fn:escapeXml(rentalProduct.getName())}</strong></h4>
                   <div class="row">
                     <d:if test="${rentalProduct.averageRating != 0}">
                       <div class="col-md-4 col-sm-4 col-xs-12">
@@ -94,7 +94,7 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <h5><strong>Short Overview</strong></h5>
-                  <p class="overview_content no-margin">${fn:substring(rentalProduct.getDescription(), 0, 1500)}<d:if test="${fn:length(rentalProduct.getDescription())>1500}">....</d:if></p>
+                  <p class="overview_content no-margin">${fn:substring(fn:escapeXml(rentalProduct.getDescription()), 0, 1500)}<d:if test="${fn:length(rentalProduct.getDescription())>1500}">....</d:if></p>
                 </div>
               </div>
             </div>
@@ -108,7 +108,7 @@
                     <p class="no-margin"><strong>Availability</strong><span class="avail_span">Unavailable</span></p>
                   </d:if>
                   <p class="no-margin"><strong>Category:</strong><span class="avail_span">${rentalProduct.getProductCategories().get(0).getCategory().getName()}</span></p>
-                  <p class="no-margin"><strong>Pickup/Product location : </strong><span class="avail_span">${rentalProduct.productLocation.formattedAddress}</span></p>
+                  <p class="no-margin"><strong>Pickup/Product location : </strong><span class="avail_span">${fn:escapeXml(rentalProduct.productLocation.formattedAddress)}</span></p>
                 </div>
               </div>
             </div>

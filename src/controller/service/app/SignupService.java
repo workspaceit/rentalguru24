@@ -96,7 +96,7 @@ public class SignupService{
         /*------------------- Uploaded Document checking By Token -----*/
 
 
-        Long identityDocToken = signUpForm.getIdentityDocToken();
+    //    Long identityDocToken = signUpForm.getIdentityDocToken();
 //        TempFile tempFile = this.tempFileModel.getByToken(identityDocToken);
 //        if(tempFile ==null){
 //            serviceResponse.setRequestError("identityDocToken", "Identity doc token is not valid");
@@ -108,8 +108,8 @@ public class SignupService{
 //            return serviceResponse;
 //        }
 
-        authCredential.setVerified(true);
-        authCredential.setEmailConfirmed(true); // Need to be set false before lunch
+        authCredential.setVerified(false);
+        authCredential.setEmailConfirmed(false); // Need to be set false before lunch
         authCredential.setBlocked(false);
         //authCredential.getUserInf().setIdentityDocUrl(tempFile.getPath());
 

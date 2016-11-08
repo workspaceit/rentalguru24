@@ -8,16 +8,16 @@
 
 <!DOCTYPE html>
 <html>
-<jsp:directive.include file="layouts/header.jsp" />
+<jsp:directive.include file="../layouts/header.jsp" />
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-  <jsp:directive.include file="layouts/navbar-top.jsp" />
-  <jsp:directive.include file="layouts/left-slider.jsp" />
+  <jsp:directive.include file="../layouts/navbar-top.jsp" />
+  <jsp:directive.include file="../layouts/left-slider.jsp" />
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <jsp:directive.include file="layouts/pageHeader.jsp" />
+    <jsp:directive.include file="../layouts/pageHeader.jsp" />
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -33,8 +33,8 @@
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email Address</th>
-                  <th>Identity Document</th>
-                  <th>Active/Deactive</th>
+                  <%--<th>Identity Document</th>--%>
+                  <th>Active/De-active</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,11 +44,11 @@
                   <td>${users.getUserInf().getFirstName()}</td>
                   <td>${users.getUserInf().getLastName()}</td>
                   <td>${users.getEmail()}</td>
-                  <td>
+                <%--  <td>
                     <a class="btn btn-block" target="_blank" href="${BaseUrl}/identitydoc-file/${users.getUserInf().getIdentityDocUrl()}">
                       <i class="fa fa-download"></i> Download Document
                     </a>
-                  </td>
+                  </td>--%>
                   <td>
                     <div class="btn-group">
                       <button type="button" class="btn <d:if test="${users.verified == true}">btn-success</d:if> <d:if test="${users.verified == false}">btn-danger</d:if>" id="actionButton_${users.id}"><d:if test="${users.verified == true}">Active</d:if> <d:if test="${users.verified == false}">Deactive</d:if></button>
@@ -70,8 +70,8 @@
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email Address</th>
-                  <th>Identity Document</th>
-                  <th>Active/Deactive</th>
+                 <%-- <th>Identity Document</th>--%>
+                  <th>Active/De-active</th>
                 </tr>
                 </tfoot>
               </table>
@@ -81,7 +81,7 @@
       </div><!-- /.row -->
     </section><!-- /.content -->
   </div><!-- /.content-wrapper -->
-    <jsp:directive.include file="layouts/footer.jsp" />
+    <jsp:directive.include file="../layouts/footer.jsp" />
   <script>
     function setActiveDeactivAppUsers(id, status){
       $("#actionButton_"+id).attr("disabled","disabled");

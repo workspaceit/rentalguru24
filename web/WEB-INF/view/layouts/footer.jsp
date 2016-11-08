@@ -119,8 +119,12 @@
   function doSearchByClick(){
     var productStr = $("#searchTxtBox").val();
     var categorySelectedInSearch = $("#categorySelectedInSearch").val();
-
-    if(productStr!=null && productStr != ""){
+    if(productStr!=null){
+      productStr = productStr.trim();
+    }else{
+      productStr = "";
+    }
+    if(productStr != ""){
       console.log("TIME TO GO");
       if(categorySelectedInSearch != ""){
         window.location = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr;
@@ -133,8 +137,12 @@
     var char = event.which || event.keyCode;
     var productStr = $("#searchTxtBox").val();
     var categorySelectedInSearch = $("#categorySelectedInSearch").val();
-
-    if(char==13 && productStr!=null && productStr != ""){
+    if(productStr!=null){
+      productStr = productStr.trim();
+    }else{
+      productStr = "";
+    }
+    if(char==13 &&  productStr != ""){
       console.log("TIME TO GO");
       if(categorySelectedInSearch != ""){
        window.location = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr;

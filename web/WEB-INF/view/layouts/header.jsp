@@ -15,7 +15,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <d:if test="${pageTitle != null}">
-    <title>${pageTitle}</title>
+    <title>${fn:escapeXml(pageTitle)}</title>
   </d:if>
   <d:if test="${pageTitle == null}">
     <title>RentGuru24</title>

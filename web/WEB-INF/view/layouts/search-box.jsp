@@ -27,7 +27,7 @@
       </button>
       <ul class="dropdown-menu" role="menu">
         <d:forEach var="listValue" items="${category}" >
-          <li><a href="#${listValue.name}" categoryId="${listValue.id}" value="${listValue.id}"  id="subCategoryOf_${listValue.id}">${listValue.name}</a></li>
+          <li><a href="#${listValue.name}" categoryId="${listValue.id}" value="${listValue.id}" <d:if test="${selectedCategoryId == listValue.id}">selected</d:if> id="subCategoryOf_${listValue.id}">${listValue.name}</a></li>
           <d:forEach var="subcategory" items="${listValue.subcategory}">
             <li>
               <a href="#${subcategory.name}" categoryId="${subcategory.id}" class="item" value="${subcategory.id}" <d:if test="${selectedCategoryId == subcategory.id}">selected</d:if> >${subcategory.name}</a>

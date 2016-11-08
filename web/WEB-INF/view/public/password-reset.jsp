@@ -19,7 +19,7 @@
 <div class="parallax-window bg1" data-enllax-ratio="0.7">
   <div class="container title-block">
     <h1>Password Reset</h1>
-    <p>Foregot your password, just reset with your email</p>
+    <p>Forgot your password, just reset with your email</p>
   </div>
 </div>
 <div class="container center-bg">

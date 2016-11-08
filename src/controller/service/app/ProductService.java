@@ -275,7 +275,7 @@ public class ProductService{
         rentalProduct.setCurrentValue(productUploadForm.getCurrentValue());
         rentalProduct.setAvailableFrom(availableFromDate);
         rentalProduct.setAvailableTill(availableTillDate);
-        rentalProduct.setReviewStatus(true);
+        rentalProduct.setReviewStatus(false);
 
 
 

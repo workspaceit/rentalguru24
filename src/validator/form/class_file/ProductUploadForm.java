@@ -1,6 +1,7 @@
 package validator.form.class_file;
 
 import helper.UtilityHelper;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.util.Arrays;
 
@@ -32,7 +33,8 @@ public class ProductUploadForm {
     private Double lng;
 
     public String getName() {
-        return name;
+
+        return StringEscapeUtils.escapeHtml3(name);
     }
 
     public void setName(String name) {
@@ -40,7 +42,7 @@ public class ProductUploadForm {
     }
 
     public String getDescription() {
-        return description;
+        return StringEscapeUtils.escapeHtml3(description);
     }
 
     public void setDescription(String description) {
@@ -134,7 +136,7 @@ public class ProductUploadForm {
 
 
     public String getCity() {
-        return city;
+        return StringEscapeUtils.escapeHtml3(city);
     }
 
     public void setCity(String city) {
@@ -150,7 +152,7 @@ public class ProductUploadForm {
     }
 
     public String getFormattedAddress() {
-        return formattedAddress;
+        return StringEscapeUtils.escapeHtml3(formattedAddress);
     }
 
     public void setFormattedAddress(String formattedAddress) {
@@ -158,7 +160,7 @@ public class ProductUploadForm {
     }
 
     public String getZip() {
-        return zip;
+        return StringEscapeUtils.escapeHtml3(zip);
     }
 
     public void setZip(String zip) {

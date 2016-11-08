@@ -135,7 +135,35 @@ public class PublicProductService{
         serviceResponse.setResponseData(rentalProduct);
         return serviceResponse;
     }
+    @RequestMapping(value = "/get-product-by-category", method = RequestMethod.GET)
+    public ServiceResponse getProductByCategoryId(HttpServletRequest request, @RequestParam Map<String, String> allRequestParameter){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
+        if(allRequestParameter.get("categoryId") == null || allRequestParameter.get("categoryId").isEmpty()){
+            serviceResponse.setRequestError("category","Category require");
+        }
+        if(allRequestParameter.get("limit") == null || allRequestParameter.get("limit").isEmpty()){
+            serviceResponse.setRequestError("limit","Limit require");
+        }
+
+        if(allRequestParameter.get("offset") == null || allRequestParameter.get("offset").isEmpty()){
+            serviceResponse.setRequestError("offset","Offset require");
+        }
+
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
+        }
+
+        int categoryId = Integer.parseInt(allRequestParameter.get("categoryId").trim());
+        int limit = Integer.parseInt(allRequestParameter.get("limit").trim());
+        int offset = Integer.parseInt(allRequestParameter.get("offset").trim());
+
+        List<RentalProduct> rentalProduct = productModel.getRentalProductByCategoryId(categoryId, limit, offset);
+
+
+        serviceResponse.setResponseData(rentalProduct,"No product found by this name");
+        return serviceResponse;
+    }
     @RequestMapping(value = "/get-product-with-title", method = RequestMethod.GET)
     public ServiceResponse getProductWithTitle(HttpServletRequest request, @RequestParam Map<String, String> allRequestParameter){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
