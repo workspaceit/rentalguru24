@@ -147,8 +147,6 @@
                     pid: prdocutId
                 }),
                 success: function (data) {
-
-
                     $('#modal-text').text(data.responseStat.msg);
                     $('#myModal').modal('show')
                     $('#' + prdocutId).text('Appoved').css("color", "green");

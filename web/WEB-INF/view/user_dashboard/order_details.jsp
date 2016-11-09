@@ -244,6 +244,8 @@
                                         <span class="inner-load productReturnGif" hidden></span>
                                     </BUTTON>
                                 </li>
+                                <br>
+                                <br>
                             </d:if>
                         </ul>
                         <ul  class="confirmation_link_ul" >
@@ -254,8 +256,11 @@
                                         <strong id="productReceiveConfirmStrong" >Confirmed</strong>
                                     </div>
                                 </div>
-
                             </li>
+                        </ul>
+                        <br>
+                        <br>
+                        <ul  class="confirmation_link_ul" >
                             <li>
                                 <div  id="productReceiveDisputeParentDiv" style="display: none;" >
                                     <p>Product received : </p>
@@ -264,10 +269,14 @@
                                     </div>
                                 </div>
                             </li>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
                             <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
 
                                     <div id="productReturnRequestParentDiv" style="display: none;" class="alert alert-danger">
-                                        <strong id="productReturnRequestString" >User have requested to return product </strong>
+                                        <strong id="productReturnRequestString" >Owner have requested to return product </strong>
                                     </div>
 
                                 <li>
@@ -279,6 +288,13 @@
                                     </div>
 
                                 </li>
+                            </d:if>
+                            <d:if test="${rentRequest.rentalProduct.getOwner().getId() == appCredential.id}">
+
+                                <div id="productReturnRequestParentDiv" style="display: none;" class="alert alert-danger">
+                                    <strong id="productReturnRequestString" >You have requested to return product </strong>
+                                </div>
+
                             </d:if>
                         </ul>
                     </div>
@@ -458,6 +474,7 @@
                                         productReceiveDispute(rentInf.rentalProductReturned.id);
                                     });
                                 }else if(rentInf.rentalProductReturned.confirm){
+                                    console.log(rentInf.rentalProductReturned.confirm);
                                     var rentalProductReturnedHistories = rentInf.rentalProductReturned.rentalProductReturnedHistories;
                                     var latestHistory = rentalProductReturnedHistories[rentalProductReturnedHistories.length - 1];
 
@@ -483,11 +500,12 @@
                                 var createdDate =  dateFormat(new Date(rentInf.rentalProductReturnRequest.createdDate), "dddd, mmm dS, yyyy, h:MM:ss TT");
                                 $("#productReturnRequestParentDiv").fadeIn();
                                 $("#productReturnRequestString").append(" On "+createdDate).fadeIn();
-                            }
-                            if(rentInf.rentalProductReturned == undefined ){
+                            }else{
                                 $("#productReturnRequestBtn").fadeIn().addClass('bound').bind("click",function(){
                                     requestToReturnProduct(rentInf.id);
                                 });
+                            }
+                            if(rentInf.rentalProductReturned == undefined ){
                                 $("#productReturnBtn").fadeIn().addClass('bound').bind("click",function(){
                                     returnProduct(rentInf.id);
                                 });
@@ -504,12 +522,13 @@
             /* For Product Owner */
             function requestToReturnProduct(rentalInfId){
                 var remarks = "";
-                $('.productReturnRequestGif').show();
+                $('#productReturnRequestGif').show();
                 $.ajax({
                     type: "POST",
                     url: BASEURL+'/api/auth/return-request/make-request/'+rentalInfId,
                     data:{remarks:remarks},
                     success: function (data) {
+                        console.log(data);
                         if(data.responseStat.status == true){
                             $('.productReturnRequestGif').hide();
                             location.reload();
