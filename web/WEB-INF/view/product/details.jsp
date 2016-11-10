@@ -350,6 +350,8 @@
             $("#productReviewTab").html(data);
           }
         });
+      }else{
+        $("#reviewRatingInnerLoader").hide();
       }
   }
 </script>
