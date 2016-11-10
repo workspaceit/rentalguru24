@@ -452,6 +452,11 @@ public class ProductService{
             return serviceResponse;
         }
 
+        if(rentalProduct.getOwner().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("product", "You are not the owner of this product");
+            return serviceResponse;
+        }
+
         List<ProductCategory> productCategories = rentalProduct.getProductCategories();
         if(productCategories.get(0).getCategory().getId() != Integer.parseInt(allRequestParameter.get("categoryId"))){
             productCategories.get(0).getCategory().setId(Integer.parseInt(allRequestParameter.get("categoryId")));

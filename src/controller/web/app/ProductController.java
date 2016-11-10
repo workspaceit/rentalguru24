@@ -121,6 +121,10 @@ public class ProductController{
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<Category> category = (List<Category>) request.getAttribute("category");
         RentalProduct rentalProduct = productModel.getMyRentalProductById(productId, appCredential.getId());
+        if(rentalProduct == null){
+            return new ModelAndView("redirect:/home");
+        }
+
         List<RentType> rentTypes = rentTypeModel.getAll();
 
         /*------------------------------------------*/
