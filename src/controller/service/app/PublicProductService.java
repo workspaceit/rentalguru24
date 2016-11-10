@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import helper.ServiceResponse;
 import model.*;
 import model.entity.app.AppCredential;
+import model.entity.app.Category;
 import model.entity.app.product.view.ProductView;
 import model.entity.app.product.rentable.SearchedProduct;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -158,7 +159,11 @@ public class PublicProductService{
         int limit = Integer.parseInt(allRequestParameter.get("limit").trim());
         int offset = Integer.parseInt(allRequestParameter.get("offset").trim());
 
-        List<RentalProduct> rentalProduct = productModel.getRentalProductByCategoryId(categoryId, limit, offset);
+        Category category = this.categoryModel.getById(categoryId);
+        if(category==null){
+            serviceResponse.setRequestError("category","Category not found");
+        }
+        List<RentalProduct> rentalProduct = productModel.getRentalProductByCategory(category, limit, offset);
 
 
         serviceResponse.setResponseData(rentalProduct,"No product found by this name");

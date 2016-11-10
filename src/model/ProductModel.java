@@ -2,6 +2,8 @@ package model;
 
 
 
+import javafx.print.Collation;
+import model.entity.app.Category;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.SearchedProduct;
 import model.entity.app.product.rentable.iface.MyRentalProduct;
@@ -11,10 +13,13 @@ import org.hibernate.*;
 import model.entity.app.product.rentable.iface.RentalProduct;
 
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by omar on 8/8/16.
@@ -307,33 +312,47 @@ public class ProductModel extends BaseModel {
     }
 
 
-    public List<RentalProduct> getRentalProductByCategoryId(int categoryId){
+
+
+    public List<RentalProduct> getRentalProductByCategoryId(int categoryId, int limit, int offset){
+
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity rentalProduct " +
-                    "  LEFT JOIN FETCH rentalProduct.productCategories " +
-                  " productCategory" +
-                "  WHERE productCategory.category.id=:categoryId " +
-                "  and rentalProduct.reviewStatus = true" +
-                " order by rentalProduct.id desc ";
+        String hql = "FROM Category " +
+                    " WHERE id =:id" ;
         try{
-            return session.createQuery(hql)
-                    .setParameter("categoryId", categoryId)
-                    .list();
+            Category category = (Category) session.createQuery(hql)
+                    .setParameter("id", categoryId)
+                    .setMaxResults(1)
+                    .uniqueResult();
+            if(category==null){
+                return new ArrayList<>();
+            }
+            return this.getRentalProductByCategory(category,limit,offset);
+
         } finally {
 
             session.close();
         }
     }
-    public List<RentalProduct> getRentalProductByCategoryId(int categoryId, int limit, int offset){
+    public List<RentalProduct> getRentalProductByCategory(Category category,int limit, int offset){
+        List<Category> subCategory =  category.getSubcategory();
+        List<Integer> categoryIdList = new ArrayList<>();
+        categoryIdList.add(category.getId());
+
+        if(subCategory!=null){
+            categoryIdList.addAll(subCategory.stream().map(Category::getId).collect(Collectors.toList()));
+        }
+
+        System.out.println(categoryIdList);
         Session session = this.sessionFactory.openSession();
         String hql = "FROM RentalProductEntity rentalProduct " +
-                     " LEFT JOIN FETCH rentalProduct.productCategories productCategory " +
-                     "  WHERE productCategory.category.id=:categoryId"+
-                    "  and rentalProduct.reviewStatus = true" +
+                    " LEFT JOIN FETCH rentalProduct.productCategories productCategory" +
+                    " WHERE rentalProduct.reviewStatus = true  " +
+                    " and productCategory.category.id IN ( :categoryIdList ) " +
                     " order by rentalProduct.id desc ";
         try{
             return session.createQuery(hql)
-                    .setParameter("categoryId", categoryId)
+                    .setParameter("categoryIdList", categoryIdList)
                     .setFirstResult(offset * limit)
                     .setMaxResults(limit)
                     .list();
