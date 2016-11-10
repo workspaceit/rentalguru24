@@ -195,12 +195,7 @@ public class TestService extends BaseService{
     }
 
 
-    @RequestMapping(value = "/partial-rendering/category/{category_id}", method = RequestMethod.GET)
-    public List<RentalProduct> getCategory(@PathVariable("category_id") int category_id){
-        List rentalProduct = productModel.getRentalProductByCategoryId(category_id);
 
-        return rentalProduct;
-    }
 
 //    @RequestMapping(value = "/date/{productId}/{rentInfId}", method = RequestMethod.GET)
 //    public List<Object> getDatesRemaining(@PathVariable("productId") int productId, @PathVariable("rentInfId") int rentInfId){
