@@ -97,7 +97,7 @@
         var productId = $('#deleteProductId').val();
         $.ajax({
             type: "POST",
-            url: BASEURL+"/api/auth/product/delete-Product/"+productId,
+            url: BASEURL+"/api/auth/product/delete-product/"+productId,
             success: function(data){
                 if(data.responseStat.status==true){
                     location.reload();

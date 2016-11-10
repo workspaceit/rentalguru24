@@ -341,7 +341,7 @@
         var otherImagesToken = $("#otherImagesToken").val();
         $.ajax({
             type: "POST",
-            url: BASEURL+"/api/auth/product/update-Product/"+${rentalProduct.getId()},
+            url: BASEURL+"/api/auth/product/update-product/"+${rentalProduct.getId()},
             data:{
                 categoryId : categorySelected,
                 subCategory : subCategory,

@@ -409,7 +409,7 @@ public class ProductService{
         return serviceResponse;
     }
 
-    @RequestMapping(value = "/update-Product/{product_id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update-product/{product_id}", method = RequestMethod.POST)
     public ServiceResponse updateProduct(HttpServletRequest request,
                                          @PathVariable("product_id") int productId,
                                          @RequestParam Map<String,String> allRequestParameter,
@@ -565,7 +565,7 @@ public class ProductService{
         return serviceResponse;
     }
 
-    @RequestMapping(value = "/delete-Product/{product_id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete-product/{product_id}", method = RequestMethod.POST)
     public ServiceResponse deleteProduct(HttpServletRequest request,
                                          @PathVariable("product_id") int productId){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
