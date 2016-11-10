@@ -88,11 +88,6 @@
                                         <td></td>
                                         <td><fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.getEndDate()}"/></td>
                                     </tr>
-                                    <%--<tr>--%>
-                                        <%--<td>Number of Days</td>--%>
-                                        <%--<td></td>--%>
-                                        <%--<td>15 days</td>--%>
-                                    <%--</tr>--%>
                                     <tr>
                                         <td>Rent/${rentRequest.getRentalProduct().getRentType().getName()}</td>
                                         <td></td>
@@ -125,11 +120,10 @@
                         </div>
                         <h5>Remarks: </h5>
                         <p class="justify no-margin p_des">${rentRequest.getRemark()} </p>
-                        <ul class="confirmation_link_ul">
-                            <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
-                                <d:if test="${rentRequest.getApprove() == false && rentRequest.getDisapprove() == false}">
-                                    <d:if test="${rentRequest.isExpired==false && rentRequest.requestCancel==false}">
-
+                        <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
+                            <d:if test="${rentRequest.getApprove() == false && rentRequest.getDisapprove() == false}">
+                                <d:if test="${rentRequest.isExpired==false && rentRequest.requestCancel==false}">
+                                    <ul class="confirmation_link_ul">
                                         <li>
                                             <BUTTON onclick="requestDisapprove(${rentRequest.getId()})" class="cancel_btn approval_btn">Disapprove
                                                 <span id="disapproveProgressImg" class="inner-load approveGif" hidden></span>
@@ -140,48 +134,13 @@
                                                 <span id="approveProgressImg" class="inner-load disapproveGif" hidden></span>
                                             </BUTTON>
                                         </li>
-                                    </d:if>
+                                    </ul>
                                 </d:if>
                             </d:if>
-                        </ul>
-                        <ul class="confirmation_link_ul">
-                            <d:if test="${rentRequest.getApprove() == true}">
-                                <div class="alert alert-success">
-                                    <strong>Product Approveed For Rent</strong>.
-                                </div>
-                            </d:if>
-                            <d:if test="${rentRequest.getDisapprove() == true}">
-                                <div class="alert alert-danger">
-                                    <strong>Product Disapproveed For Rent</strong>.
-                                </div>
-                            </d:if>
-                        </ul>
-                        <ul>
-                            <d:set var="statusMsg" value="" ></d:set>
-                            <d:if test="${rentRequest.requestCancel}">
-                                <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
-                                    <d:set var="statusMsg" value="You have canceled the rent request" ></d:set>
-                                </d:if>
-
-                                <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
-                                    <d:set var="statusMsg" value="Rent request is canceled" ></d:set>
-                                </d:if>
-                            </d:if>
-                            <d:if test="${rentRequest.isExpired}">
-                                <d:set var="statusMsg" value="Rent request is expired" ></d:set>
-                            </d:if>
-                            <d:if test="${statusMsg!=''}">
-                                <li>
-                                    <div class="alert alert-danger">
-                                        <strong>${statusMsg}</strong>
-                                    </div>
-                                </li>
-                            </d:if>
-
-                        </ul>
-                        <ul class="confirmation_link_ul">
-                            <d:if test="${rentRequest.requestedBy.id == appCredential.id && !rentRequest.isPaymentComplete}">
-                                <d:if test="${rentRequest.isExpired==false && rentRequest.requestCancel==false}">
+                        </d:if>
+                        <d:if test="${rentRequest.requestedBy.id == appCredential.id && !rentRequest.isPaymentComplete}">
+                            <d:if test="${rentRequest.isExpired==false && rentRequest.requestCancel==false}">
+                                <ul class="confirmation_link_ul">
                                     <li>
                                         <BUTTON id="proceedToPaymentBtn" class="approve_btn approval_btn" onclick="proceedToPayment(${rentRequest.id})" >Proceed to payment
                                             <span id="proceedToPaymentProgressIm" class="inner-load approveGif" hidden></span>
@@ -193,25 +152,11 @@
                                             <span><a href="${BaseUrl}/user/dashboard/my-paypal-account-email?r=${BaseUrl}/rent/request/${rentRequest.id}">Click here</a> to add paypal account</span>
                                         </p>
                                     </li>
-                                </d:if>
+                                </ul>
                             </d:if>
-                            <d:if test="${rentRequest.requestedBy.id == appCredential.id && rentRequest.isPaymentComplete}">
-                                <d:if test="${rentRequest.approve==false && rentRequest.disapprove==false}">
-                                    <li>
-                                        <div>
-                                            <div  class="alert alert-danger">
-                                                <strong id="productReceiveConfirmStrong" >Confirmation pending</strong>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </d:if>
-
-                            </d:if>
-                        </ul>
-
-                        <ul id="productReceiveConfirmationUl" style="display: none;" class="confirmation_link_ul">
-
-                            <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
+                        </d:if>
+                        <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
+                            <ul id="productReceiveConfirmationUl" style="display: none;" class="confirmation_link_ul">
                                 <li>
                                     <p>Have you received the product ?</p>
                                     <BUTTON id="productReceiveConfirmBtn" class="cancel_btn approval_btn"  >Confirm
@@ -227,77 +172,117 @@
                                         <span><a href="${BaseUrl}/user/dashboard/my-paypal-account-email?r=${BaseUrl}/rent/request/${rentRequest.id}">Click here</a> to add paypal account</span>
                                     </p>
                                 </li>
-
-                            </d:if>
-                        </ul>
-                        <ul  class="confirmation_link_ul" >
-                            <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
+                            </ul>
+                        </d:if>
+                        <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
+                            <ul  class="confirmation_link_ul" >
                                 <li>
                                     <BUTTON id="productReturnRequestBtn" class="cancel_btn approval_btn" style="display: none;" >Request to return
                                         <span class="inner-load productReturnRequestGif" hidden></span>
                                     </BUTTON>
                                 </li>
-                            </d:if>
-                            <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
+                            </ul>
+                        </d:if>
+                        <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
+                            <ul  class="confirmation_link_ul" >
                                 <li>
                                     <BUTTON id="productReturnBtn"  class="cancel_btn approval_btn" style="display: none;" >Return product
                                         <span class="inner-load productReturnGif" hidden></span>
                                     </BUTTON>
                                 </li>
-                                <br>
-                                <br>
-                            </d:if>
-                        </ul>
-                        <ul  class="confirmation_link_ul" >
-                            <li>
-                                <div  id="productReceiveConfirmParentDiv" style="display: none;" >
-                                    <p>Product received : </p>
-                                    <div  class="alert alert-danger">
-                                        <strong id="productReceiveConfirmStrong" >Confirmed</strong>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <br>
-                        <br>
-                        <ul  class="confirmation_link_ul" >
-                            <li>
-                                <div  id="productReceiveDisputeParentDiv" style="display: none;" >
-                                    <p>Product received : </p>
-                                    <div class="alert alert-danger">
-                                        <strong id="productReceiveDisputeStrong"  >Disputed</strong>
-                                    </div>
-                                </div>
-                            </li>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
-
-                                    <div id="productReturnRequestParentDiv" style="display: none;" class="alert alert-danger">
-                                        <strong id="productReturnRequestString" >Owner have requested to return product </strong>
-                                    </div>
-
-                                <li>
-                                    <div  id="productReceivePendingParentDiv" style="display: none;" >
-                                        <p>Product received : </p>
-                                        <div  class="alert alert-danger">
-                                            <strong >User have not confirmed yet</strong>
-                                        </div>
-                                    </div>
-
-                                </li>
-                            </d:if>
-                            <d:if test="${rentRequest.rentalProduct.getOwner().getId() == appCredential.id}">
-
-                                <div id="productReturnRequestParentDiv" style="display: none;" class="alert alert-danger">
-                                    <strong id="productReturnRequestString" >You have requested to return product </strong>
-                                </div>
-
-                            </d:if>
-                        </ul>
+                            </ul>
+                        </d:if>
                     </div>
+                </div>
+                <div class="all_notify">
+                    <d:if test="${rentRequest.getApprove() == true}">
+                        <div class="alert alert-success" role="alert">
+                            <a href="javascript:void(0);" class="alert-link">Product Approveed For Rent</a>
+                        </div>
+                    </d:if>
+                    <d:if test="${rentRequest.getDisapprove() == true}">
+                        <div class="alert alert-danger" role="alert">
+                            <a href="javascript:void(0);" class="alert-link">Product Disapproveed For Rent</a>
+                        </div>
+                    </d:if>
+                    <d:set var="statusMsg" value="" ></d:set>
+                    <d:if test="${rentRequest.requestCancel}">
+                        <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
+                            <div class="alert alert-danger" role="alert">
+                                <a href="javascript:void(0);" class="alert-link"><d:set var="statusMsg" value="You have canceled the rent request" ></d:set></a>
+                            </div>
+                        </d:if>
+                        <d:if test="${rentRequest.rentalProduct.owner.id == appCredential.id}">
+                            <div class="alert alert-danger" role="alert">
+                                <a href="javascript:void(0);" class="alert-link"><d:set var="statusMsg" value="Rent request is canceled" ></d:set></a>
+                            </div>
+                        </d:if>
+                    </d:if>
+                    <d:if test="${rentRequest.isExpired}">
+                       <d:set var="statusMsg" value="Rent request is expired" ></d:set>
+                    </d:if>
+                    <d:if test="${statusMsg!=''}">
+                        <li>
+                            <div class="alert alert-warning" role="alert">
+                                <a href="javascript:void(0);" class="alert-link"> <strong>${statusMsg}</strong></a>
+                            </div>
+                        </li>
+                    </d:if>
+                    <div id="productReceiveConfirmParentDiv" style="display: none;" >
+                        <div class="alert alert-info" role="alert">
+                            <p style="margin: 0px;">Product received : </p>
+                            <a href="javascript:void(0);" class="alert-link" id="productReceiveConfirmStrong">Confirmed </a>
+                        </div>
+                    </div>
+                    <div id="productReceiveDisputeParentDiv" style="display: none;" >
+                        <div class="alert alert-info" role="alert">
+                            <p style="margin: 0px;">Product received : </p>
+                            <a href="javascript:void(0);" class="alert-link" id="productReceiveDisputeStrong" >Disputed</a>
+                        </div>
+                    </div>
+                    <d:if test="${rentRequest.requestedBy.id == appCredential.id}">
+                        <div class="alert alert-danger" role="alert" id="productReturnRequestParentDiv" style="display: none;" >
+                            <a href="javascript:void(0);" class="alert-link" id="productReturnRequestString">Owner have requested to return product</a>
+                        </div>
+                        <li>
+                            <div  id="productReceivePendingParentDiv" style="display: none;" >
+                                <div class="alert alert-warning" role="alert">
+                                    <p style="margin: 0px;">Product received : </p>
+                                    <a href="javascript:void(0);" class="alert-link">User have not confirmed yet</a>
+                                </div>
+                            </div>
+                        </li>
+                    </d:if>
+
+                    <d:if test="${rentRequest.rentalProduct.getOwner().getId() == appCredential.id}">
+                        <div class="alert alert-danger" role="alert" id="productReturnRequestParentDiv" style="display: none;">
+                            <a href="javascript:void(0);" class="alert-link" id="productReturnRequestString">You have requested to return product</a>
+                        </div>
+                    </d:if>
+
+                    <d:if test="${rentRequest.requestedBy.id == appCredential.id && rentRequest.isPaymentComplete}">
+                        <d:if test="${rentRequest.approve==false && rentRequest.disapprove==false}">
+                            <li>
+                                <div>
+                                    <div class="alert alert-danger" role="alert">
+                                        <a href="javascript:void(0);" class="alert-link" id="productReceiveConfirmStrong" >Confirmation pending</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </d:if>
+                    </d:if>
+                    <%--<div class="alert alert-success" role="alert">--%>
+                        <%--<a href="javascript:void(0);" class="alert-link">Well done! You successfully read this important alert message. </a>--%>
+                    <%--</div>--%>
+                    <%--<div class="alert alert-info" role="alert">--%>
+                        <%--<a href="javascript:void(0);" class="alert-link">Heads up! This alert needs your attention, but it's not super important. </a>--%>
+                    <%--</div>--%>
+                    <%--<div class="alert alert-warning" role="alert">--%>
+                        <%--<a href="javascript:void(0);" class="alert-link">Warning! Better check yourself, you're not looking too good. </a>--%>
+                    <%--</div>--%>
+                    <%--<div class="alert alert-danger" role="alert">--%>
+                        <%--<a href="javascript:void(0);" class="alert-link">Oh snap! Change a few things up and try submitting again. </a>--%>
+                    <%--</div>--%>
                 </div>
             </div>
             <div class="alert alert-danger" id="errorMsg_requestId" hidden></div>

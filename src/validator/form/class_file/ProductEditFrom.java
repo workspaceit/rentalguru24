@@ -144,4 +144,25 @@ public class ProductEditFrom {
     public void setLng(Float lng) {
         this.lng = lng;
     }
+
+//    @Override
+//    public String toString() {
+//        return "ProductEditFrom{" +
+//                "name='" + name + '\'' +
+//                ", description='" + description + '\'' +
+//                ", currentValue=" + currentValue +
+//                ", rentFee=" + rentFee +
+//                ", availableFrom='" + availableFrom + '\'' +
+//                ", availableTill='" + availableTill + '\'' +
+//                ", reviewStatus=" + reviewStatus +
+//                ", categoryIdArray='" + categoryIdArray + '\'' +
+//                ", rentTypeId=" + rentTypeId +
+//                ", city='" + city + '\'' +
+//                ", state='" + state + '\'' +
+//                ", formattedAddress='" + formattedAddress + '\'' +
+//                ", zip='" + zip + '\'' +
+//                ", lat=" + lat +
+//                ", lng=" + lng +
+//                '}';
+//    }
 }

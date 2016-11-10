@@ -6272,6 +6272,25 @@ span.color_name {
 }
 /*custom_checkbox*/
 
+/*ALL NOTIFY*/
+
+.all_notify{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    background: #f8f8f8;
+}
+.all_notify .alert{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+/*ALL NOTIFY*/
+
 
 .featured_product {
     background-color: #2b2b2b;
@@ -7332,7 +7351,7 @@ element.style {
         border: 1px solid #d4931e;
 }
 .scrollToTop:hover{
-	text-decoration:none;
+    text-decoration:none;
         color: #DB8C31;
         background: #000;
 }
