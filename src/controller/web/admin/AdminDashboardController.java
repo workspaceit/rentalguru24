@@ -10,7 +10,6 @@ import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import model.entity.app.Category;
 import model.entity.app.product.rentable.RentInf;
-import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,12 +59,14 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Dashboard", new String(baseUrl+"/admin/user/dashboard"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Admin Dashboard");
         modelAndView.addObject("pageHeader", "Dashboard");
-        modelAndView.addObject("mainMenu", "Dashboard");
-        modelAndView.addObject("pageUrl", "admin/user/dashboard");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
@@ -73,13 +75,16 @@ public class AdminDashboardController {
         ModelAndView modelAndView = new ModelAndView("admin/createNewAdmin");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
+
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("User", new String("javascript:void(0);"));
+        breadcrumb.put("Create New Admin ", new String(baseUrl+"/admin/user/create-new-admin"));
+
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("adminUser", appCredential);
-        modelAndView.addObject("PageTitle", "Create New Admin");
         modelAndView.addObject("pageHeader", "Create New Admin");
-        modelAndView.addObject("mainMenu", "User");
-        modelAndView.addObject("subMenu", "Create New Admin");
-        modelAndView.addObject("pageUrl", "admin/user/create-new-admin");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
 
     }
@@ -91,14 +96,16 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         List<AuthCredential> adminUsers = appLoginCredentialModel.getAllAdmin();
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("User", new String("javascript:void(0);"));
+        breadcrumb.put("Admin User", new String(baseUrl+"/admin/user/get-all-admin"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("adminUsers", adminUsers);
-        modelAndView.addObject("PageTitle", "All Admin");
         modelAndView.addObject("pageHeader", "Admin User");
-        modelAndView.addObject("mainMenu", "User");
-        modelAndView.addObject("subMenu", "Admin User");
-        modelAndView.addObject("pageUrl", "admin/user/get-all-admin");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
 
     }
@@ -110,13 +117,17 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         AuthCredential admin = appLoginCredentialModel.getById(appUserId);
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("User", new String("javascript:void(0);"));
+        breadcrumb.put("Admin User", new String(baseUrl+"/admin/user/get-all-admin"));
+        breadcrumb.put("Edit Admin", new String(baseUrl+"/admin/user/get-admin-edit-page/"+appUserId));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("admin", admin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Admin Edit");
         modelAndView.addObject("pageHeader", "Edit Admin");
-        modelAndView.addObject("mainMenu", "Edit Admin");
-        modelAndView.addObject("pageUrl", "admin/user/get-admin-edit-page/"+appUserId);
+        modelAndView.addObject("breadcrumb", breadcrumb);
 
         return modelAndView;
 
@@ -130,14 +141,16 @@ public class AdminDashboardController {
         AdminSiteFeesEntity adminSiteFeesEntity = adminSitesFeesModel.getAdminSiteFees();
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Utility", new String(baseUrl+"/admin/user/get-utility"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("paypalCredientail", adminPaypalCredential);
         modelAndView.addObject("siteFeesCredientail", adminSiteFeesEntity);
-        modelAndView.addObject("PageTitle", "Utility");
         modelAndView.addObject("pageHeader", "Utility");
-        modelAndView.addObject("mainMenu", "Utility");
-        modelAndView.addObject("pageUrl", "admin/user/get-utility");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
@@ -149,25 +162,35 @@ public class AdminDashboardController {
         modelAndView.addObject("paypalCredientail", adminPaypalCredential);
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Utility", new String(baseUrl+"/admin/user/get-utility"));
+        breadcrumb.put("Update Paypal Configuration", new String(baseUrl+"/admin/user/edit-paypal-configuration"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Edit Paypal Configration");
+        modelAndView.addObject("pageHeader", "Edit Paypal Configration");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
     @RequestMapping(value = "/edit-site-fees", method = RequestMethod.GET)
     public ModelAndView getSiteFeesPage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("admin/editSiteFeesConfiguration");
-
-
         String baseUrl = (String) request.getAttribute("baseURL");
         AdminSiteFeesEntity adminSiteFeesEntity = adminSitesFeesModel.getAdminSiteFees();
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Utility", new String(baseUrl+"/admin/user/get-utility"));
+        breadcrumb.put("Edit Site Fee", new String(baseUrl+"/admin/user/edit-site-fees"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("siteFeesCredientail", adminSiteFeesEntity);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Edit Site Fee");
+        modelAndView.addObject("pageHeader", "Edit Site Fee");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
     @RequestMapping(value = "/add-category", method = RequestMethod.GET)
@@ -176,13 +199,15 @@ public class AdminDashboardController {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Category", new String("javascript:void(0);"));
+        breadcrumb.put("Create New Category", new String(baseUrl+"/admin/user/add-category"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Add Category");
         modelAndView.addObject("pageHeader", "Create New Category");
-        modelAndView.addObject("mainMenu", "Category");
-        modelAndView.addObject("subMenu", "Add Category");
-        modelAndView.addObject("pageUrl", "admin/user/add-category");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
@@ -193,14 +218,16 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         List<Category> category = categoryModel.getAll();
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Category", new String("javascript:void(0);"));
+        breadcrumb.put("Create New Subcategory", new String(baseUrl+"/admin/user/add-sub-category"));
+
         modelAndView.addObject("category", category);
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Add Subcategory");
         modelAndView.addObject("pageHeader", "Create New Subcategory");
-        modelAndView.addObject("mainMenu", "Category");
-        modelAndView.addObject("subMenu", "Add Subcategory");
-        modelAndView.addObject("pageUrl", "admin/user/add-sub-category");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
@@ -211,14 +238,16 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         List<Category> category = categoryModel.getAll();
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Category", new String("javascript:void(0);"));
+        breadcrumb.put("Category And Subcategory List", new String(baseUrl+"/admin/user/category-list"));
+
         modelAndView.addObject("category", category);
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Category List");
         modelAndView.addObject("pageHeader", "Category Tables");
-        modelAndView.addObject("mainMenu", "Category");
-        modelAndView.addObject("subMenu", "Category And Subcategory List");
-        modelAndView.addObject("pageUrl", "admin/user/category-list");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
     @RequestMapping(value = "/edit-category/{category_id}", method = RequestMethod.GET)
@@ -228,24 +257,38 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         Category category = categoryModel.getById(categoryId);
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Category", new String("javascript:void(0);"));
+        breadcrumb.put("Category And Subcategory List", new String(baseUrl+"/admin/user/category-list"));
+        breadcrumb.put("Category Edit", new String(baseUrl+"/admin/user/edit-category/"+categoryId));
+
         modelAndView.addObject("category", category);
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Edit Category");
+        modelAndView.addObject("pageHeader", "Category Edit");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
     @RequestMapping(value = "/edit-sub-category/{sub_category_id}", method = RequestMethod.GET)
     public ModelAndView editSubcategory(HttpServletRequest request,@PathVariable("sub_category_id") int subCategoryId){
-        ModelAndView modelAndView = new ModelAndView("admin/editSubCategory");
+        ModelAndView modelAndView = new ModelAndView("admin/category/editSubCategory");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         String baseUrl = (String) request.getAttribute("baseURL");
         Category subCategory = categoryModel.getById(subCategoryId);
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Category", new String("javascript:void(0);"));
+        breadcrumb.put("Category And Subcategory List", new String(baseUrl+"/admin/user/category-list"));
+        breadcrumb.put("Subcategory Edit", new String(baseUrl+"/admin/user/edit-sub-category/"+subCategoryId));
+
         modelAndView.addObject("subCategory", subCategory);
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Edit Category");
+        modelAndView.addObject("pageHeader", "Subcategory Edit");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
@@ -269,14 +312,16 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         List<AdminGlobalNotification> adminGlobalNotifications = adminGlobalNotificationModel.getAllNotification();
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Notification", new String("javascript:void(0);"));
+        breadcrumb.put("Global Notification List", new String(baseUrl+"/admin/user/notification/global"));
+
         modelAndView.addObject("adminGlobalNotifications", adminGlobalNotifications);
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Global Notification List");
         modelAndView.addObject("pageHeader", "Global Notification List Tables");
-        modelAndView.addObject("mainMenu", "Notification");
-        modelAndView.addObject("subMenu", "Global Notification List");
-        modelAndView.addObject("pageUrl", "admin/user/test/test");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
@@ -290,20 +335,24 @@ public class AdminDashboardController {
 
         AdminGlobalNotification adminGlobalNotification = adminGlobalNotificationModel.getById(notificationId);
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Notification", new String("javascript:void(0);"));
+        breadcrumb.put("Global Notification List", new String(baseUrl+"/admin/user/notification/global"));
+        breadcrumb.put("Notification Details", new String(baseUrl+"/admin/user/notification/global/"+notificationId));
+
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("adminGlobalNotification", adminGlobalNotification);
-        modelAndView.addObject("PageTitle", "Notification Details");
         modelAndView.addObject("pageHeader", "Notification Details");
-        modelAndView.addObject("mainMenu", "Notification");
-        modelAndView.addObject("subMenu", "Notification Details");
-        modelAndView.addObject("pageUrl", "admin/user/notification-details");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/order-details/{rentinf_id}", method = RequestMethod.GET)
-    public ModelAndView getOrderDetails(HttpServletRequest request, @PathVariable("rentinf_id") int rentinfId){
+    @RequestMapping(value = "/order-details/{notification_id}/{rentinf_id}", method = RequestMethod.GET)
+    public ModelAndView getOrderDetails(HttpServletRequest request, @PathVariable("notification_id") int notificationId ,@PathVariable("rentinf_id") int rentinfId){
         ModelAndView modelAndView = new ModelAndView("admin/orderDetails");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
@@ -312,13 +361,19 @@ public class AdminDashboardController {
 
         RentInf rentInf = rentInfModel.getById(rentinfId);
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Notification", new String("javascript:void(0);"));
+        breadcrumb.put("Global Notification List", new String(baseUrl+"/admin/user/notification/global"));
+        breadcrumb.put("Notification Details", new String(baseUrl+"/admin/user/notification/global/"+notificationId));
+        breadcrumb.put("Order Details", new String(baseUrl+"/admin/user/order-details/"+notificationId+"/"+rentinfId));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("rentInf", rentInf);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Order Details");
         modelAndView.addObject("pageHeader", "Order Details");
-        modelAndView.addObject("pageUrl", "admin/user/order-details/"+rentinfId);
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
@@ -330,14 +385,16 @@ public class AdminDashboardController {
         String baseUrl = (String) request.getAttribute("baseURL");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Banner Image", new String("javascript:void(0);"));
+        breadcrumb.put("Add Banner Image", new String(baseUrl+"/admin/user/add-banner-image"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Add Banner Image");
         modelAndView.addObject("pageHeader", "Add Banner Image");
-        modelAndView.addObject("mainMenu", "Banner Image");
-        modelAndView.addObject("subMenu", "Add Banner Image");
-        modelAndView.addObject("pageUrl", "admin/user/add-banner-image");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
@@ -351,15 +408,17 @@ public class AdminDashboardController {
 
         List<BannerImage> bannerImageList = bannerImageModel.getAll();
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Banner Image", new String("javascript:void(0);"));
+        breadcrumb.put("Banner Image List", new String(baseUrl+"/admin/user/banner-image-list"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("bannerImageList", bannerImageList);
-        modelAndView.addObject("PageTitle", "Banner Image List");
         modelAndView.addObject("pageHeader", "Banner Image List");
-        modelAndView.addObject("mainMenu", "Banner Image");
-        modelAndView.addObject("subMenu", "Banner Image List");
-        modelAndView.addObject("pageUrl", "admin/user/banner-image-list");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 }

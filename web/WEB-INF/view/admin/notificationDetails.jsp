@@ -37,7 +37,7 @@
         <%--</div><!-- /.box-body -->--%>
         <div class="box-footer">
           <div class="col-md-3">
-            <a class="btn btn-block btn-info" href="${BaseUrl}/admin/user/order-details/${adminGlobalNotification.getRentInf().getId()}">Order Details</a>
+            <a class="btn btn-block btn-info" href="${BaseUrl}/admin/user/order-details/${adminGlobalNotification.getId()}/${adminGlobalNotification.getRentInf().getId()}">Order Details</a>
           </div>
         </div><!-- /.box-footer-->
       </div><!-- /.box -->

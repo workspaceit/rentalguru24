@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,6 +27,12 @@ public class AdminUsersController {
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List <AuthCredential> authCredentials = appLoginCredentialModel.getAllAppUser();
+
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("User", new String("javascript:void(0);"));
+        breadcrumb.put("Rent request", new String("javascript:void(0);"));
+
 
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("allUsers", authCredentials);

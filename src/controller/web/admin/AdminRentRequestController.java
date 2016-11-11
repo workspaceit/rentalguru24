@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -54,18 +55,22 @@ public class AdminRentRequestController {
                 tableTitle = "Completed Rent Request";
                 break;
         }
+
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Rent request", new String("javascript:void(0);"));
+        breadcrumb.put(tableTitle, new String(baseUrl+"/admin/rent-request/"+tableTitle));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("rentRequests", rentRequests);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageHeader", tableTitle);
-        modelAndView.addObject("mainMenu", "Rent request");
-//        modelAndView.addObject("subMenu", "App User");
-        modelAndView.addObject("pageUrl", "admin/rent-request/all");
-        modelAndView.addObject("PageTitle", "Admin Users Details");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
     @RequestMapping(value = "details/{id}", method = RequestMethod.GET)
     public ModelAndView details(HttpServletRequest request,@PathVariable int id){
+
 
         ModelAndView modelAndView = new ModelAndView("admin/rent-request/rent-request-details");
         String baseUrl = (String) request.getAttribute("baseURL");
@@ -73,16 +78,16 @@ public class AdminRentRequestController {
 
         RentRequest rentRequest = rentRequestModel.getById(id);
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
 
+        breadcrumb.put("Rent request", new String("javascript:void(0);"));
+        breadcrumb.put(rentRequest.getRentalProduct().getName(), new String(baseUrl+"/admin/rent-request/details/"+id));
 
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("rentRequest", rentRequest);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageHeader", "App User");
-        modelAndView.addObject("mainMenu", "Rent request");
-        modelAndView.addObject("subMenu", "Details");
-        modelAndView.addObject("pageUrl", "admin/rent-request/all");
-        modelAndView.addObject("PageTitle", "Admin Users Details");
+        modelAndView.addObject("pageHeader", rentRequest.getRentalProduct().getName());
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 

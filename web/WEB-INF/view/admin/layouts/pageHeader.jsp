@@ -11,27 +11,13 @@
     <small>${pageSubHeader}</small>
   </h1>
   <ol class="breadcrumb">
-    <li>
-      <d:if test="${subMenu == null}">
-        <a href="${BaseUrl}/${pageUrl}">
-          <i class="fa fa-dashboard"></i>
-            ${mainMenu}
-        </a>
-      </d:if>
-      <d:if test="${subMenu != null}">
-        <a href="javascript:void(0);">
-          <i class="fa fa-dashboard"></i>
-            ${mainMenu}
-        </a>
-      </d:if>
-    </li>
-    <d:if test="${subMenu != null}">
+    <d:forEach var="breadcrumbList" items="${breadcrumb}">
       <li>
-        <a href="${BaseUrl}/${pageUrl}">
-          ${subMenu}
+        <a href="${breadcrumbList.getValue()}">
+            ${breadcrumbList.getKey()}
         </a>
       </li>
-    </d:if>
+    </d:forEach>
   </ol>
 </section>
 
