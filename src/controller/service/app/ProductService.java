@@ -676,6 +676,18 @@ public class ProductService{
         String path = allRequestParameter.get("path");
         RentalProduct rentalProduct = productModel.getById(productId);
 
+
+        if(path == null ){
+            serviceResponse.setRequestError("path", "Product image path required");
+            return serviceResponse;
+        }
+
+        path = path.trim();
+        if(path.isEmpty() ){
+            serviceResponse.setRequestError("path", "Product image path required");
+            return serviceResponse;
+        }
+
         if(rentalProduct == null){
             serviceResponse.setRequestError("product", "Product Not found");
             return serviceResponse;
@@ -686,12 +698,21 @@ public class ProductService{
             return  serviceResponse;
         }
 
+        path = path.trim();
+
         List<Picture> pictureList = rentalProduct.getOtherImages();
+        boolean findfile = false;
         for(int i= 0; i<pictureList.size(); i++){
             if(pictureList.get(i).getOriginal().getPath().equals(path)){
                 pictureList.remove(i);
+                findfile = true;
                 break;
             }
+        }
+
+        if(!findfile){
+            serviceResponse.setRequestError("path", "product image path not found");
+            return  serviceResponse;
         }
 
         rentalProduct.setOtherImages(pictureList);

@@ -8,20 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-<jsp:directive.include file="layouts/header.jsp" />
+<jsp:directive.include file="../layouts/header.jsp" />
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-  <jsp:directive.include file="layouts/navbar-top.jsp" />
-  <jsp:directive.include file="layouts/left-slider.jsp" />
+  <jsp:directive.include file="../layouts/navbar-top.jsp" />
+  <jsp:directive.include file="../layouts/left-slider.jsp" />
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Create New Category
-      </h1>
-    </section>
+    <jsp:directive.include file="../layouts/pageHeader.jsp"/>
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -48,7 +44,7 @@
       </div><!-- /.row -->
     </section><!-- /.content -->
   </div><!-- /.content-wrapper -->
-  <jsp:directive.include file="layouts/footer.jsp" />
+  <jsp:directive.include file="../layouts/footer.jsp" />
   <script>
     function editSubcategor(){
       var subCategoryId = $('#subCategoryName').data("subcategoryid");

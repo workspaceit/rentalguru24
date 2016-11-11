@@ -53,7 +53,7 @@
           <i class="fa fa-dashboard"></i> <span>Product</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li><a href="${BaseUrl}/admin/product/get-all-rental-product"><i class="fa fa-circle-o"></i>All Rental Products</a></li>
+          <li><a href="${BaseUrl}/admin/product/get-all-rental-product"><i class="fa fa-circle-o"></i>Rental Products List</a></li>
           <li><a href="#"><i class="fa fa-circle-o"></i>Other Products</a></li>
         </ul>
       </li>
@@ -70,8 +70,8 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="${BaseUrl}/admin/user/category-list"><i class="fa fa-circle-o"></i>Category and subcategory List</a></li>
-          <li><a href="${BaseUrl}/admin/user/add-category"><i class="fa fa-circle-o"></i>Add Category</a></li>
-          <li><a href="${BaseUrl}/admin/user/add-sub-category"><i class="fa fa-circle-o"></i>Add Subcategory</a></li>
+          <li><a href="${BaseUrl}/admin/user/add-category"><i class="fa fa-circle-o"></i>Create New Category</a></li>
+          <li><a href="${BaseUrl}/admin/user/add-sub-category"><i class="fa fa-circle-o"></i>Create New Subcategory</a></li>
         </ul>
       </li>
       <li class="treeview">
@@ -79,8 +79,8 @@
           <i class="fa fa-dashboard"></i> <span>CMS</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li><a href="${BaseUrl}/admin/cms/page"><i class="fa fa-circle-o"></i>Add page</a></li>
-          <li><a href="${BaseUrl}/admin/cms/get-all"><i class="fa fa-circle-o"></i>All pages</a></li>
+          <li><a href="${BaseUrl}/admin/cms/page"><i class="fa fa-circle-o"></i>Create New CMS Page </a></li>
+          <li><a href="${BaseUrl}/admin/cms/get-all"><i class="fa fa-circle-o"></i>CMS Pages List</a></li>
         </ul>
       </li>
       <li class="treeview">

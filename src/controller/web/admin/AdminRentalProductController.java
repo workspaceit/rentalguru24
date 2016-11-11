@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.enterprise.inject.Model;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -37,14 +38,16 @@ public class AdminRentalProductController {
         List <RentalProductEntity>rentalProductEntities=productModel.getRentalProduct();
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Product", new String("javascript:void(0);"));
+        breadcrumb.put("Rental Product List", new String(baseUrl+"/admin/product/get-all-rental-product"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("rentalProducts", rentalProductEntities);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Rental Product Details");
-        modelAndView.addObject("pageHeader", "All Rental Product");
-        modelAndView.addObject("mainMenu", "Product");
-        modelAndView.addObject("subMenu", "All Rental Product");
-        modelAndView.addObject("pageUrl", "admin/product/get-all-rental-product");
+        modelAndView.addObject("pageHeader", "Rental Product List");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
 
     }

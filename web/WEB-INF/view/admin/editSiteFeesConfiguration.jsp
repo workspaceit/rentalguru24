@@ -19,13 +19,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                Update Site Fees Configuration
-
-            </h1>
-        </section>
-
+        <jsp:directive.include file="layouts/pageHeader.jsp" />
         <!-- Main content -->
         <section class="content">
             <div class="row">
