@@ -115,7 +115,7 @@ public class ProductController{
 
     @RequestMapping(value = "/edit/{product_id}", method = RequestMethod.GET)
     public ModelAndView getEditProduct(HttpServletRequest request, @PathVariable("product_id") int productId){
-        ModelAndView modelAndView = new ModelAndView("user_dashboard/editProduct");
+        ModelAndView modelAndView = new ModelAndView("product/edit");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();

@@ -44,7 +44,7 @@
                     <select id="subCategory" class="selectpicker" disabled="disabled" >
                         <option value="0">PLEASE SELECT A SUB CATEGORY</option>
                     </select>
-                    <p class="help-block error-form" id="errorMsg_subCategoryIds"></p>
+                    <p class="help-block error-form" id="errorMsg_subcategoryId"></p>
                 </div>
                 <div class="form-group">
                     <label>Choose Rent Type</label>
@@ -119,7 +119,7 @@
                     <label for="fallback">Product main image</label>
                     <div class="profile-pic main-img clearfix">
                         <div class="main-review text-center">
-                            <img id="profileImage" src="${BaseUrl}/images/${rentalProduct.getProfileImage().getOriginal().getPath()}" alt="...">
+                            <img id="profileImage" src="${BaseUrl}/images/${rentalProduct.getProfileImage().getOriginal().getPath()}" style="width: 100%;height: 100%;" alt="...">
                         </div>
                         <div class="" style="margin-bottom:0px;">
                             <div id="fallback" class="fallback pos-relative fall-small" >
@@ -154,7 +154,7 @@
         </div>
         <div class="col-md-12 text-right" style="padding:0px 100px 20px 0px;">
             <button class="btn-cstm-sign  pos-relative" onclick="postEditProduct()">
-                Post Product
+                Edit Product
                 <span class="inner-load" hidden></span>
             </button>
         </div>
@@ -339,12 +339,24 @@
         var rentPrice = $("#rentFee").val();
         var profileImageToken = $("#profileImageToken").val();
         var otherImagesToken = $("#otherImagesToken").val();
+
+        var tmpArray = availableFrom.split("/");
+        var dd =  tmpArray[0];
+        tmpArray[0] = tmpArray[1];
+        tmpArray[1] = dd;
+        availableFrom  = tmpArray.join("-");
+
+        tmpArray = availableTill.split("/");
+         dd =  tmpArray[0];
+        tmpArray[0] = tmpArray[1];
+        tmpArray[1] = dd;
+
+        availableTill  = tmpArray.join("-");
         $.ajax({
             type: "POST",
             url: BASEURL+"/api/auth/product/update-product/"+${rentalProduct.getId()},
             data:{
-                categoryId : categorySelected,
-                subCategory : subCategory,
+                categoryIds : JSON.stringify([categorySelected]),
                 name : name,
                 description : description,
                 availableFrom : availableFrom,

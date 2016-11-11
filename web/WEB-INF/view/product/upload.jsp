@@ -42,7 +42,7 @@
               <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
           </select>
-          <p class="help-block error-form" id="errorMsg_categoryIds"></p>
+          <p class="help-block error-form" id="errorMsg_categoryIds"  custom-validation="required" for="category"  ></p>
         </div>
         <div class="form-group">
           <label>Choose Sub Category</label>
@@ -52,7 +52,7 @@
             <%--<optgroup id="subcategoryParentLabel" label="" disabled>--%>
             <%--</optgroup>--%>
           </select>
-          <p class="help-block error-form" id="errorMsg_categoryIds"></p>
+          <p class="help-block error-form" id="errorMsg_subcategoryId" for="subCategory"  ></p>
         </div>
         <div class="form-group">
           <label>Choose Rent Type</label>
@@ -62,52 +62,52 @@
               <option value="${listValue.id}">${listValue.name}</option>
             </d:forEach>
           </select>
-          <p class="help-block error-form" id="errorMsg_rentTypeId"></p>
+          <p class="help-block error-form" id="errorMsg_rentTypeId" custom-validation="required" for="rentTypeId" ></p>
         </div>
         <div class="form-group">
           <label>Product Title</label>
           <input type="text" class="form-control" placeholder="" id="name" name="name">
-          <p class="help-block error-form" id="errorMsg_name"></p>
+          <p class="help-block error-form" id="errorMsg_name"  custom-validation="required" for="name" ></p>
         </div>
         <div class="form-group">
           <label>Product Description</label>
           <textarea class="form-control cstm-desc" id="description" name="description"></textarea>
-          <p class="help-block error-form" id="errorMsg_description"></p>
+          <p class="help-block error-form" id="errorMsg_description"  custom-validation="required" for="description"  ></p>
         </div>
         <div class="row clearfix">
           <div class="col-md-6">
             <div class="form-group date-con">
               <label>From</label>
               <input type="text"  class="form-control datepicker" id="availableFrom" placeholder="" name="availableFrom">
-              <p class="help-block error-form" id="errorMsg_availableFrom"></p>
+              <p class="help-block error-form" id="errorMsg_availableFrom"  custom-validation="required" for="availableFrom"  ></p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group date-con">
               <label>To</label>
               <input type="text"  class="form-control datepicker" id="availableTill" placeholder="" name="availableTill">
-              <p class="help-block error-form" id="errorMsg_availableTill"></p>
+              <p class="help-block error-form" id="errorMsg_availableTill" for="availableTill"  ></p>
             </div>
           </div>
         </div>
         <div class="form-group">
           <label>Product Location</label>
           <input type="text" class="form-control" placeholder="" id="formattedAddress" name="formattedAddress" onfocus="getGeoLocation()" latLngUsed="0">
-          <p class="help-block error-form" id="errorMsg_formattedAddress"></p>
+          <p class="help-block error-form" id="errorMsg_formattedAddress"  custom-validation="required" for="formattedAddress"   ></p>
         </div>
         <div class="row clearfix">
           <div class="col-md-4">
             <div class="form-group">
               <label>Zip Code</label>
               <input type="text"  class="form-control" placeholder="" id="zip" name="zip">
-              <p class="help-block error-form" id="errorMsg_zip"></p>
+              <p class="help-block error-form" id="errorMsg_zip"  custom-validation="required" for="zip"  ></p>
             </div>
           </div>
           <div class="col-md-8">
             <div class="form-group">
               <label>City</label>
               <input type="text"  class="form-control" placeholder="" id="city" name="city">
-              <p class="help-block error-form" id="errorMsg_city"></p>
+              <p class="help-block error-form" id="errorMsg_city"  custom-validation="required" for="city"    ></p>
             </div>
           </div>
         </div>
@@ -116,12 +116,12 @@
         <div class="form-group">
           <label >Product Current price</label>
           <input type="number" class="form-control" placeholder="" id="currentValue" name="currentValue" min="1">
-          <p class="help-block error-form" id="errorMsg_currentValue"></p>
+          <p class="help-block error-form" id="errorMsg_currentValue"  custom-validation="required"  for="currentValue"    ></p>
         </div>
         <div class="form-group">
           <label>Rent price</label>
           <input type="number" class="form-control" placeholder="" id="rentFee" name="rentFee" min="1" >
-          <p class="help-block error-form" id="errorMsg_rentFee"></p>
+          <p class="help-block error-form" id="errorMsg_rentFee"  custom-validation="required"   for="rentFee"  ></p>
         </div>
         <%--Dropzone for product profile image--%>
         <div class="form-group">
@@ -471,9 +471,13 @@
 
   }
   function postProduct(){
+    UnBindErrors("errorMsg_");
     if(!isUserVerified){
       showUserVerificationAlert();
       return;
+    }
+    if(!requiredValidation("errorMsg_")){
+      return false;
     }
     $('#postProduct').attr("disabled", "disabled");
     $('.postProductGif').show();

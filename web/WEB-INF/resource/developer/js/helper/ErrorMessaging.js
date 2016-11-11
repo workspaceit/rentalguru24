@@ -67,12 +67,26 @@ function requiredValidation(preFix){
 
                 if(validationTypes.indexOf("required")>=0){
                     var fieldId = $(this).attr("for");
-                    if($("#"+fieldId).val()==null || $("#"+fieldId).val()=="" ){
-                        flag = false;
-                        $(this).show();
-                        var errorMsg = ($(this).attr("errorMsg")!=undefined)?$(this).attr("errorMsg"):"Field required";
-                        $(this).html(errorMsg);
+                    var tagName = $($("#"+fieldId)).prop("tagName");
+                    switch (tagName){
+                        case "INPUT":
+                            if($("#"+fieldId).val()==null || $("#"+fieldId).val()=="" ){
+                                flag = false;
+                                $(this).show();
+                                var errorMsg = ($(this).attr("errorMsg")!=undefined)?$(this).attr("errorMsg"):"Field required";
+                                $(this).html(errorMsg);
+                            }
+                            break;
+                        case "SELECT":
+                            if($("#"+fieldId).val()==null || $("#"+fieldId).val()=="" || $("#"+fieldId).val()=="0"){
+                                flag = false;
+                                $(this).show();
+                                var errorMsg = ($(this).attr("errorMsg")!=undefined)?$(this).attr("errorMsg"):"Field required";
+                                $(this).html(errorMsg);
+                            }
+                            break;
                     }
+
                 }
 
 

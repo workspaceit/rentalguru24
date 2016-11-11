@@ -21,6 +21,7 @@ public class ProductUploadForm {
     private String availableTill;
     private boolean reviewStatus;
     private Integer[] categoryIdArray;
+    private int subcategoryId; // No functionality , only using for send error in parameter
     private Long[] otherImagesTokenArray;
 
 
@@ -134,6 +135,13 @@ public class ProductUploadForm {
     }
 
 
+    public int getSubcategoryId() {
+        return subcategoryId;
+    }
+
+    public void setSubcategoryId(int subcategoryId) {
+        this.subcategoryId = subcategoryId;
+    }
 
     public String getCity() {
         return StringEscapeUtils.escapeHtml3(city);

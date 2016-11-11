@@ -51,7 +51,6 @@ public class Category {
         this.name = name;
     }
 
-    @JsonIgnore
     @Basic
     @Column(name = "is_subcategory")
     public boolean getIsSubcategory() {

@@ -64,7 +64,7 @@ public class DashboardController {
 
     @RequestMapping(value = "/my-products", method = RequestMethod.GET)
     public ModelAndView getMyProducts(HttpServletRequest request){
-        ModelAndView modelAndView = new ModelAndView("user_dashboard/myproducts");
+        ModelAndView modelAndView = new ModelAndView("product/my-products");
         String baseUrl = (String) request.getAttribute("baseURL");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
@@ -150,7 +150,7 @@ public class DashboardController {
 
     @RequestMapping(value = "/my-profile-edit", method = RequestMethod.GET)
     public ModelAndView getMyprofileEdit(HttpServletRequest request){
-        ModelAndView modelAndView = new ModelAndView("user_dashboard/editprofile");
+        ModelAndView modelAndView = new ModelAndView("profile/edit-profile");
 
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");

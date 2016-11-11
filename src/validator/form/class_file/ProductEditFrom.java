@@ -1,5 +1,8 @@
 package validator.form.class_file;
 
+import helper.UtilityHelper;
+import org.apache.commons.lang3.StringEscapeUtils;
+
 /**
  * Created by omar on 9/21/16.
  */
@@ -7,26 +10,29 @@ public class ProductEditFrom {
 
     private String name;
     private String description;
-    private Double currentValue;
-    private Double rentFee;
+    private Float currentValue;
+    private Float rentFee;
     private String availableFrom;
     private String availableTill;
-    private boolean reviewStatus;
-    private String categoryIdArray;
+    private Integer[] categoryIdArray;
+    private Integer  subcategoryId;
     private Integer rentTypeId;
 
     private String city;
     private String state;
     private String formattedAddress;
     private String zip;
-    private Float lat;
-    private Float lng;
+    private Double lat;
+    private Double lng;
 
 
-
+    public ProductEditFrom() {
+        this.subcategoryId = 0;
+    }
 
     public String getName() {
-        return (name==null)?"":name.trim();
+        name = (name!=null)?name.trim():"";
+        return StringEscapeUtils.escapeHtml3(name);
     }
 
     public void setName(String name) {
@@ -34,31 +40,45 @@ public class ProductEditFrom {
     }
 
     public String getDescription() {
-        return (description==null)?"":description.trim();
+        description = (description!=null)?description.trim():"";
+        return StringEscapeUtils.escapeHtml3(description);
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Double getCurrentValue() {
-        return (currentValue==null)?-1:currentValue;
+
+
+
+    public Float getCurrentValue() {
+        return currentValue;
     }
 
-    public void setCurrentValue(Double currentValue) {
+    public void setCurrentValue(Float currentValue) {
         this.currentValue = currentValue;
     }
 
-    public Double getRentFee() {
-        return (rentFee==null)?-1:rentFee;
+    public Float getRentFee() {
+        return rentFee;
     }
 
-    public void setRentFee(Double rentFee) {
+    public void setRentFee(Float rentFee) {
         this.rentFee = rentFee;
     }
 
+    public Integer getRentTypeId() {
+        return rentTypeId;
+    }
+
+    public void setRentTypeId(Integer rentTypeId) {
+        this.rentTypeId = rentTypeId;
+    }
+
+
     public String getAvailableFrom() {
-        return (availableFrom==null)?"":availableFrom.trim();
+        availableFrom = (availableFrom!=null)?availableFrom.trim():"";
+        return availableFrom;
     }
 
     public void setAvailableFrom(String availableFrom) {
@@ -66,39 +86,36 @@ public class ProductEditFrom {
     }
 
     public String getAvailableTill() {
-        return (availableTill==null)?"":availableTill;
+        availableTill = (availableTill!=null)?availableTill.trim():"";
+        return availableTill;
     }
 
     public void setAvailableTill(String availableTill) {
         this.availableTill = availableTill;
     }
 
-    public boolean isReviewStatus() {
-        return (reviewStatus==false)?false:reviewStatus;
+
+
+    public Integer[] getCategoryIdArray() {
+        return categoryIdArray;
     }
 
-    public void setReviewStatus(boolean reviewStatus) {
-        this.reviewStatus = reviewStatus;
-    }
-
-    public String getCategoryIdArray() {
-        return (categoryIdArray==null)?null:categoryIdArray;
-    }
-
-    public void setCategoryIdArray(String categoryIdArray) {
+    public void setCategoryIdArray(Integer[] categoryIdArray) {
         this.categoryIdArray = categoryIdArray;
     }
 
-    public Integer getRentTypeId() {
-        return (rentTypeId==null)?-1:rentTypeId;
+
+    public int getSubcategoryId() {
+        return subcategoryId;
     }
 
-    public void setRentTypeId(Integer rentTypeId) {
-        this.rentTypeId = rentTypeId;
+    public void setSubcategoryId(int subcategoryId) {
+        this.subcategoryId = subcategoryId;
     }
 
     public String getCity() {
-        return (city==null)?"":city;
+        city = (city!=null)?city.trim():"";
+        return StringEscapeUtils.escapeHtml3(city);
     }
 
     public void setCity(String city) {
@@ -106,7 +123,8 @@ public class ProductEditFrom {
     }
 
     public String getState() {
-        return (state==null)?"":state;
+        state = (state!=null)?state.trim():"";
+        return state;
     }
 
     public void setState(String state) {
@@ -114,7 +132,8 @@ public class ProductEditFrom {
     }
 
     public String getFormattedAddress() {
-        return (formattedAddress==null)?"":formattedAddress;
+        formattedAddress = (formattedAddress!=null) ? formattedAddress.trim():"";
+        return StringEscapeUtils.escapeHtml3(formattedAddress);
     }
 
     public void setFormattedAddress(String formattedAddress) {
@@ -122,47 +141,49 @@ public class ProductEditFrom {
     }
 
     public String getZip() {
-        return (zip==null)?"":zip;
+        zip = (zip!=null)?zip.trim():"";
+        return StringEscapeUtils.escapeHtml3(zip);
     }
 
     public void setZip(String zip) {
         this.zip = zip;
     }
 
-    public Float getLat() {
-        return (lat==null)?-1:lat;
+    public Double getLat() {
+        return (lat!=null)? UtilityHelper.round(lat, 13):null;
     }
 
-    public void setLat(Float lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public Float getLng() {
-        return (lng==null)?-1:lng;
+    public Double getLng() {
+        return (lng!=null)? UtilityHelper.round(lng, 13):null;
     }
 
-    public void setLng(Float lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 
-//    @Override
-//    public String toString() {
-//        return "ProductEditFrom{" +
-//                "name='" + name + '\'' +
-//                ", description='" + description + '\'' +
-//                ", currentValue=" + currentValue +
-//                ", rentFee=" + rentFee +
-//                ", availableFrom='" + availableFrom + '\'' +
-//                ", availableTill='" + availableTill + '\'' +
-//                ", reviewStatus=" + reviewStatus +
-//                ", categoryIdArray='" + categoryIdArray + '\'' +
-//                ", rentTypeId=" + rentTypeId +
-//                ", city='" + city + '\'' +
-//                ", state='" + state + '\'' +
-//                ", formattedAddress='" + formattedAddress + '\'' +
-//                ", zip='" + zip + '\'' +
-//                ", lat=" + lat +
-//                ", lng=" + lng +
-//                '}';
-//    }
+
+
+    @Override
+    public String toString() {
+        return "ProductEditFrom{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", currentValue=" + currentValue +
+                ", rentFee=" + rentFee +
+                ", availableFrom='" + availableFrom + '\'' +
+                ", availableTill='" + availableTill + '\'' +
+                ", categoryIdArray='" + categoryIdArray + '\'' +
+                ", rentTypeId=" + rentTypeId +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", formattedAddress='" + formattedAddress + '\'' +
+                ", zip='" + zip + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                '}';
+    }
 }

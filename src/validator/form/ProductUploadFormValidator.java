@@ -6,6 +6,7 @@ import helper.ImageHelper;
 import model.CategoryModel;
 import model.RentTypeModel;
 import model.TempFileModel;
+import model.entity.app.Category;
 import model.entity.app.TempFile;
 import model.entity.app.product.rentable.RentalProductEntity;
 import org.springframework.validation.Errors;
@@ -71,9 +72,16 @@ public class ProductUploadFormValidator implements Validator {
 
 
                 for(int catId : catArray){
-                    if(this.categoryModel.getById(catId)==null){
+                    Category category = categoryModel.getById(catId);
+                    if(category==null){
                         errors.rejectValue("categoryIdArray","Category not found for id = "+catId);
                         break;
+                    }
+                    if(!category.getIsSubcategory()){
+                        if(category.getSubcategory()!=null && category.getSubcategory().size()>0) {
+                            errors.rejectValue("subcategoryId","Please select subcategory");
+                            break;
+                        }
                     }
                 }
             }catch (Exception ex){

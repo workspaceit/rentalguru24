@@ -1,6 +1,7 @@
 package ConsoleTesting;
 
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.security.MessageDigest;
@@ -12,13 +13,10 @@ import static java.lang.System.out;
  */
 public class Test {
 
-    public static void main(String args[]){
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String hasPass = bCryptPasswordEncoder.encode("123456");
-        out.println(hasPass);
-        out.println(bCryptPasswordEncoder.matches("asdasd4","$2a$10$xCRWnpjAarYndXaAQ.PvOeqhKQFQPbeEssqXATLveI8SA/5QxIfKm"));
-    }
+    public static void main(String args[]) {
 
+        out.println(StringEscapeUtils.escapeHtml3("ikj"));
+    }
 
 }
 

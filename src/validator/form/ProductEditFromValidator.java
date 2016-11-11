@@ -7,12 +7,14 @@ import model.CategoryModel;
 import model.RentTypeModel;
 import model.TempFileModel;
 
+import model.entity.app.Category;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import validator.form.class_file.ProductEditFrom;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.stream.Stream;
 
 
 /**
@@ -39,55 +41,55 @@ public class ProductEditFromValidator implements Validator {
     public void validate(Object object, Errors errors){
         ProductEditFrom productEditFrom = (ProductEditFrom)object;
 
-        if(productEditFrom.getName().isEmpty()){
-            errors.rejectValue("name", "Product title required");
-        }
-        if(productEditFrom.getDescription().isEmpty()){
-            errors.rejectValue("description", "Product description required");
-        }
 
-        if(productEditFrom.getAvailableFrom().isEmpty() || productEditFrom.getAvailableFrom() == null){
-            errors.rejectValue("availableFrom", "Product available from date required");
+
+
+        if( productEditFrom.getAvailableFrom() != null && !productEditFrom.getAvailableFrom().isEmpty() ){
             if(!DateHelper.isDateValid(productEditFrom.getAvailableFrom(), DATE_FORMAT)){
-                errors.rejectValue("availableFrom","Available from date in invalid format");
+                errors.rejectValue("availableFrom","Available from date is not in valid format");
             }
         }
 
-        if(productEditFrom.getAvailableTill().isEmpty() || productEditFrom.getAvailableTill() == null){
-            errors.rejectValue("availableTill", "Product available till date required");
+        if(productEditFrom.getAvailableTill()  != null  &&  !productEditFrom.getAvailableTill().isEmpty()){
             if(!DateHelper.isDateValid(productEditFrom.getAvailableTill(), DATE_FORMAT)){
-                errors.rejectValue("availableTill","Available till date in invalid format");
+                errors.rejectValue("availableTill","Available till date is not in valid format");
             }
         }
 
-        if(productEditFrom.getFormattedAddress().isEmpty()){
-            errors.rejectValue("fromattedAddress", "Product location required");
+
+
+        if( productEditFrom.getRentTypeId()!= null){
+            if(rentTypeModel.getById( productEditFrom.getRentTypeId())==null){
+                errors.rejectValue("rentTypeId", "Rent type not found for id "+ productEditFrom.getRentTypeId());
+            }
         }
 
-        if(productEditFrom.getRentTypeId() == null || productEditFrom.getRentTypeId() == -1){
-            errors.rejectValue("rentTypeId", "Rent Type  required");
-        }
-        if(productEditFrom.getZip().isEmpty()){
-            errors.rejectValue("zip", "Product zip code required");
+
+        if(productEditFrom.getCategoryIdArray()!=null && productEditFrom.getCategoryIdArray().length>0){
+            try{
+               Integer[] catArray = productEditFrom.getCategoryIdArray();
+
+
+                for(int catId : catArray){
+                    Category category = categoryModel.getById(catId);
+                    if(category==null){
+                        errors.rejectValue("categoryIdArray","Category not found for id = "+catId);
+                        break;
+                    }
+                    if(!category.getIsSubcategory()){
+                        if(category.getSubcategory()!=null && category.getSubcategory().size()>0) {
+                            errors.rejectValue("subcategoryId","Please select subcategory");
+                            break;
+                        }
+                    }
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
+                errors.rejectValue("categoryIdArray","Category not in valid format");
+            }
         }
 
-        if(productEditFrom.getCity().isEmpty()){
-            errors.rejectValue("city", "Product city required");
-        }
 
-        if(productEditFrom.getCurrentValue() == null || productEditFrom.getCurrentValue() == -1){
-            errors.rejectValue("currentValue", "Product current value required");
-        }
-
-        if(productEditFrom.getRentFee() == null || productEditFrom.getRentFee() == -1){
-            errors.rejectValue("rentFee", "Product rent Fee required");
-        }
-
-        if(productEditFrom.getCategoryIdArray().isEmpty()){
-            errors.rejectValue("categoryIdArray", "Product category required");
-        }else if(this.isJSONValid(productEditFrom.getCategoryIdArray()) == false){
-            errors.rejectValue("categoryIdArray", "Product category required");
-        }
 
     }
 

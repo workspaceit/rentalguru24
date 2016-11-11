@@ -23,6 +23,15 @@ public class AppLoginCredentialModel extends BaseModel {
     public String getPasswordAsMd5DigestAsHex(String password){
         return DigestUtils.md5DigestAsHex(password.getBytes());
     }
+    public boolean isPasswordMatched(int appCredentialId,String password){
+        AuthCredential authCredential = this.getById(appCredentialId);
+        if(authCredential==null) return false;
+        return this.isPasswordMatched(authCredential,password);
+    }
+    public boolean isPasswordMatched(AuthCredential authCredential,String password){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder.matches(password,authCredential.getPassword());
+    }
     public static String SHA2HASH(String password,String salt) {
         try {
             MessageDigest sha256 = MessageDigest.getInstance("SHA-256");

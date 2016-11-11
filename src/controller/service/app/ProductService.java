@@ -2,7 +2,11 @@ package controller.service.app;
 
 import antlr.collections.*;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import helper.DateHelper;
 import helper.ImageHelper;
@@ -23,6 +27,7 @@ import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.support.json.JsonObjectMapper;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import validator.form.ProductEditFromValidator;
@@ -68,7 +73,7 @@ public class ProductService{
     RentRequestModel rentRequestModel;
 
     @Autowired
-    ProductRatingModel getProductRatingModel;
+    ProductCategoryModel productCategoryModel;
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @JsonView(ProductView.RentalProductView.class)
@@ -419,32 +424,17 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        if(!appLoginCredentialModel.isVerified(appCredential.getId())){
+            serviceResponse.getResponseStat().setErrorMsg("You account is not verified yet");
+            SessionManagement.destroySession(request);
+            return serviceResponse;
+        }
+
         if(appLoginCredentialModel.isBlocked(appCredential.getId())){
             serviceResponse.getResponseStat().setErrorMsg("You account is blocked");
             SessionManagement.destroySession(request);
             return serviceResponse;
         }
-
-        productEditFrom.setName(allRequestParameter.get("name"));
-        productEditFrom.setDescription(allRequestParameter.get("description"));
-        productEditFrom.setAvailableFrom(allRequestParameter.get("availableFrom"));
-        productEditFrom.setAvailableTill(allRequestParameter.get("availableTill"));
-        productEditFrom.setFormattedAddress(allRequestParameter.get("formattedAddress"));
-        productEditFrom.setRentTypeId(Integer.parseInt(allRequestParameter.get("rentTypeId")));
-        productEditFrom.setCity(allRequestParameter.get("city"));
-        productEditFrom.setState(allRequestParameter.get("state"));
-        productEditFrom.setZip(allRequestParameter.get("zip"));
-        productEditFrom.setCurrentValue(Double.parseDouble(allRequestParameter.get("productCurrentPrice").trim()));
-        productEditFrom.setRentFee(Double.parseDouble(allRequestParameter.get("rentPrice").trim()));
-        productEditFrom.setCategoryIdArray(allRequestParameter.get("categoryId"));
-
-        new ProductEditFromValidator(categoryModel,tempFileModel,rentTypeModel).validate(productEditFrom, result);
-
-        serviceResponse.setError(result, true, false);
-        if(serviceResponse.hasErrors()){
-            return serviceResponse;
-        }
-
         RentalProduct rentalProduct = productModel.getById(productId);
 
         if(rentalProduct == null){
@@ -457,51 +447,101 @@ public class ProductService{
             return serviceResponse;
         }
 
-        List<ProductCategory> productCategories = rentalProduct.getProductCategories();
-        if(productCategories.get(0).getCategory().getId() != Integer.parseInt(allRequestParameter.get("categoryId"))){
-            productCategories.get(0).getCategory().setId(Integer.parseInt(allRequestParameter.get("categoryId")));
+        serviceResponse.setParameterAlias("categoryIdArray", "categoryIds");
+
+        if(allRequestParameter.get("categoryIds")!=null && !allRequestParameter.get("categoryIds").isEmpty()){
+            ObjectMapper objectMapper =  new ObjectMapper();
+            try{
+                Integer[] categoryIdArray =  objectMapper.readValue(allRequestParameter.get("categoryIds"), Integer[].class);
+                productEditFrom.setCategoryIdArray(categoryIdArray);
+            } catch (Exception e) {
+                serviceResponse.setRequestError("categoryIds","Type miss matched json array required");
+                productEditFrom.setCategoryIdArray(new Integer[0]);
+            }
+
         }
 
-        if(!rentalProduct.getName().equals(allRequestParameter.get("name"))){
-            rentalProduct.setName(allRequestParameter.get("name"));
+        if(allRequestParameter.get("productCurrentPrice")!=null && !allRequestParameter.get("productCurrentPrice").isEmpty()){
+                try{
+                    Float tmpCurrentPrice = Float.parseFloat(allRequestParameter.get("productCurrentPrice"));
+
+                    if(tmpCurrentPrice<=0){
+                        serviceResponse.setRequestError("productCurrentPrice","Must be greater then Zero");
+                    }else{
+                        productEditFrom.setCurrentValue(tmpCurrentPrice);
+                    }
+
+                }catch (NumberFormatException ex){
+                    serviceResponse.setRequestError("productCurrentPrice","Type miss matched float required");
+                }
         }
-        if(!rentalProduct.getDescription().equals(allRequestParameter.get("description"))){
-            rentalProduct.setDescription(allRequestParameter.get("description"));
+        if(allRequestParameter.get("rentPrice")!=null && !allRequestParameter.get("rentPrice").isEmpty()){
+            try{
+                Float tmpRentPrice = Float.parseFloat(allRequestParameter.get("rentPrice"));
+
+                if(tmpRentPrice<=0){
+                    serviceResponse.setRequestError("rentPrice","Must be greater then Zero");
+                }else{
+                    productEditFrom.setRentFee(tmpRentPrice);
+                }
+
+            }catch (NumberFormatException ex){
+                serviceResponse.setRequestError("rentPrice","Type miss matched float required");
+            }
         }
 
-        if(!rentalProduct.getAvailableFrom().equals(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "MM/dd/yyyy"))){
-            System.out.println("av from now ="+rentalProduct.getAvailableFrom());
-            System.out.println("av from edit ="+DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "MM/dd/yyyy"));
-            rentalProduct.setAvailableFrom(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableFrom"), "MM/dd/yyyy"));
+        new ProductEditFromValidator(categoryModel,tempFileModel,rentTypeModel).validate(productEditFrom, result);
+
+        serviceResponse.setError(result, true, false);
+
+        ProductLocation productLocation =  rentalProduct.getProductLocation();
+        productLocation = (productLocation==null)?new ProductLocation():productLocation;
+
+        if(serviceResponse.hasErrors()){
+            return serviceResponse;
         }
 
-        if(!rentalProduct.getAvailableTill().equals(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "MM/dd/yyyy"))){
-            System.out.println("till from now ="+rentalProduct.getAvailableTill());
-            System.out.println("till from edit ="+DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "MM/dd/yyyy"));
-            rentalProduct.setAvailableTill(DateHelper.getStringToTimeStamp(allRequestParameter.get("availableTill"), "MM/dd/yyyy"));
+        if(!productEditFrom.getName().isEmpty()){
+            rentalProduct.setName(productEditFrom.getName());
+        }
+        if(!productEditFrom.getDescription().isEmpty()){
+            rentalProduct.setDescription(productEditFrom.getDescription());
+        }
+        if(!productEditFrom.getAvailableFrom().isEmpty()) {
+            rentalProduct.setAvailableFrom(DateHelper.getStringToTimeStamp(productEditFrom.getAvailableFrom(), "dd-MM-yyyy"));
+        }
+        if(!productEditFrom.getAvailableTill().isEmpty()){
+            rentalProduct.setAvailableTill(DateHelper.getStringToTimeStamp(productEditFrom.getAvailableTill(), "dd-MM-yyyy"));
         }
 
-        if(!rentalProduct.getProductLocation().getFormattedAddress().equals(allRequestParameter.get("formattedAddress"))){
-            rentalProduct.getProductLocation().setFormattedAddress(allRequestParameter.get("formattedAddress"));
+        if(productEditFrom.getRentTypeId()!=null && productEditFrom.getRentTypeId()>0){
+            rentalProduct.setRentType(rentTypeModel.getById(productEditFrom.getRentTypeId()));
         }
+        /* LOCATION */
+        if(!productEditFrom.getFormattedAddress().isEmpty()){
+            productLocation.setFormattedAddress(productEditFrom.getFormattedAddress());
+        }
+        if(!productEditFrom.getCity().isEmpty()){
+            productLocation.setCity(productEditFrom.getCity());
+        }
+        if(!productEditFrom.getState().isEmpty()){
+            productLocation.setState(productEditFrom.getState());
+        }
+        if(!productEditFrom.getZip().isEmpty()){
+            productLocation.setZip(productEditFrom.getZip());
+        }
+        if(productEditFrom.getCurrentValue()!=null && productEditFrom.getCurrentValue()>0){
+            rentalProduct.setCurrentValue(productEditFrom.getCurrentValue());
+        }
+        if(productEditFrom.getRentFee()!=null && productEditFrom.getRentFee()>0){
+            rentalProduct.setRentFee(productEditFrom.getRentFee());
+        }
+        System.out.println(productEditFrom);
 
-        if(rentalProduct.getRentType().getId() != Integer.parseInt(allRequestParameter.get("rentTypeId"))){
-            RentType rentType = rentTypeModel.getById(Integer.parseInt(allRequestParameter.get("rentTypeId")));
-            rentalProduct.setRentType(rentType);
-        }
 
-        if(!rentalProduct.getProductLocation().getCity().equals(allRequestParameter.get("city"))){
-            rentalProduct.getProductLocation().setCity(allRequestParameter.get("city"));
-        }
-        if(!rentalProduct.getProductLocation().getZip().equals(allRequestParameter.get("zip"))){
-            rentalProduct.getProductLocation().setZip(allRequestParameter.get("zip"));
-        }
-        if(rentalProduct.getCurrentValue() != Double.parseDouble(allRequestParameter.get("productCurrentPrice"))){
-            rentalProduct.setCurrentValue(Double.parseDouble(allRequestParameter.get("productCurrentPrice")));
-        }
-        if(rentalProduct.getRentFee() != Double.parseDouble(allRequestParameter.get("rentPrice"))){
-            rentalProduct.setRentFee(Double.parseDouble(allRequestParameter.get("rentPrice")));
-        }
+
+
+
 
         if(allRequestParameter.get("profileImageToken")!=null && !allRequestParameter.get("profileImageToken").isEmpty()){
 
@@ -562,8 +602,31 @@ public class ProductService{
 
             rentalProduct.setOtherImages(otherImages);
         }
+        /* In-case product does not had a Location */
+        if(rentalProduct.getProductLocation() != productLocation){
+           // productLocation.setRentalProduct(rentalProduct);
+          //  productLocationModel.insert(productLocation);
+
+            productLocation.setRentalProduct(rentalProduct);
 
 
+        }
+
+        if(productEditFrom.getCategoryIdArray()!=null && productEditFrom.getCategoryIdArray().length>0){
+            List<ProductCategory> productCategoryList = rentalProduct.getProductCategories();
+            for(ProductCategory productCategory : productCategoryList ){
+                productCategoryModel.delete(productCategory);
+            }
+            productCategoryList = new ArrayList<>();
+            for(Integer productCategoryId : productEditFrom.getCategoryIdArray()){
+                ProductCategory productCategory = new ProductCategory();
+                productCategory.setCategory(categoryModel.getById(productCategoryId));
+                productCategoryList.add(productCategory);
+            }
+            rentalProduct.setProductCategories(productCategoryList);
+        }
+
+        rentalProduct.setProductLocation(productLocation);
         productModel.update(rentalProduct);
         serviceResponse.setResponseData(productModel.getById(rentalProduct.getId()));
 

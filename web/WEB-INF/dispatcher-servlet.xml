@@ -33,15 +33,15 @@
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
             <property name="location">
-                <value>/WEB-INF/localConfig.properties</value>
-                <!--<value>/WEB-INF/liveConfig.properties</value>-->
+                <!--<value>/WEB-INF/localConfig.properties</value>-->
+                <value>/WEB-INF/liveConfig.properties</value>
             </property>
     </bean>
     <!-- * ** *** **** Scheduler **** *** ** * -->
 
     <bean id="taskExecutorExample" class="scheduler.Scheduler">
     </bean>
-    <!-- Cron expressin validation http://www.cronmaker.com/-->
+    <!-- For Cron expression validation go to http://www.cronmaker.com/-->
     <task:scheduled-tasks>
         <task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="0 0/30 * * * ?"/>
     </task:scheduled-tasks>
@@ -335,6 +335,9 @@
        </bean>
        <bean id="productLikedModel" class="model.ProductLikedModel" parent="baseModel"   >
        </bean>
+        <bean id="productCategoryModel" class="model.ProductCategoryModel" parent="baseModel"   >
+        </bean>
+
        <bean id="requestProductReturnModel" class="model.RentalProductReturnRequestModel" parent="baseModel"   >
        </bean>
        <bean id="rentalProductReturnedModel" class="model.RentalProductReturnedModel" parent="baseModel"   >

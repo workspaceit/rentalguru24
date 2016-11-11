@@ -98,7 +98,7 @@ public class UtilityServices {
         serviceResponse.setResponseData(categoryModel.getAllParentBySubcategoryId(id),"No record found");
         return serviceResponse;
     }
-    @RequestMapping(value = "/get-parent-subcategory-id/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-parent-by-subcategory-id/{id}", method = RequestMethod.GET)
     public ServiceResponse getParentBySubcategoryId(HttpServletRequest request, @PathVariable int id){
         ServiceResponse serviceResponse = (ServiceResponse) request.getAttribute("serviceResponse");
 

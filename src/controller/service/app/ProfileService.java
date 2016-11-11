@@ -86,7 +86,7 @@ public class ProfileService {
 
         if(!profileForm.getNewPassword().isEmpty()){
             isPasswordChanged = true;
-            boolean isOldPassword = authCredential.getPassword().equals(appCredentialModel.getPasswordAsMd5DigestAsHex(profileForm.getOldPassword()));
+            boolean isOldPassword = appCredentialModel.isPasswordMatched(authCredential,profileForm.getOldPassword());
             if(!isOldPassword){
                 serviceResponse.setRequestError("oldPassword","Password miss matched");
             }else{
