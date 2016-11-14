@@ -643,6 +643,11 @@ public class ProductService{
 
         RentalProduct rentalProduct = productModel.getById(productId);
 
+        if(rentalProduct.getOwner().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("productId", "You are not the owner of this product ");
+            return serviceResponse;
+        }
+
         if(rentalProduct == null){
             serviceResponse.setRequestError("product", "Product Not found");
             return serviceResponse;
@@ -678,7 +683,7 @@ public class ProductService{
         RentalProduct rentalProduct = productModel.getById(productId);
 
         if(rentalProduct.getOwner().getId() != appCredential.getId()){
-            serviceResponse.setRequestError("user", "You are not the owner of this product ");
+            serviceResponse.setRequestError("productId", "You are not the owner of this product ");
             return serviceResponse;
         }
 
