@@ -141,23 +141,8 @@
               <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <a class="rent_now_btn" href="javascript:void(0)" onclick="showRentRequestPopUp(${rentalProduct.getId()})"><i class="fa fa-shopping-basket"></i>Rent Now</a>
-                  <%--<a class="ehe_btn" href=""><i class="fa fa-eye"></i></a>--%>
-                  <%--<a class="ehe_btn" href=""><i class="fa fa-heart"></i></a>--%>
-                  <%--<a class="ehe_btn" href=""><i class="fa  fa-exchange"></i></a>--%>
                 </div>
               </div>
-              <%--<div class="row">--%>
-              <%--<div class="col-md-3 col-sm-3 col-xs-3">--%>
-              <%--<p class="value_input_label">Quantity</p>--%>
-              <%--</div>--%>
-              <%--<div class="col-md-4 col-sm-4 col-xs-6 input-group spinner">--%>
-              <%--<input type="text" class="form-control value_input" value="42">--%>
-              <%--<div class="input-group-btn-vertical">--%>
-              <%--<button class="btn btn-default value_controller" type="button"><i class="fa fa-plus"></i></button>--%>
-              <%--<button class="btn btn-default value_controller" type="button"><i class="fa fa-minus"></i></button>--%>
-              <%--</div>--%>
-              <%--</div>--%>
-              <%--</div>--%>
             </div>
             <div class="product_overview">
               <div class="row">
@@ -185,16 +170,6 @@
             </div>
             <div class="scl_share">
               <div class="row">
-                <%--<div class="col-md-12 col-sm-12 col-xs-12">--%>
-                  <%--<ul class="scl_share_ul">--%>
-                    <%--<li class="facebook"><a href=""><i class="fa fa-facebook"></i><span class="scl_share_label">Share</span></a></li>--%>
-                    <%--<li class="google"><a href=""><i class="fa fa-google-plus google"></i><span class="scl_share_label">Google+</span></a></li>--%>
-                    <%--<li class="twitter"><a href=""><i class="fa fa-twitter twitter"></i><span class="scl_share_label">Twitter</span></a></li>--%>
-                    <%--<li class="pinterest"><a href=""><i class="fa fa-pinterest pinterest"></i><span class="scl_share_label">Pinterest</span></a></li>--%>
-                    <%--<li class="linkedin"><a href=""><i class="fa fa-linkedin linkedin"></i><span class="scl_share_label">Linkedin</span></a></li>--%>
-                  <%--</ul>--%>
-
-                <%--</div>--%>
               </div>
             </div>
           </div>
