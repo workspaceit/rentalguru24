@@ -31,17 +31,13 @@ public class AdminUsersController {
         HashMap<String, String> breadcrumb = new HashMap<>();
 
         breadcrumb.put("User", new String("javascript:void(0);"));
-        breadcrumb.put("Rent request", new String("javascript:void(0);"));
-
+        breadcrumb.put("App User", new String(baseUrl+"/admin/user/app-user"));
 
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("allUsers", authCredentials);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageHeader", "App User");
-        modelAndView.addObject("mainMenu", "User");
-        modelAndView.addObject("subMenu", "App User");
-        modelAndView.addObject("pageUrl", "admin/user/app-user");
-        modelAndView.addObject("PageTitle", "Admin Users Details");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
     @RequestMapping(value = "/app-user/verified", method = RequestMethod.GET)
@@ -51,14 +47,16 @@ public class AdminUsersController {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List <AuthCredential> authCredentials = appLoginCredentialModel.getAllVerifiedAppUser();
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("User", new String("javascript:void(0);"));
+        breadcrumb.put("Verified User", new String(baseUrl+"/admin/user/app-user/verified"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("allUsers", authCredentials);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Admin Active Users Details");
         modelAndView.addObject("pageHeader", "Verified User");
-        modelAndView.addObject("mainMenu", "User");
-        modelAndView.addObject("subMenu", "Verified User");
-        modelAndView.addObject("pageUrl", "admin/user/app-user/verified");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 
@@ -69,14 +67,16 @@ public class AdminUsersController {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List <AuthCredential> authCredentials = appLoginCredentialModel.getAllUnVerifiedAppUser();
 
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("User", new String("javascript:void(0);"));
+        breadcrumb.put("Unverified User", new String(baseUrl+"/admin/user/app-user/unverified"));
+
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("allUsers", authCredentials);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("PageTitle", "Admin Active Users Details");
         modelAndView.addObject("pageHeader", "Unverified User");
-        modelAndView.addObject("mainMenu", "User");
-        modelAndView.addObject("subMenu", "Unverified User");
-        modelAndView.addObject("pageUrl", "admin/user/app-user/unverified");
+        modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
 }

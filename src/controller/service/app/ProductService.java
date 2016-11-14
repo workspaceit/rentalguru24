@@ -676,6 +676,10 @@ public class ProductService{
         String path = allRequestParameter.get("path");
         RentalProduct rentalProduct = productModel.getById(productId);
 
+        if(rentalProduct.getOwner().getId() != appCredential.getId()){
+            serviceResponse.setRequestError("user", "You are not the owner of this product ");
+            return serviceResponse;
+        }
 
         if(path == null ){
             serviceResponse.setRequestError("path", "Product image path required");

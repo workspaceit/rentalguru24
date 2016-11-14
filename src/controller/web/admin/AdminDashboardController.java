@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by omar on 8/24/16.
@@ -361,7 +362,14 @@ public class AdminDashboardController {
 
         RentInf rentInf = rentInfModel.getById(rentinfId);
 
-        HashMap<String, String> breadcrumb = new HashMap<>();
+//        HashMap<String, String> breadcrumb = new HashMap<>();
+//
+//        breadcrumb.put("Notification", new String("javascript:void(0);"));
+//        breadcrumb.put("Global Notification List", new String(baseUrl+"/admin/user/notification/global"));
+//        breadcrumb.put("Notification Details", new String(baseUrl+"/admin/user/notification/global/"+notificationId));
+//        breadcrumb.put("Order Details", new String(baseUrl+"/admin/user/order-details/"+notificationId+"/"+rentinfId));
+
+        Map<String, String> breadcrumb = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
 
         breadcrumb.put("Notification", new String("javascript:void(0);"));
         breadcrumb.put("Global Notification List", new String(baseUrl+"/admin/user/notification/global"));
