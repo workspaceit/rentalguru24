@@ -1,12 +1,8 @@
 package controller.service.app;
 
-import antlr.collections.*;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import helper.DateHelper;
 import helper.ImageHelper;
@@ -27,7 +23,6 @@ import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import model.nonentity.photo.Picture;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.support.json.JsonObjectMapper;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import validator.form.ProductEditFromValidator;
@@ -35,7 +30,6 @@ import validator.form.ProductUploadFormValidator;
 import validator.form.class_file.ProductEditFrom;
 import validator.form.class_file.ProductUploadForm;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.*;
@@ -530,6 +524,13 @@ public class ProductService{
         if(!productEditFrom.getZip().isEmpty()){
             productLocation.setZip(productEditFrom.getZip());
         }
+        if(productEditFrom.getLat()!=null){
+            productLocation.setLat(productEditFrom.getLat());
+        }
+        if(productEditFrom.getLng()!=null){
+            productLocation.setLng(productEditFrom.getLng());
+        }
+
         if(productEditFrom.getCurrentValue()!=null && productEditFrom.getCurrentValue()>0){
             rentalProduct.setCurrentValue(productEditFrom.getCurrentValue());
         }

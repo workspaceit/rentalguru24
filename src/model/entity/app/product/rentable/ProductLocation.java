@@ -23,8 +23,8 @@ public class ProductLocation {
     private String state;
     private String formattedAddress;
     private String zip;
-    private Double latitude = null;
-    private Double longitude = null;
+    private Double lat = null;
+    private Double lng = null;
     private Timestamp createdDate;
 
     private RentalProduct rentalProduct;
@@ -87,23 +87,23 @@ public class ProductLocation {
     @Basic
     @Column(name = "lat")
     @Latitude(of="home")
-    public Double getLatitude() {
-        return latitude;
+    public Double getLat() {
+        return lat;
     }
 
-    public void setLatitude(Double lat) {
-        this.latitude = lat;
+    public void setLat(Double lat) {
+        this.lat = lat;
     }
 
     @Basic
     @Column(name = "lng")
     @Longitude(of="home")
-    public Double getLongitude() {
-        return longitude;
+    public Double getLng() {
+        return lng;
     }
 
-    public void setLongitude(Double lng) {
-        this.longitude = lng;
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 
     @JsonIgnore
