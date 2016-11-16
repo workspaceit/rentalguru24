@@ -207,7 +207,7 @@ public class RentRequest {
 
 
 
-    @JsonIgnore
+   // @JsonIgnore
     @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {

@@ -1,10 +1,15 @@
 package helper;
 
+import org.joda.time.DateTimeZone;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -25,9 +30,11 @@ public class DateHelper {
         return processedTime;
     }
     public static Timestamp getCurrentUtcDateTimeStamp() {
-        Instant instant = Instant.now();
+        Date local = new Date();
+        DateTimeZone zone = DateTimeZone.getDefault();
+        long utc = zone.convertLocalToUTC(local.getTime(), false);
 
-        return new Timestamp(instant.getEpochSecond()*1000);
+        return new Timestamp(utc);
 
 
     }

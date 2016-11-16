@@ -41,12 +41,12 @@ public class Scheduler {
         String requestIds = "";
         int maxId =-1;
         for(RentRequest rentRequest : pendingRentRequestList){
-            long h24 =  ((24 * 60) * 1000); // 24 Hours in nano sec
+            long h24 =   (((60* 60)*24 ) * 1000); // 24 Hours in nano sec
             Timestamp requestCreatedDate = rentRequest.getCreatedDate();
             requestCreatedDate.setTime(requestCreatedDate.getTime()+h24);
 
             int difference =  currentSystemUtcTime.compareTo(requestCreatedDate);
-
+            System.out.println(" "+requestCreatedDate+" "+currentSystemUtcTime+" "+difference);
             if(difference>=0){
                 if(rentRequest.getIsPaymentComplete()){
                     payPalPayment.refundOtherRentRequest(rentRequest);
