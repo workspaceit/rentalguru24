@@ -271,18 +271,6 @@
                             </li>
                         </d:if>
                     </d:if>
-                    <%--<div class="alert alert-success" role="alert">--%>
-                        <%--<a href="javascript:void(0);" class="alert-link">Well done! You successfully read this important alert message. </a>--%>
-                    <%--</div>--%>
-                    <%--<div class="alert alert-info" role="alert">--%>
-                        <%--<a href="javascript:void(0);" class="alert-link">Heads up! This alert needs your attention, but it's not super important. </a>--%>
-                    <%--</div>--%>
-                    <%--<div class="alert alert-warning" role="alert">--%>
-                        <%--<a href="javascript:void(0);" class="alert-link">Warning! Better check yourself, you're not looking too good. </a>--%>
-                    <%--</div>--%>
-                    <%--<div class="alert alert-danger" role="alert">--%>
-                        <%--<a href="javascript:void(0);" class="alert-link">Oh snap! Change a few things up and try submitting again. </a>--%>
-                    <%--</div>--%>
                 </div>
             </div>
             <div class="alert alert-danger" id="errorMsg_requestId" hidden></div>
@@ -485,7 +473,7 @@
                                 var createdDate =  dateFormat(new Date(rentInf.rentalProductReturnRequest.createdDate), "dddd, mmm dS, yyyy, h:MM:ss TT");
                                 $("#productReturnRequestParentDiv").fadeIn();
                                 $("#productReturnRequestString").append(" On "+createdDate).fadeIn();
-                            }else{
+                            }else if(rentInf.rentalProductReturned == undefined){
                                 $("#productReturnRequestBtn").fadeIn().addClass('bound').bind("click",function(){
                                     requestToReturnProduct(rentInf.id);
                                 });
