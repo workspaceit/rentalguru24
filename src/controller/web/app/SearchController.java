@@ -35,8 +35,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/search")
 public class SearchController {
-    private List<State> stateList;
-
     @Autowired
     CategoryModel categoryModel;
 
@@ -47,11 +45,6 @@ public class SearchController {
     @Autowired
     StateModel stateModel;
 
-    @PostConstruct
-    public void initStateModel(){
-        stateList = stateModel.getAll();
-        System.out.println(stateList);
-    }
 
     @RequestMapping(value={"","/{usState}"},method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
@@ -61,8 +54,13 @@ public class SearchController {
                               @RequestParam(value = "radius",required = false)Float radius,
                               @RequestParam(value = "lat",required = false)Double lat,
                               @RequestParam(value = "lng",required = false)Double lng) {
-        System.out.println(stateCode.get());
-        if(stateCode.isPresent())System.out.println(stateCode.get());
+        State selectedUsState = null;
+        if(stateCode.isPresent()){
+            selectedUsState = stateModel.getByCode(stateCode.get().trim());
+            System.out.println(selectedUsState);
+        }
+
+
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
@@ -86,7 +84,7 @@ public class SearchController {
             }
         }
 
-        rentalProducts = productModel.getRentalProductForSearch(null,categoryId,title,lat,lng,radius,8,0);
+        rentalProducts = productModel.getRentalProductForSearch(selectedUsState,categoryId,title,lat,lng,radius,8,0);
 
 
         System.out.println("GeoIpManager "+GeoIpManager.getRemoteAddress(request));

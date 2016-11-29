@@ -104,6 +104,26 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
+    public List<RentalProduct> getRentalProduct(State usState,int limit, int offset) {
+        if (limit > 15) {
+            limit = 15;
+        }
+        if(limit<=0){
+            return new ArrayList<>();
+        }
+        String hql = "FROM RentalProductEntity p where p.active = true " +
+                                                    " and p.reviewStatus = true " +
+                                                    " and p.productLocation.state.id =:stateId  ORDER BY p.id DESC";
+        Session session = this.sessionFactory.openSession();
+        try {
+            return session.createQuery(hql)
+                    .setParameter("stateId",usState.getId())
+                    .setFirstResult(offset * limit)
+                    .setMaxResults(limit).list();
+        } finally {
+            session.close();
+        }
+    }
     public List<RentalProduct> getRentalProductOrderByRating(int limit, int offset) {
         if (limit > 15) {
             limit = 15;
@@ -751,6 +771,10 @@ public class ProductModel extends BaseModel {
         }
         if(haveTitle){
             return this.getRentalProductByTitle(title, limit, offset);
+        }
+
+        if(usState!=null){
+            return this.getRentalProduct(usState, limit, offset);
         }
         return new ArrayList<>();
     }
