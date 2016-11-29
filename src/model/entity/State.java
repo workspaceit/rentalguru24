@@ -1,15 +1,13 @@
 package model.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * Created by mi on 11/29/16.
  */
 @Entity
+@Table(name = "state", schema = "")
 public class State {
     private int id;
     private String code;
