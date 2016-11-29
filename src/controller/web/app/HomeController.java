@@ -7,7 +7,9 @@ import library.ipGeoTracker.dataModel.GeoIp;
 import model.BannerImageModel;
 import model.CategoryModel;
 import model.ProductModel;
+import model.StateModel;
 import model.entity.BannerImage;
+import model.entity.State;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -35,6 +38,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
+    private static List<State> stateList = new ArrayList<>();
+
     @Autowired
     CategoryModel categoryModel;
 
@@ -44,14 +49,12 @@ public class HomeController {
     @Autowired
     BannerImageModel bannerImageModel;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView index(HttpServletRequest request,
-                              @RequestParam(value = "title",required = false)String title,
-                              @RequestParam(value = "distance",required = false)Integer distance,
-                              @RequestParam(value = "lat",required = false)Double centralLatitude,
-                              @RequestParam(value = "lng",required = false)Double centralLongitude) {
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
 
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView index(HttpServletRequest request) {
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        System.out.println(stateList);
         ModelAndView modelAndView = new ModelAndView("public/Home");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<RentalProduct> rentalProducts = new ArrayList<>();
@@ -71,7 +74,6 @@ public class HomeController {
         List<BannerImage> bannerImageList = bannerImageModel.getAll();
 
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?fromHomePage=1";
-        loadMoreProductUrl = (title!=null&&!title.equals(""))?loadMoreProductUrl+"title="+title:loadMoreProductUrl;
         String preSelectedCategoryName = "Select Category";
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("bannerImageList", bannerImageList);

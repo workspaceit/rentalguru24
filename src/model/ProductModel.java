@@ -530,18 +530,18 @@ public class ProductModel extends BaseModel {
     }
     public List<RentalProduct> getRentalProductByDistance(State usState,Integer categoryId,String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
 
-        List<Integer> locationIds =  this.getRentalProductIdByDistance(usState, categoryId,title,centerLatitude, centerLongitude, radius, limit, offset);
+        List<Integer> productIds =  this.getRentalProductIdByDistance(usState, categoryId,title,centerLatitude, centerLongitude, radius, limit, offset);
 
         Session session = this.sessionFactory.openSession();
-        System.out.println("locationIds "+locationIds);
-        if(locationIds==null || locationIds.size()==0){
+        System.out.println("productIds "+productIds);
+        if(productIds==null || productIds.size()==0){
             return new ArrayList<>();
         }
         try{
             return session.createQuery("FROM RentalProductEntity " +
-                    " where productLocation.id in (:productLocationIds) " +
+                    " where id in (:productIds) " +
                     " AND reviewStatus = true ")
-                    .setParameterList("productLocationIds", locationIds)
+                    .setParameterList("productIds", productIds)
                     .list();
         }finally {
             session.close();
@@ -620,40 +620,52 @@ public class ProductModel extends BaseModel {
     private   List<Integer> getRentalProductIdByDistance(State usState,Integer categoryId,String title,double centerLatitude, double centerLongitude, float radius, int limit, int offset){
         Session session = this.sessionFactory.openSession();
         try{
-                StringBuilder query = new StringBuilder();
-                query.insert(0, "SELECT  product.id " +
-                        "FROM product_location " +
-                        " JOIN product on  product_location.product_id = product.id " +
-                        " JOIN product_category on product.id = product_category.product_id " +
-                        " where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
-                        " sin(radians(lat))))  <=:radius ) " +
-                        " and product.review_status = 1 ");
+            StringBuilder query = new StringBuilder();
+            query.insert(0, "SELECT  product.id " +
+                    "FROM product_location " +
+                    " JOIN product on  product_location.product_id = product.id " +
+                    " JOIN product_category on product.id = product_category.product_id " +
+                    " where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
+                    " sin(radians(lat))))  <=:radius ) " +
+                    " and product.review_status = 1 ");
+
+            Map<String,Object> whereParameters = new  HashMap<>();
 
 
-                NativeQuery nq =  session.createSQLQuery(query.toString())
-                .setParameter("centerLatitude", centerLatitude)
-                .setParameter("centerLongitude",centerLongitude)
-                .setParameter("radius", radius)
-                .setParameter("offset",offset*limit);
 
             if(title!=null && !title.trim().equals("")){
                 /* Add where clause by appending query */
                 query.append(" and product.name like :title ");
-                nq.setParameter("title", "%" + title + "%");
+                whereParameters.put("title", "%" + title + "%");
             }
             if(categoryId!=null && categoryId>0){
                  /* Add where clause by appending query */
                 query.append(" and product_category.category_id = :categoryId ");
-                nq.setParameter("categoryId", categoryId);
+                whereParameters.put("categoryId", categoryId);
             }
             if(usState!=null){
                  /* Add where clause by appending query */
                 query.append(" and product_location.state_id = :stateId ");
-                nq.setParameter("stateId",usState.getId());
+                whereParameters.put("stateId", usState.getId());
+            }
+            query.append(" LIMIT :offset , :limit ");
+
+
+            whereParameters.put("centerLatitude", centerLatitude);
+            whereParameters.put("centerLongitude", centerLongitude);
+            whereParameters.put("radius", radius);
+            whereParameters.put("limit", limit);
+            whereParameters.put("offset", offset);
+
+
+
+            NativeQuery nq =  session.createSQLQuery(query.toString());
+            for(Map.Entry<String,Object> entry:whereParameters.entrySet()){
+                nq.setParameter(entry.getKey(), entry.getValue());
             }
 
-            query.append(" LIMIT :offset , :limit ");
-            nq.setParameter("limit", limit);
+            System.out.println(query.toString());
+
             List<Integer> ids = nq.list();
 
             return ids;
@@ -719,7 +731,7 @@ public class ProductModel extends BaseModel {
         if(radius!=null){
             return this.getRentalProductByDistance(usState,categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
 
-            /*if(haveCategory && haveTitle ){
+           /* if(haveCategory && haveTitle ){
                 return this.getRentalProductByDistance(categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
             }else if(haveCategory){
                 return this.getRentalProductByDistance(categoryId,centerLatitude, centerLongitude, radius, limit, offset);

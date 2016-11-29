@@ -7,6 +7,8 @@ import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.CategoryModel;
 import model.ProductModel;
+import model.StateModel;
+import model.entity.State;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -32,18 +35,34 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/search")
 public class SearchController {
+    private List<State> stateList;
+
     @Autowired
     CategoryModel categoryModel;
 
     @Autowired
     ProductModel productModel;
-    @RequestMapping(method = RequestMethod.GET)
+
+
+    @Autowired
+    StateModel stateModel;
+
+    @PostConstruct
+    public void initStateModel(){
+        stateList = stateModel.getAll();
+        System.out.println(stateList);
+    }
+
+    @RequestMapping(value={"","/{usState}"},method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
+                              @PathVariable(value="usState") Optional<String> stateCode,
                               @RequestParam(value = "title",required = false)String title,
                               @RequestParam(value = "cid",required = false)Integer categoryId,
                               @RequestParam(value = "radius",required = false)Float radius,
                               @RequestParam(value = "lat",required = false)Double lat,
                               @RequestParam(value = "lng",required = false)Double lng) {
+        System.out.println(stateCode.get());
+        if(stateCode.isPresent())System.out.println(stateCode.get());
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
@@ -51,7 +70,6 @@ public class SearchController {
         ModelAndView modelAndView = new ModelAndView("public/Search");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<RentalProduct> rentalProducts = new ArrayList<>();
-
         try {
             if(title!=null && !title.equals(""))
                 title = URLDecoder.decode(title, "UTF-8");

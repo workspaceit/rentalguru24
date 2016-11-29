@@ -4,26 +4,20 @@ package controller.interceptor;
  * Created by mi on 8/16/16.
  */
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import helper.ServiceResponse;
 import model.CategoryModel;
 import model.admin.AdminCmsPageModel;
-import model.entity.admin.AdminCmsPage;
 import model.entity.app.AppCredential;
-import model.entity.app.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.PrintWriter;
-import java.util.List;
 
-public class WebInterceptor extends HandlerInterceptorAdapter{
+public class WebInterceptor extends BaseWebInterceptor{
 
     @Autowired
     CategoryModel categoryModel;
@@ -46,7 +40,6 @@ public class WebInterceptor extends HandlerInterceptorAdapter{
         if(httpSession.getAttribute("appCredential") instanceof AppCredential){
             serviceResponse.getResponseStat().setIsLogin(true);
             appCredential =(AppCredential) httpSession.getAttribute("appCredential");
-
         }
         Boolean isLogin = serviceResponse.getResponseStat().getIsLogin();
         request.setAttribute("isLogin",isLogin);
@@ -56,6 +49,7 @@ public class WebInterceptor extends HandlerInterceptorAdapter{
         request.setAttribute("BaseUrl", this.baseURL);
         request.setAttribute("serviceResponse", serviceResponse);
         request.setAttribute("appCredential", appCredential);
+        request.setAttribute("stateList", stateList);
         return true;
 
     }
@@ -65,9 +59,6 @@ public class WebInterceptor extends HandlerInterceptorAdapter{
             HttpServletRequest request, HttpServletResponse response,
             Object handler, ModelAndView modelAndView)
             throws Exception {
-
-
-        System.out.println("INTERCEPTOR postHandle");
 
     }
     public String getBaseURL() {

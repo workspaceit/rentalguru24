@@ -105,10 +105,30 @@ span.conatct_number {
 }
 .contact_icon {
     color: #cf9824;
-
 }
-
-
+.btn-area{
+    width: 100%;
+    background: #3490A7;
+    color: #fff;
+}
+.btn-area span{
+    margin-left: 5px;
+}
+.btn-area i{
+    font-size: 16px;
+}
+.btn-area:hover{
+    color: #fff;
+    opacity: 0.9;
+}
+.area-filter{
+    padding:0px; 
+}
+.area-list li{
+    border-bottom: 1px solid #eee;
+    padding: 10px 0px !important;
+    font-weight: 700;
+}
 /*Vertical mega menu*/
 
 /*.dropdown-menu li:hover .sub-menu {

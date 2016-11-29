@@ -18,8 +18,33 @@
   <%--</div>--%>
 
 <%--</div>--%>
-
-<div class="col-md-8 col-sm-8 col-xs-12 top-seach-bar">
+<div class="col-md-2 top-seach-bar area-filter">
+  <button class="btn btn-area" data-toggle="modal" data-target="#areaFilter"><i class="fa fa-map-marker"></i><span>Choose Area</span></button>
+</div>
+<!-- modal -->
+<!-- Modal -->
+<div class="modal fade" id="areaFilter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Choose an Area</h4>
+      </div>
+      <div class="modal-body">
+        <ul class="area-list">
+          <d:forEach var="usState" items="${stateList}" >
+            <li><a href="#">${usState.name}</a></li>
+          </d:forEach>
+        </ul>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div class="col-md-6 col-sm-8 col-xs-12 top-seach-bar pull-right ">
   <div class="input-group">
     <div class="input-group-btn search-panel">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">

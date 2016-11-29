@@ -77,4 +77,15 @@ public class State {
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "State{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", createdDate=" + createdDate +
+                '}';
+    }
 }
+

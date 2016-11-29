@@ -22,7 +22,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import java.io.PrintWriter;
 
-public class WebAuthInterceptor extends HandlerInterceptorAdapter{
+public class WebAuthInterceptor extends BaseWebInterceptor{
     private String baseURL;
     @Autowired
     CategoryModel categoryModel;
@@ -54,6 +54,7 @@ public class WebAuthInterceptor extends HandlerInterceptorAdapter{
             request.setAttribute("cmsPages",adminCmsPageModel.getAll());
             request.setAttribute("category",categoryModel.getAll());
             request.setAttribute("BaseUrl", this.baseURL);
+            request.setAttribute("stateList", stateList);
             return true;
         }else{
             response.sendRedirect(this.getURLWithContextPath(request) + "/signin?r=" + java.net.URLEncoder.encode(this.getURL(request), "UTF-8"));
