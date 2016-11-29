@@ -2,6 +2,7 @@ package model.entity.app.product.rentable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import model.entity.State;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.hibernate.search.annotations.*;
 
@@ -20,11 +21,11 @@ public class ProductLocation {
     private int id;
     private int productId;
     private String city;
-    private String state;
     private String formattedAddress;
     private String zip;
     private Double lat = null;
     private Double lng = null;
+    private State state;
     private Timestamp createdDate;
 
     private RentalProduct rentalProduct;
@@ -57,13 +58,14 @@ public class ProductLocation {
     public void setCity(String city) {
         this.city = city;
     }
-    @Basic
-    @Column(name = "state")
-    public String getState() {
+
+    @OneToOne
+    @JoinColumn(name = "state_id",referencedColumnName = "id")
+    public State getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(State state) {
         this.state = state;
     }
     @Basic

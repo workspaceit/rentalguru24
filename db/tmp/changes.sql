@@ -1,0 +1,1 @@
+ALTER TABLE  `product_location` CHANGE  `state`  `state_id` INT( 11 ) NOT NULL ;

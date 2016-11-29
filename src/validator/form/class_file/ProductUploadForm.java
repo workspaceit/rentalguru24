@@ -27,7 +27,7 @@ public class ProductUploadForm {
 
 
     private String city;
-    private String state;
+    private Integer stateId;
     private String formattedAddress;
     private String zip;
     private Double lat;
@@ -151,12 +151,12 @@ public class ProductUploadForm {
         this.city = city;
     }
 
-    public String getState() {
-        return state;
+    public Integer getStateId() {
+        return stateId;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setStateId(Integer stateId) {
+        this.stateId = stateId;
     }
 
     public String getFormattedAddress() {
@@ -199,7 +199,6 @@ public class ProductUploadForm {
         this.otherImagesTokenArray = otherImagesTokenArray;
     }
 
-
     @Override
     public String toString() {
         return "ProductUploadForm{" +
@@ -215,13 +214,14 @@ public class ProductUploadForm {
                 ", availableTill='" + availableTill + '\'' +
                 ", reviewStatus=" + reviewStatus +
                 ", categoryIdArray=" + Arrays.toString(categoryIdArray) +
+                ", subcategoryId=" + subcategoryId +
                 ", otherImagesTokenArray=" + Arrays.toString(otherImagesTokenArray) +
                 ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
+                ", stateId=" + stateId +
                 ", formattedAddress='" + formattedAddress + '\'' +
                 ", zip='" + zip + '\'' +
-                ", lat=" + getLat() +
-                ", lng=" + getLng() +
+                ", lat=" + lat +
+                ", lng=" + lng +
                 '}';
     }
 }

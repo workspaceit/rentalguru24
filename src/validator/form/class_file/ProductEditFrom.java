@@ -3,6 +3,8 @@ package validator.form.class_file;
 import helper.UtilityHelper;
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import java.util.Arrays;
+
 /**
  * Created by omar on 9/21/16.
  */
@@ -19,7 +21,7 @@ public class ProductEditFrom {
     private Integer rentTypeId;
 
     private String city;
-    private String state;
+    private Integer stateId;
     private String formattedAddress;
     private String zip;
     private Double lat;
@@ -122,13 +124,16 @@ public class ProductEditFrom {
         this.city = city;
     }
 
-    public String getState() {
-        state = (state!=null)?state.trim():"";
-        return state;
+    public void setSubcategoryId(Integer subcategoryId) {
+        this.subcategoryId = subcategoryId;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public Integer getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Integer stateId) {
+        this.stateId = stateId;
     }
 
     public String getFormattedAddress() {
@@ -166,7 +171,6 @@ public class ProductEditFrom {
     }
 
 
-
     @Override
     public String toString() {
         return "ProductEditFrom{" +
@@ -176,10 +180,11 @@ public class ProductEditFrom {
                 ", rentFee=" + rentFee +
                 ", availableFrom='" + availableFrom + '\'' +
                 ", availableTill='" + availableTill + '\'' +
-                ", categoryIdArray='" + categoryIdArray + '\'' +
+                ", categoryIdArray=" + Arrays.toString(categoryIdArray) +
+                ", subcategoryId=" + subcategoryId +
                 ", rentTypeId=" + rentTypeId +
                 ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
+                ", stateId=" + stateId +
                 ", formattedAddress='" + formattedAddress + '\'' +
                 ", zip='" + zip + '\'' +
                 ", lat=" + lat +

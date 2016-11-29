@@ -39,13 +39,12 @@ public class ProductUploadFormValidator implements Validator {
         ProductUploadForm productUploadForm = (ProductUploadForm)object;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name", "Product name required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"description", "Description name required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"description", "Description required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"profileImageToken", "profile Image  required");
-        //errors.rejectValue("otherImages","Other Images  required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"stateId", "State required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"rentFee", "Rent fee required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"availableFrom", "Available from date required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "availableTill", "Available till date required");
-
 
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "City is required");
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "state", "State is required");
@@ -54,7 +53,9 @@ public class ProductUploadFormValidator implements Validator {
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lng", "Lng is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "formattedAddress", "Formatted address required");
 
-
+        if(productUploadForm.getStateId()!=null && productUploadForm.getStateId()>0){
+            errors.rejectValue("stateId","State required");
+        }
         if(productUploadForm.getAvailableFrom()!=null && !productUploadForm.getAvailableFrom().isEmpty()){
 
             if(!DateHelper.isDateValid(productUploadForm.getAvailableFrom(), DATE_FORMAT)){
@@ -107,7 +108,7 @@ public class ProductUploadFormValidator implements Validator {
             }
         }
 
-        if(productUploadForm.getRentTypeId()!=null){
+        if(productUploadForm.getRentTypeId() != null){
             if(rentTypeModel.getById(productUploadForm.getRentTypeId())==null){
                 errors.rejectValue("rentTypeId", "No rent type found by id  "+productUploadForm.getRentTypeId());
             }

@@ -379,4 +379,5 @@ public class RentalProductEntity implements RentalProduct,MyRentalProduct,MyRent
         }
         return "";
     }
+
 }

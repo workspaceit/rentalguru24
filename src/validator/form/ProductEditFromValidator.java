@@ -89,8 +89,6 @@ public class ProductEditFromValidator implements Validator {
             }
         }
 
-
-
     }
 
     public boolean isJSONValid(String jsonInString ) {

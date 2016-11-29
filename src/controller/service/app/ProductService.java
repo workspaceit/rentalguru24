@@ -11,6 +11,7 @@ import helper.SessionManagement;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.*;
+import model.entity.State;
 import model.entity.app.AppCredential;
 import model.entity.app.ProductRating;
 import model.entity.app.RentType;
@@ -69,6 +70,9 @@ public class ProductService{
     @Autowired
     ProductCategoryModel productCategoryModel;
 
+    @Autowired
+    StateModel stateModel;
+
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @JsonView(ProductView.RentalProductView.class)
     public ServiceResponse uploadProduct(HttpServletRequest request,
@@ -78,6 +82,15 @@ public class ProductService{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
+        /*
+         * Response Error Parameter alias
+         * */
+        serviceResponse.setParameterAlias("otherImagesTokenArray", "otherImageTokens");
+        serviceResponse.setParameterAlias("categoryIdArray", "categoryIds");
+
+        /*
+         * User Account verification and block check
+         * */
         if(!appLoginCredentialModel.isVerified(appCredential.getId())){
             serviceResponse.getResponseStat().setErrorMsg("You account is not verified");
             SessionManagement.destroySession(request);
@@ -89,8 +102,7 @@ public class ProductService{
             SessionManagement.destroySession(request);
             return serviceResponse;
         }
-        serviceResponse.setParameterAlias("otherImagesTokenArray", "otherImageTokens");
-        serviceResponse.setParameterAlias("categoryIdArray", "categoryIds");
+
 
         RentalProduct rentalProduct = new RentalProductEntity();
 
@@ -104,12 +116,12 @@ public class ProductService{
             if(!allRequestParameter.get("categoryIds").isEmpty()){
                 Integer[] categoryIdArray =  objectMapper.readValue(allRequestParameter.get("categoryIds"), Integer[].class);
                 productUploadForm.setCategoryIdArray(categoryIdArray);
-            }else{
+            } else{
                 serviceResponse.setRequestError("categoryIds","Category Id required");
                 productUploadForm.setCategoryIdArray(new Integer[0]);
             }
 
-        }catch(Exception ex){
+        } catch (Exception ex){
             serviceResponse.setRequestError("categoryIds","Category Id required");
             productUploadForm.setCategoryIdArray(new Integer[0]);
         }
@@ -128,43 +140,14 @@ public class ProductService{
             productUploadForm.setOtherImagesTokenArray(new Long[0]);
         }
 
-        try{
-            productUploadForm.setProfileImageToken(Long.parseLong(allRequestParameter.get("profileImageToken")));
-        }catch(Exception ex){
-            serviceResponse.setRequestError("profileImageToken", "Profile image token value required");
+        State usState = null;
+        if(productUploadForm.getStateId()!=null){
+            usState = stateModel.getById(productUploadForm.getStateId());
         }
 
-        try{
-            productUploadForm.setCurrentValue(Double.parseDouble(allRequestParameter.get("currentValue")));
-        }catch(Exception ex){
-            serviceResponse.setRequestError("currentValue","Current value required");
+        if(usState==null){
+            serviceResponse.setRequestError("stateId","State not found");
         }
-
-        try{
-            productUploadForm.setRentFee(Double.parseDouble(allRequestParameter.get("rentFee")));
-        }catch(Exception ex){
-            serviceResponse.setRequestError("rentFee","Rent fee integer required");
-        }
-
-        try{
-            if(allRequestParameter.get("rentTypeId")!=null) {
-                productUploadForm.setRentTypeId(Integer.parseInt(allRequestParameter.get("rentTypeId")));
-            }else{
-                serviceResponse.setRequestError("rentTypeId","Rent type  required");
-            }
-        }catch(Exception ex){
-            serviceResponse.setRequestError("rentTypeId","Rent type  required");
-        }
-
-
-        productUploadForm.setCity(allRequestParameter.get("city"));
-        productUploadForm.setState(allRequestParameter.get("state"));
-        productUploadForm.setZip(allRequestParameter.get("zip"));
-        productUploadForm.setFormattedAddress(allRequestParameter.get("formattedAddress"));
-
-        productUploadForm.setAvailableFrom(allRequestParameter.get("availableFrom"));
-        productUploadForm.setAvailableTill(allRequestParameter.get("availableTill"));
-
 
         new ProductUploadFormValidator(categoryModel,tempFileModel,rentTypeModel).validate(productUploadForm, result);
 
@@ -173,8 +156,10 @@ public class ProductService{
         if(serviceResponse.hasErrors()){
             return serviceResponse;
         }
-         String ipAddress = request.getHeader("X-FORWARDED-FOR");
+
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
         System.out.println("request.getRemoteAddr() " +ipAddress);
+
         if(productUploadForm.getLat()==null && productUploadForm.getLng()==null){
                 GeoIpManager geoIpManager = new GeoIpManager();
                 GeoIp geoIp = geoIpManager.getGeoIp(request);
@@ -294,9 +279,9 @@ public class ProductService{
 
         ProductLocation productLocation = new ProductLocation();
         productLocation.setCity(productUploadForm.getCity());
-        productLocation.setState(productUploadForm.getState());
-      //  productLocation.setLat(productUploadForm.getLat());
-      //  productLocation.setLng(productUploadForm.getLng());
+        productLocation.setState(usState);
+        productLocation.setLat(productUploadForm.getLat());
+        productLocation.setLng(productUploadForm.getLng());
         productLocation.setZip(productUploadForm.getZip());
         productLocation.setFormattedAddress(productUploadForm.getFormattedAddress());
 
@@ -307,114 +292,13 @@ public class ProductService{
         serviceResponse.setResponseData(productModel.getById(rentalProduct.getId()));
         return serviceResponse;
     }
-
-    @RequestMapping(value = "/rate-product/{product_id}/{rating_value}", method = RequestMethod.GET)
-    public ServiceResponse postProductRating(HttpServletRequest request,
-                                             @PathVariable("product_id") int productId,
-                                             @PathVariable("rating_value") int ratingValue){
-
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
-        if(productRatingModel.getAuthorization(appCredential.getId(), productId) == true){
-            serviceResponse.getResponseStat().setErrorMsg("You have already rated this product !!");
-            return serviceResponse;
-        }
-
-        RentalProductEntity product = productModel.getEntityById(productId);
-        ProductRating productRating = new ProductRating();
-
-        if(product == null){
-            serviceResponse.getResponseStat().setErrorMsg("No Product Found !!");
-            return serviceResponse;
-        }
-
-
-        productRating.setAppCredential(appCredential);
-        productRating.setProductId(product.getId());
-        productRating.setRateValue(ratingValue);
-
-        productRatingModel.insert(productRating);
-
-        double averageRate = productRatingModel.averageRating(productId);
-        product.setAverageRating((float)averageRate);
-        productModel.update(product);
-
-        serviceResponse.setResponseData(productRating);
-
-        return serviceResponse;
-    }
-    @RequestMapping(value = "/get-my-rental-product/{product_id}", method = RequestMethod.GET)
-    @JsonView(ProductView.MyRentalProductView.class)
-    public ServiceResponse getMyRentalProduct(HttpServletRequest request,
-                                              @PathVariable("product_id") int productId){
-
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
-        RentalProduct mrp = productModel.getMyRentalProductById(productId, appCredential.getId());
-//        System.out.println("mrp : "+mrp.getClass());
-//        System.out.println("mrp : "+mrp.getRentProduct().getEndsDate());
-        serviceResponse.setResponseData(mrp, "No record found");
-        return serviceResponse;
-    }
-
-
-    @RequestMapping(value = "/get-my-rental-product", method = RequestMethod.POST)
-    @JsonView(ProductView.MyRentalProductView.class)
-    public ServiceResponse getMyRentalProductList(HttpServletRequest request,
-                                                @RequestParam ("limit") int limit,
-                                                @RequestParam ("offset") int offset){
-
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
-        serviceResponse.setResponseData(productModel.getMyRentalProductList(appCredential.getId(), limit, offset), "No record found");
-        return serviceResponse;
-    }
-    @RequestMapping(value = "/get-my-rented-product", method = RequestMethod.POST)
-    @JsonView(ProductView.MyRentalProductView.class)
-    public ServiceResponse getMyRentedProductList(HttpServletRequest request,
-                                                  @RequestParam ("limit") int limit,
-                                                  @RequestParam ("offset") int offset){
-
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
-
-        List<MyRentedProduct> myRentedProducts = productModel.getMyCurrentRentedProduct(appCredential.getId(), limit, offset);
-        Set<MyRentedProduct> myRentedProducts1 =  new HashSet<MyRentedProduct>(productModel.getMyCurrentRentedProduct(appCredential.getId()));
-        System.out.println(limit);
-        System.out.println(offset);
-        System.out.println("myRentedProducts "+myRentedProducts.size());
-        System.out.println("getMyCurrentRentedProduct " + myRentedProducts1.size());
-
-                serviceResponse.setResponseData(myRentedProducts, "No record found");
-        return serviceResponse;
-    }
-    @RequestMapping(value = "/get-my-products-on-rent", method = RequestMethod.POST)
-    @JsonView(ProductView.MyRentalProductView.class)
-    public ServiceResponse getMyCurrentProductOnRent(HttpServletRequest request,
-                                                  @RequestParam ("limit") int limit,
-                                                  @RequestParam ("offset") int offset){
-
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
-        System.out.println(limit);
-        System.out.println(offset);
-
-        serviceResponse.setResponseData(productModel.getMyCurrentProductOnRent(appCredential.getId(), limit, offset), "No record found");
-        return serviceResponse;
-    }
-
     @RequestMapping(value = "/update-product/{product_id}", method = RequestMethod.POST)
     public ServiceResponse updateProduct(HttpServletRequest request,
                                          @PathVariable("product_id") int productId,
                                          @RequestParam Map<String,String> allRequestParameter,
                                          @Valid ProductEditFrom productEditFrom,
                                          BindingResult result
-                                         ){
+    ){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
@@ -456,18 +340,18 @@ public class ProductService{
         }
 
         if(allRequestParameter.get("productCurrentPrice")!=null && !allRequestParameter.get("productCurrentPrice").isEmpty()){
-                try{
-                    Float tmpCurrentPrice = Float.parseFloat(allRequestParameter.get("productCurrentPrice"));
+            try{
+                Float tmpCurrentPrice = Float.parseFloat(allRequestParameter.get("productCurrentPrice"));
 
-                    if(tmpCurrentPrice<=0){
-                        serviceResponse.setRequestError("productCurrentPrice","Must be greater then Zero");
-                    }else{
-                        productEditFrom.setCurrentValue(tmpCurrentPrice);
-                    }
-
-                }catch (NumberFormatException ex){
-                    serviceResponse.setRequestError("productCurrentPrice","Type miss matched float required");
+                if(tmpCurrentPrice<=0){
+                    serviceResponse.setRequestError("productCurrentPrice","Must be greater then Zero");
+                }else{
+                    productEditFrom.setCurrentValue(tmpCurrentPrice);
                 }
+
+            }catch (NumberFormatException ex){
+                serviceResponse.setRequestError("productCurrentPrice", "Type miss matched float required");
+            }
         }
         if(allRequestParameter.get("rentPrice")!=null && !allRequestParameter.get("rentPrice").isEmpty()){
             try{
@@ -481,6 +365,14 @@ public class ProductService{
 
             }catch (NumberFormatException ex){
                 serviceResponse.setRequestError("rentPrice","Type miss matched float required");
+            }
+        }
+
+        State usState = null;
+        if(productEditFrom.getStateId()!=null){
+            usState = stateModel.getById(productEditFrom.getStateId());
+            if(usState==null){
+                serviceResponse.setRequestError("stateId","State not found");
             }
         }
 
@@ -511,6 +403,7 @@ public class ProductService{
         if(productEditFrom.getRentTypeId()!=null && productEditFrom.getRentTypeId()>0){
             rentalProduct.setRentType(rentTypeModel.getById(productEditFrom.getRentTypeId()));
         }
+
         /* LOCATION */
         if(!productEditFrom.getFormattedAddress().isEmpty()){
             productLocation.setFormattedAddress(productEditFrom.getFormattedAddress());
@@ -518,8 +411,8 @@ public class ProductService{
         if(!productEditFrom.getCity().isEmpty()){
             productLocation.setCity(productEditFrom.getCity());
         }
-        if(!productEditFrom.getState().isEmpty()){
-            productLocation.setState(productEditFrom.getState());
+        if(productEditFrom.getStateId()!=null){
+            productLocation.setState(usState);
         }
         if(!productEditFrom.getZip().isEmpty()){
             productLocation.setZip(productEditFrom.getZip());
@@ -605,8 +498,8 @@ public class ProductService{
         }
         /* In-case product does not had a Location */
         if(rentalProduct.getProductLocation() != productLocation){
-           // productLocation.setRentalProduct(rentalProduct);
-          //  productLocationModel.insert(productLocation);
+            // productLocation.setRentalProduct(rentalProduct);
+            //  productLocationModel.insert(productLocation);
 
             productLocation.setRentalProduct(rentalProduct);
 
@@ -735,6 +628,107 @@ public class ProductService{
         return serviceResponse;
 
     }
+    @RequestMapping(value = "/rate-product/{product_id}/{rating_value}", method = RequestMethod.GET)
+    public ServiceResponse postProductRating(HttpServletRequest request,
+                                             @PathVariable("product_id") int productId,
+                                             @PathVariable("rating_value") int ratingValue){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        if(productRatingModel.getAuthorization(appCredential.getId(), productId) == true){
+            serviceResponse.getResponseStat().setErrorMsg("You have already rated this product !!");
+            return serviceResponse;
+        }
+
+        RentalProductEntity product = productModel.getEntityById(productId);
+        ProductRating productRating = new ProductRating();
+
+        if(product == null){
+            serviceResponse.getResponseStat().setErrorMsg("No Product Found !!");
+            return serviceResponse;
+        }
+
+
+        productRating.setAppCredential(appCredential);
+        productRating.setProductId(product.getId());
+        productRating.setRateValue(ratingValue);
+
+        productRatingModel.insert(productRating);
+
+        double averageRate = productRatingModel.averageRating(productId);
+        product.setAverageRating((float) averageRate);
+        productModel.update(product);
+
+        serviceResponse.setResponseData(productRating);
+
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/get-my-rental-product/{product_id}", method = RequestMethod.GET)
+    @JsonView(ProductView.MyRentalProductView.class)
+    public ServiceResponse getMyRentalProduct(HttpServletRequest request,
+                                              @PathVariable("product_id") int productId){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        RentalProduct mrp = productModel.getMyRentalProductById(productId, appCredential.getId());
+//        System.out.println("mrp : "+mrp.getClass());
+//        System.out.println("mrp : "+mrp.getRentProduct().getEndsDate());
+        serviceResponse.setResponseData(mrp, "No record found");
+        return serviceResponse;
+    }
+
+
+    @RequestMapping(value = "/get-my-rental-product", method = RequestMethod.POST)
+    @JsonView(ProductView.MyRentalProductView.class)
+    public ServiceResponse getMyRentalProductList(HttpServletRequest request,
+                                                @RequestParam ("limit") int limit,
+                                                @RequestParam ("offset") int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        serviceResponse.setResponseData(productModel.getMyRentalProductList(appCredential.getId(), limit, offset), "No record found");
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/get-my-rented-product", method = RequestMethod.POST)
+    @JsonView(ProductView.MyRentalProductView.class)
+    public ServiceResponse getMyRentedProductList(HttpServletRequest request,
+                                                  @RequestParam ("limit") int limit,
+                                                  @RequestParam ("offset") int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+
+        List<MyRentedProduct> myRentedProducts = productModel.getMyCurrentRentedProduct(appCredential.getId(), limit, offset);
+        Set<MyRentedProduct> myRentedProducts1 =  new HashSet<MyRentedProduct>(productModel.getMyCurrentRentedProduct(appCredential.getId()));
+        System.out.println(limit);
+        System.out.println(offset);
+        System.out.println("myRentedProducts "+myRentedProducts.size());
+        System.out.println("getMyCurrentRentedProduct " + myRentedProducts1.size());
+
+                serviceResponse.setResponseData(myRentedProducts, "No record found");
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/get-my-products-on-rent", method = RequestMethod.POST)
+    @JsonView(ProductView.MyRentalProductView.class)
+    public ServiceResponse getMyCurrentProductOnRent(HttpServletRequest request,
+                                                  @RequestParam ("limit") int limit,
+                                                  @RequestParam ("offset") int offset){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        System.out.println(limit);
+        System.out.println(offset);
+
+        serviceResponse.setResponseData(productModel.getMyCurrentProductOnRent(appCredential.getId(), limit, offset), "No record found");
+        return serviceResponse;
+    }
+
+
 
     @RequestMapping(value = "/product/review/{product_id}", method = RequestMethod.GET)
     public ServiceResponse getProductReview(HttpServletRequest request, @PathVariable("product_id") int productId){
