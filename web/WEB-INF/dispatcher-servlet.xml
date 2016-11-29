@@ -200,6 +200,10 @@
                <mvc:mapping path="/api/banner-image/**"/>
                <bean class="controller.interceptor.ServiceInterceptor"/>
            </mvc:interceptor>
+           <mvc:interceptor>
+               <mvc:mapping path="/api/state/**"/>
+               <bean class="controller.interceptor.ServiceInterceptor"/>
+           </mvc:interceptor>
 
 
               <!-- ******* Service with Auth check ************-->
