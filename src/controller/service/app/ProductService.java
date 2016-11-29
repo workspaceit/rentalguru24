@@ -143,11 +143,12 @@ public class ProductService{
         State usState = null;
         if(productUploadForm.getStateId()!=null){
             usState = stateModel.getById(productUploadForm.getStateId());
+            if(usState==null){
+                serviceResponse.setRequestError("stateId","State not found");
+            }
         }
 
-        if(usState==null){
-            serviceResponse.setRequestError("stateId","State not found");
-        }
+
 
         new ProductUploadFormValidator(categoryModel,tempFileModel,rentTypeModel).validate(productUploadForm, result);
 

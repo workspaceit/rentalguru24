@@ -18,8 +18,10 @@ import static java.lang.System.out;
 public class Test {
 
     public static void main(String args[]) {
-        System.out.println("Main method");
-        Derived d = new Derived();
+        StringBuilder query = new StringBuilder();
+        query.insert(0,"asdddddddddddddddddddddddddddddddddddddddddddd");
+        query.append("ASDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+        out.println(query.toString());
     }
 
 }

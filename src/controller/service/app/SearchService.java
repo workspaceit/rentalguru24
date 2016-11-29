@@ -100,7 +100,7 @@ public class SearchService {
             }
         }
         limit=(limit > 10)?10:limit;
-        List<RentalProduct> rentalProduct = productModel.getRentalProductForSearch(categoryId,title,lat,lng,radius,limit,offset);
+        List<RentalProduct> rentalProduct = productModel.getRentalProductForSearch(null,categoryId,title,lat,lng,radius,limit,offset);
         serviceResponse.setResponseData(rentalProduct,"No product found");
         return serviceResponse;
 

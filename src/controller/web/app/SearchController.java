@@ -68,7 +68,7 @@ public class SearchController {
             }
         }
 
-        rentalProducts = productModel.getRentalProductForSearch(categoryId,title,lat,lng,radius,8,0);
+        rentalProducts = productModel.getRentalProductForSearch(null,categoryId,title,lat,lng,radius,8,0);
 
 
         System.out.println("GeoIpManager "+GeoIpManager.getRemoteAddress(request));

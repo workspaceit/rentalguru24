@@ -188,7 +188,7 @@ public class HomeController {
         if(fromHomePage!=null && fromHomePage){
             rentalProducts =  productModel.getRentalProduct(limit, offset);
         }else{
-            rentalProducts = productModel.getRentalProductForSearch(categoryId,title,lat,lng,radius,limit,offset);
+            rentalProducts = productModel.getRentalProductForSearch(null,categoryId,title,lat,lng,radius,limit,offset);
         }
 
         modelAndView.addObject("rentalProducts",rentalProducts);

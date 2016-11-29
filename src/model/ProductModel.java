@@ -3,6 +3,7 @@ package model;
 
 
 import javafx.print.Collation;
+import model.entity.State;
 import model.entity.app.Category;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.SearchedProduct;
@@ -11,6 +12,7 @@ import model.entity.app.product.rentable.iface.MyRentedProduct;
 import org.hibernate.*;
 
 import model.entity.app.product.rentable.iface.RentalProduct;
+import org.hibernate.query.NativeQuery;
 
 
 import java.text.Collator;
@@ -526,6 +528,26 @@ public class ProductModel extends BaseModel {
         }
 
     }
+    public List<RentalProduct> getRentalProductByDistance(State usState,Integer categoryId,String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
+
+        List<Integer> locationIds =  this.getRentalProductIdByDistance(usState, categoryId,title,centerLatitude, centerLongitude, radius, limit, offset);
+
+        Session session = this.sessionFactory.openSession();
+        System.out.println("locationIds "+locationIds);
+        if(locationIds==null || locationIds.size()==0){
+            return new ArrayList<>();
+        }
+        try{
+            return session.createQuery("FROM RentalProductEntity " +
+                    " where productLocation.id in (:productLocationIds) " +
+                    " AND reviewStatus = true ")
+                    .setParameterList("productLocationIds", locationIds)
+                    .list();
+        }finally {
+            session.close();
+        }
+
+    }
     public List<RentalProduct> getRentalProductByDistance(double centerLatitude,double centerLongitude,float radius,int limit,int offset){
 
         List<Integer> locationIds =  this.getProductLocationByDistance(centerLatitude, centerLongitude, radius, limit, offset);
@@ -546,7 +568,6 @@ public class ProductModel extends BaseModel {
         }
 
     }
-
 /*
 
     Here's the SQL statement that will find the closest 20 locations that are within a radius of 25 miles to the 37, -122 coordinate.
@@ -584,13 +605,57 @@ public class ProductModel extends BaseModel {
                     " sin(radians(lat))))  <=:radius ) " +
                     " and product.review_status = 1 and product.name like :title "+
                     " LIMIT :offset , :limit ")
-                    .setParameter("title", "%" + title+"%")
+                    .setParameter("title", "%" + title + "%")
                     .setParameter("centerLatitude", centerLatitude)
                     .setParameter("centerLongitude",centerLongitude)
                     .setParameter("radius", radius)
                     .setParameter("offset",offset*limit)
                     .setParameter("limit",limit)
                     .list();
+            return ids;
+        }finally {
+            session.close();
+        }
+    }
+    private   List<Integer> getRentalProductIdByDistance(State usState,Integer categoryId,String title,double centerLatitude, double centerLongitude, float radius, int limit, int offset){
+        Session session = this.sessionFactory.openSession();
+        try{
+                StringBuilder query = new StringBuilder();
+                query.insert(0, "SELECT  product.id " +
+                        "FROM product_location " +
+                        " JOIN product on  product_location.product_id = product.id " +
+                        " JOIN product_category on product.id = product_category.product_id " +
+                        " where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
+                        " sin(radians(lat))))  <=:radius ) " +
+                        " and product.review_status = 1 ");
+
+
+                NativeQuery nq =  session.createSQLQuery(query.toString())
+                .setParameter("centerLatitude", centerLatitude)
+                .setParameter("centerLongitude",centerLongitude)
+                .setParameter("radius", radius)
+                .setParameter("offset",offset*limit);
+
+            if(title!=null && !title.trim().equals("")){
+                /* Add where clause by appending query */
+                query.append(" and product.name like :title ");
+                nq.setParameter("title", "%" + title + "%");
+            }
+            if(categoryId!=null && categoryId>0){
+                 /* Add where clause by appending query */
+                query.append(" and product_category.category_id = :categoryId ");
+                nq.setParameter("categoryId", categoryId);
+            }
+            if(usState!=null){
+                 /* Add where clause by appending query */
+                query.append(" and product_location.state_id = :stateId ");
+                nq.setParameter("stateId",usState.getId());
+            }
+
+            query.append(" LIMIT :offset , :limit ");
+            nq.setParameter("limit", limit);
+            List<Integer> ids = nq.list();
+
             return ids;
         }finally {
             session.close();
@@ -646,14 +711,15 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
-    public  List<RentalProduct> getRentalProductForSearch(Integer categoryId,String title,Double centerLatitude,Double centerLongitude,Float radius,int limit,int offset){
+    public  List<RentalProduct> getRentalProductForSearch(State usState,Integer categoryId,String title,Double centerLatitude,Double centerLongitude,Float radius,int limit,int offset){
 
         boolean haveCategory = (categoryId!=null && categoryId>0);
         boolean haveTitle = (title!=null && !title.equals(""));
 
         if(radius!=null){
+            return this.getRentalProductByDistance(usState,categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
 
-            if(haveCategory && haveTitle ){
+            /*if(haveCategory && haveTitle ){
                 return this.getRentalProductByDistance(categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
             }else if(haveCategory){
                 return this.getRentalProductByDistance(categoryId,centerLatitude, centerLongitude, radius, limit, offset);
@@ -661,7 +727,7 @@ public class ProductModel extends BaseModel {
                 return this.getRentalProductByDistance(title, centerLatitude, centerLongitude, radius, limit, offset);
             }else{
                 return this.getRentalProductByDistance(centerLatitude, centerLongitude, radius, limit, offset);
-            }
+            }*/
 
         }
 
