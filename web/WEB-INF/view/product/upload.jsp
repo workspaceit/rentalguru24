@@ -46,11 +46,8 @@
         </div>
         <div class="form-group">
           <label>Choose Sub Category</label>
-          <%--<select class="selectpicker" id="subCategory">--%>
           <select id="subCategory" class="selectpicker" disabled="disabled" >
             <option value="0">PLEASE SELECT A SUB CATEGORY</option>
-            <%--<optgroup id="subcategoryParentLabel" label="" disabled>--%>
-            <%--</optgroup>--%>
           </select>
           <p class="help-block error-form" id="errorMsg_subcategoryId" for="subCategory"  ></p>
         </div>
@@ -111,6 +108,16 @@
             </div>
           </div>
         </div>
+        <div class="form-group">
+          <label>Select State</label>
+          <select  id="state" class="selectpicker" >
+            <option value="0">PLEASE SELECT A STATE</option>
+            <d:forEach var="state" items="${states}">
+              <option value="${state.id}">${state.name}</option>
+            </d:forEach>
+          </select>
+          <p class="help-block error-form" id="errorMsg_stateId"  custom-validation="required" for="state"  ></p>
+        </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
@@ -147,20 +154,6 @@
         <div class="alert alert-warning" id="otherImageWarning" hidden>
           You can only upload 3 picture
         </div>
-        <%----%>
-        <%--<div class="row preview-container">--%>
-          <%--<p>Preview Area</p>--%>
-          <%--<div class="col-xs-6 col-md-6">--%>
-            <%--<a href="#" class="thumbnail">--%>
-              <%--<img src="http://placehold.it/200x200" alt="...">--%>
-            <%--</a>--%>
-          <%--</div>--%>
-          <%--<div class="col-xs-6 col-md-6">--%>
-            <%--<a href="#" class="thumbnail">--%>
-              <%--<img src="http://placehold.it/200x200" alt="...">--%>
-            <%--</a>--%>
-          <%--</div>--%>
-        <%--</div>--%>
       </div>
     </div>
     <div class="col-md-12 text-right post-btn-fix" style="padding:0px 100px 20px 0px;">
@@ -188,12 +181,6 @@
     <div>
       <strong class="error text-danger" data-dz-errormessage></strong>
     </div>
-    <%--<div>--%>
-    <%--<p class="size" data-dz-size></p>--%>
-    <%--<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">--%>
-    <%--<div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>--%>
-    <%--</div>--%>
-    <%--</div>--%>
   </div>
 </div>
 <%------------------------------------------------------------------------------------%>
@@ -505,6 +492,7 @@
     var availableTill = tillDate.replace(/\//g,"-");
     var formattedAddress = $('#formattedAddress').val();
     var rentTypeId = $('#rentTypeId option:selected').val();
+    var stateId = $('#state option:selected').val();
     var zip = $('#zip').val();
     var city = $('#city').val();
 
@@ -526,6 +514,7 @@
         categoryIds:categoryIds,
         formattedAddress:formattedAddress,
         rentTypeId:rentTypeId,
+        stateId:stateId,
         zip:zip,
         city:city,
         lat:latitude ,

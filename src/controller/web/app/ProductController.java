@@ -2,10 +2,8 @@ package controller.web.app;
 
 import controller.BaseHttp;
 import helper.ServiceResponse;
-import model.CategoryModel;
-import model.ProductModel;
-import model.ProductRatingModel;
-import model.RentTypeModel;
+import model.*;
+import model.entity.State;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.ProductRating;
@@ -47,11 +45,15 @@ public class ProductController{
     @Autowired
     ProductRatingModel productRatingModel;
 
+    @Autowired
+    StateModel stateModel;
+
     @RequestMapping(value="/upload",method = RequestMethod.GET)
     public ModelAndView upload(HttpServletRequest request){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> category = (List<Category>) request.getAttribute("category");
+        List<State> states = stateModel.getAll();
 
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         ModelAndView modelAndView = new ModelAndView("/product/upload");
@@ -60,6 +62,7 @@ public class ProductController{
         String preSelectedCategoryName = "Select Category";
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
+        modelAndView.addObject("states", states);
         modelAndView.addObject("rentTypes", rentTypes);
         modelAndView.addObject("IsLogIn", IsLogin);
         return modelAndView;
@@ -120,6 +123,7 @@ public class ProductController{
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<Category> category = (List<Category>) request.getAttribute("category");
+        List<State> states = stateModel.getAll();
         RentalProduct rentalProduct = productModel.getMyRentalProductById(productId, appCredential.getId());
         if(rentalProduct == null){
             return new ModelAndView("redirect:/home");
@@ -150,6 +154,7 @@ public class ProductController{
         modelAndView.addObject("rentTypes", rentTypes);
         modelAndView.addObject("category", category);
         modelAndView.addObject("rentalProduct", rentalProduct);
+        modelAndView.addObject("states", states);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("appCredential", appCredential);
         return modelAndView;

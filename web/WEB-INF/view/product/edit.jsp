@@ -103,6 +103,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label>Select State</label>
+                    <select  id="state" class="selectpicker" >
+                        <option value="0">PLEASE SELECT A STATE</option>
+                        <d:forEach var="state" items="${states}">
+                            <option value="${state.id}">${state.name}</option>
+                        </d:forEach>
+                    </select>
+                    <p class="help-block error-form" id="errorMsg_stateId"  custom-validation="required" for="state"  ></p>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -320,6 +330,7 @@
         var category = $("#category option:selected").val();
         var subCategory = $("#subCategory option:selected").val();
         var rentTypeId = $("#rentTypeId option:selected").val();
+        var stateId = $('#state option:selected').val();
 
         var categorySelected;
         if(subCategory == "0"){
@@ -363,6 +374,7 @@
                 availableTill : availableTill,
                 formattedAddress : formattedAddress,
                 rentTypeId: rentTypeId,
+                stateId:stateId,
                 zip : zip,
                 city : city,
                 productCurrentPrice : productCurrentPrice,
