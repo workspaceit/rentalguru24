@@ -42,9 +42,9 @@
     <bean id="taskExecutorExample" class="scheduler.Scheduler">
     </bean>
     <!-- For Cron expression validation go to http://www.cronmaker.com/ 0 0/30 * * * ? -->
-    <task:scheduled-tasks>
-        <task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="0 0/30 * * * ?"/>
-    </task:scheduled-tasks>
+    <!--<task:scheduled-tasks>-->
+        <!--<task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="0 0/30 * * * ?"/>-->
+    <!--</task:scheduled-tasks>-->
     <!-- * ** *** **** **** *** ** * -->
     <!-- * ** *** **** **** *** ** * -->
        <!-- * ** *** **** Interceptor  **** *** ** * -->
@@ -380,6 +380,8 @@
         </bean>
         <bean id="userAddressModel" class="model.UserAddressModel" parent="baseModel"   >
         </bean>
+        <bean id="stateModel" class="model.StateModel" parent="baseModel"   >
+        </bean>
 
 
 
@@ -429,6 +431,7 @@
                     <value>model.entity.developer.cron.CronLog</value>
                     <value>model.entity.app.EmailConfirmation</value>
                     <value>model.entity.BannerImage</value>
+                    <value>model.entity.State</value>
                 </list>
             </property>
             <property name="hibernateProperties">
