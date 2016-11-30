@@ -9,6 +9,7 @@ import helper.SessionManagement;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.*;
+import model.entity.State;
 import model.entity.app.*;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.rentable.ProductLocation;
@@ -64,13 +65,14 @@ public class SearchService {
     RentRequestModel rentRequestModel;
 
     @Autowired
-    ProductRatingModel getProductRatingModel;
+    StateModel stateModel;
 
     @RequestMapping(value = "/rental-product",method = RequestMethod.GET)
     @JsonView(ProductView.RentalProductView.class)
     public ServiceResponse searchRentalProduct(
                                             HttpServletRequest request,
                                             @RequestParam(name = "title" ,required = false) String title,
+                                            @RequestParam(name = "stateId" ,required = false) Integer stateId,
                                             @RequestParam(name = "categoryId" ,required = false) Integer categoryId,
                                             @RequestParam(name = "radius" ,required = false) Float radius,
                                             @RequestParam(name = "lat" ,required = false) Double lat,
@@ -98,9 +100,9 @@ public class SearchService {
         }
         limit=(limit > 10)?10:limit;
         Category category =(categoryId!=null)?categoryModel.getById(categoryId):null;
+        State selectedState =(stateId!=null)?stateModel.getById(stateId):null;
 
-
-        List<RentalProduct> rentalProduct = productModel.getRentalProductForSearch(null,category,title,lat,lng,radius,limit,offset);
+        List<RentalProduct> rentalProduct = productModel.getRentalProductForSearch(selectedState,category,title,lat,lng,radius,limit,offset);
         serviceResponse.setResponseData(rentalProduct,"No product found");
         return serviceResponse;
 

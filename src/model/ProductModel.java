@@ -494,7 +494,7 @@ public class ProductModel extends BaseModel {
 
         List<Category> subCategory = null;
         List<Integer> categoryIdList = new  ArrayList<>();
-
+        int searchParamCount = 0;
         if(category!=null){
             subCategory = category.getSubcategory();
             categoryIdList.add(category.getId());
@@ -510,20 +510,21 @@ public class ProductModel extends BaseModel {
                 "  WHERE  rentalProduct.reviewStatus = true");
         if(title!=null && !title.trim().equals("")){
             hql.append(" AND rentalProduct.name LIKE :title ");
-            whereParams.put("title","%"+title+"%");
+            whereParams.put("title", "%" + title + "%");
+            searchParamCount++;
         }
         if(usState!=null && usState.getId()>0){
             hql.append(" AND rentalProduct.productLocation.state.id = :stateId ");
-            whereParams.put("stateId",usState.getId());
+            whereParams.put("stateId", usState.getId());
+            searchParamCount++;
         }
 
         if(categoryIdList.size()>0){
             hql.append(" AND productCategory.category.id IN (:categoryId) ");
             whereParams.put("categoryId",categoryIdList);
+            searchParamCount++;
         }
-
         hql.append(" order by rentalProduct.id desc");
-        System.out.println(hql.toString());
 
         org.hibernate.query.Query query = session.createQuery(hql.toString());
 
@@ -532,6 +533,9 @@ public class ProductModel extends BaseModel {
         }
 
         try{
+            if(searchParamCount==0){
+                return new ArrayList<>();
+            }
             return query.setFirstResult(offset * limit)
                     .setMaxResults(limit)
                     .list();
@@ -542,9 +546,9 @@ public class ProductModel extends BaseModel {
     }
 
 
-    public List<RentalProduct> getRentalProductByDistance(State usState,Integer categoryId,String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
+    public List<RentalProduct> getRentalProductByDistance(State usState,Category category,String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
 
-        List<Integer> productIds =  this.getRentalProductIdByDistance(usState, categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
+        List<Integer> productIds =  this.getRentalProductIdByDistance(usState, category, title, centerLatitude, centerLongitude, radius, limit, offset);
 
         Session session = this.sessionFactory.openSession();
         System.out.println("productIds "+productIds);
@@ -612,7 +616,7 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
-    private   List<Integer> getRentalProductIdByDistance(State usState,Integer categoryId,String title,double centerLatitude, double centerLongitude, float radius, int limit, int offset){
+    private   List<Integer> getRentalProductIdByDistance(State usState,Category category,String title,double centerLatitude, double centerLongitude, float radius, int limit, int offset){
         Session session = this.sessionFactory.openSession();
         try{
             StringBuilder query = new StringBuilder();
@@ -633,10 +637,10 @@ public class ProductModel extends BaseModel {
                 query.append(" and product.name like :title ");
                 whereParameters.put("title", "%" + title + "%");
             }
-            if(categoryId!=null && categoryId>0){
+            if(category!=null && category.getId()>0){
                  /* Add where clause by appending query */
                 query.append(" and product_category.category_id = :categoryId ");
-                whereParameters.put("categoryId", categoryId);
+                whereParameters.put("categoryId", category.getId());
             }
             if(usState!=null){
                  /* Add where clause by appending query */
@@ -672,7 +676,8 @@ public class ProductModel extends BaseModel {
     public  List<RentalProduct> getRentalProductForSearch(State usState,Category category,String title,Double centerLatitude,Double centerLongitude,Float radius,int limit,int offset){
 
         if(radius!=null){
-            return this.getRentalProductByDistance(usState, category.getId(), title, centerLatitude, centerLongitude, radius, limit, offset);
+
+            return this.getRentalProductByDistance(usState,category, title, centerLatitude, centerLongitude, radius, limit, offset);
         }
         return this.getRentalProductBySearchQuery(usState,category, title,limit, offset);
     }

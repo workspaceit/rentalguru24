@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by omar on 11/29/16.
@@ -26,7 +27,8 @@ public class StateService {
     @RequestMapping(value = "/get-all-state", method = RequestMethod.GET)
     public ServiceResponse getAllState(HttpServletRequest request){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        serviceResponse.setResponseData(stateModel.getAll());
+        List<State> stateList  =(List<State>) request.getAttribute("stateList");
+        serviceResponse.setResponseData(stateList);
         return  serviceResponse;
     }
 
