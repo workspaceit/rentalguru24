@@ -149,6 +149,16 @@ public class ProductController{
         }
 
         /*------------------------------------------*/
+        /*------------------------------------------*/
+
+        State stateSelected = stateModel.getById(rentalProduct.getProductLocation().getState().getId());
+
+        if(stateSelected != null){
+            modelAndView.addObject("stateSelectedId", stateSelected.getId());
+        }
+
+        /*------------------------------------------*/
+
         String preSelectedCategoryName = "Select Category";
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("rentTypes", rentTypes);

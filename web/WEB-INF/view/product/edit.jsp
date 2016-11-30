@@ -108,7 +108,7 @@
                     <select  id="state" class="selectpicker" >
                         <option value="0">PLEASE SELECT A STATE</option>
                         <d:forEach var="state" items="${states}">
-                            <option value="${state.id}">${state.name}</option>
+                            <option value="${state.id}" <d:if test="${state.id == stateSelectedId}">selected="selected"</d:if>>${state.name}</option>
                         </d:forEach>
                     </select>
                     <p class="help-block error-form" id="errorMsg_stateId"  custom-validation="required" for="state"  ></p>
