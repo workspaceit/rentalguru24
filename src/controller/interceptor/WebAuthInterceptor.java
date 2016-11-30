@@ -22,7 +22,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import java.io.PrintWriter;
 
-public class WebAuthInterceptor extends BaseWebInterceptor{
+public class WebAuthInterceptor extends BaseInterceptor{
     private String baseURL;
     @Autowired
     CategoryModel categoryModel;

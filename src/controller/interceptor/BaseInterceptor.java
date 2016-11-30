@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by mi on 11/29/16.
  */
-public class BaseWebInterceptor extends HandlerInterceptorAdapter {
+public class BaseInterceptor extends HandlerInterceptorAdapter {
     protected static List<State> stateList = new ArrayList<>();
     @Autowired
     StateModel stateModel;

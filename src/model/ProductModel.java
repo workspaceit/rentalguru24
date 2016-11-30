@@ -2,7 +2,6 @@ package model;
 
 
 
-import javafx.print.Collation;
 import model.entity.State;
 import model.entity.app.Category;
 import model.entity.app.product.rentable.RentalProductEntity;
@@ -13,14 +12,13 @@ import org.hibernate.*;
 
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -117,7 +115,7 @@ public class ProductModel extends BaseModel {
         Session session = this.sessionFactory.openSession();
         try {
             return session.createQuery(hql)
-                    .setParameter("stateId",usState.getId())
+                    .setParameter("stateId", usState.getId())
                     .setFirstResult(offset * limit)
                     .setMaxResults(limit).list();
         } finally {
@@ -349,7 +347,7 @@ public class ProductModel extends BaseModel {
             if(category==null){
                 return new ArrayList<>();
             }
-            return this.getRentalProductByCategory(category,limit,offset);
+            return this.getRentalProductByCategory(category, limit, offset);
 
         } finally {
 
@@ -491,66 +489,62 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
-    public List<RentalProduct> getRentalProductByDistance(String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
-        List<Integer> rentalProductIds =  this.getRentalProductIdByDistance(title, centerLatitude, centerLongitude, radius, limit, offset);
-
-
+    public List<RentalProduct> getRentalProductBySearchQuery(State usState,Category category,String title, int limit, int offset){
         Session session = this.sessionFactory.openSession();
-        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+" TITLE : PRODUCT ID "+title+" "+rentalProductIds);
-        if(rentalProductIds==null || rentalProductIds.size()==0){
-            return new ArrayList<>();
+
+        List<Category> subCategory = null;
+        List<Integer> categoryIdList = new  ArrayList<>();
+
+        if(category!=null){
+            subCategory = category.getSubcategory();
+            categoryIdList.add(category.getId());
         }
+
+        Map<String,Object> whereParams = new HashMap<>();
+
+        if(subCategory!=null){
+            categoryIdList.addAll(subCategory.stream().map(Category::getId).collect(Collectors.toList()));
+        }
+        StringBuilder hql =new StringBuilder("FROM RentalProductEntity rentalProduct " +
+                " JOIN FETCH rentalProduct.productCategories  productCategory " +
+                "  WHERE  rentalProduct.reviewStatus = true");
+        if(title!=null && !title.trim().equals("")){
+            hql.append(" AND rentalProduct.name LIKE :title ");
+            whereParams.put("title","%"+title+"%");
+        }
+        if(usState!=null && usState.getId()>0){
+            hql.append(" AND rentalProduct.productLocation.state.id = :stateId ");
+            whereParams.put("stateId",usState.getId());
+        }
+
+        if(categoryIdList.size()>0){
+            hql.append(" AND productCategory.category.id IN (:categoryId) ");
+            whereParams.put("categoryId",categoryIdList);
+        }
+
+        hql.append(" order by rentalProduct.id desc");
+        System.out.println(hql.toString());
+
+        org.hibernate.query.Query query = session.createQuery(hql.toString());
+
+        for(Map.Entry<String,Object> entry : whereParams.entrySet()){
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
         try{
-
-            return session.createQuery("FROM RentalProductEntity rpe  " +
-                    " where   rpe.id in (:rentalProductIds) ")
-                    .setParameterList("rentalProductIds", rentalProductIds)
+            return query.setFirstResult(offset * limit)
+                    .setMaxResults(limit)
                     .list();
+        } finally {
 
-        }finally {
             session.close();
         }
-
     }
-    public List<RentalProduct> getRentalProductByDistance(Integer categoryId,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
 
-        List<Integer> rentalProductIds =  this.getRentalProductIdByDistance(categoryId,centerLatitude, centerLongitude, radius, limit, offset);
-        Session session = this.sessionFactory.openSession();
-        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+"  CAT: "+rentalProductIds);
-        if(rentalProductIds==null || rentalProductIds.size()==0){
-            return new ArrayList<>();
-        }
-        try{
-            return session.createQuery("FROM RentalProductEntity rpe JOIN fetch rpe.productCategories productCategories " +
-                    " where rpe.id in (:rentalProductIds) ")
-                    .setParameterList("rentalProductIds", rentalProductIds)
-                    .list();
-        }finally {
-            session.close();
-        }
 
-    }
-    public List<RentalProduct> getRentalProductByDistance(Integer categoryId,String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
-
-        List<Integer> rentalProductIds =  this.getRentalProductIdByDistance(categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
-        Session session = this.sessionFactory.openSession();
-        System.out.println(centerLatitude+" "+centerLongitude+" "+radius+" "+limit+" "+offset+" TITLE AND CAT: "+title+rentalProductIds);
-        if(rentalProductIds==null || rentalProductIds.size()==0){
-            return new ArrayList<>();
-        }
-        try{
-            return session.createQuery("FROM RentalProductEntity " +
-                    " where id in (:rentalProductIds) ")
-                    .setParameterList("rentalProductIds", rentalProductIds)
-                    .list();
-        }finally {
-            session.close();
-        }
-
-    }
     public List<RentalProduct> getRentalProductByDistance(State usState,Integer categoryId,String title,double centerLatitude,double centerLongitude,float radius,int limit,int offset){
 
-        List<Integer> productIds =  this.getRentalProductIdByDistance(usState, categoryId,title,centerLatitude, centerLongitude, radius, limit, offset);
+        List<Integer> productIds =  this.getRentalProductIdByDistance(usState, categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
 
         Session session = this.sessionFactory.openSession();
         System.out.println("productIds "+productIds);
@@ -560,7 +554,7 @@ public class ProductModel extends BaseModel {
         try{
             return session.createQuery("FROM RentalProductEntity " +
                     " where id in (:productIds) " +
-                    " AND reviewStatus = true ")
+                    " AND reviewStatus = true order by id desc ")
                     .setParameterList("productIds", productIds)
                     .list();
         }finally {
@@ -568,26 +562,7 @@ public class ProductModel extends BaseModel {
         }
 
     }
-    public List<RentalProduct> getRentalProductByDistance(double centerLatitude,double centerLongitude,float radius,int limit,int offset){
 
-        List<Integer> locationIds =  this.getProductLocationByDistance(centerLatitude, centerLongitude, radius, limit, offset);
-
-        Session session = this.sessionFactory.openSession();
-        System.out.println("locationIds "+locationIds);
-        if(locationIds==null || locationIds.size()==0){
-            return new ArrayList<>();
-        }
-        try{
-            return session.createQuery("FROM RentalProductEntity " +
-                    " where productLocation.id in (:productLocationIds) " +
-                    " AND reviewStatus = true ")
-                    .setParameterList("productLocationIds", locationIds)
-                    .list();
-        }finally {
-            session.close();
-        }
-
-    }
 /*
 
     Here's the SQL statement that will find the closest 20 locations that are within a radius of 25 miles to the 37, -122 coordinate.
@@ -693,90 +668,13 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
-    private   List<Integer> getRentalProductIdByDistance(int categoryId,String title,double centerLatitude, double centerLongitude, float radius, int limit, int offset){
-        Session session = this.sessionFactory.openSession();
-        try{
-            List<Integer> ids = session.createSQLQuery("SELECT  product.id " +
-                    "FROM product_location " +
-                    " JOIN product on  product_location.product_id = product.id " +
-                    " JOIN product_category on product.id = product_category.product_id " +
-                    " where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
-                    " sin(radians(lat))))  <=:radius ) " +
-                    " and product.review_status = 1 " +
-                    " and product_category.category_id = :categoryId" +
-                    " and product.name like :title " +
-                    " LIMIT :offset , :limit ")
-                    .setParameter("title", "%"+title+"%")
-                    .setParameter("centerLatitude", centerLatitude)
-                    .setParameter("centerLongitude",centerLongitude)
-                    .setParameter("categoryId",categoryId)
-                    .setParameter("radius", radius)
-                    .setParameter("offset",offset*limit)
-                    .setParameter("limit",limit)
-                    .list();
-            return ids;
-        }finally {
-            session.close();
-        }
-    }
-    private   List<Integer> getRentalProductIdByDistance(int categoryId,double centerLatitude, double centerLongitude, float radius, int limit, int offset){
-        Session session = this.sessionFactory.openSession();
-        try{
-            List<Integer> ids = session.createSQLQuery("SELECT  product.id " +
-                    "FROM product_location " +
-                    " JOIN product on  product_location.product_id = product.id " +
-                    " JOIN product_category on product.id = product_category.product_id " +
-                    " where ( (6371 * acos(cos(radians(:centerLatitude)) * cos(radians(lat)) * cos( radians(lng) - radians(:centerLongitude)) + sin(radians(:centerLatitude)) * " +
-                    " sin(radians(lat))))  <=:radius ) " +
-                    " and product.review_status = 1 " +
-                    " and product_category.category_id=:categoryId"+
-                    " LIMIT :offset , :limit ")
-                    .setParameter("centerLatitude", centerLatitude)
-                    .setParameter("centerLongitude",centerLongitude)
-                    .setParameter("categoryId",categoryId)
-                    .setParameter("radius", radius)
-                    .setParameter("offset",offset*limit)
-                    .setParameter("limit",limit)
-                    .list();
-            return ids;
-        }finally {
-            session.close();
-        }
-    }
-    public  List<RentalProduct> getRentalProductForSearch(State usState,Integer categoryId,String title,Double centerLatitude,Double centerLongitude,Float radius,int limit,int offset){
 
-        boolean haveCategory = (categoryId!=null && categoryId>0);
-        boolean haveTitle = (title!=null && !title.equals(""));
+    public  List<RentalProduct> getRentalProductForSearch(State usState,Category category,String title,Double centerLatitude,Double centerLongitude,Float radius,int limit,int offset){
 
         if(radius!=null){
-            return this.getRentalProductByDistance(usState,categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
-
-           /* if(haveCategory && haveTitle ){
-                return this.getRentalProductByDistance(categoryId, title, centerLatitude, centerLongitude, radius, limit, offset);
-            }else if(haveCategory){
-                return this.getRentalProductByDistance(categoryId,centerLatitude, centerLongitude, radius, limit, offset);
-            }else if(haveTitle) {
-                return this.getRentalProductByDistance(title, centerLatitude, centerLongitude, radius, limit, offset);
-            }else{
-                return this.getRentalProductByDistance(centerLatitude, centerLongitude, radius, limit, offset);
-            }*/
-
+            return this.getRentalProductByDistance(usState, category.getId(), title, centerLatitude, centerLongitude, radius, limit, offset);
         }
-
-        if(haveCategory && haveTitle ){
-            return this.getRentalProductByCategoryIdTitle(categoryId, title,limit, offset);
-        }
-        if(haveCategory){
-            return this.getRentalProductByCategoryId(categoryId,limit, offset);
-        }
-        if(haveTitle){
-            return this.getRentalProductByTitle(title, limit, offset);
-        }
-
-        if(usState!=null){
-            return this.getRentalProduct(usState, limit, offset);
-        }
-        return new ArrayList<>();
+        return this.getRentalProductBySearchQuery(usState,category, title,limit, offset);
     }
 
 

@@ -57,17 +57,32 @@ public class SearchController {
         State selectedUsState = null;
         if(stateCode.isPresent()){
             selectedUsState = stateModel.getByCode(stateCode.get().trim());
-            System.out.println(selectedUsState);
         }
 
 
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        List<Category> category = (List<Category>) request.getAttribute("category");
+        List<Category> categoryList = (List<Category>) request.getAttribute("category");
 
         ModelAndView modelAndView = new ModelAndView("public/Search");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<RentalProduct> rentalProducts = new ArrayList<>();
+
+        Category selectedCategory = null;
+        String productListTitle = "Search result";
+        String preSelectedCategoryName = "Select Category";
+
+        if(categoryId!=null){
+            selectedCategory = categoryModel.getById(categoryId);
+        }
+        if(selectedCategory!=null){
+            preSelectedCategoryName = selectedCategory.getName();
+        }
+//
+//        Category searchedCategory = (categoryId!=null)?categoryList.stream()
+//                                                        .filter(category -> category.getId() == categoryId)
+//                                                        .findFirst()
+//                                                        .orElse(null):null;
         try {
             if(title!=null && !title.equals(""))
                 title = URLDecoder.decode(title, "UTF-8");
@@ -84,37 +99,25 @@ public class SearchController {
             }
         }
 
-        rentalProducts = productModel.getRentalProductForSearch(selectedUsState,categoryId,title,lat,lng,radius,8,0);
+        rentalProducts = productModel.getRentalProductForSearch(selectedUsState,selectedCategory,title,lat,lng,radius,8,0);
 
 
         System.out.println("GeoIpManager "+GeoIpManager.getRemoteAddress(request));
 
-        String productListTitle = "Search result";
-
-        String preSelectedCategoryName = "Select Category";
 
 
-        /* Need to check of null pointer exception on */
-//        Optional<Category> tempCat = category.stream().filter(c->c.getId()==categoryId).findFirst();
-//        Category selectedCategory = (tempCat!=null)?tempCat.get():null;
+        Integer stateId = (selectedUsState!=null)?selectedUsState.getId():null;
 
-            /* Getting from Database Fix the above code */
 
-        Category selectedCategory = null;
 
-        if(categoryId!=null){
-             selectedCategory = categoryModel.getById(categoryId);
-        }
-        if(selectedCategory!=null){
-            preSelectedCategoryName = selectedCategory.getName();
-        }
+        String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product"+ UrlHelper.getLoadMoreUrlParams(stateId,title,categoryId,lat,lng,radius);
 
-        String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product"+ UrlHelper.getLoadMoreUrlParams(title,categoryId,lat,lng,radius);
 
+        modelAndView.addObject("selectedUsState", selectedUsState);
         modelAndView.addObject("selectedCategoryId", categoryId);
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
-        modelAndView.addObject("category", category);
+        modelAndView.addObject("category", categoryList);
         modelAndView.addObject("productListTitle",productListTitle);
         modelAndView.addObject("rentalProducts", rentalProducts);
         modelAndView.addObject("IsLogIn", IsLogin);

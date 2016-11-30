@@ -3,6 +3,7 @@ package controller.service.app;
 import com.fasterxml.jackson.annotation.JsonView;
 import helper.ServiceResponse;
 import model.*;
+import model.entity.State;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
 import model.entity.app.product.view.ProductView;
@@ -194,6 +195,30 @@ public class PublicProductService{
         int offset = Integer.parseInt(allRequestParameter.get("offset").trim());
 
         List<RentalProduct> rentalProduct = productModel.getRentalProductByTitle(title, limit, offset);
+
+        if(rentalProduct == null || rentalProduct.isEmpty()){
+            serviceResponse.setRequestError("product","No product found by this name");
+            return serviceResponse;
+        }
+
+        serviceResponse.setResponseData(rentalProduct);
+        return serviceResponse;
+    }
+    @RequestMapping(value = "/get-product-suggestion", method = RequestMethod.GET)
+    public ServiceResponse getProductSuggestion(HttpServletRequest request,
+                                                @RequestParam(value = "title") String title,
+                                                @RequestParam(value = "stateId",required = false) Integer stateId,
+                                                @RequestParam(value = "categoryId",required = false) Integer categoryId,
+                                                @RequestParam(value = "limit") int limit,
+                                                @RequestParam(value = "offset") int offset){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+
+        List<State> stateList = (List<State>) request.getAttribute("stateList");
+        Category selectedCategory = (categoryId!=null)?categoryModel.getById(categoryId):null;
+
+        State selectedState = stateList.stream().filter(state -> state.getId() == stateId).findFirst().orElse(null);
+
+        List<RentalProduct> rentalProduct = productModel.getRentalProductBySearchQuery(selectedState,selectedCategory, title, limit, offset);
 
         if(rentalProduct == null || rentalProduct.isEmpty()){
             serviceResponse.setRequestError("product","No product found by this name");

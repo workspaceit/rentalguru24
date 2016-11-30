@@ -53,7 +53,7 @@ public class ProductUploadFormValidator implements Validator {
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lng", "Lng is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "formattedAddress", "Formatted address required");
 
-        if(productUploadForm.getStateId()!=null && productUploadForm.getStateId()>0){
+        if(productUploadForm.getStateId()!=null && productUploadForm.getStateId()==0){
             errors.rejectValue("stateId","State required");
         }
         if(productUploadForm.getAvailableFrom()!=null && !productUploadForm.getAvailableFrom().isEmpty()){

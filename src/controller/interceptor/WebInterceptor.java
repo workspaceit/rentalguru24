@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class WebInterceptor extends BaseWebInterceptor{
+public class WebInterceptor extends BaseInterceptor{
 
     @Autowired
     CategoryModel categoryModel;

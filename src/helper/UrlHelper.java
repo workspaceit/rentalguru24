@@ -9,7 +9,7 @@ import java.net.URLEncoder;
  * Created by mi on 10/26/16.
  */
 public class UrlHelper {
-    public static String getLoadMoreUrlParams(String title,Integer categoryId,Double lat,Double lng,Float radius) {
+    public static String getLoadMoreUrlParams(Integer stateId,String title,Integer categoryId,Double lat,Double lng,Float radius) {
         String url = "?";
         if(title!=null && !title.equals("")){
             try {
@@ -19,7 +19,10 @@ public class UrlHelper {
                 System.out.print(e.getMessage());
             }
         }
-        if(categoryId!=null){
+        if(stateId!=null && stateId>0){
+            url += "stateId="+ stateId+"&";
+        }
+        if(categoryId!=null && categoryId>0){
             url += "cid="+categoryId+"&";
         }
         if(radius!=null){

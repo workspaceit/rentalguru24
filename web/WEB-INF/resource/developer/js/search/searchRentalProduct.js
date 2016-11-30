@@ -8,14 +8,23 @@ var options = {
         console.log(phrase);
         var categoryId = $("#categorySelectedInSearch").val();
         var title = encodeURIComponent(phrase);
-        var url = BASEURL+"/api/product/get-product-with-title?limit=8&offset=0&title="+title;
-        if(categoryId!=""){
-            url = BASEURL+"/api/product/get-product-with-category-title?limit=8&offset=0&categoryId="+categoryId+"&title="+title;
-        }
-        return url;
-    },
-//    url: "http://localhost:9090/resources/auto_complete/dummy.json",
+        var selectedUsState  = getUsState();
+        var url = BASEURL+"/api/product/get-product-suggestion";
+        var params = [];
 
+        params.push("limit=8");
+        params.push("offset=0");
+
+        params.push("title="+title);
+
+        if(categoryId!=""){
+            params.push("categoryId="+categoryId);
+        }
+        if(selectedUsState.id != undefined){
+            params.push("stateId="+selectedUsState.id);
+        }
+        return url+"?"+params.join("&");
+    },
     categories: [{
         listLocation: "responseData",
         maxNumberOfElements: 4,
@@ -93,53 +102,84 @@ function searchByRange(radiusDistance){
 function searchByLatLng(radiusDistance,latitude,longitude){
     var productStr = $("#searchTxtBox").val();
     var categorySelectedInSearch = $("#categorySelectedInSearch").val();
-    var url= "";
+    var selectedUsState  = getUsState();
+    var url= BASEURL+"/search";
+    var params = [];
 
+    if(selectedUsState.id != undefined){
+        url+="/"+selectedUsState.code.toLowerCase();
+    }
     if(categorySelectedInSearch != ""){
-        url = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr+"&radius="+radiusDistance;
-    }else{
-        url = BASEURL+"/search?title="+productStr+"&radius="+radiusDistance;
+        params.push("cid="+categorySelectedInSearch);
+    }
+    if(productStr!=""){
+        params.push("title="+productStr);
     }
 
+    params.push("radius="+radiusDistance);
     if(latitude!==null && longitude!==null){
-        url += "&lat="+latitude+"&lng="+longitude;
+        params.push("lat="+latitude);
+        params.push("lng="+longitude);
     }
+    url+=(params.length>0?"?":"")+params.join("&");
     window.location = url;
-
-
 }
 function doSearchByClick(){
     var productStr = $("#searchTxtBox").val();
     var categorySelectedInSearch = $("#categorySelectedInSearch").val();
+    var selectedUsState  = getUsState();
+    var url= BASEURL+"/search";
+    var params = [];
+
     if(productStr!=null){
         productStr = productStr.trim();
     }else{
         productStr = "";
     }
-    if(productStr != ""){
-        console.log("TIME TO GO");
-        if(categorySelectedInSearch != ""){
-            window.location = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr;
-        }else{
-            window.location = BASEURL+"/search?title="+productStr;
-        }
+    if(selectedUsState.id != undefined){
+        url+="/"+selectedUsState.code.toLowerCase();
     }
+    if(categorySelectedInSearch != ""){
+        params.push("cid="+categorySelectedInSearch);
+    }
+    if(productStr!=""){
+        params.push("title="+productStr);
+    }
+    url+=(params.length>0?"?":"")+params.join("&");
+    window.location = url;
 }
 function doSearch(event){
     var char = event.which || event.keyCode;
     var productStr = $("#searchTxtBox").val();
     var categorySelectedInSearch = $("#categorySelectedInSearch").val();
-    if(productStr!=null){
-        productStr = productStr.trim();
-    }else{
-        productStr = "";
-    }
+    var url= BASEURL+"/search";
+    var params = [];
+    var selectedUsState  = getUsState();
+
     if(char==13 &&  productStr != ""){
-        console.log("TIME TO GO");
-        if(categorySelectedInSearch != ""){
-            window.location = BASEURL+"/search?cid="+categorySelectedInSearch+"&title="+productStr;
+        if(productStr!=null){
+            productStr = productStr.trim();
         }else{
-            window.location = BASEURL+"/search?title="+productStr;
+            productStr = "";
         }
+        if(selectedUsState.id != undefined){
+            url+="/"+selectedUsState.code.toLowerCase();
+        }
+        if(categorySelectedInSearch != ""){
+            params.push("cid="+categorySelectedInSearch);
+        }
+        if(productStr!=""){
+            params.push("title="+productStr);
+        }
+        url+=(params.length>0?"?":"")+params.join("&");
+        window.location = url;
     }
+}
+function selectUsaState(usStateCode,usStateName){
+    $("#chooseAreaSpan").text(usStateName);
+    $("#areaFilter").modal("hide");
+    window.location = BASEURL+"/search/"+usStateCode.toLowerCase();
+}
+function getUsState(){
+    return JSON.parse($("#selectedUsState").val());
 }

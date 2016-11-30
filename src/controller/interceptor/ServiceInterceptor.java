@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
-public class ServiceInterceptor extends HandlerInterceptorAdapter{
+public class ServiceInterceptor extends BaseInterceptor{
 
 
     //before the actual handler will be executed
@@ -30,6 +30,7 @@ public class ServiceInterceptor extends HandlerInterceptorAdapter{
         ServletRequestAttributes ar = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession httpSession = request.getSession();
 
+        request.setAttribute("stateList", stateList);
         request.setAttribute("serviceResponse", serviceResponse);
 
         return true;

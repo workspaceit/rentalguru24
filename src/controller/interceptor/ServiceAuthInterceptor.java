@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
-public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
+public class ServiceAuthInterceptor extends BaseInterceptor{
 
 
     //before the actual handler will be executed
@@ -36,6 +36,7 @@ public class ServiceAuthInterceptor extends HandlerInterceptorAdapter{
             request.setAttribute("serviceResponse", serviceResponse);
             request.setAttribute("appCredential", httpSession.getAttribute("appCredential"));
             request.setAttribute("baseURL", this.getURLWithContextPath(request));
+            request.setAttribute("stateList", stateList);
             return true;
         }else{
             serviceResponse.getResponseStat().setErrorMsg("Please login first !!");

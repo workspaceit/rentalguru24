@@ -49,6 +49,9 @@ public class HomeController {
     @Autowired
     BannerImageModel bannerImageModel;
 
+    @Autowired
+    StateModel stateModel;
+
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -155,6 +158,7 @@ public class HomeController {
     @RequestMapping(value = "/partial-rendering/load/more/rental-product", method = RequestMethod.GET)
     public ModelAndView getMoreRentalProduct(HttpServletRequest request,
                                              @RequestParam(value = "fromHomePage",required = false)Boolean fromHomePage,
+                                             @RequestParam(value = "stateId",required = false)Integer stateId,
                                              @RequestParam(value = "title",required = false)String title,
                                              @RequestParam(value = "cid",required = false)Integer categoryId,
                                              @RequestParam(value = "radius",required = false)Float radius,
@@ -164,7 +168,7 @@ public class HomeController {
                                              @RequestParam(value = "offset", required = true)int offset) {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        List<Category> category = (List<Category>) request.getAttribute("category");
+        List<Category> categoryList = (List<Category>) request.getAttribute("category");
 
 
         ModelAndView modelAndView = new ModelAndView("public/partial/load_more_product");
@@ -186,11 +190,21 @@ public class HomeController {
                 }
             }
         }
-
+        Category searchedCategory = (categoryId!=null)?categoryList.stream().
+                                        filter(category -> category.getId() == categoryId)
+                                        .findFirst()
+                                        .orElse(null):null;
+//        if(categoryId!=null){
+//            searchedCategory = categoryModel.getById(categoryId);
+//        }
+        State selectedUsState = null;
+        if(selectedUsState!=null){
+            selectedUsState = stateModel.getById(stateId);
+        }
         if(fromHomePage!=null && fromHomePage){
             rentalProducts =  productModel.getRentalProduct(limit, offset);
         }else{
-            rentalProducts = productModel.getRentalProductForSearch(null,categoryId,title,lat,lng,radius,limit,offset);
+            rentalProducts = productModel.getRentalProductForSearch(selectedUsState,searchedCategory,title,lat,lng,radius,limit,offset);
         }
 
         modelAndView.addObject("rentalProducts",rentalProducts);

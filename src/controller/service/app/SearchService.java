@@ -9,10 +9,7 @@ import helper.SessionManagement;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.*;
-import model.entity.app.AppCredential;
-import model.entity.app.ProductRating;
-import model.entity.app.RentType;
-import model.entity.app.TempFile;
+import model.entity.app.*;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.rentable.ProductLocation;
 import model.entity.app.product.rentable.RentalProductEntity;
@@ -100,7 +97,10 @@ public class SearchService {
             }
         }
         limit=(limit > 10)?10:limit;
-        List<RentalProduct> rentalProduct = productModel.getRentalProductForSearch(null,categoryId,title,lat,lng,radius,limit,offset);
+        Category category =(categoryId!=null)?categoryModel.getById(categoryId):null;
+
+
+        List<RentalProduct> rentalProduct = productModel.getRentalProductForSearch(null,category,title,lat,lng,radius,limit,offset);
         serviceResponse.setResponseData(rentalProduct,"No product found");
         return serviceResponse;
 

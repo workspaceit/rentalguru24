@@ -52,16 +52,7 @@ public class TestService extends BaseService{
     @Autowired
     AdminGlobalNotificationTemplateModel adminGlobalNotificationTemplateModel;
 
-    @Autowired
-    ProductRatingModel productRatingModel;
-    @RequestMapping(value = "/test/radius", method = RequestMethod.POST)
-    public List<RentalProduct> getByRadius( @RequestParam double centralLatitude,
-                                              @RequestParam double centralLongitude,
-                                              @RequestParam float radius,
-                                              @RequestParam int limit,
-                                              @RequestParam int offset){
-        return productModel.getRentalProductByDistance(centralLatitude,centralLongitude,radius,offset,limit);
-    }
+
     @RequestMapping(value = "/test/att", method = RequestMethod.POST)
     public void postAttribute(@RequestParam Map<String, String> allRequestParams){
 

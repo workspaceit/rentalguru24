@@ -81,7 +81,7 @@ public class ProductService{
                                          BindingResult result){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
+        System.out.println(productUploadForm);
         /*
          * Response Error Parameter alias
          * */
@@ -148,20 +148,29 @@ public class ProductService{
             }
         }
 
-
-
+        /*
+         * Validation check
+         * productUploadForm is containing all the value of request parameter
+         * ProductUploadFormValidator validate productUploadForm
+         * */
         new ProductUploadFormValidator(categoryModel,tempFileModel,rentTypeModel).validate(productUploadForm, result);
-
 
         serviceResponse.setError(result, true, false);
         if(serviceResponse.hasErrors()){
             return serviceResponse;
         }
 
+        /*
+         * If User does not sent lat lng
+         * server detects the request ip and gets lat lng
+         * */
         String ipAddress = request.getHeader("X-FORWARDED-FOR");
         System.out.println("request.getRemoteAddr() " +ipAddress);
 
         if(productUploadForm.getLat()==null && productUploadForm.getLng()==null){
+             /*
+             * Fetching lat lng by ip from Remote Service (3rd party service )
+             * */
                 GeoIpManager geoIpManager = new GeoIpManager();
                 GeoIp geoIp = geoIpManager.getGeoIp(request);
                 if(geoIpManager.isSuccess()){
@@ -175,7 +184,7 @@ public class ProductService{
 
         Timestamp utcTimeStamp = DateHelper.getUtcTimeStamp();
 
-//        utcTimeStamp. Validation
+
         if(utcTimeStamp.after(availableFromDate)){
             serviceResponse.setRequestError("availableFrom", "Available from is past then current time");
         }else{
