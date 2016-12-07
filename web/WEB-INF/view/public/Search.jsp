@@ -49,10 +49,23 @@
                         <%--</div>--%>
                         <%--<br><br><br>--%>
                     <%--</div>--%>
+                    <div class="col-md-3">
+                        <h4 class="sidebar-header">Categories</h4>
+                        <div class="list-group search-sidebar" id="categoryPageLinkUl">
+                            <d:forEach var="listValue" items="${category}">
+                                <a
 
-
-
+                                        href="javascript:void(0)"
+                                        categoryId="${listValue.id}"
+                                        onclick="selectedCategory(${listValue.id})"
+                                        id="categoryAnchor_${listValue.id}"
+                                        data-category-name="${listValue.name}" class="list-group-item scrollToSection developerCategoryAnchore">${listValue.name}</a>
+                            </d:forEach>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
                     <jsp:directive.include file="../common/product/rental_product/rental_product_list.jsp" />
+                    </div>
                 </div>
             </div>
         </div>
