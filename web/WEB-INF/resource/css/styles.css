@@ -84,9 +84,21 @@ p,label,button,a,ul,span,div{
 .search-sidebar{
 
 }
+.search-sidebar a.list-group-item{
+    padding: 4px 10px;
+    margin-bottom: -1px;
+    background-color: #fff;
+}
 .search-sidebar a.list-group-item.active{
     background-color: #f7941e !important;
     border-color: rgb(216, 123, 13) !important;
+}
+.sub-cat-s{
+    display:block;
+    padding-left: 20px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background: #efefef;
 }
 
 .mid_nav_logo_ul{

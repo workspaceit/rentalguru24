@@ -25,7 +25,46 @@
         <div class="carousel-inner" role="listbox">
             <div class="item active">
                 <div id="productListDiv"  class="row clearfix">
-                    <jsp:directive.include file="../common/product/rental_product/rental_product_list.jsp" />
+                    <div class="col-md-3">
+                        <div class="row clearfix">
+                            <h4 class="sidebar-header">Categories</h4>
+                            <div class="list-group search-sidebar" id="categoryPageLinkUl">
+                                <d:forEach var="listValue" items="${category}">
+                                    <d:if test="${categoryId == listValue.id}">
+                                        <a
+
+                                                href="javascript:void(0)"
+                                                categoryId="${listValue.id}"
+                                                onclick="selectedCategory(${listValue.id})"
+                                                id="categoryAnchor_${listValue.id}"
+                                                data-category-name="${listValue.name}" class="list-group-item scrollToSection developerCategoryAnchore">${listValue.name} (${listValue.productCount})</a>
+
+                                        <d:forEach var="subcategory" items="${listValue.subcategory}">
+                                            <a
+                                                    href="javascript:void(0)"
+                                                    categoryId="${subcategory.id}"
+                                                    onclick="selectedCategory(${subcategory.id})"
+                                                    id="categoryAnchor_${subcategory.id}"
+                                                    data-category-name="${subcategory.name}" class="sub-cat-s scrollToSection developerCategoryAnchore">${subcategory.name} (${subcategory.productCount})</a>
+                                        </d:forEach>
+                                    </d:if>
+                                </d:forEach>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <h4 class="sidebar-header">Area</h4>
+                            <div class="list-group search-sidebar" id="">
+                                <d:forEach var="usState" items="${stateList}" >
+                                <a class="list-group-item" onclick="selectUsaState('${usState.code}','${usState.name}')">${usState.name}</a>
+                                    </d:forEach>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <jsp:directive.include file="../common/product/rental_product/rental_product_list.jsp" />
+                    </div>
+
+
                 </div>
             </div>
         </div>

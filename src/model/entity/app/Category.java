@@ -25,6 +25,7 @@ public class Category {
     private Integer parentId;
     private int sortedOrder;
     private Picture picture;
+    private int productCount;
     private int createdBy;
     private boolean isSubcategory;
     private Timestamp createdDate;
@@ -80,6 +81,16 @@ public class Category {
 
     public void setPicture(Picture picture) {
         this.picture = picture;
+    }
+
+    @Basic
+    @Column(name = "product_count")
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
     }
 
     @Basic

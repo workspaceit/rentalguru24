@@ -12,10 +12,7 @@ import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.*;
 import model.entity.State;
-import model.entity.app.AppCredential;
-import model.entity.app.ProductRating;
-import model.entity.app.RentType;
-import model.entity.app.TempFile;
+import model.entity.app.*;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.rentable.iface.MyRentedProduct;
 import model.entity.app.product.view.ProductView;
@@ -284,6 +281,14 @@ public class ProductService{
 
 
         productModel.insert(rentalProduct);
+
+        for(int categoryId : categoryIds){
+            Category category = categoryModel.getById(categoryId);
+            int count = category.getProductCount();
+            category.setProductCount(count+1);
+            categoryModel.insert(category);
+        }
+
 
         rentalProduct.setProductCategories(productCategoryList);
 

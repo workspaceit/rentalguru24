@@ -117,10 +117,6 @@ public class HomeController {
         if(rentalProducts != null){
 
             List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
-            RentalProduct rentalProductsRandom1 = productModel.getRentalProductRandom();
-            RentalProduct rentalProductsRandom2 = productModel.getRentalProductRandom();
-            RentalProduct rentalProductsRandom3 = productModel.getRentalProductRandom();
-            RentalProduct rentalProductsRandom4 = productModel.getRentalProductRandom();
 
             modelAndView.addObject("selectedCategoryId", categoryId);
             modelAndView.addObject("productListTitle",selectedCategoryName);
@@ -129,10 +125,6 @@ public class HomeController {
             modelAndView.addObject("category", category);
             modelAndView.addObject("rentalProducts", rentalProducts);
             modelAndView.addObject("productsAscending", rentalProductsAscending);
-            modelAndView.addObject("rentalProductsRandom1",rentalProductsRandom1);
-            modelAndView.addObject("rentalProductsRandom2",rentalProductsRandom2);
-            modelAndView.addObject("rentalProductsRandom3",rentalProductsRandom3);
-            modelAndView.addObject("rentalProductsRandom4",rentalProductsRandom4);
             return modelAndView;
 
         }else{
