@@ -116,5 +116,37 @@ public class CategoryModel extends BaseModel {
             session.close();
         }
     }
+    public void categoryCountIncrease(int categoryId){
+        Session session = this.sessionFactory.openSession();
+        try {
+            Category category = (Category)session.createQuery("FROM Category where id = :categoryId")
+                                                    .setParameter("categoryId", categoryId)
+                                                    .setMaxResults(1)
+                                                    .uniqueResult();
+            int count = category.getProductCount();
+            category.setProductCount(count + 1);
+            session.beginTransaction();
+            session.update(category);
+            session.getTransaction().commit();
+        }finally {
+            session.close();
+        }
+    }
+    public void categoryCountDecrease(int categoryId){
+        Session session = this.sessionFactory.openSession();
+        try {
+            Category category = (Category)session.createQuery("FROM Category where id = :categoryId")
+                                                    .setParameter("categoryId", categoryId)
+                                                    .setMaxResults(1)
+                                                    .uniqueResult();
+            int count = category.getProductCount();
+            category.setProductCount(count - 1);
+            session.beginTransaction();
+            session.update(category);
+            session.getTransaction().commit();
+        }finally {
+            session.close();
+        }
+    }
 
 }

@@ -116,16 +116,24 @@ public class HomeController {
 
         if(rentalProducts != null){
 
-            List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
+        List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
 
-            modelAndView.addObject("selectedCategoryId", categoryId);
-            modelAndView.addObject("productListTitle",selectedCategoryName);
-            modelAndView.addObject("preSelectedCategoryName",preSelectedcategoryName );
-            modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
-            modelAndView.addObject("category", category);
-            modelAndView.addObject("rentalProducts", rentalProducts);
-            modelAndView.addObject("productsAscending", rentalProductsAscending);
-            return modelAndView;
+        if(categorySelected.getIsSubcategory()){
+            Category categoryParent = categoryModel.getParentCategory(categoryId);
+            Category categorySelectedParent = categoryModel.getById(categoryParent.getId());
+            modelAndView.addObject("categorySelected", categorySelectedParent);
+        }else{
+            modelAndView.addObject("categorySelected", categorySelected);
+        }
+
+        modelAndView.addObject("selectedCategoryId", categoryId);
+        modelAndView.addObject("productListTitle",selectedCategoryName);
+        modelAndView.addObject("preSelectedCategoryName",preSelectedcategoryName );
+        modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);
+        modelAndView.addObject("category", category);
+        modelAndView.addObject("rentalProducts", rentalProducts);
+        modelAndView.addObject("productsAscending", rentalProductsAscending);
+        return modelAndView;
 
         }else{
             return new ModelAndView("redirect:/home");

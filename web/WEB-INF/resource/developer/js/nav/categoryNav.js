@@ -17,7 +17,7 @@ $(function() {
 
 
 /*****************  Fetch product by category ***********/
-$("#categoryPageLinkUl,.sub-list,#categoryMobileSelectBox").find(".developerCategoryAnchore").click(function(event){
+$("#categoryPageLinkUl,.sub-list,#categoryMobileSelectBox, #areaPageLinkUl").find(".developerCategoryAnchore").click(function(event){
     var categoryId = $(this).attr("categoryId");
     //$(this).bind('click', fetchProductByCategoryAndScrollDown(categoryId,this,event));
     $(this).bind('click', redirectTocategoryPage(categoryId));

@@ -283,12 +283,8 @@ public class ProductService{
         productModel.insert(rentalProduct);
 
         for(int categoryId : categoryIds){
-            Category category = categoryModel.getById(categoryId);
-            int count = category.getProductCount();
-            category.setProductCount(count+1);
-            categoryModel.insert(category);
+             categoryModel.categoryCountIncrease(categoryId);
         }
-
 
         rentalProduct.setProductCategories(productCategoryList);
 
@@ -445,11 +441,6 @@ public class ProductService{
         if(productEditFrom.getRentFee()!=null && productEditFrom.getRentFee()>0){
             rentalProduct.setRentFee(productEditFrom.getRentFee());
         }
-        System.out.println(productEditFrom);
-
-
-
-
 
 
         if(allRequestParameter.get("profileImageToken")!=null && !allRequestParameter.get("profileImageToken").isEmpty()){
@@ -524,10 +515,12 @@ public class ProductService{
         if(productEditFrom.getCategoryIdArray()!=null && productEditFrom.getCategoryIdArray().length>0){
             List<ProductCategory> productCategoryList = rentalProduct.getProductCategories();
             for(ProductCategory productCategory : productCategoryList ){
+                categoryModel.categoryCountDecrease(productCategory.getCategory().getId());
                 productCategoryModel.delete(productCategory);
             }
             productCategoryList = new ArrayList<>();
             for(Integer productCategoryId : productEditFrom.getCategoryIdArray()){
+                categoryModel.categoryCountIncrease(productCategoryId);
                 ProductCategory productCategory = new ProductCategory();
                 productCategory.setCategory(categoryModel.getById(productCategoryId));
                 productCategoryList.add(productCategory);
@@ -574,6 +567,12 @@ public class ProductService{
                 productRatingModel.delete(productRatings.get(i));
             }
         }
+
+        List<ProductCategory> productCategories = rentalProduct.getProductCategories();
+        for(int i = 0; i < productCategories.size(); i++){
+            categoryModel.categoryCountDecrease(productCategories.get(i).getCategory().getId());
+        }
+
         productModel.delete(rentalProduct);
 
         serviceResponse.getResponseStat().setMsg("product has been deleted");

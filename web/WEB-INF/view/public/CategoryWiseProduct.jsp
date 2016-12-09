@@ -29,31 +29,25 @@
                         <div class="row clearfix">
                             <h4 class="sidebar-header">Categories</h4>
                             <div class="list-group search-sidebar" id="categoryPageLinkUl">
-                                <d:forEach var="listValue" items="${category}">
-                                    <d:if test="${categoryId == listValue.id}">
-                                        <a
-
-                                                href="javascript:void(0)"
-                                                categoryId="${listValue.id}"
-                                                onclick="selectedCategory(${listValue.id})"
-                                                id="categoryAnchor_${listValue.id}"
-                                                data-category-name="${listValue.name}" class="list-group-item scrollToSection developerCategoryAnchore">${listValue.name} (${listValue.productCount})</a>
-
-                                        <d:forEach var="subcategory" items="${listValue.subcategory}">
-                                            <a
-                                                    href="javascript:void(0)"
-                                                    categoryId="${subcategory.id}"
-                                                    onclick="selectedCategory(${subcategory.id})"
-                                                    id="categoryAnchor_${subcategory.id}"
-                                                    data-category-name="${subcategory.name}" class="sub-cat-s scrollToSection developerCategoryAnchore">${subcategory.name} (${subcategory.productCount})</a>
-                                        </d:forEach>
-                                    </d:if>
+                                <a
+                                        href="javascript:void(0)"
+                                        categoryId="${categorySelected.id}"
+                                        onclick="selectedCategory(${categorySelected.id})"
+                                        id="categoryAnchor_${categorySelected.id}"
+                                        data-category-name="${categorySelected.name}" class="list-group-item scrollToSection developerCategoryAnchore">${categorySelected.name} (${categorySelected.productCount})</a>
+                                <d:forEach var="subcategory" items="${categorySelected.subcategory}">
+                                    <a
+                                            href="javascript:void(0)"
+                                            categoryId="${subcategory.id}"
+                                            onclick="selectedCategory(${subcategory.id})"
+                                            id="categoryAnchor_${subcategory.id}"
+                                            data-category-name="${subcategory.name}" class="sub-cat-s scrollToSection developerCategoryAnchore">${subcategory.name} (${subcategory.productCount})</a>
                                 </d:forEach>
                             </div>
                         </div>
                         <div class="row clearfix">
                             <h4 class="sidebar-header">Area</h4>
-                            <div class="list-group search-sidebar" id="">
+                            <div class="list-group search-sidebar" id="areaPageLinkUl">
                                 <d:forEach var="usState" items="${stateList}" >
                                 <a class="list-group-item" onclick="selectUsaState('${usState.code}','${usState.name}')">${usState.name}</a>
                                     </d:forEach>
