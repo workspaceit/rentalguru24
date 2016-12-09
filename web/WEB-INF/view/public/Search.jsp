@@ -25,33 +25,40 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <div id="productListDiv"  class="row clearfix">
-                        <div class="col-md-3">
-                            <div class="row clearfix">
-                                <h4 class="sidebar-header">Categories</h4>
-                                <div class="list-group search-sidebar" id="categoryPageLinkUl">
-                                    <d:forEach var="listValue" items="${category}">
-                                        <a
+                <div class="row clearfix">
+                    <div class="col-md-3">
+                        <div class="row clearfix">
+                            <h4 class="sidebar-header">Categories</h4>
+                            <div class="list-group search-sidebar" id="categoryPageLinkUl">
+                                <d:forEach var="listValue" items="${category}">
+                                    <a
 
-                                                href="javascript:void(0)"
-                                                categoryId="${listValue.id}"
-                                                onclick="selectedCategory(${listValue.id})"
-                                                id="categoryAnchor_${listValue.id}"
-                                                data-category-name="${listValue.name}" class="list-group-item scrollToSection developerCategoryAnchore">${listValue.name} (${listValue.productCount})</a>
-                                    </d:forEach>
-                                </div>
-                            </div>
-                            <div class="row clearfix">
-                                <h4 class="sidebar-header">Area</h4>
-                                <div class="list-group search-sidebar" id="areaPageLinkUl">
-                                    <d:forEach var="usState" items="${stateList}" >
-                                    <a class="list-group-item" onclick="selectUsaState('${usState.code}','${usState.name}')">${usState.name}</a>
-                                        </d:forEach>
-                                </div>
+                                            href="javascript:void(0)"
+                                            categoryId="${listValue.id}"
+                                            onclick="selectedCategory(${listValue.id})"
+                                            id="categoryAnchor_${listValue.id}"
+                                            data-category-name="${listValue.name}" class="list-group-item scrollToSection developerCategoryAnchore">${listValue.name} (${listValue.productCount})</a>
+                                </d:forEach>
                             </div>
                         </div>
-                    <div class="col-md-9">
-                    <jsp:directive.include file="../common/product/rental_product/rental_product_list.jsp" />
+                        <div class="row clearfix">
+                            <h4 class="sidebar-header">Area</h4>
+                            <div class="list-group search-sidebar" id="areaPageLinkUl">
+                                <d:forEach var="usState" items="${stateList}" >
+                                <a class="list-group-item" onclick="selectUsaState('${usState.code}','${usState.name}')">${usState.name}</a>
+                                    </d:forEach>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9 clearfix">
+                        <div id="productListDiv" class="row clearfix">
+                            <jsp:directive.include file="../common/product/rental_product/rental_product_list.jsp" />
+                        </div>
+                        <div id="loadMoreButtonParent" class="col-md-12 text-center" style="display: ${loadMoreProductCssStr};">
+                            <button class="btn-cstm-sign pos-relative" id="loadMoreButton" onclick="loadMoreProduct()" >Load More
+                                <span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,11 +70,6 @@
 <d:if test="${rentalProducts.size()==0}">
     <d:set var="loadMoreProductCssStr" value="none"></d:set>
 </d:if>
-<div id="loadMoreButtonParent" class="col-md-12 text-center" style="display: ${loadMoreProductCssStr};">
-    <button class="btn-cstm-sign pos-relative" id="loadMoreButton" onclick="loadMoreProduct()" >Load More
-        <span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>
-    </button>
-</div>
 
 <!--Quick view  Modal -->
 <jsp:directive.include file="../common/product/rental_product/quickView.jsp" />

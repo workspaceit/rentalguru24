@@ -279,12 +279,11 @@ public class ProductService{
             productCategoryList.add(productCategory);
         }
 
-
         productModel.insert(rentalProduct);
 
-        for(int categoryId : categoryIds){
-             categoryModel.categoryCountIncrease(categoryId);
-        }
+//        for(int categoryId : categoryIds){
+//             categoryModel.categoryCountIncrease(categoryId);
+//        }
 
         rentalProduct.setProductCategories(productCategoryList);
 
@@ -568,9 +567,11 @@ public class ProductService{
             }
         }
 
-        List<ProductCategory> productCategories = rentalProduct.getProductCategories();
-        for(int i = 0; i < productCategories.size(); i++){
-            categoryModel.categoryCountDecrease(productCategories.get(i).getCategory().getId());
+        if(rentalProduct.isReviewStatus()){
+            List<ProductCategory> productCategories = rentalProduct.getProductCategories();
+            for(int i = 0; i < productCategories.size(); i++){
+                categoryModel.categoryCountDecrease(productCategories.get(i).getCategory().getId());
+            }
         }
 
         productModel.delete(rentalProduct);
