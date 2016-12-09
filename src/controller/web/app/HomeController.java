@@ -106,16 +106,20 @@ public class HomeController {
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?cid="+categoryId;
         String preSelectedcategoryName = "Select a category";
         String selectedCategoryName = "";
-        if(categorySelected!=null){
-            preSelectedcategoryName = categorySelected.getName();
-            selectedCategoryName = categorySelected.getName();
+
+        if(categorySelected==null){
+            return new ModelAndView("redirect:/home");
         }
 
 
-        List<RentalProduct> rentalProducts = productModel.getRentalProductByCategoryIdTitle(categoryId, title, 8, 0);
+        preSelectedcategoryName = categorySelected.getName();
+        selectedCategoryName = categorySelected.getName();
 
-        if(rentalProducts != null){
+        List<RentalProduct> rentalProducts = productModel.getRentalProductByCategory(categorySelected, 8, 0);
 
+        if(rentalProducts == null) {
+            return new ModelAndView("redirect:/home");
+        }
         List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
 
         if(categorySelected.getIsSubcategory()){
@@ -135,9 +139,6 @@ public class HomeController {
         modelAndView.addObject("productsAscending", rentalProductsAscending);
         return modelAndView;
 
-        }else{
-            return new ModelAndView("redirect:/home");
-        }
     }
 
     @RequestMapping(value = "/partial-rendering/category/{categoryId}", method = RequestMethod.GET)
