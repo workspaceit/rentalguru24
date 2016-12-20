@@ -224,7 +224,7 @@ immediately after the control sidebar -->
     $.ajax({
       url: BASEURL+"/api/signout",
       success: function(data){
-        window.location.href =BASEURL+"/admin-signin";
+        window.location.href =BASEURL+"/admin-lhacoec";
       }
     });
   }

@@ -100,7 +100,7 @@
         var url = $("#url").val();
         $.ajax({
           type : "post",
-          url : BASEURL+"/admin-signin/banner-image/add-image",
+          url : BASEURL+"/admin-lhacoec/banner-image/add-image",
           data: {
             bannerImageToken : bannerImageToken,
             url : url
