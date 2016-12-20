@@ -187,7 +187,7 @@
     var title= "";
 
     var loadMoreObj = getLoadMoreObj();
-    loadMoreObj.limit= 8;
+    loadMoreObj.limit= 12;
 
 //    +"&categoryId="+cid
 //    +"&title="+title,

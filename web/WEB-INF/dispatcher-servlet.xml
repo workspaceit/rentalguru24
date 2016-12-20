@@ -63,7 +63,7 @@
               </mvc:interceptor>
 
               <mvc:interceptor>
-                     <mvc:mapping path="/admin-signin"/>
+                     <mvc:mapping path="/admin-lhacoec"/>
                      <bean class="controller.interceptor.WebInterceptor"/>
               </mvc:interceptor>
               <!-- ******* Public Web page  ************-->
@@ -164,7 +164,7 @@
                      <bean class="controller.interceptor.ServiceInterceptor"/>
               </mvc:interceptor>
               <mvc:interceptor>
-                     <mvc:mapping path="/admin-signin/**"/>
+                     <mvc:mapping path="/admin-lhacoec/**"/>
                      <bean class="controller.interceptor.ServiceInterceptor"/>
               </mvc:interceptor>
 

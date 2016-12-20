@@ -1,0 +1,1 @@
+ALTER TABLE `user_inf` ADD `phone_number` VARCHAR(100) NOT NULL AFTER `last_name`, ADD `gender` VARCHAR(100) NOT NULL AFTER `phone_number`;

@@ -25,7 +25,7 @@
             <div class="box">
               <div class="box-body">
                 <div class="alert alert-success bannerImageSuccess" hidden>
-                    Banner image uploaded successfully
+                    Banner image uploaded successfully, Redirecting.....
                 </div>
                 <form role="form" onsubmit="return addBannerImage();">
                   <div class="form-group">

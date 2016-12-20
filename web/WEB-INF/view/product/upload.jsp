@@ -164,10 +164,10 @@
     </div>
   </div>
   <div class="alert alert-success text-center" role="alert" hidden>
-    Product Upload Successfully
+    Product Uploaded Successfully, Redirecting.....
   </div>
   <div class="alert alert-danger text-center" role="alert" hidden>
-    Product Upload Successfully
+    Product Upload Unsuccessfully, Refreshing.....
   </div>
 </div>
 <%------------------------------------------------------------------%>

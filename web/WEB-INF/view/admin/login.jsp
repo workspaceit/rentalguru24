@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Reneguru-Admin | Log in</title>
+    <title>RentGuru24 | Admin log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -90,7 +90,7 @@
           var password = $('#password').val();
 //          console.log(email, password);
           $.ajax({
-            url: BASEURL + '/admin-signin/by-email-password',
+            url: BASEURL + '/admin-lhacoec/by-email-password',
             type: 'POST',
             data: {
               email: email,

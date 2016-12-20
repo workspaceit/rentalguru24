@@ -163,7 +163,7 @@
                   </d:if>
                   <p class="no-margin"><strong>Category:</strong><span class="avail_span">${rentalProduct.getProductCategories().get(0).getCategory().getName()}</span></p>
                   <d:if test="${rentalProduct.productLocation!=null}" >
-                    <p class="no-margin"><strong>Pickup/Product location:</strong><span class="avail_span">${fn:escapeXml(rentalProduct.productLocation.formattedAddress)}</span></p>
+                    <p class="no-margin"><strong>Pickup/Product location:</strong><span class="avail_span">${fn:escapeXml(rentalProduct.productLocation.formattedAddress)} ${fn:escapeXml(rentalProduct.productLocation.state.name)}-${fn:escapeXml(rentalProduct.productLocation.zip)}</span></p>
                   </d:if>
                 </div>
               </div>
@@ -211,7 +211,7 @@
           <li data-target="#carousel-example-generic" data-slide-to="1"></li>
           <li data-target="#carousel-example-generic" data-slide-to="2"></li>
         </ol>
-        <h2 class="block-head">New Product</h2>
+        <h2 class="block-head">Latest Product</h2>
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
           <div class="item active">

@@ -51,7 +51,7 @@ public class AuthService  {
             serviceResponse.setResponseData(authCredential);
         }
 
-        serviceResponse.getResponseStat().setMsg("Login success");
+        serviceResponse.getResponseStat().setMsg("Login success, Redirecting.....");
         /************** Session Creation *******/
         SessionManagement.setAppCredentialInSession(request, serviceResponse, appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
         SessionManagement.setVerificationSession(request, authCredential.isVerified());
@@ -83,7 +83,7 @@ public class AuthService  {
             serviceResponse.setResponseData(authCredential);
         }
 
-        serviceResponse.getResponseStat().setMsg("Login success");
+        serviceResponse.getResponseStat().setMsg("Login success, Redirecting.....");
         /************** Session Creation *******/
         SessionManagement.setAppCredentialInSession(request, serviceResponse, appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
         SessionManagement.setVerificationSession(request, authCredential.isVerified());

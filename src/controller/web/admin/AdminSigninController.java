@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @Controller
-@RequestMapping("/admin-signin")
+@RequestMapping("/admin-lhacoec")
 public class AdminSigninController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){

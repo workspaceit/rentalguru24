@@ -63,15 +63,15 @@ public class HomeController {
         List<RentalProduct> rentalProducts = new ArrayList<>();
 
 
-        rentalProducts = productModel.getRentalProduct(8, 0);
+        rentalProducts = productModel.getRentalProduct(12, 0);
         List<RentalProduct> rentalProductsTop = productModel.getOnlyRatedRentalProductOrderByRating(3, 0);
         String topRentalProductHeadTitle = "MOST RATED";
         if(rentalProductsTop==null || rentalProductsTop.size()==0){
             rentalProductsTop = productModel.getRentalProduct(3, 0);
-            topRentalProductHeadTitle = "NEW PRODUCT";
+            topRentalProductHeadTitle = "Latest Product";
         }
 
-        String productListTitle = "NEW PRODUCT";
+        String productListTitle = "Latest Product";
 
 
         List<BannerImage> bannerImageList = bannerImageModel.getAll();

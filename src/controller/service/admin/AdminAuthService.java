@@ -25,7 +25,7 @@ import java.util.Map;
  * Created by omar on 8/23/16.
  */
 @RestController
-@RequestMapping("/admin-signin")
+@RequestMapping("/admin-lhacoec")
 public class AdminAuthService{
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;

@@ -1,5 +1,6 @@
 package model.entity.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import model.convert.PictureConverter;
 import model.nonentity.photo.Picture;
@@ -18,6 +19,8 @@ public class UserInf {
     private Integer addressId;
     private String firstName;
     private String lastName;
+    private String phoneNumber;
+    private String gender;
     private Picture profilePicture;
     private String identityDocUrl;
     private Timestamp createdDate;
@@ -74,6 +77,28 @@ public class UserInf {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Basic
+    @Column(name = "phone_number")
+    @JsonIgnore
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Basic
+    @Column(name = "gender")
+    @JsonIgnore
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Basic

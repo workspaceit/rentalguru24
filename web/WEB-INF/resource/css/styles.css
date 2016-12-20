@@ -1314,6 +1314,7 @@ body {
     -o-transition: all 0.4s ease-in-out;
     transition: all 0.4s ease-in-out;
     padding:5px;
+    border-radius : 10px;
 }
 
 /*effects*/
@@ -1324,10 +1325,12 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+    border-radius:10px;
 }
 
 .single-item .panel:hover {
     color: #6477b9;
+    border-radius : 10px;
 }
 .single-item .panel::before, .single-item .panel::after {
     top: 0;
@@ -1336,18 +1339,21 @@ body {
     width: 100%;
     -webkit-transform-origin: center;
     transform-origin: center;
+    border-radius:10px;
 }
 .single-item .panel::before {
     border-top: 2px solid #e6a148;
     border-bottom: 2px solid #e6a148;
     -webkit-transform: scale3d(0, 1, 1);
     transform: scale3d(0, 1, 1);
+    border-radius : 10px;
 }
 .single-item .panel::after {
     border-left: 2px solid #e6a148;
     border-right: 2px solid #e6a148;
     -webkit-transform: scale3d(1, 0, 1);
     transform: scale3d(1, 0, 1);
+    border-radius:10px;
 }
 .single-item .panel:hover::before, .single-item .panel:hover::after {
     -webkit-transform: scale3d(1, 1, 1);
@@ -1356,6 +1362,7 @@ body {
     transition: -webkit-transform 0.5s;
     transition: transform 0.5s;
     transition: transform 0.5s, -webkit-transform 0.5s;
+    border-radius : 10px;
 }
 
 /*effects*/
@@ -1363,6 +1370,7 @@ body {
 .single-item .panel-body{
     padding: 3px;
     box-shadow: none;
+    border-radius : 10px;
 }
 .img-single{
     height: 200px;
@@ -5110,7 +5118,7 @@ body {
     min-height: 370px;
 }
 .single-item .panel{
-    border-radius: 0px;
+    border-radius: 10px;
     border: 0px;
     min-height: 200px;
     background: #fff;
@@ -5132,6 +5140,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+    border-radius:10px
 }
 
 .single-item .panel:hover {
@@ -5144,6 +5153,7 @@ body {
     width: 100%;
     -webkit-transform-origin: center;
     transform-origin: center;
+    border-radius:10px;
 }
 .single-item .panel::before {
     border-top: 2px solid #e6a148;
@@ -5156,6 +5166,7 @@ body {
     border-right: 2px solid #e6a148;
     -webkit-transform: scale3d(1, 0, 1);
     transform: scale3d(1, 0, 1);
+    border-radius:10px;
 }
 .single-item .panel:hover::before, .single-item .panel:hover::after {
     -webkit-transform: scale3d(1, 1, 1);
@@ -5462,6 +5473,7 @@ body {
     padding: 0;
     display: inline-block;
     vertical-align: middle;
+    border-radius:5px
 }
 .theme-btn {
     cursor: pointer;
@@ -7754,4 +7766,28 @@ element.style {
     position: absolute;
     right: 10px;
     z-index: 999999999;
+}
+
+#slider-top{
+    height: 250px;
+    overflow: hidden;
+}
+#slider-top .carousel-inner > .item > img,
+#slider-top .carousel-inner > .item > a > img {
+    /*max-width: 100%;*/
+    width: 100%;
+    height: 250px;
+    /*margin: auto;*/
+}
+#slider-top .carousel-control.left,#slider-top .carousel-control.right{
+    background: transparent;
+    background-image: none;
+}
+#slider-top .carousel-control{
+    top: 112px;
+}
+.single-item .panel:hover img {
+    -ms-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
 }

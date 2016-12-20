@@ -18,10 +18,10 @@
                     <div class="col-md-3 profile-pic">
                         <div class="profile-pic-review">
                             <d:if test="${appCredential.getUserInf().getProfilePicture().getOriginal().getPath() != null}">
-                                <img id="profileImage" src="${BaseUrl}/profile-image/${appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}" style="height: 178px; width: 200px;">
+                                <img id="profileImage" src="${BaseUrl}/images/profile/${appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}" style="height: 178px; width: 200px;">
                             </d:if>
                             <d:if test="${appCredential.getUserInf().getProfilePicture().getOriginal().getPath() == null}">
-                                <img src="${BaseUrl}/resources/img/no_image.png" alt=""  />
+                                <img src="${BaseUrl}/resources/img/defaultProfileInmage.png" alt=""  />
                             </d:if>
                         </div>
                         <div class="form-group" style="margin-bottom:0px;">
@@ -67,7 +67,7 @@
                                 <span class="inner-load" hidden id="editProfileLoder"></span>
                             </button>
                             <br>
-                            <div class="alert alert-success text-center" role="alert" hidden >Profile Edit Successfully done</div>
+                            <div class="alert alert-success text-center" role="alert" hidden >Profile Edit Successfully done, Redirecting.....</div>
                         </div>
                         <input value="" id="profileImageToken" name="profileImageToken" type="hidden" >
                     </form>

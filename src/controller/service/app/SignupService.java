@@ -159,7 +159,7 @@ public class SignupService{
 
         System.out.println("After async ");
 
-        serviceResponse.getResponseStat().setMsg("Signup successful");
+        serviceResponse.getResponseStat().setMsg("Signup successful, Redirecting.....");
         serviceResponse.setResponseData(authCredential);
         return serviceResponse;
     }

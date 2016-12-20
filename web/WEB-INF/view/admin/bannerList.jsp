@@ -20,7 +20,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="alert alert-success bannerImageDeleteSuccess" hidden>
-        Banner Delete Successfully.
+        Banner Delete Successfully, Redirecting.....
       </div>
       <div class="row">
         <div class="col-xs-12">

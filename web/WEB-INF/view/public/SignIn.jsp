@@ -9,10 +9,22 @@
   <div class="row">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-5">
-          <ul class="top_nav_ul">
-
-          </ul>
+        <div class="col-md-6 col-sm-6 col-xs-12 support-div">
+          <a href="#" class="support-a"><i class="fa fa-envelope" aria-hidden="true">   support@rentguru24.com</i></a>
+          <%--<ul class="top_nav_ul">--%>
+          <%--<li class="dropdown">--%>
+          <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>--%>
+          <%--<ul class="dropdown-menu">--%>
+          <%--<li><a href="#">Action</a></li>--%>
+          <%--</ul>--%>
+          <%--</li>--%>
+          <%--<li class="dropdown">--%>
+          <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>--%>
+          <%--<ul class="dropdown-menu">--%>
+          <%--<li><a href="#">Action</a></li>--%>
+          <%--</ul>--%>
+          <%--</li>--%>
+          <%--</ul>--%>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-7 ">
           <ul class="top_nav_ul right top_nav_ul">
@@ -80,18 +92,18 @@
       </div>
     </div>
     <div class="col-md-5 social-sign">
-      <a class="btn btn-block btn-social btn-facebook" onclick="loginWithFacebook()" >
-        <i class="fa fa-facebook"></i> Sign in with Facebook
-        <span id="fbLoginProgressImg" class="inner-load signUpGif" style="display:none;"></span>
-      </a>
-      <a class="btn btn-block btn-social btn-google-plus" id="loginWithGooGleBtn" >
-        <i class="fa fa-google-plus"></i> Sign in with Google
-        <span id="googleLoginInProgressImg" class="inner-load signUpGif" style="display:none;"></span>
-      </a>
-      <%--<a class="btn btn-block btn-social btn-twitter">--%>
-        <%--<i class="fa fa-twitter"></i> Sign in with Twitter--%>
-      <%--</a>--%>
+      <jsp:directive.include file="SocialLogin.jsp" />
     </div>
+    <%--<div class="col-md-5 social-sign">--%>
+      <%--<a class="btn btn-block btn-social btn-facebook" onclick="loginWithFacebook()" >--%>
+        <%--<i class="fa fa-facebook"></i> Sign in with Facebook--%>
+        <%--<span id="fbLoginProgressImg" class="inner-load signUpGif" style="display:none;"></span>--%>
+      <%--</a>--%>
+      <%--<a class="btn btn-block btn-social btn-google-plus" id="loginWithGooGleBtn" >--%>
+        <%--<i class="fa fa-google-plus"></i> Sign in with Google--%>
+        <%--<span id="googleLoginInProgressImg" class="inner-load signUpGif" style="display:none;"></span>--%>
+      <%--</a>--%>
+    <%--</div>--%>
 
     <div class="col-md-12 text-center">
       <button class="btn-cstm-sign pos-relative" id="signBtn" onclick="submitSignInData()">Sign in
@@ -142,7 +154,7 @@
 <script src="<c:url value="/resources/js/jquery.enllax.min.js" />" ></script>
 
 <%--Google Js API--%>
-<script src="https://apis.google.com/js/api:client.js"></script>
+<%--<script src="https://apis.google.com/js/api:client.js"></script>--%>
 <%--Developer Helpers --%>
 <script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
@@ -227,125 +239,125 @@
     return false;
   }
 </script>
-<script>
+<%--<script>--%>
 
 
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '48614701501', // Office Live : 591163881067974 , Local : 141550766294824
-      cookie     : true,  // enable cookies to allow the server to access
-                          // the session
-      xfbml      : true,  // parse social plugins on this page
-      version    : 'v2.5' // use graph api version 2.5
-    });
+  <%--window.fbAsyncInit = function() {--%>
+    <%--FB.init({--%>
+      <%--appId      : '48614701501', // Office Live : 591163881067974 , Local : 141550766294824--%>
+      <%--cookie     : true,  // enable cookies to allow the server to access--%>
+                          <%--// the session--%>
+      <%--xfbml      : true,  // parse social plugins on this page--%>
+      <%--version    : 'v2.5' // use graph api version 2.5--%>
+    <%--});--%>
 
 
-  };
+  <%--};--%>
 
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+  <%--// Load the SDK asynchronously--%>
+  <%--(function(d, s, id) {--%>
+    <%--var js, fjs = d.getElementsByTagName(s)[0];--%>
+    <%--if (d.getElementById(id)) return;--%>
+    <%--js = d.createElement(s); js.id = id;--%>
+    <%--js.src = "//connect.facebook.net/en_US/sdk.js";--%>
+    <%--fjs.parentNode.insertBefore(js, fjs);--%>
+  <%--}(document, 'script', 'facebook-jssdk'));--%>
 
-  function loginWithFacebook(){
-    FB.login(function(response) {
-      if (response.authResponse) {
-        loginWithFaceBookAccessToken(response.authResponse.accessToken);
-      } else {
-        console.log('User cancelled login or did not fully authorize.');
-      }
-    },{scope: 'email,public_profile'});
-  }
+  <%--function loginWithFacebook(){--%>
+    <%--FB.login(function(response) {--%>
+      <%--if (response.authResponse) {--%>
+        <%--loginWithFaceBookAccessToken(response.authResponse.accessToken);--%>
+      <%--} else {--%>
+        <%--console.log('User cancelled login or did not fully authorize.');--%>
+      <%--}--%>
+    <%--},{scope: 'email,public_profile'});--%>
+  <%--}--%>
 
-  function loginWithFaceBookAccessToken(accessToken){
-    $("#fbLoginProgressImg").show();
+  <%--function loginWithFaceBookAccessToken(accessToken){--%>
+    <%--$("#fbLoginProgressImg").show();--%>
 
-      $.ajax({
-        url: BASEURL+'/api/social-media/facebook/login/by-facebook-access-token',
-        type: 'POST',
-        data: {
-          accessToken:accessToken
-        },
-        success: function(data){
-          $("#fbLoginProgressImg").hide();
-          if(data.responseStat.status == true){
-            $("#alertMsg").html("Login success").fadeIn(500).delay(2000).fadeOut(500,function(){
-              window.location.href =BASEURL+"/home";
-            });
-          }else{
-            $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){
-              $("#signBtn").removeAttrs("disabled","disabled");
-            });
-          }
-
-
-        }
-      });
-  }
-
-  /*Google Login */
-  var googleUser = {};
-  var loginWithGoogle = function() {
-    gapi.load('auth2', function(){
-      // Retrieve the singleton for the GoogleAuth library and set up the client.
-      auth2 = gapi.auth2.init({
-        client_id: '109533534799-85f6m6k04935qsuc6on9ubqe7e8rtndj.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
-        // Request scopes in addition to 'profile' and 'email'
-        //scope: 'additional_scope'
-      });
-      attachSignin(document.getElementById('loginWithGooGleBtn'));
-    });
-  };
-
-  function attachSignin(element) {
-    auth2.attachClickHandler(element, {},
-            function(googleUser) {
-              try{
-                loginWithGoogleAccessToken(googleUser.Zi.access_token);
-              }catch(ex){
-                console.log(ex);
-              }
-            }, function(error) {
-              alert(JSON.stringify(error, undefined, 2));
-            });
-  }
-  function loginWithGoogleAccessToken(accessToken){
-    $("#googleLoginInProgressImg").show();
-
-    $.ajax({
-      url: BASEURL+'/api/social-media/google/login/by-google-access-token',
-      type: 'POST',
-      data: {
-        accessToken:accessToken
-      },
-      success: function(data){
-        $("#googleLoginInProgressImg").hide();
-
-        if(data.responseStat.status == true){
-          $("#alertMsg").html("Login success").fadeIn(500).delay(2000).fadeOut(500,function(){
-            window.location.href =BASEURL+"/home";
-          });
-        }else{
-          $("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){
-            $("#signBtn").removeAttrs("disabled","disabled");
-          });
-        }
+      <%--$.ajax({--%>
+        <%--url: BASEURL+'/api/social-media/facebook/login/by-facebook-access-token',--%>
+        <%--type: 'POST',--%>
+        <%--data: {--%>
+          <%--accessToken:accessToken--%>
+        <%--},--%>
+        <%--success: function(data){--%>
+          <%--$("#fbLoginProgressImg").hide();--%>
+          <%--if(data.responseStat.status == true){--%>
+            <%--$("#alertMsg").html("Login success").fadeIn(500).delay(2000).fadeOut(500,function(){--%>
+              <%--window.location.href =BASEURL+"/home";--%>
+            <%--});--%>
+          <%--}else{--%>
+            <%--$("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){--%>
+              <%--$("#signBtn").removeAttrs("disabled","disabled");--%>
+            <%--});--%>
+          <%--}--%>
 
 
-      }
-    });
-  }
+        <%--}--%>
+      <%--});--%>
+  <%--}--%>
 
-  loginWithGoogle();
-  $(document).ready(function(){
-    $("#email").focus();
-  });
-</script>
+  <%--/*Google Login */--%>
+  <%--var googleUser = {};--%>
+  <%--var loginWithGoogle = function() {--%>
+    <%--gapi.load('auth2', function(){--%>
+      <%--// Retrieve the singleton for the GoogleAuth library and set up the client.--%>
+      <%--auth2 = gapi.auth2.init({--%>
+        <%--client_id: '109533534799-85f6m6k04935qsuc6on9ubqe7e8rtndj.apps.googleusercontent.com',--%>
+        <%--cookiepolicy: 'single_host_origin',--%>
+        <%--// Request scopes in addition to 'profile' and 'email'--%>
+        <%--//scope: 'additional_scope'--%>
+      <%--});--%>
+      <%--attachSignin(document.getElementById('loginWithGooGleBtn'));--%>
+    <%--});--%>
+  <%--};--%>
+
+  <%--function attachSignin(element) {--%>
+    <%--auth2.attachClickHandler(element, {},--%>
+            <%--function(googleUser) {--%>
+              <%--try{--%>
+                <%--loginWithGoogleAccessToken(googleUser.Zi.access_token);--%>
+              <%--}catch(ex){--%>
+                <%--console.log(ex);--%>
+              <%--}--%>
+            <%--}, function(error) {--%>
+              <%--alert(JSON.stringify(error, undefined, 2));--%>
+            <%--});--%>
+  <%--}--%>
+  <%--function loginWithGoogleAccessToken(accessToken){--%>
+    <%--$("#googleLoginInProgressImg").show();--%>
+
+    <%--$.ajax({--%>
+      <%--url: BASEURL+'/api/social-media/google/login/by-google-access-token',--%>
+      <%--type: 'POST',--%>
+      <%--data: {--%>
+        <%--accessToken:accessToken--%>
+      <%--},--%>
+      <%--success: function(data){--%>
+        <%--$("#googleLoginInProgressImg").hide();--%>
+
+        <%--if(data.responseStat.status == true){--%>
+          <%--$("#alertMsg").html("Login success").fadeIn(500).delay(2000).fadeOut(500,function(){--%>
+            <%--window.location.href =BASEURL+"/home";--%>
+          <%--});--%>
+        <%--}else{--%>
+          <%--$("#alertMsg").html(data.responseStat.msg).fadeIn(500).delay(3000).fadeOut(500,function(){--%>
+            <%--$("#signBtn").removeAttrs("disabled","disabled");--%>
+          <%--});--%>
+        <%--}--%>
+
+
+      <%--}--%>
+    <%--});--%>
+  <%--}--%>
+
+  <%--loginWithGoogle();--%>
+  <%--$(document).ready(function(){--%>
+    <%--$("#email").focus();--%>
+  <%--});--%>
+<%--</script>--%>
 
 
 

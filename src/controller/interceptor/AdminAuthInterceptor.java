@@ -46,7 +46,7 @@ public class AdminAuthInterceptor extends HandlerInterceptorAdapter{
         }else{
             serviceResponse.getResponseStat().setErrorMsg("Session expired !!!!");
             response.setContentType("application/json");
-            response.sendRedirect(this.getURLWithContextPath(request)+"/admin-signin");
+            response.sendRedirect(this.getURLWithContextPath(request)+"/admin-lhacoec");
             return false;
         }
     }

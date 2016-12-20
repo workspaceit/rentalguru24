@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by omar on 10/25/16.
  */
 @RestController
-@RequestMapping("/admin-signin/banner-image")
+@RequestMapping("/admin-lhacoec/banner-image")
 public class AdminBannerImageService {
     @Autowired
     TempFileModel tempFileModel;

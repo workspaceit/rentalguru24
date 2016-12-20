@@ -56,26 +56,26 @@
   <script src="<c:url value="/resources/js/chosen.jquery.min.js"  />" ></script>
 
   <script src="<c:url value="/resources/js/lightslider.js" />" > </script>
-  <script>
-    $(document).ready(function () {
-      $("#content-slider").lightSlider({
-        loop: true,
-        keyPress: true
-      });
-      $('#image-gallery').lightSlider({
-        gallery: true,
-        item: 1,
-        thumbItem: 9,
-        slideMargin: 0,
-        speed: 500,
-        auto: true,
-        loop: true,
-        onSliderLoad: function () {
-          $('#image-gallery').removeClass('cS-hidden');
-        }
-      });
-    });
-  </script>
+  <%--<script>--%>
+    <%--$(document).ready(function () {--%>
+      <%--$("#content-slider").lightSlider({--%>
+        <%--loop: true,--%>
+        <%--keyPress: true--%>
+      <%--});--%>
+      <%--$('#image-gallery').lightSlider({--%>
+        <%--gallery: true,--%>
+        <%--item: 1,--%>
+        <%--thumbItem: 9,--%>
+        <%--slideMargin: 0,--%>
+        <%--speed: 500,--%>
+        <%--auto: true,--%>
+        <%--loop: true,--%>
+        <%--onSliderLoad: function () {--%>
+          <%--$('#image-gallery').removeClass('cS-hidden');--%>
+        <%--}--%>
+      <%--});--%>
+    <%--});--%>
+  <%--</script>--%>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
   <!-- CSS start here -->
   <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />"  media="screen">
