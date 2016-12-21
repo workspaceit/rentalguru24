@@ -12,10 +12,14 @@
 <!--body content-->
 <div id="slider-top" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
-        <li data-target="#slider-top" data-slide-to="0" class="active"></li>
-        <li data-target="#slider-top" data-slide-to="1"></li>
-        <li data-target="#slider-top" data-slide-to="2"></li>
-        <li data-target="#slider-top" data-slide-to="3"></li>
+        <d:set var="sliderTopImageActive" value="active" />
+        <d:set var="sliderTopImageCount" value="${0}" />
+        <d:forEach var="topProduct" items="${bannerImageList}">
+            <li data-target="#slider-top" data-slide-to="${sliderTopImageCount}" class="${sliderTopImageActive}">
+                <d:set var="sliderTopImageActive" value="" />
+                <d:set var="sliderTopImageCount" value="${sliderTopImageCount + 1}" />
+            </li>
+        </d:forEach>
     </ol>
     <!-- Wrapper for slides -->
     <div  class="carousel-inner " role="listbox">

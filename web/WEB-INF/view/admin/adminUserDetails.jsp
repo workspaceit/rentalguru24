@@ -39,6 +39,7 @@
                                     <th>Status</th>
                                     <th>Active/Deactive</th>
                                     <th>Action</th>
+                                    <th>Details</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -77,8 +78,10 @@
                                             </div>
                                         </td>
 
-                                        <td><a href="${BaseUrl}/admin/user/get-admin-edit-page/${adminUser.id}">Edit</a></td>
-
+                                        <td><a href="${BaseUrl}/admin/user/get-admin-edit-page/${adminUser.id}" class="btn btn-block btn-info">Edit</a></td>
+                                        <td>
+                                            <a type="button" href="${BaseUrl}/admin/user/app-user/details/${adminUser.id}" class="btn btn-block btn-info">Details</a>
+                                        </td>
                                     </tr>
                                 </d:forEach>
                                 </tbody>
@@ -87,8 +90,10 @@
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Email Address</th>
-
-                                    <th>Active/Deactivate</th>
+                                    <th>Status</th>
+                                    <th>Active/Deactive</th>
+                                    <th>Action</th>
+                                    <th>Details</th>
                                 </tr>
                                 </tfoot>
                             </table>

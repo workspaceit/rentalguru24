@@ -282,4 +282,81 @@ public class AdminUserService {
 
         return serviceResponse;
     }
+
+    @RequestMapping(value = "/app-user/update-app-user-profile", method = RequestMethod.POST)
+    public ServiceResponse appUserEdit(HttpServletRequest request,
+                                       @RequestParam Map<String, String> allRequestParams,
+                                       @Valid AuthCredential authCredential){
+        ServiceResponse serviceResponse = (ServiceResponse) request.getAttribute("serviceResponse");
+
+        int id = Integer.parseInt( allRequestParams.get("id"));
+        String firstName = allRequestParams.get("firstName");
+        String lastName = allRequestParams.get("lastName");
+        String email = allRequestParams.get("email");
+        String address = allRequestParams.get("address");
+        String city = allRequestParams.get("city");
+        String state = allRequestParams.get("state");
+        String zip = allRequestParams.get("zip");
+        String phoneNumber = allRequestParams.get("phoneNumber");
+        String gender = allRequestParams.get("gender");
+
+        AuthCredential appUser=appLoginCredentialModel.getById(id);
+
+
+        if (!appUser.getEmail().equals(email)) {
+            if (appLoginCredentialModel.isEmailUsedByOtherButMe(id, email)) {
+                serviceResponse.getResponseStat().setStatus(false);
+                serviceResponse.getResponseStat().setMsg("This email is already Taken by other user");
+                return serviceResponse;
+            }
+        }
+
+        if (appUser == null){
+            serviceResponse.getResponseStat().setStatus(false);
+            serviceResponse.getResponseStat().setMsg("Your request is not valid");
+            return serviceResponse;
+        }
+
+        if (!firstName.equals("")){
+            appUser.getUserInf().setFirstName(firstName);
+        }
+        if (!lastName.equals("")){
+            appUser.getUserInf().setLastName(lastName);
+        }
+
+        if (!email.equals("")){
+            appUser.setEmail(email);
+        }
+
+        if (!address.equals("")){
+            appUser.getUserInf().getUserAddress().setAddress(address);
+        }
+
+        if (!city.equals("")){
+            appUser.getUserInf().getUserAddress().setCity(city);
+        }
+
+        if (!state.equals("")){
+            appUser.getUserInf().getUserAddress().setState(state);
+        }
+
+        if (!zip.equals("")){
+            appUser.getUserInf().getUserAddress().setZip(zip);
+        }
+
+        if (!phoneNumber.equals("")){
+            appUser.getUserInf().setPhoneNumber(phoneNumber);
+        }
+        if (!gender.equals("")){
+            appUser.getUserInf().setGender(gender);
+        }
+
+
+        appLoginCredentialModel.update(appUser);
+
+        serviceResponse.getResponseStat().setMsg("App User Information Updated Successfully");
+        serviceResponse.getResponseStat().setStatus(true);
+
+        return serviceResponse;
+    }
 }

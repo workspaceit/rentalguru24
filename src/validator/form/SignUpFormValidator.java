@@ -38,9 +38,15 @@ public class SignUpFormValidator implements Validator {
     public void validate(Object object, Errors errors) {
         SignUpForm signUpForm = (SignUpForm)object;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"email","Email is required");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Password is required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"password", "Password is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"firstName","First name required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"lastName","Last name required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"phoneNumber","Phone Number required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"address","Address required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"city","City required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"state","State required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"zip","Zip required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"gender","Gender required");
        // ValidationUtils.rejectIfEmptyOrWhitespace(errors,"identityDocToken", "Identity doc token required");
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"identityTypeId", "Identity type id required");
         if(errors.getFieldErrorCount("password")==0 && signUpForm.getPassword().length()<6){

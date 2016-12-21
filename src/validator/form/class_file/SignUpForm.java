@@ -10,6 +10,12 @@ public class SignUpForm {
     private String lastName;
     private String email;
     private String password;
+    private String phoneNumber;
+    private String address;
+    private String zip;
+    private String city;
+    private String state;
+    private String gender;
     private int identityTypeId;
     private Long identityDocToken;
 
@@ -45,6 +51,54 @@ public class SignUpForm {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public int getIdentityTypeId() {

@@ -65,9 +65,9 @@
     function deleteBannerImage(id){
       $.ajax({
         type: "POST",
-        url: BASEURL+"/admin-signin/banner-image/delete-banner-image/"+id,
+        url: BASEURL+"/admin-lhacoec/banner-image/delete-banner-image/"+id,
         success: function(data){
-          console.log(data);
+          console.log(data.responseStat.status);
           if(data.responseStat.status == true){
             $(".bannerImageDeleteSuccess").show().delay(5000).fadeOut(500,function(){
               window.location.href = BASEURL+"/admin/user/banner-image-list";

@@ -1,4 +1,4 @@
-package controller.service.admin;
+package contbannerImageActiveroller.service.admin;
 
 import helper.ImageHelper;
 import helper.ServiceResponse;

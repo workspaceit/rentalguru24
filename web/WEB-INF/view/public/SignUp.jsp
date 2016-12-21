@@ -83,6 +83,15 @@
                 <p class="help-block error-form" id="errorMsg_lastName" for="lastName" custom-validation="required" ></p>
             </div>
             <div class="form-group">
+                <label>Gender</label>
+                <select id="gender" class="selectpicker" >
+                    <option value="0">PLEASE SELECT A GENDER</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <p class="help-block error-form" id="errorMsg_gender"  custom-validation="required" for="gender"  ></p>
+            </div>
+            <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" placeholder="ex.email@email.com" id="email" name="email" onblur="isEmailExist()">
                 <p class="help-block error-form" id="errorMsg_email" for="email" custom-validation="required" ></p>
@@ -97,6 +106,31 @@
                 <label for="conPassword">Confirm password</label>
                 <input type="password" class="form-control" placeholder="ex.password" id="conPassword" name="conPassword" >
                 <p class="help-block error-form" id="errorMsg_confirmPassword" for="conPassword" custom-validation="required" ></p>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" class="form-control" placeholder="Phone Number" id="phoneNumber" name="phoneNumber" >
+                <p class="help-block error-form" id="errorMsg_phoneNumber" for="phoneNumber" custom-validation="required" ></p>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" placeholder="Address" id="address" name="address" >
+                <p class="help-block error-form" id="errorMsg_address" for="address" custom-validation="required" ></p>
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" placeholder="City" id="city" name="city" >
+                <p class="help-block error-form" id="errorMsg_city" for="city" custom-validation="required" ></p>
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" class="form-control" placeholder="State" id="state" name="state" >
+                <p class="help-block error-form" id="errorMsg_state" for="state" custom-validation="required" ></p>
+            </div>
+            <div class="form-group">
+                <label for="zip">Zip</label>
+                <input type="text" class="form-control" placeholder="Zip" id="zip" name="zip" >
+                <p class="help-block error-form" id="errorMsg_zip" for="zip" custom-validation="required" ></p>
             </div>
             <%--<div class="form-group ">--%>
                 <%--<label for="identityTypeId">Identity Type</label>--%>
@@ -260,6 +294,11 @@
 //        });
 //    }
 </script>
+<script type="text/javascript">
+    window.onload = function () {
+        $('.selectpicker').selectpicker();
+    };
+</script>
 <script>
     function submitSignUpData(){
         UnBindErrors("errorMsg_");
@@ -274,6 +313,12 @@
         var email = $("#email").val();
         var password = $("#password").val();
         var conPassword = $("#conPassword").val();
+        var phoneNumber = $("#phoneNumber").val();
+        var gender = $("#gender option:selected").val();
+        var address = $("#address").val();
+        var city = $("#city").val();
+        var state = $("#state").val();
+        var zip = $("#zip").val();
 
         if(conPassword !== password){
             $("#errorMsg_confirmPassword").html("Password miss matched");
@@ -295,6 +340,12 @@
                 lastName:lastName,
                 email:email,
                 password:password,
+                phoneNumber:phoneNumber,
+                gender:gender,
+                address:address,
+                city:city,
+                state:state,
+                zip:zip
               //  identityTypeId:identityTypeId,
               //  identityDocToken:identityDocToken
             },

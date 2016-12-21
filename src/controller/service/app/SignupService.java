@@ -55,15 +55,18 @@ public class SignupService{
 //        String state = allRequestParams.get("state");
 //        String address = allRequestParams.get("address");
 
-//        UserAddress userAddress = new UserAddress();
-//        userAddress.setAddress(address);
-//        userAddress.setZip(zip);
-//        userAddress.setState(state);
-//        userAddress.setCity(city);
+        UserAddress userAddress = new UserAddress();
+        userAddress.setAddress(signUpForm.getAddress());
+        userAddress.setZip(signUpForm.getZip());
+        userAddress.setState(signUpForm.getState());
+        userAddress.setCity(signUpForm.getCity());
 
         UserInf userInf = new UserInf();
         userInf.setFirstName(signUpForm.getFirstName());
         userInf.setLastName(signUpForm.getLastName());
+        userInf.setPhoneNumber(signUpForm.getPhoneNumber());
+        userInf.setGender(signUpForm.getGender());
+        userInf.setUserAddress(userAddress);
         userInf.setProfilePicture(new Picture());
 //        user.setUserAddress(userAddress);
 

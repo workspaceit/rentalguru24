@@ -35,6 +35,8 @@
                   <th>Email Address</th>
                   <%--<th>Identity Document</th>--%>
                   <th>Active/De-active</th>
+                  <th>Edit</th>
+                  <th>Details</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,6 +64,12 @@
                       </ul>
                     </div>
                   </td>
+                  <td>
+                    <a type="button" href="${BaseUrl}/admin/user/app-user/edit/${users.id}" class="btn btn-block btn-info">Edit</a>
+                  </td>
+                  <td>
+                    <a type="button" href="${BaseUrl}/admin/user/app-user/details/${users.id}" class="btn btn-block btn-info">Details</a>
+                  </td>
                 </tr>
                 </d:forEach>
                 </tbody>
@@ -72,6 +80,8 @@
                   <th>Email Address</th>
                  <%-- <th>Identity Document</th>--%>
                   <th>Active/De-active</th>
+                  <th>Edit</th>
+                  <th>Details</th>
                 </tr>
                 </tfoot>
               </table>

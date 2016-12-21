@@ -37,6 +37,7 @@
                                     <th>Rent Fee</th>
                                     <th>Status</th>
                                     <th>Active/Deactive</th>
+                                    <th>Owner Details</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -77,6 +78,9 @@
                                                 </ul>
                                             </div>
                                         </td>
+                                        <td>
+                                            <a type="button" href="${BaseUrl}/admin/user/app-user/details/${product.getOwner().getUserInf().getId()}" class="btn btn-block btn-info">Details</a>
+                                        </td>
                                     </tr>
                                 </d:forEach>
                                 </tbody>
@@ -88,6 +92,8 @@
                                     <th>Current Value</th>
                                     <th>Rent Fee</th>
                                     <th>Status</th>
+                                    <th>Active/Deactive</th>
+                                    <th>Owner Details</th>
                                 </tr>
                                 </tfoot>
                             </table>

@@ -32,6 +32,8 @@ public class UserInf {
         this.addressId = 0;
         this.firstName = "";
         this.lastName = "";
+        this.phoneNumber = "";
+        this.gender = "";
         this.identityDocUrl = "";
         this.createdDate = null;
         this.userAddress = new UserAddress();
@@ -167,6 +169,8 @@ public class UserInf {
         if (addressId != null ? !addressId.equals(userInf.addressId) : userInf.addressId != null) return false;
         if (firstName != null ? !firstName.equals(userInf.firstName) : userInf.firstName != null) return false;
         if (lastName != null ? !lastName.equals(userInf.lastName) : userInf.lastName != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(userInf.phoneNumber) : userInf.phoneNumber != null) return false;
+        if (gender != null ? !gender.equals(userInf.gender) : userInf.gender != null) return false;
         if (profilePicture != null ? !profilePicture.equals(userInf.profilePicture) : userInf.profilePicture != null)
             return false;
         if (identityDocUrl != null ? !identityDocUrl.equals(userInf.identityDocUrl) : userInf.identityDocUrl != null)
@@ -183,6 +187,8 @@ public class UserInf {
         result = 31 * result + (addressId != null ? addressId.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
         result = 31 * result + (profilePicture != null ? profilePicture.hashCode() : 0);
         result = 31 * result + (identityDocUrl != null ? identityDocUrl.hashCode() : 0);
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
