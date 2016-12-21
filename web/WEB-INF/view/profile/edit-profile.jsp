@@ -17,11 +17,16 @@
                     <h3>Edit profile</h3>
                     <div class="col-md-3 profile-pic">
                         <div class="profile-pic-review">
-                            <d:if test="${appCredential.getUserInf().getProfilePicture().getOriginal().getPath() != null}">
+                            <d:if test="${not empty appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}">
                                 <img id="profileImage" src="${BaseUrl}/images/profile/${appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}" style="height: 178px; width: 200px;">
                             </d:if>
-                            <d:if test="${appCredential.getUserInf().getProfilePicture().getOriginal().getPath() == null}">
-                                <img src="${BaseUrl}/resources/img/defaultProfileInmage.png" alt=""  />
+                            <d:if test="${empty appCredential.getUserInf().getProfilePicture().getOriginal().getPath()}">
+                                <d:if test="${appCredential.getUserInf().getGender() == 'male'}">
+                                    <img src="${BaseUrl}/resources/img/defaultProfileInmage.png" alt=""  />
+                                </d:if>
+                                <d:if test="${appCredential.getUserInf().getGender() == 'female'}">
+                                    <img src="${BaseUrl}/resources/img/defaultProfileInmageFemale.png" alt=""  />
+                                </d:if>
                             </d:if>
                         </div>
                         <div class="form-group" style="margin-bottom:0px;">

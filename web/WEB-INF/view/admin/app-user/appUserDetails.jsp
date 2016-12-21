@@ -31,7 +31,12 @@
                 <img class="profile-user-img img-responsive img-circle" src="${BaseUrl}/profile-image/${user.getUserInf().getProfilePicture().getOriginal().getPath()}" alt="User profile picture">
               </d:if>
               <d:if test="${empty user.getUserInf().getProfilePicture().getOriginal().getPath()}">
-                <img class="profile-user-img img-responsive img-circle" src="${BaseUrl}/admin-resources/dist/img/defaultProfileImages.png" alt="User profile picture">
+                <d:if test="${user.getUserInf().getGender() == 'male'}">
+                  <img src="${BaseUrl}/resources/img/defaultProfileInmage.png" alt=""  />
+                </d:if>
+                <d:if test="${user.getUserInf().getGender() == 'female'}">
+                  <img src="${BaseUrl}/resources/img/defaultProfileInmageFemale.png" alt=""  />
+                </d:if>
               </d:if>
 
               <h3 class="profile-username text-center">${user.getUserInf().getFirstName()} ${user.getUserInf().getLastName()}</h3>

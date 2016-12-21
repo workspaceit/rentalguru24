@@ -50,7 +50,7 @@ public class AdminAuthService{
             }
             serviceResponse.setResponseData(authCredential);
         }
-        serviceResponse.getResponseStat().setMsg("Login success");
+        serviceResponse.getResponseStat().setMsg("Login success, Redirecting......");
         SessionManagement.setAdminCredentialInSession(request,serviceResponse,appLoginCredentialModel.getAppCredentialById(authCredential.getId()));
 
         return serviceResponse;
