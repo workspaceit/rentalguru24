@@ -28,7 +28,7 @@
           <div class="box box-primary">
             <div class="box-body box-profile">
               <d:if test="${not empty user.getUserInf().getProfilePicture().getOriginal().getPath()}">
-                <img class="profile-user-img img-responsive img-circle" src="${BaseUrl}/profile-image/${user.getUserInf().getProfilePicture().getOriginal().getPath()}" alt="User profile picture">
+                <img class="profile-user-img img-responsive img-circle" src="${BaseUrl}/images/profile/${user.getUserInf().getProfilePicture().getOriginal().getPath()}" alt="User profile picture">
               </d:if>
               <d:if test="${empty user.getUserInf().getProfilePicture().getOriginal().getPath()}">
                 <d:if test="${user.getUserInf().getGender() == 'male'}">

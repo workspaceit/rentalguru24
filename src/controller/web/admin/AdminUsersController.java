@@ -125,7 +125,7 @@ public class AdminUsersController {
         modelAndView.addObject("user", authCredential);
         modelAndView.addObject("ownerRentalProductList", ownerRentalProductList);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageHeader", "App User Profile Details");
+        modelAndView.addObject("pageHeader", "User Profile Details");
         modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }

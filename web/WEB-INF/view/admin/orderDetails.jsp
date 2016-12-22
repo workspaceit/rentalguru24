@@ -26,7 +26,7 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="${BaseUrl}/profile-image/${rentInf.getRentRequest().getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath()}" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="${BaseUrl}/images/profile/${rentInf.getRentRequest().getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath()}" alt="User profile picture">
               <h3 class="profile-username text-center">${rentInf.getRentRequest().getRequestedBy().getUserInf().getFirstName()} ${rentInf.getRentRequest().getRequestedBy().getUserInf().getLastName()}</h3>
               <hr>
 
@@ -48,12 +48,12 @@
               <%--<li><a href="#timeline" data-toggle="tab">Transaction Details</a></li>--%>
             </ul>
             <div class="tab-content">
-              <div class="active tab-pane" id="activity">
+              <div class="active" id="activity">
 
                 <!-- Post -->
                 <div class="post">
                   <div class='user-block'>
-                    <img class='img-circle img-bordered-sm' src='${BaseUrl}/profile-image/${rentInf.getRentalProduct().getOwner().getUserInf().getProfilePicture().getOriginal().getPath()}' alt='user image'>
+                    <img class='img-circle img-bordered-sm' src='${BaseUrl}/images/profile/${rentInf.getRentalProduct().getOwner().getUserInf().getProfilePicture().getOriginal().getPath()}' alt='user image'>
                         <span class='username'>
                           <a href="#">${rentInf.getRentalProduct().getOwner().getUserInf().getFirstName()} ${rentInf.getRentalProduct().getOwner().getUserInf().getLastName()}</a>
                           <a href='#' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>
@@ -74,14 +74,6 @@
                       </div><!-- /.row -->
                     </div><!-- /.col -->
                   </div><!-- /.row -->
-
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a></li>
-                    <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments (5)</a></li>
-                  </ul>
-
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
                 </div><!-- /.post -->
               </div><!-- /.tab-pane -->
               <div class="tab-pane" id="timeline">

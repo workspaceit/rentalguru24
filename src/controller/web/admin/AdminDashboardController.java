@@ -321,7 +321,7 @@ public class AdminDashboardController {
         modelAndView.addObject("adminGlobalNotifications", adminGlobalNotifications);
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
-        modelAndView.addObject("pageHeader", "Global Notification List Tables");
+        modelAndView.addObject("pageHeader", "Dispute List");
         modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }

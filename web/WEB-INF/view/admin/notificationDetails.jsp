@@ -39,6 +39,12 @@
           <div class="col-md-3">
             <a class="btn btn-block btn-info" href="${BaseUrl}/admin/user/order-details/${adminGlobalNotification.getId()}/${adminGlobalNotification.getRentInf().getId()}">Order Details</a>
           </div>
+          <div class="col-md-3">
+            <a class="btn btn-block btn-info" href="${BaseUrl}/admin/user/app-user/details/${adminGlobalNotification.getRentInf().getRentalProduct().getOwner().getId()}">Owner Details</a>
+          </div>
+          <div class="col-md-3">
+            <a class="btn btn-block btn-info" href="${BaseUrl}/admin/user/app-user/details/${adminGlobalNotification.getRentInf().getRentRequest().getRequestedBy().getId()}">Renter Details</a>
+          </div>
         </div><!-- /.box-footer-->
       </div><!-- /.box -->
       <!-- /.row -->

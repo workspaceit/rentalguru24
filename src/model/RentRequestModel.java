@@ -8,6 +8,8 @@ import org.hibernate.Session;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -588,5 +590,22 @@ public class RentRequestModel extends BaseModel {
         }finally {
             session.close();
         }
+    }
+    public List<RentRequest> searchRentRequestByBetweenDates(String stDate, String edDate){
+        Session session = this.sessionFactory.openSession();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        List<RentRequest> rentRequestList = new ArrayList<>();
+        try {
+            rentRequestList = session.createQuery("FROM RentRequest RR WHERE " +
+                    "RR.startDate BETWEEN :stDate AND :edDate ")
+                    .setParameter("stDate", stDate)
+                    .setParameter("edDate", edDate)
+                    .list();
+            return rentRequestList;
+
+        }finally {
+            session.close();
+        }
+
     }
 }

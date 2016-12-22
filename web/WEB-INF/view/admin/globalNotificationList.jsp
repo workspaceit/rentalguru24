@@ -31,6 +31,8 @@
                 <tr>
                   <th>Type</th>
                   <th>Description</th>
+                  <th>Owner</th>
+                  <th>Renter</th>
                   <th>Status</th>
                   <th></th>
                 </tr>
@@ -40,6 +42,8 @@
                   <tr>
                     <td>${notification.getType()}</td>
                     <td>${notification.getDetails()}</td>
+                    <td><a href="${BaseUrl}/admin/user/app-user/details/${notification.getRentInf().getRentalProduct().getOwner().getId()}">${notification.getRentInf().getRentalProduct().getOwner().getUserInf().getFirstName()} ${notification.getRentInf().getRentalProduct().getOwner().getUserInf().getLastName()}</a></td>
+                    <td><a href="${BaseUrl}/admin/user/app-user/details/${notification.getRentInf().getRentRequest().getRequestedBy().getId()}">${notification.getRentInf().getRentRequest().getRequestedBy().getUserInf().getFirstName()} ${notification.getRentInf().getRentRequest().getRequestedBy().getUserInf().getLastName()}</a></td>
                     <d:if test="${notification.getIsRead() == true}">
                       <td>Read</td>
                     </d:if>
@@ -54,6 +58,8 @@
                 <tr>
                   <th>Type</th>
                   <th>Description</th>
+                  <th>Owner</th>
+                  <th>Renter</th>
                   <th>Status</th>
                   <th></th>
                 </tr>

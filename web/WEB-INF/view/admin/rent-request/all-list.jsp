@@ -43,9 +43,9 @@
                 <d:forEach var="rentRequest" items="${rentRequests}">
                 <tr>
 
-                  <td>${rentRequest.rentalProduct.name}</td>
-                  <td>${rentRequest.requestedBy.userInf.firstName}&nbsp;${rentRequest.requestedBy.userInf.lastName}</td>
-                  <td>${rentRequest.rentalProduct.owner.userInf.firstName}&nbsp;${rentRequest.rentalProduct.owner.userInf.lastName}</td>
+                  <td><a href="${BaseUrl}/product/details/${rentRequest.rentalProduct.id}">${rentRequest.rentalProduct.name}</a></td>
+                  <td><a href="${BaseUrl}/admin/user/app-user/details/${rentRequest.getRequestedBy().getId()}">${rentRequest.requestedBy.userInf.firstName}&nbsp;${rentRequest.requestedBy.userInf.lastName}</a></td>
+                  <td><a href="${BaseUrl}/admin/user/app-user/details/${rentRequest.getRentalProduct().getOwner().getId()}">${rentRequest.rentalProduct.owner.userInf.firstName}&nbsp;${rentRequest.rentalProduct.owner.userInf.lastName}</a></td>
                   <td><fmt:formatDate pattern="MMM d, yyyy h:mm a" value="${rentRequest.createdDate}" /></td>
                   <td>
                     <fmt:formatDate pattern="MMM d, yyyy" value="${rentRequest.startDate}" />
@@ -60,7 +60,7 @@
                     </d:choose>
                   </td>
                   <td>
-                    <a href="${BaseUrl}/admin/rent-request/details/${rentRequest.id}" class="btn btn-default btn-lg active" role="button">Details</a>
+                    <a href="${BaseUrl}/admin/rent-request/details/${rentRequest.id}" class="btn btn-block btn-info" role="button">Details</a>
                   </td>
                 </tr>
                 </d:forEach>

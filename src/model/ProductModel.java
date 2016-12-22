@@ -84,6 +84,37 @@ public class ProductModel extends BaseModel {
 
         return rentalProducts;
     }
+    public List<RentalProductEntity> getAllApproveRentalProduct() {
+        Session session = null;
+        List rentalProducts = null;
+        try {
+            session = this.sessionFactory.openSession();
+            rentalProducts = session.createQuery("from RentalProductEntity R WHERE R.reviewStatus = true ORDER BY R.id DESC").list();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (session != null)
+                session.close();
+        }
+
+        return rentalProducts;
+    }
+    public List<RentalProductEntity> getAllDisapproveRentalProduct() {
+        Session session = null;
+        List rentalProducts = null;
+        try {
+            session = this.sessionFactory.openSession();
+            rentalProducts = session.createQuery("from RentalProductEntity R WHERE R.reviewStatus = false ORDER BY R.id DESC").list();
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (session != null)
+                session.close();
+        }
+
+        return rentalProducts;
+    }
+
 
     public List<RentalProduct> getRentalProduct(int limit, int offset) {
         if (limit > 15) {

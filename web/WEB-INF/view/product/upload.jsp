@@ -73,6 +73,13 @@
         </div>
         <div class="row clearfix">
           <div class="col-md-6">
+            <div class="form-group">
+              <label>Product Available</label>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-md-6">
             <div class="form-group date-con">
               <label>From</label>
               <input type="text"  class="form-control datepicker" id="availableFrom" placeholder="" name="availableFrom">
@@ -89,7 +96,8 @@
         </div>
         <div class="form-group">
           <label>Product Location</label>
-          <input type="text" class="form-control" placeholder="" id="formattedAddress" name="formattedAddress" onfocus="getGeoLocation()" latLngUsed="0">
+          <%--<input type="text" class="form-control" placeholder="" id="formattedAddress" name="formattedAddress" onfocus="getGeoLocation()" latLngUsed="0">--%>
+          <input type="text" class="form-control" placeholder="" id="formattedAddress" name="formattedAddress" latLngUsed="0">
           <p class="help-block error-form" id="errorMsg_formattedAddress"  custom-validation="required" for="formattedAddress"   ></p>
         </div>
         <div class="row clearfix">

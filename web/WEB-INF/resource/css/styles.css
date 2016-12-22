@@ -6344,6 +6344,9 @@ span.color_name {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+.all_notify li{
+    list-style-type: none;
+}
 
 /*ALL NOTIFY*/
 

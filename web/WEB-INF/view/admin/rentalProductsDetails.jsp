@@ -37,7 +37,6 @@
                                     <th>Rent Fee</th>
                                     <th>Status</th>
                                     <th>Active/Deactive</th>
-                                    <th>Owner Details</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -46,13 +45,13 @@
                                         <td><img width="100px" height="100px"
                                                  src="${BaseUrl}/images/${product.profileImage.original.path}"></td>
                                         <td width="200px"><a href="${BaseUrl}/product/details/${product.id}" target="_blank">${product.name}</a></td>
-                                        <td>${product.owner.userInf.firstName}</td>
+                                        <td><a href="${BaseUrl}/admin/user/app-user/details/${product.getOwner().getUserInf().getId()}" >${product.owner.userInf.firstName}</a></td>
                                         <td>${product.currentValue}</td>
                                         <td>${product.rentFee}</td>
                                         <d:choose>
                                             <d:when test="${product.reviewStatus==true}">
                                                 <td style="color: green">
-                                                    <div id="${product.id}">Appoved</div>
+                                                    <div id="${product.id}">Approved</div>
                                                 </td>
                                             </d:when>
                                             <d:otherwise>
@@ -78,9 +77,6 @@
                                                 </ul>
                                             </div>
                                         </td>
-                                        <td>
-                                            <a type="button" href="${BaseUrl}/admin/user/app-user/details/${product.getOwner().getUserInf().getId()}" class="btn btn-block btn-info">Details</a>
-                                        </td>
                                     </tr>
                                 </d:forEach>
                                 </tbody>
@@ -93,7 +89,6 @@
                                     <th>Rent Fee</th>
                                     <th>Status</th>
                                     <th>Active/Deactive</th>
-                                    <th>Owner Details</th>
                                 </tr>
                                 </tfoot>
                             </table>

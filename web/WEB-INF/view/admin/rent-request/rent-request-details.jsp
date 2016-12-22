@@ -26,7 +26,17 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="${BaseUrl}/profile-image/${rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath()}" alt="User profile picture">
+              <d:if test="${not empty rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath()}">
+                <img class="profile-user-img img-responsive img-circle" src="${BaseUrl}/images/profile/${rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath()}" alt="User profile picture">
+              </d:if>
+              <d:if test="${empty rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath()}">
+                <d:if test="${rentRequest.getRequestedBy().getUserInf().getGender() == 'male'}">
+                  <img src="${BaseUrl}/resources/img/defaultProfileInmage.png" alt=""  />
+                </d:if>
+                <d:if test="${rentRequest.getRequestedBy().getUserInf().getGender() == 'female'}">
+                  <img src="${BaseUrl}/resources/img/defaultProfileInmageFemale.png" alt=""  />
+                </d:if>
+              </d:if>
               <h3 class="profile-username text-center">${rentRequest.getRequestedBy().getUserInf().getFirstName()} ${rentRequest.getRequestedBy().getUserInf().getLastName()}</h3>
               <hr>
 
@@ -52,11 +62,21 @@
                 <!-- Post -->
                 <div class="post">
                   <div class='user-block'>
-                    <img class='img-circle img-bordered-sm' src='${BaseUrl}/profile-image/${rentRequest.getRentalProduct().getOwner().getUserInf().getProfilePicture().getOriginal().getPath()}' alt='user image'>
-                        <span class='username'>
-                          ${rentRequest.getRentalProduct().getOwner().getUserInf().getFirstName()} ${rentRequest.getRentalProduct().getOwner().getUserInf().getLastName()}
-                          <%--<a href='#' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>--%>
-                        </span>
+                    <d:if test="${not empty rentRequest.getRentalProduct().getOwner().getUserInf().getProfilePicture().getOriginal().getPath()}">
+                      <img class='img-circle img-bordered-sm' src='${BaseUrl}/images/profile/${rentRequest.getRentalProduct().getOwner().getUserInf().getProfilePicture().getOriginal().getPath()}' alt='user image'>
+                    </d:if>
+                    <d:if test="${empty rentRequest.getRentalProduct().getOwner().getUserInf().getProfilePicture().getOriginal().getPath()}">
+                      <d:if test="${rentRequest.getRentalProduct().getOwner().getUserInf().getGender() == 'male'}">
+                        <img src="${BaseUrl}/resources/img/defaultProfileInmage.png" alt=""  />
+                      </d:if>
+                      <d:if test="${rentRequest.getRentalProduct().getOwner().getUserInf().getGender() == 'female'}">
+                        <img src="${BaseUrl}/resources/img/defaultProfileInmageFemale.png" alt=""  />
+                      </d:if>
+                    </d:if>
+                    <span class='username'>
+                      ${rentRequest.getRentalProduct().getOwner().getUserInf().getFirstName()} ${rentRequest.getRentalProduct().getOwner().getUserInf().getLastName()}
+                      <%--<a href='#' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>--%>
+                    </span>
                   </div><!-- /.user-block -->
                   <div class='row margin-bottom'>
                     <div class='col-sm-6'>
@@ -155,9 +175,9 @@
                     </div><!-- /.table-responsive -->
                   </div><!-- /.box-body -->
                   <div class="box-footer clearfix">
-                    <a href="javascript::;" style="margin-right:15px;" class="btn btn-sm btn-danger btn-flat pull-right">Cancel</a>
+                    <a href="javascript:void(0);" style="margin-right:15px;" class="btn btn-sm btn-danger btn-flat pull-right">Cancel</a>
                     &nbsp; &nbsp;
-                    <a href="javascript::;" class="btn btn-sm btn-success btn-flat pull-right">Approve</a>
+                    <a href="javascript:void(0);" class="btn btn-sm btn-success btn-flat pull-right">Approve</a>
                   </div><!-- /.box-footer -->
                 </div><!-- /.tab-pane -->
               </div><!-- /.tab-pane -->

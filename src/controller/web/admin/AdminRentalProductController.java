@@ -52,5 +52,44 @@ public class AdminRentalProductController {
 
     }
 
+    @RequestMapping(value = "/get-all-approve-product", method = RequestMethod.GET)
+    public ModelAndView loadAllApproveProduct(HttpServletRequest request){
+        ModelAndView modelAndView =new ModelAndView("admin/rentalProductsDetails");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        List <RentalProductEntity>rentalProductEntities=productModel.getAllApproveRentalProduct();
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Product", new String("javascript:void(0);"));
+        breadcrumb.put("Rental Product List", new String(baseUrl+"/admin/product/get-all-approve-product"));
+
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("rentalProducts", rentalProductEntities);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageHeader", "Approve Rental Product List");
+        modelAndView.addObject("breadcrumb", breadcrumb);
+        return modelAndView;
+    }
+    @RequestMapping(value = "/get-all-disapprove-product", method = RequestMethod.GET)
+    public ModelAndView loadAllDisapproveProduct(HttpServletRequest request){
+        ModelAndView modelAndView =new ModelAndView("admin/rentalProductsDetails");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        List <RentalProductEntity>rentalProductEntities=productModel.getAllDisapproveRentalProduct();
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+        breadcrumb.put("Product", new String("javascript:void(0);"));
+        breadcrumb.put("Rental Product List", new String(baseUrl+"/admin/product/get-all-disapprove-product"));
+
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("rentalProducts", rentalProductEntities);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageHeader", "Disapprove Rental Product List");
+        modelAndView.addObject("breadcrumb", breadcrumb);
+        return modelAndView;
+    }
+
 
 }

@@ -20,51 +20,87 @@
                         <h3 class="aproval_container_title">Order Information</h3>
                     </div>
                     <div class="col-md-5 col-sm-5 col-xs-12">
-                        <div class="row">
-                            <div class="col-md-3 col-xs-3 col-xs-12">
-                                <div class="product_img_container">
+                        <%--<div class="row">--%>
+                            <%--<div class="col-md-3 col-xs-3 col-xs-12">--%>
+                                <%--<div class="product_img_container">--%>
 
-                                    <d:if test="${rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath() != null}">
-                                        <img src="${BaseUrl}/profile-image/${rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath()}" class=" img-responsive user_img">
-                                    </d:if>
-                                    <d:if test="${rentRequest.getRequestedBy().getUserInf().getProfilePicture() == null}">
-                                        <img src="${BaseUrl}/resources/img/defaultProfileInmage.png" class=" img-responsive user_img">
-                                    </d:if>
-                                </div>
-                            </div>
-                            <div class="col-md-9 col-xs-9 col-xs-12">
-                                <h3>${rentRequest.getRequestedBy().getUserInf().getFirstName()}, ${rentRequest.getRequestedBy().getUserInf().getLastName()}</h3>
+                                    <%--<d:if test="${rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath() != null}">--%>
+                                        <%--<img src="${BaseUrl}/profile-image/${rentRequest.getRequestedBy().getUserInf().getProfilePicture().getOriginal().getPath()}" class=" img-responsive user_img">--%>
+                                    <%--</d:if>--%>
+                                    <%--<d:if test="${rentRequest.getRequestedBy().getUserInf().getProfilePicture() == null}">--%>
+                                        <%--<img src="${BaseUrl}/resources/img/defaultProfileInmage.png" class=" img-responsive user_img">--%>
+                                    <%--</d:if>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%--<div class="col-md-9 col-xs-9 col-xs-12">--%>
+                                <%--<h3>${rentRequest.getRequestedBy().getUserInf().getFirstName()}, ${rentRequest.getRequestedBy().getUserInf().getLastName()}</h3>--%>
 
-                                <h5 class="social_link_header">Social Links:</h5>
-                                <ul class="social_link_client_rqst">
-                                    <li><a href=""><i class="fa fa-facebook-square facebook"></i></a></li>
-                                    <li><a href=""><i class="fa fa-linkedin-square linkedin"></i></a></li>
-                                    <li><a href=""><i class="fa fa-twitter-square twitter"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <h5 class="rent_client_other_info_head">Other Informations</h5>
-                                <div class="all_info">
-                                    <div class="info_title">
-                                        <p class="no-margin"><strong>Email</strong></p>
+                                <%--<h5 class="social_link_header">Social Links:</h5>--%>
+                                <%--<ul class="social_link_client_rqst">--%>
+                                    <%--<li><a href=""><i class="fa fa-facebook-square facebook"></i></a></li>--%>
+                                    <%--<li><a href=""><i class="fa fa-linkedin-square linkedin"></i></a></li>--%>
+                                    <%--<li><a href=""><i class="fa fa-twitter-square twitter"></i></a></li>--%>
+                                <%--</ul>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="row">--%>
+                            <%--<div class="col-md-12 col-sm-12 col-xs-12">--%>
+                                <%--<h5 class="rent_client_other_info_head">Other Informations</h5>--%>
+                                <%--<div class="all_info">--%>
+                                    <%--<div class="info_title">--%>
+                                        <%--<p class="no-margin"><strong>Email</strong></p>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="detail_info">--%>
+                                        <%--<p class="justify no-margin">${rentRequest.getRequestedBy().getEmail()}</p>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                                <%--<div class="all_info">--%>
+                                    <%--<div class="info_title">--%>
+                                        <%--<p class="no-margin"><strong>Address</strong></p>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="detail_info">--%>
+                                        <%--<p class="justify no-margin">${rentRequest.getRequestedBy().getUserInf().getUserAddress().getAddress()} ${rentRequest.getRequestedBy().getUserInf().getUserAddress().getCity()} ${rentRequest.getRequestedBy().getUserInf().getUserAddress().getState()} ${rentRequest.getRequestedBy().getUserInf().getUserAddress().getZip()}</p>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                            <%----%>
+                        <%--</div>--%>
+                            <h5 class="color invoice_head">Product Information</h5>
+                            <div class="product_info_wrap">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                        <div class="product_img_container">
+                                            <img src="${BaseUrl}/images/${rentRequest.getRentalProduct().getProfileImage().getOriginal().getPath()}" class=" img-responsive">
+                                        </div>
                                     </div>
-                                    <div class="detail_info">
-                                        <p class="justify no-margin">${rentRequest.getRequestedBy().getEmail()}</p>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="product_info_container">
+
+                                            <div class="req_information">
+                                                <h3 class="color p_name ">${rentRequest.getRentalProduct().getName()}</h3>
+                                                <h5 class=" p_des_head">Description</h5>
+                                                <p class="justify no-margin p_des">${fn:substring(rentRequest.getRentalProduct().getDescription(), 0, 1500)}<d:if test="${fn:length(rentRequest.getRentalProduct().getDescription())>1500}">....</d:if></p>
+                                                <ul class="order_time_interval">
+                                                    <li>From</li>
+                                                    <li><strong><span class="time_date"><fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.getRentalProduct().getAvailableFrom()}"/></span></strong></li>
+                                                    <li>To</li>
+                                                    <li><strong><span class="time_date"><fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.getRentalProduct().getAvailableTill()}"/></span></strong></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <%--<div class="other_image_rqst_product">--%>
+                                            <%--<h5 class=" p_des_head no-padding">Other Images</h5>--%>
+                                            <%--<div class=" rqst_product_slider">--%>
+                                                <%--<div class="owl-carousel">--%>
+                                                    <%--<d:forEach var="productOtherImages" items="${rentRequest.getRentalProduct().getOtherImages()}">--%>
+                                                        <%--<div class="item"><img src="${BaseUrl}/images/${productOtherImages.getOriginal().getPath()}"></div>--%>
+                                                    <%--</d:forEach>--%>
+                                                <%--</div>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
                                     </div>
                                 </div>
-                                <div class="all_info">
-                                    <div class="info_title">
-                                        <p class="no-margin"><strong>Address</strong></p>
-                                    </div>
-                                    <div class="detail_info">
-                                        <p class="justify no-margin">${rentRequest.getRequestedBy().getUserInf().getUserAddress().getAddress()} ${rentRequest.getRequestedBy().getUserInf().getUserAddress().getCity()} ${rentRequest.getRequestedBy().getUserInf().getUserAddress().getState()} ${rentRequest.getRequestedBy().getUserInf().getUserAddress().getZip()}</p>
-                                    </div>
-                                </div>
                             </div>
-                            
-                        </div>
                     </div>
                     <div class="col-md-7 col-sm-7 col-xs-12">
                         <h5 class="color invoice_head">Transection Details</h5>
@@ -74,7 +110,7 @@
                                     <tr>
                                         <th>Order Info</th>
                                         <th></th>
-                                        <th>Order Details</th>  
+                                        <th>Order Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,10 +183,10 @@
                                         </BUTTON>
                                     </li>
                                     <li>
-                                        <p id="paymentCreateResponsePar" style="display:none;">
-                                            <span id="paymentCreateResponseMsg"></span>&nbsp;
-                                            <span><a href="${BaseUrl}/user/dashboard/my-paypal-account-email?r=${BaseUrl}/rent/request/${rentRequest.id}">Click here</a> to add paypal account</span>
-                                        </p>
+                                        <%--<p id="paymentCreateResponsePar" style="display:none;">--%>
+                                            <%--<span id="paymentCreateResponseMsg"></span>&nbsp;--%>
+                                            <%--<span><a href="${BaseUrl}/user/dashboard/my-paypal-account-email?r=${BaseUrl}/rent/request/${rentRequest.id}">Click here</a> to add paypal account</span>--%>
+                                        <%--</p>--%>
                                     </li>
                                 </ul>
                             </d:if>
@@ -278,42 +314,42 @@
             <div class="alert alert-danger" id="disApproveError" hidden>Something Went Wrong</div>
             <div class="alert alert-success" id="approveSuccess" hidden>Product Approve</div>
             <div class="alert alert-success" id="disApproveSuccess" hidden>Product Disapprove</div>
-            <h3 class="aproval_container_title">Product Information</h3>
-            <div class="product_info_wrap">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-12 ">
-                        <div class="product_img_container">
-                            <img src="${BaseUrl}/images/${rentRequest.getRentalProduct().getProfileImage().getOriginal().getPath()}" class=" img-responsive">
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="product_info_container">
-                            
-                            <div class="req_information">
-                                <h3 class="color p_name ">${rentRequest.getRentalProduct().getName()}</h3>
-                                <h5 class=" p_des_head">Description</h5>
-                                <p class="justify no-margin p_des">${fn:substring(rentRequest.getRentalProduct().getDescription(), 0, 1500)}<d:if test="${fn:length(rentRequest.getRentalProduct().getDescription())>1500}">....</d:if></p>
-                                <ul class="order_time_interval">
-                                    <li>From</li>
-                                    <li><strong><span class="time_date"><fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.getRentalProduct().getAvailableFrom()}"/></span></strong></li>
-                                    <li>To</li>
-                                    <li><strong><span class="time_date"><fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.getRentalProduct().getAvailableTill()}"/></span></strong></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="other_image_rqst_product">
-                            <h5 class=" p_des_head no-padding">Other Images</h5>                            
-                            <div class=" rqst_product_slider">
-                                <div class="owl-carousel">
-                                    <d:forEach var="productOtherImages" items="${rentRequest.getRentalProduct().getOtherImages()}">
-                                        <div class="item"><img src="${BaseUrl}/images/${productOtherImages.getOriginal().getPath()}"></div>
-                                    </d:forEach>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <%--<h3 class="aproval_container_title">Product Information</h3>--%>
+            <%--<div class="product_info_wrap">--%>
+                <%--<div class="row">--%>
+                    <%--<div class="col-md-6 col-sm-6 col-xs-12 ">--%>
+                        <%--<div class="product_img_container">--%>
+                            <%--<img src="${BaseUrl}/images/${rentRequest.getRentalProduct().getProfileImage().getOriginal().getPath()}" class=" img-responsive">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-md-6 col-sm-6 col-xs-12">--%>
+                        <%--<div class="product_info_container">--%>
+                            <%----%>
+                            <%--<div class="req_information">--%>
+                                <%--<h3 class="color p_name ">${rentRequest.getRentalProduct().getName()}</h3>--%>
+                                <%--<h5 class=" p_des_head">Description</h5>--%>
+                                <%--<p class="justify no-margin p_des">${fn:substring(rentRequest.getRentalProduct().getDescription(), 0, 1500)}<d:if test="${fn:length(rentRequest.getRentalProduct().getDescription())>1500}">....</d:if></p>--%>
+                                <%--<ul class="order_time_interval">--%>
+                                    <%--<li>From</li>--%>
+                                    <%--<li><strong><span class="time_date"><fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.getRentalProduct().getAvailableFrom()}"/></span></strong></li>--%>
+                                    <%--<li>To</li>--%>
+                                    <%--<li><strong><span class="time_date"><fmt:formatDate pattern="MMM d,yyyy" value="${rentRequest.getRentalProduct().getAvailableTill()}"/></span></strong></li>--%>
+                                <%--</ul>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                        <%--<div class="other_image_rqst_product">--%>
+                            <%--<h5 class=" p_des_head no-padding">Other Images</h5>                            --%>
+                            <%--<div class=" rqst_product_slider">--%>
+                                <%--<div class="owl-carousel">--%>
+                                    <%--<d:forEach var="productOtherImages" items="${rentRequest.getRentalProduct().getOtherImages()}">--%>
+                                        <%--<div class="item"><img src="${BaseUrl}/images/${productOtherImages.getOriginal().getPath()}"></div>--%>
+                                    <%--</d:forEach>--%>
+                                <%--</div>--%>
+                            <%--</div> --%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</div>--%>
 
             <div role="tabpanel" class="tab-pane active" id="reviews" style="display: none;">
                 <h3 class="aproval_container_title">Add Review</h3>
@@ -353,6 +389,34 @@
                 </form>
             </div>
         </div>
+
+        <%--------------------------------------------------------------------------%>
+        <!-- Modal -->
+        <div class="modal fade" id="paypalAccountAddModal" tabindex="-1" role="dialog" aria-labelledby="paypalAccountAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="paypalAccountAddModalLabel">Add Paypal Account</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="paymentCreateResponsePar">
+                            <span id="paymentCreateResponseMsg"></span>&nbsp;
+                            <span><a type="button" class="btn btn-primary" href="${BaseUrl}/user/dashboard/my-paypal-account-email?r=${BaseUrl}/rent/request/${rentRequest.id}" style="text-decoration: none;">Click here</a> to add paypal account</span>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--------------------------------------------------------------------------%>
+
+
+
         <jsp:directive.include file="../layouts/top-footer.jsp" />
         <jsp:directive.include file="../layouts/footer.jsp" />
         <input type="hidden" value="${rentRequest.getId()}" id="rentRequestId" />
@@ -596,7 +660,8 @@
                             window.location = data.responseData.url;
                         }else{
                             $("#paymentCreateResponseMsg").text(data.responseStat.msg);
-                            $("#paymentCreateResponsePar").show();
+//                            $("#paymentCreateResponsePar").show();
+                            $('#paypalAccountAddModal').modal('show');
                         }
                         $('#proceedToPaymentBtn').removeAttrs("disabled");
                         $('#proceedToPaymentProgressIm').hide();
