@@ -186,6 +186,9 @@ immediately after the control sidebar -->
 <script src="<c:url value="/resources/js/dropzone.js" />" ></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="<c:url value="/admin-resources/bootstrap/js/bootstrap.min.js"/>"></script>
+<!-- date-range-picker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="<c:url value="/admin-resources/plugins/daterangepicker/daterangepicker.js"/>"></script>
 <!-- DataTables -->
 <script src="<c:url value="/admin-resources/plugins/datatables/jquery.dataTables.min.js"/>"></script>
 <script src="<c:url value="/admin-resources/plugins/datatables/dataTables.bootstrap.min.js"/>"></script>
@@ -199,12 +202,19 @@ immediately after the control sidebar -->
 <script src="<c:url value="/admin-resources/dist/js/demo.js"/>"></script>
 <!-- page script -->
 
+
 <script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
 <script src="<c:url value="/admin-resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"/>"></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
 <script>
   var BASEURL = "${BaseUrl}";
+</script>
+<script>
+  $(function () {
+    //Date range picker
+    $('#daterangepicker').daterangepicker();
+  });
 </script>
 <script>
   $(function () {

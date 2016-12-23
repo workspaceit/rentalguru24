@@ -679,21 +679,4 @@ public class RentRequestService{
         return serviceResponse;
 
     }
-
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public ServiceResponse getMyApprovedRentRequest(HttpServletRequest request, @RequestParam Map<String, String> allRequestParam){
-
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-
-        String stDate = allRequestParam.get("stDate");
-        String edDate = allRequestParam.get("edDate");
-        List<RentRequest> rentRequestList = rentRequestModel.searchRentRequestByBetweenDates(stDate, edDate);
-        if(rentRequestList == null){
-            serviceResponse.setRequestError("date","No product found between this date");
-            return serviceResponse;
-        }
-        return serviceResponse;
-    }
 }

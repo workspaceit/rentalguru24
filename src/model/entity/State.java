@@ -1,7 +1,10 @@
 package model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by mi on 11/29/16.
@@ -12,6 +15,7 @@ public class State {
     private int id;
     private String code;
     private String name;
+    private List<Cities> cities;
     private Timestamp createdDate;
 
     @Id
@@ -54,6 +58,7 @@ public class State {
         this.createdDate = createdDate;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,8 +89,20 @@ public class State {
                 "id=" + id +
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
+                ", cities=" + cities +
                 ", createdDate=" + createdDate +
                 '}';
+    }
+
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name = "state_id", referencedColumnName = "id", nullable = true)
+    @JsonIgnore
+    public List<Cities> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<Cities> cities) {
+        this.cities = cities;
     }
 }
 

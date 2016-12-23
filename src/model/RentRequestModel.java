@@ -1,5 +1,6 @@
 package model;
 
+import helper.DateHelper;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.RentalProductEntity;
@@ -591,21 +592,124 @@ public class RentRequestModel extends BaseModel {
             session.close();
         }
     }
-    public List<RentRequest> searchRentRequestByBetweenDates(String stDate, String edDate){
+
+    public List<RentRequest> searchRentRequestAllByBetweenDates(String stDate, String edDate){
         Session session = this.sessionFactory.openSession();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         List<RentRequest> rentRequestList = new ArrayList<>();
-        try {
+        try{
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            java.util.Date utilFrmDate = simpleDateFormat.parse(stDate);
+            java.util.Date utilEnDate = simpleDateFormat.parse(edDate);
+
+            Date frmDate = new java.sql.Date(utilFrmDate.getTime());
+            Date enDate = new java.sql.Date(utilEnDate.getTime());
+
             rentRequestList = session.createQuery("FROM RentRequest RR WHERE " +
-                    "RR.startDate BETWEEN :stDate AND :edDate ")
-                    .setParameter("stDate", stDate)
-                    .setParameter("edDate", edDate)
+                    " RR.startDate BETWEEN :frmDate AND :enDate " +
+                    " ORDER BY RR.id desc ")
+                    .setParameter("frmDate", frmDate)
+                    .setParameter("enDate", enDate)
                     .list();
             return rentRequestList;
 
+        }catch (ParseException e){
+            e.printStackTrace();
         }finally {
             session.close();
         }
 
+        return rentRequestList;
+    }
+
+    public List<RentRequest> searchRentRequestPendingByBetweenDates(String stDate, String edDate){
+        Session session = this.sessionFactory.openSession();
+        List<RentRequest> rentRequestList = new ArrayList<>();
+        try{
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            java.util.Date utilFrmDate = simpleDateFormat.parse(stDate);
+            java.util.Date utilEnDate = simpleDateFormat.parse(edDate);
+
+            Date frmDate = new java.sql.Date(utilFrmDate.getTime());
+            Date enDate = new java.sql.Date(utilEnDate.getTime());
+
+            rentRequestList = session.createQuery("FROM RentRequest RR WHERE " +
+                    "RR.startDate BETWEEN :frmDate AND :enDate " +
+                    " AND RR.isExpired = false " +
+                    " AND RR.approve = false " +
+                    " AND RR.disapprove = false " +
+                    " ORDER BY RR.id desc ")
+                    .setParameter("frmDate", frmDate)
+                    .setParameter("enDate", enDate)
+                    .list();
+            return rentRequestList;
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+
+        return rentRequestList;
+    }
+
+    public List<RentRequest> searchRentRequestOnProgressByBetweenDates(String stDate, String edDate){
+        Session session = this.sessionFactory.openSession();
+        List<RentRequest> rentRequestList = new ArrayList<>();
+        try{
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            java.util.Date utilFrmDate = simpleDateFormat.parse(stDate);
+            java.util.Date utilEnDate = simpleDateFormat.parse(edDate);
+
+            Date frmDate = new java.sql.Date(utilFrmDate.getTime());
+            Date enDate = new java.sql.Date(utilEnDate.getTime());
+
+            rentRequestList = session.createQuery("FROM RentRequest RR WHERE " +
+                    "RR.startDate BETWEEN :frmDate AND :enDate " +
+                    " AND RR.isExpired = false " +
+                    " AND ( RR.approve = true or RR.isRentComplete = true )" +
+                    " AND RR.isRentComplete = false" +
+                    " ORDER BY RR.id desc ")
+                    .setParameter("frmDate", frmDate)
+                    .setParameter("enDate", enDate)
+                    .list();
+            return rentRequestList;
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+
+        return rentRequestList;
+    }
+
+    public List<RentRequest> searchRentRequestCompleteByBetweenDates(String stDate, String edDate){
+        Session session = this.sessionFactory.openSession();
+        List<RentRequest> rentRequestList = new ArrayList<>();
+        try{
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            java.util.Date utilFrmDate = simpleDateFormat.parse(stDate);
+            java.util.Date utilEnDate = simpleDateFormat.parse(edDate);
+
+            Date frmDate = new java.sql.Date(utilFrmDate.getTime());
+            Date enDate = new java.sql.Date(utilEnDate.getTime());
+
+            rentRequestList = session.createQuery("FROM RentRequest RR WHERE " +
+                    "RR.startDate BETWEEN :frmDate AND :enDate " +
+                    " AND RR.isExpired = false " +
+                    " AND RR.isRentComplete = true" +
+                    " ORDER BY RR.id desc ")
+                    .setParameter("frmDate", frmDate)
+                    .setParameter("enDate", enDate)
+                    .list();
+            return rentRequestList;
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+
+        return rentRequestList;
     }
 }

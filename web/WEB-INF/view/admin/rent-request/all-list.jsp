@@ -19,12 +19,44 @@
     <!-- Content Header (Page header) -->
     <jsp:directive.include file="../layouts/pageHeader.jsp" />
     <!-- Main content -->
-    <section class="content">
+    <section class="content" id="partial-content">
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <%--<h3 class="box-title">Data Table With Full Features</h3>--%>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Date:</label>
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" class="form-control pull-right" id="daterangepicker">
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
+                </div>
+                <div class="col-md-6">
+                  <label>&nbsp;</label>
+                  <button type="button" class="btn btn-block btn-primary" onclick="searchBetweenDates()">Search</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="info-box bg-green">
+                      <span class="info-box-text">Total Rent Price</span>
+                      <span class="info-box-number">${totalPrice}</span>
+                    <!-- /.info-box-content -->
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="info-box bg-green">
+                      <span class="info-box-text">${pageHeader}</span>
+                      <span class="info-box-number">${totalRent}</span>
+                    <!-- /.info-box-content -->
+                  </div>
+                </div>
+              </div>
             </div><!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
@@ -36,6 +68,7 @@
                   <th>Request Date</th>
                   <th>Duration</th>
                   <th>Status</th>
+                  <th>Price</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -59,6 +92,7 @@
                       <d:when test="${rentRequest.isRentComplete}">Complete</d:when>
                     </d:choose>
                   </td>
+                  <td>${rentRequest.rentFee}</td>
                   <td>
                     <a href="${BaseUrl}/admin/rent-request/details/${rentRequest.id}" class="btn btn-block btn-info" role="button">Details</a>
                   </td>
@@ -71,7 +105,9 @@
                   <th>Requested By</th>
                   <th>Product Owner</th>
                   <th>Request Date</th>
+                  <th>Duration</th>
                   <th>Status</th>
+                  <th>Price</th>
                   <th>Action</th>
                 </tr>
                 </tfoot>
@@ -124,6 +160,28 @@
         },
         error:function(data){
           console.log(data);
+        }
+      });
+    }
+  </script>
+  <script>
+    function searchBetweenDates(){
+      var dateRange = $('#daterangepicker').val();
+      var split = dateRange.split('-', 2);
+      var stDate = split[0].trim();
+      var edDate = split[1].trim();
+      var type = "${type}";
+
+      $.ajax({
+        url: BASEURL+"/admin/rent-request/search-between-dates",
+        type: 'GET',
+        data:{
+          stDate: stDate,
+          edDate: edDate,
+          type: type
+        },
+        success: function(data){
+          $("#partial-content").html(data);
         }
       });
     }

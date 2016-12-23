@@ -4,6 +4,9 @@ import helper.EmailHelper;
 import helper.ServiceResponse;
 import model.CategoryModel;
 import model.ProductModel;
+import model.RentRequestModel;
+import model.entity.app.AppCredential;
+import model.entity.app.RentRequest;
 import model.entity.app.product.ProductCategory;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Tomal on 8/24/2016.
@@ -24,6 +28,9 @@ public class AdminProductService {
 
     @Autowired
     CategoryModel categoryModel;
+
+    @Autowired
+    RentRequestModel rentRequestModel;
 
     @RequestMapping(value = "/product/approve-product", method = RequestMethod.POST)
     public ServiceResponse approveRentalProduct(HttpServletRequest request,  @RequestParam("pid") int productId){
@@ -103,6 +110,26 @@ public class AdminProductService {
         serviceResponse.getResponseStat().setStatus(true);
         serviceResponse.getResponseStat().setMsg("Product status changed successfully");
 
+        return serviceResponse;
+    }
+
+    @RequestMapping(value = "/pending/product-search-dates", method = RequestMethod.GET)
+    public ServiceResponse searchPandingRentRequesBetweenDates(HttpServletRequest request, @RequestParam Map<String, String> allRequestParam){
+
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
+        String stDate = allRequestParam.get("stDate");
+        String edDate = allRequestParam.get("edDate");
+
+        List<RentRequest> rentRequestList = rentRequestModel.searchRentRequestPendingByBetweenDates(stDate, edDate);
+        if(rentRequestList == null){
+            serviceResponse.setRequestError("date","No product found between this date");
+            return serviceResponse;
+        }
+        serviceResponse.getResponseStat().setStatus(true);
+        serviceResponse.getResponseStat().setMsg("Rent request list");
+        serviceResponse.setResponseData(rentRequestList);
         return serviceResponse;
     }
 }

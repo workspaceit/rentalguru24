@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="<c:url value="/admin-resources/dist/css/font-awesome.min.css"/>" >
   <!-- Ionicons -->
   <link rel="stylesheet" href="<c:url value="/admin-resources/dist/css/ionicons.min.css"/>">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="<c:url value="/admin-resources/plugins/daterangepicker/daterangepicker-bs3.css"/>">
   <!-- DataTables -->
   <link rel="stylesheet" href="<c:url value="/admin-resources/plugins/datatables/dataTables.bootstrap.css"/>">
   <!-- Theme style -->
@@ -36,8 +38,8 @@
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
+  <!--[if lt IE 9]>-->
+  <!--[endif]-->
   <script src="<c:url value="/admin-resources/dist/js/html5shiv.min.js"/>" > </script>
   <script src="<c:url value="/admin-resources/dist/js/respond.min.js"/>" > </script>
-  <![endif]-->
 </head>
