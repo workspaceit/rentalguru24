@@ -180,6 +180,11 @@ function selectUsaState(usStateCode,usStateName){
     $("#areaFilter").modal("hide");
     window.location = BASEURL+"/search/"+usStateCode.toLowerCase();
 }
+function selectUsaStateFromCategoryPage(usStateCode,usStateName,categoryId){
+    $("#chooseAreaSpan").text(usStateName);
+    $("#areaFilter").modal("hide");
+    window.location = BASEURL+"/search/"+usStateCode.toLowerCase()+"?cid="+categoryId;
+}
 function getUsState(){
     return JSON.parse($("#selectedUsState").val());
 }

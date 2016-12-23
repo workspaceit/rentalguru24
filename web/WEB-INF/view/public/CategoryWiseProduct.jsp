@@ -123,7 +123,7 @@
     $("#state").on("change", function(){
         var code = $("#state option:selected").val();
         var name = $("#state option:selected").text();
-        selectUsaState(code,name);
+        selectUsaStateFromCategoryPage(code,name,"${categorySelected.id}");
 //        console.log(code,name );
     });
 

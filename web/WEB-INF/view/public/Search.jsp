@@ -41,11 +41,13 @@
                             <h4 class="sidebar-header">Categories</h4>
                             <div class="list-group search-sidebar" id="categoryPageLinkUl">
                                 <d:forEach var="listValue" items="${category}">
+
+                                    <%--onclick="selectedCategory(${listValue.id})"--%>
                                     <a
 
-                                            href="javascript:void(0)"
+                                            href="${BaseUrl}/search/${selectedUsState.code.toLowerCase()}?cid=${listValue.id}"
                                             categoryId="${listValue.id}"
-                                            onclick="selectedCategory(${listValue.id})"
+
                                             id="categoryAnchor_${listValue.id}"
                                             data-category-name="${listValue.name}" class="list-group-item scrollToSection developerCategoryAnchore">${listValue.name} (${listValue.productCount})</a>
                                 </d:forEach>
