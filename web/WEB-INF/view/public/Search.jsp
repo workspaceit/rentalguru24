@@ -28,6 +28,16 @@
                 <div class="row clearfix">
                     <div class="col-md-3">
                         <div class="row clearfix">
+                            <h4 class="sidebar-header">Area</h4>
+                            <div class="list-group search-sidebar" id="areaPageLinkUl">
+                                <select id="state" class="selectpicker"> <%--onchange="selectUsaState('${usState.code}','${usState.name}')"--%>
+                                    <d:forEach var="usState" items="${stateList}" >
+                                        <option value="${usState.code}">${usState.name}</option>
+                                    </d:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
                             <h4 class="sidebar-header">Categories</h4>
                             <div class="list-group search-sidebar" id="categoryPageLinkUl">
                                 <d:forEach var="listValue" items="${category}">
@@ -41,14 +51,14 @@
                                 </d:forEach>
                             </div>
                         </div>
-                        <div class="row clearfix">
-                            <h4 class="sidebar-header">Area</h4>
-                            <div class="list-group search-sidebar" id="areaPageLinkUl">
-                                <d:forEach var="usState" items="${stateList}" >
-                                <a class="list-group-item" onclick="selectUsaState('${usState.code}','${usState.name}')">${usState.name}</a>
-                                    </d:forEach>
-                            </div>
-                        </div>
+                        <%--<div class="row clearfix">--%>
+                            <%--<h4 class="sidebar-header">Area</h4>--%>
+                            <%--<div class="list-group search-sidebar" id="areaPageLinkUl">--%>
+                                <%--<d:forEach var="usState" items="${stateList}" >--%>
+                                <%--<a class="list-group-item" onclick="selectUsaState('${usState.code}','${usState.name}')">${usState.name}</a>--%>
+                                    <%--</d:forEach>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                     </div>
                     <div class="col-md-9 clearfix">
                         <div id="productListDiv" class="row clearfix">
@@ -105,7 +115,12 @@
 <script type="text/javascript" src="<c:url value="/resources/developer/js/rent/rent_request.js" />" ></script>
 
 <script>
-
+    $("#state").on("change", function(){
+        var code = $("#state option:selected").val();
+        var name = $("#state option:selected").text();
+        selectUsaState(code,name);
+//        console.log(code,name );
+    });
 
 </script>
 </body>
