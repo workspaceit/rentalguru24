@@ -213,11 +213,13 @@
 <d:if test="${rentalProducts.size()==0}">
     <d:set var="loadMoreProductCssStr" value="none"></d:set>
 </d:if>
+<d:if test="${rentalProducts.size()>=12}">
 <div id="loadMoreButtonParent" class="col-md-12 text-center" style="display: ${loadMoreProductCssStr};">
     <button class="btn-cstm-sign pos-relative" id="loadMoreButton" onclick="loadMoreProduct()" >Load More
         <span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>
     </button>
 </div>
+</d:if>
 <!--Quick view  Modal -->
 <jsp:directive.include file="../common/product/rental_product/quickView.jsp" />
 <!--Quick view  Modal end-->

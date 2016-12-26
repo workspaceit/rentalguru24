@@ -9,3 +9,10 @@ function getUrlParamsVal( name )
     else
         return results[1];
 }
+function getArrayToUriParams(parameters){
+        var uriParams = [];
+        for(var key in parameters){
+            uriParams.push(key+"="+parameters[key]);
+        }
+        return uriParams.join("&");
+}

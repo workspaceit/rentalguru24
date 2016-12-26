@@ -9,6 +9,7 @@ import helper.SessionManagement;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.*;
+import model.entity.Cities;
 import model.entity.State;
 import model.entity.app.*;
 import model.entity.app.product.ProductCategory;
@@ -67,12 +68,16 @@ public class SearchService {
     @Autowired
     StateModel stateModel;
 
+    @Autowired
+    CitiesModel citiesModel;
+
     @RequestMapping(value = "/rental-product",method = RequestMethod.GET)
     @JsonView(ProductView.RentalProductView.class)
     public ServiceResponse searchRentalProduct(
                                             HttpServletRequest request,
                                             @RequestParam(name = "title" ,required = false) String title,
                                             @RequestParam(name = "stateId" ,required = false) Integer stateId,
+                                            @RequestParam(name = "cityId" ,required = false) Integer cityId,
                                             @RequestParam(name = "categoryId" ,required = false) Integer categoryId,
                                             @RequestParam(name = "radius" ,required = false) Float radius,
                                             @RequestParam(name = "lat" ,required = false) Double lat,
@@ -101,8 +106,8 @@ public class SearchService {
         limit=(limit > 10)?10:limit;
         Category category =(categoryId!=null)?categoryModel.getById(categoryId):null;
         State selectedState =(stateId!=null)?stateModel.getById(stateId):null;
-
-        List<RentalProduct> rentalProduct = productModel.getRentalProductForSearch(selectedState,category,title,lat,lng,radius,limit,offset);
+        Cities cities =(cityId!=null)?citiesModel.getById(cityId):null;
+        List<RentalProduct> rentalProduct = productModel.getRentalProductForSearch(selectedState,cities,category,title,lat,lng,radius,limit,offset);
         serviceResponse.setResponseData(rentalProduct,"No product found");
         return serviceResponse;
 

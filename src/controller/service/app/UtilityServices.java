@@ -5,6 +5,8 @@ import helper.ServiceResponse;
 import model.CategoryModel;
 import model.IdentityTypeModel;
 import model.RentTypeModel;
+import model.StateModel;
+import model.entity.State;
 import model.entity.app.Category;
 import model.entity.app.IdentityType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class UtilityServices {
     CategoryModel categoryModel;
     @Autowired
     RentTypeModel rentTypeModel;
+    @Autowired
+    StateModel stateModel;
 
     @RequestMapping(value = "/get-identity", method = RequestMethod.GET)
     public ServiceResponse getAllIdentityType(HttpServletRequest request){
@@ -104,5 +108,31 @@ public class UtilityServices {
 
         serviceResponse.setResponseData(categoryModel.getParentCategory(id), "NO record found");
         return serviceResponse;
+    }
+    @RequestMapping(value = "/get-city-by-state-id/{stateId}", method = RequestMethod.GET)
+    public ServiceResponse getByCode(HttpServletRequest request, @PathVariable("stateId") int  stateId){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+
+        State state = stateModel.getById(stateId);
+        if(state == null){
+            serviceResponse.setRequestError("stateId", "No city found");
+            return serviceResponse;
+        }
+
+        serviceResponse.setResponseData(state.getCities());
+        return  serviceResponse;
+    }
+    @RequestMapping(value = "/get-city-by-code/{stateCode}", method = RequestMethod.GET)
+    public ServiceResponse getByCode(HttpServletRequest request, @PathVariable("stateCode") String  stateCode){
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+
+        State state = stateModel.getByCode(stateCode);
+        if(state == null){
+            serviceResponse.setRequestError("stateId", "No city found");
+            return serviceResponse;
+        }
+
+        serviceResponse.setResponseData(state.getCities());
+        return  serviceResponse;
     }
 }

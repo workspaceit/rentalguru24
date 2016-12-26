@@ -100,25 +100,9 @@
           <input type="text" class="form-control" placeholder="" id="formattedAddress" name="formattedAddress" latLngUsed="0">
           <p class="help-block error-form" id="errorMsg_formattedAddress"  custom-validation="required" for="formattedAddress"   ></p>
         </div>
-        <div class="row clearfix">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>Zip Code</label>
-              <input type="text"  class="form-control" placeholder="" id="zip" name="zip">
-              <p class="help-block error-form" id="errorMsg_zip"  custom-validation="required" for="zip"  ></p>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="form-group">
-              <label>City</label>
-              <input type="text"  class="form-control" placeholder="" id="city" name="city">
-              <p class="help-block error-form" id="errorMsg_city"  custom-validation="required" for="city"    ></p>
-            </div>
-          </div>
-        </div>
         <div class="form-group">
           <label>Select State</label>
-          <select  id="state" class="selectpicker" >
+          <select  id="state" class="selectpicker" onchange="fetchCitiesByStateId() " >
             <option value="0">PLEASE SELECT A STATE</option>
             <d:forEach var="state" items="${states}">
               <option value="${state.id}">${state.name}</option>
@@ -126,6 +110,28 @@
           </select>
           <p class="help-block error-form" id="errorMsg_stateId"  custom-validation="required" for="state"  ></p>
         </div>
+        <div class="row clearfix">
+          <div class="col-md-8">
+            <div class="form-group">
+              <label>Select city</label>
+              <select  id="city" class="selectpicker" disabled="disabled"  >
+                <option value="0">PLEASE SELECT A CITY</option>
+              </select>
+              <p class="help-block error-form" id="errorMsg_cityId"  custom-validation="required" for="city"  ></p>
+            </div>
+
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Zip Code</label>
+              <input type="text"  class="form-control" placeholder="" id="zip" name="zip">
+              <p class="help-block error-form" id="errorMsg_zip"  custom-validation="required" for="zip"  ></p>
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
       <div class="col-md-6">
         <div class="form-group">
@@ -319,7 +325,7 @@
             option.text = subCategories.name;
             option.value = subCategories.id;
 
-            subCategorySelectBox.add(option, subCategory[1]);
+            subCategorySelectBox.add(option);
           });
           if(subcategoryArray.length>0){
             $('#subCategory').removeAttr("disabled");
@@ -524,7 +530,7 @@
         rentTypeId:rentTypeId,
         stateId:stateId,
         zip:zip,
-        city:city,
+        cityId:city,
         lat:latitude ,
         lng:longitude
       },
@@ -549,7 +555,6 @@
       }
     });
   }
-
 
   $(document).ready(function(){
     setAliasMessage("categoryIds","Category not in valid format","Please select category");

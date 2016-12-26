@@ -20,7 +20,7 @@ public class BaseInterceptor extends HandlerInterceptorAdapter {
     @PostConstruct
     public void initStateModel(){
         stateList = stateModel.getAll();
-        System.out.println("*********** USA State loaded in static variable ******************");
+        System.out.println("~~~~~~~~~~~~~ USA State loaded in static variable ~~~~~~~~~~~~~");
     }
 
 }

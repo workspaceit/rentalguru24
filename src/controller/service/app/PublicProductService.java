@@ -3,6 +3,7 @@ package controller.service.app;
 import com.fasterxml.jackson.annotation.JsonView;
 import helper.ServiceResponse;
 import model.*;
+import model.entity.Cities;
 import model.entity.State;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
@@ -39,6 +40,9 @@ public class PublicProductService{
 
     @Autowired
     ProductRatingModel productRatingModel;
+
+    @Autowired
+    CitiesModel citiesModel;
 
     @JsonView(ProductView.RentalProductView.class)
     @RequestMapping(value = "/get-product", method = RequestMethod.GET)
@@ -208,6 +212,7 @@ public class PublicProductService{
     public ServiceResponse getProductSuggestion(HttpServletRequest request,
                                                 @RequestParam(value = "title") String title,
                                                 @RequestParam(value = "stateId",required = false) Integer stateId,
+                                                @RequestParam(value = "cityId",required = false) Integer cityId,
                                                 @RequestParam(value = "categoryId",required = false) Integer categoryId,
                                                 @RequestParam(value = "limit") int limit,
                                                 @RequestParam(value = "offset") int offset){
@@ -217,8 +222,8 @@ public class PublicProductService{
         Category selectedCategory = (categoryId!=null)?categoryModel.getById(categoryId):null;
 
         State selectedState = stateList.stream().filter(state -> state.getId() == stateId).findFirst().orElse(null);
-
-        List<RentalProduct> rentalProduct = productModel.getRentalProductBySearchQuery(selectedState,selectedCategory, title, limit, offset);
+        Cities city =(cityId!=null)?citiesModel.getById(cityId):null;
+        List<RentalProduct> rentalProduct = productModel.getRentalProductBySearchQuery(selectedState,city,selectedCategory, title, limit, offset);
 
         if(rentalProduct == null || rentalProduct.isEmpty()){
             serviceResponse.setRequestError("product","No product found by this name");

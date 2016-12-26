@@ -26,16 +26,7 @@
             <div class="item active">
                 <div class="row clearfix">
                     <div class="col-md-3">
-                        <div class="row clearfix">
-                            <h4 class="sidebar-header">Area</h4>
-                            <div class="list-group search-sidebar" id="areaPageLinkUl">
-                                <select id="state" class="selectpicker"> <%--onchange="selectUsaState('${usState.code}','${usState.name}')"--%>
-                                    <d:forEach var="usState" items="${stateList}" >
-                                        <option value="${usState.code}">${usState.name}</option>
-                                    </d:forEach>
-                                </select>
-                            </div>
-                        </div>
+                        <jsp:directive.include file="../common/search/filter/state-and-city.jsp" />
                         <div class="row clearfix">
                             <h4 class="sidebar-header">Categories</h4>
                             <div class="list-group search-sidebar" id="categoryPageLinkUl">
@@ -68,11 +59,13 @@
                         <div id="productListDiv" class="row clearfix">
                             <jsp:directive.include file="../common/product/rental_product/rental_product_list.jsp" />
                         </div>
-                        <div id="loadMoreButtonParent" class="col-md-12 text-center" style="display: ${loadMoreProductCssStr};">
-                            <button class="btn-cstm-sign pos-relative" id="loadMoreButton" onclick="loadMoreProduct()" >Load More
-                                <span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>
-                            </button>
-                        </div>
+                        <d:if test="${rentalProducts.size()>=12}">
+                            <div id="loadMoreButtonParent" class="col-md-12 text-center" style="display: ${loadMoreProductCssStr};">
+                                <button class="btn-cstm-sign pos-relative" id="loadMoreButton" onclick="loadMoreProduct()" >Load More
+                                    <span id="loadMoreButtonLoader" class="inner-load " hidden="hidden"></span>
+                                </button>
+                            </div>
+                        </d:if>
                     </div>
                 </div>
             </div>
@@ -121,12 +114,20 @@
 
 <script>
     $("#state").on("change", function(){
-        var code = $("#state option:selected").val();
+        fetchCitiesByStateCode();
+    /*   var code = $("#state option:selected").val();
         var name = $("#state option:selected").text();
-        selectUsaStateFromCategoryPage(code,name,"${categorySelected.id}");
+        selectUsaStateFromCategoryPage(code,name,"${categorySelected.id}");*/
 //        console.log(code,name );
     });
+    $("#city").on("change",function(){
+        var code = $("#state option:selected").val();
+        var name = $("#state option:selected").text();
+        var catId = "${categorySelected.id}";
+        var cityId = $(this).val();
 
+        selectCityAndStateFromCategoryPage(code,name,cityId,catId);
+    });
 </script>
 </body>
 </html>

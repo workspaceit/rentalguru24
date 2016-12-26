@@ -6,8 +6,10 @@ import helper.UrlHelper;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.CategoryModel;
+import model.CitiesModel;
 import model.ProductModel;
 import model.StateModel;
+import model.entity.Cities;
 import model.entity.State;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
@@ -45,11 +47,14 @@ public class SearchController {
     @Autowired
     StateModel stateModel;
 
+    @Autowired
+    CitiesModel citiesModel;
 
     @RequestMapping(value={"","/{usState}"},method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request,
                               @PathVariable(value="usState") Optional<String> stateCode,
                               @RequestParam(value = "title",required = false)String title,
+                              @RequestParam(value = "cityId",required = false)Integer cityId,
                               @RequestParam(value = "cid",required = false)Integer categoryId,
                               @RequestParam(value = "radius",required = false)Float radius,
                               @RequestParam(value = "lat",required = false)Double lat,
@@ -63,6 +68,7 @@ public class SearchController {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> categoryList = (List<Category>) request.getAttribute("category");
+        String baseURL =  (String) request.getAttribute("baseURL");
 
         ModelAndView modelAndView = new ModelAndView("public/Search");
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
@@ -99,7 +105,10 @@ public class SearchController {
             }
         }
 
-        rentalProducts = productModel.getRentalProductForSearch(selectedUsState,selectedCategory,title,lat,lng,radius,8,0);
+        Cities city = (cityId!=null)?citiesModel.getById(cityId):null;
+
+
+        rentalProducts = productModel.getRentalProductForSearch(selectedUsState,city,selectedCategory,title,lat,lng,radius,12,0);
 
 
         System.out.println("GeoIpManager "+GeoIpManager.getRemoteAddress(request));
@@ -112,7 +121,12 @@ public class SearchController {
 
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product"+ UrlHelper.getLoadMoreUrlParams(stateId,title,categoryId,lat,lng,radius);
 
-
+        String categoryBySearchUrl = "/search/"+selectedUsState.getCode().toLowerCase();
+        categoryBySearchUrl+=(cityId!=null)?"?cityId="+cityId:"";
+        System.out.println(categoryBySearchUrl);
+        modelAndView.addObject("categoryBySearchUrl", categoryBySearchUrl);
+        modelAndView.addObject("selectedCityId", cityId);
+        modelAndView.addObject("isSearchPage", true);
         modelAndView.addObject("selectedUsState", selectedUsState);
         modelAndView.addObject("selectedCategoryId", categoryId);
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);

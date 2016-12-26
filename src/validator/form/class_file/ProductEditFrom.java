@@ -20,7 +20,7 @@ public class ProductEditFrom {
     private Integer  subcategoryId;
     private Integer rentTypeId;
 
-    private String city;
+    private Integer cityId;
     private Integer stateId;
     private String formattedAddress;
     private String zip;
@@ -115,13 +115,12 @@ public class ProductEditFrom {
         this.subcategoryId = subcategoryId;
     }
 
-    public String getCity() {
-        city = (city!=null)?city.trim():"";
-        return StringEscapeUtils.escapeHtml3(city);
+    public Integer getCityId() {
+        return cityId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
 
     public void setSubcategoryId(Integer subcategoryId) {
@@ -183,7 +182,7 @@ public class ProductEditFrom {
                 ", categoryIdArray=" + Arrays.toString(categoryIdArray) +
                 ", subcategoryId=" + subcategoryId +
                 ", rentTypeId=" + rentTypeId +
-                ", city='" + city + '\'' +
+                ", city='" + cityId + '\'' +
                 ", stateId=" + stateId +
                 ", formattedAddress='" + formattedAddress + '\'' +
                 ", zip='" + zip + '\'' +

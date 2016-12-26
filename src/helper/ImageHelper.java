@@ -1,10 +1,13 @@
 package helper;
 
 import model.nonentity.photo.Picture;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.*;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,12 +17,16 @@ import java.util.Random;
 /**
  * Created by mi on 10/1/15.
  */
+@org.springframework.stereotype.Component
 public class ImageHelper {
     //server settings for pictures and images
       /* ------------------- Live server of client ----------------------------- */
-    //@Value("${fileLocation.uploaded}")
 
-    private static String GLOBAL_PATH ="/home/rentguru24files/";
+    private static String GLOBAL_PATH ="";
+
+    @Autowired
+    public String TGLOBAL_PATH;
+
     /* ------------------- Develop ----------------------------- */
   //  private static String GLOBAL_PATH = "/home/wsit/rentguru24files/";
 
@@ -31,19 +38,35 @@ public class ImageHelper {
 
 //    private static String GLOBAL_PATH= "/home/omar/IdeaProjects/rentguru24files/";
 
-    private static String DOC_FOLDER= "identityDoc/";
-    private static String DOC_PATH= GLOBAL_PATH+DOC_FOLDER;
-    private static String PRODUCT_FOLDER= "product/";
-    private static String PRODUCT_PATH= GLOBAL_PATH+PRODUCT_FOLDER;
-    private static String PROFILE_FOLDER= "profile/";
-    private static String PROFILE_PATH= GLOBAL_PATH+PROFILE_FOLDER;
-    private static String CATEGORY_FOLDER= "category/";
-    private static String CATEGORY_PATH= GLOBAL_PATH+CATEGORY_FOLDER;
-    private static String TEMP_FOLDER= "temp/";
-    private static String TEMP_FILE_PATH= GLOBAL_PATH+TEMP_FOLDER;
-    private static String BANNER_IMAGE_FOLDER = "bannerImage/";
-    private static String BANNER_IMAGE_PATH= GLOBAL_PATH+BANNER_IMAGE_FOLDER;
+    private static String DOC_FOLDER= "";
+    private static String DOC_PATH=  "";
+    private static String PRODUCT_FOLDER= "";
+    private static String PRODUCT_PATH= "";
+    private static String PROFILE_FOLDER= "";
+    private static String PROFILE_PATH= "";
+    private static String CATEGORY_FOLDER= "";
+    private static String CATEGORY_PATH= "";
+    private static String TEMP_FOLDER= "";
+    private static String TEMP_FILE_PATH= "";
+    private static String BANNER_IMAGE_FOLDER = "";
+    private static String BANNER_IMAGE_PATH= "";
 
+    @PostConstruct
+    public void init(){
+        ImageHelper.GLOBAL_PATH = TGLOBAL_PATH;
+        DOC_FOLDER= "identityDoc/";
+        DOC_PATH= GLOBAL_PATH+DOC_FOLDER;
+        PRODUCT_FOLDER= "product/";
+        PRODUCT_PATH= GLOBAL_PATH+PRODUCT_FOLDER;
+        PROFILE_FOLDER= "profile/";
+        PROFILE_PATH= GLOBAL_PATH+PROFILE_FOLDER;
+        CATEGORY_FOLDER= "category/";
+        CATEGORY_PATH= GLOBAL_PATH+CATEGORY_FOLDER;
+        TEMP_FOLDER= "temp/";
+        TEMP_FILE_PATH= GLOBAL_PATH+TEMP_FOLDER;
+        BANNER_IMAGE_FOLDER = "bannerImage/";
+        BANNER_IMAGE_PATH= GLOBAL_PATH+BANNER_IMAGE_FOLDER;
+    }
 
 
     public static void setGlobalPath(String globalPath) {

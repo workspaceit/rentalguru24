@@ -13,7 +13,7 @@ public class StateModel extends BaseModel {
     public List<State> getAll(){
         Session session = this.sessionFactory.openSession();
         try {
-            return session.createQuery("FROM State").list();
+            return session.createQuery("select distinct state FROM State state left join fetch state.cities ").list();
         }finally {
             session.close();
         }
@@ -22,7 +22,7 @@ public class StateModel extends BaseModel {
     public State getById(int id){
         Session session = this.sessionFactory.openSession();
         try {
-            return (State)session.createQuery("FROM State state WHERE state.id = :id")
+            return (State)session.createQuery("FROM State state left join fetch state.cities WHERE state.id = :id")
                     .setParameter("id", id)
                     .uniqueResult();
         }finally {
@@ -33,7 +33,7 @@ public class StateModel extends BaseModel {
     public State getByCode(String code){
         Session session = this.sessionFactory.openSession();
         try {
-            return (State)session.createQuery("FROM State state WHERE state.code = :code")
+            return (State)session.createQuery("FROM State state left join fetch state.cities WHERE state.code = :code")
                     .setParameter("code", code)
                     .uniqueResult();
         }finally {

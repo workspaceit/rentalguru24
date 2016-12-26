@@ -1,6 +1,8 @@
 package model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,6 +11,7 @@ import java.util.List;
 /**
  * Created by mi on 11/29/16.
  */
+@JsonSerialize(include= JsonSerialize.Inclusion.NON_EMPTY)
 @Entity
 @Table(name = "state", schema = "")
 public class State {
@@ -48,6 +51,17 @@ public class State {
         this.name = name;
     }
 
+
+    @OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+    @JoinColumn(name = "state_id", referencedColumnName = "id", nullable = true)
+    public List<Cities> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<Cities> cities) {
+        this.cities = cities;
+    }
+
     @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {
@@ -57,7 +71,6 @@ public class State {
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -94,15 +107,6 @@ public class State {
                 '}';
     }
 
-    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-    @JoinColumn(name = "state_id", referencedColumnName = "id", nullable = true)
-    @JsonIgnore
-    public List<Cities> getCities() {
-        return cities;
-    }
 
-    public void setCities(List<Cities> cities) {
-        this.cities = cities;
-    }
 }
 

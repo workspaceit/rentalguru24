@@ -26,7 +26,7 @@ public class ProductUploadForm {
 
 
 
-    private String city;
+    private Integer cityId;
     private Integer stateId;
     private String formattedAddress;
     private String zip;
@@ -143,12 +143,12 @@ public class ProductUploadForm {
         this.subcategoryId = subcategoryId;
     }
 
-    public String getCity() {
-        return StringEscapeUtils.escapeHtml3(city);
+    public Integer getCityId() {
+        return cityId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
     }
 
     public Integer getStateId() {
@@ -216,7 +216,7 @@ public class ProductUploadForm {
                 ", categoryIdArray=" + Arrays.toString(categoryIdArray) +
                 ", subcategoryId=" + subcategoryId +
                 ", otherImagesTokenArray=" + Arrays.toString(otherImagesTokenArray) +
-                ", city='" + city + '\'' +
+                ", city='" + cityId + '\'' +
                 ", stateId=" + stateId +
                 ", formattedAddress='" + formattedAddress + '\'' +
                 ", zip='" + zip + '\'' +

@@ -11,6 +11,7 @@ import helper.SessionManagement;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.*;
+import model.entity.Cities;
 import model.entity.State;
 import model.entity.app.*;
 import model.entity.app.product.ProductCategory;
@@ -69,6 +70,9 @@ public class ProductService{
 
     @Autowired
     StateModel stateModel;
+
+    @Autowired
+    CitiesModel citiesModel;
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @JsonView(ProductView.RentalProductView.class)
@@ -137,12 +141,34 @@ public class ProductService{
             productUploadForm.setOtherImagesTokenArray(new Long[0]);
         }
 
+        /**
+         * State and city exist or not
+        * */
         State usState = null;
         if(productUploadForm.getStateId()!=null){
             usState = stateModel.getById(productUploadForm.getStateId());
             if(usState==null){
                 serviceResponse.setRequestError("stateId","State not found");
             }
+        }
+
+
+        List<Cities> stateCities = usState.getCities();
+
+        if(stateCities!=null && stateCities.size()>0){
+            if(productUploadForm.getCityId()==null || productUploadForm.getCityId()<=0){
+              //  serviceResponse.setRequestError("cityId", "City required");
+            }else{
+                Optional<Cities> citiesResult = stateCities.stream().filter(tempCity -> tempCity.getId() == productUploadForm.getCityId()).findFirst();
+                Cities cities = null;
+                if(citiesResult.isPresent()){
+                    cities = citiesResult.get();
+                }
+            /*    if(cities==null){
+                    serviceResponse.setRequestError("cityId","City not found in state "+usState.getName());
+                }*/
+            }
+
         }
 
         /*
@@ -288,7 +314,7 @@ public class ProductService{
         rentalProduct.setProductCategories(productCategoryList);
 
         ProductLocation productLocation = new ProductLocation();
-        productLocation.setCity(productUploadForm.getCity());
+        productLocation.setCity(citiesModel.getById(productUploadForm.getCityId()));
         productLocation.setState(usState);
         productLocation.setLat(productUploadForm.getLat());
         productLocation.setLng(productUploadForm.getLng());
@@ -377,14 +403,34 @@ public class ProductService{
                 serviceResponse.setRequestError("rentPrice","Type miss matched float required");
             }
         }
+        /**
+         * State And City is exist or not
+         * */
 
         State usState = null;
         if(productEditFrom.getStateId()!=null){
             usState = stateModel.getById(productEditFrom.getStateId());
             if(usState==null){
-                serviceResponse.setRequestError("stateId","State not found");
+                serviceResponse.setRequestError("stateId", "State not found");
+            }
+            List<Cities> stateCities = usState.getCities();
+
+            if(stateCities!=null && stateCities.size()>0){
+                if(productEditFrom.getCityId()==null || productEditFrom.getCityId()<=0){
+                    serviceResponse.setRequestError("cityId", "City required");
+                }else{
+                    Optional<Cities> citiesResult = stateCities.stream().filter(tempCity -> tempCity.getId() == productEditFrom.getCityId()).findFirst();
+                    Cities cities = null;
+                    if(citiesResult.isPresent()){
+                        cities = citiesResult.get();
+                    }
+                    if(cities==null){
+                        serviceResponse.setRequestError("cityId","City not found in state "+usState.getName());
+                    }
+                }
             }
         }
+
 
         new ProductEditFromValidator(categoryModel,tempFileModel,rentTypeModel).validate(productEditFrom, result);
 
@@ -418,8 +464,8 @@ public class ProductService{
         if(!productEditFrom.getFormattedAddress().isEmpty()){
             productLocation.setFormattedAddress(productEditFrom.getFormattedAddress());
         }
-        if(!productEditFrom.getCity().isEmpty()){
-            productLocation.setCity(productEditFrom.getCity());
+        if(productEditFrom.getCityId()!=null){
+            productLocation.setCity(citiesModel.getById(productEditFrom.getCityId()));
         }
         if(productEditFrom.getStateId()!=null){
             productLocation.setState(usState);

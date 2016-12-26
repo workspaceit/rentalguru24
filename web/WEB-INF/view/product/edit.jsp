@@ -97,18 +97,28 @@
                     </div>
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label for="city">City</label>
-                            <input type="text"  class="form-control" id="city" name="city" value="${rentalProduct.getProductLocation().getCity()}">
-                            <p class="help-block error-form" id="errorMsg_city"></p>
+                            <label>Select city</label>
+                            <select  id="city" class="selectpicker" >
+                                <option value="0">PLEASE SELECT A CITY</option>
+                                <d:forEach var="cityList" items="${stateSelected.cities}">
+                                    <option value="${cityList.id}"
+                                            <d:if test="${rentalProduct.productLocation.city.id == cityList.id}" >
+                                                selected="selected"
+                                            </d:if>
+                                            >${cityList.cityName}</option>
+                                </d:forEach>
+                            </select>
+                            <p class="help-block error-form" id="errorMsg_cityId"  for="city"  ></p>
                         </div>
+
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Select State</label>
-                    <select  id="state" class="selectpicker" >
+                    <select  id="state" class="selectpicker" onchange="fetchCitiesByStateId()" >
                         <option value="0">PLEASE SELECT A STATE</option>
                         <d:forEach var="state" items="${states}">
-                            <option value="${state.id}" <d:if test="${state.id == stateSelectedId}">selected="selected"</d:if>>${state.name}</option>
+                            <option value="${state.id}" <d:if test="${state.id == stateSelected.id}">selected="selected"</d:if> >${state.name}</option>
                         </d:forEach>
                     </select>
                     <p class="help-block error-form" id="errorMsg_stateId"  custom-validation="required" for="state"  ></p>
@@ -345,7 +355,7 @@
         var availableTill = $("#dpd2").val();
         var formattedAddress = $("#formattedAddress").val();
         var zip = $("#zip").val();
-        var city = $("#city").val();
+        var cityId = $("#city").val();
         var productCurrentPrice = $("#currentValue").val();
         var rentPrice = $("#rentFee").val();
         var profileImageToken = $("#profileImageToken").val();
@@ -376,7 +386,7 @@
                 rentTypeId: rentTypeId,
                 stateId:stateId,
                 zip : zip,
-                city : city,
+                cityId : cityId,
                 productCurrentPrice : productCurrentPrice,
                 rentPrice : rentPrice,
                 profileImageToken : profileImageToken,
@@ -442,6 +452,7 @@
         console.log(index);
 //        console.log(otherImageTokenArray);
     }
+
 </script>
 <script>
     function decreaseVal(selector) {

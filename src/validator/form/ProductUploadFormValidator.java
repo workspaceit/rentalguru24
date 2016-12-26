@@ -3,9 +3,9 @@ package validator.form;
 
 import helper.DateHelper;
 import helper.ImageHelper;
-import model.CategoryModel;
-import model.RentTypeModel;
-import model.TempFileModel;
+import model.*;
+import model.entity.Cities;
+import model.entity.State;
 import model.entity.app.Category;
 import model.entity.app.TempFile;
 import model.entity.app.product.rentable.RentalProductEntity;
@@ -45,7 +45,6 @@ public class ProductUploadFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"rentFee", "Rent fee required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors,"availableFrom", "Available from date required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "availableTill", "Available till date required");
-
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "City is required");
 //        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "state", "State is required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zip", "Zip is required");
@@ -92,6 +91,7 @@ public class ProductUploadFormValidator implements Validator {
         }
 
 
+
           /*----- Other images token validation check ---- */
         if(productUploadForm.getOtherImagesTokenArray()!=null){
             for(long otherImageToken : productUploadForm.getOtherImagesTokenArray()){
@@ -113,9 +113,6 @@ public class ProductUploadFormValidator implements Validator {
                 errors.rejectValue("rentTypeId", "No rent type found by id  "+productUploadForm.getRentTypeId());
             }
         }
-
-
-
 
     }
 }

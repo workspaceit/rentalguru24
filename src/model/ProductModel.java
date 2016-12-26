@@ -2,6 +2,7 @@ package model;
 
 
 
+import model.entity.Cities;
 import model.entity.State;
 import model.entity.app.Category;
 import model.entity.app.product.rentable.RentalProductEntity;
@@ -520,7 +521,7 @@ public class ProductModel extends BaseModel {
             session.close();
         }
     }
-    public List<RentalProduct> getRentalProductBySearchQuery(State usState,Category category,String title, int limit, int offset){
+    public List<RentalProduct> getRentalProductBySearchQuery(State usState,Cities city,Category category,String title, int limit, int offset){
         Session session = this.sessionFactory.openSession();
 
         List<Category> subCategory = null;
@@ -549,7 +550,11 @@ public class ProductModel extends BaseModel {
             whereParams.put("stateId", usState.getId());
             searchParamCount++;
         }
-
+        if(city!=null){
+            hql.append(" AND rentalProduct.productLocation.city.id = :cityId ");
+            whereParams.put("cityId", city.getId());
+            searchParamCount++;
+        }
         if(categoryIdList.size()>0){
             hql.append(" AND productCategory.category.id IN (:categoryId) ");
             whereParams.put("categoryId",categoryIdList);
@@ -704,13 +709,13 @@ public class ProductModel extends BaseModel {
         }
     }
 
-    public  List<RentalProduct> getRentalProductForSearch(State usState,Category category,String title,Double centerLatitude,Double centerLongitude,Float radius,int limit,int offset){
+    public  List<RentalProduct> getRentalProductForSearch(State usState,Cities cities,Category category,String title,Double centerLatitude,Double centerLongitude,Float radius,int limit,int offset){
 
         if(radius!=null){
 
             return this.getRentalProductByDistance(usState,category, title, centerLatitude, centerLongitude, radius, limit, offset);
         }
-        return this.getRentalProductBySearchQuery(usState,category, title,limit, offset);
+        return this.getRentalProductBySearchQuery(usState,cities,category, title,limit, offset);
     }
 
 

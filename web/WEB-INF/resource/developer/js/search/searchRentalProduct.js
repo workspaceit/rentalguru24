@@ -185,6 +185,16 @@ function selectUsaStateFromCategoryPage(usStateCode,usStateName,categoryId){
     $("#areaFilter").modal("hide");
     window.location = BASEURL+"/search/"+usStateCode.toLowerCase()+"?cid="+categoryId;
 }
+function selectCityAndStateFromCategoryPage(usStateCode,usStateName,cityId,categoryId){
+    $("#chooseAreaSpan").text(usStateName);
+    $("#areaFilter").modal("hide");
+    var url  = BASEURL+"/search/"+usStateCode.toLowerCase()+"?cid="+categoryId;
+    if(cityId!=""){
+        url  +="&cityId="+cityId;
+    }
+    window.location = url;
+}
+
 function getUsState(){
     return JSON.parse($("#selectedUsState").val());
 }

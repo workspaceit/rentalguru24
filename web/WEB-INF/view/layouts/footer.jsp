@@ -74,6 +74,9 @@
 <script type="text/javascript" src="<c:url value="/resources/developer/js/nav/categoryNav.js"  />" ></script>
 <script type="text/javascript" src="<c:url value="/resources/developer/js/search/searchRentalProduct.js"  />" ></script>
 
+<%-- Utility (Fetch etc) --%>
+<script type="text/javascript" src="<c:url value="/resources/developer/js/utility/fetch-dependent-data.js"  />" ></script>
+
 <script>
 
 

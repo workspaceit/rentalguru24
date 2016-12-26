@@ -3,6 +3,7 @@ package controller.web.app;
 import controller.BaseHttp;
 import helper.ServiceResponse;
 import model.*;
+import model.entity.Cities;
 import model.entity.State;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
@@ -47,6 +48,9 @@ public class ProductController{
 
     @Autowired
     StateModel stateModel;
+
+    @Autowired
+    CitiesModel citiesModel;
 
     @RequestMapping(value="/upload",method = RequestMethod.GET)
     public ModelAndView upload(HttpServletRequest request){
@@ -153,13 +157,11 @@ public class ProductController{
 
         State stateSelected = stateModel.getById(rentalProduct.getProductLocation().getState().getId());
 
-        if(stateSelected != null){
-            modelAndView.addObject("stateSelectedId", stateSelected.getId());
-        }
-
         /*------------------------------------------*/
-
         String preSelectedCategoryName = "Select Category";
+
+        modelAndView.addObject("stateSelected", stateSelected);
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("rentTypes", rentTypes);
         modelAndView.addObject("category", category);

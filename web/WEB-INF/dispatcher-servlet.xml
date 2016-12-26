@@ -310,6 +310,10 @@
         <property name="rentPaymentModel" ref="rentPaymentModel"/>
     </bean>
 
+
+    <bean id="TGLOBAL_PATH" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="${fileLocation.uploadPath}"/>
+    </bean>
     <!-- -->
        <!-- ******************** Model Bean Class, *********************************** -->
        <bean id="baseModel" class="model.BaseModel">
@@ -386,6 +390,10 @@
         </bean>
         <bean id="stateModel" class="model.StateModel" parent="baseModel"   >
         </bean>
+        <bean id="citiesModel" class="model.CitiesModel" parent="baseModel"   >
+        </bean>
+
+
 
 
 

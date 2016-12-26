@@ -4,11 +4,9 @@ package controller.web.app;
 import helper.ServiceResponse;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
-import model.BannerImageModel;
-import model.CategoryModel;
-import model.ProductModel;
-import model.StateModel;
+import model.*;
 import model.entity.BannerImage;
+import model.entity.Cities;
 import model.entity.State;
 import model.entity.app.AppCredential;
 import model.entity.app.Category;
@@ -52,7 +50,8 @@ public class HomeController {
     @Autowired
     StateModel stateModel;
 
-
+    @Autowired
+    CitiesModel citiesModel;
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
@@ -115,12 +114,12 @@ public class HomeController {
         preSelectedcategoryName = categorySelected.getName();
         selectedCategoryName = categorySelected.getName();
 
-        List<RentalProduct> rentalProducts = productModel.getRentalProductByCategory(categorySelected, 8, 0);
+        List<RentalProduct> rentalProducts = productModel.getRentalProductByCategory(categorySelected, 12, 0);
 
         if(rentalProducts == null) {
             return new ModelAndView("redirect:/home");
         }
-        List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(8, 0);
+        List<RentalProduct> rentalProductsAscending = productModel.getRentalProductAscending(12, 0);
 
         if(categorySelected.getIsSubcategory()){
             Category categoryParent = categoryModel.getParentCategory(categoryId);
@@ -160,6 +159,7 @@ public class HomeController {
     public ModelAndView getMoreRentalProduct(HttpServletRequest request,
                                              @RequestParam(value = "fromHomePage",required = false)Boolean fromHomePage,
                                              @RequestParam(value = "stateId",required = false)Integer stateId,
+                                             @RequestParam(value = "cityId",required = false)Integer cityId,
                                              @RequestParam(value = "title",required = false)String title,
                                              @RequestParam(value = "cid",required = false)Integer categoryId,
                                              @RequestParam(value = "radius",required = false)Float radius,
@@ -198,6 +198,8 @@ public class HomeController {
 //        if(categoryId!=null){
 //            searchedCategory = categoryModel.getById(categoryId);
 //        }
+
+        Cities city =(cityId!=null)?citiesModel.getById(cityId):null;
         State selectedUsState = null;
         if(selectedUsState!=null){
             selectedUsState = stateModel.getById(stateId);
@@ -205,7 +207,7 @@ public class HomeController {
         if(fromHomePage!=null && fromHomePage){
             rentalProducts =  productModel.getRentalProduct(limit, offset);
         }else{
-            rentalProducts = productModel.getRentalProductForSearch(selectedUsState,searchedCategory,title,lat,lng,radius,limit,offset);
+            rentalProducts = productModel.getRentalProductForSearch(selectedUsState,city,searchedCategory,title,lat,lng,radius,limit,offset);
         }
 
         modelAndView.addObject("rentalProducts",rentalProducts);
