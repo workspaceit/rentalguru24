@@ -71,7 +71,7 @@
 
 <div class="container center-bg">
     <form class="form-signup clearfix" onsubmit="return submitSignUpData();" >
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
                 <label for="firstname">First name</label>
                 <input type="text" class="form-control" placeholder="ex.John" id="firstName" name="firstName">
@@ -154,13 +154,15 @@
 
             <%--</div>--%>
         </div>
-        <div class="col-md-1 pos-relative">
-            <div class="divider-sign">
-                or
-            </div>
-        </div>
-        <div class="col-md-5 social-sign" >
+
+        <div class="social-sign" style="position:absolute;left: 0px;">
+
+            <div class="panel panel-default" data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+                <div class="panel-body text-center">
+                    <h4>Signup using: </h4>
             <jsp:directive.include file="SocialLogin.jsp" />
+                    </div>
+            </div>
         </div>
         <div class="col-md-12 text-center">
             <button class="btn-cstm-sign pos-relative" id="signUpButton">
