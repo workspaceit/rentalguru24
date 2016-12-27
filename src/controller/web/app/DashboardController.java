@@ -41,7 +41,7 @@ public class DashboardController {
     @Autowired
     UserPaypalCredentialModel userPaypalCredentialModel;
 
-    private final static String preSelectedCategoryName = "Select Category";
+    private final static String preSelectedCategoryName = "Browse By Category";
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request){
