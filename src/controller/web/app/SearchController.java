@@ -64,9 +64,9 @@ public class SearchController {
             selectedUsState = stateModel.getByCode(stateCode.get().trim());
         }
 
-        if(selectedUsState==null){
+     /*   if(selectedUsState==null){
             return new ModelAndView("redirect:/home");
-        }
+        }*/
 
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
@@ -123,8 +123,11 @@ public class SearchController {
 
 
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product"+ UrlHelper.getLoadMoreUrlParams(stateId,cityId,title,categoryId,lat,lng,radius);
-
-        String categoryBySearchUrl = "/search/"+selectedUsState.getCode().toLowerCase()+"?";
+        String categoryBySearchUrl = "/search";
+        if(selectedUsState!=null){
+            categoryBySearchUrl += "/"+selectedUsState.getCode().toLowerCase();
+        }
+        categoryBySearchUrl += "?";
         categoryBySearchUrl+=(cityId!=null)?"cityId="+cityId+"&":"";
         System.out.println(categoryBySearchUrl);
         modelAndView.addObject("categoryBySearchUrl", categoryBySearchUrl);
