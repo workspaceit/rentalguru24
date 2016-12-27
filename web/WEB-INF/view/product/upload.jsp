@@ -117,7 +117,7 @@
               <select  id="city" class="selectpicker" disabled="disabled"  >
                 <option value="0">PLEASE SELECT A CITY</option>
               </select>
-              <p class="help-block error-form" id="errorMsg_cityId"  custom-validation="required" for="city"  ></p>
+              <p class="help-block error-form" id="errorMsg_cityId"   for="city"  ></p>
             </div>
 
           </div>

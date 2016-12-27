@@ -41,7 +41,10 @@ public class AuthService  {
         if(authCredential==null){
             serviceResponse.getResponseStat().setErrorMsg("Invalid access token !! Ha ha ha ....");
             return serviceResponse;
-        }else if(!authCredential.isVerified()){
+        }else if(!authCredential.getEmailConfirmed()){
+            serviceResponse.getResponseStat().setErrorMsg("Email is not confirmed");
+            return serviceResponse;
+        } else if(!authCredential.isVerified()){
             serviceResponse.getResponseStat().setErrorMsg("This account is not verified by system admin");
             return serviceResponse;
         } else if(authCredential.isBlocked()){
@@ -62,10 +65,9 @@ public class AuthService  {
     @RequestMapping(value = "/by-email-password", method = RequestMethod.POST)
     public ServiceResponse authenticateByEmailPassword(HttpServletRequest request,@RequestParam String email,@RequestParam String password){
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
 
         if(email.isEmpty() || password.isEmpty()){
-            serviceResponse.getResponseStat().setErrorMsg("Email or password is worng");
+            serviceResponse.getResponseStat().setErrorMsg("Email or password is wrong");
         }
 
         AuthCredential authCredential = appLoginCredentialModel.authenticationByEmailPassword(email,password);
@@ -73,7 +75,10 @@ public class AuthService  {
         if(authCredential==null){
             serviceResponse.getResponseStat().setErrorMsg("Invalid email or password");
             return serviceResponse;
-        }else if(!authCredential.isVerified()){
+        }else if(!authCredential.getEmailConfirmed()){
+            serviceResponse.getResponseStat().setErrorMsg("Email is not confirmed");
+            return serviceResponse;
+        } else if(!authCredential.isVerified()){
             serviceResponse.getResponseStat().setErrorMsg("This account is not verified by system admin");
             return serviceResponse;
         }else if(authCredential.isBlocked()){

@@ -111,7 +111,7 @@ public class SignupService{
 //            return serviceResponse;
 //        }
 
-        authCredential.setVerified(false);
+        authCredential.setVerified(true);
         authCredential.setEmailConfirmed(false); // Need to be set false before lunch
         authCredential.setBlocked(false);
         //authCredential.getUserInf().setIdentityDocUrl(tempFile.getPath());

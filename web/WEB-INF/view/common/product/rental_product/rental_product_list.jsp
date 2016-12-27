@@ -1,6 +1,6 @@
 <d:forEach var="rentalProduct" items="${rentalProducts}">
-<div class="<d:if test="${isSearchPage == null}">col-md-3 single-item</d:if>
-            <d:if test="${isSearchPage != null && isSearchPage}">col-md-4 single-item</d:if>
+<div class="<d:if test="${productCount4 == null}">col-md-4 single-item</d:if>
+            <d:if test="${productCount4 != null && productCount4}">col-md-3 single-item</d:if>
             ">
     <div class="panel panel-default">
         <div class="panel-body">

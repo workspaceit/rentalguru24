@@ -272,7 +272,7 @@ public class ProductModel extends BaseModel {
 
     public RentalProduct getMyRentalProductById(int id, int ownerId) {
         Session session = this.sessionFactory.openSession();
-        String hql = "FROM RentalProductEntity p WHERE p.active = true and p.reviewStatus = true and p.id =:id and p.owner.id = :ownerId";
+        String hql = "FROM RentalProductEntity p WHERE p.active = true and p.id =:id and p.owner.id = :ownerId";
         try {
             return (RentalProduct) session.createQuery(hql)
                     .setParameter("id", id)

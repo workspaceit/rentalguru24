@@ -26,7 +26,7 @@ public class AppLoginCredentialModel extends BaseModel {
     public boolean isPasswordMatched(int appCredentialId,String password){
         AuthCredential authCredential = this.getById(appCredentialId);
         if(authCredential==null) return false;
-        return this.isPasswordMatched(authCredential,password);
+        return this.isPasswordMatched(authCredential, password);
     }
     public boolean isPasswordMatched(AuthCredential authCredential,String password){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -98,6 +98,9 @@ public class AppLoginCredentialModel extends BaseModel {
         Query query = session.createQuery(hql);
         query.setParameter("email", email);
         AuthCredential authCredential = (AuthCredential)query.uniqueResult();
+        if(authCredential==null){
+            return null;
+        }
         if(bCryptPasswordEncoder.matches(password,authCredential.getPassword())) {
             return authCredential;
         }else {
@@ -112,6 +115,11 @@ public class AppLoginCredentialModel extends BaseModel {
         Query query = session.createQuery(hql);
         query.setParameter("email", email);
         AuthCredential authCredential = (AuthCredential)query.uniqueResult();
+
+        if(authCredential==null){
+            return null;
+        }
+
         if(bCryptPasswordEncoder.matches(password,authCredential.getPassword())) {
             return authCredential;
         }else {

@@ -87,6 +87,16 @@
                     <input type="text" class="form-control" placeholder="" id="formattedAddress" name="formattedAddress" value="${rentalProduct.getProductLocation().getFormattedAddress()}">
                     <p class="help-block error-form" id="errorMsg_formattedAddress"></p>
                 </div>
+                <div class="form-group">
+                    <label>Select State</label>
+                    <select  id="state" class="selectpicker" onchange="fetchCitiesByStateId()" >
+                        <option value="0">PLEASE SELECT A STATE</option>
+                        <d:forEach var="state" items="${states}">
+                            <option value="${state.id}" <d:if test="${state.id == stateSelected.id}">selected="selected"</d:if> >${state.name}</option>
+                        </d:forEach>
+                    </select>
+                    <p class="help-block error-form" id="errorMsg_stateId"  custom-validation="required" for="state"  ></p>
+                </div>
                 <div class="row clearfix">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -113,16 +123,7 @@
 
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Select State</label>
-                    <select  id="state" class="selectpicker" onchange="fetchCitiesByStateId()" >
-                        <option value="0">PLEASE SELECT A STATE</option>
-                        <d:forEach var="state" items="${states}">
-                            <option value="${state.id}" <d:if test="${state.id == stateSelected.id}">selected="selected"</d:if> >${state.name}</option>
-                        </d:forEach>
-                    </select>
-                    <p class="help-block error-form" id="errorMsg_stateId"  custom-validation="required" for="state"  ></p>
-                </div>
+
             </div>
             <div class="col-md-6">
                 <div class="form-group">

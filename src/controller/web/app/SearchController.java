@@ -64,6 +64,9 @@ public class SearchController {
             selectedUsState = stateModel.getByCode(stateCode.get().trim());
         }
 
+        if(selectedUsState==null){
+            return new ModelAndView("redirect:/home");
+        }
 
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
@@ -126,7 +129,6 @@ public class SearchController {
         System.out.println(categoryBySearchUrl);
         modelAndView.addObject("categoryBySearchUrl", categoryBySearchUrl);
         modelAndView.addObject("selectedCityId", cityId);
-        modelAndView.addObject("isSearchPage", true);
         modelAndView.addObject("selectedUsState", selectedUsState);
         modelAndView.addObject("selectedCategoryId", categoryId);
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);

@@ -45,7 +45,7 @@
                                         <td><img width="100px" height="100px"
                                                  src="${BaseUrl}/images/${product.profileImage.original.path}"></td>
                                         <td width="200px"><a href="${BaseUrl}/product/details/${product.id}" target="_blank">${product.name}</a></td>
-                                        <td><a href="${BaseUrl}/admin/user/app-user/details/${product.getOwner().getUserInf().getId()}" >${product.owner.userInf.firstName}</a></td>
+                                        <td><a href="${BaseUrl}/admin/user/app-user/details/${product.owner.id}" >${product.owner.userInf.firstName}</a></td>
                                         <td>${product.currentValue}</td>
                                         <td>${product.rentFee}</td>
                                         <d:choose>

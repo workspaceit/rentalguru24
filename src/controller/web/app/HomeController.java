@@ -85,6 +85,7 @@ public class HomeController {
         modelAndView.addObject("rentalProducts", rentalProducts);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("rentalProductsTop",rentalProductsTop);
+        modelAndView.addObject("productCount4", true);
         return modelAndView;
     }
 

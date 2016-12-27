@@ -27,6 +27,9 @@
                 <div class="row clearfix">
                     <div class="col-md-3">
                         <jsp:directive.include file="../common/search/filter/state-and-city.jsp" />
+
+                        <%--CATEGORIES --%>
+
                         <div class="row clearfix">
                             <h4 class="sidebar-header">Categories</h4>
                             <div class="list-group search-sidebar" id="categoryPageLinkUl">
@@ -46,6 +49,9 @@
                                 </d:forEach>
                             </div>
                         </div>
+
+
+
                         <%--<div class="row clearfix">--%>
                             <%--<h4 class="sidebar-header">Area</h4>--%>
                             <%--<div class="list-group search-sidebar" id="areaPageLinkUl">--%>
