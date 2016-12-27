@@ -36,7 +36,7 @@
                                     <%--onclick="selectedCategory(${listValue.id})"--%>
                                     <a
 
-                                            href="${BaseUrl}${categoryBySearchUrl}&cid=${listValue.id}"
+                                            href="${BaseUrl}${categoryBySearchUrl}cid=${listValue.id}"
                                             categoryId="${listValue.id}"
 
                                             id="categoryAnchor_${listValue.id}"

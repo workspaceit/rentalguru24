@@ -45,7 +45,8 @@
                                             categoryId="${subcategory.id}"
                                             onclick="selectedCategory(${subcategory.id})"
                                             id="categoryAnchor_${subcategory.id}"
-                                            data-category-name="${subcategory.name}" class="sub-cat-s scrollToSection developerCategoryAnchore">${subcategory.name} (${subcategory.productCount})</a>
+                                            data-category-name="${subcategory.name}" class="sub-cat-s scrollToSection developerCategoryAnchore">${subcategory.name} </a>
+                                    <%--(${subcategory.productCount})--%>
                                 </d:forEach>
                             </div>
                         </div>

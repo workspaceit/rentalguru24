@@ -122,10 +122,10 @@ public class SearchController {
 
 
 
-        String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product"+ UrlHelper.getLoadMoreUrlParams(stateId,title,categoryId,lat,lng,radius);
+        String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product"+ UrlHelper.getLoadMoreUrlParams(stateId,cityId,title,categoryId,lat,lng,radius);
 
-        String categoryBySearchUrl = "/search/"+selectedUsState.getCode().toLowerCase();
-        categoryBySearchUrl+=(cityId!=null)?"?cityId="+cityId:"";
+        String categoryBySearchUrl = "/search/"+selectedUsState.getCode().toLowerCase()+"?";
+        categoryBySearchUrl+=(cityId!=null)?"cityId="+cityId+"&":"";
         System.out.println(categoryBySearchUrl);
         modelAndView.addObject("categoryBySearchUrl", categoryBySearchUrl);
         modelAndView.addObject("selectedCityId", cityId);
