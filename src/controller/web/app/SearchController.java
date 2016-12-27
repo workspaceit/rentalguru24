@@ -76,7 +76,7 @@ public class SearchController {
 
         Category selectedCategory = null;
         String productListTitle = "Search result";
-        String preSelectedCategoryName = "Select Category";
+        String preSelectedCategoryName = "Browse By Category";
 
         if(categoryId!=null){
             selectedCategory = categoryModel.getById(categoryId);

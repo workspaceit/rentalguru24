@@ -76,7 +76,7 @@ public class HomeController {
         List<BannerImage> bannerImageList = bannerImageModel.getAll();
 
         String loadMoreProductUrl = "/home/partial-rendering/load/more/rental-product?fromHomePage=1";
-        String preSelectedCategoryName = "Select Category";
+        String preSelectedCategoryName = "Browse By Category";
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("bannerImageList", bannerImageList);
         modelAndView.addObject("loadMoreProductUrl", loadMoreProductUrl);

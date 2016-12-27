@@ -63,7 +63,7 @@ public class ProductController{
         ModelAndView modelAndView = new ModelAndView("/product/upload");
         List<RentType> rentTypes = rentTypeModel.getAll();
 
-        String preSelectedCategoryName = "Select Category";
+        String preSelectedCategoryName = "Browse By Category";
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
         modelAndView.addObject("category", category);
         modelAndView.addObject("states", states);
@@ -109,7 +109,7 @@ public class ProductController{
         productBreadCrumbDetails.put("text", "Details");
         breadCrumbStr.add(productBreadCrumbDetails);
 
-        String preSelectedCategoryName = "Select Category";
+        String preSelectedCategoryName = "Browse By Category";
         model.addAttribute("preSelectedCategoryName", preSelectedCategoryName);
         model.addAttribute("breadCrumbStr", breadCrumbStr);
         model.addAttribute("IsLogIn", IsLogin);
@@ -158,7 +158,7 @@ public class ProductController{
         State stateSelected = stateModel.getById(rentalProduct.getProductLocation().getState().getId());
 
         /*------------------------------------------*/
-        String preSelectedCategoryName = "Select Category";
+        String preSelectedCategoryName = "Browse By Category";
 
         modelAndView.addObject("stateSelected", stateSelected);
         modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);

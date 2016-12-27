@@ -71,7 +71,7 @@
 
 <div class="container center-bg">
     <form class="form-signup clearfix" onsubmit="return submitSignUpData();" >
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="firstname">First name</label>
                 <input type="text" class="form-control" placeholder="ex.John" id="firstName" name="firstName">
@@ -154,7 +154,12 @@
 
             <%--</div>--%>
         </div>
-        <div class="col-md-5 social-sign" style="margin: 0px auto; float: none;">
+        <div class="col-md-1 pos-relative">
+            <div class="divider-sign">
+                or
+            </div>
+        </div>
+        <div class="col-md-5 social-sign" >
             <jsp:directive.include file="SocialLogin.jsp" />
         </div>
         <div class="col-md-12 text-center">
