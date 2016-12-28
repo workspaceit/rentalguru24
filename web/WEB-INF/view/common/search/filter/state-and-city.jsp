@@ -6,21 +6,20 @@
   Time: 5:45 PM
   To change this template use File | Settings | File Templates.
 --%>
-<d:set var="selectedUsStateId" value="0" ></d:set>
+<d:set var="selectedUsStateId" value="" ></d:set>
 <d:set var="cityList" value="" ></d:set>
 <d:if test="${selectedUsState != null}" >
   <d:set var="selectedUsStateId" value="${selectedUsState.id}" ></d:set>
   <d:set var="cityList" value="${selectedUsState.cities}" ></d:set>
 </d:if>
 <d:if test="${selectedUsState == null}" >
-  <d:set var="selectedUsStateId" value="${stateList[0].id}" ></d:set>
   <d:set var="cityList" value="${stateList[0].cities}" ></d:set>
 </d:if>
 <div class="row clearfix">
   <h4 class="sidebar-header">Area</h4>
   <div class="list-group search-sidebar" id="areaPageLinkUl">
     <select id="state" class="selectpicker"> <%--onchange="selectUsaState('${usState.code}','${usState.name}')"--%>
-      <option value=""  >Select State</option>
+      <option value="" selected="selected" >Select State</option>
 
       <d:forEach var="usState" items="${stateList}" >
         <option value="${usState.code}"

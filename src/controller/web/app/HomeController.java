@@ -85,7 +85,7 @@ public class HomeController {
         modelAndView.addObject("rentalProducts", rentalProducts);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("rentalProductsTop",rentalProductsTop);
-        modelAndView.addObject("productCount4", true);
+        modelAndView.addObject("productCount3", true);
         return modelAndView;
     }
 
@@ -169,12 +169,11 @@ public class HomeController {
                                              @RequestParam(value = "limit", required = true)int limit,
                                              @RequestParam(value = "offset", required = true)int offset) {
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         List<Category> categoryList = (List<Category>) request.getAttribute("category");
 
 
         ModelAndView modelAndView = new ModelAndView("public/partial/load_more_product");
-        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+
         List<RentalProduct> rentalProducts = new ArrayList<>();
 
         try {
@@ -202,11 +201,13 @@ public class HomeController {
 
         Cities city =(cityId!=null)?citiesModel.getById(cityId):null;
         State selectedUsState = null;
-        if(selectedUsState!=null){
+        if(stateId!=null){
             selectedUsState = stateModel.getById(stateId);
         }
         if(fromHomePage!=null && fromHomePage){
+            modelAndView.addObject("productCount3", true);
             rentalProducts =  productModel.getRentalProduct(limit, offset);
+            System.out.println("FROM HERE");
         }else{
             rentalProducts = productModel.getRentalProductForSearch(selectedUsState,city,searchedCategory,title,lat,lng,radius,limit,offset);
         }

@@ -165,8 +165,8 @@ public class AdminDashboardController {
 
         HashMap<String, String> breadcrumb = new HashMap<>();
 
-        breadcrumb.put("Utility", new String(baseUrl+"/admin/user/get-utility"));
-        breadcrumb.put("Update Paypal Configuration", new String(baseUrl+"/admin/user/edit-paypal-configuration"));
+        breadcrumb.put("Utility", new String(baseUrl + "/admin/user/get-utility"));
+        breadcrumb.put("Update Paypal Configuration", new String(baseUrl + "/admin/user/edit-paypal-configuration"));
 
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -203,7 +203,7 @@ public class AdminDashboardController {
         HashMap<String, String> breadcrumb = new HashMap<>();
 
         breadcrumb.put("Category", new String("javascript:void(0);"));
-        breadcrumb.put("Create New Category", new String(baseUrl+"/admin/user/add-category"));
+        breadcrumb.put("Create New Category", new String(baseUrl + "/admin/user/add-category"));
 
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("BaseUrl", baseUrl);
@@ -396,7 +396,7 @@ public class AdminDashboardController {
         HashMap<String, String> breadcrumb = new HashMap<>();
 
         breadcrumb.put("Banner Image", new String("javascript:void(0);"));
-        breadcrumb.put("Add Banner Image", new String(baseUrl+"/admin/user/add-banner-image"));
+        breadcrumb.put("Add Banner Image", new String(baseUrl + "/admin/user/add-banner-image"));
 
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("IsLogIn", IsLogin);
@@ -429,4 +429,23 @@ public class AdminDashboardController {
         modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;
     }
+    @RequestMapping(value = "/transactions", method = RequestMethod.GET)
+    public ModelAndView getTransaction(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView("admin/transaction/all-list");
+        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
+        String baseUrl = (String) request.getAttribute("baseURL");
+        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+        HashMap<String, String> breadcrumb = new HashMap<>();
+
+
+        modelAndView.addObject("adminUser", appCredential);
+        modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("BaseUrl", baseUrl);
+        modelAndView.addObject("pageHeader", "Banner Image List");
+        modelAndView.addObject("breadcrumb", breadcrumb);
+        return modelAndView;
+    }
+
+
 }

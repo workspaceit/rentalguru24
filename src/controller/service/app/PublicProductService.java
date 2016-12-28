@@ -221,7 +221,10 @@ public class PublicProductService{
         List<State> stateList = (List<State>) request.getAttribute("stateList");
         Category selectedCategory = (categoryId!=null)?categoryModel.getById(categoryId):null;
 
-        State selectedState = stateList.stream().filter(state -> state.getId() == stateId).findFirst().orElse(null);
+        State selectedState = null;
+        if(stateId!=null){
+            selectedState = stateList.stream().filter(state -> state.getId() == stateId).findFirst().orElse(null);
+        }
         Cities city =(cityId!=null)?citiesModel.getById(cityId):null;
         List<RentalProduct> rentalProduct = productModel.getRentalProductBySearchQuery(selectedState,city,selectedCategory, title, limit, offset);
 
