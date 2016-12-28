@@ -71,9 +71,13 @@
 
       </select>
       <ul class="nav navbar-nav navbar-right main_navigation">
-        <d:forEach var="cmsPage" items="${cmsPages}" >
+        <%--<d:forEach var="cmsPage" items="${cmsPages}" >
           <li><a href="${BaseUrl}/static/${cmsPage.pageKey}">${cmsPage.pageName}</a></li>
-        </d:forEach>
+        </d:forEach>--%>
+          <li><a href="${BaseUrl}/home/category/8">Home & Garden</a></li>
+          <li><a href="${BaseUrl}/home/category/9">Cars and Vehicles, </a></li>
+          <li><a href="${BaseUrl}/home/category/12">Electronics</a></li>
+          <li><a href="${BaseUrl}/home/category/100">Property</a></li>
       </ul>
     </div>
   </div><!-- /.container-fluid -->

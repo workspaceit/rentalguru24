@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<jsp:directive.include file="../layouts/header.jsp" />
 <style>
     body{
         font-family: 'Open Sans','verdana',sans-serif;
@@ -74,10 +74,23 @@
         </span>
 
         <h3 style="font-weight: lighter;">Congratulation! Your email is confirmed.</h3>
-        <button class="btn-login" onclick="location.href='http://rentguru24.com/signin'">Login</button>
+        <button class="btn-login" id="cButton" onclick="location.href='http://rentguru24.com/signin'">Redirecting in 5</button>
         <p><a href="http://rentguru24.com" style="color: #000;text-transform: uppercase;font-size: 14px;text-decoration: none;">&#8592;&nbsp;Back to home</a> </p>
         </div>
+        <input type="hidden" value = "4" id ="counterVal" />
     <%--${statusMsg}--%>
 </div>
 </body>
 </html>
+<script type="text/javascript">
+    function updateTime()
+    {
+        currentTime = document.getElementById('counterVal').value;
+        if(currentTime==0)
+        {window.location= "http://www.rentguru24.com/signin";}
+        document.getElementById('cButton').innerHTML = "Redirecting in "+currentTime;
+        document.getElementById('counterVal').value = currentTime - 1;
+    }
+    window.setInterval(updateTime, 1000);
+</script>
+
