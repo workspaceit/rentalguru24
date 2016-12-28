@@ -44,13 +44,17 @@
             <li><a href="mailto:support@rentguru24.com">Email : support@rentguru24.com</a></li>
             <li><a href="#">Phone : +12345678</a></li>
           </ul>
-        </div>
+          </div>
+        <%--</div>&lt;%&ndash;&ndash;%&gt;--%>
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <h3 style="vertical-align: middle">Stay Connected</h3>
-          <a><img src="/resources/img/facebook_ico.png" style="height: 50px;"></a>
-          <a><img src="/resources/img/googlePlus_ico.png" style="height: 50px;"></a>
-          <a><img src="/resources/img/twitter_ico.png" style="height: 50px;"></a>
-          <a><img src="/resources/img/youtube_ico.png" style="height: 50px;"></a>
+          <%--<h3 style="vertical-align: middle">Stay Connected</h3>--%>
+            <p class="footer_head">STAY CONNECTED</p>
+            <ul class="footer_ul"    style="margin-top: 15px;">
+          <a href="https://www.facebook.com/RentGuru24/" target="_blank"><img src="/resources/img/facebook_ico.png" style="height: 50px;"></a>
+          <a href="javascript:void(0)" target="_blank"><img src="/resources/img/googlePlus_ico.png" style="height: 50px;"></a>
+          <a href="javascript:void(0)" target="_blank"><img src="/resources/img/twitter_ico.png" style="height: 50px;"></a>
+          <a href="javascript:void(0)" target="_blank"><img src="/resources/img/youtube_ico.png" style="height: 50px;"></a>
+              </ul>
         </div>
       </div>
     </div>

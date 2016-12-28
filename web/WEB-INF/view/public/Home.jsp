@@ -172,8 +172,13 @@
 <div class="container-fluid h-w-container">
     <div class="container">
         <h2 class="block-head">How it works</h2>
-        <img src="<c:url value="${BaseUrl}/resources/img/imgpsh_fullsize.png"  />" class="img-responsive" />
-    </div>
+        <%--<img src="<c:url value="${BaseUrl}/resources/img/imgpsh_fullsize.png"  />" class="img-responsive" />--%>
+        <div class="col-md-6" style="float: none;margin: 0px auto;">
+
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/196047371"></iframe>
+        </div>
+        </div>
 </div>
 
     <div class="container product_carousel" id="newProductPartialRender">
