@@ -33,8 +33,8 @@
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
             <property name="location">
-                <value>/WEB-INF/localConfig.properties</value>
-                <!--<value>/WEB-INF/liveConfig.properties</value>-->
+                <!--<value>/WEB-INF/localConfig.properties</value>-->
+                <value>/WEB-INF/liveConfig.properties</value>
             </property>
     </bean>
     <!-- * ** *** **** Scheduler **** *** ** * -->
@@ -42,9 +42,9 @@
     <bean id="taskExecutorExample" class="scheduler.Scheduler">
     </bean>
     <!-- For Cron expression validation go to http://www.cronmaker.com/ 0 0/30 * * * ? -->
-    <task:scheduled-tasks>
-        <task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="0 0/30 * * * ?"/>
-    </task:scheduled-tasks>
+    <!--<task:scheduled-tasks>-->
+        <!--<task:scheduled ref="taskExecutorExample" method="rentRequestExpiration"  cron="0 0/30 * * * ?"/>-->
+    <!--</task:scheduled-tasks>-->
     <!-- * ** *** **** **** *** ** * -->
     <!-- * ** *** **** **** *** ** * -->
        <!-- * ** *** **** Interceptor  **** *** ** * -->

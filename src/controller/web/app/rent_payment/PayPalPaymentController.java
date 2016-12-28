@@ -8,7 +8,9 @@ import model.RentInfModel;
 import model.RentPaymentModel;
 import model.RentRequestModel;
 import model.admin.AdminPaypalCredentialModel;
+import model.admin.AdminSitesFeesModel;
 import model.entity.admin.AdminPaypalCredential;
+import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
 import model.entity.app.payments.RentPayment;
@@ -34,6 +36,8 @@ public class PayPalPaymentController {
     RentPaymentModel rentPaymentModel;
     @Autowired
     RentRequestModel rentRequestModel;
+    @Autowired
+    AdminSitesFeesModel adminSitesFeesModel;
 
     @RequestMapping(value = "/payment-success/{rentRequestId}", method = RequestMethod.GET)
     public ModelAndView successPayment(HttpServletRequest request,
@@ -58,6 +62,11 @@ public class PayPalPaymentController {
         }
         if (payerId==null) {
         }
+        /**
+         * Site Fees
+        * */
+        AdminSiteFeesEntity adminSitesFees = adminSitesFeesModel.getAdminSiteFees();
+        modelAndView.addObject("adminSitesFees", adminSitesFees);
 
 
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
@@ -166,7 +175,7 @@ public class PayPalPaymentController {
         rentPayment.setCurrency(currency);
         rentPayment.setAuthorizationId(authorizationId);
         rentPayment.setRentFee(rentRequest.getRentFee());
-        rentPayment.setPaypalPaymentDate(DateHelper.getCurrentUtcDateTimeStamp());
+        rentPayment.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
         rentPaymentModel.insert(rentPayment);
 
         /* Updating rent request payment completion */

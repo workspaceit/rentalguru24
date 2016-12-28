@@ -9,7 +9,9 @@ import helper.*;
 import library.paypal.PayPalPayment;
 import model.*;
 import model.admin.AdminPaypalCredentialModel;
+import model.admin.AdminSitesFeesModel;
 import model.entity.admin.AdminPaypalCredential;
+import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.AppCredential;
 import model.entity.app.payments.PaymentRefund;
 import model.entity.app.payments.RentPayment;
@@ -47,6 +49,9 @@ public class RentRequestService{
     RentPaymentModel rentPaymentModel;
     @Autowired
     PaymentRefundModel paymentRefundModel;
+
+    @Autowired
+    AdminSitesFeesModel adminSitesFeesModel;
 
     /* **************************** Rent Request action [Started] ************************** */
 
@@ -183,7 +188,10 @@ public class RentRequestService{
             }
 
             PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
-            Payment createdPayment = payPalPayment.createPayment(rentRequest,
+
+            AdminSiteFeesEntity adminSitesFees = adminSitesFeesModel.getAdminSiteFees();
+
+            Payment createdPayment = payPalPayment.createPayment(rentRequest,adminSitesFees,
                     baseURL + "/paypal/rent-payment/payment-success/"+rentRequest.getId(),
                     baseURL + "/paypal/rent-payment/payment-cancel/"+rentRequest.getId());
 
