@@ -195,8 +195,15 @@ public class PaymentService {
             serviceResponse.getResponseStat().setErrorMsg("You have charge less then product current value. Have you been drinking !!");
             return serviceResponse;
         }
-        /* Insert payment information */
+        AdminSiteFeesEntity adminSitesFees = adminSitesFeesModel.getAdminSiteFees();
 
+        /* Insert payment information */
+        double siteFees = 0;
+        if(adminSitesFees.isFixed()){
+            siteFees = adminSitesFees.getFixedValue();
+        }else if(adminSitesFees.isPercentage()){
+            siteFees = (adminSitesFees.getPercentageValue()*rentRequest.getRentFee()) / 100;
+        }
         RentPayment rentPayment = new RentPayment();
         rentPayment.setRentRequest(rentRequest);
         rentPayment.setAppCredential(appCredential);
@@ -206,6 +213,7 @@ public class PaymentService {
         rentPayment.setTransactionFee(transactionFee);
         rentPayment.setTotalAmount(totalAmount);
         rentPayment.setCurrency(currency);
+        rentPayment.setSiteFee(siteFees);
         rentPayment.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
         // rentPayment.setPaypalPaymentDate(DateHelper.getCurrentUtcDateTimeStamp());
         rentPaymentModel.insert(rentPayment);

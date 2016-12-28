@@ -208,7 +208,7 @@ immediately after the control sidebar -->
 <script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
 <script src="<c:url value="/resources/developer/third_party/date.format.js" />" ></script>
-<script src="<c:url value="/resources/developer/third_party/date.format.js" />" ></script>
+<script src="<c:url value="/resources/developer/js/helper/DateHelper.js" />" ></script>
 
 
 <script>

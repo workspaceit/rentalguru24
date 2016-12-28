@@ -163,6 +163,12 @@ public class PayPalPaymentController {
         }
 
         /* Insert payment information */
+        double siteFees = 0;
+        if(adminSitesFees.isFixed()){
+            siteFees = adminSitesFees.getFixedValue();
+        }else if(adminSitesFees.isPercentage()){
+            siteFees = (adminSitesFees.getPercentageValue()*rentRequest.getRentFee()) / 100;
+        }
 
         RentPayment rentPayment = new RentPayment();
         rentPayment.setRentRequest(rentRequest);
@@ -175,6 +181,7 @@ public class PayPalPaymentController {
         rentPayment.setCurrency(currency);
         rentPayment.setAuthorizationId(authorizationId);
         rentPayment.setRentFee(rentRequest.getRentFee());
+        rentPayment.setSiteFee(siteFees);
         rentPayment.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
         rentPaymentModel.insert(rentPayment);
 

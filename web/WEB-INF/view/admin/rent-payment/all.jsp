@@ -62,7 +62,7 @@
                     <th>Site fees</th>
                     <th>Owner's earning</th>
                     <th>Refunded amount</th>
-                    <th>Amount deposite</th>
+                    <th>Amount deposit</th>
                     <th>Status</th>
                     <th>Date</th>
                   </tr>
@@ -108,7 +108,10 @@
                           <d:if test="${!rentPayment.rentRequest.approve && !rentPayment.rentRequest.disapprove && !rentPayment.rentRequest.isExpired}">
                             <span>Pending</span>
                           </d:if>
-                          <d:if test="${rentPayment.rentRequest.isExpired}">
+                          <d:if test="${!rentPayment.rentRequest.requestCancel
+                                            && !rentPayment.rentRequest.approve
+                                            && !rentPayment.rentRequest.disapprove
+                                            && rentPayment.rentRequest.isExpired}">
                             <span>Expired</span>
                           </d:if>
                       </td>
@@ -124,8 +127,12 @@
                   <th>Order</th>
                   <th>Owner</th>
                   <th>Renter</th>
-                  <th>Amount</th>
+                  <th>Site fees</th>
+                  <th>Owner's earning</th>
+                  <th>Refunded amount</th>
+                  <th>Amount deposit</th>
                   <th>Status</th>
+                  <th>Date</th>
                 </tr>
                 </tfoot>
               </table>
