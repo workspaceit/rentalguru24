@@ -1,6 +1,7 @@
 package controller.web.app.rent_payment;
 
 import com.paypal.api.payments.*;
+import helper.DateHelper;
 import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
 import model.RentInfModel;
@@ -165,7 +166,7 @@ public class PayPalPaymentController {
         rentPayment.setCurrency(currency);
         rentPayment.setAuthorizationId(authorizationId);
         rentPayment.setRentFee(rentRequest.getRentFee());
-       // rentPayment.setPaypalPaymentDate(DateHelper.getCurrentUtcDateTimeStamp());
+        rentPayment.setPaypalPaymentDate(DateHelper.getCurrentUtcDateTimeStamp());
         rentPaymentModel.insert(rentPayment);
 
         /* Updating rent request payment completion */

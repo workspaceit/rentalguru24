@@ -62,27 +62,52 @@
                     <th>Order</th>
                     <th>Owner</th>
                     <th>Renter</th>
-                    <th>Amount</th>
+                    <th>Site fees</th>
+                    <th>Owner's earning</th>
+                    <th>Refunded amount</th>
+                    <th>Amount deposite</th>
                     <th>Status</th>
+                    <th>Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>1231</td>
-                  <td>View Order</td>
-                  <td>Owner Name</td>
-                  <td>Renter</td>
-                  <td>$ 898</td>
-                  <td>OK</td>
-                </tr>
-                <tr>
-                  <td>1232</td>
-                  <td>View Order</td>
-                  <td>Owner Name</td>
-                  <td>Renter</td>
-                  <td>$ 635</td>
-                  <td>DISPUTE</td>
-                </tr>
+                  <d:forEach var="rentPayment" items="${rentPaymentList}" >
+                    <tr>
+                      <td>${rentPayment.id}</td>
+                      <td>
+                        ${rentPayment.rentRequest.id}
+                      </td>
+                      <td>
+                          ${rentPayment.rentRequest.rentalProduct.owner.userInf.firstName} ${rentPayment.rentRequest.rentalProduct.owner.userInf.lastName}
+                      </td>
+                      <td> ${rentPayment.rentRequest.requestedBy.userInf.firstName} ${rentPayment.rentRequest.requestedBy.userInf.lastName}</td>
+                      <td>${rentPayment.siteFee}</td>
+                      <td>${rentPayment.rentRequest.rentFee}</td>
+                      <td>${rentPayment.refundAmount}</td>
+                      <td>${rentPayment.totalAmount}</td>
+                      <td>
+                          <d:if test="${rentPayment.rentRequest.isRentComplete}">
+                                <span>Complete</span>
+                          </d:if>
+                          <d:if test="${rentPayment.rentRequest.approve && !rentPayment.rentRequest.isRentComplete}">
+                            <span>On progress</span>
+                          </d:if>
+                          <d:if test="${rentPayment.rentRequest.disapprove}">
+                            <span>Disapproved by owner</span>
+                          </d:if>
+                          <d:if test="${rentPayment.rentRequest.requestCancel}">
+                            <span>Canceled by requester</span>
+                          </d:if>
+                          <d:if test="${!rentPayment.rentRequest.approve && !rentPayment.rentRequest.disapprove}">
+                            <span>Pending</span>
+                          </d:if>
+                      </td>
+                      <td>
+                        <fmt:formatDate value="${rentPayment.createdDate}" pattern="E d, MMM Y" />
+                        <span class="utcToLocalDate" >${rentPayment.createdDate.getTime()}</span>
+                      </td>
+                    </tr>
+                  </d:forEach>
                 </tbody>
                 <tfoot>
                 <tr>
@@ -102,6 +127,23 @@
     </section><!-- /.content -->
   </div><!-- /.content-wrapper -->
   <jsp:directive.include file="../layouts/footer.jsp" />
+<script>
+  (function(){
+    $(".utcToLocalDate").each(function(){
+      var timeStamp = $(this).html();
+      try{
+        timeStamp = parseInt(timeStamp);
+        var localDate = convertUTCDateToLocalDate(new Date(timeStamp));
+        console.log(localDate);
+      }catch(ex){
+        console.log(ex);
+      }
 
+    });
+  //
+    console.log("ASD");
+  })();
+  console.log("ASD1");
+</script>
 </body>
 </html>

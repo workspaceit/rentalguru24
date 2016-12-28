@@ -9,6 +9,7 @@ import model.entity.admin.*;
 import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import model.entity.app.Category;
+import model.entity.app.payments.RentPayment;
 import model.entity.app.product.rentable.RentInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,6 +54,9 @@ public class AdminDashboardController {
 
     @Autowired
     BannerImageModel bannerImageModel;
+
+    @Autowired
+    RentPaymentModel rentPaymentModel;
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
@@ -439,6 +443,9 @@ public class AdminDashboardController {
         HashMap<String, String> breadcrumb = new HashMap<>();
 
 
+        List<RentPayment> rentPaymentList  = rentPaymentModel.getAll();
+
+        modelAndView.addObject("rentPaymentList", rentPaymentList);
         modelAndView.addObject("adminUser", appCredential);
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);

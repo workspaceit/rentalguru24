@@ -1,7 +1,11 @@
 package model;
 
 import model.entity.app.payments.RentPayment;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mi on 9/20/16.
@@ -27,6 +31,19 @@ public class RentPaymentModel extends BaseModel {
         if(rentPayment==null)
             return false;
         return true;
+
+    }
+    public List<RentPayment> getAll(){
+        Session session= null;
+        try{
+            session = this.sessionFactory.openSession();
+            return  session.createQuery("from RentPayment").list();
+        }catch (HibernateException hEx){
+            hEx.printStackTrace();
+        }finally {
+            if(session!=null)session.close();
+        }
+        return new ArrayList<>();
 
     }
     public RentPayment getByPayIdAndPayerId(String paymentId,String payerId){
