@@ -4,13 +4,16 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.Sale;
 import com.paypal.api.payments.Transaction;
+import helper.DateHelper;
 import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
 import model.RentPaymentModel;
 import model.RentRequestModel;
 import model.UserPaypalCredentialModel;
 import model.admin.AdminPaypalCredentialModel;
+import model.admin.AdminSitesFeesModel;
 import model.entity.admin.AdminPaypalCredential;
+import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
 import model.entity.app.UserPaypalCredential;
@@ -38,6 +41,9 @@ public class PaymentService {
     AdminPaypalCredentialModel adminPaypalCredentialModel;
     @Autowired
     UserPaypalCredentialModel userPaypalCredentialModel;
+
+    @Autowired
+    AdminSitesFeesModel adminSitesFeesModel;
 
     @RequestMapping(value = "/create-payment/{rentRequestId}", method = RequestMethod.GET)
     public ServiceResponse createPayment(HttpServletRequest request,@PathVariable int rentRequestId){
@@ -67,8 +73,11 @@ public class PaymentService {
             serviceResponse.getResponseStat().setErrorMsg("No valid rent request found");
             return serviceResponse;
         }
+
+        AdminSiteFeesEntity adminSitesFees = adminSitesFeesModel.getAdminSiteFees();
+
         PayPalPayment payPalPayment = new PayPalPayment(adminPaypalCredential.getApiKey(),adminPaypalCredential.getApiSecret());
-        Payment createdPayment = payPalPayment.createPayment(rentRequest,
+        Payment createdPayment = payPalPayment.createPayment(rentRequest,adminSitesFees,
                                                             baseURL + "/paypal/rent-payment/payment-success/"+rentRequest.getId(),
                                                             baseURL + "/paypal/rent-payment/payment-cancel/"+rentRequest.getId());
 
@@ -197,6 +206,7 @@ public class PaymentService {
         rentPayment.setTransactionFee(transactionFee);
         rentPayment.setTotalAmount(totalAmount);
         rentPayment.setCurrency(currency);
+        rentPayment.setCreatedDate(DateHelper.getCurrentUtcDateTimeStamp());
         // rentPayment.setPaypalPaymentDate(DateHelper.getCurrentUtcDateTimeStamp());
         rentPaymentModel.insert(rentPayment);
 

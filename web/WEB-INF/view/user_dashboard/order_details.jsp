@@ -102,8 +102,16 @@
                                 </div>
                             </div>
                     </div>
+
+                    <d:set var="siteFees" value="0" ></d:set>
+                    <d:if test="${adminSitesFees.fixed}">
+                        <d:set var="siteFees" value="${adminSitesFees.fixedValue}" ></d:set>
+                    </d:if>
+                    <d:if test="${adminSitesFees.percentage}">
+                        <d:set var="siteFees" value="${adminSitesFees.percentageValue}" ></d:set>
+                    </d:if>
                     <div class="col-md-7 col-sm-7 col-xs-12">
-                        <h5 class="color invoice_head">Transection Details</h5>
+                        <h5 class="color invoice_head">Transaction Details</h5>
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
@@ -130,6 +138,11 @@
                                         <td>$${rentRequest.getRentalProduct().getRentFee()}</td>
                                     </tr>
                                     <tr>
+                                        <td>Site Fees</td>
+                                        <td></td>
+                                        <td>$${siteFees}</td>
+                                    </tr>
+                                    <tr>
                                         <td>Product current price</td>
                                         <td></td>
                                         <td>$${rentRequest.rentalProduct.currentValue}</td>
@@ -140,16 +153,16 @@
                                         <td>$${rentRequest.rentFee}</td>
                                     </tr>
                                     <tr>
-                                        <td>Deposite amount</td>
+                                        <td>Deposit amount</td>
                                         <td></td>
-                                        <td>$${rentRequest.advanceAmount}</td>
+                                        <td>$${rentRequest.advanceAmount+siteFees}</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th><strong>Total</strong></th>
                                         <th></th>
-                                        <th><strong>$${rentRequest.advanceAmount}</strong></th>
+                                        <th><strong>$${rentRequest.advanceAmount+siteFees}</strong></th>
                                     </tr>
                                 </tfoot>
                             </table>

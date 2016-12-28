@@ -208,9 +208,9 @@ immediately after the control sidebar -->
 <script src="<c:url value="/resources/developer/js/helper/ErrorSuccessModal.js"  />" ></script>
 <script src="<c:url value="/resources/developer/js/helper/ErrorMessaging.js" />" ></script>
 <script src="<c:url value="/resources/developer/third_party/date.format.js" />" ></script>
-<script src="<c:url value="/resources/developer/js/helper/DateHelper.js" />" ></script>
+<script src="<c:url value="/resources/developer/third_party/date.format.js" />" ></script>
 
-/home/mi/Projects/j2ee/RentGuru24/web/WEB-INF/resource/developer/js/helper/DateHelper.js
+
 <script>
   var BASEURL = "${BaseUrl}";
 </script>

@@ -8,6 +8,7 @@ import model.PaymentRefundModel;
 import model.RentPaymentModel;
 import model.admin.AdminPaypalCredentialModel;
 import model.entity.admin.AdminPaypalCredential;
+import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.RentRequest;
 import model.entity.app.payments.PaymentRefund;
 import model.entity.app.payments.RentPayment;
@@ -93,7 +94,7 @@ public class PayPalPayment {
         return createdPayment;
 
     }
-    public Payment createPayment(RentRequest rentRequest, String successRedirect,String cancelRedirect){
+    public Payment createPayment(RentRequest rentRequest, AdminSiteFeesEntity adminSiteFee,String successRedirect,String cancelRedirect){
         try {
             Payment createdPayment = null;
 
@@ -109,14 +110,23 @@ public class PayPalPayment {
 //                    rentRequest.getStartDate(),
 //                    rentRequest.getEndDate());
             /* Setting current value as rent charge */
-            Double rentCharge = rentRequest.getRentalProduct().getCurrentValue();
+            double rentCharge = rentRequest.getRentalProduct().getCurrentValue();
+
+            double siteFees = 0;
+            if(adminSiteFee.isFixed()){
+                siteFees = adminSiteFee.getFixedValue();
+            }else if(adminSiteFee.isPercentage()){
+                siteFees = (adminSiteFee.getPercentageValue()*rentCharge) / 100;
+            }
+
 
             // ###Amount
             // Let's you specify a payment amount.
             Amount amount = new Amount();
             amount.setCurrency("USD");
             // Total must be equal to sum of shipping, tax and subtotal.
-            amount.setTotal(String.format("%.2f", rentCharge));
+            rentCharge = rentCharge+siteFees;
+            amount.setTotal(String.format("%.2f",rentCharge));
             amount.setDetails(details);
 
 

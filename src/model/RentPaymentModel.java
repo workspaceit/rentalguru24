@@ -1,8 +1,12 @@
 package model;
 
 import model.entity.app.payments.RentPayment;
+import model.nonentity.rent_payment.RentPaymentSummary;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +14,7 @@ import java.util.List;
 /**
  * Created by mi on 9/20/16.
  */
+
 public class RentPaymentModel extends BaseModel {
     public void insert(RentPayment rentPayment){
         Session session = this.sessionFactory.openSession();
@@ -81,5 +86,23 @@ public class RentPaymentModel extends BaseModel {
         }finally {
             session.close();
         }
+    }
+    public RentPaymentSummary getSummary(){
+        Session session = this.sessionFactory.openSession();
+        List<Object[]> rows = session.createCriteria(RentPayment.class)
+                .setProjection(
+                        Projections.projectionList()
+                                .add(Projections.rowCount(), "totalOrderCount")
+                                .add(Projections.sum("siteFee"), "companyEarning")
+                                .add(Projections.sum("rentFee"), "renteeEarning")
+                ).list();
+        RentPaymentSummary rps = new RentPaymentSummary();
+        for(Object[] obj : rows){
+            rps.setTotalOrderCount((Long) obj[0]);
+            rps.setCompanyEarning((Double) obj[1]);
+            rps.setRenteerEarning((Double) obj[2]);
+        }
+        return rps;
+
     }
 }

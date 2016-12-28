@@ -114,6 +114,14 @@
           <li><a href="${BaseUrl}/admin/rent-request/complete"><i class="fa fa-circle-o"></i>Complete</a></li>
         </ul>
       </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-dashboard"></i> <span>Rent payment</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="${BaseUrl}/admin/rent-payment/all"><i class="fa fa-circle-o"></i>All</a></li>
+        </ul>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->

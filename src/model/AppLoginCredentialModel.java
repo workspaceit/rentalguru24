@@ -98,6 +98,8 @@ public class AppLoginCredentialModel extends BaseModel {
         Query query = session.createQuery(hql);
         query.setParameter("email", email);
         AuthCredential authCredential = (AuthCredential)query.uniqueResult();
+        session.close();
+
         if(authCredential==null){
             return null;
         }
@@ -115,6 +117,8 @@ public class AppLoginCredentialModel extends BaseModel {
         Query query = session.createQuery(hql);
         query.setParameter("email", email);
         AuthCredential authCredential = (AuthCredential)query.uniqueResult();
+
+        session.close();
 
         if(authCredential==null){
             return null;

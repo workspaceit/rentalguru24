@@ -3,6 +3,8 @@ package controller.web.app;
 import com.sun.org.apache.xerces.internal.impl.dv.xs.DayDV;
 import helper.ServiceResponse;
 import model.RentRequestModel;
+import model.admin.AdminSitesFeesModel;
+import model.entity.admin.AdminSiteFeesEntity;
 import model.entity.app.AppCredential;
 import model.entity.app.RentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 public class RentRequestController {
     @Autowired
     RentRequestModel rentRequestModel;
+    @Autowired
+    AdminSitesFeesModel adminSitesFeesModel;
     @RequestMapping(value = "/request/{rent_request_id}",method = RequestMethod.GET)
     public ModelAndView getRequestApproval(HttpServletRequest request, @PathVariable("rent_request_id") int rentRequestId){
         ModelAndView modelAndView = new ModelAndView("user_dashboard/order_details");
@@ -32,10 +36,13 @@ public class RentRequestController {
         AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
         RentRequest rentRequest = rentRequestModel.getById(rentRequestId);
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
+        AdminSiteFeesEntity adminSitesFees = adminSitesFeesModel.getAdminSiteFees();
         if(rentRequest != null){
             if(rentRequest.getRequestedBy().getId() == appCredential.getId()
                     ||
-                    rentRequest.getRentalProduct().getOwner().getId() == appCredential.getId()){
+                rentRequest.getRentalProduct().getOwner().getId() == appCredential.getId()){
+
+                modelAndView.addObject("adminSitesFees", adminSitesFees);
                 modelAndView.addObject("IsLogIn", IsLogin);
                 modelAndView.addObject("IsLogIn", IsLogin);
                 modelAndView.addObject("appCredential", appCredential);

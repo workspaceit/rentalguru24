@@ -11,6 +11,7 @@ import model.entity.app.AuthCredential;
 import model.entity.app.Category;
 import model.entity.app.payments.RentPayment;
 import model.entity.app.product.rentable.RentInf;
+import model.nonentity.rent_payment.RentPaymentSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -429,26 +430,6 @@ public class AdminDashboardController {
         modelAndView.addObject("IsLogIn", IsLogin);
         modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("bannerImageList", bannerImageList);
-        modelAndView.addObject("pageHeader", "Banner Image List");
-        modelAndView.addObject("breadcrumb", breadcrumb);
-        return modelAndView;
-    }
-    @RequestMapping(value = "/transactions", method = RequestMethod.GET)
-    public ModelAndView getTransaction(HttpServletRequest request){
-        ModelAndView modelAndView = new ModelAndView("admin/transaction/all-list");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
-        ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        String baseUrl = (String) request.getAttribute("baseURL");
-        Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
-        HashMap<String, String> breadcrumb = new HashMap<>();
-
-
-        List<RentPayment> rentPaymentList  = rentPaymentModel.getAll();
-
-        modelAndView.addObject("rentPaymentList", rentPaymentList);
-        modelAndView.addObject("adminUser", appCredential);
-        modelAndView.addObject("IsLogIn", IsLogin);
-        modelAndView.addObject("BaseUrl", baseUrl);
         modelAndView.addObject("pageHeader", "Banner Image List");
         modelAndView.addObject("breadcrumb", breadcrumb);
         return modelAndView;

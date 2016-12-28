@@ -29,21 +29,19 @@
               <%--<h3 class="box-title">Data Table With Full Features</h3>--%>
             </div><!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="rentPaymentSummaryTbl" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                       <th>Total Order</th>
                       <th>Company Earning</th>
                       <th>Renter Earning</th>
-                      <th>Total Dispute</th>
                     </tr>
                 </thead>
                 <tbody>
                   <tr>
-                      <td>1231</td>
-                      <td>$ 454</td>
-                      <td>$ 552</td>
-                      <td>$ 635</td>
+                      <td>${rentPaymentSummary.totalOrderCount}</td>
+                      <td>$ ${rentPaymentSummary.companyEarning}</td>
+                      <td>$ ${rentPaymentSummary.renteerEarning}</td>
                   </tr>
                 </tbody>
                 <tfoot>
@@ -51,11 +49,10 @@
                     <th>Total Order</th>
                     <th>Company Earning</th>
                     <th>Renter Earning</th>
-                    <th>Total Dispute</th>
                   </tr>
                 </tfoot>
               </table>
-              <table id="example2" class="table table-bordered table-striped">
+              <table id="rentPaymentTbl" class="table table-bordered table-striped">
                 <thead>
                   <tr>
                     <th>Id</th>
@@ -75,12 +72,22 @@
                     <tr>
                       <td>${rentPayment.id}</td>
                       <td>
-                        ${rentPayment.rentRequest.id}
+                        <a href="${baseURL}/admin/rent-request/details/${rentPayment.rentRequest.rentalProduct.owner.id}" target="_blank">
+                            ${rentPayment.rentRequest.id}
+                        </a>
+
+
                       </td>
                       <td>
-                          ${rentPayment.rentRequest.rentalProduct.owner.userInf.firstName} ${rentPayment.rentRequest.rentalProduct.owner.userInf.lastName}
+                        <a href="${baseURL}/admin/user/app-user/details/${rentPayment.rentRequest.rentalProduct.owner.id}" target="_blank">
+                            ${rentPayment.rentRequest.rentalProduct.owner.userInf.firstName} ${rentPayment.rentRequest.rentalProduct.owner.userInf.lastName}
+                        </a>
                       </td>
-                      <td> ${rentPayment.rentRequest.requestedBy.userInf.firstName} ${rentPayment.rentRequest.requestedBy.userInf.lastName}</td>
+                      <td>
+                        <a href="${baseURL}/admin/user/app-user/details/${rentPayment.rentRequest.requestedBy.id}" target="_blank">
+                             ${rentPayment.rentRequest.requestedBy.userInf.firstName} ${rentPayment.rentRequest.requestedBy.userInf.lastName}
+                        </a>
+                      </td>
                       <td>${rentPayment.siteFee}</td>
                       <td>${rentPayment.rentRequest.rentFee}</td>
                       <td>${rentPayment.refundAmount}</td>
@@ -98,13 +105,15 @@
                           <d:if test="${rentPayment.rentRequest.requestCancel}">
                             <span>Canceled by requester</span>
                           </d:if>
-                          <d:if test="${!rentPayment.rentRequest.approve && !rentPayment.rentRequest.disapprove}">
+                          <d:if test="${!rentPayment.rentRequest.approve && !rentPayment.rentRequest.disapprove && !rentPayment.rentRequest.isExpired}">
                             <span>Pending</span>
+                          </d:if>
+                          <d:if test="${rentPayment.rentRequest.isExpired}">
+                            <span>Expired</span>
                           </d:if>
                       </td>
                       <td>
-                        <fmt:formatDate value="${rentPayment.createdDate}" pattern="E d, MMM Y" />
-                        <span class="utcToLocalDate" >${rentPayment.createdDate.getTime()}</span>
+                        <span class="utcToLocalDate" style="display: none;">${rentPayment.createdDate.getTime()}</span>
                       </td>
                     </tr>
                   </d:forEach>
@@ -129,11 +138,17 @@
   <jsp:directive.include file="../layouts/footer.jsp" />
 <script>
   (function(){
+
+    $("#rentPaymentSummaryTbl").DataTable({"searching": false});
+    $("#rentPaymentTbl").DataTable();
+    /*UTC time to Local*/
     $(".utcToLocalDate").each(function(){
       var timeStamp = $(this).html();
       try{
         timeStamp = parseInt(timeStamp);
         var localDate = convertUTCDateToLocalDate(new Date(timeStamp));
+        $(this).html(dateFormat(localDate, "ddd, mmm dS, yyyy")); //, h:MM:ss TT
+        $(this).show();
         console.log(localDate);
       }catch(ex){
         console.log(ex);
