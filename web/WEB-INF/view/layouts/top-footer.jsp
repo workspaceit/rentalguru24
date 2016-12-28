@@ -19,7 +19,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-2 col-sm-6 col-xs-12">
           <p class="footer_head">INFORMATION</p>
           <ul class="footer_ul">
             <d:forEach var="cmsPage" items="${cmsPages}" >
@@ -31,32 +31,26 @@
             <%--<li><a href="#">Online Support</a></li>--%>
           </ul>
         </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <p class="footer_head">MY ACCOUNT</p>
+        <div class="col-md-4 col-sm-6 col-xs-12" style="text-align: center">
+          <p class="footer_head">DOWNLOAD OUR APP</p>
           <ul class="footer_ul">
-            <li><a href="#">Login</a></li>
-            <li><a href="#">My Cart</a></li>
-            <li><a href="#">Wishlist</a></li>
-            <li><a href="#">Checkout</a></li>
+            <li><a href="#"><img src="/resources/img/appstore.png" /></a></li>
+            <li><a href="#"><img src="/resources//img/playstore.png"></a></li>
           </ul>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <p class="footer_head">INFORMATION</p>
+          <p class="footer_head">GET SUPPORT</p>
           <ul class="footer_ul">
-            <li><a href="#">Specials</a></li>
-            <li><a href="#">New Products</a></li>
-            <li><a href="#">Best Sellers</a></li>
-            <li><a href="#">Our Stored</a></li>
+            <li><a href="mailto:support@rentguru24.com">Email : support@rentguru24.com</a></li>
+            <li><a href="#">Phone : +12345678</a></li>
           </ul>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
-          <p class="footer_head">ORDERS</p>
-          <ul class="footer_ul">
-            <li><a href="#">Payment Option</a></li>
-            <li><a href="#">Shipping Delivery</a></li>
-            <li><a href="#">Returns</a></li>
-            <li><a href="#">Shipping</a></li>
-          </ul>
+          <h3 style="vertical-align: middle">Stay Connected</h3>
+          <a><img src="/resources/img/facebook_ico.png" style="height: 50px;"></a>
+          <a><img src="/resources/img/googlePlus_ico.png" style="height: 50px;"></a>
+          <a><img src="/resources/img/twitter_ico.png" style="height: 50px;"></a>
+          <a><img src="/resources/img/youtube_ico.png" style="height: 50px;"></a>
         </div>
       </div>
     </div>

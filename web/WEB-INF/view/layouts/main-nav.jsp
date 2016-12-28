@@ -75,7 +75,7 @@
           <li><a href="${BaseUrl}/static/${cmsPage.pageKey}">${cmsPage.pageName}</a></li>
         </d:forEach>--%>
           <li><a href="${BaseUrl}/home/category/8">Home & Garden</a></li>
-          <li><a href="${BaseUrl}/home/category/9">Cars and Vehicles, </a></li>
+          <li><a href="${BaseUrl}/home/category/9">Cars and Vehicles</a></li>
           <li><a href="${BaseUrl}/home/category/12">Electronics</a></li>
           <li><a href="${BaseUrl}/home/category/100">Property</a></li>
       </ul>
