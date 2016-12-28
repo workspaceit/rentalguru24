@@ -6,7 +6,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12 support-div">
-          <a href="#" class="support-a"><i class="fa fa-envelope" aria-hidden="true">   support@rentguru24.com</i></a>
+          <a href="mailto:support@rentguru24.com" class="support-a"><i class="fa fa-envelope" aria-hidden="true">&nbsp;&nbsp;&nbsp;&nbsp;support@rentguru24.com</i></a>
           <%--<ul class="top_nav_ul">--%>
             <%--<li class="dropdown">--%>
               <%--<a href="#" class="dropdown-toggle top_nav_a" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">English <span class="caret"></span></a>--%>
