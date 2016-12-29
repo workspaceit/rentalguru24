@@ -2,13 +2,13 @@
 <div class="footer_bottom">
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-4">
+      <div class="col-md-12 col-sm-12 col-xs-12 ">
         <div class="bottom_footer_content">
           <div class="copyright">
             <p class="no-margin"> &#169; Copyright 2016 Reneguru24 | All Rights Reserved</p>
           </div>
-          <div class="social_link">
-            <p class="no-margin"> <span class="social_link_i"><i class="fa fa-twitter"></i></span><span class="social_link_i"><i class="fa fa-facebook"></i></span><span class="social_link_i"><i class="fa fa-youtube"></i></span><span class="social_link_i"><i class="fa fa-google-plus"></i></span><span class="social_link_i"><i class="fa fa-linkedin"></i></span><span class="social_link_i"><i class="fa fa-pinterest"></i></span></p>
+          <div class="social_link" >
+            <p class="no-margin"> <span class="social_link_i"><i class="fa fa-paypal" aria-hidden="true"></i><i class="fa fa-cc-amex" aria-hidden="true"></i><i class="fa fa-cc-visa" aria-hidden="true"></i><i class="fa fa-cc-mastercard" aria-hidden="true"></i></p>
           </div>
         </div>
       </div>

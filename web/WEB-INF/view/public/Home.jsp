@@ -48,7 +48,7 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-    <div class="home_slider">
+    <div class="home_slider" style="margin-bottom: 0px;">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -169,14 +169,14 @@
     </div>
 
 
-<div class="container-fluid h-w-container">
+<div class="container-fluid h-w-container" style="margin-top:0px;padding-bottom:0px;padding-top: 10px;">
     <div class="container">
         <h2 class="block-head">How it works</h2>
         <%--<img src="<c:url value="${BaseUrl}/resources/img/imgpsh_fullsize.png"  />" class="img-responsive" />--%>
         <div class="col-md-6" style="float: none;margin: 0px auto;">
 
         <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/196047371"></iframe>
+            <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/196047371?color=3d96d2&amp;title=0&amp;badge=0&amp;byline=0&amp;portrait=0"></iframe>
         </div>
         </div>
 </div>
