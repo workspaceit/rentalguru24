@@ -67,10 +67,10 @@ public class HomeController {
         String topRentalProductHeadTitle = "MOST RATED";
         if(rentalProductsTop==null || rentalProductsTop.size()==0){
             rentalProductsTop = productModel.getRentalProduct(3, 0);
-            topRentalProductHeadTitle = "Latest Product";
+            topRentalProductHeadTitle = "Latest Products";
         }
 
-        String productListTitle = "Latest Product";
+        String productListTitle = "Latest Products";
 
 
         List<BannerImage> bannerImageList = bannerImageModel.getAll();

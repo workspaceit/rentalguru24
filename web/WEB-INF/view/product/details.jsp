@@ -211,7 +211,7 @@
           <li data-target="#carousel-example-generic" data-slide-to="1"></li>
           <li data-target="#carousel-example-generic" data-slide-to="2"></li>
         </ol>
-        <h2 class="block-head">Latest Product</h2>
+        <h2 class="block-head">Latest Products</h2>
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
           <div class="item active">
