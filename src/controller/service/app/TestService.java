@@ -61,8 +61,6 @@ public class TestService extends BaseService{
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
 
-    @Autowired
-    ProductModel productModel;
 
     @Autowired
     EmailHelper emailHelper;
@@ -74,13 +72,10 @@ public class TestService extends BaseService{
         emailHelper.sendRegistrationNotifyEmailToAdmin(registeredUser);
     }
 
-    @Autowired
-    EmailHelper emailHelper;
     @RequestMapping(value = "/test/email", method = RequestMethod.POST)
-    public void testEmail(){
-
-
+    public AppCredential testEmail(){
         AppCredential registeredUser = appLoginCredentialModel.getAppCredentialById(80);
-        emailHelper.sendRegistrationNotifyEmailToAdmin(registeredUser);
+        return  registeredUser;
+
     }
 }
