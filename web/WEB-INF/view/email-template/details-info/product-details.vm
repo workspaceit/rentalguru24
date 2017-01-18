@@ -1,0 +1,42 @@
+#*id": 23,
+"name": "asd",
+"description": "asd",
+"averageRating": 0,
+"profileImage":{"original":{"path": "product/32/28261518442183.png", "type": "", "size":{"width": 3286,…},
+"currentValue": 9,
+"rentFee": 10,
+"active": true,
+"currentlyAvailable": true,
+"availableFrom": 1482688800000,
+"availableTill": 1483034400000,
+"reviewStatus": true,
+"createdDate": 1482757650000,
+"owner":{"id": 32, "role": -1, "email": "mousum@workspace.com", "createdDate": 1482819722000,…},
+"productLocation":{"id": 13, "formattedAddress": "asd", "zip": "asd", "lat": 0,…},
+"productCategories":[{"id": 44, "category":{"id": 15, "name": "HOME SUBCAT ",…],
+"rentType":{"id": 2, "name": "Week"},
+"isLiked": false*#
+
+#set ( $dollarSumbol = "$")
+<table>
+    <tr>
+        <td>Name : </td>
+        <td>$rentalProduct.name</td>
+    </tr>
+    <tr>
+        <td>Description : </td>
+        <td>$rentalProduct.description</td>
+    </tr>
+    <tr>
+        <td>Current value : </td>
+        <td>$dollarSumbol $rentalProduct.currentValue</td>
+    </tr>
+    <tr>
+        <td>Rent Fee : </td>
+        <td>$dollarSumbol $rentalProduct.rentFee</td>
+    </tr>
+    <tr>
+        <td>Rent Type : </td>
+        <td>$dollarSumbol $rentalProduct.rentType.name</td>
+    </tr>
+</table>

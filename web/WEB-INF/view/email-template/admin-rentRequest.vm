@@ -1,0 +1,15 @@
+ #include("pertial/header.vm")
+       <p style="margin:0px;font-size: 14px;">
+           Dear $adminUser.getUserInf().getFirstName() $adminUser.getUserInf().getLastName(),
+           <br>
+           A rent request has been ${requestStatus}. Rent details:
+           <br>
+           #set ($orderDetails="#parse('details-info/order-details.vm')")
+           <br>
+           $orderDetails
+           <br>
+           #set ($paymentDetails="#parse('details-info/payment-details.vm')")
+           <br>
+           $paymentDetails
+       </p>
+ #include("pertial/footer.vm")

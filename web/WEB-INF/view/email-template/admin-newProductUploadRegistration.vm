@@ -1,0 +1,17 @@
+ #include("pertial/header.vm")
+       <p style="margin:0px;font-size: 14px;">
+           Dear $adminUser.getUserInf().getFirstName() $adminUser.getUserInf().getLastName(), <br>
+           A new <a href="#">product[within-proruct-url]</a> has been uploaded by $rentalProduct.owner.email.
+           <br>
+           Customer details
+           #set ($user = $rentalProduct.owner)
+           #set ($userDetails="#parse('details-info/user-details.vm')")
+           $userDetails
+           <br>
+           Product details
+           #set ($productDetails="#parse('details-info/product-details.vm')")
+           <br>
+           $productDetails
+           Please review the product as soon as possible.
+       </p>
+ #include("pertial/footer.vm")

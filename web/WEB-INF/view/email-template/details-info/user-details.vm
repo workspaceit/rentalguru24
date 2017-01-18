@@ -1,3 +1,30 @@
+#*
+"userInf":{
+"id": 33,
+"firstName": "Mausum",
+"lastName": "Nandi",
+"profilePicture":{"original":{"path": "32/7355841379748.jpg", "type": "", "size":{"width": 680,…},
+"identityDocUrl": "identityDoc/32/10300038890383.documentIdentity",
+"createdDate": 1472119961000,
+"userAddress":{
+"id": 19,
+"address": "",
+"zip": "",
+"city": "",
+"state": "",
+"lat": null,
+"lng": null,
+"createdDate": 1470640462000
+},
+"identityType":{
+"id": 1,
+"name": "Passport",
+"createdDate": 1470374364000
+}
+}
+},
+*#
+
 <table>
     <tr>
         <td>Name : </td><td>$user.getUserInf().getFirstName() $user.getUserInf().getLastName()</td>

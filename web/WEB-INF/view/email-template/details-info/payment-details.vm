@@ -1,0 +1,38 @@
+#*private long id;
+private AppCredential appCredential;
+private RentRequest rentRequest;
+private RentInf rentInf;
+private double siteFee;
+private double rentFee;
+private double refundAmount;
+private double totalAmount;
+private double transactionFee;
+private String currency;
+private String paypalPayerId;
+private String paypalPayId;
+private String paypalSaleId;
+private String authorizationId;
+private Timestamp paypalPaymentDate;
+private Timestamp createdDate;*#
+
+#set ( $dollarSumbol = "$")
+<h3>Payment details</h3>
+<table>
+
+    #*<tr>
+        <td>Refund Amount : </td>
+        <td>$dollarSumbol $rentPayment.refundAmount</td>
+    </tr>*#
+    <tr>
+        <td>Total Amount : </td>
+        <td>$dollarSumbol $rentPayment.totalAmount</td>
+    </tr>
+    <tr>
+        <td>Currency : </td>
+        <td>$rentPayment.currency</td>
+    </tr>
+    <tr>
+        <td>Payment Date : </td>
+        <td>$rentPayment.createdDate</td>
+    </tr>
+</table>

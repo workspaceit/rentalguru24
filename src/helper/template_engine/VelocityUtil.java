@@ -45,4 +45,5 @@ public class VelocityUtil {
         template.merge(context, writer);
         return writer.toString();
     }
+
 }

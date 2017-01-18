@@ -8,6 +8,7 @@ import library.RentGuruMail;
 import model.*;
 
 import model.entity.app.*;
+import model.entity.app.payments.RentPayment;
 import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.RentalProductEntity;
 import model.entity.app.product.rentable.iface.RentalProduct;
@@ -16,6 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
@@ -44,6 +51,9 @@ public class TestService extends BaseService{
     RentRequestModel rentRequestModel;
 
     @Autowired
+    RentPaymentModel rentPaymentModel;
+
+    @Autowired
     RentInfModel rentInfModel;
 
     @Autowired
@@ -68,8 +78,13 @@ public class TestService extends BaseService{
     public void postCategory(){
 
 
-        AppCredential registeredUser = appLoginCredentialModel.getAppCredentialById(80);
-        emailHelper.sendRegistrationNotifyEmailToAdmin(registeredUser);
+        RentPayment rentPayment = rentPaymentModel.getByRentRequestId(148);
+        emailHelper.sendAdminProductReceiveEmail(rentPayment, true);
+        emailHelper.sendAdminProductReceiveEmail(rentPayment, false);
+        emailHelper.sendAdminRentRequestEmail(rentPayment,"approve");
+        emailHelper.sendAdminProductReturnRequestEmail(rentPayment);
+        emailHelper.sendAdminProductReceiveEmail(rentPayment,true);
+
     }
 
     @RequestMapping(value = "/test/email", method = RequestMethod.POST)

@@ -1,0 +1,65 @@
+#*public class RentRequest {
+private int id;
+private RentalProduct rentalProduct;
+private AppCredential requestedBy;
+private List<RentRequest> requestExtension;
+    private Double rentFee;
+    private Double advanceAmount;
+    private boolean requestCancel;
+    private Date startDate;
+    private Date endDate;
+    private Boolean approve;
+    private Boolean disapprove;
+    private Boolean isExpired;
+    private boolean isExtension;
+    private String remark;
+    private boolean isPaymentComplete;
+    private boolean isRentComplete;
+    private Timestamp createdDate;*#
+
+#set ( $dollarSumbol = "$")
+<h3>Order details</h3>
+<table>
+    <thead>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Start Date</td>
+        <td>$rentPayment.rentRequest.startDate</td>
+    </tr>
+    <tr>
+        <td>End Date</td>
+        <td>$rentPayment.rentRequest.endDate</td>
+    </tr>
+    <tr>
+        <td>Remarks</td>
+        <td>#if($rentPayment.rentRequest.remark)
+                $rentPayment.rentRequest.remark
+                #end
+        </td>
+    </tr>
+    <tr>
+        <td>Site Fee : </td>
+        <td>$dollarSumbol $rentPayment.siteFee</td>
+    </tr>
+    <tr>
+        <td>Product current price</td>
+        <td>$dollarSumbol $rentPayment.rentRequest.rentalProduct.currentValue</td>
+    </tr>
+    <tr>
+        <td>Rent/$rentPayment.rentRequest.rentalProduct.rentType.name</td>
+        <td>$dollarSumbol $rentPayment.rentRequest.rentalProduct.rentFee</td>
+    </tr>
+    <tr>
+        <td><strong>Rent Fees</strong></td>
+        <td><strong>$dollarSumbol $rentPayment.rentRequest.rentFee</strong></td>
+    </tr>
+
+        #set ($totalAmount = $rentPayment.rentRequest.advanceAmount+$siteFees)
+
+    <tr>
+        <td>Total </td>
+        <td>$dollarSumbol $totalAmount</td>
+    </tr>
+    </tbody>
+</table>
