@@ -1,0 +1,8 @@
+<table>
+    <tr>
+        <td>Name : </td><td>$user.getUserInf().getFirstName() $user.getUserInf().getLastName()</td>
+    </tr>
+    <tr>
+        <td>Email : </td><td>$user.getEmail()</td>
+    </tr>
+</table>

@@ -159,6 +159,23 @@ public class UserInf {
     }
 
     @Override
+    public String toString() {
+        return "UserInf{" +
+                "id=" + id +
+                ", addressId=" + addressId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender='" + gender + '\'' +
+                ", profilePicture=" + profilePicture +
+                ", identityDocUrl='" + identityDocUrl + '\'' +
+                ", createdDate=" + createdDate +
+                ", userAddress=" + userAddress +
+                ", identityType=" + identityType +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

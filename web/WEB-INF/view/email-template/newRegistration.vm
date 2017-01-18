@@ -1,0 +1,11 @@
+ #include("pertial/header.vm")
+       <p style="margin:0px;font-size: 14px;">
+           Dear $adminUser.getUserInf().getFirstName() $adminUser.getUserInf().getLastName(), <br>
+           A new user has registered to the portal.
+           <br>
+           Basic Information of the user:
+            <br>
+           #set ($userDetails="#parse('details-info/user-details.vm')")
+           $userDetails
+       </p>
+ #include("pertial/footer.vm")

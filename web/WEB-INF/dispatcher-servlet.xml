@@ -315,6 +315,11 @@
     <bean id="TGLOBAL_PATH" class="java.lang.String">
         <constructor-arg type="java.lang.String" value="${fileLocation.uploadPath}"/>
     </bean>
+
+    <bean id="_velocityTemplatePath" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="${velocity.resource.path}" />
+    </bean>
+
     <!-- -->
        <!-- ******************** Model Bean Class, *********************************** -->
        <bean id="baseModel" class="model.BaseModel">

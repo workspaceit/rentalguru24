@@ -1,24 +1,45 @@
 package helper;
 
+import helper.template_engine.VelocityUtil;
+import model.AppLoginCredentialModel;
 import model.entity.app.AppCredential;
+import model.entity.app.AuthCredential;
 import model.entity.app.RentRequest;
 import model.entity.app.product.rentable.iface.RentalProduct;
+import org.apache.velocity.VelocityContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Properties;
 
 /**
  * Created by mi on 9/7/16.
  */
+@Component
 public class EmailHelper {
     private static String BASEURL = "http://rentguru24.com";
     private final static String from="developer_beta@workspaceit.com";
     private final static String username="developer_beta@workspaceit.com";
     private final static String password="wsit_cabguard1";
+
+    @Autowired
+    AppLoginCredentialModel appLoginCredentialModel;
+
+    private class AdminEmailDeatils{
+        String subject;
+        StringBuilder emailBody = new StringBuilder();
+
+        {
+
+        }
+
+    }
 
 
 
@@ -267,6 +288,64 @@ public class EmailHelper {
 
         return true;
     }
+
+
+    public boolean sendRegistrationNotifyEmailToAdmin(AppCredential registeredUser){
+        List<AuthCredential> adminUserList = appLoginCredentialModel.getAllAdmin();
+
+        Properties properties = System.getProperties();
+        // properties.put("mail.smtp.starttls.enable", "true");
+
+
+        properties.put("mail.smtp.host", "hera.ihostman.com");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.user",username ); // User name
+        properties.put("mail.smtp.password",password); // password
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(
+                        username,password);// Specify the Username and the PassWord
+            }
+        });
+
+
+        try{
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.setSubject("RentGuru account email confirmation");
+
+            for(AuthCredential adminUser : adminUserList){
+                message.addRecipient(Message.RecipientType.TO,
+                        new InternetAddress(adminUser.getEmail()));
+
+
+                VelocityContext context = new VelocityContext();
+                adminUser.getEmail();
+                context.put("adminUser", adminUser);
+                context.put("user", registeredUser);
+                String emailHtml = VelocityUtil.getHtmlByTemplateAndContext("newRegistration.vm", context);
+                message.setText(emailHtml,null,"html");
+
+                System.out.println("T:" + registeredUser);
+                Transport.send(message);
+            }
+
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+        return true;
+
+    }
+
+
 
     static String templateTop = "<html>\n" +
             "\t<title>Email template</title>\n" +
