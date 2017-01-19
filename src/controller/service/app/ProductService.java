@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
-import helper.DateHelper;
-import helper.ImageHelper;
-import helper.ServiceResponse;
-import helper.SessionManagement;
+
+import helper.*;
 import library.ipGeoTracker.GeoIpManager;
 import library.ipGeoTracker.dataModel.GeoIp;
 import model.*;
@@ -73,6 +71,9 @@ public class ProductService{
 
     @Autowired
     CitiesModel citiesModel;
+
+    @Autowired
+    EmailHelper emailHelper;
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @JsonView(ProductView.RentalProductView.class)
@@ -322,10 +323,26 @@ public class ProductService{
         productLocation.setFormattedAddress(productUploadForm.getFormattedAddress());
 
         productLocation.setRentalProduct(rentalProduct);
-
+        rentalProduct = productModel.getById(rentalProduct.getId());
         productLocationModel.insert(productLocation);
 
-        serviceResponse.setResponseData(productModel.getById(rentalProduct.getId()));
+        final RentalProduct finalRetalProduct = rentalProduct;
+
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.print("Email sending init");
+                emailHelper.sendAdminNewProductUploadEmail(finalRetalProduct);
+                System.out.print("User Email sent to admin users");
+                emailHelper.userProductUploadMail(finalRetalProduct);
+                System.out.print("New Product upload user mail");
+            }
+        }).start();
+
+
+        serviceResponse.setResponseData(rentalProduct);
         return serviceResponse;
     }
     @RequestMapping(value = "/update-product/{product_id}", method = RequestMethod.POST)

@@ -104,5 +104,17 @@ public class UserAddress {
         this.createdDate = createdDate;
     }
 
-
+    @Override
+    public String toString() {
+        return "UserAddress{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", zip='" + zip + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", createdDate=" + createdDate +
+                '}';
+    }
 }

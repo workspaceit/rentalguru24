@@ -73,17 +73,24 @@ public class ProductController{
     }
 
     @RequestMapping(value = "/details/{product_id}", method = RequestMethod.GET)
-    public String details(HttpServletRequest request,@PathVariable("product_id") int productId, Model model){
+    public ModelAndView details(HttpServletRequest request,@PathVariable("product_id") int productId){
+        ModelAndView modelAndView = new ModelAndView("product/details");
         ServiceResponse serviceResponse =(ServiceResponse) request.getAttribute("serviceResponse");
-        AppCredential appCredential = (AppCredential) request.getAttribute("appCredential");
+
         List<Category> category = (List<Category>) request.getAttribute("category");
 
         String baseUrl = (String) request.getAttribute("BaseUrl");
         RentalProduct rentalProduct = productModel.getById(productId);
+
+        if(rentalProduct == null){
+            return new ModelAndView("redirect:/home");
+        }
+
         List<RentalProduct> newProducts = productModel.getRentalProduct(4, 0, productId);
         Boolean IsLogin = serviceResponse.getResponseStat().getIsLogin();
         List<ProductCategory> productCategories = rentalProduct.getProductCategories();
         List<Map<String,String>> breadCrumbStr = new ArrayList<>();
+
 
         if(productCategories!=null){
             if(productCategories.size()>0){
@@ -110,14 +117,14 @@ public class ProductController{
         breadCrumbStr.add(productBreadCrumbDetails);
 
         String preSelectedCategoryName = "Browse By Category";
-        model.addAttribute("preSelectedCategoryName", preSelectedCategoryName);
-        model.addAttribute("breadCrumbStr", breadCrumbStr);
-        model.addAttribute("IsLogIn", IsLogin);
-        model.addAttribute("rentalProduct", rentalProduct);
-        model.addAttribute("newProducts", newProducts);
-        model.addAttribute("category", category);
-        model.addAttribute("pageTitle", rentalProduct.getName());
-        return "product/details";
+        modelAndView.addObject("preSelectedCategoryName", preSelectedCategoryName);
+        modelAndView.addObject("breadCrumbStr", breadCrumbStr);
+        modelAndView.addObject("IsLogIn", IsLogin);
+        modelAndView.addObject("rentalProduct", rentalProduct);
+        modelAndView.addObject("newProducts", newProducts);
+        modelAndView.addObject("category", category);
+        modelAndView.addObject("pageTitle", rentalProduct.getName());
+        return modelAndView;
     }
 
     @RequestMapping(value = "/edit/{product_id}", method = RequestMethod.GET)

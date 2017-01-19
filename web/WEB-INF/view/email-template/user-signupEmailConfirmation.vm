@@ -1,0 +1,18 @@
+ #include("pertial/header.vm")
+       <p style="margin:0px;font-size: 14px;">
+           Dear
+           #if($user.gender=='male')
+               Mr
+           #elseif($user.gender=='female')
+               Ms
+           #else
+               Mr/Ms
+           #end
+           $user.getLastName(),
+           <br>
+           We are thankful to you here. Welcome to the Renting world.
+           <br> Please vefiry your email address to complete your registration
+           <br> by clicking <a href="$activationUrl">this link</a> .
+           <br> Or if you didn&#39;t make this registration please <a href="$diapproveUrl">click here</a>.
+       </p>
+ #include("pertial/user-footer.vm")

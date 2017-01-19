@@ -68,7 +68,8 @@ public class AppLoginCredentialModel extends BaseModel {
         Session session = this.sessionFactory.openSession();
         try{
             return (AuthCredential)session.createQuery("from AuthCredential where email = :email ")
-                    .setParameter("email",email).uniqueResult();
+                    .setMaxResults(1)
+                    .setParameter("email", email).uniqueResult();
         }finally {
             session.close();
         }
@@ -143,9 +144,10 @@ public class AppLoginCredentialModel extends BaseModel {
         Session session = this.sessionFactory.openSession();
         String hql = "from AppCredential where email = :email";
 
-        Query query = session.createQuery(hql);
-        query.setParameter("email", email);
-        AppCredential appCredential = (AppCredential)query.uniqueResult();
+        AppCredential appCredential = (AppCredential)session.createQuery(hql)
+                .setParameter("email", email)
+                .setMaxResults(1)
+                .uniqueResult();
 
         if(appCredential==null){
             return false;

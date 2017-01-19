@@ -53,6 +53,8 @@ public class RentRequestService{
     @Autowired
     AdminSitesFeesModel adminSitesFeesModel;
 
+    @Autowired
+    EmailHelper emailHelper;
     /* **************************** Rent Request action [Started] ************************** */
 
     @RequestMapping(value = "/make-request/{productId}", method = RequestMethod.POST)
@@ -215,6 +217,7 @@ public class RentRequestService{
 
         }
 
+
         serviceResponse.getResponseStat().setMsg("Request successfully sent");
         serviceResponse.setResponseData(rentRequest, "Internal server error");
         serviceResponse.setExtras(extraObj);
@@ -309,7 +312,7 @@ public class RentRequestService{
             public void run() {
                 System.out.println("Inside Email sending");
 
-                EmailHelper.rentalRequestApprovalEmail(rentRequest, true);
+                emailHelper.userProductRentRequestApproveDisapproveMail(rentRequest, true);
                 System.out.println("Inside Email sent");
             }
         }).start();
@@ -370,6 +373,17 @@ public class RentRequestService{
         serviceResponse = this.refundOtherRentRequest(serviceResponse,rentRequest);
         /* Update Rent request*/
         rentRequestModel.update(rentRequest);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Inside Email sending");
+
+                emailHelper.userProductRentRequestApproveDisapproveMail(rentRequest, false);
+                System.out.println("Inside Email sent");
+            }
+        }).start();
+
         serviceResponse.setResponseData(rentRequest,"No record found");
         return serviceResponse;
     }

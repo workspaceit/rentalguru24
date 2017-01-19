@@ -1,0 +1,16 @@
+ #include("pertial/header.vm")
+       <p style="margin:0px;font-size: 14px;">
+           Dear
+           #if($recipient.userInf.gender=='male')
+               Mr
+           #elseif($recipient.userInf.gender=='female')
+               Ms
+           #else
+               Mr/Ms
+           #end
+           $recipient.userInf.getLastName(),
+           <br>
+           Your rent request on <a href="http://rentguru24.com/product/details/${rentRequest.rentalProduct.id}">this product</a> has been disapproved by the owner.
+
+       </p>
+ #include("pertial/user-footer.vm")

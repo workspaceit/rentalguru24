@@ -32,11 +32,7 @@
         <td>$dollarSumbol $rentalProduct.currentValue</td>
     </tr>
     <tr>
-        <td>Rent Fee : </td>
+        <td>Rent/$rentalProduct.rentType.name : </td>
         <td>$dollarSumbol $rentalProduct.rentFee</td>
-    </tr>
-    <tr>
-        <td>Rent Type : </td>
-        <td>$dollarSumbol $rentalProduct.rentType.name</td>
     </tr>
 </table>

@@ -1,0 +1,22 @@
+ #include("pertial/header.vm")
+       <p style="margin:0px;font-size: 14px;">
+           Dear
+           #if($recipient.userInf.gender=='male')
+               Mr
+           #elseif($recipient.userInf.gender=='female')
+               Ms
+           #else
+               Mr/Ms
+           #end
+           $recipient.userInf.getLastName(),
+           <br>
+           Your rent request on <a href="http://rentguru24.com/product/details/${rentRequest.rentalProduct.id}">this product</a> has been approved by the owner.
+           <br>
+           Please contact with the owner.
+           <br>
+           <br>
+           #set ($userDetails="#parse('details-info/user-details.vm')")
+           <br>
+           $userDetails
+       </p>
+ #include("pertial/user-footer.vm")

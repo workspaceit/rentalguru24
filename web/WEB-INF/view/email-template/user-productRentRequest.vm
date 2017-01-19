@@ -1,0 +1,20 @@
+ #include("pertial/header.vm")
+       <p style="margin:0px;font-size: 14px;">
+           Dear
+           #if($user.gender=='male')
+               Mr
+           #elseif($user.gender=='female')
+               Ms
+           #else
+               Mr/Ms
+           #end
+           $user.getLastName(),
+           <br>
+           Congratulations. Someone just requested you to rent your product. Check the complete details bellow
+           <br>
+           <br>
+           #set ($orderDetails="#parse('details-info/order-details.vm')")
+           <br>
+           $orderDetails
+       </p>
+ #include("pertial/user-footer.vm")

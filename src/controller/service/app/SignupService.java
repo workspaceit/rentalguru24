@@ -39,6 +39,9 @@ public class SignupService{
     @Autowired
     EmailConfirmationModel emailConfirmationModel;
 
+    @Autowired
+    EmailHelper emailHelper;
+
     @RequestMapping(value="/user",method = RequestMethod.POST)
     public ServiceResponse userSignUp(HttpServletRequest request,
                                       @RequestParam Map<String, String> allRequestParams,
@@ -150,11 +153,13 @@ public class SignupService{
             @Override
             public void run() {
                 System.out.print("Email sending init");
-                EmailHelper.signUpConfirmationMail(emailConfirmation.getAppCredential().getEmail(),
+                emailHelper.signUpEmailConfirmationMail(emailConfirmation.getAppCredential(),
                         emailConfirmation.getToken(),
                         baseUrl + "/email-confirmation/confirm/",
                         baseUrl + "/email-confirmation/deny/");
-                System.out.print("Email sent");
+                System.out.print("User Email sent");
+                emailHelper.sendRegistrationNotifyEmailToAdmin(emailConfirmation.getAppCredential());
+                System.out.print("User Email sent to admin users");
             }
         }).start();
 

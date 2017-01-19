@@ -28,9 +28,9 @@ import java.util.Properties;
 @Component
 public class EmailHelper {
     private static String BASEURL = "http://rentguru24.com";
-    private final static String from="developer_beta@workspaceit.com";
-    private final static String username="developer_beta@workspaceit.com";
-    private final static String password="wsit_cabguard1";
+    private final static String from= "rafi@workspaceit.com";//"developer_beta@workspaceit.com";
+    private final static String username="rafi@workspaceit.com";
+    private final static String password="wsit97480";//"wsit_cabguard1";
 
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
@@ -86,10 +86,10 @@ public class EmailHelper {
         properties.put("mail.smtp.port", "465");
         properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
-        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
+        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(
-                        username,password);// Specify the Username and the PassWord
+                        username, password);// Specify the Username and the PassWord
             }
         });
         String activationUrl =url+activationCode;
@@ -243,71 +243,14 @@ public class EmailHelper {
 
         return true;
     }
-    public static boolean signUpConfirmationMail(String email,String activationCode,String confirmUrl,String diapproveUrl){
 
-
-
-        String to = email;
-        Properties properties = System.getProperties();
-        // properties.put("mail.smtp.starttls.enable", "true");
-
-
-        properties.put("mail.smtp.host", "hera.ihostman.com");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.user",username ); // User name
-        properties.put("mail.smtp.password",password); // password
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
-        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(
-                        username,password);// Specify the Username and the PassWord
-            }
-        });
-        String activationUrl = null;
-        try {
-            String params = URLEncoder.encode(email,"UTF-8")+"/"+URLEncoder.encode(activationCode, "UTF-8");
-            activationUrl = confirmUrl+params;
-            diapproveUrl = diapproveUrl+params;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String confirmLinkHtml = "<a href='"+activationUrl+"'>Click here</a>";
-        String disapproveLinkHtml = "<a href='"+diapproveUrl+"'>Click here</a>";
-        String emailHtmlBody = "Hi,<br>   Please click this link " + confirmLinkHtml + " to confirm , or to deny "+disapproveLinkHtml;
-        emailHtmlBody = templateTop+emailHtmlBody+templateBottom;
-
-        try{
-
-            MimeMessage message = new MimeMessage(session);
-
-            message.setHeader("Content-Type", "text/html");
-            message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress(to));
-            message.setSubject("RentGuru account email confirmation");
-            message.setText(emailHtmlBody,null,"html");
-            Transport.send(message);
-            String title = "";
-            String body = "";
-
-
-        }catch (MessagingException mex) {
-            mex.printStackTrace();
-            return false;
-        }
-
-
-        return true;
-    }
 
     public float getSiteFees(){
         AdminSiteFeesEntity adminSiteFeesEntity = adminSitesFeesModel.getAdminSiteFees();
         return  (adminSiteFeesEntity.isPercentage())?adminSiteFeesEntity.getPercentageValue():adminSiteFeesEntity.getFixedValue();
     }
-    public boolean sendRegistrationNotifyEmailToAdmin(AppCredential registeredUser){
+
+    public synchronized boolean sendRegistrationNotifyEmailToAdmin(AppCredential registeredUser){
         List<AuthCredential> adminUserList = appLoginCredentialModel.getAllAdmin();
 
 
@@ -324,22 +267,18 @@ public class EmailHelper {
             message.setSubject("New user registered");
 
             for(AuthCredential adminUser : adminUserList){
-                message.addRecipient(Message.RecipientType.TO,
-                        new InternetAddress(adminUser.getEmail()));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(adminUser.getEmail()));
 
 
                 VelocityContext context = new VelocityContext();
-                adminUser.getEmail();
                 context.put("adminUser", adminUser);
                 context.put("user", registeredUser);
                 String emailHtml = VelocityUtil.getHtmlByTemplateAndContext("admin-newRegistration.vm", context);
-                message.setText(emailHtml,null,"html");
-
-                System.out.println("T:" + registeredUser);
+                message.setText(emailHtml, null, "html");
+                System.out.println("T:" + emailHtml);
                 Transport.send(message);
+
             }
-
-
         }catch (MessagingException mex) {
             mex.printStackTrace();
             return false;
@@ -347,7 +286,7 @@ public class EmailHelper {
         return true;
 
     }
-    public boolean sendAdminNewProductUploadEmail(RentalProduct rentalProduct){
+    public synchronized boolean  sendAdminNewProductUploadEmail(RentalProduct rentalProduct){
         List<AuthCredential> adminUserList = appLoginCredentialModel.getAllAdmin();
 
         Session session = this.getSession();
@@ -379,6 +318,9 @@ public class EmailHelper {
             }
 
 
+        }catch (com.sun.mail.smtp.SMTPSendFailedException e){
+            e.printStackTrace();
+            return false;
         }catch (MessagingException mex) {
             mex.printStackTrace();
             return false;
@@ -386,7 +328,7 @@ public class EmailHelper {
         return true;
 
     }
-    public boolean sendAdminRentRequestEmail(RentPayment rentPayment,String requestType){
+    public synchronized boolean sendAdminRentRequestEmail(RentPayment rentPayment,String requestType){
         List<AuthCredential> adminUserList = appLoginCredentialModel.getAllAdmin();
 
         Session session = this.getSession();
@@ -439,7 +381,7 @@ public class EmailHelper {
         return true;
 
     }
-    public boolean sendAdminProductReturnRequestEmail(RentPayment rentPayment){
+    public synchronized boolean sendAdminProductReturnRequestEmail(RentPayment rentPayment){
         List<AuthCredential> adminUserList = appLoginCredentialModel.getAllAdmin();
 
         Session session = this.getSession();
@@ -478,7 +420,7 @@ public class EmailHelper {
         return true;
 
     }
-    public boolean sendAdminProductReceiveEmail(RentPayment rentPayment,boolean acknowledgment){
+    public synchronized boolean sendAdminProductReceiveEmail(RentPayment rentPayment,boolean acknowledgment){
         List<AuthCredential> adminUserList = appLoginCredentialModel.getAllAdmin();
 
         Session session = this.getSession();
@@ -507,7 +449,6 @@ public class EmailHelper {
 
 
                 VelocityContext context = new VelocityContext();
-                adminUser.getEmail();
                 context.put("requestStatus", requestStatus);
                 context.put("adminUser", adminUser);
                 context.put("siteFees",this.getSiteFees());
@@ -533,6 +474,264 @@ public class EmailHelper {
         }
         return true;
 
+    }
+
+
+    public synchronized boolean signUpEmailConfirmationMail(AppCredential appCredential, String activationCode, String confirmUrl, String diapproveUrl){
+
+
+
+        String to = appCredential.getEmail();
+
+
+        Session session = this.getSession();
+        String activationUrl = null;
+        try {
+            String params = URLEncoder.encode(appCredential.getEmail(),"UTF-8")+"/"+URLEncoder.encode(activationCode, "UTF-8");
+            activationUrl = confirmUrl+params;
+            diapproveUrl = diapproveUrl+params;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        VelocityContext context = new VelocityContext();
+        context.put("user", appCredential.getUserInf());
+        context.put("activationUrl", activationUrl);
+        context.put("diapproveUrl",diapproveUrl);
+
+        String emailHtml = VelocityUtil.getHtmlByTemplateAndContext("user-signupEmailConfirmation.vm", context);
+        System.out.println(emailHtml);
+        try{
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+            message.setSubject("Welcome to RentGuru24.com");
+            message.setText(emailHtml, null, "html");
+            Transport.send(message);
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+
+
+        return true;
+    }
+    public synchronized boolean userProductUploadMail(RentalProduct rentalProduct){
+
+        AppCredential appCredential =rentalProduct.getOwner();
+
+        String to = appCredential.getEmail();
+
+
+        Session session = this.getSession();
+
+        VelocityContext context = new VelocityContext();
+        context.put("user", appCredential.getUserInf());
+        context.put("rentalProduct", rentalProduct);
+
+        String emailHtml = VelocityUtil.getHtmlByTemplateAndContext("user-newProductUpload.vm", context);
+        System.out.println(emailHtml);
+        try{
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+            message.setSubject(rentalProduct.getName());
+            message.setText(emailHtml,null,"html");
+            Transport.send(message);
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+
+
+        return true;
+    }
+    public synchronized boolean userProductVerifiedMail(RentalProduct rentalProduct){
+
+        AppCredential appCredential =rentalProduct.getOwner();
+
+        String to = appCredential.getEmail();
+
+
+        Session session = this.getSession();
+
+        VelocityContext context = new VelocityContext();
+        context.put("user", appCredential);
+        context.put("rentalProduct", rentalProduct);
+
+        String emailHtml = VelocityUtil.getHtmlByTemplateAndContext("user-newProductVerified.vm", context);
+        System.out.println(emailHtml);
+        try{
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+            message.setSubject(rentalProduct.getName());
+            message.setText(emailHtml,null,"html");
+            Transport.send(message);
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+    public synchronized boolean userProductDeniedMail(RentalProduct rentalProduct){
+
+        AppCredential appCredential =rentalProduct.getOwner();
+
+        String to = appCredential.getEmail();
+
+
+        Session session = this.getSession();
+
+        VelocityContext context = new VelocityContext();
+        context.put("user", appCredential);
+        context.put("rentalProduct", rentalProduct);
+
+        String emailHtml = VelocityUtil.getHtmlByTemplateAndContext("user-newProductDenied.vm", context);
+        System.out.println(emailHtml);
+        try{
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+            message.setSubject(rentalProduct.getName());
+            message.setText(emailHtml,null,"html");
+            Transport.send(message);
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+    public synchronized boolean userProductRentRequestMail(RentPayment rentPayment){
+
+        AppCredential appCredential =rentPayment.getRentRequest().getRentalProduct().getOwner();
+
+        String to = appCredential.getEmail();
+
+
+        Session session = this.getSession();
+
+        VelocityContext context = new VelocityContext();
+        context.put("user", appCredential.getUserInf());
+        context.put("rentPayment", rentPayment);
+
+        String emailHtml = VelocityUtil.getHtmlByTemplateAndContext("user-productRentRequest.vm", context);
+        System.out.println(emailHtml);
+        try{
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+            message.setSubject("Rent Request : "+rentPayment.getRentRequest().getRentalProduct().getName());
+            message.setText(emailHtml,null,"html");
+            Transport.send(message);
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+    public synchronized boolean userProductRentRequestApproveDisapproveMail(RentRequest rentRequest,boolean approve){
+
+        AppCredential appCredential =rentRequest.getRequestedBy();
+
+        String to = appCredential.getEmail();
+
+
+        Session session = this.getSession();
+
+        VelocityContext context = new VelocityContext();
+        context.put("recipient", appCredential);
+        context.put("user", rentRequest.getRentalProduct().getOwner());
+        context.put("rentRequest", rentRequest);
+        System.out.println(appCredential);
+        String emailHtml ="";
+        if(approve){
+            emailHtml = VelocityUtil.getHtmlByTemplateAndContext("user-productRentRequestApprove.vm", context);
+        }else{
+            emailHtml = VelocityUtil.getHtmlByTemplateAndContext("user-productRentRequestDisapprove.vm", context);
+        }
+        System.out.println(emailHtml);
+        try{
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+            message.setSubject("Rent Request : "+rentRequest.getRentalProduct().getName());
+            message.setText(emailHtml,null,"html");
+            Transport.send(message);
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+    public synchronized boolean userProductReturnRequestMail(RentRequest rentRequest){
+
+        AppCredential appCredential =rentRequest.getRequestedBy();
+
+        String to = appCredential.getEmail();
+
+
+        Session session = this.getSession();
+
+        VelocityContext context = new VelocityContext();
+        context.put("recipient", appCredential);
+        context.put("rentRequest", rentRequest);
+
+        String emailHtml = VelocityUtil.getHtmlByTemplateAndContext("user-productReturn.vm", context);
+        System.out.println(emailHtml);
+        try{
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setHeader("Content-Type", "text/html");
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(to));
+            message.setSubject("Return of "+rentRequest.getRentalProduct());
+            message.setText(emailHtml,null,"html");
+            Transport.send(message);
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return false;
+        }
+
+
+        return true;
     }
 
 

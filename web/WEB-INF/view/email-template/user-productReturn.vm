@@ -1,0 +1,16 @@
+ #include("pertial/header.vm")
+       <p style="margin:0px;font-size: 14px;">
+           Dear
+           #if($recipient.userInf.gender=='male')
+               Mr
+           #elseif($recipient.userInf.gender=='female')
+               Ms
+           #else
+               Mr/Ms
+           #end
+           $recipient.userInf.getLastName(),
+           <br>
+           This email is to notify that the last date of the product you rented is $rentRequest.endDate
+
+       </p>
+ #include("pertial/user-footer.vm")

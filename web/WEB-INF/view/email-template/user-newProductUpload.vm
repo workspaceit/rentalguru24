@@ -1,0 +1,20 @@
+ #include("pertial/header.vm")
+       <p style="margin:0px;font-size: 14px;">
+           Dear
+           #if($user.gender=='male')
+               Mr
+           #elseif($user.gender=='female')
+               Ms
+           #else
+               Mr/Ms
+           #end
+           $user.getLastName(),
+           <br>
+           Your product has been  uploaded to RentGuru24.com
+           <br> An admin will be review the product within a short time.
+           <br> Your product details:
+           #set ($productDetails="#parse('details-info/product-details.vm')")
+           <br>
+           $productDetails
+       </p>
+ #include("pertial/user-footer.vm")

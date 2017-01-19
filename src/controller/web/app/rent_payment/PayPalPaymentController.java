@@ -2,6 +2,7 @@ package controller.web.app.rent_payment;
 
 import com.paypal.api.payments.*;
 import helper.DateHelper;
+import helper.EmailHelper;
 import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
 import model.RentInfModel;
@@ -38,6 +39,8 @@ public class PayPalPaymentController {
     RentRequestModel rentRequestModel;
     @Autowired
     AdminSitesFeesModel adminSitesFeesModel;
+    @Autowired
+    EmailHelper emailHelper;
 
     @RequestMapping(value = "/payment-success/{rentRequestId}", method = RequestMethod.GET)
     public ModelAndView successPayment(HttpServletRequest request,
@@ -188,6 +191,18 @@ public class PayPalPaymentController {
         /* Updating rent request payment completion */
         rentRequest.setIsPaymentComplete(true);
         rentRequestModel.update(rentRequest);
+
+
+        final RentRequest finalRenRequest = rentRequest;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.print("Email sending init");
+
+                emailHelper.userProductRentRequestMail(rentPaymentModel.getByRentRequestId(finalRenRequest.getId()));
+                System.out.print("User Email sent to admin users");
+            }
+        }).start();
 
         modelAndView.addObject("rentRequest", rentRequest);
         modelAndView.addObject("payPalStatusMsg", "Payment successfully received");

@@ -27,9 +27,24 @@
 
 <table>
     <tr>
-        <td>Name : </td><td>$user.getUserInf().getFirstName() $user.getUserInf().getLastName()</td>
+        <td>Name : </td><td>$user.userInf.firstName $user.userInf.lastName</td>
     </tr>
     <tr>
-        <td>Email : </td><td>$user.getEmail()</td>
+        <td>Email : </td><td>$user.email</td>
+    </tr>
+    <tr>
+        <td>Phone Number : </td><td>$user.userInf.phoneNumber</td>
+    </tr>
+    <tr>
+        <td>Address : </td><td>#if($user.userInf.userAddress.address)$user.userInf.userAddress.address#end</td>
+    </tr>
+    <tr>
+        <td>City : </td><td>#if($user.userInf.userAddress.city)$user.userInf.userAddress.city#end</td>
+    </tr>
+    <tr>
+        <td>State : </td><td>#if($user.userInf.userAddress.state)$user.userInf.userAddress.state#end</td>
+    </tr>
+    <tr>
+        <td>Zip : </td><td>#if($user.userInf.userAddress.zip)$user.userInf.userAddress.zip#end</td>
     </tr>
 </table>

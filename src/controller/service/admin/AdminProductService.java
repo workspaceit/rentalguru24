@@ -32,6 +32,9 @@ public class AdminProductService {
     @Autowired
     RentRequestModel rentRequestModel;
 
+    @Autowired
+    EmailHelper emailHelper;
+
     @RequestMapping(value = "/product/approve-product", method = RequestMethod.POST)
     public ServiceResponse approveRentalProduct(HttpServletRequest request,  @RequestParam("pid") int productId){
 
@@ -62,7 +65,7 @@ public class AdminProductService {
                 System.out.println("Inside Email sending");
                 RentalProduct rentalProduct = productModel.getById(productId);
                 if(rentalProduct!=null){
-                    EmailHelper.rentalProductApprovalDisapprovalEmail(rentalProduct, true);
+                    emailHelper.userProductVerifiedMail(rentalProduct);
                     System.out.println("Inside Email sent");
                 }
             }
@@ -94,13 +97,14 @@ public class AdminProductService {
             categoryModel.categoryCountDecrease(productCategories.get(i).getCategory().getId());
         }
 
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 System.out.println("Inside Email sending");
                 RentalProduct rentalProduct = productModel.getById(productId);
                 if(rentalProduct!=null){
-                    EmailHelper.rentalProductApprovalDisapprovalEmail(rentalProduct, false);
+                    emailHelper.userProductDeniedMail(rentalProduct);
                     System.out.println("Inside Email sent");
                 }
             }

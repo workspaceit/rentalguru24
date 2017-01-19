@@ -51,8 +51,8 @@ private List<RentRequest> requestExtension;
         <td>$dollarSumbol $rentPayment.rentRequest.rentalProduct.rentFee</td>
     </tr>
     <tr>
-        <td><strong>Rent Fees</strong></td>
-        <td><strong>$dollarSumbol $rentPayment.rentRequest.rentFee</strong></td>
+        <td>Rent Fees</td>
+        <td>$dollarSumbol $rentPayment.rentRequest.rentFee</td>
     </tr>
 
         #set ($totalAmount = $rentPayment.rentRequest.advanceAmount+$siteFees)

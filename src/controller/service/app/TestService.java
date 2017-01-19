@@ -77,13 +77,7 @@ public class TestService extends BaseService{
     @RequestMapping(value = "/test/category", method = RequestMethod.POST)
     public void postCategory(){
 
-
-        RentPayment rentPayment = rentPaymentModel.getByRentRequestId(148);
-        emailHelper.sendAdminProductReceiveEmail(rentPayment, true);
-        emailHelper.sendAdminProductReceiveEmail(rentPayment, false);
-        emailHelper.sendAdminRentRequestEmail(rentPayment,"approve");
-        emailHelper.sendAdminProductReturnRequestEmail(rentPayment);
-        emailHelper.sendAdminProductReceiveEmail(rentPayment,true);
+        emailHelper.userProductReturnRequestMail(rentRequestModel.getById(150));
 
     }
 

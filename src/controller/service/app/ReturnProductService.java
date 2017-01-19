@@ -1,5 +1,6 @@
 package controller.service.app;
 
+import helper.EmailHelper;
 import helper.ServiceResponse;
 import model.RentInfModel;
 import model.RentalProductReturnedModel;
@@ -21,6 +22,8 @@ public class ReturnProductService {
     RentalProductReturnedModel rentalProductReturnedModel;
     @Autowired
     RentInfModel rentInfModel;
+    @Autowired
+    EmailHelper emailHelper;
 
     @RequestMapping(value = "/confirm-return/{rentInfId}", method = RequestMethod.POST)
     public ServiceResponse renturnProduct(HttpServletRequest request,
@@ -60,6 +63,18 @@ public class ReturnProductService {
         rentalProductReturnedModel.insert(rentalProductReturned);
 
         serviceResponse.setResponseData(rentalProductReturned);
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Inside Email sending");
+
+                emailHelper.userProductReturnRequestMail(rentInf.getRentRequest());
+                System.out.println("Inside Email sent");
+            }
+        }).start();
+
 
         return serviceResponse;
     }
