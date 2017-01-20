@@ -313,6 +313,7 @@ public class RentRequestService{
                 System.out.println("Inside Email sending");
 
                 emailHelper.userProductRentRequestApproveDisapproveMail(rentRequest, true);
+                emailHelper.sendAdminRentRequestEmail(rentPaymentModel.getByRentRequestId(rentRequest.getId()),"approve");
                 System.out.println("Inside Email sent");
             }
         }).start();
@@ -380,6 +381,7 @@ public class RentRequestService{
                 System.out.println("Inside Email sending");
 
                 emailHelper.userProductRentRequestApproveDisapproveMail(rentRequest, false);
+                emailHelper.sendAdminRentRequestEmail(rentPaymentModel.getByRentRequestId(rentRequest.getId()),"disapprove");
                 System.out.println("Inside Email sent");
             }
         }).start();
@@ -458,6 +460,9 @@ public class RentRequestService{
         rentRequest.setRequestCancel(false);
 
         rentRequestModel.update(rentRequest);
+
+
+
         serviceResponse.setResponseData(rentRequest,"No record found");
         return serviceResponse;
     }

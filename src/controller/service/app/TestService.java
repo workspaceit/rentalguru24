@@ -76,9 +76,9 @@ public class TestService extends BaseService{
     EmailHelper emailHelper;
     @RequestMapping(value = "/test/category", method = RequestMethod.POST)
     public void postCategory(){
-
-        emailHelper.userProductReturnRequestMail(rentRequestModel.getById(150));
-
+        System.out.println("Init");
+          emailHelper.signUpEmailConfirmationMail(appLoginCredentialModel.getAppCredentialById(87), "sd", "sd", "ds");
+        System.out.println("Sent");
     }
 
     @RequestMapping(value = "/test/email", method = RequestMethod.POST)

@@ -198,8 +198,9 @@ public class PayPalPaymentController {
             @Override
             public void run() {
                 System.out.print("Email sending init");
-
-                emailHelper.userProductRentRequestMail(rentPaymentModel.getByRentRequestId(finalRenRequest.getId()));
+                RentPayment finalPayment = rentPaymentModel.getByRentRequestId(finalRenRequest.getId());
+                emailHelper.userProductRentRequestMail(finalPayment);
+                emailHelper.sendAdminRentRequestEmail(finalPayment,"");
                 System.out.print("User Email sent to admin users");
             }
         }).start();

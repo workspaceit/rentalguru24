@@ -3,6 +3,7 @@ package controller.service.app;
 import helper.EmailHelper;
 import helper.ServiceResponse;
 import model.RentInfModel;
+import model.RentPaymentModel;
 import model.RentalProductReturnedModel;
 import model.entity.app.AppCredential;
 import model.entity.app.product.rentable.RentInf;
@@ -24,6 +25,9 @@ public class ReturnProductService {
     RentInfModel rentInfModel;
     @Autowired
     EmailHelper emailHelper;
+    @Autowired
+    RentPaymentModel rentPaymentModel;
+
 
     @RequestMapping(value = "/confirm-return/{rentInfId}", method = RequestMethod.POST)
     public ServiceResponse renturnProduct(HttpServletRequest request,
@@ -71,6 +75,7 @@ public class ReturnProductService {
                 System.out.println("Inside Email sending");
 
                 emailHelper.userProductReturnRequestMail(rentInf.getRentRequest());
+                emailHelper.sendAdminProductReturnRequestEmail(rentPaymentModel.getByRentRequestId(rentInf.getRentRequest().getId()));
                 System.out.println("Inside Email sent");
             }
         }).start();

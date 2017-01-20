@@ -4,6 +4,7 @@ import com.paypal.api.payments.PayoutBatch;
 import com.paypal.api.payments.Refund;
 import com.paypal.base.rest.PayPalRESTException;
 import helper.DateHelper;
+import helper.EmailHelper;
 import helper.ServiceResponse;
 import library.paypal.PayPalPayment;
 import model.*;
@@ -55,6 +56,9 @@ public class ReceiveProductService {
     AdminGlobalNotificationModel adminGlobalNotificationModel;
     @Autowired
     AdminGlobalNotificationTemplateModel adminGlobalNotificationTemplateModel;
+    @Autowired
+    EmailHelper emailHelper;
+
 
     @RequestMapping(value = "/confirm-receive/{rentalProductReturnId}", method = RequestMethod.POST)
     public ServiceResponse renturnProduct(HttpServletRequest request,
@@ -193,6 +197,16 @@ public class ReceiveProductService {
 
         this.processProductReturnConfirmDispute(serviceResponse,rentalProductReturned,remarks,true,false);
 
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Inside Email sending");
+                emailHelper.sendAdminProductReceiveEmail(rentPaymentModel.getByRentRequestId(rentInf.getRentRequest().getId()),true);
+                System.out.println("Inside Email sent");
+            }
+        }).start();
+
         return serviceResponse;
     }
     @RequestMapping(value = "/dispute-receive/{rentalProductReturnId}", method = RequestMethod.POST)
@@ -261,6 +275,15 @@ public class ReceiveProductService {
         adminGlobalNotificationModel.insert(adminGlobalNotification);
 
         /*----------------------------*/
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Inside Email sending");
+                emailHelper.sendAdminProductReceiveEmail(rentPaymentModel.getByRentRequestId(rentalProductReturned.getRentInf().getRentRequest().getId()),true);
+                System.out.println("Inside Email sent");
+            }
+        }).start();
+
 
         return serviceResponse;
     }

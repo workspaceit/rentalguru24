@@ -8,7 +8,6 @@ import model.entity.app.AppCredential;
 import model.entity.app.AuthCredential;
 import model.entity.app.RentRequest;
 import model.entity.app.payments.RentPayment;
-import model.entity.app.product.rentable.RentInf;
 import model.entity.app.product.rentable.iface.RentalProduct;
 import org.apache.velocity.VelocityContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,25 @@ import java.util.Properties;
 @Component
 public class EmailHelper {
     private static String BASEURL = "http://rentguru24.com";
-    private final static String from= "rafi@workspaceit.com";//"developer_beta@workspaceit.com";
-    private final static String username="rafi@workspaceit.com";
+    private final static String from= "no-reply@rentguru24.com";//"rafi@workspaceit.com";//"developer_beta@workspaceit.com";
+    private final static String username="no-reply@rentguru24.com";//"rafi@workspaceit.com";
+    private final static String password="qwe112233";//"wsit_cabguard1";
+    private final static String smtpHost = "mail.rentguru24.com"; // "hera.ihostman.com"
+    private final static String smtpPort = "587";
+
+   /* private static String BASEURL = "http://rentguru24.com";
+    private final static String from= "rafi@workspaceit.com";//"rafi@workspaceit.com";//"developer_beta@workspaceit.com";
+    private final static String username="rafi@workspaceit.com";//"rafi@workspaceit.com";
     private final static String password="wsit97480";//"wsit_cabguard1";
+    private final static String smtpHost = "hera.ihostman.com"; // "hera.ihostman.com"
+    private final static String smtpPort = "465";*/
+
+   /* private static String BASEURL = "http://rentguru24.com";
+    private final static String from= "developer_beta@workspaceit.com";//"rafi@workspaceit.com";//"";
+    private final static String username="developer_beta@workspaceit.com";//"rafi@workspaceit.com";
+    private final static String password="wsit_cabguard1T";//"wsit_cabguard1";
+    private final static String smtpHost = "hera.ihostman.com"; // "hera.ihostman.com"
+    private final static String smtpPort = "465";*/
 
     @Autowired
     AppLoginCredentialModel appLoginCredentialModel;
@@ -39,15 +54,25 @@ public class EmailHelper {
 
     private Session getSession(){
         Properties properties = System.getProperties();
-        // properties.put("mail.smtp.starttls.enable", "true");
+      //  properties.put("mail.smtp.starttls.enable", "true");
+       // properties.put("mail.smtp.socketFactory.fallback", "true");
 
-
-        properties.put("mail.smtp.host", "hera.ihostman.com");
+        /*OLD config */
+       /* properties.put("mail.smtp.host",smtpHost);
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.user",username ); // User name
         properties.put("mail.smtp.password",password); // password
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.port", smtpPort);
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");*/
+
+         /*New config */
+        properties.put("mail.smtp.host", smtpHost);
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.user",username ); // User name
+        properties.put("mail.smtp.password",password); // password
+        properties.put("mail.smtp.port", smtpPort);
+        properties.put("mail.smtp.ssl.trust", smtpHost);
+
 
         return Session.getDefaultInstance(properties, new javax.mail.Authenticator(){
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -56,7 +81,9 @@ public class EmailHelper {
             }
         });
     }
-
+    public Session testSession(){
+        return this.getSession();
+    }
     private static Properties getProperties(){
         Properties properties = System.getProperties();
         // properties.put("mail.smtp.starttls.enable", "true");
@@ -348,13 +375,14 @@ public class EmailHelper {
 
         try{
 
-            MimeMessage message = new MimeMessage(session);
 
-            message.setHeader("Content-Type", "text/html");
-            message.setFrom(new InternetAddress(from));
-            message.setSubject(subject.toString()+" : "+rentPayment.getRentRequest().getRentalProduct().getName());
 
             for(AuthCredential adminUser : adminUserList){
+                MimeMessage message = new MimeMessage(session);
+
+                message.setHeader("Content-Type", "text/html");
+                message.setFrom(new InternetAddress(from));
+                message.setSubject(subject.toString()+" : "+rentPayment.getRentRequest().getRentalProduct().getName());
                 message.addRecipient(Message.RecipientType.TO,
                         new InternetAddress(adminUser.getEmail()));
 
@@ -388,13 +416,14 @@ public class EmailHelper {
 
         try{
 
-            MimeMessage message = new MimeMessage(session);
 
-            message.setHeader("Content-Type", "text/html");
-            message.setFrom(new InternetAddress(from));
-            message.setSubject("Return Request: "+rentPayment.getRentRequest().getRentalProduct().getName());
 
             for(AuthCredential adminUser : adminUserList){
+                MimeMessage message = new MimeMessage(session);
+
+                message.setHeader("Content-Type", "text/html");
+                message.setFrom(new InternetAddress(from));
+                message.setSubject("Return Request: "+rentPayment.getRentRequest().getRentalProduct().getName());
                 message.addRecipient(Message.RecipientType.TO,
                         new InternetAddress(adminUser.getEmail()));
 
@@ -437,13 +466,14 @@ public class EmailHelper {
 
         try{
 
-            MimeMessage message = new MimeMessage(session);
 
-            message.setHeader("Content-Type", "text/html");
-            message.setFrom(new InternetAddress(from));
-            message.setSubject(subject.toString()+" : "+rentPayment.getRentRequest().getRentalProduct().getName());
 
             for(AuthCredential adminUser : adminUserList){
+                MimeMessage message = new MimeMessage(session);
+
+                message.setHeader("Content-Type", "text/html");
+                message.setFrom(new InternetAddress(from));
+                message.setSubject(subject.toString()+" : "+rentPayment.getRentRequest().getRentalProduct().getName());
                 message.addRecipient(Message.RecipientType.TO,
                         new InternetAddress(adminUser.getEmail()));
 
@@ -710,7 +740,7 @@ public class EmailHelper {
         VelocityContext context = new VelocityContext();
         context.put("recipient", appCredential);
         context.put("rentRequest", rentRequest);
-
+/*
         String emailHtml = VelocityUtil.getHtmlByTemplateAndContext("user-productReturn.vm", context);
         System.out.println(emailHtml);
         try{
@@ -728,7 +758,7 @@ public class EmailHelper {
         }catch (MessagingException mex) {
             mex.printStackTrace();
             return false;
-        }
+        }*/
 
 
         return true;
